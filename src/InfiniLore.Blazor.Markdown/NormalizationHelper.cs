@@ -36,7 +36,7 @@ public static class NormalizationHelper {
             for (int index = 0; index < lineCount; index++) {
                 ReadOnlySpan<char> trimmed = lines[index].AsSpan();
                 stringBuilder.Append(trimmed.Length >= minIndent ? trimmed[minIndent..] : trimmed);
-                stringBuilder.AppendLine();
+                stringBuilder.Append('\n');
             }
 
             return stringBuilder.ToString();
@@ -67,8 +67,8 @@ public static class NormalizationHelper {
                     : line.AsSpan();
 
                 trimmed.CopyTo(resultSpan[position..]);
-                resultSpan[position + trimmed.Length] = '\n'; // Write the newline directly
-                position += trimmed.Length + 1;
+                resultSpan[position += trimmed.Length] = '\n'; // Write the newline directly
+                position += 1;
 
             }
 

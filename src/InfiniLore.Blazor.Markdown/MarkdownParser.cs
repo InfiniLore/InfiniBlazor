@@ -49,7 +49,7 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
         "tag"
         // "remainder" // Remainder for single-lines are their own separate thing, see service below
     ];
-    
+
     // ReSharper disable once SuspiciousTypeConversion.Global
     private readonly RemainderSectionParser RemainderSectionParser = (RemainderSectionParser)serviceProvider.GetRequiredKeyedService<ISingleLineSectionParser>("remainder");
 
@@ -80,7 +80,7 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
             string groupName = keyNames[index];
             var service = serviceProvider.GetKeyedService<T>(groupName);
             if (service is null) {
-                logger.LogWarning($"No service found for group name '{groupName}' for type '{typeof(T).Name}'.");
+                logger.LogWarning("No service found for group name '{groupName}' for type '{name}'.", groupName, typeof(T).Name);
                 continue;
             }
 
@@ -97,7 +97,7 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
 
         try {
             // Preload matches into the queue
-            MatchCollection matches = MarkdownRegexLib.MultilineStructuresMatches(markdown);
+            MatchCollection matches = MarkdownRegexLib.MultilineStructuresRegex.Matches(markdown);
             matchesQueue.EnsureCapacity(matches.Count);
             foreach (Match match in matches) {
                 matchesQueue.Enqueue(match);
@@ -120,7 +120,6 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
         finally {
             MatchQueuePool.Return(matchesQueue);
         }
-
     }
 
 
@@ -129,7 +128,7 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
 
         try {
             // Preload matches into the queue
-            MatchCollection matches = MarkdownRegexLib.SinglelineStructuresMatches(markdown);
+            MatchCollection matches = MarkdownRegexLib.SinglelineStructuresRegex.Matches(markdown);
             matchesQueue.EnsureCapacity(matches.Count);
             foreach (Match match in matches) {
                 matchesQueue.Enqueue(match);

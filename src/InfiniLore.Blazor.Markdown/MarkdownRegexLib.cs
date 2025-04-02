@@ -30,7 +30,7 @@ public static partial class MarkdownRegexLib {
           )
         | (?<tag>\#(?<tText>[^#\s]+))
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
-    private static partial Regex SinglelineStructuresRegex { get; }
+    public static partial Regex SinglelineStructuresRegex { get; }
 
     [GeneratedRegex("""
           (?<heading>^(?<hLevel>\#{1,6})\s+(?<hText>.+))
@@ -62,7 +62,7 @@ public static partial class MarkdownRegexLib {
         | (?<horizontalRule>^[*-_]{3,}\s*$)
         | (?<remainder>.+?(?:\r?\n|$))
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
-    private static partial Regex MultilineStructuresRegex { get; }
+    public static partial Regex MultilineStructuresRegex { get; }
 
     [GeneratedRegex(@"^[ ]*[-.]?\d*\.?\s+(?<lTask>\[[\ xX]\])?(?<lHead>.+)(?<lBody>(?:\n[ ]+.+)*)", RegexOptions.Multiline | RegexOptions.ExplicitCapture)]
     public static partial Regex ListItemBodyRegex { get; }
@@ -75,7 +75,4 @@ public static partial class MarkdownRegexLib {
     
     [GeneratedRegex(@"<[sS][cC][rR][iI][pP][tT].*?>[\s\S]*?</[sS][cC][rR][iI][pP][tT]>")]
     public static partial Regex NormalizeScriptRegex { get; }
-
-    public static MatchCollection SinglelineStructuresMatches(string markdown) => SinglelineStructuresRegex.Matches(markdown);
-    public static MatchCollection MultilineStructuresMatches(string markdown) => MultilineStructuresRegex.Matches(markdown);
 }
