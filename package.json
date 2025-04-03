@@ -1,0 +1,18 @@
+{
+  "name": "infinilore",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "watch:tailwind-server": "npx @tailwindcss/cli -i ./src/InfiniLore.Blazor/wwwroot/tailwind.css -o ./src/InfiniLore.Blazor/wwwroot/infiniloreblazor.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "GNUv3",
+  "description": "",
+  "devDependencies": {
+    "tailwindcss": "^4.0.9"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.0.9"
+  }
+}
