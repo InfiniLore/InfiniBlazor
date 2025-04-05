@@ -10,8 +10,8 @@ namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[KeyedInjectableService<ISingleLineSectionParser>("remainder", ServiceLifetime.Singleton)]
-public class RemainderSectionParser : ISingleLineSectionParser{
+// [KeyedInjectableService<ISingleLineSectionParser>("remainder", ServiceLifetime.Singleton)]
+public abstract class RemainderSectionParser : ISingleLineSectionParser{
     public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.NotSkipped;
     
     // -----------------------------------------------------------------------------------------------------------------
@@ -22,7 +22,7 @@ public class RemainderSectionParser : ISingleLineSectionParser{
         throw new NotSupportedException("This parser is not meant to be used for direct single line parsing. Use ParseToStringBuilder(ref ReadOnlySpan<char> remainder, IMarkdownWriter writer) instead.");
     }
 
-    public void ParseToStringBuilder(ref ReadOnlySpan<char> remainder, IMarkdownWriter writer) {
+    public static void ParseToStringBuilder(ref ReadOnlySpan<char> remainder, IMarkdownWriter writer) {
         if (remainder.IsEmpty) return;
         int currentIndex = 0;
 

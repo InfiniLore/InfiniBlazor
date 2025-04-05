@@ -48,10 +48,7 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
         "tag"
         // "remainder" // Remainder for single-lines are their own separate thing, see service below
     ];
-
-    // ReSharper disable once SuspiciousTypeConversion.Global
-    private readonly RemainderSectionParser RemainderSectionParser = (RemainderSectionParser)serviceProvider.GetRequiredKeyedService<ISingleLineSectionParser>("remainder");
-
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
