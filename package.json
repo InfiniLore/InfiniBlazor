@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "watch:tailwind-server": "npx @tailwindcss/cli -i ./src/InfiniLore.Blazor/wwwroot/tailwind.css -o ./src/InfiniLore.Blazor/wwwroot/infiniloreblazor.css --watch"
+    "watch:tailwind-server": "npx @tailwindcss/cli -i ./src/InfiniLore.Blazor/wwwroot/tailwind.css -o ./src/InfiniLore.Blazor/wwwroot/InfiniLoreBlazorStyles.css --watch"
   },
   "keywords": [],
   "author": "",

@@ -12,6 +12,7 @@ public static class ServiceCollectionExtensions {
     public static IServiceCollection AddInfiniLoreBlazor(this IServiceCollection services, Action<IInfiniLoreBlazorConfig>? configure = null) {
         var config = new InfiniLoreBlazorConfig(services);
         services.RegisterServicesFromInfiniLoreBlazor();
+        services.AddLucideIcons();
         
         configure?.Invoke(config);
         

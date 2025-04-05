@@ -4,6 +4,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>Example</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="InfiniLore.Lucide" Version="0.21.487" />
+      <PackageReference Include="InfiniLore.Lucide" Version="0.22.487" />
     </ItemGroup>
 
 </Project>

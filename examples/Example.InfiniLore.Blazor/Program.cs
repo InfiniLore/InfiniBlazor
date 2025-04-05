@@ -1,7 +1,7 @@
-using Example.InfiniLore.Blazor.Components;
+using Example.Components;
 using InfiniLore.Blazor.Markdown;
 
-namespace Example.InfiniLore.Blazor;
+namespace Example;
 public class Program {
     public static void Main(string[] args) {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
