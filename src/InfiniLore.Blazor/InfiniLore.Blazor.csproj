@@ -5,7 +5,29 @@
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+
+        <!-- Package metadata -->
+        <PackageId>InfiniLore.Blazor</PackageId>
+        <Version>0.0.0</Version>
+        <Authors>Anna Sas</Authors>
+        <Description>InfiniLore's Component Library</Description>
+        <PackageProjectUrl>https://github.com/InfiniLore/infinilore.blazor</PackageProjectUrl>
+        <PackageTags>Blazor;Ui;Design;Components;Library</PackageTags>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <DebugType>embedded</DebugType>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
+
+    <!-- Include external files -->
+    <ItemGroup>
+        <None Include="../../LICENSE" Pack="true" PackagePath="" Visible="false" />
+        <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
+        <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
+    </ItemGroup>
 
     <ItemGroup>
         <EmbeddedResource Include="wwwroot\**\*"/>

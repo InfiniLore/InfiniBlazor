@@ -4,7 +4,29 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+
+        <!-- Package metadata -->
+        <PackageId>InfiniLore.Blazor.Markdown</PackageId>
+        <Version>0.0.0</Version>
+        <Authors>Anna Sas</Authors>
+        <Description>Markdown Parser library for InfiniLore's Component Library</Description>
+        <PackageProjectUrl>https://github.com/InfiniLore/infinilore.blazor</PackageProjectUrl>
+        <PackageTags>Blazor;Ui;Design;Components;Library;Contracts</PackageTags>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <DebugType>embedded</DebugType>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
+
+    <!-- Include external files -->
+    <ItemGroup>
+        <None Include="../../LICENSE" Pack="true" PackagePath="" Visible="false" />
+        <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
+        <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="CodeOfChaos.Extensions" Version="0.57.0" />

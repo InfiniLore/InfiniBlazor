@@ -10,10 +10,10 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Setup .NET
-              uses: actions/setup-dotnet@v3
+              uses: actions/setup-dotnet@v4
               with:
                   dotnet-version: '9.x'
 
@@ -27,10 +27,12 @@ jobs:
             # The job will fail automatically if any test fails because `dotnet test` exits with a non-zero code
             - name: Run tests - InfiniLore.Blazor
               run: dotnet run -c Release --no-restore --no-build
-              working-directory: "tests/Tests.InfiniLore.Blazor"
+              working-directory: "tests/Tests.InfiniLore.Blazor.Markdown"
 
             - name: Publish to NuGet
               env:
                   NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
               run: |
                   dotnet nuget push src/InfiniLore.Blazor/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                  dotnet nuget push src/InfiniLore.Blazor.Contracts/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                  dotnet nuget push src/InfiniLore.Blazor.Markdown/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
