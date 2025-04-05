@@ -12,4 +12,8 @@
       <ProjectReference Include="..\..\src\InfiniLore.Blazor\InfiniLore.Blazor.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <PackageReference Include="InfiniLore.Lucide" Version="0.21.487" />
+    </ItemGroup>
+
 </Project>
