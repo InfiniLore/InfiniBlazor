@@ -24,6 +24,22 @@ public static class HeadingDataSources {
         yield return () => new MarkdownTestDto(SectionName,
             """
             Heading
+            --
+            """,
+            "<p>Heading</p><p>--</p>"
+        );
+        
+        yield return () => new MarkdownTestDto(SectionName,
+            """
+            Heading
+            ==
+            """,
+            "<p>Heading</p><p>==</p>"
+        );
+
+        yield return () => new MarkdownTestDto(SectionName,
+            """
+            Heading
             ---
             """,
             "<h1>Heading</h1>"
@@ -41,6 +57,14 @@ public static class HeadingDataSources {
             """
             Heading
                 ========
+            """,
+            "<h1>Heading</h1>"
+        );
+        
+        yield return () => new MarkdownTestDto(SectionName,
+            """
+            Heading
+                --------
             """,
             "<h1>Heading</h1>"
         );
