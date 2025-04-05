@@ -36,5 +36,15 @@ public static class ItalicDataSources {
             "* something **bold** in italic *",
             "<p><em>something <strong>bold</strong> in italic</em></p>"
         );
+        
+        yield return static () => new MarkdownTestDto(SectionName,
+            "**", 
+            "<p>**</p>"
+        );
+
+        yield return static () => new MarkdownTestDto(SectionName,
+            "some text ****",  // to exclude the <hr> tag being triggered
+            "<p>some text <em>**</em></p>"
+        );
     }
 }

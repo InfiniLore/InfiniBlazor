@@ -46,5 +46,10 @@ public static class BoldDataSources {
             "**bold *nested \\* italic***",
             "<p><strong>bold <em>nested * italic</em></strong></p>"
         );
+
+        yield return static () => new MarkdownTestDto(SectionName,
+            "some text *****",  // to exclude the <hr> tag being triggered
+            "<p>some text <strong>*</strong></p>"
+        );
     }
 }
