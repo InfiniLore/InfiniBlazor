@@ -192,7 +192,7 @@ public static class BlockQuoteDataSources {
             """,
             """
             <blockquote>
-                <p>This is a blockquote with escaped characters: *, >, <code>`</code>.</p>
+                <p>This is a blockquote with escaped characters: *, &gt;, <code>`</code>.</p>
             </blockquote>
             """
         );

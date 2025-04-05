@@ -20,12 +20,12 @@ public static class EscapedCharacterDataSources {
 
         yield return static () => new MarkdownTestDto(SectionName,
             @"\!\""\#\$\%\&\'\(\)\*\+\,\-\.\/\:\;\<\=\>\?\@\[\\\]\^\_\`\{\|\}\~",
-            "<p>!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~</p>"
+            "<p>!&quot;#$%&amp;'()*+,-./:;&lt;=&gt;?@[\\]^_`{|}~</p>"
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "\\\"She told me that \\'he isn't here right *now*\\' - so I left.\\\"",
-            "<p>\"She told me that 'he isn't here right <em>now</em>' - so I left.\"</p>"
+            "<p>&quot;She told me that 'he isn't here right <em>now</em>' - so I left.&quot;</p>"
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -93,5 +93,9 @@ public static class EscapedCharacterDataSources {
             "<p>Double escaping \\<em> and then </em>italicize*</p>"
         );
 
+        yield return static () => new MarkdownTestDto(SectionName,
+            @"\!\""\#\$\%\&\'\(\)\*\+\,\-\.\/\:\;\<\=\>\?\@\[\\\]\^\_\`\{\|\}\~\n",
+            @"<p>!&quot;#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~\n</p>"
+        );
     }
 }
