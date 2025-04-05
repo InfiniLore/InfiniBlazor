@@ -16,6 +16,21 @@ public static class LinkDataSources {
             "This is an [-->*example*<--](https://www.facebook.com) of a link.",
             """<p>This is an <a href="https://www.facebook.com">--&gt;<em>example</em>&lt;--</a> of a link.</p>"""
         );
+        
+        yield return static () => new MarkdownTestDto(SectionName,
+            "This is an **[-->*example*<--](https://www.facebook.com)** of a link.",
+            """<p>This is an <strong><a href="https://www.facebook.com">--&gt;<em>example</em>&lt;--</a></strong> of a link.</p>"""
+        );
+        
+        yield return static () => new MarkdownTestDto(SectionName,
+            "This is an ^[-->*example*<--](https://www.facebook.com)^ of a link.",
+            """<p>This is an <sub><a href="https://www.facebook.com">--&gt;<em>example</em>&lt;--</a></sub> of a link.</p>"""
+        );
+        
+        yield return static () => new MarkdownTestDto(SectionName,
+            "This is an ^^[-->*example*<--](https://www.facebook.com)^^ of a link.",
+            """<p>This is an <sup><a href="https://www.facebook.com">--&gt;<em>example</em>&lt;--</a></sup> of a link.</p>"""
+        );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "![Specs](https://i.imgur.com/aV8o3rE.png)",
