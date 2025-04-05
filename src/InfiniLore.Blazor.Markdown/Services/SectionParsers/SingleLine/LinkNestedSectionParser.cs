@@ -9,7 +9,7 @@ namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[KeyedInjectableService<ISingleLineSectionParser>("linkNested", ServiceLifetime.Singleton)]
+[InjectableSingleton<ISingleLineSectionParser>("linkNested")]
 public class LinkNestedSectionParser(IServiceProvider provider) : ISingleLineSectionParser {
     private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
     public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.NotSkipped;

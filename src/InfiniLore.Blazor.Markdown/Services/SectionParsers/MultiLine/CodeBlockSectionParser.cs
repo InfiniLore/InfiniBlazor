@@ -10,7 +10,7 @@ namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[KeyedInjectableService<IMultiLineSectionParser>("codeBlock", ServiceLifetime.Singleton)]
+[InjectableSingleton<IMultiLineSectionParser>("codeBlock")]
 public class CodeBlockSectionParser : IMultiLineSectionParser {
     public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer) {
         if (!entireMatch.Groups["cBody"].TryGetValue(out string? codeBlockBody)) return;

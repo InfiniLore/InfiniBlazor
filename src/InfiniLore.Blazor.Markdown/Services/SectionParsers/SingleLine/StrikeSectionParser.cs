@@ -9,7 +9,7 @@ namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[KeyedInjectableService<ISingleLineSectionParser>("strike", ServiceLifetime.Singleton)]
+[InjectableSingleton<ISingleLineSectionParser>("strike")]
 public class StrikeSectionParser(IServiceProvider provider) : ISingleLineSectionParser {
     private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
     public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.Strike;

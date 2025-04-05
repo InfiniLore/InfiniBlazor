@@ -10,7 +10,7 @@ namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[KeyedInjectableService<IMultiLineSectionParser>("table", ServiceLifetime.Singleton)]
+[InjectableSingleton<IMultiLineSectionParser>("table")]
 public class TableSectionParser(IServiceProvider provider) : IMultiLineSectionParser {
     private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
 

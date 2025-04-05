@@ -11,7 +11,7 @@ namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[KeyedInjectableService<ISingleLineSectionParser>("emote", ServiceLifetime.Singleton)]
+[InjectableSingleton<ISingleLineSectionParser>("emote")]
 public class EmoteSectionParser(ILogger<EmoteSectionParser> logger) : ISingleLineSectionParser{
     public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.Emote;
     

@@ -9,7 +9,7 @@ namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[KeyedInjectableService<ISingleLineSectionParser>("supScript", ServiceLifetime.Singleton)]
+[InjectableSingleton<ISingleLineSectionParser>("supScript")]
 public class SuperScriptSectionParser(IServiceProvider provider) : ISingleLineSectionParser {
     private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
     public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.SuperScript;

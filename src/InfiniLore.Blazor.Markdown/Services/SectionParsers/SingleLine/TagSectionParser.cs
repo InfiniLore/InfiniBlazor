@@ -9,7 +9,7 @@ namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[KeyedInjectableService<ISingleLineSectionParser>("tag", ServiceLifetime.Singleton)]
+[InjectableSingleton<ISingleLineSectionParser>("tag")]
 public class TagSectionParser : ISingleLineSectionParser {
     public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.NotSkipped;
 

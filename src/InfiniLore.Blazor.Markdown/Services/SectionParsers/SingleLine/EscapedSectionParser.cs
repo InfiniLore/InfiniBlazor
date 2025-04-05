@@ -9,7 +9,7 @@ namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[KeyedInjectableService<ISingleLineSectionParser>("escaped", ServiceLifetime.Singleton)]
+[InjectableSingleton<ISingleLineSectionParser>("escaped")]
 public class EscapedSectionParser: ISingleLineSectionParser {
     public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.NotSkipped;
 

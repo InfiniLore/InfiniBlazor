@@ -9,7 +9,7 @@ namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[KeyedInjectableService<IMultiLineSectionParser>("horizontalRule", ServiceLifetime.Singleton)]
+[InjectableSingleton<IMultiLineSectionParser>("horizontalRule")]
 public class HorizontalRuleSectionParser : IMultiLineSectionParser {
     public void ParseToStringBuilder(Match _, Group group, IMarkdownWriter writer) {
         writer.Write("<hr>");
