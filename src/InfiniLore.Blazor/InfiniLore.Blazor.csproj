@@ -8,7 +8,7 @@
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.Blazor</PackageId>
-        <Version>0.0.0</Version>
+        <Version>0.1.0</Version>
         <Authors>Anna Sas</Authors>
         <Description>InfiniLore's Component Library</Description>
         <PackageProjectUrl>https://github.com/InfiniLore/infinilore.blazor</PackageProjectUrl>
@@ -30,13 +30,13 @@
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Include="wwwroot\**\*"/>
+        <EmbeddedResource Include="wwwroot\**\*" />
     </ItemGroup>
     
     <ItemGroup>
         <PackageReference Include="InfiniLore.Lucide" Version="0.21.487" />
-        <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.3"/>
-        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.3"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.3" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.3" />
     </ItemGroup>
 
