@@ -6,4 +6,10 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\InfiniLore.Blazor.Contracts\InfiniLore.Blazor.Contracts.csproj" />
+      <ProjectReference Include="..\..\src\InfiniLore.Blazor.Markdown\InfiniLore.Blazor.Markdown.csproj" />
+      <ProjectReference Include="..\..\src\InfiniLore.Blazor\InfiniLore.Blazor.csproj" />
+    </ItemGroup>
+
 </Project>

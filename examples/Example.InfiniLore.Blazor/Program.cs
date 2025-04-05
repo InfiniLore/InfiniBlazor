@@ -1,14 +1,21 @@
 using Example.InfiniLore.Blazor.Components;
+using InfiniLore.Blazor.Markdown;
 
 namespace Example.InfiniLore.Blazor;
 public class Program {
     public static void Main(string[] args) {
-        var builder = WebApplication.CreateBuilder(args);
+        WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
+        builder.Services.AddInfiniLoreBlazor(config => {
+            config.AddMarkdown();
+        });
+        
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
 
+        // -------------------------------------------------------------------------------------------------------------
+        // App
+        // -------------------------------------------------------------------------------------------------------------
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.

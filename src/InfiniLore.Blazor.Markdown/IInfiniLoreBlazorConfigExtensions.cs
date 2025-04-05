@@ -1,11 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.Blazor.Services.Themes;
+namespace InfiniLore.Blazor.Markdown;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class DefaultTheme : IInfiniLoreTheme {
-    
+public static class IInfiniLoreBlazorConfigExtensions {
+    public static void AddMarkdown(this IInfiniLoreBlazorConfig config) {
+        config.Services.RegisterServicesFromInfiniLoreBlazorMarkdown();
+    }
 }

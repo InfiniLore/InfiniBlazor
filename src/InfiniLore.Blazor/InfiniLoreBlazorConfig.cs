@@ -1,10 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using Microsoft.Extensions.DependencyInjection;
+
 namespace InfiniLore.Blazor;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class InfiniLoreBlazorConfig : IInfiniLoreBlazorConfig {
-    
+public class InfiniLoreBlazorConfig(IServiceCollection collection) : IInfiniLoreBlazorConfig {
+    public IServiceCollection Services { get; } = collection;
 }

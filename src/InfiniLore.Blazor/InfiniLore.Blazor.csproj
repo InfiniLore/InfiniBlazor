@@ -34,6 +34,11 @@
     </ItemGroup>
     
     <ItemGroup>
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" Version="0.57.0" />
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators" Version="0.57.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="InfiniLore.Lucide" Version="0.21.487" />
         <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.3" />
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.3" />
