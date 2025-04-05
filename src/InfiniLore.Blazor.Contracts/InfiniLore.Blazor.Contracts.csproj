@@ -8,7 +8,7 @@
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.Blazor.Contracts</PackageId>
-        <Version>0.1.1</Version>
+        <Version>0.2.0</Version>
         <Authors>Anna Sas</Authors>
         <Description>Contract library for InfiniLore's Component Library</Description>
         <PackageProjectUrl>https://github.com/InfiniLore/infinilore.blazor</PackageProjectUrl>
@@ -27,7 +27,7 @@
         <None Include="../../LICENSE" Pack="true" PackagePath="" Visible="false" />
         <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
         <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
-        <InternalsVisibleTo Include="InfiniLore.Blazor.Markdown"/>
+        <InternalsVisibleTo Include="InfiniLore.Blazor.Markdown" />
     </ItemGroup>
 
     <ItemGroup>
