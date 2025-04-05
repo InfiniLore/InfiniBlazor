@@ -10,7 +10,7 @@ namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.SingleLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [KeyedInjectableService<ISingleLineSectionParser>("escaped", ServiceLifetime.Singleton)]
-public class EscapedSectionParser(IValueChangerLookupService lookupService) : ISingleLineSectionParser {
+public class EscapedSectionParser: ISingleLineSectionParser {
     public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -19,7 +19,7 @@ public class EscapedSectionParser(IValueChangerLookupService lookupService) : IS
     public void ParseToStringBuilder(Match _, Group group, IMarkdownWriter writer, SingleLineOrigin origin) {
         char value = group.ValueSpan[1];
         ReadOnlySpan<char> span = [value];
-        if (lookupService.AlternateLookup.TryGetValue(span, out string? alternate)) {
+        if (HtmlSymbolLookup.AlternateLookup.TryGetValue(span, out string? alternate)) {
             writer.Write(alternate);
             return;
         }

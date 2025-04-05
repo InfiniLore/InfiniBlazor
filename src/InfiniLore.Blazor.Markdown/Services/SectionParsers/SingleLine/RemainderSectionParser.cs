@@ -11,7 +11,7 @@ namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.SingleLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [KeyedInjectableService<ISingleLineSectionParser>("remainder", ServiceLifetime.Singleton)]
-public class RemainderSectionParser(IValueChangerLookupService lookupService) : ISingleLineSectionParser{
+public class RemainderSectionParser : ISingleLineSectionParser{
     public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.NotSkipped;
     
     // -----------------------------------------------------------------------------------------------------------------
@@ -26,13 +26,13 @@ public class RemainderSectionParser(IValueChangerLookupService lookupService) : 
         if (remainder.IsEmpty) return;
         int currentIndex = 0;
 
-        foreach (ValueMatch match in lookupService.LookupDictRegex.EnumerateMatches(remainder)) {
+        foreach (ValueMatch match in HtmlSymbolLookup.Regex.EnumerateMatches(remainder)) {
             int matchIndex = match.Index;
             int matchLength = match.Length;
             if (currentIndex < matchIndex) {
                 writer.Write(remainder.Slice(currentIndex, matchIndex - currentIndex));
             }
-            if (lookupService.AlternateLookup.TryGetValue(remainder.Slice(matchIndex, matchLength), out string? replacement)) {
+            if (HtmlSymbolLookup.AlternateLookup.TryGetValue(remainder.Slice(matchIndex, matchLength), out string? replacement)) {
                 writer.Write(replacement);
             }
             currentIndex = matchIndex + matchLength;
