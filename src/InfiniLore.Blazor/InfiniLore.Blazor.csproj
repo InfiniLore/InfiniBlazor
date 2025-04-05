@@ -8,7 +8,7 @@
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.Blazor</PackageId>
-        <Version>0.2.1</Version>
+        <Version>0.2.2</Version>
         <Authors>Anna Sas</Authors>
         <Description>InfiniLore's Component Library</Description>
         <PackageProjectUrl>https://github.com/InfiniLore/infinilore.blazor</PackageProjectUrl>
@@ -31,7 +31,7 @@
 
     <ItemGroup>
         <EmbeddedResource Include="wwwroot\**\*" />
-        <Folder Include="wwwroot\"/>
+        <Folder Include="wwwroot\" />
     </ItemGroup>
     
     <ItemGroup>
