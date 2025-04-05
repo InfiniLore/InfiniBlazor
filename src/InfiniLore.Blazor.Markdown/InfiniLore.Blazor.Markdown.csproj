@@ -7,7 +7,7 @@
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.Blazor.Markdown</PackageId>
-        <Version>0.1.0</Version>
+        <Version>0.1.1</Version>
         <Authors>Anna Sas</Authors>
         <Description>Markdown Parser library for InfiniLore's Component Library</Description>
         <PackageProjectUrl>https://github.com/InfiniLore/infinilore.blazor</PackageProjectUrl>
