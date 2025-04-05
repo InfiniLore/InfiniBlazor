@@ -19,6 +19,15 @@ public static class HtmlSymbolLookup {
         { "\"", "&quot;" },
     }.ToFrozenDictionary();
     
+    public static FrozenDictionary<string, string> CodeBlockLookup { get; } = new Dictionary<string,string> {
+        { "\r\n", "\n" },
+        { "&", "&amp;" },
+        { "<", "&lt;" },
+        { ">", "&gt;" },
+    }.ToFrozenDictionary();
+    
     public static FrozenDictionary<string, string>.AlternateLookup<ReadOnlySpan<char>> AlternateLookup { get; } = Lookup.GetAlternateLookup<ReadOnlySpan<char>>();
     public static Regex Regex { get; } = new(string.Join('|', Lookup.Keys), RegexOptions.Compiled | RegexOptions.Singleline);
+    
+    public static Regex CodeBlockRegex { get; } = new(string.Join('|', CodeBlockLookup.Keys), RegexOptions.Compiled | RegexOptions.Singleline);
 }

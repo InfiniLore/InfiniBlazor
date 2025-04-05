@@ -257,7 +257,7 @@ public static class BlockQuoteDataSources {
             """
             <blockquote>
                 <p>This is a paragraph.</p>
-                <pre><code>Code block inside a blockquote.&#xA;</code></pre>
+                <pre><code>Code block inside a blockquote.</code></pre>
             </blockquote>
             """
         );

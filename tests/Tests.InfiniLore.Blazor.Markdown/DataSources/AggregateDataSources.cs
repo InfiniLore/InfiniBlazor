@@ -60,11 +60,11 @@ public static class AggregateDataSources {
             <p>Welcome to this test. This section introduces the topic, along with <strong>bold</strong>, <em>italic</em>, and <code>code</code> formatting.</p>
             <h3>Code Snippet</h3>
             <p>Below is an example of a C# code snippet:</p>
-            <pre><code class="language-csharp">public class Program {&#xD;&#xA;
-                public static void Main() {&#xD;&#xA;
-                    Console.WriteLine(&quot;Hello, World!&quot;);&#xD;&#xA;
-                }&#xD;&#xA;
-            }&#xD;&#xA;</code></pre>
+            <pre><code class="language-csharp">public class Program {
+                public static void Main() {
+                    Console.WriteLine("Hello, World!");
+                }
+            }</code></pre>
             <h3>Bullet Points</h3>
             <p>Here are some bullet points:</p>
             <ul>
