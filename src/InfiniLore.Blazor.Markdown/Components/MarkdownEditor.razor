@@ -1,13 +1,13 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using Microsoft.JSInterop
+@using InfiniLore.Blazor.Services
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits ComponentBase
 @inject IMarkdownParser MarkdownParser
-@inject IJSRuntime JsRuntime
+@inject IJsRuntimeHelper JsRuntimeHelper
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -53,33 +53,33 @@
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    private void UpdateMarkdown() {
+        MarkdownOutput = new MarkupString(MarkdownParser.Parse(LastKnownContent));
+    }
     private void TextAreaOnChange(ChangeEventArgs args) {
         if (args.Value is not string content) return;
 
         LastKnownContent = content;
-        MarkdownOutput = new MarkupString(MarkdownParser.Parse(LastKnownContent));
+        UpdateMarkdown();
     }
 
     private async Task OnTextSelectedAsync() {
-        // Assign selection start and end from the textarea element
-        _selectionStart = await JsRuntime.InvokeAsync<int>("getSelectionStart", _textareaRef);
-        _selectionEnd = await JsRuntime.InvokeAsync<int>("getSelectionEnd", _textareaRef);
+        _selectionStart = await JsRuntimeHelper.GetSelectionStartAsync(_textareaRef);
+        _selectionEnd = await JsRuntimeHelper.GetSelectionEndAsync(_textareaRef);
     }
 
 
     private void ApplyFormattingToSelection(string wrapper) {
-        if (_selectionStart == _selectionEnd) return;// No selection, do nothing
+        if (_selectionStart == _selectionEnd) return;
 
-        // Get parts of the content: before, selected, and after the selection
-        string beforeSelection = LastKnownContent[.._selectionStart];
-        string selectedText = LastKnownContent.Substring(_selectionStart, _selectionEnd - _selectionStart);
-        string afterSelection = LastKnownContent[_selectionEnd..];
-
-        // Wrap the selected text with the desired formatting
-        string formattedText = $"{beforeSelection}{wrapper}{selectedText}{wrapper}{afterSelection}";
-
-        // Update the textarea content and Markdown output
-        LastKnownContent = formattedText;
-        MarkdownOutput = new MarkupString(MarkdownParser.Parse(LastKnownContent));
+        LastKnownContent = LastKnownContent
+            .Insert(_selectionEnd, wrapper)
+            .Insert(_selectionStart, wrapper);
+        
+        UpdateMarkdown();
+        
+        _selectionStart -= wrapper.Length;
+        _selectionEnd += wrapper.Length;
     }
+
 }
