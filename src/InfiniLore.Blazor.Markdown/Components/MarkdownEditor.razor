@@ -1,0 +1,85 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using Microsoft.JSInterop
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits ComponentBase
+@inject IMarkdownParser MarkdownParser
+@inject IJSRuntime JsRuntime
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="flex h-screen">
+    <!-- Editor (Left side, 50%) -->
+    <div class="w-1/2 flex flex-col border-r border-gray-300">
+        <!-- Toolbar inside the top of the editor -->
+        <div class="flex space-x-2 bg-gray-100 px-2 py-1 border-b border-gray-300">
+            <button class="px-2 py-1 bg-blue-500 text-white rounded" @onclick="() => ApplyFormattingToSelection(Bold)">Bold</button>
+            <button class="px-2 py-1 bg-blue-500 text-white rounded" @onclick="() => ApplyFormattingToSelection(Italic)">Italic</button>
+        </div>
+
+        <!-- Textarea -->
+        <textarea
+            class="flex-grow p-4 border-none focus:outline-none resize-none"
+            @ref="_textareaRef"
+            @bind="LastKnownContent"
+            @oninput="TextAreaOnChange"
+            @onselect="OnTextSelectedAsync">
+        </textarea>
+    </div>
+
+    <!-- Preview (Right side, 50%) -->
+    <div class="w-1/2 p-4 overflow-auto">
+        <div class="prose max-w-full">
+            @MarkdownOutput
+        </div>
+    </div>
+</div>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    private MarkupString MarkdownOutput { get; set; }
+    private string LastKnownContent { get; set; } = string.Empty;
+
+    private ElementReference _textareaRef;
+    private int _selectionStart;
+    private int _selectionEnd;
+    
+    private const string Bold = "**";
+    private const string Italic = "*";
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private void TextAreaOnChange(ChangeEventArgs args) {
+        if (args.Value is not string content) return;
+
+        LastKnownContent = content;
+        MarkdownOutput = new MarkupString(MarkdownParser.Parse(LastKnownContent));
+    }
+
+    private async Task OnTextSelectedAsync() {
+        // Assign selection start and end from the textarea element
+        _selectionStart = await JsRuntime.InvokeAsync<int>("getSelectionStart", _textareaRef);
+        _selectionEnd = await JsRuntime.InvokeAsync<int>("getSelectionEnd", _textareaRef);
+    }
+
+
+    private void ApplyFormattingToSelection(string wrapper) {
+        if (_selectionStart == _selectionEnd) return;// No selection, do nothing
+
+        // Get parts of the content: before, selected, and after the selection
+        string beforeSelection = LastKnownContent[.._selectionStart];
+        string selectedText = LastKnownContent.Substring(_selectionStart, _selectionEnd - _selectionStart);
+        string afterSelection = LastKnownContent[_selectionEnd..];
+
+        // Wrap the selected text with the desired formatting
+        string formattedText = $"{beforeSelection}{wrapper}{selectedText}{wrapper}{afterSelection}";
+
+        // Update the textarea content and Markdown output
+        LastKnownContent = formattedText;
+        MarkdownOutput = new MarkupString(MarkdownParser.Parse(LastKnownContent));
+    }
+}

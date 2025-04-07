@@ -1,7 +1,8 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.Blazor.Markdown.Services
+@using InfiniLore.Blazor.Markdown
+@using InfiniLore.Blazor.Markdown.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -16,10 +17,7 @@
     <div class="w-1/2 h-16 p-4 border-2 border-red-300 rounded-lg">@MarkdownOutput</div>
 </div>
 
-<div class="flex space-x-4">
-    <textarea class="w-1/2 p-4 border-2 border-gray-300 rounded-lg" @oninput="TextAreaOnChange"></textarea>
-    <div class="w-1/2 p-4 border-2 border-red-300 rounded-lg">@MarkdownOutput2</div>
-</div>
+<MarkdownEditor></MarkdownEditor>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -35,12 +33,6 @@
             MarkdownOutput = new MarkupString($"<p>{editedText}</p>");
         }
     }
-
+    
     private MarkupString MarkdownOutput { get; set; }
-    private MarkupString MarkdownOutput2 { get; set; }
-
-    private void TextAreaOnChange(ChangeEventArgs obj) {
-        if (obj.Value is not string content) return;
-        MarkdownOutput2 = new MarkupString(MarkdownParser.Parse(content));
-    }
 }

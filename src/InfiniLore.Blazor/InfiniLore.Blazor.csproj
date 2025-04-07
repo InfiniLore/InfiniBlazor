@@ -31,7 +31,6 @@
 
     <ItemGroup>
         <EmbeddedResource Include="wwwroot\**\*" />
-        <Folder Include="wwwroot\" />
     </ItemGroup>
     
     <ItemGroup>
