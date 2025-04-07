@@ -25,11 +25,19 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmarks.InfiniLore.Blazor.Markdown", "tests\Benchmarks.InfiniLore.Blazor.Markdown\Benchmarks.InfiniLore.Blazor.Markdown.csproj", "{E5C1D953-B6DB-4CC0-8490-BF2F43994D92}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".dev-tools", ".dev-tools", "{25ED7F52-E54D-45E9-8CC9-37E2FB0F08F2}"
+	ProjectSection(SolutionItems) = preProject
+		package.json = package.json
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tailwind", "tailwind", "{42FE03BE-7358-4D1E-9A9C-D9FAAC1564D3}"
 	ProjectSection(SolutionItems) = preProject
-		package.json = package.json
 		tailwind.config.js = tailwind.config.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "typescript", "typescript", "{401208E4-BA9D-4FD0-80F0-466634E00E90}"
+	ProjectSection(SolutionItems) = preProject
+		tsconfig.json = tsconfig.json
+		webpack.config.js = webpack.config.js
 	EndProjectSection
 EndProject
 Global
@@ -81,5 +89,6 @@ Global
 		{1210F705-ABBA-4EC0-943A-E9CC35B1642A} = {8DD280D4-1E14-4D5E-AFE6-58DD8F079DCC}
 		{E5C1D953-B6DB-4CC0-8490-BF2F43994D92} = {8DD280D4-1E14-4D5E-AFE6-58DD8F079DCC}
 		{42FE03BE-7358-4D1E-9A9C-D9FAAC1564D3} = {25ED7F52-E54D-45E9-8CC9-37E2FB0F08F2}
+		{401208E4-BA9D-4FD0-80F0-466634E00E90} = {25ED7F52-E54D-45E9-8CC9-37E2FB0F08F2}
 	EndGlobalSection
 EndGlobal
