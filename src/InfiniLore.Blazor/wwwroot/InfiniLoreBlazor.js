@@ -16,4 +16,10 @@ const _getSelection = (element, callback) => {
     return callback(element);
 }
 
+window.preventDefault = (event) => event.preventDefault();
 
+window.setSelectionRangeBlazor = (element, start, end) => {
+    if (!element) return;
+    element.focus();
+    element.setSelectionRange(start, end);
+};
