@@ -2,12 +2,14 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.Blazor.Services
+@using InfiniLore.Lucide
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits ComponentBase
 @inject IMarkdownParser MarkdownParser
 @inject IJsRuntimeHelper JsRuntimeHelper
+@inject ITextEditor TextEditor
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -17,10 +19,10 @@
         <!-- Toolbar inside the top of the editor -->
         <div class="flex space-x-2 bg-gray-100 px-2 py-1 border-b border-gray-300">
             <button class="px-2 py-1 bg-blue-500 text-white rounded" @onclick="() => ApplyFormattingToSelection(Bold)">
-                Bold
+                <LiBold/>
             </button>
-            <button class="px-2 py-1 bg-blue-500 text-white rounded"
-                    @onclick="() => ApplyFormattingToSelection(Italic)">Italic
+            <button class="px-2 py-1 bg-blue-500 text-white rounded" @onclick="() => ApplyFormattingToSelection(Italic)">
+                <LiItalic/>
             </button>
         </div>
 
@@ -55,7 +57,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
     private MarkupString MarkdownOutput { get; set; }
     private string LastKnownContent { get; set; } = string.Empty;
@@ -103,8 +104,7 @@
         if (_lastPressedKey != string.Empty) {
             switch (obj) {
                 case { CtrlKey: true, Key: "1" }: {
-                    // at the beginning of the currrent line where the curso is, place a #
-
+                    // at the beginning of the current line where the cursor is, place a #
                     break;
                 }
             }
@@ -114,12 +114,17 @@
         }
 
         switch (obj) {
-            case { CtrlKey: true, Key: "a" }: {
+            case { CtrlKey: true, Key: "a" or "A" }: {
                 await JsRuntimeHelper.SetSelectionRangeAsync(_textareaRef, 0, int.MaxValue);
                 break;
             }
 
             case { CtrlKey: true, Key: "b" }: {
+                ApplyFormattingToSelection(Bold);
+                break;
+            }
+                
+            case { CtrlKey: true, Key: "i" }: {
                 ApplyFormattingToSelection(Bold);
                 break;
             }

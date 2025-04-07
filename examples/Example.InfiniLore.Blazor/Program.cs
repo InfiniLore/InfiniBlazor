@@ -1,5 +1,6 @@
 using Example.Components;
 using InfiniLore.Blazor.Markdown;
+using InfiniLore.Blazor.Markdown.Config;
 
 namespace Example;
 public class Program {
