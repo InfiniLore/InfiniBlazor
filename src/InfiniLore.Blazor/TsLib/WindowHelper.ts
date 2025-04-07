@@ -1,18 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Microsoft.AspNetCore.Components;
-
-namespace InfiniLore.Blazor.Services;
-
+import {getSelectionStart, getSelectionEnd, setSelectionRange} from "./Selection";
+import {addPreventDefaultListener, removePreventDefaultListener} from "./KeyDownListener";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IJsRuntimeHelper {
-    Task<int> GetSelectionStartAsync(ElementReference element);
-    Task<int> GetSelectionEndAsync(ElementReference element);
-    Task SetSelectionRangeAsync(ElementReference element, int start, int end);
-    
-    Task AddPreventDefaultListenerAsync();
-    Task RemovePreventDefaultListenerAsync();
-}
+window.getSelectionStart = getSelectionStart;
+window.getSelectionEnd = getSelectionEnd;
+window.setSelectionRange = setSelectionRange;
+
+window.addPreventDefaultListener = addPreventDefaultListener;
+window.removePreventDefaultListener = removePreventDefaultListener;

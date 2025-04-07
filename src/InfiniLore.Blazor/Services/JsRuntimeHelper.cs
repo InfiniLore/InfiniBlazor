@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.Lucide.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
@@ -12,11 +13,9 @@ namespace InfiniLore.Blazor.Services;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableScoped<IJsRuntimeHelper>]
 public class JsRuntimeHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper> logger) : IJsRuntimeHelper {
-    private bool SystemInvoked { get; set; } = false;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-   
     public async Task<int> GetSelectionStartAsync(ElementReference element) {
         try {
             return await jsRuntime.InvokeAsync<int>("getSelectionStart", element);
@@ -28,14 +27,42 @@ public class JsRuntimeHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper> logg
     }
 
     public async Task<int> GetSelectionEndAsync(ElementReference element) {
-        return await jsRuntime.InvokeAsync<int>("getSelectionEnd", element);
-    }
-
-    public async Task PreventDefaultAsync<T>(T sender) where T : EventArgs {
-        await jsRuntime.InvokeVoidAsync("preventDefault", sender);
+        try {
+            return await jsRuntime.InvokeAsync<int>("getSelectionEnd", element);
+        }
+        catch (JSException e) {
+            logger.LogError(e, "Error getting selection start");
+            return -1;
+        }
     }
 
     public async Task SetSelectionRangeAsync(ElementReference element, int start, int end) {
-        await jsRuntime.InvokeVoidAsync("setSelectionRange", element, start, end);
+        try {
+            await jsRuntime.InvokeVoidAsync("setSelectionRange", element, start, end);
+        }
+        catch (JSException e) {
+            logger.LogWarning(e, "Error setting selection range");
+        }
+    }
+    
+    public async Task AddPreventDefaultListenerAsync() {
+        try {
+            await jsRuntime.InvokeVoidAsync("addPreventDefaultListener");
+        }
+        catch (JSException e) {
+            logger.LogError(e, "Error adding prevent default listener");
+        }
+    }
+    
+    public async Task RemovePreventDefaultListenerAsync() {
+        try {
+            await jsRuntime.InvokeVoidAsync("removePreventDefaultListener");
+        }
+        catch (JSException e) {
+            logger.LogWarning(e, "failed to remove prevent default listener");
+        }
+        catch (InvalidOperationException e) {
+            logger.LogDebug(e, "Prevent default listener already removed or the server is in static rendering mode, usually during a reconnection.");
+        }
     }
 }

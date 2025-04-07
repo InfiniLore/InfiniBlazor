@@ -1,18 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Microsoft.AspNetCore.Components;
-
-namespace InfiniLore.Blazor.Services;
+namespace InfiniLore.Blazor.Markdown.Config;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IJsRuntimeHelper {
-    Task<int> GetSelectionStartAsync(ElementReference element);
-    Task<int> GetSelectionEndAsync(ElementReference element);
-    Task SetSelectionRangeAsync(ElementReference element, int start, int end);
-    
-    Task AddPreventDefaultListenerAsync();
-    Task RemovePreventDefaultListenerAsync();
+public class MarkdownConfig(IInfiniLoreBlazorConfig infiniLoreBlazorConfig) {
+    public MarkdownTextEditorConfig TextEditor { get; } = new(infiniLoreBlazorConfig);
 }

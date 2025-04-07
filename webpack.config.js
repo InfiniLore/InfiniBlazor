@@ -6,7 +6,7 @@ module.exports = {
     // mode: "production",
     devtool: "inline-source-map",
     entry: {
-        main: "./src/InfiniLore.Blazor/TsLib/windowHelper.ts",
+        main: "./src/InfiniLore.Blazor/TsLib/WindowHelper.ts",
     },
     output: {
         path: path.resolve(__dirname, './src/InfiniLore.Blazor/wwwroot'),

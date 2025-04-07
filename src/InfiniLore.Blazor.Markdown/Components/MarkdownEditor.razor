@@ -7,6 +7,8 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits ComponentBase
+@implements IAsyncDisposable
+
 @inject IMarkdownParser MarkdownParser
 @inject IJsRuntimeHelper JsRuntimeHelper
 @inject ITextEditor TextEditor
@@ -45,15 +47,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener('keydown', function (e) {
-        if (e.ctrlKey) {
-            e.preventDefault();
-        }
-    });
-</script>
-
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -68,11 +61,25 @@
     private const string Bold = "**";
     private const string Italic = "*";
     // -----------------------------------------------------------------------------------------------------------------
+    // Component Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        await base.OnAfterRenderAsync(firstRender);
+        if (!firstRender) return;
+        
+        await JsRuntimeHelper.AddPreventDefaultListenerAsync();
+    }
+
+    public async ValueTask DisposeAsync() {
+        await JsRuntimeHelper.RemovePreventDefaultListenerAsync();
+    }
+    // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private void UpdateMarkdown() {
         MarkdownOutput = new MarkupString(MarkdownParser.Parse(LastKnownContent));
     }
+    
     private void TextAreaOnChange(ChangeEventArgs args) {
         if (args.Value is not string content) return;
 
@@ -119,7 +126,7 @@
                 break;
             }
 
-            case { CtrlKey: true, Key: "b" }: {
+            case {  CtrlKey: true, Key: "b" }: {
                 ApplyFormattingToSelection(Bold);
                 break;
             }

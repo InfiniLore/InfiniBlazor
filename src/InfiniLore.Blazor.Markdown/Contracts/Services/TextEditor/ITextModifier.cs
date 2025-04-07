@@ -6,8 +6,7 @@ namespace InfiniLore.Blazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class IInfiniLoreBlazorConfigExtensions {
-    public static void AddMarkdown(this IInfiniLoreBlazorConfig config) {
-        config.Services.RegisterServicesFromInfiniLoreBlazorMarkdown();
-    }
+public interface ITextModifier {
+    string IconName { get; }
+    string Modify(string input, Range range);
 }
