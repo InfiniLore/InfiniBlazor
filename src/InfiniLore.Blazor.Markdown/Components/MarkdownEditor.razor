@@ -64,7 +64,7 @@
     // -----------------------------------------------------------------------------------------------------------------
     protected override async Task OnAfterRenderAsync(bool firstRender) {
         await base.OnAfterRenderAsync(firstRender);
-        if (!firstRender) return;
+        if (!firstRender) return; // Only add the "prevent default listener" once.
         
         await JsRuntimeHelper.AddPreventDefaultListenerAsync();
     }
@@ -87,8 +87,7 @@
     }
 
     private async Task OnTextSelectedAsync() {
-        _selectionStart = await JsRuntimeHelper.GetSelectionStartAsync(_textareaRef);
-        _selectionEnd = await JsRuntimeHelper.GetSelectionEndAsync(_textareaRef);
+        (_selectionStart, _selectionEnd) = await JsRuntimeHelper.GetSelectionAsync(_textareaRef);
     }
 
 
@@ -131,7 +130,7 @@
             }
                 
             case { CtrlKey: true, Key: "i" }: {
-                ApplyFormattingToSelection(Bold);
+                ApplyFormattingToSelection(Italic);
                 break;
             }
 

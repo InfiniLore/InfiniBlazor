@@ -1,14 +1,15 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-import {getSelectionStart, getSelectionEnd, setSelectionRange} from "./Selection";
+import {getInputSelectionStart, getInputSelectionEnd, setInputSelectionRange, getInputSelection} from "./InputSelection";
 import {addPreventDefaultListener, removePreventDefaultListener} from "./KeyDownListener";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-window.getSelectionStart = getSelectionStart;
-window.getSelectionEnd = getSelectionEnd;
-window.setSelectionRange = setSelectionRange;
+window.getInputSelectionStart = getInputSelectionStart;
+window.getInputSelectionEnd = getInputSelectionEnd;
+window.getInputSelection = getInputSelection;
+window.setInputSelectionRange = setInputSelectionRange;
 
 window.addPreventDefaultListener = addPreventDefaultListener;
 window.removePreventDefaultListener = removePreventDefaultListener;

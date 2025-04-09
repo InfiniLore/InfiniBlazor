@@ -7,9 +7,9 @@
 // ---------------------------------------------------------------------------------------------------------------------
 function preventKeyDefault(event:KeyboardEvent) : void {
     if (!event) return;
+    if (!(event.ctrlKey)) return;
     if (event.key === "F5" || event.key === "F12") return;
     if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "i" ) return;
-    if (!(event.ctrlKey)) return;
     event.preventDefault();
 }
 

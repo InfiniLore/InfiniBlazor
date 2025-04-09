@@ -5,6 +5,8 @@
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <DebugType>portable</DebugType>
+        <Optimize>false</Optimize>
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.Blazor</PackageId>
