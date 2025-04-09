@@ -5,6 +5,7 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.Blazor.Markdown.Config;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Frozen;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.Blazor.Markdown.Services;
@@ -33,7 +34,7 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private void UpdateText(string value) {
-        _text = value;
+        _text = TextEditorRegexLib.LineEndingRegex.Replace(value, "\n");
 
         Regex.ValueMatchEnumerator lineMatches = TextEditorRegexLib.NewlinesRegex.EnumerateMatches(_text);
         Lines.Clear();
@@ -48,6 +49,7 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
         if (lastIndex < _text.Length) {
             Lines.Add(new Range(lastIndex, _text.Length));
         }
+        _caretIndexToUpdate = -1;
     }
 
     public void Modify(string section, Range range) {
@@ -98,6 +100,23 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
 
             Text = modifier.Modify(Text, new Range(intersectStart, intersectEnd), this);
         }
+    }
+    
+    public void Insert(string input, Range range) {
+        int totalLength = Text.Length;
+        int start = range.Start.GetOffset(totalLength);
+        int end = range.End.GetOffset(totalLength);
+
+        // Ensure the range is valid
+        if (start < 0 || end > totalLength || start > end) {
+            throw new ArgumentOutOfRangeException(nameof(range), "Invalid range provided for text insertion.");
+        }
+
+        // Generate the new text by replacing the specified range with the input text
+        var builder = new StringBuilder(_text);
+        builder.Remove(start, end - start);
+        builder.Insert(start, input);
+        UpdateText(builder.ToString());
     }
 
     public bool TryGetCaretLine(int caretIndex, out Range lineRange) {
