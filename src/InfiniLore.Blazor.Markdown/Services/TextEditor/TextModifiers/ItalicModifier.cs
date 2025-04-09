@@ -9,9 +9,9 @@ namespace InfiniLore.Blazor.Markdown.Services.TextModifiers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ITextModifier>("bold")]
-public class BoldModifier(ILogger<BoldModifier> logger) : ITextModifier {
-    public string IconName => "bold";
+[InjectableSingleton<ITextModifier>("italic")]
+public class ItalicModifier(ILogger<ItalicModifier> logger) : ITextModifier {
+    public string IconName => "italic";
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -30,19 +30,19 @@ public class BoldModifier(ILogger<BoldModifier> logger) : ITextModifier {
 
         
         // Precompute the final size needed for the buffer
-        int finalLength = length + 4;// Add 4 because you're inserting `**` twice
+        int finalLength = length + 2;// Add 2 because you're inserting `*` twice
 
         // Rent a buffer using ArrayPool to avoid frequent allocations
         char[] buffer = ArrayPool<char>.Shared.Rent(finalLength);
 
         try {
-            ReadOnlySpan<char> mod = "**".AsSpan();
+            ReadOnlySpan<char> mod = "*".AsSpan();
 
             input.AsSpan(0, start).CopyTo(buffer.AsSpan(0, start));
             mod.CopyTo(buffer.AsSpan(start));
-            input.AsSpan(start, end - start).CopyTo(buffer.AsSpan(start + 2));
-            mod.CopyTo(buffer.AsSpan(start + 2 + (end - start)));
-            input.AsSpan(end).CopyTo(buffer.AsSpan(start + 4 + (end - start)));
+            input.AsSpan(start, end - start).CopyTo(buffer.AsSpan(start + 1));
+            mod.CopyTo(buffer.AsSpan(start + 1 + (end - start)));
+            input.AsSpan(end).CopyTo(buffer.AsSpan(start + 2 + (end - start)));
 
             return new string(buffer, 0, finalLength);
 

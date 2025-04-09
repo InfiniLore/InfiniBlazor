@@ -8,5 +8,7 @@ namespace InfiniLore.Blazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 public interface ITextEditor {
     string Text { get; set; }
+    IEnumerable<ITextModifier> Modifiers { get; }
+    
     void Modify(string section, Range range);
 }

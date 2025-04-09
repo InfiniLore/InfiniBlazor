@@ -20,12 +20,11 @@
     <div class="w-1/2 flex flex-col border-r border-gray-300">
         <!-- Toolbar inside the top of the editor -->
         <div class="flex space-x-2 bg-gray-100 px-2 py-1 border-b border-gray-300">
-            <button class="px-2 py-1 bg-blue-500 text-white rounded" @onclick="() => ApplyFormattingToSelection(Bold)">
-                <LiBold/>
-            </button>
-            <button class="px-2 py-1 bg-blue-500 text-white rounded" @onclick="() => ApplyFormattingToSelection(Italic)">
-                <LiItalic/>
-            </button>
+            @foreach (ITextModifier textModifier in TextEditor.Modifiers)  {
+                <button class="px-2 py-1 bg-blue-500 text-white rounded" @onclick="() => OnModifierClick(textModifier)">
+                    <LucideIcon Name="@textModifier.IconName"/>
+                </button>
+            }
         </div>
 
         <!-- Textarea -->
@@ -56,9 +55,8 @@
     private ElementReference _textareaRef;
     private int _selectionStart;
     private int _selectionEnd;
-
-    private const string Bold = "**";
-    private const string Italic = "*";
+    
+    private string _lastPressedKey = string.Empty;
     // -----------------------------------------------------------------------------------------------------------------
     // Component Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -86,25 +84,17 @@
         UpdateMarkdown();
     }
 
+    private void OnModifierClick(ITextModifier textModifier) {
+        TextEditor.Text = textModifier.Modify(TextEditor.Text, GetSelectionRange());
+        UpdateMarkdown();
+    }
+
     private async Task OnTextSelectedAsync() {
         (_selectionStart, _selectionEnd) = await JsRuntimeHelper.GetSelectionAsync(_textareaRef);
     }
 
+    private Range GetSelectionRange() => new(_selectionStart, _selectionEnd);
 
-    private void ApplyFormattingToSelection(string wrapper) {
-        if (_selectionStart == _selectionEnd) return;
-
-        TextEditor.Text = TextEditor.Text
-            .Insert(_selectionEnd, wrapper)
-            .Insert(_selectionStart, wrapper);
-
-        UpdateMarkdown();
-
-        _selectionStart -= wrapper.Length;
-        _selectionEnd += wrapper.Length;
-    }
-
-    private string _lastPressedKey = string.Empty;
     private async Task OnKeyDownAsync(KeyboardEventArgs obj) {
         if (_lastPressedKey != string.Empty) {
             switch (obj) {
@@ -124,13 +114,13 @@
                 break;
             }
 
-            case {  CtrlKey: true, Key: "b" }: {
-                ApplyFormattingToSelection(Bold);
+            case { CtrlKey: true, Key: "b" }: {
+                TextEditor.Modify("bold", GetSelectionRange());
                 break;
             }
                 
             case { CtrlKey: true, Key: "i" }: {
-                ApplyFormattingToSelection(Italic);
+                TextEditor.Modify("italic", GetSelectionRange());
                 break;
             }
 
@@ -138,7 +128,8 @@
                 _lastPressedKey = "h";
                 break;
             }
-
         }
+        
+        UpdateMarkdown();
     }
 }
