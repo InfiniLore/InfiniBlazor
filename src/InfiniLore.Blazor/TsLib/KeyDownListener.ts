@@ -5,7 +5,7 @@ import {KeyCondition} from "./Contracts";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-const keysToSkip: Set<string> = new Set(["u", "b", "i"]);
+const keysToSkip: Set<string> = new Set(["u", "b", "i", "a"]);
 const allowSpecialConditions: KeyCondition[] = [
     (event, key) => event.ctrlKey && event.shiftKey && key === "i", // Skip `Ctrl+Shift+I`
 ];

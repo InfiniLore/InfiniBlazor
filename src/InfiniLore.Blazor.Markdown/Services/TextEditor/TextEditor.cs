@@ -108,6 +108,7 @@ public class TextEditor(IServiceProvider provider) : ITextEditor {
     }
 
     public bool TryGetCaretLine(int caretIndex, out Range lineRange) {
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
         foreach (Range lr in Lines) {
             if (caretIndex < lr.Start.Value) continue;
             if (caretIndex > lr.End.Value) continue;
@@ -116,7 +117,7 @@ public class TextEditor(IServiceProvider provider) : ITextEditor {
             return true;
         }
 
-        lineRange = new Range(0, 0);
+        lineRange = new Range(-1, -1);
         return false;
     }
 
