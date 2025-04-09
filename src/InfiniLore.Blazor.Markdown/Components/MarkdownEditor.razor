@@ -3,6 +3,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.Blazor.Services
 @using InfiniLore.Lucide
+@using Microsoft.Extensions.Logging
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -12,6 +13,7 @@
 @inject IMarkdownParser MarkdownParser
 @inject IJsRuntimeHelper JsRuntimeHelper
 @inject ITextEditor TextEditor
+@inject ILogger<MarkdownEditor> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -84,7 +86,7 @@
     
     private void TextAreaOnChange(ChangeEventArgs args) {
         if (args.Value is not string content) return;
-
+    
         TextEditor.Text = content;
         UpdateMarkdown();
     }
@@ -105,6 +107,7 @@
                 await JsRuntimeHelper.SetSelectionRangeAsync(_textareaRef, 0, TextEditor.Text.Length);
                 break;
             }
+                
             case ({ CtrlKey: true, Key: "a" or "A" }, _): {
                 // when we select a only once we should get the current line
                 int caretIndex = await JsRuntimeHelper.GetSelectionStartAsync(_textareaRef);
@@ -113,10 +116,9 @@
                 break;
             }
                 
-
             case ({ CtrlKey: true, Key: "b" }, _): {
                 Range selection = await GetSelectionRangeAsync();
-                TextEditor.Modify("bold", selection );
+                TextEditor.Modify("bold", selection);
                 break;
             }
                 

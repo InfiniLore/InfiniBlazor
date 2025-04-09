@@ -62,6 +62,9 @@ public class JsRuntimeHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper> logg
         catch (JSException e) {
             logger.LogError(e, "Error adding prevent default listener");
         }
+        catch (JSDisconnectedException e) {
+            logger.LogDebug(e, "Prevent default listener already added or the server is in static rendering mode, usually during a reconnection.");
+        }
     }
     
     public async Task RemovePreventDefaultListenerAsync() {
@@ -70,6 +73,9 @@ public class JsRuntimeHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper> logg
         }
         catch (JSException e) {
             logger.LogWarning(e, "failed to remove prevent default listener");
+        }
+        catch (JSDisconnectedException e) {
+            logger.LogDebug(e, "Prevent default listener already removed or the server is in static rendering mode, usually during a reconnection.");
         }
         catch (InvalidOperationException e) {
             logger.LogDebug(e, "Prevent default listener already removed or the server is in static rendering mode, usually during a reconnection.");

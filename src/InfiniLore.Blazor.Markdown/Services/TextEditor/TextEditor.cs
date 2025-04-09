@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.Blazor.Markdown.Config;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Frozen;
 using System.Text.RegularExpressions;
@@ -12,7 +13,7 @@ namespace InfiniLore.Blazor.Markdown.Services;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ITextEditor>]
-public class TextEditor(IServiceProvider provider) : ITextEditor {
+public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provider) : ITextEditor {
     private string _text = string.Empty;
     public string Text {
         get => _text;
@@ -20,19 +21,11 @@ public class TextEditor(IServiceProvider provider) : ITextEditor {
     }
     private readonly List<Range> Lines = [];
 
-    private FrozenDictionary<string, ITextModifier> ModifierLookup { get; } = ModifiersKeys.ToFrozenDictionary(
+    private FrozenDictionary<string, ITextModifier> ModifierLookup { get; } = markdownConfig.TextEditorModifierNames.ToFrozenDictionary(
         name => name,
         provider.GetRequiredKeyedService<ITextModifier>
     );
-    private static string[] ModifiersKeys { get; } = [
-        "bold",
-        "italic",
-        "underline",
-        "superscript",
-        "subscript",
-        "code-inline",
-        "strike"
-    ];
+    
     public IEnumerable<ITextModifier> Modifiers => ModifierLookup.Values;
     private int _caretIndexToUpdate = -1;
 

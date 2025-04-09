@@ -1,6 +1,8 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using Microsoft.Extensions.DependencyInjection;
+
 namespace InfiniLore.Blazor.Markdown.Config;
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -12,7 +14,10 @@ public static class IInfiniLoreBlazorConfigExtensions {
         config.Services.RegisterServicesFromInfiniLoreBlazorMarkdown();
         
         var markdownConfig = new MarkdownConfig(config);
+        markdownConfig.TextEditor.AddDefaultModifiers();
         
         configure?.Invoke(markdownConfig);
+
+        config.Services.AddSingleton<IMarkdownConfig>(FrozenMarkdownConfig.FromConfig(markdownConfig));
     }
 }
