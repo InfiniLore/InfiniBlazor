@@ -1,26 +1,43 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace Tests.InfiniLore.Blazor.Markdown.DataSources;
+namespace Tests.InfiniLore.Blazor.Markdown.MarkdownParser.DataSources;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class HorizontalLineDataSources {
-    private static readonly string SectionName = nameof(HorizontalLineDataSources)[..^nameof(DataSources).Length];
+public static class EdgeCaseDataSources {
+    private static readonly string SectionName = nameof(EdgeCaseDataSources)[..^nameof(DataSources).Length];
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
-        char[]? chars = new[] { '-', '=' };
-        foreach (char c in chars) {
-            for (int i = 1; i < 10; i++) {
-                string text = new(c, i);
-                string content = i < 3
-                    ? $"<p>{text}</p>"
-                    : "<hr>";
-                yield return () => new MarkdownTestDto(SectionName, text, content);
-            }
-        }
+
+        yield return static () => new MarkdownTestDto(SectionName,
+            """
+            1234
+            1234
+            1234
+            """,
+            """
+            <p>1234</p>
+            <p>1234</p>
+            <p>1234</p>
+            """
+        );
+        
+        yield return static () => new MarkdownTestDto(SectionName,
+            """
+            1234
+            1234
+            123
+            """,
+            """
+            <p>1234</p>
+            <p>1234</p>
+            <p>123</p>
+            """
+        );
     }
 }

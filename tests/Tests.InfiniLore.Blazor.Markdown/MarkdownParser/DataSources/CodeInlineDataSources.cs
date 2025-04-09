@@ -1,55 +1,61 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace Tests.InfiniLore.Blazor.Markdown.DataSources;
+namespace Tests.InfiniLore.Blazor.Markdown.MarkdownParser.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class BoldDataSources {
-    private static readonly string SectionName = nameof(BoldDataSources)[..^nameof(DataSources).Length];
+public static class CodeInlineDataSources {
+    private static readonly string SectionName = nameof(CodeInlineDataSources)[..^nameof(DataSources).Length];
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
+
         yield return static () => new MarkdownTestDto(SectionName,
-            "**bold**",
-            "<p><strong>bold</strong></p>"
-        );
-        
-        yield return static () => new MarkdownTestDto(SectionName,
-            @"**\*bold**",
-            "<p><strong>*bold</strong></p>"
-        );
-        
-        yield return static () => new MarkdownTestDto(SectionName,
-            @"**bold\***",
-            "<p><strong>bold*</strong></p>"
+            "This is an `example` of some inline code.",
+            "<p>This is an <code>example</code> of some inline code.</p>"
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
-            "**bold *nested italic***",
-            "<p><strong>bold <em>nested italic</em></strong></p>"
+            "`\\``",
+            "<p><code>`</code></p>"
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
-            "***nested italic* bold**",
-            "<p><strong><em>nested italic</em> bold</strong></p>"
+            "Here is some `inline code` inside a sentence.",
+            "<p>Here is some <code>inline code</code> inside a sentence.</p>"
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
-            "** \\* **",
-            "<p><strong> * </strong></p>"
+            "`code` at the start of the line.",
+            "<p><code>code</code> at the start of the line.</p>"
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
-            "**bold *nested \\* italic***",
-            "<p><strong>bold <em>nested * italic</em></strong></p>"
+            "This is the `last example`.",
+            "<p>This is the <code>last example</code>.</p>"
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
-            "some text *****",  // to exclude the <hr> tag being triggered
-            "<p>some text <strong>*</strong></p>"
+            "Multiple `inline` `code` segments.",
+            "<p>Multiple <code>inline</code> <code>code</code> segments.</p>"
+        );
+
+        yield return static () => new MarkdownTestDto(SectionName,
+            "Backticks inside inline code: ``Code with `backticks` inside``.",
+            "<p>Backticks inside inline code: <code>Code with `backticks` inside</code>.</p>"
+        );
+
+        yield return static () => new MarkdownTestDto(SectionName,
+            "`Nested ` is not valid syntax.`",
+            "<p><code>Nested </code> is not valid syntax.`</p>"
+        );
+
+        yield return static () => new MarkdownTestDto(SectionName,
+            "`inline code with special characters !@#$%^&*()`",
+            "<p><code>inline code with special characters !@#$%^&amp;*()</code></p>"
         );
     }
 }

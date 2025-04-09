@@ -1,42 +1,40 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace Tests.InfiniLore.Blazor.Markdown.DataSources;
-
+namespace Tests.InfiniLore.Blazor.Markdown.MarkdownParser.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class EdgeCaseDataSources {
-    private static readonly string SectionName = nameof(EdgeCaseDataSources)[..^nameof(DataSources).Length];
+public class TableDataSources {
+    private static readonly string SectionName = nameof(TableDataSources)[..^nameof(DataSources).Length];
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
-
         yield return static () => new MarkdownTestDto(SectionName,
             """
-            1234
-            1234
-            1234
+            | Column 1      | Column 2     | Column 3      |
+            | --------------| ------------ |-------------- |
+            | Row 2 col 1   | Row 2 col 2  | Row 2 col 3   |
             """,
             """
-            <p>1234</p>
-            <p>1234</p>
-            <p>1234</p>
-            """
-        );
-        
-        yield return static () => new MarkdownTestDto(SectionName,
-            """
-            1234
-            1234
-            123
-            """,
-            """
-            <p>1234</p>
-            <p>1234</p>
-            <p>123</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Column 1</th>
+                        <th>Column 2</th>
+                        <th>Column 3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Row 2 col 1</td>
+                        <td>Row 2 col 2</td>
+                        <td>Row 2 col 3</td>
+                    </tr>
+                </tbody>
+            </table>
             """
         );
     }

@@ -1,19 +1,25 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.Blazor.Markdown;
+using InfiniLore.Blazor.Markdown;
+
+namespace Tests.InfiniLore.Blazor.Markdown.TextEditor;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface ITextEditor {
-    string Text { get; set; }
-    IEnumerable<ITextModifier> Modifiers { get; }
-    
-    void Modify(ReadOnlySpan<char> section, Range range);
-    void Insert(string input, Range range);
-    
-    bool TryGetCaretLine(int caretIndex, out Range lineRange);
-    bool TryGetCaretUpdate(out int caretIndex);
-    void UpdateCaret(int caretIndex);
+[DIDataSource]
+public class TextEditorTests(ITextEditor textEditor) {
+    [Test]
+    public async Task Test1() {
+        // Arrange
+        textEditor.Text = "Hello World!";
+        Range range = ..;
+
+        // Act
+        textEditor.Modify("bold", range);
+
+        // Assert
+        await Assert.That(textEditor.Text).IsEqualTo("**Hello World!**");
+    }
 }

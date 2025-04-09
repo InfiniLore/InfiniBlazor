@@ -19,6 +19,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\InfiniLore.Blazor.Markdown\InfiniLore.Blazor.Markdown.csproj" />
+      <ProjectReference Include="..\..\src\InfiniLore.Blazor\InfiniLore.Blazor.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,56 +1,35 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace Tests.InfiniLore.Blazor.Markdown.DataSources;
+namespace Tests.InfiniLore.Blazor.Markdown.MarkdownParser.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class SpecialCharacterDataSources {
-    private static readonly string SectionName = nameof(SpecialCharacterDataSources)[..^nameof(DataSources).Length];
+public static class BoldAndItalicDataSources {
+    private static readonly string SectionName = nameof(BoldAndItalicDataSources)[..^nameof(DataSources).Length];
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
-
         yield return static () => new MarkdownTestDto(SectionName,
-            "",
-            ""
+            "***bold and italic***",
+            "<p><strong><em>bold and italic</em></strong></p>"
         );
-
+        
         yield return static () => new MarkdownTestDto(SectionName,
-            "&",
-            "<p>&amp;</p>"
+            @"***\*bold and italic***",
+            "<p><strong><em>*bold and italic</em></strong></p>"
         );
-
+        
         yield return static () => new MarkdownTestDto(SectionName,
-            "<",
-            "<p>&lt;</p>"
+            @"***bold and italic\****",
+            "<p><strong><em>bold and italic*</em></strong></p>"
         );
-
+        
         yield return static () => new MarkdownTestDto(SectionName,
-            ">",
-            "<p>&gt;</p>"
-        );
-
-        yield return static () => new MarkdownTestDto(SectionName,
-            "&copy;",
-            "<p>\u00a9</p>"
-        );
-
-        yield return static () => new MarkdownTestDto(SectionName,
-            "This contains an emoji: 😀",
-            "<p>This contains an emoji: 😀</p>"
-        );
-
-        yield return static () => new MarkdownTestDto(SectionName,
-            "@username mentions",
-            "<p>@username mentions</p>"
-        );
-
-        yield return static () => new MarkdownTestDto(SectionName,
-            "test <br/> test",
-            "<p>test <br/> test</p>"
+            @"*** \* \* \* ***",
+            "<p><strong><em> * * * </em></strong></p>"
         );
     }
 }

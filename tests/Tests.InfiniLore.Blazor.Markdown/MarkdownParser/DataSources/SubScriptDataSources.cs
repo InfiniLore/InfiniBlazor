@@ -1,95 +1,95 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace Tests.InfiniLore.Blazor.Markdown.DataSources;
+namespace Tests.InfiniLore.Blazor.Markdown.MarkdownParser.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class SuperScriptDataSources {
-    private static readonly string SectionName = nameof(SuperScriptDataSources)[..^nameof(DataSources).Length];
+public static class SubScriptDataSources {
+    private static readonly string SectionName = nameof(SubScriptDataSources)[..^nameof(DataSources).Length];
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
         yield return static () => new MarkdownTestDto(SectionName,
-            "^^superscript^^",
-            "<p><sup>superscript</sup></p>"
+            "^subscript^",
+            "<p><sub>subscript</sub></p>"
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
-            "^^\\^superscript^^",
-            "<p><sup>^superscript</sup></p>"
+            "^subscript\\^^",
+            "<p><sub>subscript^</sub></p>"
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
-            "^^superscript\\^^^",
-            "<p><sup>superscript^</sup></p>"
+            "^\\^subscript^",
+            "<p><sub>^subscript</sub></p>"
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
-            "This is a **bold^^superscript^^ text**.",
-            "<p>This is a <strong>bold<sup>superscript</sup> text</strong>.</p>"
+            "This is a **bold^subscript^ text**.",
+            "<p>This is a <strong>bold<sub>subscript</sub> text</strong>.</p>"
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
-            "Text with *italic^^superscript^^*.",
-            "<p>Text with <em>italic<sup>superscript</sup></em>.</p>"
+            "Text with *italic^subscript^ and ^^superscript^^*.",
+            "<p>Text with <em>italic<sub>subscript</sub> and <sup>superscript</sup></em>.</p>"
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
-            "A [link with ^^superscript^^](https://example.com).",
+            "A [link with ^subscript^](https://example.com).",
             """
-            <p>A <a href="https://example.com">link with <sup>superscript</sup></a>.</p>
+            <p>A <a href="https://example.com">link with <sub>subscript</sub></a>.</p>
             """
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             """
-            - **Bold^^sup^^**
-            - *Italic^^sup^^*
+            - **Bold^sub^**
+            - *Italic^sub^*
             """,
             """
             <ul>
-                <li><strong>Bold<sup>sup</sup></strong></li>
-                <li><em>Italic<sup>sup</sup></em></li>
+                <li><strong>Bold<sub>sub</sub></strong></li>
+                <li><em>Italic<sub>sub</sub></em></li>
             </ul>
             """
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
-            "Nested formatting: **Bold ^^superscript^^ in a [link](https://example.com)**.",
+            "**Bold ^subscript^ in a [link](https://example.com)**.",
             """
-            <p>Nested formatting: <strong>Bold <sup>superscript</sup> in a <a href="https://example.com">link</a></strong>.</p>
+            <p><strong>Bold <sub>subscript</sub> in a <a href="https://example.com">link</a></strong>.</p>
             """
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
-            "Inline code with superscript: `x = y^^2^^`",
-            "<p>Inline code with superscript: <code>x = y^^2^^</code></p>"
+            "Inline code with subscript: `x = z^2^`",
+            "<p>Inline code with subscript: <code>x = z^2^</code></p>"
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
-            "Complex: ***Bold and italic^^super^^***.",
-            "<p>Complex: <strong><em>Bold and italic<sup>super</sup></em></strong>.</p>"
+            "***Bold and italic^sub^ and italic^sub^***.",
+            "<p><strong><em>Bold and italic<sub>sub</sub> and italic<sub>sub</sub></em></strong>.</p>"
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             """
-            - **Bold link [with ^^superscript^^ text](https://example.com)**.
-            - *Italic link [and ^^superscript^^ text](https://example.org)*.
+            - **Bold link [with ^sub^ text](https://example.com)**.
+            - *Italic link [and ^sub^ text](https://example.org)*.
             """,
             """
             <ul>
-                <li><strong>Bold link <a href="https://example.com">with <sup>superscript</sup> text</a></strong>.</li>
-                <li><em>Italic link <a href="https://example.org">and <sup>superscript</sup> text</a></em>.</li>
+                <li><strong>Bold link <a href="https://example.com">with <sub>sub</sub> text</a></strong>.</li>
+                <li><em>Italic link <a href="https://example.org">and <sub>sub</sub> text</a></em>.</li>
             </ul>
             """
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
-            "^^superscript with ^subscript^ inside^^",
-            "<p><sup>superscript with <sub>subscript</sub> inside</sup></p>"
+            "^subscript with ^^superscript^^ inside^",
+            "<p><sub>subscript with <sup>superscript</sup> inside</sub></p>"
         );
     }
 }

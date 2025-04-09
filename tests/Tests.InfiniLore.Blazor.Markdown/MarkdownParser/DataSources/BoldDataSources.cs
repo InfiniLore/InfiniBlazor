@@ -1,38 +1,55 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace Tests.InfiniLore.Blazor.Markdown.DataSources;
+namespace Tests.InfiniLore.Blazor.Markdown.MarkdownParser.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class TagDataSources {
-    private static readonly string SectionName = nameof(TagDataSources)[..^nameof(DataSources).Length];
+public static class BoldDataSources {
+    private static readonly string SectionName = nameof(BoldDataSources)[..^nameof(DataSources).Length];
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
         yield return static () => new MarkdownTestDto(SectionName,
-            "#tag",
-            "<p><span>#tag</span></p>"
+            "**bold**",
+            "<p><strong>bold</strong></p>"
         );
+        
         yield return static () => new MarkdownTestDto(SectionName,
-            "#不",
-            "<p><span>#不</span></p>"
+            @"**\*bold**",
+            "<p><strong>*bold</strong></p>"
         );
+        
         yield return static () => new MarkdownTestDto(SectionName,
-            "#öäüÖÄÜß",
-            "<p><span>#öäüÖÄÜß</span></p>"
-        );
-
-        yield return static () => new MarkdownTestDto(SectionName,
-            "**#tag**",
-            "<p><strong><span>#tag</span></strong></p>"
+            @"**bold\***",
+            "<p><strong>bold*</strong></p>"
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
-            "*#tag*",
-            "<p><em><span>#tag</span></em></p>"
+            "**bold *nested italic***",
+            "<p><strong>bold <em>nested italic</em></strong></p>"
+        );
+
+        yield return static () => new MarkdownTestDto(SectionName,
+            "***nested italic* bold**",
+            "<p><strong><em>nested italic</em> bold</strong></p>"
+        );
+
+        yield return static () => new MarkdownTestDto(SectionName,
+            "** \\* **",
+            "<p><strong> * </strong></p>"
+        );
+
+        yield return static () => new MarkdownTestDto(SectionName,
+            "**bold *nested \\* italic***",
+            "<p><strong>bold <em>nested * italic</em></strong></p>"
+        );
+
+        yield return static () => new MarkdownTestDto(SectionName,
+            "some text *****",  // to exclude the <hr> tag being triggered
+            "<p>some text <strong>*</strong></p>"
         );
     }
 }

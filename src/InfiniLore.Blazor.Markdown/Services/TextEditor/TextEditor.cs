@@ -13,12 +13,12 @@ namespace InfiniLore.Blazor.Markdown.Services;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ITextEditor>]
+[InjectableTransient<ITextEditor>]
 public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provider) : ITextEditor {
     private string _text = string.Empty;
     public string Text {
         get => _text;
-        set => UpdateText(value);
+        set => UpdateText(value); // done so we can easily bind this to the textAreaInput Component
     }
     private readonly List<Range> Lines = [];
 
@@ -26,9 +26,12 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
         name => name,
         provider.GetRequiredKeyedService<ITextModifier>
     );
-    
+
     public IEnumerable<ITextModifier> Modifiers => ModifierLookup.Values;
     private int _caretIndexToUpdate = -1;
+    
+    private FrozenDictionary<string, ITextModifier>.AlternateLookup<ReadOnlySpan<char>>? _lookupCache;
+    private FrozenDictionary<string, ITextModifier>.AlternateLookup<ReadOnlySpan<char>> AlternateLookup => _lookupCache ??=  ModifierLookup.GetAlternateLookup<ReadOnlySpan<char>>();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -52,8 +55,8 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
         _caretIndexToUpdate = -1;
     }
 
-    public void Modify(string section, Range range) {
-        if (!ModifierLookup.TryGetValue(section, out ITextModifier? modifier)) return;
+    public void Modify(ReadOnlySpan<char> section, Range range) {
+        if (!AlternateLookup.TryGetValue(section, out ITextModifier? modifier)) return;
 
         if (!modifier.IsSingleLineStructure) {
             Text = modifier.Modify(Text, range, this);

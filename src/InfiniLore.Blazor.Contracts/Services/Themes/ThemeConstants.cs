@@ -1,19 +1,15 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.Blazor.Markdown;
+namespace InfiniLore.Blazor.Services.Themes;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface ITextEditor {
-    string Text { get; set; }
-    IEnumerable<ITextModifier> Modifiers { get; }
-    
-    void Modify(ReadOnlySpan<char> section, Range range);
-    void Insert(string input, Range range);
-    
-    bool TryGetCaretLine(int caretIndex, out Range lineRange);
-    bool TryGetCaretUpdate(out int caretIndex);
-    void UpdateCaret(int caretIndex);
+public static class ThemeVarConstants {
+    public const string LinkColor = "var(link-color)";
+    public const string LinkHoverColor = "var(link-hover-color)";
+    public const string LinkActiveColor = "var(link-active-color)";
+    public const string LinkVisitedColor = "var(link-visited-color)";
+    public const string LinkFocusColor = "var(link-focus-color)";
 }
