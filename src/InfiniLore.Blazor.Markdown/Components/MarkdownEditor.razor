@@ -21,7 +21,7 @@
         <!-- Toolbar inside the top of the editor -->
         <div class="flex space-x-2 bg-gray-100 px-2 py-1 border-b border-gray-300">
             @foreach (ITextModifier textModifier in TextEditor.Modifiers) {
-                <button class="px-2 py-1 bg-blue-500 text-white rounded" @onclick="() => OnModifierClick(textModifier.ModifierName)">
+                <button class="px-2 py-1 bg-blue-500 text-white rounded" @onclick="() => OnModifierClickAsync(textModifier.ModifierName)">
                     <LucideIcon Name="@textModifier.IconName"/>
                 </button>
             }
@@ -33,7 +33,6 @@
             @ref="_textareaRef"
             @bind="TextEditor.Text"
             @oninput="TextAreaOnChange"
-            @onselect="OnTextSelectedAsync"
             @onkeydown="OnKeyDownAsync"
         >
         </textarea>
@@ -53,18 +52,27 @@
     private MarkupString MarkdownOutput { get; set; }
 
     private ElementReference _textareaRef;
-    private int _selectionStart;
-    private int _selectionEnd;
     
     private string _lastPressedKey = string.Empty;
+    private (bool, int) _shouldUpdateCaret = (false, -1);
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Component Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected override async Task OnAfterRenderAsync(bool firstRender) {
         await base.OnAfterRenderAsync(firstRender);
-        if (!firstRender) return; // Only add the "prevent default listener" once.
-        
-        await JsRuntimeHelper.AddPreventDefaultListenerAsync();
+        if (firstRender) {
+            // Only add the "prevent default listener" once.
+            await JsRuntimeHelper.AddPreventDefaultListenerAsync();
+            return;
+        }
+
+        // place the caret in newly requested location
+        if (_shouldUpdateCaret is (true, var index and >= 0)) {
+            await JsRuntimeHelper.SetSelectionRangeAsync(_textareaRef, index, index);
+            _shouldUpdateCaret = (false, -1);
+        }
+
     }
 
     public async ValueTask DisposeAsync() {
@@ -84,16 +92,15 @@
         UpdateMarkdown();
     }
 
-    private void OnModifierClick(string modifierName) {
-        TextEditor.Modify(modifierName, GetSelectionRange());
+    private async Task OnModifierClickAsync(string modifierName) {
+        TextEditor.Modify(modifierName, await GetSelectionRangeAsync());
         UpdateMarkdown();
     }
 
-    private async Task OnTextSelectedAsync() {
-        (_selectionStart, _selectionEnd) = await JsRuntimeHelper.GetSelectionAsync(_textareaRef);
+    private async Task<Range> GetSelectionRangeAsync() {
+        (int, int) tuple = await JsRuntimeHelper.GetSelectionAsync(_textareaRef);
+        return new Range(tuple.Item1, tuple.Item2);
     }
-
-    private Range GetSelectionRange() => new(_selectionStart, _selectionEnd);
 
     private async Task OnKeyDownAsync(KeyboardEventArgs obj) {
         switch (obj, _lastPressedKey) {
@@ -111,12 +118,26 @@
                 
 
             case ({ CtrlKey: true, Key: "b" }, _): {
-                TextEditor.Modify("bold", GetSelectionRange());
+                Range selection = await GetSelectionRangeAsync();
+                TextEditor.Modify("bold", selection );
+                int offset = selection.Start.Value + 2;
+                _shouldUpdateCaret = (true, offset);
                 break;
             }
                 
             case ({ CtrlKey: true, Key: "i" }, _): {
-                TextEditor.Modify("italic", GetSelectionRange());
+                Range selection = await GetSelectionRangeAsync();
+                TextEditor.Modify("italic", selection);
+                int offset = selection.Start.Value + 1;
+                _shouldUpdateCaret = (true, offset);
+                break;
+            }
+                
+            case ({ CtrlKey: true, Key: "u" }, _): {
+                Range selection = await GetSelectionRangeAsync();
+                TextEditor.Modify("underline", selection);
+                int offset = selection.Start.Value + 1;
+                _shouldUpdateCaret = (true, offset);
                 break;
             }
         }

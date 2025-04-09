@@ -58,6 +58,10 @@ public class TextEditor(IServiceProvider provider) : ITextEditor {
             Text = modifier.Modify(Text, range);
             return;
         }
+        if (range.Start.Value == range.End.Value) {
+            Text = modifier.Modify(Text, range);
+            return;
+        }
         if (Lines.IsEmpty()) {
             Text = modifier.Modify(Text, range);
             return;
