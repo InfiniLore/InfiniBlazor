@@ -37,9 +37,9 @@
         </PackageReference>
         <PackageReference Include="InfiniLore.Lucide" Version="0.22.487" />
 
-        <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.3" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.3" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.4" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.4" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.4" />
     </ItemGroup>
 
     <ItemGroup>

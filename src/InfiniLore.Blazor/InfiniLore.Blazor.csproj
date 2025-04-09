@@ -37,9 +37,9 @@
     </ItemGroup>
     
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.3" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.3" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.4" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.4" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
         
         <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" Version="0.57.0" />
         <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators" Version="0.57.0">
