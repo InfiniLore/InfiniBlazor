@@ -7,5 +7,6 @@ namespace InfiniLore.Blazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface ITextEditor {
-    public string Modify(string input, string section, Range range);
+    string Text { get; set; }
+    void Modify(string section, Range range);
 }

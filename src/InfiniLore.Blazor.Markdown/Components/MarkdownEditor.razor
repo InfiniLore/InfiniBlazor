@@ -32,7 +32,7 @@
         <textarea
             class="flex-grow p-4 border-none focus:outline-none resize-none"
             @ref="_textareaRef"
-            @bind="LastKnownContent"
+            @bind="TextEditor.Text"
             @oninput="TextAreaOnChange"
             @onselect="OnTextSelectedAsync"
             @onkeydown="OnKeyDownAsync"
@@ -52,7 +52,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     private MarkupString MarkdownOutput { get; set; }
-    private string LastKnownContent { get; set; } = string.Empty;
 
     private ElementReference _textareaRef;
     private int _selectionStart;
@@ -77,13 +76,13 @@
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private void UpdateMarkdown() {
-        MarkdownOutput = new MarkupString(MarkdownParser.Parse(LastKnownContent));
+        MarkdownOutput = new MarkupString(MarkdownParser.Parse(TextEditor.Text));
     }
     
     private void TextAreaOnChange(ChangeEventArgs args) {
         if (args.Value is not string content) return;
 
-        LastKnownContent = content;
+        TextEditor.Text = content;
         UpdateMarkdown();
     }
 
@@ -96,7 +95,7 @@
     private void ApplyFormattingToSelection(string wrapper) {
         if (_selectionStart == _selectionEnd) return;
 
-        LastKnownContent = LastKnownContent
+        TextEditor.Text = TextEditor.Text
             .Insert(_selectionEnd, wrapper)
             .Insert(_selectionStart, wrapper);
 

@@ -13,8 +13,6 @@ public static class IInfiniLoreBlazorConfigExtensions {
         
         var markdownConfig = new MarkdownConfig(config);
         
-        markdownConfig.TextEditor.AddModifier("bold");
-        
         configure?.Invoke(markdownConfig);
     }
 }
