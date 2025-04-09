@@ -52,23 +52,15 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
         if (lastIndex < _text.Length) {
             Lines.Add(new Range(lastIndex, _text.Length));
         }
-        _caretIndexToUpdate = -1;
     }
 
     public void Modify(ReadOnlySpan<char> section, Range range) {
         if (!AlternateLookup.TryGetValue(section, out ITextModifier? modifier)) return;
 
-        if (!modifier.IsSingleLineStructure) {
-            Text = modifier.Modify(Text, range, this);
-            return;
-        }
-
-        if (range.Start.Value == range.End.Value) {
-            Text = modifier.Modify(Text, range, this);
-            return;
-        }
-
-        if (Lines.IsEmpty()) {
+        if (Lines.IsEmpty()
+            || !modifier.IsSingleLineStructure
+            || range.Start.Value == range.End.Value
+        ) {
             Text = modifier.Modify(Text, range, this);
             return;
         }
@@ -91,13 +83,12 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
             int intersectEnd = Math.Min(lineEnd, end);
 
             // check if the line is empty
-            if (Text.AsSpan(intersectStart, intersectEnd - intersectStart).Trim().IsWhiteSpace()) continue;
-
+            if (Text.AsSpan(intersectStart, intersectEnd - intersectStart).IsEmpty) continue;
+            
             // handle special structures, like lists
             Match lineMatch = TextEditorRegexLib.ListItemsRegex.Match(Text, intersectStart, intersectEnd - intersectStart);
-            if (lineMatch.Success && lineMatch.Groups["a"].TryGetLength(out int prefixLength)) {
-                if (lineMatch.Groups["b"].TryGetValueSpan(out ReadOnlySpan<char> body) && body.Trim().IsWhiteSpace()) continue;
-
+            if (lineMatch.Success && lineMatch.Groups[1].TryGetLength(out int prefixLength)) {
+                if (lineMatch.Groups[2].TryGetValueSpan(out ReadOnlySpan<char> body) && body.Trim().IsWhiteSpace()) continue;
                 intersectStart += prefixLength;
             }
 
@@ -123,16 +114,18 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
     }
 
     public bool TryGetCaretLine(int caretIndex, out Range lineRange) {
+        int normalizedCaretIndex = Math.Max(0, caretIndex);
+        
         // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
         foreach (Range lr in Lines) {
-            if (caretIndex < lr.Start.Value) continue;
-            if (caretIndex > lr.End.Value) continue;
+            if (normalizedCaretIndex < lr.Start.Value) continue;
+            if (normalizedCaretIndex > lr.End.Value) continue;
 
             lineRange = lr;
             return true;
         }
 
-        lineRange = new Range(-1, -1);
+        lineRange = new Range(0, 0);
         return false;
     }
 

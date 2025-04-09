@@ -15,6 +15,6 @@ public static partial class TextEditorRegexLib {
     [GeneratedRegex("\r?\n", RegexOptions.Compiled | RegexOptions.ExplicitCapture)]
     public static partial Regex LineEndingRegex { get; }
     
-    [GeneratedRegex(@"^(?<a> *(?:- |\d+\. |>[>\-\d\. ]* ))(?<b>.*)$", RegexOptions.Compiled | RegexOptions.ExplicitCapture)]
+    [GeneratedRegex(@"^( *(?:- |\d+\. |>[>\-\d. ]* ))(.*)$", RegexOptions.Compiled)]
     public static partial Regex ListItemsRegex { get; }
 }

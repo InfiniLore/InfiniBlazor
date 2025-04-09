@@ -17,6 +17,8 @@ public abstract class SingleInstructionModifiers(ILogger logger) : ITextModifier
     protected abstract string Instruction { get; }
 
     public string Modify(string input, Range range, ITextEditor editor) {
+        ReadOnlySpan<char> inputSpan = input.AsSpan();
+        
         // Calculate indices for range
         int length = input.Length;
         int start = range.Start.GetOffset(length);
@@ -29,22 +31,27 @@ public abstract class SingleInstructionModifiers(ILogger logger) : ITextModifier
         }
         
         // Precompute the final size needed for the buffer
-        ReadOnlySpan<char> mod = Instruction.AsSpan();
-        int modLength = mod.Length;
-        int finalLength = length + modLength*2;
+        ReadOnlySpan<char> instructionSpan = Instruction.AsSpan();
+        int instructionLength = instructionSpan.Length;
+        int finalLength = length + instructionLength*2;
 
         // Rent a buffer using ArrayPool to avoid frequent allocations
         char[] buffer = ArrayPool<char>.Shared.Rent(finalLength);
+        Span<char> bufferSpan = buffer.AsSpan();
 
         try {
-            input.AsSpan(0, start).CopyTo(buffer.AsSpan(0, start));
-            mod.CopyTo(buffer.AsSpan(start));
-            input.AsSpan(start, end - start).CopyTo(buffer.AsSpan(start + modLength));
-            mod.CopyTo(buffer.AsSpan(start + modLength + (end - start)));
-            input.AsSpan(end).CopyTo(buffer.AsSpan(start + modLength*2 + (end - start)));
+            // Build the resulting string with modifications
+            inputSpan[..start].CopyTo(bufferSpan[..start]);
+            instructionSpan.CopyTo(bufferSpan[start..]);
+            inputSpan.Slice(start, end - start).CopyTo(bufferSpan[(start + instructionLength)..]);
+            instructionSpan.CopyTo(bufferSpan[(start + instructionLength + (end - start))..]);
+            inputSpan[end..].CopyTo(bufferSpan[(start + instructionLength * 2 + (end - start))..]);
             
-            editor.UpdateCaret(range.Start.Value + mod.Length);
-            return new string(buffer, 0, finalLength);
+            // Place caret after the first instruction
+            editor.UpdateCaret(range.Start.Value + instructionLength);
+
+            // Return only the relevant portion of the buffer as a string
+            return new string(bufferSpan[..finalLength]);
 
         }
         finally {
