@@ -18,7 +18,7 @@ public class TextEditor(IServiceProvider provider) : ITextEditor {
         get => _text;
         set => UpdateText(value);
     }
-    private List<Range> Lines { get; set; } = [];
+    private readonly List<Range> Lines = [];
     
     private FrozenDictionary<string, ITextModifier> ModifierLookup { get; } = ModifiersKeys.ToFrozenDictionary(
         name => name,
@@ -46,6 +46,7 @@ public class TextEditor(IServiceProvider provider) : ITextEditor {
             Lines.Add(new Range(valueMatch.Index, lastIndex - 1));
         }
         
+        // add the last line which didnt end with a newline
         if (lastIndex < _text.Length) {
             Lines.Add(new Range(lastIndex, _text.Length));
         }
@@ -67,7 +68,6 @@ public class TextEditor(IServiceProvider provider) : ITextEditor {
         int start = range.Start.GetOffset(totalLength);
         int end = range.End.GetOffset(totalLength);
         
-        string modifiedText = Text;
         for (int index = Lines.Count - 1; index >= 0; index--) {
             Range lineRange = Lines[index];
             int lineStart = lineRange.Start.GetOffset(totalLength);
@@ -81,17 +81,16 @@ public class TextEditor(IServiceProvider provider) : ITextEditor {
             int intersectEnd = Math.Min(lineEnd, end);
             
             // check if the line is empty
-            if (modifiedText.AsSpan(intersectStart, intersectEnd - intersectStart).Trim().IsWhiteSpace()) continue;
+            if (Text.AsSpan(intersectStart, intersectEnd - intersectStart).Trim().IsWhiteSpace()) continue;
             
             // handle special structures, like lists
-            Match lineMatch = TextEditorRegexLib.ListItemsRegex.Match(modifiedText, intersectStart, intersectEnd - intersectStart);
-            if (lineMatch.Success && lineMatch.Groups["listId"].TryGetLength(out int lineIdLength)) {
-                intersectStart += lineIdLength;
+            Match lineMatch = TextEditorRegexLib.ListItemsRegex.Match(Text, intersectStart, intersectEnd - intersectStart);
+            if (lineMatch.Success && lineMatch.Groups["a"].TryGetLength(out int prefixLength)) {
+                if (lineMatch.Groups["b"].TryGetValueSpan(out ReadOnlySpan<char> body) && body.Trim().IsWhiteSpace()) continue; 
+                intersectStart += prefixLength;
             }
 
-            modifiedText = modifier.Modify(modifiedText,  new Range(intersectStart, intersectEnd));
+            Text = modifier.Modify(Text,  new Range(intersectStart, intersectEnd));
         }
-
-        Text = modifiedText;
     }
 }
