@@ -96,40 +96,32 @@
     private Range GetSelectionRange() => new(_selectionStart, _selectionEnd);
 
     private async Task OnKeyDownAsync(KeyboardEventArgs obj) {
-        if (_lastPressedKey != string.Empty) {
-            switch (obj) {
-                case { CtrlKey: true, Key: "1" }: {
-                    // at the beginning of the current line where the cursor is, place a #
-                    break;
-                }
-            }
-
-            _lastPressedKey = string.Empty;
-            return;
-        }
-
-        switch (obj) {
-            case { CtrlKey: true, Key: "a" or "A" }: {
-                await JsRuntimeHelper.SetSelectionRangeAsync(_textareaRef, 0, int.MaxValue);
+        switch (obj, _lastPressedKey) {
+            case ({ CtrlKey: true, Key: "a" or "A" }, "a"): {
+                await JsRuntimeHelper.SetSelectionRangeAsync(_textareaRef, 0, TextEditor.Text.Length);
                 break;
             }
+            case ({ CtrlKey: true, Key: "a" or "A" }, _): {
+                // when we select a only once we should get the current line
+                int caretIndex = await JsRuntimeHelper.GetSelectionStartAsync(_textareaRef);
+                if (!TextEditor.TryGetCaretLine(caretIndex, out Range lineRange)) break;
+                await JsRuntimeHelper.SetSelectionRangeAsync(_textareaRef, lineRange.Start.Value, lineRange.End.Value);
+                break;
+            }
+                
 
-            case { CtrlKey: true, Key: "b" }: {
+            case ({ CtrlKey: true, Key: "b" }, _): {
                 TextEditor.Modify("bold", GetSelectionRange());
                 break;
             }
                 
-            case { CtrlKey: true, Key: "i" }: {
+            case ({ CtrlKey: true, Key: "i" }, _): {
                 TextEditor.Modify("italic", GetSelectionRange());
                 break;
             }
-
-            case { CtrlKey: true, Key: "h" }: {
-                _lastPressedKey = "h";
-                break;
-            }
         }
-        
+
+        _lastPressedKey = obj.Key;
         UpdateMarkdown();
     }
 }

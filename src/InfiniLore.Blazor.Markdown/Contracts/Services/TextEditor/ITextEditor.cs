@@ -11,4 +11,5 @@ public interface ITextEditor {
     IEnumerable<ITextModifier> Modifiers { get; }
     
     void Modify(string section, Range range);
+    bool TryGetCaretLine(int caretIndex, out Range lineRange);
 }

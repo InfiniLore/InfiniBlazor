@@ -93,4 +93,15 @@ public class TextEditor(IServiceProvider provider) : ITextEditor {
             Text = modifier.Modify(Text,  new Range(intersectStart, intersectEnd));
         }
     }
+
+    public bool TryGetCaretLine(int caretIndex, out Range lineRange) {
+        foreach (Range lr in Lines) {
+            if (caretIndex < lr.Start.Value) continue;
+            if (caretIndex > lr.End.Value) continue;
+            lineRange = lr;
+            return true;
+        }
+        lineRange = new Range(0, 0);
+        return false;
+    }
 }
