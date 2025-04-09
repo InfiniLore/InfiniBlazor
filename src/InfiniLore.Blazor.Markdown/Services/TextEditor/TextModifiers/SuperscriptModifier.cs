@@ -1,17 +1,16 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.Blazor.Markdown;
+using CodeOfChaos.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
+namespace InfiniLore.Blazor.Markdown.Services.TextModifiers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface ITextEditor {
-    string Text { get; set; }
-    IEnumerable<ITextModifier> Modifiers { get; }
-    
-    void Modify(string section, Range range);
-    bool TryGetCaretLine(int caretIndex, out Range lineRange);
-    bool TryGetCaretUpdate(out int caretIndex);
-    void UpdateCaret(int caretIndex);
+[InjectableSingleton<ITextModifier>("superscript")]
+public class SuperscriptModifier(ILogger<SuperscriptModifier> logger) : SingleInstructionModifiers(logger) {
+    public override string IconName => "superscript";
+    public override string ModifierName => "superscript";
+    protected override string Instruction => "^^";
 }

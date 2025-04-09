@@ -11,5 +11,5 @@ public interface ITextModifier {
     string ModifierName { get; }
     bool IsSingleLineStructure { get; }
     
-    string Modify(string input, Range range);
+    string Modify(string input, Range range, ITextEditor editor);
 }

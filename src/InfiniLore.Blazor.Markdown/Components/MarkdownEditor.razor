@@ -54,8 +54,6 @@
     private ElementReference _textareaRef;
     
     private string _lastPressedKey = string.Empty;
-    private (bool, int) _shouldUpdateCaret = (false, -1);
-    
     // -----------------------------------------------------------------------------------------------------------------
     // Component Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -68,9 +66,8 @@
         }
 
         // place the caret in newly requested location
-        if (_shouldUpdateCaret is (true, var index and >= 0)) {
+        if (TextEditor.TryGetCaretUpdate(out int index)) {
             await JsRuntimeHelper.SetSelectionRangeAsync(_textareaRef, index, index);
-            _shouldUpdateCaret = (false, -1);
         }
 
     }
@@ -120,24 +117,18 @@
             case ({ CtrlKey: true, Key: "b" }, _): {
                 Range selection = await GetSelectionRangeAsync();
                 TextEditor.Modify("bold", selection );
-                int offset = selection.Start.Value + 2;
-                _shouldUpdateCaret = (true, offset);
                 break;
             }
                 
             case ({ CtrlKey: true, Key: "i" }, _): {
                 Range selection = await GetSelectionRangeAsync();
                 TextEditor.Modify("italic", selection);
-                int offset = selection.Start.Value + 1;
-                _shouldUpdateCaret = (true, offset);
                 break;
             }
                 
             case ({ CtrlKey: true, Key: "u" }, _): {
                 Range selection = await GetSelectionRangeAsync();
                 TextEditor.Modify("underline", selection);
-                int offset = selection.Start.Value + 1;
-                _shouldUpdateCaret = (true, offset);
                 break;
             }
         }

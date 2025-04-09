@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.Blazor.Markdown;
-using InfiniLore.Blazor.Markdown.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Tests.InfiniLore.Blazor.Markdown.DataSources;
 

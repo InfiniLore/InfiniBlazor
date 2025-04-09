@@ -8,6 +8,8 @@
 export type IInputElement = HTMLInputElement | HTMLTextAreaElement
 export type CSharpTuple<T1, T2> = { "Item1": T1, "Item2": T2 };
 
+export type KeyCondition = (event: KeyboardEvent, key: string) => boolean;
+
 declare global {
     // noinspection JSUnusedGlobalSymbols
     interface Window {

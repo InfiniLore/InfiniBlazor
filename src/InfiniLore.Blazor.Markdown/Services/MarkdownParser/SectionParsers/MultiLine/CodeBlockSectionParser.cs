@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using System.Text.Encodings.Web;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.MultiLine;

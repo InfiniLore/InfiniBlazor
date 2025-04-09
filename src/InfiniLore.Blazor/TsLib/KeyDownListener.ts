@@ -1,22 +1,28 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-
+import {KeyCondition} from "./Contracts";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-function preventKeyDefault(event:KeyboardEvent) : void {
+const keysToSkip: Set<string> = new Set(["u", "b", "i"]);
+const allowSpecialConditions: KeyCondition[] = [
+    (event, key) => event.ctrlKey && event.shiftKey && key === "i", // Skip `Ctrl+Shift+I`
+];
+
+// Main function to prevent default behavior
+function preventKeyDefault(event: KeyboardEvent): void {
     if (!event) return;
-    if (!(event.ctrlKey)) return;
-    if (event.key === "F5" || event.key === "F12") return;
-    // if (event.ctrlKey && event.key.toLowerCase() === "z") return;
-    // if (event.ctrlKey && event.key.toLowerCase() === "y") return;
-    // if (event.ctrlKey && event.key.toLowerCase() === "c") return;
-    // if (event.ctrlKey && event.key.toLowerCase() === "v") return;
-    // if (event.ctrlKey && event.key.toLowerCase() === "x") return;
-    if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "i" ) return;
+    if (!event.ctrlKey) return;
+
+    const key = event.key.toLowerCase();
+    if (allowSpecialConditions.some(condition => condition(event, key))) return;
+
+    // Block default behavior for keys in the keysToSkip set
+    if (!keysToSkip.has(key)) return;
     event.preventDefault();
 }
+
 
 export function addPreventDefaultListener() : void {
     document.addEventListener("keydown",preventKeyDefault)

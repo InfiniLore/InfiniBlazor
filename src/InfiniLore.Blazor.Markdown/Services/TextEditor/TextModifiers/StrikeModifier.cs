@@ -1,17 +1,16 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.Blazor.Markdown;
+using CodeOfChaos.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
+namespace InfiniLore.Blazor.Markdown.Services.TextModifiers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface ITextEditor {
-    string Text { get; set; }
-    IEnumerable<ITextModifier> Modifiers { get; }
-    
-    void Modify(string section, Range range);
-    bool TryGetCaretLine(int caretIndex, out Range lineRange);
-    bool TryGetCaretUpdate(out int caretIndex);
-    void UpdateCaret(int caretIndex);
+[InjectableSingleton<ITextModifier>("strike")]
+public class StrikeModifier(ILogger<StrikeModifier> logger) : SingleInstructionModifiers(logger) {
+    public override string IconName => "strikethrough";
+    public override string ModifierName => "strike";
+    protected override string Instruction => "~";
 }
