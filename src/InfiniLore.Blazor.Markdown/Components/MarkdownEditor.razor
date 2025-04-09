@@ -20,8 +20,8 @@
     <div class="w-1/2 flex flex-col border-r border-gray-300">
         <!-- Toolbar inside the top of the editor -->
         <div class="flex space-x-2 bg-gray-100 px-2 py-1 border-b border-gray-300">
-            @foreach (ITextModifier textModifier in TextEditor.Modifiers)  {
-                <button class="px-2 py-1 bg-blue-500 text-white rounded" @onclick="() => OnModifierClick(textModifier)">
+            @foreach (ITextModifier textModifier in TextEditor.Modifiers) {
+                <button class="px-2 py-1 bg-blue-500 text-white rounded" @onclick="() => OnModifierClick(textModifier.ModifierName)">
                     <LucideIcon Name="@textModifier.IconName"/>
                 </button>
             }
@@ -84,8 +84,8 @@
         UpdateMarkdown();
     }
 
-    private void OnModifierClick(ITextModifier textModifier) {
-        TextEditor.Text = textModifier.Modify(TextEditor.Text, GetSelectionRange());
+    private void OnModifierClick(string modifierName) {
+        TextEditor.Modify(modifierName, GetSelectionRange());
         UpdateMarkdown();
     }
 

@@ -9,10 +9,10 @@ namespace InfiniLore.Blazor.Markdown.Services.TextModifiers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ITextModifier>("italic")]
-public class ItalicModifier(ILogger<ItalicModifier> logger) : ITextModifier {
-    public string IconName => "italic";
-    public string ModifierName => "italic";
+[InjectableSingleton<ITextModifier>("underline")]
+public class UnderlineModifier(ILogger<UnderlineModifier> logger) : ITextModifier {
+    public string IconName => "underline";
+    public string ModifierName => "underline";
     public bool IsSingleLineStructure => true;
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -31,13 +31,13 @@ public class ItalicModifier(ILogger<ItalicModifier> logger) : ITextModifier {
         }
         
         // Precompute the final size needed for the buffer
-        int finalLength = length + 2;// Add 2 because you're inserting `*` twice
+        int finalLength = length + 2;// Add 2 because you're inserting `_` twice
 
         // Rent a buffer using ArrayPool to avoid frequent allocations
         char[] buffer = ArrayPool<char>.Shared.Rent(finalLength);
 
         try {
-            ReadOnlySpan<char> mod = "*".AsSpan();
+            ReadOnlySpan<char> mod = "_".AsSpan();
 
             input.AsSpan(0, start).CopyTo(buffer.AsSpan(0, start));
             mod.CopyTo(buffer.AsSpan(start));

@@ -36,7 +36,7 @@ public static partial class MarkdownRegexLib {
           (?<heading>^(?<hLevel>\#{1,6})\s+(?<hText>.+))
         | (?<codeBlock>`{3}(?<cLang>.*?)?\r?\n(?<cBody>[\s\S]*?)`{3})
         | (?<headingSimple>^(?<hsText>.+?)\r?\n[\ ]*[-=]{3,})
-        | (?<listUnordered>(?:^[^\S\r\n]*-\s+.*(?:\n(?:[^\S\r\n]*[-.]\d*\.?\s+.*|[^\S\r\n]+.*))*))
+        | (?<listUnordered>(?:^[^\S\r\n]*-\s+.*(?:\n(?:[^\S\r\n]*[\-.]\d*\.?\s+.*|[^\S\r\n]+.*))*))
         | (?<listOrdered>(?:^[^\S\r\n]*\d+\.\s+?.*(?:\n(?:[^\S\r\n]*[\-.]?\d+\.?\s+.*|[^\S\r\n]+.*))*))
         | (?<table>
             ^\|(?<tHead>.+)\|\s*\r?\n
@@ -59,7 +59,7 @@ public static partial class MarkdownRegexLib {
             )
             (?<htmlPost>.+)?
           )
-        | (?<horizontalRule>^[*\-_]{3,}\s*$)
+        | (?<horizontalRule>^[\-=]{3,}\s*$)
         | (?<remainder>.+?(?:\r?\n|$))
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex MultilineStructuresRegex { get; }

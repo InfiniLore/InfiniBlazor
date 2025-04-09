@@ -12,7 +12,7 @@ public class HorizontalLineDataSources {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
-        char[]? chars = new[] { '-', '*', '_' };
+        char[]? chars = new[] { '-', '=' };
         foreach (char c in chars) {
             for (int i = 1; i < 10; i++) {
                 string text = new(c, i);

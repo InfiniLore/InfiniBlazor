@@ -1,15 +1,17 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.Blazor.Markdown;
+using System.Text.RegularExpressions;
+
+namespace InfiniLore.Blazor.Markdown.Services;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface ITextModifier {
-    string IconName { get; }
-    string ModifierName { get; }
-    bool IsSingleLineStructure { get; }
+public static partial class TextEditorRegexLib {
+    [GeneratedRegex(".*\r?\n", RegexOptions.Compiled | RegexOptions.ExplicitCapture)]
+    public static partial Regex NewlinesRegex { get; }
     
-    string Modify(string input, Range range);
+    [GeneratedRegex(@"^(?<listId> *(?:- |\d+\. )).*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    public static partial Regex ListItemsRegex { get; }
 }

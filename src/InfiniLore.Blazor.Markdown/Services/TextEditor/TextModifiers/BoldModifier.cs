@@ -12,6 +12,8 @@ namespace InfiniLore.Blazor.Markdown.Services.TextModifiers;
 [InjectableSingleton<ITextModifier>("bold")]
 public class BoldModifier(ILogger<BoldModifier> logger) : ITextModifier {
     public string IconName => "bold";
+    public string ModifierName => "bold";
+    public bool IsSingleLineStructure => true;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
