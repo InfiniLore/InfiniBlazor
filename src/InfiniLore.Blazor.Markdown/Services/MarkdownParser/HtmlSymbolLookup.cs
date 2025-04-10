@@ -27,7 +27,8 @@ public static class HtmlSymbolLookup {
     }.ToFrozenDictionary();
     
     public static FrozenDictionary<string, string>.AlternateLookup<ReadOnlySpan<char>> AlternateLookup { get; } = Lookup.GetAlternateLookup<ReadOnlySpan<char>>();
-    public static Regex Regex { get; } = new(string.Join('|', Lookup.Keys), RegexOptions.Compiled | RegexOptions.Singleline);
+    public static FrozenDictionary<string, string>.AlternateLookup<ReadOnlySpan<char>> CodeBlockAlternateLookup { get; } = CodeBlockLookup.GetAlternateLookup<ReadOnlySpan<char>>();
     
-    public static Regex CodeBlockRegex { get; } = new(string.Join('|', CodeBlockLookup.Keys), RegexOptions.Compiled | RegexOptions.Singleline);
+    public static Regex Regex { get; } = new(string.Join('|', Lookup.Keys), RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.Compiled);
+    public static Regex CodeBlockRegex { get; } = new(string.Join('|', CodeBlockLookup.Keys), RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.Compiled);
 }

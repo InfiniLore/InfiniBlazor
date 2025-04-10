@@ -72,19 +72,19 @@ public static partial class MarkdownRegexLib {
               )
             (?<htmlPost>.+)?
           )
-        | (?<horizontalRule>^[\-=]{3,}\s*$)
+        | (?<horizontalRule>^[\-=]{3,64}\s*$)
         | (?<remainder>.+?(?:\r?\n|$))
         
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex MultilineStructuresRegex { get; }
 
-    [GeneratedRegex(@"^[ ]*[-.]?\d*\.?\s+(?<lTask>\[[\ xX]\])?(?<lHead>.+)(?<lBody>(?:\n[ ]+.+)*)", RegexOptions.Multiline | RegexOptions.ExplicitCapture)]
+    [GeneratedRegex(@"^[ ]*[-.]?\d*\.?\s+(?<lTask>\[[\ xX]\])?(?<lHead>.+)(?<lBody>(?:\n[ ]+.+)*)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex ListItemBodyRegex { get; }
 
-    [GeneratedRegex("^>", RegexOptions.Multiline)]
+    [GeneratedRegex("^>", RegexOptions.Multiline | RegexOptions.Compiled)]
     public static partial Regex NormalizeBlockQuoteRegex { get; }
     
-    [GeneratedRegex("\r?\n")]
+    [GeneratedRegex("\r?\n", RegexOptions.Compiled)]
     public static partial Regex NormalizeNewlinesRegex { get; }
     
     [GeneratedRegex("""
@@ -99,6 +99,6 @@ public static partial class MarkdownRegexLib {
         )
         (?(open)(?!))
         (</\k<tag>>)
-        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline)]
+        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.Compiled)]
     public static partial Regex FindSpanHtmlRegex { get; }
 }

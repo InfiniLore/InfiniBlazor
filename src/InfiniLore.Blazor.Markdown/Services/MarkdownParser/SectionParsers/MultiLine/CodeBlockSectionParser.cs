@@ -10,45 +10,48 @@ namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMultiLineSectionParser>("codeBlock")]
 public class CodeBlockSectionParser : IMultiLineSectionParser {
+    private const string CodeBlockStartMarker = "<pre><code";
+    private const string CodeBlockLang = " class=\"language-";
+    private const string CodeBlockEndMarker = "</code></pre>";
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
     public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, MultiLineOrigin origin) {
-        if (!entireMatch.Groups["cBody"].TryGetValue(out string? codeBlockBody)) return;
-        string langName = entireMatch.Groups["cLang"].TryGetValue(out string? langNameValue)
-            ? langNameValue
-            : string.Empty;
+        if (!entireMatch.Groups["cBody"].TryGetValueSpan(out ReadOnlySpan<char> codeBlockBody)) return;
 
-        string langClass = langName.IsNotNullOrWhiteSpace()
-            ? $" class=\"language-{langName}\""
-            : string.Empty;
+        writer.Write(CodeBlockStartMarker.AsSpan());
+        ReadOnlySpan<char> langNameValue = entireMatch.Groups["cLang"].ValueSpan;
+        if (!langNameValue.IsEmpty) {
+            writer.Write(CodeBlockLang.AsSpan())
+                .Write(langNameValue)
+                .Write('"');
+        }
 
-
-        writer.Write("<pre><code")
-            .Write(langClass)
-            .Write('>');
-        ProcessCodeBlockContent(writer, codeBlockBody);
-        writer.Write("</code></pre>");
-
+        writer.Write('>');
+        ProcessCodeBlockContent(writer, ref codeBlockBody);
+        writer.Write(CodeBlockEndMarker.AsSpan());
     }
 
-    private static void ProcessCodeBlockContent(IMarkdownWriter writer, string content) {
-        ReadOnlySpan<char> remainder = content.AsSpan();
+    private static void ProcessCodeBlockContent(IMarkdownWriter writer, ref ReadOnlySpan<char> content) {
         int currentIndex = 0;
 
-        foreach (ValueMatch match in HtmlSymbolLookup.CodeBlockRegex.EnumerateMatches(remainder)) {
+        foreach (ValueMatch match in HtmlSymbolLookup.CodeBlockRegex.EnumerateMatches(content)) {
             int matchIndex = match.Index;
             int matchLength = match.Length;
             if (currentIndex < matchIndex) {
-                writer.Write(remainder.Slice(currentIndex, matchIndex - currentIndex));
+                writer.Write(content.Slice(currentIndex, matchIndex - currentIndex));
             }
 
-            if (HtmlSymbolLookup.CodeBlockLookup.TryGetValue(remainder.Slice(matchIndex, matchLength).ToString(), out string? replacement)) {
-                writer.Write(replacement);
+            if (HtmlSymbolLookup.CodeBlockAlternateLookup.TryGetValue(content.Slice(matchIndex, matchLength), out string? replacement)) {
+                writer.Write(replacement.AsSpan());
             }
 
             currentIndex = matchIndex + matchLength;
         }
 
-        if (currentIndex < remainder.Length) {
-            writer.Write(remainder[currentIndex..]);
+        if (currentIndex < content.Length) {
+            writer.Write(content[currentIndex..]);
         }
     }
 }
