@@ -6,7 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <DebugType>portable</DebugType>
-        <Optimize>false</Optimize>
+<!--        <Optimize>false</Optimize>-->
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.Blazor</PackageId>
