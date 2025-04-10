@@ -126,12 +126,12 @@ public static class BlockQuoteDataSources {
         yield return static () => new MarkdownTestDto(SectionName,
             """
             > Inline formatting:
-            > **Bold**, *italic*, `code`, and [link](#).
+            > **Bold**, *italic*, `code`, and [link](https://example.com).
             """,
             """
             <blockquote>
                 <p>Inline formatting:</p>
-                <p><strong>Bold</strong>, <em>italic</em>, <code>code</code>, and <a href="#">link</a>.</p>
+                <p><strong>Bold</strong>, <em>italic</em>, <code>code</code>, and <a href="https://example.com">link</a>.</p>
             </blockquote>
             """
         );
@@ -222,11 +222,11 @@ public static class BlockQuoteDataSources {
         
         yield return static () => new MarkdownTestDto(SectionName,
             """
-            > **Bold text**, *italic text*, `inline code`, ~strikethrough~, and [link](#).
+            > **Bold text**, *italic text*, `inline code`, ~strikethrough~, and [link](https://example.com).
             """,
             """
             <blockquote>
-                <p><strong>Bold text</strong>, <em>italic text</em>, <code>inline code</code>, <s>strikethrough</s>, and <a href="#">link</a>.</p>
+                <p><strong>Bold text</strong>, <em>italic text</em>, <code>inline code</code>, <s>strikethrough</s>, and <a href="https://example.com">link</a>.</p>
             </blockquote>
             """
         );

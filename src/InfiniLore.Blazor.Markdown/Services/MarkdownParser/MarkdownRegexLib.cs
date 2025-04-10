@@ -26,7 +26,7 @@ public static partial class MarkdownRegexLib {
         | (?<linkRegular>
             (?<lrBang>!)?
             \[(?<lrText>[^\]]+?)\]
-            \((?<lrHref>[^\)]+?)(?:\s?"(?<lrTitle>[^"]*)")?\)
+            \((?<lrHref>http(?:\?)?[^\)]+?)(?:\s?"(?<lrTitle>[^"]*)")?\)
           )
         | (?<tag>\#(?<tText>[^#\s]+))
         | (?<span>

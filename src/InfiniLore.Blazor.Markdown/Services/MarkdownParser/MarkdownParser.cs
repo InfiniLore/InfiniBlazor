@@ -17,7 +17,7 @@ namespace InfiniLore.Blazor.Markdown.Services;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableService<IMarkdownParser>(ServiceLifetime.Singleton)]
-public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownParser> logger, IHtmlSanitizer htmlSanitizer) : IMarkdownParser {
+public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownParser> logger) : IMarkdownParser {
     private readonly FrozenDictionary<string, IMultiLineSectionParser> _multilineGroupToParsers = ToFrozenDictionary<IMultiLineSectionParser>(MultilineGroupNames, logger, serviceProvider);
     private readonly FrozenDictionary<string, ISingleLineSectionParser> _singlelineGroupToParsers = ToFrozenDictionary<ISingleLineSectionParser>(SinglelineGroupNames, logger, serviceProvider);
 

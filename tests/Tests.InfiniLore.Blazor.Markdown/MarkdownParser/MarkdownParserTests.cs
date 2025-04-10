@@ -36,6 +36,7 @@ public class MarkdownParserTests(IMarkdownParser parser) {
     [MethodDataSource(typeof(TableDataSources), nameof(TableDataSources.DataSources))]
     [MethodDataSource(typeof(TagDataSources), nameof(TagDataSources.DataSources))]
     [MethodDataSource(typeof(UnderlineDataSources), nameof(UnderlineDataSources.DataSources))]
+    [MethodDataSource(typeof(XSSDataSources), nameof(XSSDataSources.DataSources))]
     public async Task Parse_ValidInputs(MarkdownTestDto dto) {
         // Arrange
         
@@ -70,6 +71,7 @@ public class MarkdownParserTests(IMarkdownParser parser) {
     [MethodDataSource(typeof(TableDataSources), nameof(TableDataSources.DataSources))]
     [MethodDataSource(typeof(TagDataSources), nameof(TagDataSources.DataSources))]
     [MethodDataSource(typeof(UnderlineDataSources), nameof(UnderlineDataSources.DataSources))]
+    [MethodDataSource(typeof(XSSDataSources), nameof(XSSDataSources.DataSources))]
     public async Task Parse_ValidInputs_WithTextWriter(MarkdownTestDto dto) {
         // Arrange
 

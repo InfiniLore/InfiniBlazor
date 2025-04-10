@@ -27,7 +27,8 @@ public class HtmlBodySectionParser(IServiceProvider provider, IHtmlSanitizer htm
         }
 
         if (entireMatch.Groups["htmlBody"].TryGetValue(out string? htmlBody)) {
-            var match = MarkdownRegexLib.FindSpanHtmlRegex.Match(htmlBody);
+            // Span should be only special case allowed which allows for markdown parsing within it
+            Match match = MarkdownRegexLib.FindSpanHtmlRegex.Match(htmlBody);
             if (match.Groups["spanTag"].TryGetValue(out string? spanTag) && match.Groups["spanBody"].TryGetValue(out string? spanBody)) {
                 writer.Write(htmlSanitizer.Sanitize(spanTag).AsSpan()[..^7]);
                 _markdownParser.Value.ParseMultiline(spanBody, writer, origin | MultiLineOrigin.Html);
