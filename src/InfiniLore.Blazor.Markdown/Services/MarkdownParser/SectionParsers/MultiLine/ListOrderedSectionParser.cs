@@ -16,7 +16,7 @@ public class ListOrderedSectionParser(IServiceProvider provider) : IMultiLineSec
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer) {
+    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, MultiLineOrigin origin) {
         if (!group.TryGetValue(out string? listOrderedBody)) return;
 
         List<Match> matchCollection = MarkdownRegexLib.ListItemBodyRegex.Matches(listOrderedBody).ToList();
@@ -39,7 +39,7 @@ public class ListOrderedSectionParser(IServiceProvider provider) : IMultiLineSec
 
             if (groups["lBody"].TryGetValue(out string? listBody)) {
                 string normalizedBody = NormalizationHelper.NormalizeIndentation(listBody);
-                _markdownParser.Value.ParseMultiline(normalizedBody, writer);
+                _markdownParser.Value.ParseMultiline(normalizedBody, writer,origin | MultiLineOrigin.PreserveHtml);
             }
 
             writer.Write("</li>");

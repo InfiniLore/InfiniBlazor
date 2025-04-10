@@ -17,7 +17,7 @@ public class TableSectionParser(IServiceProvider provider) : IMultiLineSectionPa
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer) {
+    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, MultiLineOrigin origin) {
         // Extract header, separator, and rows
         ReadOnlySpan<char> header = entireMatch.Groups["tHead"].ValueSpan;
         Span<Range> headerColumns = stackalloc Range[header.Length];

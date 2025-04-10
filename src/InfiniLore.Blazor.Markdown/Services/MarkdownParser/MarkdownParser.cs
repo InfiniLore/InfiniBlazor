@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using Ganss.Xss;
 using InfiniLore.Blazor.Markdown.Services.MarkdownWriters;
 using InfiniLore.Blazor.Markdown.Services.Pools;
 using InfiniLore.Blazor.Markdown.Services.SectionParsers.SingleLine;
@@ -16,7 +17,7 @@ namespace InfiniLore.Blazor.Markdown.Services;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableService<IMarkdownParser>(ServiceLifetime.Singleton)]
-public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownParser> logger) : IMarkdownParser {
+public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownParser> logger, IHtmlSanitizer htmlSanitizer) : IMarkdownParser {
     private readonly FrozenDictionary<string, IMultiLineSectionParser> _multilineGroupToParsers = ToFrozenDictionary<IMultiLineSectionParser>(MultilineGroupNames, logger, serviceProvider);
     private readonly FrozenDictionary<string, ISingleLineSectionParser> _singlelineGroupToParsers = ToFrozenDictionary<ISingleLineSectionParser>(SinglelineGroupNames, logger, serviceProvider);
 
@@ -88,7 +89,7 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
     }
 
     #region Parsing Methods
-    public void ParseMultiline(string markdown, IMarkdownWriter writer) {
+    public void ParseMultiline(string markdown, IMarkdownWriter writer, MultiLineOrigin origin = MultiLineOrigin.Undefined) {
         Queue<Match> matchesQueue = MatchQueuePool.Get();
 
         try {
@@ -109,7 +110,7 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
                     if (!group.Success) continue;
                     if (!_multilineGroupToParsers.TryGetValue(group.Name, out IMultiLineSectionParser? sectionParser)) continue;
 
-                    sectionParser.ParseToStringBuilder(match, group, writer);
+                    sectionParser.ParseToStringBuilder(match, group, writer, origin);
                 }
             }
         }

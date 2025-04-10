@@ -2,8 +2,8 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using Ganss.Xss;
 using Microsoft.Extensions.DependencyInjection;
-using System.Text.Encodings.Web;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.MultiLine;
@@ -11,30 +11,38 @@ namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMultiLineSectionParser>("htmlBody")]
-public class HtmlBodySectionParser(IServiceProvider provider) : IMultiLineSectionParser {
+public class HtmlBodySectionParser(IServiceProvider provider, IHtmlSanitizer htmlSanitizer) : IMultiLineSectionParser {
     private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer) {
-        if (!entireMatch.Groups["htmlPre"].TryGetValue(out string? pre)) {
-            writer.Write(SanitizeHtml(group.Value));
-            return;
+    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, MultiLineOrigin origin) {
+        bool writeParagraph = !origin.HasFlag(MultiLineOrigin.PreserveHtml);
+        if (writeParagraph) {
+            writer.Write("<p>");
+        }
+        if (entireMatch.Groups["htmlPre"].TryGetValue(out string? pre)) {
+            _markdownParser.Value.ParseSingleline(pre, writer);
         }
 
-        writer.Write("<p>");
-        _markdownParser.Value.ParseSingleline(pre, writer);
-        writer.Write(SanitizeHtml(group.Value));
+        if (entireMatch.Groups["htmlBody"].TryGetValue(out string? htmlBody)) {
+            var match = MarkdownRegexLib.FindSpanHtmlRegex.Match(htmlBody);
+            if (match.Groups["spanTag"].TryGetValue(out string? spanTag) && match.Groups["spanBody"].TryGetValue(out string? spanBody)) {
+                writer.Write(htmlSanitizer.Sanitize(spanTag).AsSpan()[..^7]);
+                _markdownParser.Value.ParseMultiline(spanBody, writer, origin | MultiLineOrigin.Html);
+                writer.Write("</span>");
+            }
+            else {
+                writer.Write(htmlSanitizer.Sanitize(htmlBody));
+            }
+        }
+
         if (entireMatch.Groups["htmlPost"].TryGetValue(out string? post)) {
             _markdownParser.Value.ParseSingleline(post, writer);
         }
-        writer.Write("</p>");
-    }
-
-    private static string SanitizeHtml(string html) {
-        // TODO look into actual html sanitizing libraries
-        string sanitized = MarkdownRegexLib.NormalizeScriptRegex.Replace(html, static match => HtmlEncoder.Default.Encode(match.Value));
-        return sanitized;
+        if (writeParagraph) {
+            writer.Write("</p>");
+        }
     }
 }

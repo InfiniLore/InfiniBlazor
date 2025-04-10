@@ -15,6 +15,7 @@ public static class IInfiniLoreBlazorConfigExtensions {
         
         var markdownConfig = new MarkdownConfig(config);
         markdownConfig.TextEditor.AddDefaultModifiers();
+        markdownConfig.Parser.AddDefaultSanitizer();
         
         configure?.Invoke(markdownConfig);
 

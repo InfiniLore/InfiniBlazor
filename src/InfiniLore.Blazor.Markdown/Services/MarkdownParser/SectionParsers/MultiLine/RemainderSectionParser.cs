@@ -16,12 +16,13 @@ public class RemainderSectionParser(IServiceProvider provider) : IMultiLineSecti
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match _, Group group, IMarkdownWriter writer) {
+    public void ParseToStringBuilder(Match _, Group group, IMarkdownWriter writer, MultiLineOrigin origin) {
         if (!group.TryGetValue(out string? paragraph)) return;
         if (paragraph.IsNullOrWhiteSpace()) return;
+        bool writeParagraph = !origin.HasFlag(MultiLineOrigin.Html);
 
-        writer.Write("<p>");
+        if (writeParagraph) writer.Write("<p>");
         _markdownParser.Value.ParseSingleline(paragraph, writer);
-        writer.Write("</p>");
+        if (writeParagraph) writer.Write("</p>");
     }
 }

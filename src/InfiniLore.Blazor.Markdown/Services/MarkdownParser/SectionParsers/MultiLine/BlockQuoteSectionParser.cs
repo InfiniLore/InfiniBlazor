@@ -16,14 +16,14 @@ public class BlockQuoteSectionParser(IServiceProvider provider) : IMultiLineSect
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match _, Group group, IMarkdownWriter writer) {
+    public void ParseToStringBuilder(Match _, Group group, IMarkdownWriter writer, MultiLineOrigin origin) {
         if (!group.TryGetValue(out string? blockQuoteBody)) return;
 
         string normalized = MarkdownRegexLib.NormalizeBlockQuoteRegex.Replace(blockQuoteBody, string.Empty);
         string adjustedBlockquote = NormalizationHelper.NormalizeIndentation(normalized);
 
         writer.Write("<blockquote>");
-        _markdownParser.Value.ParseMultiline(adjustedBlockquote, writer);
+        _markdownParser.Value.ParseMultiline(adjustedBlockquote, writer, origin | MultiLineOrigin.PreserveHtml);
         writer.Write("</blockquote>");
     }
 }

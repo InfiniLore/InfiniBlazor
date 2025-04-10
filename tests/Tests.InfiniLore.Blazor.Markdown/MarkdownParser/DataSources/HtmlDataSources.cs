@@ -16,36 +16,38 @@ public class HtmlDataSources {
             """
             Unrelated previous paragraph followed by a blank line
             <table>
-            <tr>
-            <td>Table cell</td>
-            <td>
-
-            <table>
-            <tr>
-            <td>*Tables in tables*</td>
-            </tr>
-            </table>
-
-            </td>
-            </tr>
+                <tr>
+                    <td>Table cell</td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>*Tables in tables*</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
             </table>
             """,
             """
             <p>Unrelated previous paragraph followed by a blank line</p>
-            <table>
-            <tr>
-            <td>Table cell</td>
-            <td>
-
-            <table>
-            <tr>
-              <td>*Tables in tables*</td>
-            </tr>
-            </table>
-
-            </td>
-            </tr>
-            </table>
+            <p>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>Table cell</td>
+                        <td>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td>*Tables in tables*</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </p>
             """
         );
 
@@ -66,7 +68,7 @@ public class HtmlDataSources {
             </pre>
             """,
             """
-            <pre>
+            <p><pre>
             Buffalo Bill ’s
             defunct
                    who used to
@@ -78,19 +80,19 @@ public class HtmlDataSources {
                                  and what i want to know is
             how do you like your blueeyed boy
             Mister Death
-            </pre>
+            </pre></p>
             """
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             """
             test <div>
-            <bold>something</bold>
+            <strong>something</strong>
             </div>
             """,
             """
             <p> test <div>
-            <bold>something</bold>
+            <strong>something</strong>
             </div> </p>
             """
         );
@@ -102,35 +104,29 @@ public class HtmlDataSources {
             </div>
             """,
             """
-            <p> test <div>
-            &lt;script&gt;something&lt;/script&gt;
-            </div></p> 
+            <p> test <div></div></p> 
             """
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
             "test <div> <script>something</script> </div>",
-            """
-            <p> test <div>
-            &lt;script&gt;something&lt;/script&gt;
-            </div> </p> 
-            """
+            "<p> test <div></div> </p> "
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
             "test <script>something</script>",
-            "<p> test &lt;script&gt;something&lt;/script&gt;</p>"
+            "<p> test </p>"
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
             """
             *test* <div>
-            <bold>something</bold>
+            <strong>something</strong>
             </div> **bold this**
             """,
             """
             <p> <em>test</em> <div>
-            <bold>something</bold>
+            <strong>something</strong>
             </div> <strong>bold this</strong> </p>
             """
         );

@@ -29,6 +29,19 @@ public static partial class MarkdownRegexLib {
             \((?<lrHref>[^\)]+?)(?:\s?"(?<lrTitle>[^"]*)")?\)
           )
         | (?<tag>\#(?<tText>[^#\s]+))
+        | (?<span>
+          <(?<tag>span)\b[^>]*>
+          (?<spanBody>
+            (?>
+              [^<]+
+              | <(?<open>\k<tag>)\b[^>]*>
+              | </(?<-open>\k<tag>)>
+              | <(?!/?\k<tag>\b)[^>]+>
+            )*
+          )
+          (?(open)(?!))
+          </\k<tag>>
+        )
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex SinglelineStructuresRegex { get; }
 
@@ -46,21 +59,22 @@ public static partial class MarkdownRegexLib {
         | (?<blockQuote>^>\s+.*(?:\r?\n(?![*+-]\s|[-.]?\d|\s*[^>]).+)*)
         | (?:
             (?<htmlPre>.+?)?
-            (?<htmlBody>
-              <(?<tag>\w+)\b[^:>]*>
-              (?>
-                [^<]+
-                | <(?<open>\k<tag>)\b[^>]*>
-                | </(?<-open>\k<tag>)>
-                | <(?!/?\k<tag>\b)[^>]+>
-              )*
-              (?(open)(?!))
-              </\k<tag>>
-            )
+              (?<htmlBody>
+                <(?<tag>\w+)\b[^>]*>
+                (?>
+                  [^<]+
+                  | <(?<open>\k<tag>)\b[^>]*>
+                  | </(?<-open>\k<tag>)>
+                  | <(?!/?\k<tag>\b)[^>]+>
+                )*
+                (?(open)(?!))
+                (</\k<tag>>)
+              )
             (?<htmlPost>.+)?
           )
         | (?<horizontalRule>^[\-=]{3,}\s*$)
         | (?<remainder>.+?(?:\r?\n|$))
+        
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex MultilineStructuresRegex { get; }
 
@@ -73,6 +87,18 @@ public static partial class MarkdownRegexLib {
     [GeneratedRegex("\r?\n")]
     public static partial Regex NormalizeNewlinesRegex { get; }
     
-    [GeneratedRegex(@"<[sS][cC][rR][iI][pP][tT].*?>[\s\S]*?</[sS][cC][rR][iI][pP][tT]>")]
-    public static partial Regex NormalizeScriptRegex { get; }
+    [GeneratedRegex("""
+        (?<spanTag><(?<tag>span)\b[^>]*>)
+        (?<spanBody>
+          (?>
+            [^<]+
+            | <(?<open>\k<tag>)\b[^>]*>
+            | </(?<-open>\k<tag>)>
+            | <(?!/?\k<tag>\b)[^>]+>
+          )*
+        )
+        (?(open)(?!))
+        (</\k<tag>>)
+        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline)]
+    public static partial Regex FindSpanHtmlRegex { get; }
 }

@@ -16,7 +16,7 @@ public class HeadingSimpleSectionParser(IServiceProvider provider) : IMultiLineS
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer) {
+    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, MultiLineOrigin origin) {
         if (!entireMatch.Groups["hsText"].TryGetValue(out string? headerSimpleText)) return;
 
         writer.Write("<h1>");

@@ -16,7 +16,7 @@ public class HeadingSectionParser(IServiceProvider provider) : IMultiLineSection
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer) {
+    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, MultiLineOrigin origin) {
         if (!entireMatch.Groups["hLevel"].TryGetLength(out int headingLevel)) return;
         if (!entireMatch.Groups["hText"].TryGetValue(out string? headerText)) return;
 

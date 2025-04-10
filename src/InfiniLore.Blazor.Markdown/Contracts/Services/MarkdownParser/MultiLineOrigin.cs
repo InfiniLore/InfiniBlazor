@@ -1,12 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.Blazor.Markdown.Config;
+namespace InfiniLore.Blazor.Markdown;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MarkdownConfig(IInfiniLoreBlazorConfig infiniLoreBlazorConfig) {
-    public MarkdownTextEditorConfig TextEditor { get; } = new(infiniLoreBlazorConfig);
-    public MarkdownParserConfig Parser { get; } = new(infiniLoreBlazorConfig);
+[Flags]
+public enum MultiLineOrigin {
+    Undefined = 0,
+    Html = 1 << 0,
+    PreserveHtml = 1 << 1,
 }
