@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using Ganss.Xss;
 using InfiniLore.Blazor.Markdown.Services.MarkdownWriters;
 using InfiniLore.Blazor.Markdown.Services.Pools;
 using InfiniLore.Blazor.Markdown.Services.SectionParsers.SingleLine;

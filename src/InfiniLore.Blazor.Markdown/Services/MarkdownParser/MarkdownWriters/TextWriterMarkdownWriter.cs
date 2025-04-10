@@ -25,19 +25,4 @@ public class TextWriterMarkdownWriter<T>(T writer) : IMarkdownWriter where T : T
         writer.Write(value);
         return this;
     }
-
-    public IMarkdownWriter WriteLine() {
-        writer.WriteLine();
-        return this;
-    }
-
-    public IMarkdownWriter WriteLine(string value) {
-        writer.WriteLine(value);
-        return this;
-    }
-
-    public IMarkdownWriter WriteFormatted(string format, params object[] args) {
-        writer.Write(format, args);
-        return this;
-    }
 }

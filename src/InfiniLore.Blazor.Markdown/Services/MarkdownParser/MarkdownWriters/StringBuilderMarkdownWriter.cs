@@ -34,25 +34,6 @@ public class StringBuilderMarkdownWriter(StringBuilder builder) : IMarkdownWrite
         builder.Append(value);
         return this;
     }
-    public IMarkdownWriter Write(ref ReadOnlySpan<char> value) {
-        builder.Append(value);
-        return this;
-    }
-
-    public IMarkdownWriter WriteLine() {
-        builder.AppendLine();
-        return this;
-    }
-
-    public IMarkdownWriter WriteLine(string value) {
-        builder.AppendLine(value);
-        return this;
-    }
-
-    public IMarkdownWriter WriteFormatted(string format, params object[] args) {
-        builder.AppendFormat(format, args);
-        return this;
-    }
 
     public override string ToString() => builder.ToString();
 
