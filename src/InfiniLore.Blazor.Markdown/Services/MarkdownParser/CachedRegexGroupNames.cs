@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using System.Collections.Frozen;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 
@@ -12,35 +13,35 @@ namespace InfiniLore.Blazor.Markdown.Services;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ICachedRegexGroupNames>]
 public class CachedRegexGroupNames : ICachedRegexGroupNames{
-    private ImmutableDictionary<string, int> GroupNameToGroupId { get; set; } = ImmutableDictionary<string, int>.Empty;
-    private readonly Lock _lock = new();
+    private static FrozenDictionary<string, int> GroupNameToGroupId { get; } = GetGroupNames();
+    private static FrozenDictionary<string, int>.AlternateLookup<ReadOnlySpan<char>> AlternateLookup { get; } = GroupNameToGroupId.GetAlternateLookup<ReadOnlySpan<char>>();
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public int GetSingleLineGroupId(string groupName) 
-        => GetOrAdd(groupName, MarkdownRegexLib.SinglelineStructuresRegex);
+    private static FrozenDictionary<string, int> GetGroupNames() {
+        Regex[] regexes = [
+            MarkdownRegexLib.SinglelineStructuresRegex,
+            MarkdownRegexLib.MultilineStructuresRegex,
+            MarkdownRegexLib.FindSpanHtmlRegex,
+            MarkdownRegexLib.ListItemBodyRegex,
+        ];
 
-    public int GetMultiLineGroupId(string groupName) 
-        => GetOrAdd(groupName, MarkdownRegexLib.MultilineStructuresRegex);
-
-    public int GetSpanGroupId(string groupName)
-        => GetOrAdd(groupName, MarkdownRegexLib.FindSpanHtmlRegex);
-
-    public int GetListGroupId(string groupName) 
-        => GetOrAdd(groupName, MarkdownRegexLib.ListItemBodyRegex);
-
-    private int GetOrAdd(string groupName, Regex regex) {
-        if (GroupNameToGroupId.TryGetValue(groupName, out int value)) return value;
+        IEnumerable<(Regex regex, string[])> a = regexes.Select(regex => (regex, regex.GetGroupNames()));
+        var dictionary = new Dictionary<string, int>(32);
         
-        lock (_lock) {
-            if (GroupNameToGroupId.TryGetValue(groupName, out value)) return value;
-
-            value = regex.GroupNumberFromName(groupName);
-            GroupNameToGroupId = GroupNameToGroupId.Add(groupName, value);
+        foreach ((Regex regex, string[] names) in a) {
+            foreach (string name in names) {
+                dictionary.AddOrUpdate(name, regex.GroupNumberFromName(name));
+            }
         }
-
-        return value;
+        
+        return dictionary.ToFrozenDictionary();
     }
-
+    
+    public int GetSingleLineGroupId(ReadOnlySpan<char> groupName) =>AlternateLookup[groupName]; 
+    public int GetMultiLineGroupId(ReadOnlySpan<char> groupName) =>AlternateLookup[groupName]; 
+    public int GetSpanGroupId(ReadOnlySpan<char> groupName)=>AlternateLookup[groupName]; 
+    public int GetListGroupId(ReadOnlySpan<char> groupName) =>AlternateLookup[groupName]; 
+    
 }

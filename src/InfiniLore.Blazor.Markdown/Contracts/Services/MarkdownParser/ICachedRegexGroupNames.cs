@@ -7,8 +7,8 @@ namespace InfiniLore.Blazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface ICachedRegexGroupNames {
-    int GetSingleLineGroupId(string groupName);
-    int GetMultiLineGroupId(string groupName);
-    int GetSpanGroupId(string groupName);
-    int GetListGroupId(string groupName);
+    int GetSingleLineGroupId(ReadOnlySpan<char> groupName);
+    int GetMultiLineGroupId(ReadOnlySpan<char> groupName);
+    int GetSpanGroupId(ReadOnlySpan<char> groupName);
+    int GetListGroupId(ReadOnlySpan<char> groupName);
 }
