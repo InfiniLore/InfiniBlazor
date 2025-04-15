@@ -15,10 +15,9 @@ namespace InfiniLore.Blazor.Markdown.Services;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableTransient<ITextEditor>]
 public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provider) : ITextEditor {
-    private string _text = string.Empty;
     public string Text {
         get => _text;
-        set => UpdateText(value); // done so we can easily bind this to the textAreaInput Component
+        set => _text = TextEditorRegexLib.LineEndingRegex.Replace(value, "\n");
     }
     private readonly List<Range> Lines = [];
 
@@ -31,30 +30,30 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
     private int _caretIndexToUpdate = -1;
     
     private FrozenDictionary<string, ITextModifier>.AlternateLookup<ReadOnlySpan<char>>? _lookupCache;
+    private string _text = string.Empty;
     private FrozenDictionary<string, ITextModifier>.AlternateLookup<ReadOnlySpan<char>> AlternateLookup => _lookupCache ??=  ModifierLookup.GetAlternateLookup<ReadOnlySpan<char>>();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private void UpdateText(string value) {
-        _text = TextEditorRegexLib.LineEndingRegex.Replace(value, "\n");
-
-        Regex.ValueMatchEnumerator lineMatches = TextEditorRegexLib.NewlinesRegex.EnumerateMatches(_text);
+    public void UpdateTextMeta() {
+        Regex.ValueMatchEnumerator lineMatches = TextEditorRegexLib.NewlinesRegex.EnumerateMatches(Text);
         Lines.Clear();
 
         int lastIndex = 0;
+        
         foreach (ValueMatch valueMatch in lineMatches) {
             lastIndex = valueMatch.Index + valueMatch.Length;
             Lines.Add(new Range(valueMatch.Index, lastIndex - 1));
         }
 
         // add the last line which didnt end with a newline
-        if (lastIndex < _text.Length) {
-            Lines.Add(new Range(lastIndex, _text.Length));
+        if (lastIndex < Text.Length) {
+            Lines.Add(new Range(lastIndex, Text.Length));
         }
     }
 
-    public void Modify(ReadOnlySpan<char> section, Range range) {
+    public void Modify(string section, Range range) {
         if (!AlternateLookup.TryGetValue(section, out ITextModifier? modifier)) return;
 
         if (Lines.IsEmpty()
@@ -107,10 +106,10 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
         }
 
         // Generate the new text by replacing the specified range with the input text
-        var builder = new StringBuilder(_text);
+        var builder = new StringBuilder(Text);
         builder.Remove(start, end - start);
         builder.Insert(start, input);
-        UpdateText(builder.ToString());
+        Text = builder.ToString();
     }
 
     public bool TryGetCaretLine(int caretIndex, out Range lineRange) {

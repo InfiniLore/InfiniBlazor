@@ -1,19 +1,12 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.Blazor.Services
 @using InfiniLore.Lucide
-@using Microsoft.Extensions.Logging
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits ComponentBase
 @implements IAsyncDisposable
-
-@inject IMarkdownParser MarkdownParser
-@inject IJsRuntimeHelper JsRuntimeHelper
-@inject ITextEditor TextEditor
-@inject ILogger<MarkdownEditor> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -24,7 +17,7 @@
         <div class="flex justify-between bg-gray-100 px-2 py-1 border-b border-gray-300">
             <!-- Left-Aligned Buttons -->
             <div class="flex space-x-2">
-                @foreach (ITextModifier textModifier in TextEditor.Modifiers) {
+                @foreach (ITextModifier textModifier in textEditor.Modifiers) {
                     <button class="px-1.5 py-1 bg-blue-500 text-white rounded" @onclick="() => OnModifierClickAsync(textModifier.ModifierName)">
                         <LucideIcon Name="@textModifier.IconName"/>
                     </button>
@@ -44,8 +37,7 @@
         <textarea
             class="flex-grow p-4 border-none focus:outline-none resize-none"
             @ref="_textareaRef"
-            @bind="TextEditor.Text"
-            @oninput="TextAreaOnChange"
+            @bind-value="Text" @bind-value:event="oninput" 
             @onkeydown="OnKeyDownAsync"
         >
         </textarea>
@@ -58,127 +50,3 @@
         </div>
     </div>
 </div>
-@* ------------------------------------------------------------------------------------------------------------------ *@
-@* Code
-@* ------------------------------------------------------------------------------------------------------------------ *@
-@code {
-    private MarkupString MarkdownOutput { get; set; }
-
-    private ElementReference _textareaRef;
-    
-    private string _lastPressedKey = string.Empty;
-    // -----------------------------------------------------------------------------------------------------------------
-    // Component Methods
-    // -----------------------------------------------------------------------------------------------------------------
-    protected override async Task OnAfterRenderAsync(bool firstRender) {
-        await base.OnAfterRenderAsync(firstRender);
-        if (firstRender) {
-            // Only add the "prevent default listener" once.
-            await JsRuntimeHelper.AddPreventDefaultListenerAsync();
-            return;
-        }
-
-        // place the caret in newly requested location
-        if (TextEditor.TryGetCaretUpdate(out int index)) {
-            await JsRuntimeHelper.SetSelectionRangeAsync(_textareaRef, index, index);
-        }
-
-    }
-
-    public async ValueTask DisposeAsync() {
-        await JsRuntimeHelper.RemovePreventDefaultListenerAsync();
-    }
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
-    private void UpdateMarkdown() {
-        MarkdownOutput = new MarkupString(MarkdownParser.Parse(TextEditor.Text));
-    }
-    
-    private void TextAreaOnChange(ChangeEventArgs args) {
-        if (args.Value is not string content) return;
-    
-        TextEditor.Text = content;
-        UpdateMarkdown();
-    }
-
-    private async Task OnModifierClickAsync(string modifierName) {
-        TextEditor.Modify(modifierName, await GetSelectionRangeAsync());
-        UpdateMarkdown();
-    }
-
-    private async Task<Range> GetSelectionRangeAsync() {
-        (int, int) tuple = await JsRuntimeHelper.GetSelectionAsync(_textareaRef);
-        return new Range(tuple.Item1, tuple.Item2);
-    }
-
-    private async Task OnKeyDownAsync(KeyboardEventArgs obj) {
-        switch (obj, _lastPressedKey) {
-            case ({ CtrlKey: true, Key: "a" or "A" }, "a"): {
-                if (TextEditor.Text.IsNullOrWhiteSpace()) break;
-                await JsRuntimeHelper.SetSelectionRangeAsync(_textareaRef, 0, TextEditor.Text.Length);
-                break;
-            }
-                
-            case ({ CtrlKey: true, Key: "a" or "A" }, _): {
-                if (TextEditor.Text.IsNullOrWhiteSpace()) break;
-                // when we select a only once we should get the current line
-                int caretIndex = await JsRuntimeHelper.GetSelectionStartAsync(_textareaRef);
-                if (!TextEditor.TryGetCaretLine(caretIndex, out Range lineRange)) break;
-                await JsRuntimeHelper.SetSelectionRangeAsync(_textareaRef, lineRange.Start.Value, lineRange.End.Value);
-                break;
-            }
-                
-            case ({ CtrlKey: true, Key: "b" }, _): {
-                Range selection = await GetSelectionRangeAsync();
-                TextEditor.Modify("bold", selection);
-                break;
-            }
-                
-            case ({ CtrlKey: true, Key: "i" }, _): {
-                Range selection = await GetSelectionRangeAsync();
-                TextEditor.Modify("italic", selection);
-                break;
-            }
-                
-            case ({ CtrlKey: true, Key: "u" }, _): {
-                Range selection = await GetSelectionRangeAsync();
-                TextEditor.Modify("underline", selection);
-                break;
-            }
-        }
-
-        _lastPressedKey = obj.Key;
-        UpdateMarkdown();
-    }
-    
-    private async Task DebugLoremAsync() {
-        const string loremText = @"Lorem ipsum dolor
-sit amet, consectetur
-adipiscing elit. Sed
-do eiusmod tempor
-incididunt ut labore
-et dolore magna aliqua.
-
-Ut enim ad minim veniam,
-quis nostrud exercitation
-ullamco laboris nisi ut
-aliquip ex ea commodo
-consequat.
-
-Duis aute irure dolor
-in reprehenderit in 
-voluptate velit esse
-cillum dolore eu fugiat
-nulla pariatur.
-
-Excepteur sint occaecat
-cupidatat non proident, 
-sunt in culpa qui officia
-deserunt mollit anim id
-est laborum.";
-        
-        TextEditor.Insert(loremText, await GetSelectionRangeAsync());
-        UpdateMarkdown();
-    }
-}
