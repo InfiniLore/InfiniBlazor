@@ -9,19 +9,22 @@ namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMultiLineSectionParser>("codeBlock")]
-public class CodeBlockSectionParser : IMultiLineSectionParser {
+public class CodeBlockSectionParser(ICachedRegexGroupNames groupNames) : IMultiLineSectionParser {
     private const string CodeBlockStartMarker = "<pre><code";
     private const string CodeBlockLang = " class=\"language-";
     private const string CodeBlockEndMarker = "</code></pre>";
+    
+    private readonly int CBodyId = groupNames.GetMultiLineGroupId("cBody");
+    private readonly int CLangId = groupNames.GetMultiLineGroupId("cLang");
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, MultiLineOrigin origin) {
-        if (!entireMatch.Groups["cBody"].TryGetValueSpan(out ReadOnlySpan<char> codeBlockBody)) return;
+        if (!entireMatch.Groups[CBodyId].TryGetValueSpan(out ReadOnlySpan<char> codeBlockBody)) return;
 
         writer.Write(CodeBlockStartMarker.AsSpan());
-        ReadOnlySpan<char> langNameValue = entireMatch.Groups["cLang"].ValueSpan;
+        ReadOnlySpan<char> langNameValue = entireMatch.Groups[CLangId].ValueSpan;
         if (!langNameValue.IsEmpty) {
             writer.Write(CodeBlockLang.AsSpan())
                 .Write(langNameValue)

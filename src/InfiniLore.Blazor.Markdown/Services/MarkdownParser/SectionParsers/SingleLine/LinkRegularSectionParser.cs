@@ -10,20 +10,25 @@ namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.SingleLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISingleLineSectionParser>("linkRegular")]
-public class LinkRegularSectionParser(IServiceProvider provider) : ISingleLineSectionParser {
+public class LinkRegularSectionParser(IServiceProvider provider, ICachedRegexGroupNames groupNames) : ISingleLineSectionParser {
     private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
     public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.Link;
-
+    
+    private readonly int LrTextId = groupNames.GetSingleLineGroupId("lrText");
+    private readonly int LrHrefId = groupNames.GetSingleLineGroupId("lrHref");
+    private readonly int LrTitleId = groupNames.GetSingleLineGroupId("lrTitle");
+    private readonly int LrBangId = groupNames.GetSingleLineGroupId("lrBang");
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, SingleLineOrigin origin) {
-        if (!entireMatch.Groups["lrText"].TryGetValue(out string? linkText)) return;
-        if (!entireMatch.Groups["lrHref"].TryGetValue(out string? linkHref)) return;
+        if (!entireMatch.Groups[LrTextId].TryGetValue(out string? linkText)) return;
+        if (!entireMatch.Groups[LrHrefId].TryGetValue(out string? linkHref)) return;
 
-        string titleText = entireMatch.Groups["lrTitle"].TryGetValue(out string? altTextValue) ? $" title=\"{altTextValue}\"" : string.Empty;
+        string titleText = entireMatch.Groups[LrTitleId].TryGetValue(out string? altTextValue) ? $" title=\"{altTextValue}\"" : string.Empty;
 
-        if (entireMatch.Groups["lrBang"].Success) {
+        if (entireMatch.Groups[LrBangId].Success) {
             writer.Write("<img src=\"");
             writer.Write(linkHref);
             writer.Write("\" alt=\"");

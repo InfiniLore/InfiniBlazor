@@ -10,9 +10,12 @@ namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMultiLineSectionParser>("listUnordered")]
-public class ListUnorderedSectionParser(IServiceProvider provider) : IMultiLineSectionParser {
+public class ListUnorderedSectionParser(IServiceProvider provider, ICachedRegexGroupNames groupName) : IMultiLineSectionParser {
     private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
 
+    private readonly int LTaskId = groupName.GetListGroupId("lTask");
+    private readonly int LHeadId = groupName.GetListGroupId("lHead");
+    private readonly int LBodyId = groupName.GetListGroupId("lBody");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -28,16 +31,16 @@ public class ListUnorderedSectionParser(IServiceProvider provider) : IMultiLineS
             GroupCollection groups = match.Groups;
 
             writer.Write("<li>");
-            if (groups["lTask"].TryGetValue(out string? taskMarker)) {
+            if (groups[LTaskId].TryGetValue(out string? taskMarker)) {
                 bool isChecked = taskMarker.ToLowerInvariant().Contains('x');
                 writer.Write($"<input type=\"checkbox\" disabled {(isChecked ? "checked" : "")} /> ");
             }
             
-            if (groups["lHead"].TryGetValue(out string? listHeader)) {
+            if (groups[LHeadId].TryGetValue(out string? listHeader)) {
                 _markdownParser.Value.ParseSingleline(listHeader, writer);
             }
 
-            if (groups["lBody"].TryGetValue(out string? listBody)) {
+            if (groups[LBodyId].TryGetValue(out string? listBody)) {
                 string normalizedBody = NormalizationHelper.NormalizeIndentation(listBody);
                 _markdownParser.Value.ParseMultiline(normalizedBody, writer,origin | MultiLineOrigin.PreserveHtml);
             }

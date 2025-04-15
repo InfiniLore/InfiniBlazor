@@ -10,15 +10,16 @@ namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.SingleLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISingleLineSectionParser>("supScript")]
-public class SuperScriptSectionParser(IServiceProvider provider) : ISingleLineSectionParser {
+public class SuperScriptSectionParser(IServiceProvider provider, ICachedRegexGroupNames groupNames) : ISingleLineSectionParser {
     private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
     public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.SuperScript;
 
+    private readonly int SpId = groupNames.GetSingleLineGroupId("sp");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, SingleLineOrigin origin) {
-        if (!entireMatch.Groups["sp"].TryGetValue(out string? boldValue)) return;
+        if (!entireMatch.Groups[SpId].TryGetValue(out string? boldValue)) return;
 
         writer.Write("<sup>");
         _markdownParser.Value.ParseSingleline(boldValue, writer, origin | SkipOnOrigin);

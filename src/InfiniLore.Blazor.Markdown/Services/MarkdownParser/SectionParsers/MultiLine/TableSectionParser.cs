@@ -11,23 +11,27 @@ namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMultiLineSectionParser>("table")]
-public class TableSectionParser(IServiceProvider provider) : IMultiLineSectionParser {
+public class TableSectionParser(IServiceProvider provider, ICachedRegexGroupNames groupName) : IMultiLineSectionParser {
     private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
+    
+    private readonly int THeadId = groupName.GetMultiLineGroupId("tHead");
+    private readonly int TSepId = groupName.GetMultiLineGroupId("tSep");
+    private readonly int TBodyId = groupName.GetMultiLineGroupId("tBody");
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, MultiLineOrigin origin) {
         // Extract header, separator, and rows
-        ReadOnlySpan<char> header = entireMatch.Groups["tHead"].ValueSpan;
+        ReadOnlySpan<char> header = entireMatch.Groups[THeadId].ValueSpan;
         Span<Range> headerColumns = stackalloc Range[header.Length];
         int headerColumnCount = header.Split(headerColumns, '|', StringSplitOptions.TrimEntries);
 
-        ReadOnlySpan<char> separator = entireMatch.Groups["tSep"].ValueSpan;
+        ReadOnlySpan<char> separator = entireMatch.Groups[TSepId].ValueSpan;
         Span<Range> separatorColumns = stackalloc Range[separator.Length];
         int _ = separator.Split(separatorColumns, '|', StringSplitOptions.TrimEntries);
 
-        ReadOnlySpan<char> rows = entireMatch.Groups["tBody"].ValueSpan;
+        ReadOnlySpan<char> rows = entireMatch.Groups[TBodyId].ValueSpan;
         Span<Range> rowRanges = stackalloc Range[rows.Length];
         int rowCount = rows.Split(rowRanges, '\n', StringSplitOptions.TrimEntries);
 

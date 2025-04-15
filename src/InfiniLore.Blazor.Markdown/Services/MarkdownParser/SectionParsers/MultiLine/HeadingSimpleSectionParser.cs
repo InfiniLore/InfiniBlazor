@@ -10,14 +10,15 @@ namespace InfiniLore.Blazor.Markdown.Services.SectionParsers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMultiLineSectionParser>("headingSimple")]
-public class HeadingSimpleSectionParser(IServiceProvider provider) : IMultiLineSectionParser {
+public class HeadingSimpleSectionParser(IServiceProvider provider, ICachedRegexGroupNames groupName) : IMultiLineSectionParser {
     private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
-
+    
+    private readonly int HSTextId = groupName.GetMultiLineGroupId("hsText");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, MultiLineOrigin origin) {
-        if (!entireMatch.Groups["hsText"].TryGetValue(out string? headerSimpleText)) return;
+        if (!entireMatch.Groups[HSTextId].TryGetValue(out string? headerSimpleText)) return;
 
         writer.Write("<h1>");
         _markdownParser.Value.ParseSingleline(headerSimpleText, writer);
