@@ -37,5 +37,76 @@ public class TableDataSources {
             </table>
             """
         );
+
+        yield return static () => new MarkdownTestDto(SectionName,
+            """
+            | Tables        | Are           | Cool  |
+            | ------------- | ------------- | ----- |
+            | col 3 is      | right-aligned | $1600 |
+            | col 2 is      | centered      |   $12 |
+            | zebra stripes | are neat      |    $1 |
+            
+            | Tables        | Are           | Cool  |
+            | ------------- | ------------- | ----- |
+            | col 3 is      | right-aligned | $1600 |
+            | col 2 is      | centered      |   $12 |
+            | zebra stripes | are neat      |    $1 |
+            
+            """,
+            """
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tables</th>
+                        <th>Are</th>
+                        <th>Cool</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>col 3 is</td>
+                        <td>right-aligned</td>
+                        <td>$1600</td>
+                    </tr>
+                    <tr>
+                        <td>col 2 is</td>
+                        <td>centered</td>
+                        <td>$12</td>
+                    </tr>
+                    <tr>
+                        <td>zebra stripes</td>
+                        <td>are neat</td>
+                        <td>$1</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tables</th>
+                        <th>Are</th>
+                        <th>Cool</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>col 3 is</td>
+                        <td>right-aligned</td>
+                        <td>$1600</td>
+                    </tr>
+                    <tr>
+                        <td>col 2 is</td>
+                        <td>centered</td>
+                        <td>$12</td>
+                    </tr>
+                    <tr>
+                        <td>zebra stripes</td>
+                        <td>are neat</td>
+                        <td>$1</td>
+                    </tr>
+                </tbody>
+            </table>
+            """
+        );
     }
 }

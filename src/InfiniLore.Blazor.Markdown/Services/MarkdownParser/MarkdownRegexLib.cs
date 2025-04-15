@@ -54,7 +54,7 @@ public static partial class MarkdownRegexLib {
         | (?<table>
             ^\|(?<tHead>.+)\|\s*\r?\n
             ^\|(?<tSep>[:\-|\ ]+?)\|\s*\r?\n
-            (?<tBody>(?:^\|.*\|\s*)+)
+            (?<tBody>(?:^\|.*\S.*\|(?:\r?\n|$))+)
           )
         | (?<blockQuote>^>\s+.*(?:\r?\n(?![*+-]\s|[-.]?\d|\s*[^>]).+)*)
         | (?:
