@@ -17,7 +17,10 @@ namespace InfiniLore.Blazor.Markdown.Services;
 public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provider) : ITextEditor {
     public string Text {
         get => _text;
-        set => _text = TextEditorRegexLib.LineEndingRegex.Replace(value, "\n");
+        set {
+            _text = TextEditorRegexLib.LineEndingRegex.Replace(value, "\n");
+            UpdateTextMeta();
+        }
     }
     private readonly List<Range> Lines = [];
 

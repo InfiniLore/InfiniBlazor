@@ -10,7 +10,7 @@ public interface ITextEditor {
     string Text { get; set; }
     IEnumerable<ITextModifier> Modifiers { get; }
 
-    void UpdateTextMeta();
+    // void UpdateTextMeta();
     void Modify(string section, Range range);
     void Insert(string input, Range range);
     

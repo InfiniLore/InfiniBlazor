@@ -45,8 +45,6 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
     }
     
     private void UpdateMarkdown() {
-        textEditor.UpdateTextMeta();
-        
         MarkdownOutput = new MarkupString(markdownParser.Parse(textEditor.Text));
     }
     
