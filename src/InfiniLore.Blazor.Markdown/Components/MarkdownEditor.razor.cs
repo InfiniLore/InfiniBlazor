@@ -64,6 +64,7 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
         string lastPressedKey = _lastPressedKey;
         _lastPressedKey = obj.Key;
         
+        // Todo make this come form a dictionary or something which has the option for user configuration
         switch (obj, lastPressedKey) {
             case ({ CtrlKey: true, Key: "a" or "A" }, "a"): {
                 if (textEditor.Text.IsNullOrWhiteSpace()) break;

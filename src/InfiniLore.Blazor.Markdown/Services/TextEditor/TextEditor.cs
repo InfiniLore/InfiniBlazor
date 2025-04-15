@@ -15,54 +15,50 @@ namespace InfiniLore.Blazor.Markdown.Services;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableTransient<ITextEditor>]
 public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provider) : ITextEditor {
+    private string _text = string.Empty;
     public string Text {
         get => _text;
         set {
             _text = TextEditorRegexLib.LineEndingRegex.Replace(value, "\n");
-            UpdateTextMeta();
+            UpdateTextMetaData();
         }
     }
     private readonly List<Range> Lines = [];
 
+    private int _caretIndexToUpdate = -1;
+    
     private FrozenDictionary<string, ITextModifier> ModifierLookup { get; } = markdownConfig.TextEditorModifierNames.ToFrozenDictionary(
         name => name,
         provider.GetRequiredKeyedService<ITextModifier>
     );
-
-    public IEnumerable<ITextModifier> Modifiers => ModifierLookup.Values;
-    private int _caretIndexToUpdate = -1;
-    
     private FrozenDictionary<string, ITextModifier>.AlternateLookup<ReadOnlySpan<char>>? _lookupCache;
-    private string _text = string.Empty;
     private FrozenDictionary<string, ITextModifier>.AlternateLookup<ReadOnlySpan<char>> AlternateLookup => _lookupCache ??=  ModifierLookup.GetAlternateLookup<ReadOnlySpan<char>>();
-
+    
+    public IEnumerable<ITextModifier> Modifiers => ModifierLookup.Values;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void UpdateTextMeta() {
+    private void UpdateTextMetaData() {
         Regex.ValueMatchEnumerator lineMatches = TextEditorRegexLib.NewlinesRegex.EnumerateMatches(Text);
         Lines.Clear();
 
         int lastIndex = 0;
+        int textLength = Text.Length;
         
         foreach (ValueMatch valueMatch in lineMatches) {
             lastIndex = valueMatch.Index + valueMatch.Length;
             Lines.Add(new Range(valueMatch.Index, lastIndex - 1));
         }
 
-        // add the last line which didnt end with a newline
-        if (lastIndex < Text.Length) {
-            Lines.Add(new Range(lastIndex, Text.Length));
+        // add the last line which didn't end with a newline
+        if (lastIndex < textLength) {
+            Lines.Add(new Range(lastIndex, textLength));
         }
     }
 
     public void Modify(string section, Range range) {
         if (!AlternateLookup.TryGetValue(section, out ITextModifier? modifier)) return;
-
-        if (Lines.IsEmpty()
-            || !modifier.IsSingleLineStructure
-            || range.Start.Value == range.End.Value
-        ) {
+        if (!modifier.IsSingleLineStructure || range.Start.Value == range.End.Value) {
             Text = modifier.Modify(Text, range, this);
             return;
         }
