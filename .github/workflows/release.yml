@@ -18,21 +18,21 @@ jobs:
                   dotnet-version: '9.x'
 
             - name: Restore dependencies
-              run: dotnet restore InfiniLore.Blazor.sln
+              run: dotnet restore InfiniLore.InfiniBlazor.sln
 
             - name: Build
-              run: dotnet build InfiniLore.Blazor.sln --configuration Release --no-restore
+              run: dotnet build InfiniLore.InfiniBlazor.sln --configuration Release --no-restore
             
             # Ensure that the tests must pass 
             # The job will fail automatically if any test fails because `dotnet test` exits with a non-zero code
-            - name: Run tests - InfiniLore.Blazor
+            - name: Run tests - InfiniLore.InfiniBlazor
               run: dotnet run -c Release --no-restore --no-build
-              working-directory: "tests/Tests.InfiniLore.Blazor.Markdown"
+              working-directory: "tests/Tests.InfiniLore.InfiniBlazor.Markdown"
 
             - name: Publish to NuGet
               env:
                   NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
               run: |
-                  dotnet nuget push src/InfiniLore.Blazor/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                  dotnet nuget push src/InfiniLore.Blazor.Contracts/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                  dotnet nuget push src/InfiniLore.Blazor.Markdown/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                  dotnet nuget push src/InfiniLore.InfiniBlazor/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                  dotnet nuget push src/InfiniLore.InfiniBlazor.Contracts/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                  dotnet nuget push src/InfiniLore.InfiniBlazor.Markdown/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
