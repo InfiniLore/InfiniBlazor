@@ -140,4 +140,15 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
         textEditor.Insert(Source, loremText, await GetSelectionRangeAsync());
         UpdateMarkdown();
     }
+    
+    private async Task DebugTableAsync() {
+        const string tableText = """
+            | test | something |
+            |  ---- | --------- |
+            | alpha | beta |
+            """;
+        
+        textEditor.Insert(Source, tableText, await GetSelectionRangeAsync());
+        UpdateMarkdown();
+    }
 }
