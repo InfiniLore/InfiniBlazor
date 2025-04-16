@@ -3,32 +3,34 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.Blazor.Markdown.Config;
+using InfiniLore.Blazor.Markdown.Services.Pools;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Frozen;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.Blazor.Markdown.Services;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableTransient<ITextEditor>]
 public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provider) : ITextEditor {
     private int _caretIndexToUpdate = -1;
-    
+
     private FrozenDictionary<string, ITextModifier> ModifierLookup { get; } = markdownConfig.TextEditorModifierNames.ToFrozenDictionary(
-        name => name,
+        keySelector: name => name,
         provider.GetRequiredKeyedService<ITextModifier>
     );
     private FrozenDictionary<string, ITextModifier>.AlternateLookup<ReadOnlySpan<char>>? _lookupCache;
-    private FrozenDictionary<string, ITextModifier>.AlternateLookup<ReadOnlySpan<char>> AlternateLookup => _lookupCache ??=  ModifierLookup.GetAlternateLookup<ReadOnlySpan<char>>();
+    private FrozenDictionary<string, ITextModifier>.AlternateLookup<ReadOnlySpan<char>> AlternateLookup => _lookupCache ??= ModifierLookup.GetAlternateLookup<ReadOnlySpan<char>>();
 
     public IEnumerable<ITextModifier> Modifiers => ModifierLookup.Values;
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void Modify(ITextSource source, string section, Range range) {
         if (!AlternateLookup.TryGetValue(section, out ITextModifier? modifier)) return;
+
         if (!modifier.IsSingleLineStructure || range.Start.Value == range.End.Value) {
             modifier.Modify(source, range, this);
             return;
@@ -53,38 +55,57 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
 
             // check if the line is empty
             if (source.Text.AsSpan(intersectStart, intersectEnd - intersectStart).IsEmpty) continue;
-            
-            // handle like lists
-            Match lineMatch = TextEditorRegexLib.ListItemsRegex.Match(source.Text, intersectStart, intersectEnd - intersectStart);
-            if (lineMatch.Success) {
-                int newIntersectStart = intersectStart;
-                if (lineMatch.Groups[1].TryGetLength(out int prefixLength)) {
-                    newIntersectStart += prefixLength;
-                }
-                modifier.Modify(source, new Range(newIntersectStart, intersectEnd), this);
-                continue;
-            }
-            
-            // handle tables
-            ReadOnlySpan<char> possibleTable = source.Text.AsSpan(intersectStart, intersectEnd - intersectStart);
-            if (TextEditorRegexLib.IsTableLineRegex.IsMatch(possibleTable)) {
-                Regex.ValueMatchEnumerator tableCellMatches = TextEditorRegexLib.TableCellsRegex.EnumerateMatches(possibleTable);
-                Stack<Range> tableCellMatchesStack = [];
-                foreach (ValueMatch valueMatch in tableCellMatches) {
-                    tableCellMatchesStack.Push(new Range(intersectStart + valueMatch.Index, intersectStart + valueMatch.Index + valueMatch.Length));
-                }
-                while (tableCellMatchesStack.TryPop(out Range result)) {
-                    modifier.Modify(source, result, this); 
-                }
-                continue;
-            }
-            if (TextEditorRegexLib.IsTableHeaderLineRegex.IsMatch(possibleTable)) continue;
-            
+
+            // handle special structures
+            if (TryHandleAsLine(source, intersectStart, intersectEnd, modifier)) continue;
+            if (TryHandleAsTableRow(source, intersectStart, intersectEnd, modifier)) continue;
+
             // Handle like normal
             modifier.Modify(source, new Range(intersectStart, intersectEnd), this);
         }
     }
     
+    #region Modify Special Structures
+    private bool TryHandleAsLine(ITextSource source, int intersectStart, int intersectEnd, ITextModifier modifier) {
+        Match lineMatch = TextEditorRegexLib.ListItemsRegex.Match(source.Text, intersectStart, intersectEnd - intersectStart);
+        if (!lineMatch.Success || !lineMatch.Groups[1].TryGetLength(out int prefixLength)) return false;
+
+        modifier.Modify(source, new Range(intersectStart + prefixLength, intersectEnd), this);
+        return true;
+    }
+
+    private bool TryHandleAsTableRow(ITextSource source, int intersectStart, int intersectEnd, ITextModifier modifier) {
+        ReadOnlySpan<char> possibleTable = source.Text.AsSpan(intersectStart, intersectEnd - intersectStart);
+        if (TextEditorRegexLib.IsTableLineRegex.IsMatch(possibleTable)) {
+            Regex.ValueMatchEnumerator tableCellMatches = TextEditorRegexLib.TableCellsRegex.EnumerateMatches(possibleTable);
+            Stack<Range> tableCellMatchesStack = RangeStackPool.Get();
+            try {
+                while (tableCellMatches.MoveNext()) {
+                    ValueMatch current = tableCellMatches.Current;
+                    if (current.Index < 0 || current.Length <= 0) continue;
+
+                    tableCellMatchesStack.Push(new Range(
+                        intersectStart + current.Index,
+                        intersectStart + current.Index + current.Length
+                    ));
+                }
+
+                while (tableCellMatchesStack.TryPop(out Range result)) {
+                    modifier.Modify(source, result, this);
+                }
+                return true;
+            }
+            finally {
+                RangeStackPool.Return(tableCellMatchesStack);
+            }
+        }
+
+        if (TextEditorRegexLib.IsTableHeaderLineRegex.IsMatch(possibleTable)) return true;
+
+        return false;
+    }
+    #endregion
+
     public void Insert(ITextSource source, string input, Range range) {
         int totalLength = source.Length;
         int start = range.Start.GetOffset(totalLength);
@@ -101,7 +122,7 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
 
     public bool TryGetCaretLine(ITextSource source, int caretIndex, out Range lineRange) {
         int normalizedCaretIndex = Math.Max(0, caretIndex);
-        
+
         // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
         foreach (Range lr in source.Lines) {
             if (normalizedCaretIndex < lr.Start.Value) continue;
@@ -118,12 +139,14 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
     public bool TryGetCaretUpdate(out int caretIndex) {
         caretIndex = _caretIndexToUpdate;
         if (_caretIndexToUpdate < 0) return false;
+
         _caretIndexToUpdate = -1;
         return true;
     }
-    
+
     public void UpdateCaret(int caretIndex) {
         if (caretIndex < 0) return;
+
         _caretIndexToUpdate = caretIndex;
     }
 }
