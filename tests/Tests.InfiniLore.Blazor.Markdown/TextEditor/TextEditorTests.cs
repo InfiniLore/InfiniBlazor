@@ -26,6 +26,7 @@ public class TextEditorTests(ITextEditor textEditor) {
     }
 
     public static IEnumerable<Func<(string, string)>> ModifyBoldMultiLineDataSource() {
+        yield return () => ("- ", "- ****");
         yield return () => ("- Hello World!", "- **Hello World!**");
         yield return () => ("1. Hello World!", "1. **Hello World!**");
         yield return () => ("- Hello World!\n- Hello World!", "- **Hello World!**\n- **Hello World!**");

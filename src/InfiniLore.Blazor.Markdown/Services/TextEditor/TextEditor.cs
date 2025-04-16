@@ -59,7 +59,6 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
             if (lineMatch.Success) {
                 int newIntersectStart = intersectStart;
                 if (lineMatch.Groups[1].TryGetLength(out int prefixLength)) {
-                    if (lineMatch.Groups[2].TryGetValueSpan(out ReadOnlySpan<char> body) && body.Trim().IsWhiteSpace()) continue;
                     newIntersectStart += prefixLength;
                 }
                 modifier.Modify(source, new Range(newIntersectStart, intersectEnd), this);
