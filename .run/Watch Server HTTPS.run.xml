@@ -5,12 +5,12 @@
         <entry key="DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION" value="1" />
       </map>
     </option>
-    <option name="exePath" value="$PROJECT_DIR$/examples/Example.InfiniLore.Blazor/bin/Release/net9.0/Example.InfiniLore.Blazor.exe" />
+    <option name="exePath" value="$PROJECT_DIR$/examples/Example.InfiniLore.InfiniBlazor/bin/Release/net9.0/Example.InfiniLore.InfiniBlazor.exe" />
     <option name="programParameters" value="--launch-profile https" />
-    <option name="projectFilePath" value="$PROJECT_DIR$/examples/Example.InfiniLore.Blazor/Example.InfiniLore.Blazor.csproj" />
+    <option name="projectFilePath" value="$PROJECT_DIR$/examples/Example.InfiniLore.InfiniBlazor/Example.InfiniLore.InfiniBlazor.csproj" />
     <option name="projectTfm" value="net9.0" />
     <option name="watchParameters" value="" />
-    <option name="workingDirectory" value="$PROJECT_DIR$/examples/Example.InfiniLore.Blazor/" />
+    <option name="workingDirectory" value="$PROJECT_DIR$/examples/Example.InfiniLore.InfiniBlazor/" />
     <method v="2" />
   </configuration>
 </component>

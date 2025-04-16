@@ -1,0 +1,41 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports *@
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@rendermode InteractiveServer
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html *@
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<CollapsibleMenu @bind-IsMenuCollapsed="@IsMenuCollapsed">
+    <Header>
+        <a href="/"
+           class="@(!IsMenuCollapsed ? "text-1xl font-bold text-white hover:text-gray-300 no-underline" : "hidden")">
+            InfiniLore.InfiniBlazor
+        </a>
+    </Header>
+
+    <NavigationMenu>
+        <CollapsibleMenuButton Href="/markdown-test">
+            <Icon>
+                <LiSignature/>
+            </Icon>
+            <Text>Markdown Test</Text>
+        </CollapsibleMenuButton>
+    </NavigationMenu>
+
+    <Footer>
+    </Footer>
+</CollapsibleMenu>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code *@
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    // State for user details
+    private string UserName { get; set; } = "Guest";
+    private string ProfileImage { get; set; } = "";// Fallback image
+    private bool IsMenuCollapsed { get; set; } = false;// Tracks whether the menu is collapsed
+}

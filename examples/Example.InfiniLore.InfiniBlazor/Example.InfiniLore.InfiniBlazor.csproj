@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>Example</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
+      <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Markdown\InfiniLore.InfiniBlazor.Markdown.csproj" />
+      <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="InfiniLore.Lucide" Version="0.22.488" />
+        <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.4" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.4" />
+    </ItemGroup>
+
+</Project>

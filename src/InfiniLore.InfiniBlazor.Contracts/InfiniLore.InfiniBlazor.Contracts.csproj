@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>InfiniLore.InfiniBlazor</RootNamespace>
+
+        <!-- Package metadata -->
+        <PackageId>InfiniLore.InfiniBlazor.Contracts</PackageId>
+        <Version>0.2.2</Version>
+        <Authors>Anna Sas</Authors>
+        <Description>Contract library for InfiniLore's Component Library</Description>
+        <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
+        <PackageTags>Blazor;Ui;Design;Components;Library;Contracts</PackageTags>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <DebugType>embedded</DebugType>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageIcon>icon.png</PackageIcon>
+    </PropertyGroup>
+
+    <!-- Include external files -->
+    <ItemGroup>
+        <None Include="../../LICENSE" Pack="true" PackagePath="" Visible="false" />
+        <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
+        <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
+        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Markdown" />
+        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Components\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.4" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
+    </ItemGroup>
+
+</Project>
