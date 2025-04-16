@@ -28,7 +28,7 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void Modify(ITextSource source, string section, Range range) {
+    public void Modify(ITextSource source, ReadOnlySpan<char> section, Range range) {
         if (!AlternateLookup.TryGetValue(section, out ITextModifier? modifier)) return;
 
         if (!modifier.IsSingleLineStructure || range.Start.Value == range.End.Value) {
@@ -106,7 +106,7 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
     }
     #endregion
 
-    public void Insert(ITextSource source, string input, Range range) {
+    public void Insert(ITextSource source, ReadOnlySpan<char> input, Range range) {
         int totalLength = source.Length;
         int start = range.Start.GetOffset(totalLength);
         int end = range.End.GetOffset(totalLength);
