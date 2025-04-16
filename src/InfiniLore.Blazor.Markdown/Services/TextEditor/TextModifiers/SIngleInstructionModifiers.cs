@@ -16,18 +16,18 @@ public abstract class SingleInstructionModifiers(ILogger logger) : ITextModifier
 
     protected abstract string Instruction { get; }
 
-    public string Modify(string input, Range range, ITextEditor editor) {
-        ReadOnlySpan<char> inputSpan = input.AsSpan();
+    public void Modify(ITextSource source, Range range, ITextEditor editor) {
+        ReadOnlySpan<char> inputSpan = source.TextSpan;
         
         // Calculate indices for range
-        int length = input.Length;
+        int length = source.Length;
         int start = range.Start.GetOffset(length);
         int end = range.End.GetOffset(length);
         
         // Validate range
         if (start < 0 || end > length || start > end) {
             logger.LogWarning("Invalid range: start={start}, end={end}, length={length}", start, end, length);
-            return input;
+            return;
         }
         
         // Precompute the final size needed for the buffer
@@ -51,8 +51,7 @@ public abstract class SingleInstructionModifiers(ILogger logger) : ITextModifier
             editor.UpdateCaret(range.Start.Value + instructionLength);
 
             // Return only the relevant portion of the buffer as a string
-            return new string(bufferSpan[..finalLength]);
-
+            source.Text = new string(bufferSpan[..finalLength]);
         }
         finally {
             // Return the buffer to the pool to avoid memory leaks

@@ -6,10 +6,10 @@ namespace InfiniLore.Blazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface ITextModifier {
-    string IconName { get; }
-    string ModifierName { get; }
-    bool IsSingleLineStructure { get; }
+public interface ITextSource {
+    string Text { get; set; }
+    ReadOnlySpan<char> TextSpan { get; }
     
-    void Modify(ITextSource source, Range range, ITextEditor editor);
+    int Length { get; }
+    IReadOnlyList<Range> Lines { get; }
 }

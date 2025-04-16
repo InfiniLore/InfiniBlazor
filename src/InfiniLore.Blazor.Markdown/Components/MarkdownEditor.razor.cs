@@ -9,18 +9,20 @@ namespace InfiniLore.Blazor.Markdown.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsRuntimeHelper, IMarkdownParser markdownParser) {
+public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsRuntimeHelper, IMarkdownParser markdownParser) : ComponentBase {
     private MarkupString MarkdownOutput { get; set; }
     private ElementReference _textareaRef;
     private string _lastPressedKey = string.Empty;
     private string Text {
-        get => textEditor.Text;
+        get => Source.Text;
         set {
             // needed to fix a but that places the caret at the end of the text, see https://github.com/dotnet/aspnetcore/issues/20072
-            textEditor.Text = value;
+            Source.Text = value;
             UpdateMarkdown();
         }
     }
+    
+    [Parameter, EditorRequired] public required ITextSource Source { get; init; } = null!;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -45,11 +47,11 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
     }
     
     private void UpdateMarkdown() {
-        MarkdownOutput = new MarkupString(markdownParser.Parse(textEditor.Text));
+        MarkdownOutput = new MarkupString(markdownParser.Parse(Source.Text));
     }
     
     private async Task OnModifierClickAsync(string modifierName) {
-        textEditor.Modify(modifierName, await GetSelectionRangeAsync());
+        textEditor.Modify(Source, modifierName, await GetSelectionRangeAsync());
 
         UpdateMarkdown();
     }
@@ -67,18 +69,18 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
         // Todo make this come form a dictionary or something which has the option for user configuration
         switch (obj, lastPressedKey) {
             case ({ CtrlKey: true, Key: "a" or "A" }, "a"): {
-                if (textEditor.Text.IsNullOrWhiteSpace()) break;
+                if (Source.Text.IsNullOrWhiteSpace()) break;
 
-                await jsRuntimeHelper.SetSelectionRangeAsync(_textareaRef, 0, textEditor.Text.Length);
+                await jsRuntimeHelper.SetSelectionRangeAsync(_textareaRef, 0, Source.Length);
                 break;
             }
 
             case ({ CtrlKey: true, Key: "a" or "A" }, _): {
-                if (textEditor.Text.IsNullOrWhiteSpace()) break;
+                if (Source.Text.IsNullOrWhiteSpace()) break;
 
                 // when we select a only once we should get the current line
                 int caretIndex = await jsRuntimeHelper.GetSelectionStartAsync(_textareaRef);
-                if (!textEditor.TryGetCaretLine(caretIndex, out Range lineRange)) break;
+                if (!textEditor.TryGetCaretLine(Source, caretIndex, out Range lineRange)) break;
 
                 await jsRuntimeHelper.SetSelectionRangeAsync(_textareaRef, lineRange.Start.Value, lineRange.End.Value);
                 break;
@@ -86,21 +88,21 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
 
             case ({ CtrlKey: true, Key: "b" }, _): {
                 Range selection = await GetSelectionRangeAsync();
-                textEditor.Modify("bold", selection);
+                textEditor.Modify(Source, "bold", selection);
                 UpdateMarkdown();
                 break;
             }
 
             case ({ CtrlKey: true, Key: "i" }, _): {
                 Range selection = await GetSelectionRangeAsync();
-                textEditor.Modify("italic", selection);
+                textEditor.Modify(Source, "italic", selection);
                 UpdateMarkdown();
                 break;
             }
 
             case ({ CtrlKey: true, Key: "u" }, _): {
                 Range selection = await GetSelectionRangeAsync();
-                textEditor.Modify("underline", selection);
+                textEditor.Modify(Source, "underline", selection);
                 UpdateMarkdown();
                 break;
             }
@@ -135,7 +137,7 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
             est laborum.
             """;
 
-        textEditor.Insert(loremText, await GetSelectionRangeAsync());
+        textEditor.Insert(Source, loremText, await GetSelectionRangeAsync());
         UpdateMarkdown();
     }
 }

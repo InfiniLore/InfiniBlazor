@@ -5,7 +5,6 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.Blazor.Markdown.Config;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Frozen;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.Blazor.Markdown.Services;
@@ -15,16 +14,6 @@ namespace InfiniLore.Blazor.Markdown.Services;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableTransient<ITextEditor>]
 public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provider) : ITextEditor {
-    private string _text = string.Empty;
-    public string Text {
-        get => _text;
-        set {
-            _text = TextEditorRegexLib.LineEndingRegex.Replace(value, "\n");
-            UpdateTextMetaData();
-        }
-    }
-    private readonly List<Range> Lines = [];
-
     private int _caretIndexToUpdate = -1;
     
     private FrozenDictionary<string, ITextModifier> ModifierLookup { get; } = markdownConfig.TextEditorModifierNames.ToFrozenDictionary(
@@ -33,43 +22,25 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
     );
     private FrozenDictionary<string, ITextModifier>.AlternateLookup<ReadOnlySpan<char>>? _lookupCache;
     private FrozenDictionary<string, ITextModifier>.AlternateLookup<ReadOnlySpan<char>> AlternateLookup => _lookupCache ??=  ModifierLookup.GetAlternateLookup<ReadOnlySpan<char>>();
-    
+
     public IEnumerable<ITextModifier> Modifiers => ModifierLookup.Values;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private void UpdateTextMetaData() {
-        Regex.ValueMatchEnumerator lineMatches = TextEditorRegexLib.NewlinesRegex.EnumerateMatches(Text);
-        Lines.Clear();
-
-        int lastIndex = 0;
-        int textLength = Text.Length;
-        
-        foreach (ValueMatch valueMatch in lineMatches) {
-            lastIndex = valueMatch.Index + valueMatch.Length;
-            Lines.Add(new Range(valueMatch.Index, lastIndex - 1));
-        }
-
-        // add the last line which didn't end with a newline
-        if (lastIndex < textLength) {
-            Lines.Add(new Range(lastIndex, textLength));
-        }
-    }
-
-    public void Modify(string section, Range range) {
+    public void Modify(ITextSource source, string section, Range range) {
         if (!AlternateLookup.TryGetValue(section, out ITextModifier? modifier)) return;
         if (!modifier.IsSingleLineStructure || range.Start.Value == range.End.Value) {
-            Text = modifier.Modify(Text, range, this);
+            modifier.Modify(source, range, this);
             return;
         }
 
         // if it is a single line structure, then we need to treat every line as a new modifier
-        int totalLength = Text.Length;
+        int totalLength = source.Length;
         int start = range.Start.GetOffset(totalLength);
         int end = range.End.GetOffset(totalLength);
 
-        for (int index = Lines.Count - 1; index >= 0; index--) {
-            Range lineRange = Lines[index];
+        for (int index = source.Lines.Count - 1; index >= 0; index--) {
+            Range lineRange = source.Lines[index];
             int lineStart = lineRange.Start.GetOffset(totalLength);
             int lineEnd = lineRange.End.GetOffset(totalLength);
 
@@ -81,21 +52,21 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
             int intersectEnd = Math.Min(lineEnd, end);
 
             // check if the line is empty
-            if (Text.AsSpan(intersectStart, intersectEnd - intersectStart).IsEmpty) continue;
+            if (source.Text.AsSpan(intersectStart, intersectEnd - intersectStart).IsEmpty) continue;
             
             // handle special structures, like lists
-            Match lineMatch = TextEditorRegexLib.ListItemsRegex.Match(Text, intersectStart, intersectEnd - intersectStart);
+            Match lineMatch = TextEditorRegexLib.ListItemsRegex.Match(source.Text, intersectStart, intersectEnd - intersectStart);
             if (lineMatch.Success && lineMatch.Groups[1].TryGetLength(out int prefixLength)) {
                 if (lineMatch.Groups[2].TryGetValueSpan(out ReadOnlySpan<char> body) && body.Trim().IsWhiteSpace()) continue;
                 intersectStart += prefixLength;
             }
 
-            Text = modifier.Modify(Text, new Range(intersectStart, intersectEnd), this);
+            modifier.Modify(source, new Range(intersectStart, intersectEnd), this);
         }
     }
     
-    public void Insert(string input, Range range) {
-        int totalLength = Text.Length;
+    public void Insert(ITextSource source, string input, Range range) {
+        int totalLength = source.Length;
         int start = range.Start.GetOffset(totalLength);
         int end = range.End.GetOffset(totalLength);
 
@@ -105,17 +76,14 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
         }
 
         // Generate the new text by replacing the specified range with the input text
-        var builder = new StringBuilder(Text);
-        builder.Remove(start, end - start);
-        builder.Insert(start, input);
-        Text = builder.ToString();
+        source.Text = string.Concat(source.Text.AsSpan(0, start), input, source.Text.AsSpan(end));
     }
 
-    public bool TryGetCaretLine(int caretIndex, out Range lineRange) {
+    public bool TryGetCaretLine(ITextSource source, int caretIndex, out Range lineRange) {
         int normalizedCaretIndex = Math.Max(0, caretIndex);
         
         // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
-        foreach (Range lr in Lines) {
+        foreach (Range lr in source.Lines) {
             if (normalizedCaretIndex < lr.Start.Value) continue;
             if (normalizedCaretIndex > lr.End.Value) continue;
 
