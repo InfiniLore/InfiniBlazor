@@ -1,1 +1,1 @@
-﻿# InfiniLore.Blazor
+﻿# InfiniLore.InfiniBlazor
