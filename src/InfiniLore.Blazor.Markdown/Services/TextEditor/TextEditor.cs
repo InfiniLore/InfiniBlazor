@@ -54,13 +54,34 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
             // check if the line is empty
             if (source.Text.AsSpan(intersectStart, intersectEnd - intersectStart).IsEmpty) continue;
             
-            // handle special structures, like lists
+            // handle like lists
             Match lineMatch = TextEditorRegexLib.ListItemsRegex.Match(source.Text, intersectStart, intersectEnd - intersectStart);
-            if (lineMatch.Success && lineMatch.Groups[1].TryGetLength(out int prefixLength)) {
-                if (lineMatch.Groups[2].TryGetValueSpan(out ReadOnlySpan<char> body) && body.Trim().IsWhiteSpace()) continue;
-                intersectStart += prefixLength;
+            if (lineMatch.Success) {
+                int newIntersectStart = intersectStart;
+                if (lineMatch.Groups[1].TryGetLength(out int prefixLength)) {
+                    if (lineMatch.Groups[2].TryGetValueSpan(out ReadOnlySpan<char> body) && body.Trim().IsWhiteSpace()) continue;
+                    newIntersectStart += prefixLength;
+                }
+                modifier.Modify(source, new Range(newIntersectStart, intersectEnd), this);
+                continue;
             }
-
+            
+            // handle tables
+            ReadOnlySpan<char> possibleTable = source.Text.AsSpan(intersectStart, intersectEnd - intersectStart);
+            if (TextEditorRegexLib.IsTableLineRegex.IsMatch(possibleTable)) {
+                Regex.ValueMatchEnumerator tableCellMatches = TextEditorRegexLib.TableCellsRegex.EnumerateMatches(possibleTable);
+                Stack<Range> tableCellMatchesStack = [];
+                foreach (ValueMatch valueMatch in tableCellMatches) {
+                    tableCellMatchesStack.Push(new Range(intersectStart + valueMatch.Index, intersectStart + valueMatch.Index + valueMatch.Length));
+                }
+                while (tableCellMatchesStack.TryPop(out Range result)) {
+                    modifier.Modify(source, result, this); 
+                }
+                continue;
+            }
+            if (TextEditorRegexLib.IsTableHeaderLineRegex.IsMatch(possibleTable)) continue;
+            
+            // Handle like normal
             modifier.Modify(source, new Range(intersectStart, intersectEnd), this);
         }
     }

@@ -29,19 +29,6 @@ public static partial class MarkdownRegexLib {
             \((?<lrHref>http(?:\?)?[^\)]+?)(?:\s?"(?<lrTitle>[^"]*)")?\)
           )
         | (?<tag>\#(?<tText>[^#\s]+))
-        | (?<span>
-          <(?<tag>span)\b[^>]*>
-          (?<spanBody>
-            (?>
-              [^<]+
-              | <(?<open>\k<tag>)\b[^>]*>
-              | </(?<-open>\k<tag>)>
-              | <(?!/?\k<tag>\b)[^>]+>
-            )*
-          )
-          (?(open)(?!))
-          </\k<tag>>
-        )
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex SinglelineStructuresRegex { get; }
 

@@ -4,7 +4,6 @@
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.Blazor.Markdown.Services;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -42,7 +41,7 @@ public class TextSource : ITextSource{
         
         foreach (ValueMatch valueMatch in lineMatches) {
             lastIndex = valueMatch.Index + valueMatch.Length;
-            LinesCache.Add(new Range(valueMatch.Index, lastIndex - 1));
+            LinesCache.Add(new Range(valueMatch.Index, lastIndex - 1)); // -1 to exclude the newline character
         }
 
         // add the last line which didn't end with a newline

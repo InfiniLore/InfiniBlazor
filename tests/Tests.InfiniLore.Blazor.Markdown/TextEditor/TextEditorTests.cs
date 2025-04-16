@@ -25,6 +25,37 @@ public class TextEditorTests(ITextEditor textEditor) {
         }
     }
 
+    public static IEnumerable<Func<(string, string)>> ModifyBoldMultiLineDataSource() {
+        yield return () => ("- Hello World!", "- **Hello World!**");
+        yield return () => ("1. Hello World!", "1. **Hello World!**");
+        yield return () => ("- Hello World!\n- Hello World!", "- **Hello World!**\n- **Hello World!**");
+        yield return () => ("1. Hello World!\n2. Hello World!", "1. **Hello World!**\n2. **Hello World!**");
+        yield return () => (
+            """
+            | test | something |
+            | ---- | --------- |
+            | alpha | beta |
+            """,
+            """
+            | **test** | **something** |
+            | ---- | --------- |
+            | **alpha** | **beta** |
+            """
+        );
+        yield return () => (
+            "alpha | beta |",
+            "**alpha** | **beta** |"
+        );
+        yield return () => (
+            "alpha | beta",
+            "**alpha** | **beta**"
+        );
+        yield return () => (
+            "| alpha | beta",
+            "| **alpha** | **beta**"
+        );
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -33,30 +64,29 @@ public class TextEditorTests(ITextEditor textEditor) {
     public async Task Modify_Bold_SingleLine(int start, int end, string expected) {
         // Arrange
         var source = new TextSource { Text = "Hello World!" };
+        var expectedSource = new TextSource { Text = expected };
         Range range = start..end;
 
         // Act
         textEditor.Modify(source,"bold", range);
 
         // Assert
-        await Assert.That(source.Text).IsEqualTo(expected);
+        await Assert.That(source.Text).IsEqualTo(expectedSource.Text);
     }
 
     [Test]
-    [Arguments("- Hello World!", "- **Hello World!**")]
-    [Arguments("1. Hello World!", "1. **Hello World!**")]
-    [Arguments("- Hello World!\n- Hello World!", "- **Hello World!**\n- **Hello World!**")]
-    [Arguments("1. Hello World!\n2. Hello World!", "1. **Hello World!**\n2. **Hello World!**")]
+    [MethodDataSource(nameof(ModifyBoldMultiLineDataSource))]
     public async Task Modify_Bold_MultiLine(string input, string expected) {
         // Arrange
         var source = new TextSource { Text =input };
+        var expectedSource = new TextSource { Text = expected };
         Range range = ..input.Length;
         
         // Act
         textEditor.Modify(source, "bold", range);
         
         // Assert
-        await Assert.That(source.Text).IsEqualTo(expected);
+        await Assert.That(source.Text).IsEqualTo(expectedSource.Text);
     }
 
     [Test]
