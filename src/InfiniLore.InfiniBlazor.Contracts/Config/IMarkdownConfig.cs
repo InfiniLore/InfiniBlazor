@@ -1,13 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Markdown;
+using System.Collections.Immutable;
+
+namespace InfiniLore.InfiniBlazor.Config;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMarkdownWriter {
-    IMarkdownWriter Write(string value);
-    IMarkdownWriter Write(char value);
-    IMarkdownWriter Write(int value);
-    IMarkdownWriter Write(ReadOnlySpan<char> value);
+public interface IMarkdownConfig {
+    ImmutableArray<string> TextEditorModifierNames { get; }
 }

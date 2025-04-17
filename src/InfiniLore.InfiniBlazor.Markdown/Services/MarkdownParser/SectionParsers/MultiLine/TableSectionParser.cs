@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.MarkdownParser;
 using Microsoft.Extensions.DependencyInjection;
 using System.Buffers;
 using System.Text.RegularExpressions;

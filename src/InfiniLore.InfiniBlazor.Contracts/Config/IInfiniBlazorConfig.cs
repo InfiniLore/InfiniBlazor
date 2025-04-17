@@ -1,11 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Services.Themes;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace InfiniLore.InfiniBlazor.Config;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IInfiniLoreTheme {
-    
+public interface IInfiniBlazorConfig {
+    internal IServiceCollection Services { get; }
 }

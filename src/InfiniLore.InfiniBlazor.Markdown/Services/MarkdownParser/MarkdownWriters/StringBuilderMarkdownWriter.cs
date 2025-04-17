@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.MarkdownParser;
 using System.Text;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Services.MarkdownWriters;

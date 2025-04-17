@@ -1,19 +1,15 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Microsoft.AspNetCore.Components;
-
-namespace InfiniLore.InfiniBlazor.Services;
+namespace InfiniLore.InfiniBlazor.Themes;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IJsRuntimeHelper {
-    Task<int> GetSelectionStartAsync(ElementReference element);
-    Task<int> GetSelectionEndAsync(ElementReference element);
-    Task<(int, int)> GetSelectionAsync(ElementReference element);
-    Task SetSelectionRangeAsync(ElementReference element, int start, int end);
-    
-    Task AddPreventDefaultListenerAsync();
-    Task RemovePreventDefaultListenerAsync();
+public static class ThemeVarConstants {
+    public const string LinkColor = "var(link-color)";
+    public const string LinkHoverColor = "var(link-hover-color)";
+    public const string LinkActiveColor = "var(link-active-color)";
+    public const string LinkVisitedColor = "var(link-visited-color)";
+    public const string LinkFocusColor = "var(link-focus-color)";
 }

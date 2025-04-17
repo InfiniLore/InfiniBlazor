@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using Ganss.Xss;
+using InfiniLore.InfiniBlazor.Config;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Config;

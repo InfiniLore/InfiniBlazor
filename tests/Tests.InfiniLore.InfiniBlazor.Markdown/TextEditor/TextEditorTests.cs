@@ -1,8 +1,10 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor;
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.Services;
+using InfiniLore.InfiniBlazor.TextEditor;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.TextEditor;
 

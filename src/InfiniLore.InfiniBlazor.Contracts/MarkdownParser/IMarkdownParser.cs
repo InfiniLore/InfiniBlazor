@@ -1,14 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Markdown;
-
+namespace InfiniLore.InfiniBlazor.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface ICachedRegexGroupNames {
-    int GetSingleLineGroupId(ReadOnlySpan<char> groupName);
-    int GetMultiLineGroupId(ReadOnlySpan<char> groupName);
-    int GetSpanGroupId(ReadOnlySpan<char> groupName);
-    int GetListGroupId(ReadOnlySpan<char> groupName);
+public interface IMarkdownParser {
+    string Parse(string markdown);
+    void Parse<T>(string markdown, T writer) where T : TextWriter;
+
+    void ParseMultiline(string markdown, IMarkdownWriter writer, MultiLineOrigin origin = MultiLineOrigin.Undefined);
+    void ParseSingleline(string markdown, IMarkdownWriter writer, SingleLineOrigin origin = SingleLineOrigin.Undefined);
 }

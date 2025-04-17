@@ -1,6 +1,8 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Config;
+using InfiniLore.InfiniBlazor.TextEditor;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Config;

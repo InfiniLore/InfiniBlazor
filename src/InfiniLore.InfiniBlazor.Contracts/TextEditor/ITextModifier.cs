@@ -1,13 +1,15 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Microsoft.Extensions.DependencyInjection;
-
-namespace InfiniLore.InfiniBlazor;
+namespace InfiniLore.InfiniBlazor.TextEditor;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IInfiniBlazorConfig {
-    internal IServiceCollection Services { get; }
+public interface ITextModifier {
+    string IconName { get; }
+    string ModifierName { get; }
+    bool IsSingleLineStructure { get; }
+    
+    void Modify(ITextSource source, Range range, ITextEditor editor);
 }

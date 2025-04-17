@@ -1,15 +1,19 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Markdown;
+using Microsoft.AspNetCore.Components;
+
+namespace InfiniLore.InfiniBlazor.JsRuntime;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface ITextModifier {
-    string IconName { get; }
-    string ModifierName { get; }
-    bool IsSingleLineStructure { get; }
+public interface IJsRuntimeHelper {
+    Task<int> GetSelectionStartAsync(ElementReference element);
+    Task<int> GetSelectionEndAsync(ElementReference element);
+    Task<(int, int)> GetSelectionAsync(ElementReference element);
+    Task SetSelectionRangeAsync(ElementReference element, int start, int end);
     
-    void Modify(ITextSource source, Range range, ITextEditor editor);
+    Task AddPreventDefaultListenerAsync();
+    Task RemovePreventDefaultListenerAsync();
 }

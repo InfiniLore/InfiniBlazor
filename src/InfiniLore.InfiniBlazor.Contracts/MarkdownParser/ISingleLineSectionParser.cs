@@ -1,15 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Services.Themes;
+using System.Text.RegularExpressions;
 
+namespace InfiniLore.InfiniBlazor.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class ThemeVarConstants {
-    public const string LinkColor = "var(link-color)";
-    public const string LinkHoverColor = "var(link-hover-color)";
-    public const string LinkActiveColor = "var(link-active-color)";
-    public const string LinkVisitedColor = "var(link-visited-color)";
-    public const string LinkFocusColor = "var(link-focus-color)";
+public interface ISingleLineSectionParser {
+    public SingleLineOrigin SkipOnOrigin { get; }
+
+    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, SingleLineOrigin origin);
 }

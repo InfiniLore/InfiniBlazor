@@ -1,7 +1,9 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Services;
+using InfiniLore.InfiniBlazor.JsRuntime;
+using InfiniLore.InfiniBlazor.MarkdownParser;
+using InfiniLore.InfiniBlazor.TextEditor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 

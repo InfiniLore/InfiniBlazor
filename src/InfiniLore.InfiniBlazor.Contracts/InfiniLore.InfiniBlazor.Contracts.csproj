@@ -32,10 +32,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Components\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.4" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
     </ItemGroup>

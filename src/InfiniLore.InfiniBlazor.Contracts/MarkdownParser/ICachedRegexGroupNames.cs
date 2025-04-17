@@ -1,13 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Services.Themes;
+namespace InfiniLore.InfiniBlazor.MarkdownParser;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IThemeSelector {
-    public IInfiniLoreTheme CurrentTheme { get; }
-    
-    public void SelectTheme(string themeName);
+public interface ICachedRegexGroupNames {
+    int GetSingleLineGroupId(ReadOnlySpan<char> groupName);
+    int GetMultiLineGroupId(ReadOnlySpan<char> groupName);
+    int GetSpanGroupId(ReadOnlySpan<char> groupName);
+    int GetListGroupId(ReadOnlySpan<char> groupName);
 }

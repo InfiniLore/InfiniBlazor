@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Config;
 using System.Collections.Immutable;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Config;

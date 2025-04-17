@@ -1,13 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Collections.Immutable;
-
-namespace InfiniLore.InfiniBlazor.Markdown.Config;
+namespace InfiniLore.InfiniBlazor.MarkdownParser;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMarkdownConfig {
-    ImmutableArray<string> TextEditorModifierNames { get; }
+[Flags]
+public enum MultiLineOrigin {
+    Undefined = 0,
+    Html = 1 << 0,
+    PreserveHtml = 1 << 1,
 }

@@ -1,14 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Markdown;
+namespace InfiniLore.InfiniBlazor.Themes;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[Flags]
-public enum MultiLineOrigin {
-    Undefined = 0,
-    Html = 1 << 0,
-    PreserveHtml = 1 << 1,
+public interface IThemeSelector {
+    public IInfiniLoreTheme CurrentTheme { get; }
+    
+    public void SelectTheme(string themeName);
 }

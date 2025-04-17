@@ -2,8 +2,10 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Markdown.Config;
 using InfiniLore.InfiniBlazor.Markdown.Services.Pools;
+using InfiniLore.InfiniBlazor.TextEditor;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Frozen;
 using System.Text.RegularExpressions;

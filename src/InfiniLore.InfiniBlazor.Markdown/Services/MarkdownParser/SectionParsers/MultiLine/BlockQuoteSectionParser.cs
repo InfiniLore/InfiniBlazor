@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.Services.Pools;
+using InfiniLore.InfiniBlazor.MarkdownParser;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 using System.Text.RegularExpressions;

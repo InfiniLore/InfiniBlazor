@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Config;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InfiniLore.InfiniBlazor;
