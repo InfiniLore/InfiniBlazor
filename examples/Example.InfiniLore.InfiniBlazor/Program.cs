@@ -12,7 +12,7 @@ public class Program {
     public static void Main(string[] args) {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddInfiniLoreBlazor(config => {
+        builder.Services.AddInfiniBlazor(config => {
             config.AddMarkdown();
         });
         

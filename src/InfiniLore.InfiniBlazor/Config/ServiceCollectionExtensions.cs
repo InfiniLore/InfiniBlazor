@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public static class ServiceCollectionExtensions {
-    public static IServiceCollection AddInfiniLoreBlazor(this IServiceCollection services, Action<IInfiniBlazorConfig>? configure = null) {
+    public static IServiceCollection AddInfiniBlazor(this IServiceCollection services, Action<IInfiniBlazorConfig>? configure = null) {
         var config = new InfiniBlazorConfig(services);
         services.RegisterServicesFromInfiniLoreInfiniBlazor();
         services.AddLucideIcons();

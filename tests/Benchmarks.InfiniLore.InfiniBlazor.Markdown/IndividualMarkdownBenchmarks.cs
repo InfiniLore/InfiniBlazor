@@ -22,7 +22,7 @@ public class IndividualMarkdownBenchmarks {
     [GlobalSetup]
     public void Setup() {
         var serviceCollection = new ServiceCollection();
-        serviceCollection.AddInfiniLoreBlazor(config => config.AddMarkdown());
+        serviceCollection.AddInfiniBlazor(config => config.AddMarkdown());
         serviceCollection.AddLogging();
         ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
         Parser = serviceProvider.GetRequiredService<IMarkdownParser>();

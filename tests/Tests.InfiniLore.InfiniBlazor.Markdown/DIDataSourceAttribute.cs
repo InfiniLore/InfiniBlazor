@@ -23,7 +23,7 @@ public class DIDataSourceAttribute : DependencyInjectionDataSourceAttribute<ISer
         
         services.AddLogging();
         services.AddLucideIcons();
-        services.AddInfiniLoreBlazor(static config => config.AddMarkdown());
+        services.AddInfiniBlazor(static config => config.AddMarkdown());
 
         return services.BuildServiceProvider();
     }
