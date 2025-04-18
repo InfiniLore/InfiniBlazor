@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
+using Tests.InfiniLore.InfiniBlazor.Markdown.TextEditor.DataSources;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.TextEditor;
 
@@ -10,80 +11,36 @@ namespace Tests.InfiniLore.InfiniBlazor.Markdown.TextEditor;
 // ---------------------------------------------------------------------------------------------------------------------
 [DIDataSource]
 public class TextEditorTests(ITextEditor textEditor) {
-    public static IEnumerable<Func<(int, int, string)>> HelloWoldDataSource() {
-        const string input = "Hello World!";
-        const string boldFormat = "**";
-
-        for (int start = 0; start <= input.Length; start++) {
-            for (int end = input.Length; end >= start; end--) {
-                string modified = $"{input[..start]}{boldFormat}{input[start..end]}{boldFormat}{input[end..]}";
-                int i = start;
-                int j = end;
-                yield return () => (i, j, modified);
-            }
-        }
-    }
-
-    public static IEnumerable<Func<(string, string)>> ModifyBoldMultiLineDataSource() {
-        yield return () => ("- ", "- ****");
-        yield return () => ("- Hello World!", "- **Hello World!**");
-        yield return () => ("1. Hello World!", "1. **Hello World!**");
-        yield return () => ("- Hello World!\n- Hello World!", "- **Hello World!**\n- **Hello World!**");
-        yield return () => ("1. Hello World!\n2. Hello World!", "1. **Hello World!**\n2. **Hello World!**");
-        yield return () => (
-            """
-            | test | something |
-            | ---- | --------- |
-            | alpha | beta |
-            """,
-            """
-            | **test** | **something** |
-            | ---- | --------- |
-            | **alpha** | **beta** |
-            """
-        );
-        yield return () => (
-            "alpha | beta |",
-            "**alpha** | **beta** |"
-        );
-        yield return () => (
-            "alpha | beta",
-            "**alpha** | **beta**"
-        );
-        yield return () => (
-            "| alpha | beta",
-            "| **alpha** | **beta**"
-        );
-    }
-
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     [Test]
-    [MethodDataSource(nameof(HelloWoldDataSource))]
-    public async Task Modify_Bold_SingleLine(int start, int end, string expected) {
+    [MethodDataSource(typeof(ModifyBoldMultiLineDataSources), nameof(ModifyBoldMultiLineDataSources.HelloWoldDataSource))]
+    [MethodDataSource(typeof(ModifyItalicMultiLineDataSources), nameof(ModifyItalicMultiLineDataSources.HelloWoldDataSource))]
+    public async Task Modify_HelloWorld_ByRange(string sectionName, int start, int end, string expected) {
         // Arrange
         var source = new TextSource { Text = "Hello World!" };
         var expectedSource = new TextSource { Text = expected };
         Range range = start..end;
 
         // Act
-        textEditor.Modify(source,"bold", range);
+        textEditor.Modify(source,sectionName, range);
 
         // Assert
         await Assert.That(source.Text).IsEqualTo(expectedSource.Text);
     }
 
     [Test]
-    [MethodDataSource(nameof(ModifyBoldMultiLineDataSource))]
-    public async Task Modify_Bold_MultiLine(string input, string expected) {
+    [MethodDataSource(typeof(ModifyBoldMultiLineDataSources),nameof(ModifyBoldMultiLineDataSources.DataSources))]
+    [MethodDataSource(typeof(ModifyItalicMultiLineDataSources),nameof(ModifyItalicMultiLineDataSources.DataSources))]
+    public async Task Modify_MultiLine(string sectionName, string input, string expected) {
         // Arrange
         var source = new TextSource { Text =input };
         var expectedSource = new TextSource { Text = expected };
         Range range = ..input.Length;
         
         // Act
-        textEditor.Modify(source, "bold", range);
+        textEditor.Modify(source, sectionName, range);
         
         // Assert
         await Assert.That(source.Text).IsEqualTo(expectedSource.Text);
