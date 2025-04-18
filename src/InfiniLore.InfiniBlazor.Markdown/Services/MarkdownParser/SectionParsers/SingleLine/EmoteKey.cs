@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using System.Collections.Frozen;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Services.SectionParsers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

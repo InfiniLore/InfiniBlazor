@@ -2,9 +2,8 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using InfiniLore.InfiniBlazor.Themes;
 
-namespace InfiniLore.InfiniBlazor.Services.Themes;
+namespace InfiniLore.InfiniBlazor.Themes;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

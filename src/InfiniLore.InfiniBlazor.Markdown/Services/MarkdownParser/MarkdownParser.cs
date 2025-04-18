@@ -2,17 +2,16 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using InfiniLore.InfiniBlazor.Markdown.Services.MarkdownWriters;
-using InfiniLore.InfiniBlazor.Markdown.Services.Pools;
-using InfiniLore.InfiniBlazor.Markdown.Services.SectionParsers.SingleLine;
-using InfiniLore.InfiniBlazor.MarkdownParser;
+using InfiniLore.InfiniBlazor.Markdown.MarkdownWriters;
+using InfiniLore.InfiniBlazor.Markdown.Pools;
+using InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Services;
+namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

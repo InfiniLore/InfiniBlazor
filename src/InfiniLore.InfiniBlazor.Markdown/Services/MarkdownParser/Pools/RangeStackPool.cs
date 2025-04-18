@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using Microsoft.Extensions.ObjectPool;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Services.Pools;
+namespace InfiniLore.InfiniBlazor.Markdown.Pools;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

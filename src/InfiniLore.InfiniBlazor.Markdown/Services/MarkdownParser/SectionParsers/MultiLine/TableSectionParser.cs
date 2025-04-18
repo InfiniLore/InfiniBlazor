@@ -2,12 +2,11 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using InfiniLore.InfiniBlazor.MarkdownParser;
 using Microsoft.Extensions.DependencyInjection;
 using System.Buffers;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Services.SectionParsers.MultiLine;
+namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -15,9 +14,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.Services.SectionParsers.MultiLine;
 public class TableSectionParser(IServiceProvider provider, ICachedRegexGroupNames groupName) : IMultiLineSectionParser {
     private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
     
+    private readonly int TBodyId = groupName.GetMultiLineGroupId("tBody");
     private readonly int THeadId = groupName.GetMultiLineGroupId("tHead");
     private readonly int TSepId = groupName.GetMultiLineGroupId("tSep");
-    private readonly int TBodyId = groupName.GetMultiLineGroupId("tBody");
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

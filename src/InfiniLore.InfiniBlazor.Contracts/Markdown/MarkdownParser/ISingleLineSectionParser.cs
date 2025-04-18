@@ -1,14 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.MarkdownParser;
+using System.Text.RegularExpressions;
 
+namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[Flags]
-public enum MultiLineOrigin {
-    Undefined = 0,
-    Html = 1 << 0,
-    PreserveHtml = 1 << 1,
+public interface ISingleLineSectionParser {
+    public SingleLineOrigin SkipOnOrigin { get; }
+
+    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, SingleLineOrigin origin);
 }

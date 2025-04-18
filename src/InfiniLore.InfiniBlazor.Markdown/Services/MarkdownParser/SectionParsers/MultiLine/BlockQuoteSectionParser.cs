@@ -2,13 +2,12 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using InfiniLore.InfiniBlazor.Markdown.Services.Pools;
-using InfiniLore.InfiniBlazor.MarkdownParser;
+using InfiniLore.InfiniBlazor.Markdown.Pools;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Services.SectionParsers.MultiLine;
+namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

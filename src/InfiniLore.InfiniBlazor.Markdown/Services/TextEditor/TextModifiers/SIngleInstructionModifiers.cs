@@ -1,11 +1,10 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.TextEditor;
 using Microsoft.Extensions.Logging;
 using System.Buffers;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Services.TextModifiers;
+namespace InfiniLore.InfiniBlazor.Markdown.TextModifiers;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

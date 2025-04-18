@@ -1,14 +1,15 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Text.RegularExpressions;
+namespace InfiniLore.InfiniBlazor.Markdown;
 
-namespace InfiniLore.InfiniBlazor.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface ISingleLineSectionParser {
-    public SingleLineOrigin SkipOnOrigin { get; }
-
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, SingleLineOrigin origin);
+public interface ITextModifier {
+    string IconName { get; }
+    string ModifierName { get; }
+    bool IsSingleLineStructure { get; }
+    
+    void Modify(ITextSource source, Range range, ITextEditor editor);
 }

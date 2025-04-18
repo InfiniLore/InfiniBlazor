@@ -1,10 +1,10 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown.Services.MarkdownWriters;
+using InfiniLore.InfiniBlazor.Markdown.MarkdownWriters;
 using Microsoft.Extensions.ObjectPool;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Services.Pools;
+namespace InfiniLore.InfiniBlazor.Markdown.Pools;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

@@ -4,7 +4,7 @@
 using Microsoft.Extensions.ObjectPool;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Services.Pools;
+namespace InfiniLore.InfiniBlazor.Markdown.Pools;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

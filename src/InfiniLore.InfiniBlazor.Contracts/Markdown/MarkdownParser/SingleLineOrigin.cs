@@ -1,14 +1,22 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.MarkdownParser;
+namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMarkdownParser {
-    string Parse(string markdown);
-    void Parse<T>(string markdown, T writer) where T : TextWriter;
-
-    void ParseMultiline(string markdown, IMarkdownWriter writer, MultiLineOrigin origin = MultiLineOrigin.Undefined);
-    void ParseSingleline(string markdown, IMarkdownWriter writer, SingleLineOrigin origin = SingleLineOrigin.Undefined);
+[Flags]
+public enum SingleLineOrigin {
+    NotSkipped = -1,
+    Undefined = 0,
+    // BoldAndItalic = 1 << 0,
+    Bold = 1 << 1,
+    Italic = 1 << 2,
+    Strike = 1 << 3,
+    Code = 1 << 4,
+    Link = 1 << 5,
+    Underline = 1 << 6,
+    Emote = 1 << 7,
+    SuperScript = 1 << 8,
+    SubScript = 1 << 9,
 }

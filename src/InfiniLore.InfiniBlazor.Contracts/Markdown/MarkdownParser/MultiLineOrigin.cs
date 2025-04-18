@@ -1,15 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.TextEditor;
+namespace InfiniLore.InfiniBlazor.Markdown;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface ITextModifier {
-    string IconName { get; }
-    string ModifierName { get; }
-    bool IsSingleLineStructure { get; }
-    
-    void Modify(ITextSource source, Range range, ITextEditor editor);
+[Flags]
+public enum MultiLineOrigin {
+    Undefined = 0,
+    Html = 1 << 0,
+    PreserveHtml = 1 << 1,
 }
