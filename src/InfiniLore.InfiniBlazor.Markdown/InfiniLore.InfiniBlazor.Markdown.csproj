@@ -29,14 +29,14 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CodeOfChaos.Extensions" Version="0.59.0" />
-        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" Version="0.59.0" />
-        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators" Version="0.59.0">
+        <PackageReference Include="CodeOfChaos.Extensions" Version="0.59.1" />
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" Version="0.59.1" />
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators" Version="0.59.1">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="HtmlSanitizer" Version="9.0.876" />
-        <PackageReference Include="InfiniLore.Lucide" Version="0.24.494" />
+        <PackageReference Include="InfiniLore.Lucide" Version="0.24.501" />
 
         <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.4" />
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.4" />
