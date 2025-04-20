@@ -41,7 +41,7 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
         
             // If there's text between this match's end and the last position, add it as raw input
             if (matchEnd < currentIndex) {
-                AddStringToStack(input[matchEnd..currentIndex], node, origin);
+                node.WithContent(input[matchEnd..currentIndex]);
             }
         
             
@@ -53,13 +53,8 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
 
         // Handle any remaining text before the first match
         if (currentIndex > 0) {
-            AddStringToStack(input[..currentIndex], node, origin);
+            node.WithContent(input[..currentIndex]);
         }
-    }
-    
-    public void AddStringToStack(string value, IMdNode node, ParserOrigin origin) {
-        ParserDataDto dto = ParserDataDtoPool.Get();
-        dto.AsString(node, origin, value);
     }
     #endregion
 

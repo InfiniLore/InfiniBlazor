@@ -93,34 +93,17 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
                 // Extract what we already have from the stack
                 IMdNode currentNode = dataDto.Node;
                 ParserOrigin origin = dataDto.Origin;
+                Match match = dataDto.Match;
+                GroupCollection groups = match.Groups;
+                int count = groups.Count;
 
-                // A box can be either a match or raw input, so we need to handle both cases
-                switch (dataDto) {
-                    case { IsRawInput: true }: {
-                        currentNode.WithContent(dataDto.RawInput);
-                        continue;
-                    }
+                for (int index = 0; index < count; index++) {
+                    Group group = groups[index];
+                    if (!group.Success) continue;
+                    if (!_sectionHandlers.TryGetValue(group.Name, out ISectionHandler? handler)) continue;
+                    if ((origin & handler.SkipOnOrigin) == handler.SkipOnOrigin) continue;
 
-                    case { IsMatch: true }: {
-                        Match match = dataDto.Match;
-                        GroupCollection groups = match.Groups;
-                        int count = groups.Count;
-
-                        for (int index = 0; index < count; index++) {
-                            Group group = groups[index];
-                            if (!group.Success) continue;
-                            if (!_sectionHandlers.TryGetValue(group.Name, out ISectionHandler? handler)) continue;
-                            if ((origin & handler.SkipOnOrigin) == handler.SkipOnOrigin) continue;
-
-                            handler.HandleMatch(match, group, origin, currentNode, runningParser);
-                        }
-
-                        continue;
-                    }
-
-                    default: {
-                        throw new Exception("Invalid data box");
-                    }
+                    handler.HandleMatch(match, group, origin, currentNode, runningParser);
                 }
             }
 

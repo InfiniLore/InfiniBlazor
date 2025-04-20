@@ -32,7 +32,7 @@ public class CodeBlockSectionParser(ICachedRegexGroupNames groupNames) : ISectio
         }
         
         string content = ProcessCodeBlockContent(ref codeBlockBody);
-        parser.AddStringToStack(content, codeNode, origin | ParserOrigin.PreserveHtml);
+        currentNode.WithContent(content);
     }
 
     private static string ProcessCodeBlockContent(ref ReadOnlySpan<char> content) {

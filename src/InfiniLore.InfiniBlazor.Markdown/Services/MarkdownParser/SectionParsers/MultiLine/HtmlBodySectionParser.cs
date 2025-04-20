@@ -35,11 +35,11 @@ public class HtmlBodySectionParser(IHtmlSanitizer htmlSanitizer, ICachedRegexGro
             // Span should be only special case allowed which allows for markdown parsing within it
             Match match = MarkdownRegexLib.FindSpanHtmlRegex.Match(htmlBody);
             if (match.Groups[SpanTagId].TryGetValue(out string? spanTag) && match.Groups[SpanBodyId].TryGetValue(out string? spanBody)) {
-                parser.AddStringToStack(htmlSanitizer.Sanitize(spanTag).AsSpan()[..^7].ToString(), currentNode, origin);
+                currentNode.WithContent(htmlSanitizer.Sanitize(spanTag).AsSpan()[..^7].ToString());
                 parser.AddMultiLineMatchesToStack(spanBody, currentNode, origin | ParserOrigin.Html);
             }
             else {
-                parser.AddStringToStack(htmlSanitizer.Sanitize(htmlBody), currentNode, origin);
+                currentNode.WithContent(htmlSanitizer.Sanitize(htmlBody));
             }
         }
 

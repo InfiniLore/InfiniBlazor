@@ -1,6 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using AngleSharp.Dom;
 using CodeOfChaos.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
@@ -37,9 +38,9 @@ public class EmoteSectionParser(ILogger<EmoteSectionParser> logger, ICachedRegex
         if (!entireMatch.Groups[EId].TryGetValue(out string? lookupValue)) return;
         if (!EmoteLookup.TryGetValue(lookupValue, out string? value)) {
             logger.LogWarning("Lookup emote not found: {LookupValue}", lookupValue);
-            parser.AddStringToStack(group.Value, currentNode, origin | SkipOnOrigin );
+            currentNode.WithContent(group.Value);
             return;
         }
-        parser.AddStringToStack(value, currentNode, origin | SkipOnOrigin);
+        currentNode.WithContent(value);
     }
 }
