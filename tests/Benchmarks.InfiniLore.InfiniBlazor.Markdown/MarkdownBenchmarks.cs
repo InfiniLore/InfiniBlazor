@@ -47,7 +47,7 @@ public class MarkdownBenchmarks {
     public string RenderMarkdown() {
         string input = Markdown;
 
-        string output = Parser.Parse(input);
+        string output = Parser.ParseToString(input);
         return output;
     }
 
@@ -55,7 +55,7 @@ public class MarkdownBenchmarks {
     public StringWriter RenderMarkdownToStream() {
         var streamWriter = new StringWriter();
 
-        Parser.Parse(Markdown, streamWriter);
+        Parser.ParseToWriter(Markdown, streamWriter);
 
         streamWriter.Flush();
         return streamWriter;

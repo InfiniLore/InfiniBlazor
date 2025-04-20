@@ -71,11 +71,11 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
     #endregion
 
     #region Parsing Methods
-    public string Parse(string markdown) {
+    public string ParseToString(string markdown) {
         throw new NotImplementedException();
     }
 
-    public void Parse<T>(string markdown, T writer) where T : TextWriter {
+    public void ParseToWriter<T>(string markdown, T writer) where T : TextWriter {
         throw new NotImplementedException();
     }
     public IMdNode ParseToNodeTree(string markdown) {
@@ -101,7 +101,9 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
                     Group group = groups[index];
                     if (!group.Success) continue;
                     if (!_sectionHandlers.TryGetValue(group.Name, out ISectionHandler? handler)) continue;
-                    if ((origin & handler.SkipOnOrigin) == handler.SkipOnOrigin) continue;
+                    
+                    var handlerOrigin = handler.SkipOnOrigin;
+                    if (handlerOrigin is not ParserOrigin.NotSkipped && (origin & handler.SkipOnOrigin) == handler.SkipOnOrigin) continue;
 
                     handler.HandleMatch(match, group, origin, currentNode, runningParser);
                 }

@@ -6,7 +6,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMarkdownParser {
-    string Parse(string markdown);
-    void Parse<T>(string markdown, T writer) where T : TextWriter;
+    string ParseToString(string markdown);
+    void ParseToWriter<T>(string markdown, T writer) where T : TextWriter;
     public IMdNode ParseToNodeTree(string markdown);
 }

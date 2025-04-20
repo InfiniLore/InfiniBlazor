@@ -32,72 +32,72 @@ public class IndividualMarkdownBenchmarks {
 
     [Benchmark]
     public string EscapedCharacters() {
-        return Parser.Parse(@"\*escaped text\*");
+        return Parser.ParseToString(@"\*escaped text\*");
     }
 
     [Benchmark]
     public string BoldAndItalic() {
-        return Parser.Parse("***bold and italic***");
+        return Parser.ParseToString("***bold and italic***");
     }
     
     [Benchmark]
     public string BoldOnly() {
-        return Parser.Parse("**bold**");
+        return Parser.ParseToString("**bold**");
     }
     
     [Benchmark]
     public string ItalicOnly() {
-        return Parser.Parse("*italic*");
+        return Parser.ParseToString("*italic*");
     }
     
     [Benchmark]
     public string Superscript() {
-        return Parser.Parse("^^sup-script^^");
+        return Parser.ParseToString("^^sup-script^^");
     }
     
     [Benchmark]
     public string Subscript() {
-        return Parser.Parse("^^sub-script^^");
+        return Parser.ParseToString("^^sub-script^^");
     }
     
     [Benchmark]
     public string Strikethrough() {
-        return Parser.Parse("~~strikethrough~~");
+        return Parser.ParseToString("~~strikethrough~~");
     }
     
     [Benchmark]
     public string Underline() {
-        return Parser.Parse("_underline_");
+        return Parser.ParseToString("_underline_");
     }
     
     [Benchmark]
     public string InlineCode() {
-        return Parser.Parse("`inline code`");
+        return Parser.ParseToString("`inline code`");
     }
     
     [Benchmark]
     public string Emotes() {
-        return Parser.Parse(":flag-trans:");
+        return Parser.ParseToString(":flag-trans:");
     }
     
     [Benchmark]
     public string NestedLinks() {
-        return Parser.Parse("[![nested link](image_url)](outer_url)");
+        return Parser.ParseToString("[![nested link](image_url)](outer_url)");
     }
     
     [Benchmark]
     public string RegularLinks() {
-        return Parser.Parse("[Regular Link](https://example.com)");
+        return Parser.ParseToString("[Regular Link](https://example.com)");
     }
     
     [Benchmark]
     public string Tags() {
-        return Parser.Parse("#tag");
+        return Parser.ParseToString("#tag");
     }
     
     [Benchmark]
     public string HtmlSpecialCharacters() {
-        return Parser.Parse("&copy; & < >");
+        return Parser.ParseToString("&copy; & < >");
     }
     
     // -----------------------------------------------------------------------------------------------------------------
@@ -106,7 +106,7 @@ public class IndividualMarkdownBenchmarks {
     
     [Benchmark]
     public string Headings() {
-        return Parser.Parse("""
+        return Parser.ParseToString("""
             # Header 1
             ## Header 2
             ### Header 3
@@ -115,7 +115,7 @@ public class IndividualMarkdownBenchmarks {
     
     [Benchmark]
     public string CodeBlocks() {
-        return Parser.Parse("""
+        return Parser.ParseToString("""
             ```csharp
             code block
             ```
@@ -124,7 +124,7 @@ public class IndividualMarkdownBenchmarks {
     
     [Benchmark]
     public string SimpleHeadings() {
-        return Parser.Parse("""
+        return Parser.ParseToString("""
             Simple Heading
             ---
             """);
@@ -132,7 +132,7 @@ public class IndividualMarkdownBenchmarks {
     
     [Benchmark]
     public string UnorderedLists() {
-        return Parser.Parse("""
+        return Parser.ParseToString("""
             - Item 1
             - Item 2
               - Nested Item
@@ -141,7 +141,7 @@ public class IndividualMarkdownBenchmarks {
     
     [Benchmark]
     public string OrderedLists() {
-        return Parser.Parse("""
+        return Parser.ParseToString("""
             1. First Item
             2. Second Item
               3. Nested Item
@@ -150,7 +150,7 @@ public class IndividualMarkdownBenchmarks {
     
     [Benchmark]
     public string Tables() {
-        return Parser.Parse(
+        return Parser.ParseToString(
             """
             | Column 1 | Column 2 |
             |----------|----------|
@@ -161,7 +161,7 @@ public class IndividualMarkdownBenchmarks {
     
     [Benchmark]
     public string BlockQuotes() {
-        return Parser.Parse("""
+        return Parser.ParseToString("""
             > A blockquote
             > with multiple lines.
             """);
@@ -169,12 +169,12 @@ public class IndividualMarkdownBenchmarks {
     
     [Benchmark]
     public string HtmlBlocks() {
-        return Parser.Parse("<div><p>HTML content</p></div>");
+        return Parser.ParseToString("<div><p>HTML content</p></div>");
     }
     
     [Benchmark]
     public string HorizontalRules() {
-        return Parser.Parse("""
+        return Parser.ParseToString("""
             ---
 
             ***
@@ -185,6 +185,6 @@ public class IndividualMarkdownBenchmarks {
     
     [Benchmark]
     public string RemainderText() {
-        return Parser.Parse("This is normal text left over.");
+        return Parser.ParseToString("This is normal text left over.");
     }
 }

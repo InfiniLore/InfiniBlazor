@@ -1,6 +1,8 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -14,7 +16,10 @@ public static class BoldDataSources {
     public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
         yield return static () => new MarkdownTestDto(SectionName,
             "**bold**",
-            "<p><strong>bold</strong></p>"
+            "<p><strong>bold</strong></p>",
+            static rootNode => rootNode.AddParagraph()
+                .AddBold()
+                .WithContent("bold")
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
