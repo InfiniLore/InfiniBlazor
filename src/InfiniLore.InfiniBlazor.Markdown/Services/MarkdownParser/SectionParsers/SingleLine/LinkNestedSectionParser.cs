@@ -26,7 +26,7 @@ public class LinkNestedSectionParser(IServiceProvider provider, ICachedRegexGrou
         if (!entireMatch.Groups[LnHrefId].TryGetValue(out string? linkHref)) return;
 
         if (entireMatch.Groups[LnBangId].Success) {
-            IMdNode imgNode = currentNode.AddChild(MdElement.Image);
+            IMdNode imgNode = currentNode.AddChildNode(MdElement.Image);
             imgNode.WithAttribute("src", $"\"{linkHref}\"");
             imgNode.WithAttribute("alt", $"\"{linkText}\"");
 
@@ -36,7 +36,7 @@ public class LinkNestedSectionParser(IServiceProvider provider, ICachedRegexGrou
             return;
         }
     
-        IMdNode linkNode = currentNode.AddChild(MdElement.Link);
+        IMdNode linkNode = currentNode.AddChildNode(MdElement.Link);
         linkNode.WithAttribute("href", $"\"{linkHref}\"");
         
         parser.AddSingleLineMatchesToStack(linkText, linkNode, origin);

@@ -25,15 +25,15 @@ public class ListOrderedSectionParser(ICachedRegexGroupNames groupName) : ISecti
         List<Match> matchCollection = MarkdownRegexLib.ListItemBodyRegex.Matches(listOrderedBody).ToList();
         int matchCount = matchCollection.Count;
 
-        IMdNode olNode = currentNode.AddChild(MdElement.ListOrdered);
+        IMdNode olNode = currentNode.AddChildNode(MdElement.ListOrdered);
         for (int index = 0; index < matchCount; index++) {
             Match match = matchCollection[index];
             GroupCollection groups = match.Groups;
             
-            IMdNode listItemNode = olNode.AddChild(MdElement.ListItem);
+            IMdNode listItemNode = olNode.AddChildNode(MdElement.ListItem);
             if (groups[LTaskId].TryGetValue(out string? taskMarker)) {
                 bool isChecked = taskMarker.Contains('x');
-                IMdNode inputNode = listItemNode.AddChild(MdElement.Input);
+                IMdNode inputNode = listItemNode.AddChildNode(MdElement.Input);
                 inputNode.WithAttribute("type", "checkbox");
                 inputNode.WithAttribute("disabled", isChecked ? "checked" : "");
             }

@@ -21,7 +21,7 @@ public class ItalicSectionParser(IServiceProvider provider, ICachedRegexGroupNam
     public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
         if (!entireMatch.Groups[IId].TryGetValue(out string? italicValue)) return;
         
-        IMdNode node = currentNode.AddChild(MdElement.Italic);
+        IMdNode node = currentNode.AddChildNode(MdElement.Italic);
         parser.AddSingleLineMatchesToStack(italicValue, node, origin  | SkipOnOrigin);
     }
 }

@@ -23,16 +23,14 @@ public class CodeBlockSectionParser(ICachedRegexGroupNames groupNames) : ISectio
     public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
         if (!entireMatch.Groups[CBodyId].TryGetValueSpan(out ReadOnlySpan<char> codeBlockBody)) return;
 
-        IMdNode preNode = currentNode.AddChild(MdElement.Pre);
-        IMdNode codeNode = preNode.AddChild(MdElement.Code);
+        IMdNode preNode = currentNode.AddChildNode(MdElement.Pre);
+        IMdNode codeNode = preNode.AddChildNode(MdElement.Code);
         
         ReadOnlySpan<char> langNameValue = entireMatch.Groups[CLangId].ValueSpan;
-        if (!langNameValue.IsEmpty) {
-            codeNode.WithClass($"language-{langNameValue}");
-        }
+        if (!langNameValue.IsEmpty) codeNode.WithClass($"language-{langNameValue}");
         
         string content = ProcessCodeBlockContent(ref codeBlockBody);
-        currentNode.WithContent(content);
+        codeNode.WithContent(content);
     }
 
     private static string ProcessCodeBlockContent(ref ReadOnlySpan<char> content) {

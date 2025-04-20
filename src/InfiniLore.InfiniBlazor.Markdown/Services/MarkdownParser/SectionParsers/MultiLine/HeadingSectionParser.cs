@@ -32,7 +32,7 @@ public class HeadingSectionParser(ICachedRegexGroupNames groupName) : ISectionHa
             _ => MdElement.H1
         };
         
-        IMdNode headingElement = currentNode.AddChild(mdElement);
+        IMdNode headingElement = currentNode.AddChildNode(mdElement);
         parser.AddSingleLineMatchesToStack(headerText, headingElement, origin);
     }
 }

@@ -25,15 +25,15 @@ public class ListUnorderedSectionParser(ICachedRegexGroupNames groupName) : ISec
         int matchCount = matchCollection.Count;
 
         
-        IMdNode ulNode = currentNode.AddChild(MdElement.ListUnordered);
+        IMdNode ulNode = currentNode.AddChildNode(MdElement.ListUnordered);
         for (int index = 0; index < matchCount; index++) {
             Match match = matchCollection[index];
             GroupCollection groups = match.Groups;
 
-            IMdNode listItemNode = ulNode.AddChild(MdElement.ListItem);
+            IMdNode listItemNode = ulNode.AddChildNode(MdElement.ListItem);
             if (groups[LTaskId].TryGetValue(out string? taskMarker)) {
                 bool isChecked = taskMarker.Contains('x');
-                IMdNode inputNode = listItemNode.AddChild(MdElement.Input);
+                IMdNode inputNode = listItemNode.AddChildNode(MdElement.Input);
                 inputNode.WithAttribute("type", "checkbox");
                 inputNode.WithAttribute("disabled", isChecked ? "checked" : "");
             }

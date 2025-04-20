@@ -19,7 +19,7 @@ public class SubScriptSectionParser(ICachedRegexGroupNames groupNames) : ISectio
     public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
         if (!entireMatch.Groups[SbId].TryGetValue(out string? subValue)) return;
         
-        IMdNode node = currentNode.AddChild(MdElement.Subscript);
+        IMdNode node = currentNode.AddChildNode(MdElement.Subscript);
         parser.AddSingleLineMatchesToStack(subValue, node, origin  | SkipOnOrigin);
     }
 }

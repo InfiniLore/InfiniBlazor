@@ -20,7 +20,7 @@ public class ParagraphSectionParser : ISectionHandler {
         if (paragraph.IsNullOrWhiteSpace()) return;
         bool writeParagraph = !origin.HasFlag(ParserOrigin.Html);
 
-        if (writeParagraph) currentNode = currentNode.AddChild(MdElement.Paragraph);
+        if (writeParagraph) currentNode = currentNode.AddChildNode(MdElement.Paragraph);
         parser.AddSingleLineMatchesToStack(paragraph, currentNode, origin);
     }
 }

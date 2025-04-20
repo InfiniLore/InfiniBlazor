@@ -91,21 +91,37 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
             // Process matches
             while (runningParser.TryPopDto(out ParserDataDto? dataDto)) {
                 // Extract what we already have from the stack
-                IMdNode currentNode = dataDto.Node;
-                ParserOrigin origin = dataDto.Origin;
-                Match match = dataDto.Match;
-                GroupCollection groups = match.Groups;
-                int count = groups.Count;
+                try {
+                    IMdNode currentNode = dataDto.Node;
+                    ParserOrigin origin = dataDto.Origin;
 
-                for (int index = 0; index < count; index++) {
-                    Group group = groups[index];
-                    if (!group.Success) continue;
-                    if (!_sectionHandlers.TryGetValue(group.Name, out ISectionHandler? handler)) continue;
+                    switch (dataDto) {
+                        case { IsRawInput: true }: {
+                            currentNode.WithContent(dataDto.RawInput);
+                            break;
+                        }
+
+                        case { IsMatch: true }: {
+                            Match match = dataDto.Match;
+                            GroupCollection groups = match.Groups;
+                            int count = groups.Count;
+
+                            for (int index = 0; index < count; index++) {
+                                Group group = groups[index];
+                                if (!group.Success) continue;
+                                if (!_sectionHandlers.TryGetValue(group.Name, out ISectionHandler? handler)) continue;
                     
-                    var handlerOrigin = handler.SkipOnOrigin;
-                    if (handlerOrigin is not ParserOrigin.NotSkipped && (origin & handler.SkipOnOrigin) == handler.SkipOnOrigin) continue;
+                                ParserOrigin handlerOrigin = handler.SkipOnOrigin;
+                                if (handlerOrigin is not ParserOrigin.NotSkipped && (origin & handler.SkipOnOrigin) == handler.SkipOnOrigin) continue;
 
-                    handler.HandleMatch(match, group, origin, currentNode, runningParser);
+                                handler.HandleMatch(match, group, origin, currentNode, runningParser);
+                            }
+                            break;
+                        }
+                    }
+                }
+                finally {
+                    ParserDataDtoPool.Return(dataDto);
                 }
             }
 

@@ -45,7 +45,7 @@ public class MarkdownParserTests(IMarkdownParser parser) {
         string output = parser.ParseToString(dto.Markdown);
 
         // Assert
-        await Assert.That(output).IsEqualTo(dto.HtmlOutput).IgnoringWhitespace();
+        await Assert.That(output).IsEqualTo(dto.ExpectedStringOutput).IgnoringWhitespace();
     }
 
     [Test]
@@ -82,7 +82,7 @@ public class MarkdownParserTests(IMarkdownParser parser) {
         string output = writer.ToString();
 
         // Assert
-        await Assert.That(output).IsEqualTo(dto.HtmlOutput).IgnoringWhitespace();
+        await Assert.That(output).IsEqualTo(dto.ExpectedStringOutput).IgnoringWhitespace();
     }
 
     [Test]
@@ -115,9 +115,9 @@ public class MarkdownParserTests(IMarkdownParser parser) {
         
         // Act
         IMdNode output = parser.ParseToNodeTree(dto.Markdown);
-        Skip.When(dto.Node == null, "The node tree is null.");
+        Skip.When(dto.ExpectedNode == null, "The node tree is null and thus cannot be compared.");
 
         // Assert
-        await Assert.That(output).IsEquivalentTo(dto.Node);
+        await Assert.That(output).IsEquivalentTo(dto.ExpectedNode);
     }
 }

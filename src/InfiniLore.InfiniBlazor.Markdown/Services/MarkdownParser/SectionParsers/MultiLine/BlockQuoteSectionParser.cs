@@ -23,7 +23,7 @@ public class BlockQuoteSectionParser : ISectionHandler {
         string normalized = NormalizeBlockQuote(ref blockQuoteBody);
         string adjustedBlockquote = NormalizationHelper.NormalizeIndentation(normalized);
 
-        IMdNode blockquoteNode = currentNode.AddChild(MdElement.Blockquote);
+        IMdNode blockquoteNode = currentNode.AddChildNode(MdElement.Blockquote);
         parser.AddMultiLineMatchesToStack(adjustedBlockquote, blockquoteNode, origin | ParserOrigin.PreserveHtml);
     }
 

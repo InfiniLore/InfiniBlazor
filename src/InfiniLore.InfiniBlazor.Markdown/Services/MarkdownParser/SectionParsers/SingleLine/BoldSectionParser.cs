@@ -21,7 +21,7 @@ public class BoldSectionParser(IServiceProvider provider, ICachedRegexGroupNames
     public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
         if (!entireMatch.Groups[BId].TryGetValue(out string? boldValue)) return;
 
-        IMdNode boldNode = currentNode.AddChild(MdElement.Bold);
+        IMdNode boldNode = currentNode.AddChildNode(MdElement.Bold);
         parser.AddSingleLineMatchesToStack(boldValue, boldNode, origin  | SkipOnOrigin);
     }
 }

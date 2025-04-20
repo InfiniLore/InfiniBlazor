@@ -13,6 +13,6 @@ public class HorizontalRuleSectionParser : ISectionHandler {
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     
     public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
-        currentNode.AddChild(MdElement.HorizontalRule);
+        currentNode.AddChildNode(MdElement.HorizontalRule);
     }
 }

@@ -25,7 +25,7 @@ public class HtmlBodySectionParser(IHtmlSanitizer htmlSanitizer, ICachedRegexGro
     public void HandleMatch(Match entireMatch, Group group, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
         bool writeParagraph = !origin.HasFlag(ParserOrigin.PreserveHtml);
         if (writeParagraph) {
-            currentNode = currentNode.AddChild(MdElement.Paragraph);
+            currentNode = currentNode.AddChildNode(MdElement.Paragraph);
         }
         if (entireMatch.Groups[HtmlPreId].TryGetValue(out string? pre)) {
             parser.AddSingleLineMatchesToStack(pre, currentNode, origin);

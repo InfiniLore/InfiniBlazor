@@ -19,7 +19,7 @@ public class StrikeSectionParser(ICachedRegexGroupNames groupNames) : ISectionHa
     public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
         if (!entireMatch.Groups[SId].TryGetValue(out string? strikeValue)) return;
         
-        IMdNode node = currentNode.AddChild(MdElement.Strikethrough);
+        IMdNode node = currentNode.AddChildNode(MdElement.Strikethrough);
         parser.AddSingleLineMatchesToStack(strikeValue, node, origin  | SkipOnOrigin);
     }
 }

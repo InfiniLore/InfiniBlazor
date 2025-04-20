@@ -1,6 +1,8 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -22,7 +24,9 @@ public static class CodeDataSources {
             <pre><code>
             const code = sample();
             </code></pre>
-            """
+            """,
+            static rootNode => rootNode.AddPre().AddCode()
+                .WithContent("const code = sample();\n")
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -35,7 +39,10 @@ public static class CodeDataSources {
             <pre><code class="language-javascript">
             const code = sample();
             </code></pre>
-            """
+            """,
+            static rootNode => rootNode.AddPre().AddCode()
+                .WithClass("language-javascript")
+                .WithContent("const code = sample();\n")
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -46,13 +53,15 @@ public static class CodeDataSources {
             end tell
             ```
             """,
-            $"""
+            """
             <pre><code>
             tell application "Foo"
                 beep
             end tell
             </code></pre>
-            """
+            """,
+            static rootNode => rootNode.AddPre().AddCode()
+            .WithContent("tell application \"Foo\"\n    beep\nend tell\n")
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -65,7 +74,9 @@ public static class CodeDataSources {
             <pre><code>
             **some valid markdown**
             </code></pre>
-            """
+            """,
+            static rootNode => rootNode.AddPre().AddCode()
+            .WithContent("**some valid markdown**\n")
         );
     }
 }

@@ -20,7 +20,7 @@ public class HeadingSimpleSectionParser(ICachedRegexGroupNames groupName) : ISec
         if (!entireMatch.Groups[HSTextId].TryGetValue(out string? headerSimpleText)) return;
 
         
-        IMdNode headingElement = currentNode.AddChild(MdElement.H1);
+        IMdNode headingElement = currentNode.AddChildNode(MdElement.H1);
         parser.AddSingleLineMatchesToStack(headerSimpleText, headingElement, origin);
     }
 }

@@ -234,7 +234,7 @@ public static class ListsDataSources {
               - [X] nested
             4. todo list
             """,
-            HtmlOutput: """
+            ExpectedStringOutput: """
             <ol>
                 <li>this</li>
                 <li><input type="checkbox" disabled/>is</li>

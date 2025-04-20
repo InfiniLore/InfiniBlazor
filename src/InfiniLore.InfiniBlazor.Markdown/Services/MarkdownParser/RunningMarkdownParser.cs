@@ -35,13 +35,15 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
         int currentIndex = input.Length;
 
         // Process matches in reverse order for _stack
-        IOrderedEnumerable<Match> matchesList = matches.ToImmutableArray().OrderByDescending(m => m.Index);
+        IEnumerable<Match> matchesList = matches.ToImmutableArray().Reverse();
         foreach (Match match in matchesList) {
             int matchEnd = match.Index + match.Length;
         
             // If there's text between this match's end and the last position, add it as raw input
             if (matchEnd < currentIndex) {
-                node.WithContent(input[matchEnd..currentIndex]);
+                ParserDataDto preDto = ParserDataDtoPool.Get();
+                preDto.AsString(node, origin, input[matchEnd..currentIndex]);
+                _stack.Push(preDto);
             }
         
             
@@ -53,7 +55,9 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
 
         // Handle any remaining text before the first match
         if (currentIndex > 0) {
-            node.WithContent(input[..currentIndex]);
+            ParserDataDto dto = ParserDataDtoPool.Get();
+            dto.AsString(node, origin, input[..currentIndex]);
+            _stack.Push(dto);
         }
     }
     #endregion

@@ -19,7 +19,7 @@ public class UnderlineSectionParser(ICachedRegexGroupNames groupNames) : ISectio
     public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
         if (!entireMatch.Groups[UId].TryGetValue(out string? underlineValue)) return;
         
-        var underlineNode = currentNode.AddChild(MdElement.Underline);
+        var underlineNode = currentNode.AddChildNode(MdElement.Underline);
         parser.AddSingleLineMatchesToStack(underlineValue, underlineNode, origin | SkipOnOrigin);
     }
 }

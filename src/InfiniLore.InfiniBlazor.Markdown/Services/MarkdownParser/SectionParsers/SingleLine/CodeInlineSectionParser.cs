@@ -23,6 +23,6 @@ public class CodeInlineSectionParser(ICachedRegexGroupNames groupNames) : ISecti
         string normalizedBackticks = codeValue.Replace("\\`", "`");
         string output = HtmlEncoder.Default.Encode(normalizedBackticks);
 
-        IMdNode codeNode = currentNode.AddChild(MdElement.Code);
+        IMdNode codeNode = currentNode.AddChildNode(MdElement.Code);
     }
 }

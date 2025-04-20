@@ -25,7 +25,7 @@ public class LinkRegularSectionParser(ICachedRegexGroupNames groupNames) : ISect
         if (!entireMatch.Groups[LrHrefId].TryGetValue(out string? linkHref)) return;
         
         if (entireMatch.Groups[LrBangId].Success) {
-            IMdNode imgNode = currentNode.AddChild(MdElement.Image);
+            IMdNode imgNode = currentNode.AddChildNode(MdElement.Image);
             imgNode.WithAttribute("src", $"\"{linkHref}\"");
             imgNode.WithAttribute("alt", $"\"{linkText}\"");
 
@@ -35,7 +35,7 @@ public class LinkRegularSectionParser(ICachedRegexGroupNames groupNames) : ISect
             return;
         }
     
-        IMdNode linkNode = currentNode.AddChild(MdElement.Link);
+        IMdNode linkNode = currentNode.AddChildNode(MdElement.Link);
         linkNode.WithAttribute("href", $"\"{linkHref}\"");
         
         parser.AddSingleLineMatchesToStack(linkText, linkNode, origin | SkipOnOrigin);

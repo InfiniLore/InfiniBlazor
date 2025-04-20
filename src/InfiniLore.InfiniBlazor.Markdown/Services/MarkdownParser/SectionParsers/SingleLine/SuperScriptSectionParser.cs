@@ -19,7 +19,7 @@ public class SuperScriptSectionParser(ICachedRegexGroupNames groupNames) : ISect
     public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
         if (!entireMatch.Groups[SpId].TryGetValue(out string? superValue)) return;
         
-        IMdNode node = currentNode.AddChild(MdElement.Superscript);
+        IMdNode node = currentNode.AddChildNode(MdElement.Superscript);
         parser.AddSingleLineMatchesToStack(superValue, node, origin  | SkipOnOrigin);
     }
 }

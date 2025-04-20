@@ -11,11 +11,17 @@ namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 public record MarkdownTestDto(
     string Section,
     string Markdown,
-    string HtmlOutput,
-    Action<IMdNode>? ConfigureNode = null
+    string ExpectedStringOutput,
+    
+    // ReSharper disable once NotAccessedPositionalProperty.Global
+    Action<IMdNode>? ConfigureExpectedNode = null
 ) {
-    public IMdNode? Node { get; } = CreateNode(ConfigureNode); 
-    private static IMdNode? CreateNode(Action<IMdNode>? configureNode) {
+    public IMdNode? ExpectedNode { get; } = CreateNode(ConfigureExpectedNode);
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private static MdNode? CreateNode(Action<IMdNode>? configureNode) {
         if (configureNode == null) return null;
         var node = new MdNode();
         configureNode.Invoke(node);

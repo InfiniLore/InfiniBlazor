@@ -18,7 +18,7 @@ public class MdNode : IMdNode {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public IMdNode AddChild(MdElement element) {
+    public IMdNode AddChildNode(MdElement element) {
         var child = new MdNode {
             Element = element,
         };
@@ -32,7 +32,9 @@ public class MdNode : IMdNode {
             Element = MdElement.Content,
             Content = content,
         };
+        
         Children.Add(child);
+        
         child.Parent = this;
         return this;   
     }

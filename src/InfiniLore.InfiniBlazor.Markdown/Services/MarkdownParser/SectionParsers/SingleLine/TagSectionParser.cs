@@ -19,7 +19,7 @@ public class TagSectionParser(ICachedRegexGroupNames groupNames) : ISectionHandl
     public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
         if (!entireMatch.Groups[TTextId].TryGetValueSpan(out ReadOnlySpan<char> tagValue)) return;
         
-        IMdNode spanNode = currentNode.AddChild(MdElement.Span);
+        IMdNode spanNode = currentNode.AddChildNode(MdElement.Span);
         spanNode.WithContent($"#{tagValue}");
     }
 }

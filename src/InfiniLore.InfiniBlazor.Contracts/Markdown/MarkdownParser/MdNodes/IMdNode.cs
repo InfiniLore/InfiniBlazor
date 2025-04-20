@@ -13,7 +13,8 @@ public interface IMdNode {
     List<IMdNode> Children { get; }
     IMdNode Parent { get; }
     
-    IMdNode AddChild(MdElement element);
+    IMdNode AddChildNode(MdElement element);
+    
     IMdNode WithContent(string content);
     IMdNode WithClass(string className);
     IMdNode WithAttribute(string key, string value);
