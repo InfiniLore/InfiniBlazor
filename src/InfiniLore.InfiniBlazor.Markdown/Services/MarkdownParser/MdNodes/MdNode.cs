@@ -11,7 +11,7 @@ public class MdNode : IMdNode {
     public string Content { get; private set; } = string.Empty;
     
     public List<IMdNode> Children { get; } = new();
-    public IMdNode Parent { get; private set; }
+    public IMdNode Parent { get; private set; } = null!;
     public HashSet<string> Classes { get; } = new();
     public Dictionary<string, string> Attributes { get; } = new();
 
@@ -29,7 +29,7 @@ public class MdNode : IMdNode {
     
     public IMdNode WithContent(string content) {
         var child = new MdNode {
-            Element = MdElement.Text,
+            Element = MdElement.Content,
             Content = content,
         };
         Children.Add(child);
