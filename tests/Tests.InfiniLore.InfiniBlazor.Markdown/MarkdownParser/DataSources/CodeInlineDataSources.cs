@@ -1,6 +1,9 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -15,47 +18,118 @@ public static class CodeInlineDataSources {
 
         yield return static () => new MarkdownTestDto(SectionName,
             "This is an `example` of some inline code.",
-            "<p>This is an <code>example</code> of some inline code.</p>"
+            "<p>This is an <code>example</code> of some inline code.</p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.WithContent("This is an ");
+                
+                IMdNode code = paragraph.AddCode();
+                code.WithContent("example");
+                paragraph.WithContent(" of some inline code.");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "`\\``",
-            "<p><code>`</code></p>"
+            "<p><code>`</code></p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                IMdNode code = paragraph.AddCode();
+                code.WithContent("`");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "Here is some `inline code` inside a sentence.",
-            "<p>Here is some <code>inline code</code> inside a sentence.</p>"
+            "<p>Here is some <code>inline code</code> inside a sentence.</p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.WithContent("Here is some ");
+                
+                IMdNode code = paragraph.AddCode();
+                code.WithContent("inline code");
+                
+                paragraph.WithContent(" inside a sentence.");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "`code` at the start of the line.",
-            "<p><code>code</code> at the start of the line.</p>"
+            "<p><code>code</code> at the start of the line.</p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                IMdNode code = paragraph.AddCode();
+                code.WithContent("code");
+                paragraph.WithContent(" at the start of the line.");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "This is the `last example`.",
-            "<p>This is the <code>last example</code>.</p>"
+            "<p>This is the <code>last example</code>.</p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.WithContent("This is the ");
+                
+                IMdNode code = paragraph.AddCode();
+                code.WithContent("last example");
+                
+                paragraph.WithContent(".");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "Multiple `inline` `code` segments.",
-            "<p>Multiple <code>inline</code> <code>code</code> segments.</p>"
+            "<p>Multiple <code>inline</code> <code>code</code> segments.</p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.WithContent("Multiple ");
+                
+                IMdNode code = paragraph.AddCode();
+                code.WithContent("inline");
+                
+                paragraph.WithContent(" ");
+                
+                IMdNode code2 = paragraph.AddCode();
+                code2.WithContent("code");
+                
+                paragraph.WithContent(" segments.");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "Backticks inside inline code: ``Code with `backticks` inside``.",
-            "<p>Backticks inside inline code: <code>Code with `backticks` inside</code>.</p>"
+            "<p>Backticks inside inline code: <code>Code with `backticks` inside</code>.</p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.WithContent("Backticks inside inline code: ");
+                
+                IMdNode code = paragraph.AddCode();
+                code.WithContent("Code with `backticks` inside");
+                
+                paragraph.WithContent(".");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "`Nested ` is not valid syntax.`",
-            "<p><code>Nested </code> is not valid syntax.`</p>"
+            "<p><code>Nested </code> is not valid syntax.`</p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                IMdNode code = paragraph.AddCode();
+                code.WithContent("Nested ");
+                paragraph.WithContent(" is not valid syntax.`");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "`inline code with special characters !@#$%^&*()`",
-            "<p><code>inline code with special characters !@#$%^&amp;*()</code></p>"
+            "<p><code>inline code with special characters !@#$%^&amp;*()</code></p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                IMdNode code = paragraph.AddCode();
+                code.WithContent("inline code with special characters !@#$%^&amp;*()");
+            }
         );
     }
 }

@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.MdNodes;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
@@ -25,9 +26,11 @@ public static class CodeDataSources {
             const code = sample();
             </code></pre>
             """,
-            static rootNode => rootNode.AddPre().AddCode()
-                .WithContent("const code = sample();\n")
-        );
+            static rootNode => {
+                IMdNode pre = rootNode.AddPre();
+                IMdNode code = pre.AddCode();
+                code.WithContent("const code = sample();\n");
+            });
 
         yield return static () => new MarkdownTestDto(SectionName,
             """
@@ -40,10 +43,12 @@ public static class CodeDataSources {
             const code = sample();
             </code></pre>
             """,
-            static rootNode => rootNode.AddPre().AddCode()
-                .WithClass("language-javascript")
-                .WithContent("const code = sample();\n")
-        );
+            static rootNode => {
+                IMdNode pre = rootNode.AddPre();
+                IMdNode code = pre.AddCode();
+                code.WithClass("language-javascript");
+                code.WithContent("const code = sample();\n");
+            });
 
         yield return static () => new MarkdownTestDto(SectionName,
             """
@@ -60,9 +65,11 @@ public static class CodeDataSources {
             end tell
             </code></pre>
             """,
-            static rootNode => rootNode.AddPre().AddCode()
-            .WithContent("tell application \"Foo\"\n    beep\nend tell\n")
-        );
+            static rootNode => {
+                IMdNode pre = rootNode.AddPre();
+                IMdNode code = pre.AddCode();
+                code.WithContent("tell application \"Foo\"\n    beep\nend tell\n");
+            });
 
         yield return static () => new MarkdownTestDto(SectionName,
             """
@@ -75,8 +82,10 @@ public static class CodeDataSources {
             **some valid markdown**
             </code></pre>
             """,
-            static rootNode => rootNode.AddPre().AddCode()
-            .WithContent("**some valid markdown**\n")
-        );
+            static rootNode => {
+                IMdNode pre = rootNode.AddPre();
+                IMdNode code = pre.AddCode();
+                code.WithContent("**some valid markdown**\n");
+            });
     }
 }
