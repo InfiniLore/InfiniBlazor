@@ -23,7 +23,6 @@ public class ListUnorderedSectionParser(ICachedRegexGroupNames groupName) : ISec
 
         List<Match> matchCollection = MarkdownRegexLib.ListItemBodyRegex.Matches(listUnorderedBody).ToList();
         int matchCount = matchCollection.Count;
-
         
         IMdNode ulNode = currentNode.AddChildNode(MdElement.ListUnordered);
         for (int index = 0; index < matchCount; index++) {

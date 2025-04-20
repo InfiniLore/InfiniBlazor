@@ -81,8 +81,8 @@ public class UnderlineDataSources {
                 paragraph.WithContent("something ");
                 paragraph.AddUnderline()
                     .AddBold()
-                        .AddItalic()
-                            .WithContent("bold, italic, and underlined");
+                    .AddItalic()
+                        .WithContent("bold, italic, and underlined");
             }
         );
         
@@ -96,8 +96,8 @@ public class UnderlineDataSources {
                 paragraph.WithContent("click ");
                 paragraph.AddUnderline()
                     .AddLink()
-                    .WithAttribute("href", "https://example.com")
-                    .WithContent("here");
+                        .WithAttribute("href", "https://example.com")
+                        .WithContent("here");
             }
         );
 
@@ -112,8 +112,8 @@ public class UnderlineDataSources {
                 paragraph.AddUnderline()
                     .AddBold()
                     .AddLink()
-                    .WithAttribute("href", "https://example.com")
-                    .WithContent("bold link");
+                        .WithAttribute("href", "https://example.com")
+                        .WithContent("bold link");
             }
         );
         
@@ -127,9 +127,9 @@ public class UnderlineDataSources {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("this has ");
                 IMdNode underline = paragraph.AddUnderline();
-                IMdNode bold = underline.AddBold().WithContent("multiple");;
+                underline.AddBold().WithContent("multiple");
                 underline.WithContent(" elements to ");
-                IMdNode italic = underline.AddItalic().WithContent("underline");
+                underline.AddItalic().WithContent("underline");
             }
         );
         
@@ -137,7 +137,8 @@ public class UnderlineDataSources {
             SectionName,
             "__",
             "<p>__</p>",
-            static rootNode => rootNode.AddParagraph().WithContent("__")
+            static rootNode => rootNode.AddParagraph()
+                .WithContent("__")
         );
         
         yield return static () => new MarkdownTestDto(
@@ -145,7 +146,7 @@ public class UnderlineDataSources {
             @"\_escaped_",
             "<p>_escaped_</p>",
             static rootNode => rootNode.AddParagraph()
-                .WithContent("_")
+                .WithContent("_") // Escaped Char
                 .WithContent("escaped_")
         );
 
@@ -155,7 +156,7 @@ public class UnderlineDataSources {
             "<p>_escaped_</p>",
             static rootNode => rootNode.AddParagraph()
                 .WithContent("_escaped")                
-                .WithContent("_")
+                .WithContent("_") // Escaped Char
         );
     }
 }
