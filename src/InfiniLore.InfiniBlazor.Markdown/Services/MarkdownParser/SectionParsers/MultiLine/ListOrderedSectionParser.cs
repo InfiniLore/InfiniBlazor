@@ -2,16 +2,15 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMultiLineSectionParser>("listOrdered")]
-public class ListOrderedSectionParser(IServiceProvider provider, ICachedRegexGroupNames groupName) : IMultiLineSectionParser {
-    private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
+[InjectableSingleton<ISectionHandler>("listOrdered")]
+public class ListOrderedSectionParser(ICachedRegexGroupNames groupName) : ISectionHandler {
+    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     
     private readonly int LTaskId = groupName.GetListGroupId("lTask");
     private readonly int LHeadId = groupName.GetListGroupId("lHead");
@@ -20,35 +19,34 @@ public class ListOrderedSectionParser(IServiceProvider provider, ICachedRegexGro
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, MultiLineOrigin origin) {
+    public void HandleMatch(Match entireMatch, Group group, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
         if (!group.TryGetValue(out string? listOrderedBody)) return;
 
         List<Match> matchCollection = MarkdownRegexLib.ListItemBodyRegex.Matches(listOrderedBody).ToList();
         int matchCount = matchCollection.Count;
 
-        writer.Write("<ol>");
+        IMdNode olNode = currentNode.AddChild(MdElement.ListOrdered);
         for (int index = 0; index < matchCount; index++) {
             Match match = matchCollection[index];
             GroupCollection groups = match.Groups;
-
-            writer.Write("<li>");
+            
+            IMdNode listItemNode = olNode.AddChild(MdElement.ListItem);
             if (groups[LTaskId].TryGetValue(out string? taskMarker)) {
                 bool isChecked = taskMarker.Contains('x');
-                writer.Write($"<input type=\"checkbox\" disabled {(isChecked ? "checked" : "")} /> ");
+                IMdNode inputNode = listItemNode.AddChild(MdElement.Input);
+                inputNode.WithAttribute("type", "checkbox");
+                inputNode.WithAttribute("disabled", isChecked ? "checked" : "");
             }
             
             if (groups[LHeadId].TryGetValue(out string? listHeader)) {
-                _markdownParser.Value.ParseSingleline(listHeader, writer);
+                parser.AddSingleLineMatchesToStack(listHeader, listItemNode, origin);
             }
 
+            // ReSharper disable once InvertIf
             if (groups[LBodyId].TryGetValue(out string? listBody)) {
                 string normalizedBody = NormalizationHelper.NormalizeIndentation(listBody);
-                _markdownParser.Value.ParseMultiline(normalizedBody, writer,origin | MultiLineOrigin.PreserveHtml);
+                parser.AddMultiLineMatchesToStack(normalizedBody, listItemNode, origin | ParserOrigin.PreserveHtml);
             }
-
-            writer.Write("</li>");
         }
-
-        writer.Write("</ol>");
     }
 }

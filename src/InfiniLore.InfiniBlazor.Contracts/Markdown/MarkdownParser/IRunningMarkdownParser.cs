@@ -1,25 +1,20 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISectionHandler>("underline")]
-public class UnderlineSectionParser(ICachedRegexGroupNames groupNames) : ISectionHandler {
-    public ParserOrigin SkipOnOrigin => ParserOrigin.Underline;
-
-    private readonly int UId = groupNames.GetSingleLineGroupId("u");
+public interface IRunningMarkdownParser {
+    IMdNode RootNode { get; }
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
-        if (!entireMatch.Groups[UId].TryGetValue(out string? underlineValue)) return;
-        
-        var underlineNode = currentNode.AddChild(MdElement.Underline);
-        parser.AddSingleLineMatchesToStack(underlineValue, underlineNode, origin | SkipOnOrigin);
-    }
+    void AddMultiLineMatchesToStack(string input, IMdNode node, ParserOrigin origin);
+    void AddSingleLineMatchesToStack(string input, IMdNode node, ParserOrigin origin);
+    void AddStringToStack(string value, IMdNode node, ParserOrigin origin);
 }

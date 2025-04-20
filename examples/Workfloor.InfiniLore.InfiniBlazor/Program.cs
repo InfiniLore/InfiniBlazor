@@ -160,31 +160,7 @@ public static class Program {
             Node currentNode = box.Node;
             Origin origin = box.Origin;
             
-            // A box can be either a match or raw input, so we need to handle both cases
-            switch (box) {
-                case { IsRawInput: true }: {
-                    currentNode.AddChild().NewContent = box.RawInput;
-                    continue;
-                }
-                case { IsMatch: true }: {
-                    Match match = box.Match;
-                    GroupCollection groups = match.Groups;
-                    int count = groups.Count;
-
-                    for (int index = 0; index < count; index++) {
-                        Group group = groups[index];
-                        if (!group.Success) continue;
-                        if(!GroupHandlers.TryGetValue(group.Name, out GroupHandler? handler)) continue;
-                        if ((origin & handler.SkipOnOrigin) == handler.SkipOnOrigin) continue;
-                        handler.HandleMatch(match, group, currentNode, matchesStack, origin);
-                    }
-                    continue;
-                }
-
-                default: {
-                    throw new Exception("Invalid data box");
-                }
-            }
+            
         }
         
         

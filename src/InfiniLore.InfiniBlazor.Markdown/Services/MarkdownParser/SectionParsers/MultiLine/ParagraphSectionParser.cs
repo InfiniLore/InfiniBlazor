@@ -2,27 +2,25 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMultiLineSectionParser>("paragraph")]
-public class ParapgrahSectionParser(IServiceProvider provider) : IMultiLineSectionParser {
-    private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
+[InjectableSingleton<ISectionHandler>("paragraph")]
+public class ParagraphSectionParser : ISectionHandler {
+    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match _, Group group, IMarkdownWriter writer, MultiLineOrigin origin) {
+    public void HandleMatch(Match entireMatch, Group group, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
         if (!group.TryGetValue(out string? paragraph)) return;
         if (paragraph.IsNullOrWhiteSpace()) return;
-        bool writeParagraph = !origin.HasFlag(MultiLineOrigin.Html);
+        bool writeParagraph = !origin.HasFlag(ParserOrigin.Html);
 
-        if (writeParagraph) writer.Write("<p>");
-        _markdownParser.Value.ParseSingleline(paragraph, writer);
-        if (writeParagraph) writer.Write("</p>");
+        if (writeParagraph) currentNode = currentNode.AddChild(MdElement.Paragraph);
+        parser.AddSingleLineMatchesToStack(paragraph, currentNode, origin);
     }
 }

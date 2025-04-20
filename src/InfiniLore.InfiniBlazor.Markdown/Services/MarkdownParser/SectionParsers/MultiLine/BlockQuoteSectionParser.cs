@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.Pools;
-using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -11,23 +10,21 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMultiLineSectionParser>("blockQuote")]
-public class BlockQuoteSectionParser(IServiceProvider provider) : IMultiLineSectionParser {
-    private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
-
+[InjectableSingleton<ISectionHandler>("blockQuote")]
+public class BlockQuoteSectionParser : ISectionHandler {
+    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match _, Group group, IMarkdownWriter writer, MultiLineOrigin origin) {
+    public void HandleMatch(Match entireMatch, Group group, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
         if (!group.TryGetValueSpan(out ReadOnlySpan<char> blockQuoteBody)) return;
 
         // Replace Regex usage with span-based logic:
         string normalized = NormalizeBlockQuote(ref blockQuoteBody);
         string adjustedBlockquote = NormalizationHelper.NormalizeIndentation(normalized);
 
-        writer.Write("<blockquote>");
-        _markdownParser.Value.ParseMultiline(adjustedBlockquote, writer, origin | MultiLineOrigin.PreserveHtml);
-        writer.Write("</blockquote>");
+        IMdNode blockquoteNode = currentNode.AddChild(MdElement.Blockquote);
+        parser.AddMultiLineMatchesToStack(adjustedBlockquote, blockquoteNode, origin | ParserOrigin.PreserveHtml);
     }
 
     private static string NormalizeBlockQuote(ref ReadOnlySpan<char> span) {

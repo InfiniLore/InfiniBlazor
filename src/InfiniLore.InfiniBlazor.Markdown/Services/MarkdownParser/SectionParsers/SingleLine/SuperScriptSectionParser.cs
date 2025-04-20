@@ -2,27 +2,24 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISingleLineSectionParser>("supScript")]
-public class SuperScriptSectionParser(IServiceProvider provider, ICachedRegexGroupNames groupNames) : ISingleLineSectionParser {
-    private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
-    public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.SuperScript;
+[InjectableSingleton<ISectionHandler>("supScript")]
+public class SuperScriptSectionParser(ICachedRegexGroupNames groupNames) : ISectionHandler {
+    public ParserOrigin SkipOnOrigin => ParserOrigin.SuperScript;
 
     private readonly int SpId = groupNames.GetSingleLineGroupId("sp");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, SingleLineOrigin origin) {
-        if (!entireMatch.Groups[SpId].TryGetValue(out string? boldValue)) return;
-
-        writer.Write("<sup>");
-        _markdownParser.Value.ParseSingleline(boldValue, writer, origin | SkipOnOrigin);
-        writer.Write("</sup>");
+    public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
+        if (!entireMatch.Groups[SpId].TryGetValue(out string? superValue)) return;
+        
+        IMdNode node = currentNode.AddChild(MdElement.Superscript);
+        parser.AddSingleLineMatchesToStack(superValue, node, origin  | SkipOnOrigin);
     }
 }

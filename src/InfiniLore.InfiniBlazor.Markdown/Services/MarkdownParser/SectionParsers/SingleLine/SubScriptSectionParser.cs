@@ -2,27 +2,24 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISingleLineSectionParser>("subScript")]
-public class SubScriptSectionParser(IServiceProvider provider, ICachedRegexGroupNames groupNames) : ISingleLineSectionParser {
-    private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
-    public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.SubScript;
+[InjectableSingleton<ISectionHandler>("subScript")]
+public class SubScriptSectionParser(ICachedRegexGroupNames groupNames) : ISectionHandler {
+    public ParserOrigin SkipOnOrigin => ParserOrigin.SubScript;
 
     private readonly int SbId = groupNames.GetSingleLineGroupId("sb");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, SingleLineOrigin origin) {
-        if (!entireMatch.Groups[SbId].TryGetValue(out string? boldValue)) return;
-
-        writer.Write("<sub>");
-        _markdownParser.Value.ParseSingleline(boldValue, writer, origin | SkipOnOrigin);
-        writer.Write("</sub>");
+    public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
+        if (!entireMatch.Groups[SbId].TryGetValue(out string? subValue)) return;
+        
+        IMdNode node = currentNode.AddChild(MdElement.Subscript);
+        parser.AddSingleLineMatchesToStack(subValue, node, origin  | SkipOnOrigin);
     }
 }

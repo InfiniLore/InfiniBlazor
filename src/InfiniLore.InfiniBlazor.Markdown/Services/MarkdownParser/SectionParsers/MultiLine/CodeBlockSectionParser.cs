@@ -2,17 +2,17 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.Markdown.Pools;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMultiLineSectionParser>("codeBlock")]
-public class CodeBlockSectionParser(ICachedRegexGroupNames groupNames) : IMultiLineSectionParser {
-    private const string CodeBlockStartMarker = "<pre><code";
-    private const string CodeBlockLang = " class=\"language-";
-    private const string CodeBlockEndMarker = "</code></pre>";
+[InjectableSingleton<ISectionHandler>("codeBlock")]
+public class CodeBlockSectionParser(ICachedRegexGroupNames groupNames) : ISectionHandler {
+    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     
     private readonly int CBodyId = groupNames.GetMultiLineGroupId("cBody");
     private readonly int CLangId = groupNames.GetMultiLineGroupId("cLang");
@@ -20,41 +20,48 @@ public class CodeBlockSectionParser(ICachedRegexGroupNames groupNames) : IMultiL
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, MultiLineOrigin origin) {
+    public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
         if (!entireMatch.Groups[CBodyId].TryGetValueSpan(out ReadOnlySpan<char> codeBlockBody)) return;
 
-        writer.Write(CodeBlockStartMarker.AsSpan());
+        IMdNode preNode = currentNode.AddChild(MdElement.Pre);
+        IMdNode codeNode = preNode.AddChild(MdElement.Code);
+        
         ReadOnlySpan<char> langNameValue = entireMatch.Groups[CLangId].ValueSpan;
         if (!langNameValue.IsEmpty) {
-            writer.Write(CodeBlockLang.AsSpan())
-                .Write(langNameValue)
-                .Write('"');
+            codeNode.WithClass($"language-{langNameValue}");
         }
-
-        writer.Write('>');
-        ProcessCodeBlockContent(writer, ref codeBlockBody);
-        writer.Write(CodeBlockEndMarker.AsSpan());
+        
+        string content = ProcessCodeBlockContent(ref codeBlockBody);
+        parser.AddStringToStack(content, codeNode, origin | ParserOrigin.PreserveHtml);
     }
 
-    private static void ProcessCodeBlockContent(IMarkdownWriter writer, ref ReadOnlySpan<char> content) {
+    private static string ProcessCodeBlockContent(ref ReadOnlySpan<char> content) {
         int currentIndex = 0;
+        StringBuilder sb = StringBuilderPool.Get();
+        try {
+            foreach (ValueMatch match in HtmlSymbolLookup.CodeBlockRegex.EnumerateMatches(content)) {
+                int matchIndex = match.Index;
+                int matchLength = match.Length;
+                if (currentIndex < matchIndex) {
+                    sb.Append(content.Slice(currentIndex, matchIndex - currentIndex));
+                }
 
-        foreach (ValueMatch match in HtmlSymbolLookup.CodeBlockRegex.EnumerateMatches(content)) {
-            int matchIndex = match.Index;
-            int matchLength = match.Length;
-            if (currentIndex < matchIndex) {
-                writer.Write(content.Slice(currentIndex, matchIndex - currentIndex));
+                if (HtmlSymbolLookup.CodeBlockAlternateLookup.TryGetValue(content.Slice(matchIndex, matchLength), out string? replacement)) {
+                    sb.Append(replacement.AsSpan());
+                }
+
+                currentIndex = matchIndex + matchLength;
             }
 
-            if (HtmlSymbolLookup.CodeBlockAlternateLookup.TryGetValue(content.Slice(matchIndex, matchLength), out string? replacement)) {
-                writer.Write(replacement.AsSpan());
+            if (currentIndex < content.Length) {
+                sb.Append(content[currentIndex..]);
             }
-
-            currentIndex = matchIndex + matchLength;
+            return sb.ToString();
+        }
+        finally {
+            StringBuilderPool.Return(sb);
         }
 
-        if (currentIndex < content.Length) {
-            writer.Write(content[currentIndex..]);
-        }
+        
     }
 }

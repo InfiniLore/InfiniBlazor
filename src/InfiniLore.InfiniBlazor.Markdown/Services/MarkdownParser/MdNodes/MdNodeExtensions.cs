@@ -1,14 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Markdown;
+namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[Flags]
-public enum MultiLineOrigin {
-    Undefined = 0,
-    Html = 1 << 0,
-    PreserveHtml = 1 << 1,
+public static class MdNodeExtensions {
+    public static IMdNode AddParagraph(this IMdNode node) => node.AddChild(MdElement.Paragraph);
 }

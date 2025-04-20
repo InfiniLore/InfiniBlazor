@@ -1,25 +1,25 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISectionHandler>("underline")]
-public class UnderlineSectionParser(ICachedRegexGroupNames groupNames) : ISectionHandler {
-    public ParserOrigin SkipOnOrigin => ParserOrigin.Underline;
+public interface IParserDataDto {
+    IMdNode Node { get; }
+    ParserOrigin Origin { get; }
+    Match? Match { get; }
+    string? RawInput { get; }
+    [MemberNotNull(nameof(Match))] bool IsMatch { get; }
+    [MemberNotNull(nameof(RawInput))] bool IsRawInput { get; }
 
-    private readonly int UId = groupNames.GetSingleLineGroupId("u");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
-        if (!entireMatch.Groups[UId].TryGetValue(out string? underlineValue)) return;
-        
-        var underlineNode = currentNode.AddChild(MdElement.Underline);
-        parser.AddSingleLineMatchesToStack(underlineValue, underlineNode, origin | SkipOnOrigin);
-    }
+    void AsMatch(IMdNode node, ParserOrigin origin, Match match);
+    void AsString(IMdNode node, ParserOrigin origin, string value);
 }

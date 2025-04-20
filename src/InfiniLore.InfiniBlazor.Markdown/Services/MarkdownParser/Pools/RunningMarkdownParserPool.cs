@@ -1,12 +1,21 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Text.RegularExpressions;
+using Microsoft.Extensions.ObjectPool;
 
-namespace InfiniLore.InfiniBlazor.Markdown;
+namespace InfiniLore.InfiniBlazor.Markdown.Pools;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMultiLineSectionParser {
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, MultiLineOrigin origin);
+public static class RunningMarkdownParserPool {
+    private static readonly ObjectPool<RunningMarkdownParser> Pool =
+        ObjectPool.Create(new DefaultPooledObjectPolicy<RunningMarkdownParser>());
+
+    public static RunningMarkdownParser Get() => Pool.Get();
+
+    public static void Return(RunningMarkdownParser builder) {
+        builder.Clear();
+        Pool.Return(builder);
+    }
 }

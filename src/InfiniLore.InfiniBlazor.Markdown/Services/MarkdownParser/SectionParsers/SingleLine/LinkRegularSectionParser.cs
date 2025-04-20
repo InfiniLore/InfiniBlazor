@@ -2,17 +2,15 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISingleLineSectionParser>("linkRegular")]
-public class LinkRegularSectionParser(IServiceProvider provider, ICachedRegexGroupNames groupNames) : ISingleLineSectionParser {
-    private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
-    public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.Link;
+[InjectableSingleton<ISectionHandler>("linkRegular")]
+public class LinkRegularSectionParser(ICachedRegexGroupNames groupNames) : ISectionHandler {
+    public ParserOrigin SkipOnOrigin => ParserOrigin.Link;
     
     private readonly int LrTextId = groupNames.GetSingleLineGroupId("lrText");
     private readonly int LrHrefId = groupNames.GetSingleLineGroupId("lrHref");
@@ -22,27 +20,24 @@ public class LinkRegularSectionParser(IServiceProvider provider, ICachedRegexGro
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, SingleLineOrigin origin) {
+    public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
         if (!entireMatch.Groups[LrTextId].TryGetValue(out string? linkText)) return;
         if (!entireMatch.Groups[LrHrefId].TryGetValue(out string? linkHref)) return;
-
-        string titleText = entireMatch.Groups[LrTitleId].TryGetValue(out string? altTextValue) ? $" title=\"{altTextValue}\"" : string.Empty;
-
+        
         if (entireMatch.Groups[LrBangId].Success) {
-            writer.Write("<img src=\"");
-            writer.Write(linkHref);
-            writer.Write("\" alt=\"");
-            writer.Write(linkText);
-            writer.Write('"');
-            writer.Write(titleText);
-            writer.Write('>');
+            IMdNode imgNode = currentNode.AddChild(MdElement.Image);
+            imgNode.WithAttribute("src", $"\"{linkHref}\"");
+            imgNode.WithAttribute("alt", $"\"{linkText}\"");
+
+            if (entireMatch.Groups[LrTitleId].TryGetValue(out string? altTextValue)) {
+                imgNode.WithAttribute("title", $"\"{altTextValue}\"");
+            }
             return;
         }
-
-        writer.Write("<a href=\"");
-        writer.Write(linkHref);
-        writer.Write("\">");
-        _markdownParser.Value.ParseSingleline(linkText, writer, origin | SkipOnOrigin);
-        writer.Write("</a>");
+    
+        IMdNode linkNode = currentNode.AddChild(MdElement.Link);
+        linkNode.WithAttribute("href", $"\"{linkHref}\"");
+        
+        parser.AddSingleLineMatchesToStack(linkText, linkNode, origin | SkipOnOrigin);
     }
 }

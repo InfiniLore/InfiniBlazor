@@ -1,21 +1,22 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown.MarkdownWriters;
 using Microsoft.Extensions.ObjectPool;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Pools;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class StringBuilderMarkdownWriterPool {
-    private static readonly ObjectPool<StringBuilderMarkdownWriter> Pool =
-        ObjectPool.Create(new DefaultPooledObjectPolicy<StringBuilderMarkdownWriter>());
+public static class ParserDataDtoPool {
+    private const int InitialCapacity = 255;
+    private static readonly ObjectPool<ParserDataDto> Pool =
+        new DefaultObjectPool<ParserDataDto>(new DefaultPooledObjectPolicy<ParserDataDto>(), InitialCapacity);
 
-    public static StringBuilderMarkdownWriter Get() => Pool.Get();
+    public static ParserDataDto Get() => Pool.Get();
 
-    public static void Return(StringBuilderMarkdownWriter builder) {
-        builder.Clear();
-        Pool.Return(builder);
+    public static void Return(ParserDataDto stack) {
+        stack.Clear();
+        Pool.Return(stack);
     }
 }

@@ -10,9 +10,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISingleLineSectionParser>("emote")]
-public class EmoteSectionParser(ILogger<EmoteSectionParser> logger, ICachedRegexGroupNames groupNames) : ISingleLineSectionParser{
-    public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.Emote;
+[InjectableSingleton<ISectionHandler>("emote")]
+public class EmoteSectionParser(ILogger<EmoteSectionParser> logger, ICachedRegexGroupNames groupNames) : ISectionHandler{
+    public ParserOrigin SkipOnOrigin => ParserOrigin.Emote;
     
     // TODO Requires some sort of Emote service
     private FrozenDictionary<EmoteKey, string> EmoteDict { get; } = new Dictionary<EmoteKey, string> {
@@ -33,13 +33,13 @@ public class EmoteSectionParser(ILogger<EmoteSectionParser> logger, ICachedRegex
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, SingleLineOrigin origin) {
+    public void HandleMatch(Match entireMatch, Group group, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
         if (!entireMatch.Groups[EId].TryGetValue(out string? lookupValue)) return;
         if (!EmoteLookup.TryGetValue(lookupValue, out string? value)) {
             logger.LogWarning("Lookup emote not found: {LookupValue}", lookupValue);
-            writer.Write(group.Value);
+            parser.AddStringToStack(group.Value, currentNode, origin | SkipOnOrigin );
             return;
         }
-        writer.Write(value);
+        parser.AddStringToStack(value, currentNode, origin | SkipOnOrigin);
     }
 }

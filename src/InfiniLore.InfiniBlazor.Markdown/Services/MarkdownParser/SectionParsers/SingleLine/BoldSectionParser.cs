@@ -9,20 +9,19 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISingleLineSectionParser>("bold")]
-public class BoldSectionParser(IServiceProvider provider, ICachedRegexGroupNames groupNames) : ISingleLineSectionParser {
+[InjectableSingleton<ISectionHandler>("bold")]
+public class BoldSectionParser(IServiceProvider provider, ICachedRegexGroupNames groupNames) : ISectionHandler {
     private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
-    public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.Bold;
+    public ParserOrigin SkipOnOrigin => ParserOrigin.Bold;
     
     private readonly int BId = groupNames.GetSingleLineGroupId("b");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, SingleLineOrigin origin) {
+    public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
         if (!entireMatch.Groups[BId].TryGetValue(out string? boldValue)) return;
 
-        writer.Write("<strong>");
-        _markdownParser.Value.ParseSingleline(boldValue, writer, origin | SkipOnOrigin);
-        writer.Write("</strong>");
+        IMdNode boldNode = currentNode.AddChild(MdElement.Bold);
+        parser.AddSingleLineMatchesToStack(boldValue, boldNode, origin  | SkipOnOrigin);
     }
 }
