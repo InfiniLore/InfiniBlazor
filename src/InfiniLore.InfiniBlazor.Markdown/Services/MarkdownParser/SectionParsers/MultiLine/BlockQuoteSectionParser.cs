@@ -5,6 +5,7 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.Pools;
 using System.Text;
 using System.Text.RegularExpressions;
+using CodeOfChaos.Extensions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -31,24 +32,34 @@ public class BlockQuoteSectionParser : ISectionHandler {
         // Use a ValueStringBuilder for efficient memory writing
         StringBuilder builder = StringBuilderPool.Get();
         try {
+            bool isFirstLine = true;
             foreach (ReadOnlySpan<char> line in span.EnumerateLines()) {
-                // Example: Remove leading '>' and any extra whitespace
-                ReadOnlySpan<char> trimmedLine = line.TrimStart();
+                if (!isFirstLine) builder.Append('\n');
 
-                if (trimmedLine.StartsWith('>')) {
-                    trimmedLine = trimmedLine[1..];// Remove '>'
+                ReadOnlySpan<char> trimmedLine = line.TrimStart();
+                if (trimmedLine.IsEmpty) continue;
+
+                if (trimmedLine[0] == '>') {
+                    int contentStart = 1;
+                    while (contentStart < trimmedLine.Length && trimmedLine[contentStart].IsWhiteSpace()) {
+                        contentStart++;
+                    }
+
+                    builder.Append(trimmedLine[contentStart..]);
+                    isFirstLine = false;
+                    continue;
                 }
 
-                // Append the normalized line back to the builder
                 builder.Append(trimmedLine);
-                builder.Append('\n');
+                isFirstLine = false;
             }
 
-            return builder.ToString().TrimEnd('\n');
+            return builder.ToString();
         }
         finally {
             StringBuilderPool.Return(builder);
         }
+
     }
 
 }
