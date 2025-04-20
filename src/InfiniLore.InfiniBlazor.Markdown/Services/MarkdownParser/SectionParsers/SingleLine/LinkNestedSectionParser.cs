@@ -25,17 +25,17 @@ public class LinkNestedSectionParser(ICachedRegexGroupNames groupNames) : ISecti
 
         if (entireMatch.Groups[LnBangId].Success) {
             IMdNode imgNode = currentNode.AddChildNode(MdElement.Image);
-            imgNode.WithAttribute("src", $"\"{linkHref}\"");
-            imgNode.WithAttribute("alt", $"\"{linkText}\"");
+            imgNode.WithAttribute("src", $"{linkHref}");
+            imgNode.WithAttribute("alt", $"{linkText}");
 
             if (entireMatch.Groups[LnTitleId].TryGetValue(out string? altTextValue)) {
-                imgNode.WithAttribute("title", $"\"{altTextValue}\"");
+                imgNode.WithAttribute("title", $"{altTextValue}");
             }
             return;
         }
     
         IMdNode linkNode = currentNode.AddChildNode(MdElement.Link);
-        linkNode.WithAttribute("href", $"\"{linkHref}\"");
+        linkNode.WithAttribute("href", $"{linkHref}");
         
         parser.AddSingleLineMatchesToStack(linkText, linkNode, origin);
     }
