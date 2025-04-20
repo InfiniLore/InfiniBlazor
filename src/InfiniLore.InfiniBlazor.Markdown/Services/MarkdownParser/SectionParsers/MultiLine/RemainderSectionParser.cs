@@ -9,8 +9,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMultiLineSectionParser>("remainder")]
-public class RemainderSectionParser(IServiceProvider provider) : IMultiLineSectionParser {
+[InjectableSingleton<IMultiLineSectionParser>("paragraph")]
+public class ParapgrahSectionParser(IServiceProvider provider) : IMultiLineSectionParser {
     private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
 
     // -----------------------------------------------------------------------------------------------------------------

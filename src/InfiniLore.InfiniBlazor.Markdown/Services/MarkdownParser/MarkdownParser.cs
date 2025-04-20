@@ -21,7 +21,7 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
     private readonly FrozenDictionary<string, ISingleLineSectionParser> _singlelineGroupToParsers = ToFrozenDictionary<ISingleLineSectionParser>(SinglelineGroupNames, logger, serviceProvider);
 
     private static ImmutableArray<string> MultilineGroupNames => [
-        "remainder",
+        "paragraph",
         "heading",
         "codeBlock",
         "headingSimple",
