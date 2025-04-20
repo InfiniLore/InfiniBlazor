@@ -40,6 +40,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "typescript", "typescript", 
 		webpack.config.js = webpack.config.js
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workfloor.InfiniLore.InfiniBlazor", "examples\Workfloor.InfiniLore.InfiniBlazor\Workfloor.InfiniLore.InfiniBlazor.csproj", "{74F08627-07BE-432B-8893-E1DFA7045731}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,10 @@ Global
 		{E5C1D953-B6DB-4CC0-8490-BF2F43994D92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5C1D953-B6DB-4CC0-8490-BF2F43994D92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5C1D953-B6DB-4CC0-8490-BF2F43994D92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74F08627-07BE-432B-8893-E1DFA7045731}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74F08627-07BE-432B-8893-E1DFA7045731}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74F08627-07BE-432B-8893-E1DFA7045731}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74F08627-07BE-432B-8893-E1DFA7045731}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{26284571-0E09-4BAF-8C2B-DF87DCC1BA0B} = {8DD280D4-1E14-4D5E-AFE6-58DD8F079DCC}
@@ -90,5 +96,6 @@ Global
 		{E5C1D953-B6DB-4CC0-8490-BF2F43994D92} = {8DD280D4-1E14-4D5E-AFE6-58DD8F079DCC}
 		{42FE03BE-7358-4D1E-9A9C-D9FAAC1564D3} = {25ED7F52-E54D-45E9-8CC9-37E2FB0F08F2}
 		{401208E4-BA9D-4FD0-80F0-466634E00E90} = {25ED7F52-E54D-45E9-8CC9-37E2FB0F08F2}
+		{74F08627-07BE-432B-8893-E1DFA7045731} = {85D9748B-B4DD-428D-850A-DCF23F8DBA39}
 	EndGlobalSection
 EndGlobal
