@@ -36,15 +36,15 @@ public class ListUnorderedSectionParser(ICachedRegexGroupNames groupName) : ISec
                 inputNode.WithAttribute("type", "checkbox");
                 inputNode.WithAttribute("disabled", isChecked ? "checked" : "");
             }
-            
-            if (groups[LHeadId].TryGetValue(out string? listHeader)) {
-                parser.AddSingleLineMatchesToStack(listHeader, listItemNode, origin);
-            }
 
-            // ReSharper disable once InvertIf
             if (groups[LBodyId].TryGetValue(out string? listBody)) {
                 string normalizedBody = NormalizationHelper.NormalizeIndentation(listBody);
                 parser.AddMultiLineMatchesToStack(normalizedBody, listItemNode, origin | ParserOrigin.PreserveHtml);
+            }
+            
+            // ReSharper disable once InvertIf
+            if (groups[LHeadId].TryGetValue(out string? listHeader)) {
+                parser.AddSingleLineMatchesToStack(listHeader, listItemNode, origin);
             }
         }
     }

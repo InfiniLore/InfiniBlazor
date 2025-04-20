@@ -1,6 +1,9 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -32,7 +35,20 @@ public static class BlockQuoteDataSources {
                     <li>test</li>
                 </ul>
             </blockquote>
-            """
+            """,
+            static rootNode => {
+                IMdNode blockquote = rootNode.AddBlockquote();
+                IMdNode h1 = blockquote.AddH1();
+                h1.WithContent("test");
+                
+                IMdNode nestedBlockquote = blockquote.AddBlockquote();
+                IMdNode nestedParagraph = nestedBlockquote.AddParagraph();
+                nestedParagraph.WithContent("test");
+
+                IMdNode list = blockquote.AddListUnordered();
+                list.AddListItem().WithContent("test");
+                list.AddListItem().WithContent("test");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -51,7 +67,20 @@ public static class BlockQuoteDataSources {
                     </blockquote>
                 </blockquote>
             </blockquote>
-            """
+            """,
+            static rootNode => {
+                IMdNode blockquote = rootNode.AddBlockquote();
+                IMdNode paragraph = blockquote.AddParagraph();
+                paragraph.WithContent(" blockQuote 1");
+                
+                IMdNode nestedBlockquote = blockquote.AddBlockquote();
+                IMdNode nestedParagraph = nestedBlockquote.AddParagraph();
+                nestedParagraph.WithContent(" ...blockQuote 2");
+                
+                IMdNode nestedNestedBlockquote = nestedBlockquote.AddBlockquote();
+                IMdNode nestedNestedParagraph = nestedNestedBlockquote.AddParagraph();
+                nestedNestedParagraph.WithContent("...blockQuote 3");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -74,7 +103,24 @@ public static class BlockQuoteDataSources {
                     </li>
                 </ol>
             </blockquote>
-            """
+            """,
+            static rootNode => {
+                IMdNode blockquote = rootNode.AddBlockquote();
+                IMdNode paragraph = blockquote.AddParagraph();
+                paragraph.WithContent("This is a blockquote with ");
+                paragraph.AddBold().WithContent("bold text");
+                paragraph.WithContent(" and ");
+                paragraph.AddItalic().WithContent("italic text");
+                paragraph.WithContent(".");
+                
+                IMdNode list = blockquote.AddListOrdered();
+                list.AddListItem().WithContent("First item");
+                IMdNode secondListItem = list.AddListItem();
+                secondListItem.WithContent("Second item");
+                
+                IMdNode nestedList = secondListItem.AddListUnordered();
+                nestedList.AddListItem().WithContent("Sub-item");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,

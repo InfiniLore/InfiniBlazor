@@ -32,29 +32,20 @@ public class BlockQuoteSectionParser : ISectionHandler {
         // Use a ValueStringBuilder for efficient memory writing
         StringBuilder builder = StringBuilderPool.Get();
         try {
-            bool isFirstLine = true;
             foreach (ReadOnlySpan<char> line in span.EnumerateLines()) {
-                if (!isFirstLine) builder.Append('\n');
-
+                // Example: Remove leading '>' and any extra whitespace
                 ReadOnlySpan<char> trimmedLine = line.TrimStart();
-                if (trimmedLine.IsEmpty) continue;
 
-                if (trimmedLine[0] == '>') {
-                    int contentStart = 1;
-                    while (contentStart < trimmedLine.Length && trimmedLine[contentStart].IsWhiteSpace()) {
-                        contentStart++;
-                    }
-
-                    builder.Append(trimmedLine[contentStart..]);
-                    isFirstLine = false;
-                    continue;
+                if (trimmedLine.StartsWith('>')) {
+                    trimmedLine = trimmedLine[1..];// Remove '>'
                 }
 
+                // Append the normalized line back to the builder
                 builder.Append(trimmedLine);
-                isFirstLine = false;
+                builder.Append('\n');
             }
 
-            return builder.ToString();
+            return builder.ToString().TrimEnd('\n');
         }
         finally {
             StringBuilderPool.Return(builder);
