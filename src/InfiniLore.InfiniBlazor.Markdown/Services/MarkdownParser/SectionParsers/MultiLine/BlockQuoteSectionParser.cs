@@ -44,7 +44,7 @@ public class BlockQuoteSectionParser : ISectionHandler {
                 builder.Append('\n');
             }
 
-            return builder.ToString();
+            return builder.ToString().TrimEnd('\n');
         }
         finally {
             StringBuilderPool.Return(builder);

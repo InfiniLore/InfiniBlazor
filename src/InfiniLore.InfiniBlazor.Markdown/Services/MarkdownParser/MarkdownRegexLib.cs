@@ -67,9 +67,6 @@ public static partial class MarkdownRegexLib {
 
     [GeneratedRegex(@"^[ ]*[-.]?\d*\.?\s+(?<lTask>\[[\ xX]\])?(?<lHead>[^\r\n]+)(?<lBody>(?:\r?\n[ ]+.+)*)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex ListItemBodyRegex { get; }
-
-    [GeneratedRegex("^>", RegexOptions.Multiline | RegexOptions.Compiled)]
-    public static partial Regex NormalizeBlockQuoteRegex { get; }
     
     [GeneratedRegex("\r?\n", RegexOptions.Compiled)]
     public static partial Regex NormalizeNewlinesRegex { get; }

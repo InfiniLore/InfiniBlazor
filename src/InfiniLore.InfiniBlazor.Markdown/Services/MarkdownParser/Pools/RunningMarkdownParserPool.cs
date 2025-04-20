@@ -14,8 +14,8 @@ public static class RunningMarkdownParserPool {
 
     public static RunningMarkdownParser Get() => Pool.Get();
 
-    public static void Return(RunningMarkdownParser builder) {
-        builder.Clear();
-        Pool.Return(builder);
+    public static void Return(RunningMarkdownParser parser) {
+        parser.Clear();
+        Pool.Return(parser);
     }
 }

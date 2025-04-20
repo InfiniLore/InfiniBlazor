@@ -90,44 +90,42 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
 
             // Process matches
             while (runningParser.TryPopDto(out ParserDataDto? dataDto)) {
-                // Extract what we already have from the stack
-                try {
-                    IMdNode currentNode = dataDto.Node;
-                    ParserOrigin origin = dataDto.Origin;
+                IMdNode currentNode = dataDto.Node;
+                ParserOrigin origin = dataDto.Origin;
 
-                    switch (dataDto) {
-                        case { IsRawInput: true }: {
-                            currentNode.WithContent(dataDto.RawInput);
-                            break;
-                        }
-
-                        case { IsMatch: true }: {
-                            Match match = dataDto.Match;
-                            GroupCollection groups = match.Groups;
-                            int count = groups.Count;
-
-                            for (int index = 0; index < count; index++) {
-                                Group group = groups[index];
-                                if (!group.Success) continue;
-                                if (!_sectionHandlers.TryGetValue(group.Name, out ISectionHandler? handler)) continue;
+                // Needed for adding child text content to a node
+                if (dataDto is { IsMatch: false, IsRawInput: true } ) {
+                    currentNode.WithContent(dataDto.RawInput);
                     
-                                ParserOrigin handlerOrigin = handler.SkipOnOrigin;
-                                if (handlerOrigin is not ParserOrigin.NotSkipped && (origin & handler.SkipOnOrigin) == handler.SkipOnOrigin) continue;
-
-                                handler.HandleMatch(match, group, origin, currentNode, runningParser);
-                            }
-                            break;
-                        }
-                    }
-                }
-                finally {
+                    // Remember to clean up the DTO, else it will not return to the pool
                     ParserDataDtoPool.Return(dataDto);
+                    continue;
                 }
+
+                // Process the match, which will happen most of the time
+                Match match = dataDto.Match;
+                GroupCollection groups = match.Groups;
+                int count = groups.Count;
+
+                for (int index = 0; index < count; index++) {
+                    Group group = groups[index];
+                    if (!group.Success) continue;
+                    if (!_sectionHandlers.TryGetValue(group.Name, out ISectionHandler? handler)) continue;
+
+                    ParserOrigin handlerOrigin = handler.SkipOnOrigin;
+                    if (handlerOrigin is not ParserOrigin.NotSkipped && (origin & handler.SkipOnOrigin) == handler.SkipOnOrigin) continue;
+
+                    handler.HandleMatch(match, group, origin, currentNode, runningParser);
+                }
+                
+                // Remember to clean up the DTO, else it will not return to the pool
+                ParserDataDtoPool.Return(dataDto);
             }
 
             return rootNode;
         }
         finally {
+            // Also handles ParserDataDto cleanup if still present, so no nested try-finally block needed.
             RunningMarkdownParserPool.Return(runningParser);
         }
     }
