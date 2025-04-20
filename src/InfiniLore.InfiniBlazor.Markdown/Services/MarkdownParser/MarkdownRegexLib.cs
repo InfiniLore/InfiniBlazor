@@ -60,7 +60,7 @@ public static partial class MarkdownRegexLib {
             (?<htmlPost>.+)?
           )
         | (?<horizontalRule>^[\-=]{3,64}\s*$)
-        | (?<paragraph>.+?(?:\r?\n|$))
+        | (?<paragraph>(?<p>.+?)(?:\r?\n|$))
         
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex MultilineStructuresRegex { get; }
