@@ -1,6 +1,8 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -14,25 +16,37 @@ public static class TagDataSources {
     public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
         yield return static () => new MarkdownTestDto(SectionName,
             "#tag",
-            "<p><span>#tag</span></p>"
+            "<p><span>#tag</span></p>",
+            static rootNode => rootNode.AddParagraph()
+                .AddSpan().WithContent("#tag")
         );
         yield return static () => new MarkdownTestDto(SectionName,
             "#不",
-            "<p><span>#不</span></p>"
+            "<p><span>#不</span></p>",
+            static rootNode => rootNode.AddParagraph()
+                .AddSpan().WithContent("#不")
+            
         );
         yield return static () => new MarkdownTestDto(SectionName,
             "#öäüÖÄÜß",
-            "<p><span>#öäüÖÄÜß</span></p>"
+            "<p><span>#öäüÖÄÜß</span></p>",
+            static rootNode => rootNode.AddParagraph()
+                .AddSpan().WithContent("#öäüÖÄÜß")
+            
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "**#tag**",
-            "<p><strong><span>#tag</span></strong></p>"
+            "<p><strong><span>#tag</span></strong></p>",
+            static rootNode => rootNode.AddParagraph()
+                .AddBold().AddSpan().WithContent("#tag")
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "*#tag*",
-            "<p><em><span>#tag</span></em></p>"
+            "<p><em><span>#tag</span></em></p>",
+            static rootNode => rootNode.AddParagraph()
+            .AddItalic().AddSpan().WithContent("#tag")
         );
     }
 }
