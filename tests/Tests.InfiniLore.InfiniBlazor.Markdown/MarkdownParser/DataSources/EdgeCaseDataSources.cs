@@ -1,6 +1,9 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -25,7 +28,12 @@ public static class EdgeCaseDataSources {
             <p>1234</p>
             <p>1234</p>
             <p>1234</p>
-            """
+            """,
+            static rootNode => {
+                rootNode.AddParagraph().WithContent("1234");
+                rootNode.AddParagraph().WithContent("1234");
+                rootNode.AddParagraph().WithContent("1234");
+            }
         );
         
         // Caused a weird issue that created a horizontal line
@@ -39,28 +47,48 @@ public static class EdgeCaseDataSources {
             <p>1234</p>
             <p>1234</p>
             <p>123</p>
-            """
+            """,
+            static rootNode => {
+                rootNode.AddParagraph().WithContent("1234");
+                rootNode.AddParagraph().WithContent("1234");
+                rootNode.AddParagraph().WithContent("123");
+            }
         );
 
         // Unclosed items
         yield return static () => new MarkdownTestDto(SectionName,
             "**bold",
-            "<p>**bold</p>"
-        );
+            "<p>**bold</p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.WithContent("**bold");
+            });
 
         yield return static () => new MarkdownTestDto(SectionName,
             "*italics",
-            "<p>*italics</p>"
+            "<p>*italics</p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.WithContent("*italics");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "[link](https://example.com",
-            "<p>[link](https://example.com</p>"
+            "<p>[link](https://example.com</p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.WithContent("[link](https://example.com");
+            }
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
             "# Heading 1 # Not a heading",
-            "<h1>Heading 1 # Not a heading</h1>"
+            "<h1>Heading 1 # Not a heading</h1>",
+            static rootNode => {
+                IMdNode heading = rootNode.AddH1();
+                heading.WithContent("Heading 1 # Not a heading");
+            }
         );
 
         // Span should be allowed
