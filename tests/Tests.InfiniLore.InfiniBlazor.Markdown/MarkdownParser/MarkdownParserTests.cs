@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor;
 using InfiniLore.InfiniBlazor.Markdown;
 using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
 

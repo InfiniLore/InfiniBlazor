@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
-using InfiniLore.InfiniBlazor;
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.Config;
 using Microsoft.Extensions.DependencyInjection;

@@ -24,5 +24,6 @@ public class CodeInlineSectionParser(ICachedRegexGroupNames groupNames) : ISecti
         string output = HtmlEncoder.Default.Encode(normalizedBackticks);
 
         IMdNode codeNode = currentNode.AddChildNode(MdElement.Code);
+        codeNode.WithContent(output);
     }
 }

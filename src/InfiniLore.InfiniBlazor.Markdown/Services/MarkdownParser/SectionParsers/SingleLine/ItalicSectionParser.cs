@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
@@ -10,8 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("italic")]
-public class ItalicSectionParser(IServiceProvider provider, ICachedRegexGroupNames groupNames) : ISectionHandler {
-    private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
+public class ItalicSectionParser(ICachedRegexGroupNames groupNames) : ISectionHandler {
     public ParserOrigin SkipOnOrigin => ParserOrigin.Italic;
     
     private readonly int IId = groupNames.GetSingleLineGroupId("i");
