@@ -22,6 +22,6 @@ public class ParagraphSectionParser(ICachedRegexGroupNames groupNames) : ISectio
         bool writeParagraph = !origin.HasFlag(ParserOrigin.Html);
 
         if (writeParagraph) currentNode = currentNode.AddChildNode(MdElement.Paragraph);
-        parser.AddSingleLineMatchesToStack(paragraph, currentNode, origin);
+        parser.AddSingleLineMatchesToStack(paragraph.TrimStart(), currentNode, origin);
     }
 }

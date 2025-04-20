@@ -71,11 +71,11 @@ public static class BlockQuoteDataSources {
             static rootNode => {
                 IMdNode blockquote = rootNode.AddBlockquote();
                 IMdNode paragraph = blockquote.AddParagraph();
-                paragraph.WithContent(" blockQuote 1");
+                paragraph.WithContent("blockQuote 1");
                 
                 IMdNode nestedBlockquote = blockquote.AddBlockquote();
                 IMdNode nestedParagraph = nestedBlockquote.AddParagraph();
-                nestedParagraph.WithContent(" ...blockQuote 2");
+                nestedParagraph.WithContent("...blockQuote 2");
                 
                 IMdNode nestedNestedBlockquote = nestedBlockquote.AddBlockquote();
                 IMdNode nestedNestedParagraph = nestedNestedBlockquote.AddParagraph();
@@ -143,7 +143,24 @@ public static class BlockQuoteDataSources {
                     </blockquote>
                 </blockquote>
             </blockquote>
-            """
+            """,
+            static rootNode => {
+                IMdNode blockquote = rootNode.AddBlockquote();
+                IMdNode paragraph = blockquote.AddParagraph();
+                paragraph.WithContent("Nested quotes:");
+                
+                IMdNode nestedBlockquote = blockquote.AddBlockquote();
+                IMdNode nestedParagraph = nestedBlockquote.AddParagraph();
+                nestedParagraph.WithContent("Level 2");
+                
+                IMdNode nestedNestedBlockquote = nestedBlockquote.AddBlockquote();
+                IMdNode nestedNestedParagraph = nestedNestedBlockquote.AddParagraph();
+                nestedNestedParagraph.WithContent("Level 3");
+                
+                IMdNode nestedNestedNestedBlockquote = nestedNestedBlockquote.AddBlockquote();
+                IMdNode nestedNestedNestedParagraph = nestedNestedNestedBlockquote.AddParagraph();
+                nestedNestedNestedParagraph.WithContent("Level 4");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -166,7 +183,23 @@ public static class BlockQuoteDataSources {
                     <p>Sub blockquote</p>
                 </blockquote>
             </blockquote>
-            """
+            """,
+            static rootNode => {
+                IMdNode blockquote = rootNode.AddBlockquote();
+                IMdNode paragraph = blockquote.AddParagraph();
+                paragraph.WithContent("Combining elements:");
+                
+                IMdNode heading = blockquote.AddH3();
+                heading.WithContent("Heading inside blockquote");
+                
+                IMdNode list = blockquote.AddListUnordered();
+                list.AddListItem().WithContent("List item");
+                list.AddListItem().WithContent("Another item");
+                
+                IMdNode nestedBlockquote = blockquote.AddBlockquote();
+                IMdNode nestedParagraph = nestedBlockquote.AddParagraph();
+                nestedParagraph.WithContent("Sub blockquote");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -179,7 +212,32 @@ public static class BlockQuoteDataSources {
                 <p>Inline formatting:</p>
                 <p><strong>Bold</strong>, <em>italic</em>, <code>code</code>, and <a href="https://example.com">link</a>.</p>
             </blockquote>
-            """
+            """,
+            static rootNode => {
+                IMdNode blockquote = rootNode.AddBlockquote();
+                IMdNode paragraph = blockquote.AddParagraph();
+                paragraph.WithContent("Inline formatting:");
+                
+                IMdNode paragraph2 = blockquote.AddParagraph();
+                
+                IMdNode bold = paragraph2.AddBold();
+                bold.WithContent("Bold");
+                paragraph2.WithContent(", ");
+                
+                IMdNode italic = paragraph2.AddItalic();
+                italic.WithContent("italic");
+                paragraph2.WithContent(", ");
+
+                IMdNode code = paragraph2.AddCode();
+                code.WithContent("code");
+                paragraph2.WithContent(", and ");
+
+                IMdNode link = paragraph2.AddLink();
+                link.WithAttribute("href", "https://example.com");
+                link.WithContent("link");
+                
+                paragraph2.WithContent(".");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -214,13 +272,35 @@ public static class BlockQuoteDataSources {
                     </li>
                 </ol>
             </blockquote>
-            """
+            """,
+            static rootNode => {
+                IMdNode blockquote = rootNode.AddBlockquote();
+                IMdNode paragraph = blockquote.AddParagraph();
+                paragraph.WithContent("Mixed levels and lists:");
+                
+                IMdNode list = blockquote.AddListOrdered();
+                IMdNode firstListItem = list.AddListItem();
+                firstListItem.WithContent("First");
+                IMdNode nestedBlockquote = firstListItem.AddBlockquote();
+                nestedBlockquote.AddParagraph().WithContent("Nested blockquote with text.");
+                
+                IMdNode secondListItem = list.AddListItem();
+                secondListItem.WithContent("Second");
+                IMdNode nestedList = secondListItem.AddListUnordered();
+                IMdNode subItem = nestedList.AddListItem();
+                subItem.WithContent("Sub-item");
+                IMdNode nestedNestedBlockquote = subItem.AddBlockquote();
+                nestedNestedBlockquote.AddParagraph().WithContent("Another nested quote.");
+            }
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
             ">", 
-            "<p>&gt;</p>" // an empty blockquote is not parsed as a blockquote
-        );
+            "<p>&gt;</p>", // an empty blockquote is not parsed as a blockquote
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.WithContent(">");
+            });
         
         
         yield return static () => new MarkdownTestDto(SectionName,
@@ -229,8 +309,12 @@ public static class BlockQuoteDataSources {
             <blockquote>
                 <p>Plain text blockquote.</p>
             </blockquote>
-            """
-        );
+            """,
+            static rootNode => {
+                IMdNode blockquote = rootNode.AddBlockquote();
+                IMdNode paragraph = blockquote.AddParagraph();
+                paragraph.WithContent("Plain text blockquote.");
+            });
         
         yield return static () => new MarkdownTestDto(SectionName,
             """
@@ -240,7 +324,21 @@ public static class BlockQuoteDataSources {
             <blockquote>
                 <p>This is a blockquote with escaped characters: *, &gt;, <code>`</code>.</p>
             </blockquote>
-            """
+            """,
+            static rootNode => {
+                IMdNode blockquote = rootNode.AddBlockquote();
+                IMdNode paragraph = blockquote.AddParagraph();
+                paragraph.WithContent("This is a blockquote with escaped characters: ");
+                paragraph.WithContent("*");
+                paragraph.WithContent(", ");
+                paragraph.WithContent("&gt;");
+                paragraph.WithContent(", ");
+                
+                IMdNode code = paragraph.AddCode();
+                code.WithContent("`");
+                
+                paragraph.WithContent(".");
+            }
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
@@ -263,7 +361,23 @@ public static class BlockQuoteDataSources {
                     </blockquote>
                 </blockquote>
             </blockquote>
-            """
+            """,
+            static rootNode => {
+                IMdNode blockquote = rootNode.AddBlockquote();
+                IMdNode paragraph = blockquote.AddParagraph();
+                paragraph.WithContent("Level 1");
+                
+                IMdNode nestedBlockquote = blockquote.AddBlockquote();
+                IMdNode nestedParagraph = nestedBlockquote.AddParagraph();
+                nestedParagraph.WithContent("Level 2");
+                
+                IMdNode paragraph2 = blockquote.AddParagraph();
+                paragraph2.WithContent("Back to Level 1");
+                
+                IMdNode nestedNestedBlockquote = blockquote.AddBlockquote().AddBlockquote();
+                IMdNode nestedNestedParagraph = nestedNestedBlockquote.AddParagraph();
+                nestedNestedParagraph.WithContent("Level 3");
+            }
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
@@ -289,7 +403,15 @@ public static class BlockQuoteDataSources {
                 <p>Line 1</p>
                 <p>Line 2</p>
             </blockquote>
-            """
+            """,
+            static rootNode => {
+                IMdNode blockquote = rootNode.AddBlockquote();
+                IMdNode paragraph = blockquote.AddParagraph();
+                paragraph.WithContent("Line 1");
+                
+                IMdNode paragraph2 = blockquote.AddParagraph();
+                paragraph2.WithContent("Line 2");
+            }
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
@@ -305,7 +427,15 @@ public static class BlockQuoteDataSources {
                 <p>This is a paragraph.</p>
                 <pre><code>Code block inside a blockquote.</code></pre>
             </blockquote>
-            """
+            """,
+            static rootNode => {
+                IMdNode blockquote = rootNode.AddBlockquote();
+                IMdNode paragraph = blockquote.AddParagraph();
+                paragraph.WithContent("This is a paragraph.");
+                
+                IMdNode code = blockquote.AddPre().AddCode();
+                code.WithContent("Code block inside a blockquote.\n");
+            }
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
@@ -319,7 +449,15 @@ public static class BlockQuoteDataSources {
                 <p>This is the first paragraph.</p>
                 <p>This is the second paragraph, separated by an empty line.</p>
             </blockquote>
-            """
+            """,
+            static rootNode => {
+                IMdNode blockquote = rootNode.AddBlockquote();
+                IMdNode paragraph = blockquote.AddParagraph();
+                paragraph.WithContent("This is the first paragraph.");
+                
+                IMdNode paragraph2 = blockquote.AddParagraph();
+                paragraph2.WithContent("This is the second paragraph, separated by an empty line.");
+            }
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
@@ -330,7 +468,11 @@ public static class BlockQuoteDataSources {
             <blockquote>
                 <div>This is a div inside a blockquote.</div>
             </blockquote>
-            """
+            """,
+            static rootNode => {
+                IMdNode blockquote = rootNode.AddBlockquote();
+                blockquote.WithContent("<div>This is a div inside a blockquote.</div>");
+            }
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
