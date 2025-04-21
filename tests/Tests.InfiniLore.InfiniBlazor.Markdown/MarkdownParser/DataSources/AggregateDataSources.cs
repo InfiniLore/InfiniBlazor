@@ -109,7 +109,65 @@ public static class AggregateDataSources {
             <h3>Links and Images</h3>
             <p>You can visit <a href="https://www.google.com">Google</a> or check out the following image:</p>
             <p><img src="https://via.placeholder.com/150" alt="Placeholder Image"></p>
-            """
+            """,
+            static rootNode => {
+                rootNode.AddH2("Longer Example with Multiple Sections");
+                
+                rootNode.AddH3("Introduction");
+                IMdNode paragraph0 = rootNode.AddParagraph();
+                paragraph0.WithContent("Welcome to this test. This section introduces the topic, along with ");
+                paragraph0.AddBold("bold");
+                paragraph0.WithContent(", ");
+                paragraph0.AddItalic("italic");
+                paragraph0.WithContent(", and ");
+                paragraph0.AddCode("code");
+                paragraph0.WithContent(" formatting.");
+                
+                rootNode.AddH3("Code Snippet");
+                rootNode.AddParagraph("Below is an example of a C# code snippet:");
+                IMdNode csharpCode = rootNode.AddPre().AddCode("public class Program {\n    public static void Main() {\n        Console.WriteLine(\"Hello, World!\");\n    }\n}\n");
+                csharpCode.WithClass("language-csharp");
+                
+                rootNode.AddH3("Bullet Points");
+                rootNode.AddParagraph("Here are some bullet points:");
+                IMdNode bulletList = rootNode.AddListUnordered();
+                bulletList.AddListItem("Point one");
+                IMdNode nestedItem = bulletList.AddListItem("Point two");
+                IMdNode bulletList2 = nestedItem.AddListUnordered();
+                bulletList2.AddListItem("Subpoint A");
+                bulletList2.AddListItem("Subpoint B");
+                
+                rootNode.AddH3("Blockquote");
+                IMdNode blockquote = rootNode.AddBlockquote();
+                blockquote.AddParagraph("This is a blockquote. It can contain multiple lines of text");
+                blockquote.AddParagraph("and demonstrates how Markdown handles quoted content.");
+                
+                rootNode.AddH3("Table Example");
+                IMdNode table = rootNode.AddTable();
+                IMdNode tableHeader = table.AddTableHead();
+                IMdNode tableHeaderRow = tableHeader.AddTableRow();
+                tableHeaderRow.AddTableHeadCell("Column 1");
+                tableHeaderRow.AddTableHeadCell("Column 2");
+                tableHeaderRow.AddTableHeadCell("Column 3");
+                IMdNode tableBody = table.AddTableBody();
+                IMdNode tableBodyRow0 = tableBody.AddTableRow();
+                tableBodyRow0.AddTableCell("Data 1");
+                tableBodyRow0.AddTableCell("Data 2");
+                tableBodyRow0.AddTableCell("Data 3");
+                IMdNode tableBodyRow1 = tableBody.AddTableRow();
+                tableBodyRow1.AddTableCell("Data 4");
+                tableBodyRow1.AddTableCell("Data 5");
+                tableBodyRow1.AddTableCell("Data 6");
+
+                rootNode.AddH3("Links and Images");
+                var paragraph1 = rootNode.AddParagraph();
+                paragraph1.WithContent("You can visit ");
+                paragraph1.AddLink("Google").WithAttribute("href", "https://www.google.com");
+                paragraph1.WithContent(" or check out the following image:");
+                var image = rootNode.AddParagraph().AddImage();
+                image.WithAttribute("src", "https://via.placeholder.com/150");
+                image.WithAttribute("alt", "Placeholder Image");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
