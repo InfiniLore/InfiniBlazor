@@ -43,4 +43,6 @@ public static class MdNodeExtensions {
     public static IMdNode AddTableHeadCell(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.TableHeadCell, content);
     public static IMdNode AddTableRow(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.TableRow, content);
     public static IMdNode AddUnderline(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Underline, content);
+    public static IMdNode AddCheckboxSelected(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.CheckboxSelected, content);
+    public static IMdNode AddCheckboxUnselected(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.CheckboxUnselected, content);
 }

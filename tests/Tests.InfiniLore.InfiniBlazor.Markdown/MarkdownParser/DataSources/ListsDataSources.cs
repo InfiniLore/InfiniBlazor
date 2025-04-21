@@ -302,7 +302,14 @@ public static class ListsDataSources {
                     </ul>
                 </li>
             </ul>
-            """
+            """,
+            static rootNode => {
+                IMdNode list = rootNode.AddListUnordered();
+                IMdNode list2 = list.AddListItem("This list has").AddListUnordered();
+                IMdNode list3 = list2.AddListItem("Uneven indentation").AddListUnordered();
+                IMdNode list4 = list3.AddListItem("But still renders").AddListUnordered();
+                list4.AddListItem("Correctly!");
+            }
         );
 
 
@@ -320,13 +327,29 @@ public static class ListsDataSources {
                 <li><input type="checkbox" disabled/>is</li>
                 <li><input type="checkbox" disabled checked/>a
                     <ul>
-                    <li>
-                    <input type="checkbox" disabled checked/>nested</li>
+                        <li><input type="checkbox" disabled checked/>nested</li>
                     </ul>
                 </li>
                 <li>todo list</li>
             </ol>
-            """
+            """,
+            static rootNode => {
+                var list = rootNode.AddListOrdered();
+                list.AddListItem("this");
+                var item1 = list.AddListItem();
+                item1.AddCheckboxUnselected();
+                item1.WithContent(" is");
+
+                var item2 = list.AddListItem();
+                item2.AddCheckboxSelected();
+                item2.WithContent(" a");
+                var sublist = item2.AddListUnordered();
+                var item3 = sublist.AddListItem();
+                item3.AddCheckboxSelected();
+                item3.WithContent(" nested");
+
+                list.AddListItem("todo list");
+            }
         );
         
         yield return static () => new MarkdownTestDto(SectionName,

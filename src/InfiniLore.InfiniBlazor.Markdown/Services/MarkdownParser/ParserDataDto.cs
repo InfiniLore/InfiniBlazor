@@ -17,7 +17,7 @@ public class ParserDataDto : IParserDataDto {
     public MdElement Element { get; private set; }
     
     [MemberNotNull(nameof(Match))] public bool IsMatch { get; private set; }
-    [MemberNotNull(nameof(Content))] public bool IsElement { get; private set; }
+    public bool IsElement { get; private set; }
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ public class ParserDataDto : IParserDataDto {
         IsMatch = true;
     }
     
-    public void AsElement(IMdNode node, ParserOrigin origin, string value, MdElement element) {
+    public void AsElement(IMdNode node, ParserOrigin origin, string? value, MdElement element) {
         Node = node;
         Origin = origin;
         Content = value;

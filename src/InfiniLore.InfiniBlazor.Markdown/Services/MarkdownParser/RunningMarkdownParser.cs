@@ -68,7 +68,7 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
         PushElementToStack(content, currentNode, origin, MdElement.Content);
     }
     
-    public void PushElementToStack(string content, IMdNode currentNode, ParserOrigin origin, MdElement element) {
+    public void PushElementToStack(string? content, IMdNode currentNode, ParserOrigin origin, MdElement element) {
         ParserDataDto dto = ParserDataDtoPool.Get();
         dto.AsElement(currentNode, origin, content, element);
         _stack.Push(dto);

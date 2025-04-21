@@ -31,7 +31,7 @@ public class ListUnorderedSectionParser : ISectionHandler {
 
             IMdNode listItemNode = ulNode.AddChildNode(MdElement.ListItem);
 
-            if (groups[LBodyId].TryGetValue(out string? listBody)) {
+            if (groups[LBodyId].TryGetValue(out string? listBody) && listBody.IsNotNullOrWhiteSpace()) {
                 string normalizedBody = NormalizationHelper.NormalizeIndentation(listBody);
                 parser.AddMultiLineMatchesToStack(normalizedBody, listItemNode, origin | ParserOrigin.PreserveHtml);
             }
@@ -42,9 +42,9 @@ public class ListUnorderedSectionParser : ISectionHandler {
             
             // ReSharper disable once InvertIf
             if (groups[LTaskId].TryGetValue(out string? taskMarker)) {
-                bool isChecked = taskMarker.Contains('x');
+                bool isChecked = taskMarker.ToLowerInvariant().Contains('x');
                 MdElement element = isChecked ? MdElement.CheckboxSelected : MdElement.CheckboxUnselected;
-                parser.PushElementToStack(string.Empty, currentNode, origin, element); 
+                parser.PushElementToStack(null, listItemNode, origin, element); 
             }
         }
     }

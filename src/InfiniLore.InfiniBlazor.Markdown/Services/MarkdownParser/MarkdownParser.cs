@@ -126,7 +126,7 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
 
                     case { IsElement: true, Content: var newContent, Element: var element }: {
                         IMdNode newNode = currentNode.AddChildNode(element);
-                        newNode.WithContent(newContent);
+                        if (newContent is not null) newNode.WithContent(newContent);
                         break;
                     }
                 }
