@@ -334,19 +334,19 @@ public static class ListsDataSources {
             </ol>
             """,
             static rootNode => {
-                var list = rootNode.AddListOrdered();
+                IMdNode list = rootNode.AddListOrdered();
                 list.AddListItem("this");
-                var item1 = list.AddListItem();
+                IMdNode item1 = list.AddListItem();
                 item1.AddCheckboxUnselected();
-                item1.WithContent(" is");
+                item1.WithContent("is");
 
-                var item2 = list.AddListItem();
+                IMdNode item2 = list.AddListItem();
                 item2.AddCheckboxSelected();
-                item2.WithContent(" a");
-                var sublist = item2.AddListUnordered();
-                var item3 = sublist.AddListItem();
+                item2.WithContent("a");
+                IMdNode sublist = item2.AddListUnordered();
+                IMdNode item3 = sublist.AddListItem();
                 item3.AddCheckboxSelected();
-                item3.WithContent(" nested");
+                item3.WithContent("nested");
 
                 list.AddListItem("todo list");
             }
@@ -355,28 +355,44 @@ public static class ListsDataSources {
         yield return static () => new MarkdownTestDto(SectionName,
             """
             - [ ] Task with sublist
-              - Subitem A
-              - Subitem B
+              - SubItem A
+              - SubItem B
             - [x] Completed task with sublist
-              - Subitem C
-              - Subitem D
+              - SubItem C
+              - SubItem D
             """,
             """
             <ul>
                 <li><input type="checkbox" disabled />Task with sublist
                     <ul>
-                        <li>Subitem A</li>
-                        <li>Subitem B</li>
+                        <li>SubItem A</li>
+                        <li>SubItem B</li>
                     </ul>
                 </li>
                 <li><input type="checkbox" disabled checked />Completed task with sublist
                     <ul>
-                        <li>Subitem C</li>
-                        <li>Subitem D</li>
+                        <li>SubItem C</li>
+                        <li>SubItem D</li>
                     </ul>
                 </li>
             </ul>
-            """
+            """,
+            static rootNode => {
+                IMdNode list = rootNode.AddListUnordered();
+                IMdNode item0 = list.AddListItem();
+                item0.AddCheckboxUnselected();
+                item0.WithContent("Task with sublist");
+                IMdNode nestedList0 = item0.AddListUnordered();
+                nestedList0.AddListItem("SubItem A");
+                nestedList0.AddListItem("SubItem B");
+                
+                IMdNode item1 = list.AddListItem();
+                item1.AddCheckboxSelected();
+                item1.WithContent("Completed task with sublist");
+                IMdNode nestedList1 = item1.AddListUnordered();
+                nestedList1.AddListItem("SubItem C");
+                nestedList1.AddListItem("SubItem D");
+            }
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
@@ -391,7 +407,20 @@ public static class ListsDataSources {
                 <li><input type="checkbox" disabled />Incomplete task in ordered list</li>
                 <li><input type="checkbox" disabled checked />Completed task in ordered list</li>
             </ol>
-            """
+            """,
+            static rootNode => {
+                IMdNode list = rootNode.AddListOrdered();
+                list.AddListItem("Ordered task list");
+
+                IMdNode item1 = list.AddListItem();
+                item1.AddCheckboxUnselected();
+                item1.WithContent("Incomplete task in ordered list");
+
+                IMdNode item2 = list.AddListItem();
+                item2.AddCheckboxSelected();
+                item2.WithContent("Completed task in ordered list");
+                
+            }
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
@@ -411,7 +440,23 @@ public static class ListsDataSources {
                 </li>
                 <li>Another item</li>
             </ul>
-            """
+            """,
+            static rootNode => {
+                IMdNode list = rootNode.AddListUnordered();
+                IMdNode item0 = list.AddListItem();
+                item0.AddCheckboxSelected();
+                item0.WithContent("Mixed list");
+
+                IMdNode nestedList = item0.AddListOrdered();
+                IMdNode item0A = nestedList.AddListItem();
+                item0A.AddCheckboxUnselected();
+                item0A.WithContent("Subtask 1");
+                IMdNode item0B = nestedList.AddListItem();
+                item0B.AddCheckboxSelected();
+                item0B.WithContent("Subtask 2");
+
+                list.AddListItem("Another item");
+            }
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
@@ -432,7 +477,21 @@ public static class ListsDataSources {
             <ul>
                 <li><input type="checkbox" disabled checked />Another completed task</li>
             </ul>
-            """
+            """,
+            static rootNode => {
+                IMdNode list0 = rootNode.AddListUnordered();
+                list0.AddListItem("Normal item");
+                IMdNode item01 = list0.AddListItem();
+                item01.AddCheckboxUnselected();
+                item01.WithContent("Task item without sublist");
+
+                rootNode.AddParagraph("Unrelated paragraph between list items.");
+
+                IMdNode list1 = rootNode.AddListUnordered();
+                IMdNode item10 = list1.AddListItem();
+                item10.AddCheckboxSelected();
+                item10.WithContent("Another completed task");
+            }
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
@@ -454,7 +513,20 @@ public static class ListsDataSources {
             <ul>
                 <li><input type="checkbox" disabled checked />Another completed task</li>
             </ul>
-            """
+            """,
+            static rootNode => {
+                IMdNode list0 = rootNode.AddListUnordered();
+                list0.AddListItem("Normal item");
+                IMdNode item01 = list0.AddListItem();
+                item01.AddCheckboxUnselected();
+                item01.WithContent("Task item without sublist");
+                item01.AddParagraph("related paragraph between list items.");
+
+                IMdNode list1 = rootNode.AddListUnordered();
+                IMdNode item10 = list1.AddListItem();
+                item10.AddCheckboxSelected();
+                item10.WithContent("Another completed task");
+            }
         );
         
     }

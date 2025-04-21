@@ -59,6 +59,7 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
             _stack.Push(dto);
         }
     }
+    
     public void PushContentToStack(string content, IMdNode currentNode, ParserOrigin origin) {
         PushElementToStack(content, currentNode, origin, MdElement.Content);
     }
