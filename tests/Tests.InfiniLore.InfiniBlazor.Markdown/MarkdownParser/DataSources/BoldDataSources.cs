@@ -52,7 +52,7 @@ public static class BoldDataSources {
                 IMdNode paragraph = rootNode.AddParagraph();
                 IMdNode bold = paragraph.AddBold();
                 bold.WithContent("bold ");
-                bold.AddItalic().WithContent("nested italic");
+                bold.AddItalic("nested italic");
             });
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -61,7 +61,7 @@ public static class BoldDataSources {
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 IMdNode bold = paragraph.AddBold();
-                bold.AddItalic().WithContent("nested italic");
+                bold.AddItalic("nested italic");
                 bold.WithContent(" bold");
             }
         );
@@ -96,7 +96,7 @@ public static class BoldDataSources {
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("some text ");
-                paragraph.AddBold().WithContent("*");
+                paragraph.AddBold("*");
             }
         );
     }

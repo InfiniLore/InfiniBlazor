@@ -30,9 +30,9 @@ public static class EdgeCaseDataSources {
             <p>1234</p>
             """,
             static rootNode => {
-                rootNode.AddParagraph().WithContent("1234");
-                rootNode.AddParagraph().WithContent("1234");
-                rootNode.AddParagraph().WithContent("1234");
+                rootNode.AddParagraph("1234");
+                rootNode.AddParagraph("1234");
+                rootNode.AddParagraph("1234");
             }
         );
         
@@ -49,9 +49,9 @@ public static class EdgeCaseDataSources {
             <p>123</p>
             """,
             static rootNode => {
-                rootNode.AddParagraph().WithContent("1234");
-                rootNode.AddParagraph().WithContent("1234");
-                rootNode.AddParagraph().WithContent("123");
+                rootNode.AddParagraph("1234");
+                rootNode.AddParagraph("1234");
+                rootNode.AddParagraph("123");
             }
         );
 

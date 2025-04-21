@@ -165,7 +165,7 @@ public static class AggregateDataSources {
 
                 IMdNode unOrderedList = rootNode.AddListUnordered();
                 IMdNode topic1 = unOrderedList.AddListItem();
-                topic1.AddBold().WithContent("Main Topic 1");
+                topic1.AddBold("Main Topic 1");
                 IMdNode topic1List = topic1.AddListUnordered();
                 IMdNode subtopic1 = topic1List.AddListItem();
                 subtopic1.WithContent("Subtopic 1.1");
@@ -181,7 +181,7 @@ public static class AggregateDataSources {
                 subtopic2.WithContent("Subtopic 1.2");
                 
                 IMdNode topic2 = unOrderedList.AddListItem();
-                topic2.AddBold().WithContent("Main Topic 2");
+                topic2.AddBold("Main Topic 2");
                 IMdNode topic2List = topic2.AddListOrdered();
                 IMdNode item21 = topic2List.AddListItem();
                 item21.WithContent("Item 2.1");

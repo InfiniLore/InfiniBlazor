@@ -32,38 +32,7 @@ public static class EscapedCharacterDataSources {
             "<p>!&quot;#$%&amp;'()*+,-./:;&lt;=&gt;?@[\\]^_`{|}~</p>",
             static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("!"); // Escaped char
-                paragraph.WithContent("&quot;"); // Escaped char
-                paragraph.WithContent("#"); // Escaped char
-                paragraph.WithContent("$"); // Escaped char
-                paragraph.WithContent("%"); // Escaped char
-                paragraph.WithContent("&amp;"); // Escaped char
-                paragraph.WithContent("'"); // Escaped char
-                paragraph.WithContent("("); // Escaped char
-                paragraph.WithContent(")"); // Escaped char
-                paragraph.WithContent("*"); // Escaped char
-                paragraph.WithContent("+"); // Escaped char
-                paragraph.WithContent(","); // Escaped char
-                paragraph.WithContent("-"); // Escaped char
-                paragraph.WithContent("."); // Escaped char
-                paragraph.WithContent("/"); // Escaped char
-                paragraph.WithContent(":"); // Escaped char
-                paragraph.WithContent(";"); // Escaped char
-                paragraph.WithContent("&lt;"); // Escaped char
-                paragraph.WithContent("="); // Escaped char
-                paragraph.WithContent("&gt;"); // Escaped char
-                paragraph.WithContent("?"); // Escaped char
-                paragraph.WithContent("@"); // Escaped char
-                paragraph.WithContent("["); // Escaped char
-                paragraph.WithContent("\\"); // Escaped char
-                paragraph.WithContent("]"); // Escaped char
-                paragraph.WithContent("^"); // Escaped char
-                paragraph.WithContent("_"); // Escaped char
-                paragraph.WithContent("`"); // Escaped char
-                paragraph.WithContent("{"); // Escaped char
-                paragraph.WithContent("|"); // Escaped char
-                paragraph.WithContent("}"); // Escaped char
-                paragraph.WithContent("~"); // Escaped char
+                paragraph.WithContent("!&quot;#$%&amp;'()*+,-./:;&lt;=&gt;?@[\\]^_`{|}~"); // Escaped char
             }
         );
 
@@ -74,14 +43,9 @@ public static class EscapedCharacterDataSources {
             "<p>&quot;She told me that 'he isn't here right <em>now</em>' - so I left.&quot;</p>",
             static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("&quot;"); // Escaped char
-                paragraph.WithContent("She told me that ");
-                paragraph.WithContent("'"); // Escaped char")
-                paragraph.WithContent("he isn't here right ");
-                paragraph.AddItalic().WithContent("now"); 
-                paragraph.WithContent("'"); // Escaped char
-                paragraph.WithContent(" - so I left.");
-                paragraph.WithContent("&quot;"); // Escaped char
+                paragraph.WithContent("&quot;She told me that 'he isn't here right ");
+                paragraph.AddItalic("now"); 
+                paragraph.WithContent("' - so I left.&quot;"); 
             }
         );
 
@@ -90,10 +54,7 @@ public static class EscapedCharacterDataSources {
             "<p>Escape characters like backticks: `code`</p>",
             static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("Escape characters like backticks: ");
-                paragraph.WithContent("`"); // Escaped char
-                paragraph.WithContent("code");
-                paragraph.WithContent("`"); // Escaped char
+                paragraph.WithContent("Escape characters like backticks: `code`"); // Escaped char
             }
         );
 
@@ -102,8 +63,7 @@ public static class EscapedCharacterDataSources {
             "<p>A backslash at the end of a line: This is a line\\</p>",
             static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("A backslash at the end of a line: This is a line");
-                paragraph.WithContent("\\"); // Escaped char
+                paragraph.WithContent("A backslash at the end of a line: This is a line\\"); // Escaped char
             }
         );
 
@@ -112,10 +72,7 @@ public static class EscapedCharacterDataSources {
             "<p>Escaping underscores:_This is not italicized_</p>",
             static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("Escaping underscores:");
-                paragraph.WithContent("_"); // Escaped char
-                paragraph.WithContent("This is not italicized");
-                paragraph.WithContent("_"); // Escaped char
+                paragraph.WithContent("Escaping underscores:_This is not italicized_"); // Escaped char
             }
         );
 
@@ -124,37 +81,59 @@ public static class EscapedCharacterDataSources {
             @"<p>Double escape: \*this is not emphasized\*</p>",
             static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("Double escape: ");
-                paragraph.WithContent("\\"); // Escaped char
-                paragraph.WithContent("*this is not emphasized");
-                paragraph.WithContent("\\"); // Escaped char
-                paragraph.WithContent("*");
+                paragraph.WithContent(@"Double escape: \*this is not emphasized\*");
             }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             @"Handling escaped square brackets: \[link text\]\(https://example.com\)",
-            "<p>Handling escaped square brackets: [link text](https://example.com)</p>"
+            "<p>Handling escaped square brackets: [link text](https://example.com)</p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.WithContent("Handling escaped square brackets: [link text](https://example.com)");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             @"Inline code with escaped backticks: ``code with \`escaped backticks\```",
-            "<p>Inline code with escaped backticks: <code>code with `escaped backticks`</code></p>"
+            "<p>Inline code with escaped backticks: <code>code with `escaped backticks`</code></p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.WithContent("Inline code with escaped backticks: ");
+                IMdNode code = paragraph.AddCode();
+                code.WithContent("code with `escaped backticks`");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             @"Asterisks visibly escaped: \*\*not bold\*\*",
-            "<p>Asterisks visibly escaped: **not bold**</p>"
+            "<p>Asterisks visibly escaped: **not bold**</p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.WithContent("Asterisks visibly escaped: **not bold**");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             @"Testing emphasis escape: \*not italic\* and also \*\*not bold\*\*",
-            "<p>Testing emphasis escape: *not italic* and also **not bold**</p>"
+            "<p>Testing emphasis escape: *not italic* and also **not bold**</p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.WithContent("Testing emphasis escape: *not italic* and also **not bold**");
+            }
         );
-
         yield return static () => new MarkdownTestDto(SectionName,
             @"Partially escaped inline formatting: *italic \*escaped\** and **bold**",
-            "<p>Partially escaped inline formatting: <em>italic *escaped*</em> and <strong>bold</strong></p>"
+            "<p>Partially escaped inline formatting: <em>italic *escaped*</em> and <strong>bold</strong></p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.WithContent("Partially escaped inline formatting: ");
+                IMdNode italic = paragraph.AddItalic();
+                italic.WithContent("italic *escaped*");
+                paragraph.WithContent(" and ");
+                IMdNode bold = paragraph.AddBold();
+                bold.WithContent("bold");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,

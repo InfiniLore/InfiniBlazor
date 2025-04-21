@@ -26,8 +26,7 @@ public class EmoteSectionParser(ILogger<EmoteSectionParser> logger) : ISectionHa
         }
     }.ToFrozenDictionary(comparer:new EmoteKeyComparer());
     
-    private FrozenDictionary<EmoteKey, string>.AlternateLookup<string>? _emoteLookup;
-    private FrozenDictionary<EmoteKey, string>.AlternateLookup<string> EmoteLookup => _emoteLookup ??= EmoteDict.GetAlternateLookup<string>();
+    private FrozenDictionary<EmoteKey, string>.AlternateLookup<string> EmoteLookup => EmoteDict.GetAlternateLookup<string>();
 
     private static readonly int EId = CachedRegexGroupNames.GetSingleLineGroupId("e");
     // -----------------------------------------------------------------------------------------------------------------

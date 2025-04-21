@@ -10,7 +10,7 @@ public interface IMdNode {
     MdElement Element { get; }
     string? Content { get; }
 
-    List<IMdNode> Children { get; }
+    IReadOnlyCollection<IMdNode> Children { get; }
     IMdNode Parent { get; }
     
     IMdNode AddChildNode(MdElement element);

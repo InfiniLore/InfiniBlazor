@@ -24,7 +24,7 @@ public class UnderlineDataSources {
             static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("something ");
-                paragraph.AddUnderline().WithContent("underlined");
+                paragraph.AddUnderline("underlined");
             }
         );
         
@@ -127,9 +127,9 @@ public class UnderlineDataSources {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("this has ");
                 IMdNode underline = paragraph.AddUnderline();
-                underline.AddBold().WithContent("multiple");
+                underline.AddBold("multiple");
                 underline.WithContent(" elements to ");
-                underline.AddItalic().WithContent("underline");
+                underline.AddItalic("underline");
             }
         );
         

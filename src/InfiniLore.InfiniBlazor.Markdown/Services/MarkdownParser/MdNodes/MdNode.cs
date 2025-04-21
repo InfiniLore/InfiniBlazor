@@ -10,7 +10,9 @@ public class MdNode : IMdNode {
     public MdElement Element { get; set; } = MdElement.Undefined;
     public string? Content { get; private set; } = string.Empty;
 
-    public List<IMdNode> Children { get; } = new();
+    public IReadOnlyCollection<IMdNode> Children => ChildNodes;
+    private List<MdNode> ChildNodes { get; } = new();
+    
     public IMdNode Parent { get; private set; } = null!;
     public HashSet<string> Classes { get; } = new();
     public Dictionary<string, string> Attributes { get; } = new();
@@ -23,7 +25,9 @@ public class MdNode : IMdNode {
     }
 
     public IMdNode WithContent(string content) {
-        CreateChildNode(MdElement.Content, content);
+        if (ChildNodes.LastOrDefault() is not { Element: MdElement.Content } lastNode) CreateChildNode(MdElement.Content, content);
+        else lastNode.Content += content;
+
         return this;
     }
 
@@ -47,7 +51,7 @@ public class MdNode : IMdNode {
             Element = element,
             Content = content
         };
-        Children.Add(child);
+        ChildNodes.Add(child);
         child.Parent = this;
         return child;
     }

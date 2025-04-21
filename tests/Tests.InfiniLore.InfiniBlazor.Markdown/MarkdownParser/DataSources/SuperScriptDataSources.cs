@@ -18,7 +18,7 @@ public static class SuperScriptDataSources {
         yield return static () => new MarkdownTestDto(SectionName,
             "^^superscript^^",
             "<p><sup>superscript</sup></p>",
-            static rootNode => rootNode.AddParagraph().AddSuperscript().WithContent("superscript")
+            static rootNode => rootNode.AddParagraph().AddSuperscript("superscript")
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
@@ -45,7 +45,7 @@ public static class SuperScriptDataSources {
                 paragraph.WithContent("This is a ");
                 IMdNode bold = paragraph.AddBold();
                 bold.WithContent("bold");
-                bold.AddSuperscript().WithContent("superscript");
+                bold.AddSuperscript("superscript");
                 bold.WithContent(" text");
                 paragraph.WithContent(".");
             }
@@ -59,7 +59,7 @@ public static class SuperScriptDataSources {
                 paragraph.WithContent("Text with ");
                 IMdNode italic = paragraph.AddItalic();
                 italic.WithContent("italic");
-                italic.AddSuperscript().WithContent("superscript");
+                italic.AddSuperscript("superscript");
                 paragraph.WithContent(".");
             }
         );
@@ -75,7 +75,7 @@ public static class SuperScriptDataSources {
                 IMdNode linkNode = paragraph.AddLink();
                 linkNode.WithAttribute("href", "https://example.com");
                 linkNode.WithContent("link with ");
-                linkNode.AddSuperscript().WithContent("superscript");
+                linkNode.AddSuperscript("superscript");
                 paragraph.WithContent(".");
             }
         );
@@ -117,7 +117,7 @@ public static class SuperScriptDataSources {
                 paragraph.WithContent("Nested formatting: ");
                 IMdNode bold = paragraph.AddBold();
                 bold.WithContent("Bold ");
-                bold.AddSuperscript().WithContent("superscript");
+                bold.AddSuperscript("superscript");
                 bold.WithContent(" in a ");
                 IMdNode linkNode = bold.AddLink();
                 linkNode.WithAttribute("href", "https://example.com");
@@ -131,7 +131,7 @@ public static class SuperScriptDataSources {
             "<p>Inline code with superscript: <code>x = y^^2^^</code></p>",
             static rootNode => rootNode.AddParagraph()
                 .WithContent("Inline code with superscript: ")
-                .AddCode().WithContent("x = y^^2^^")
+                .AddCode("x = y^^2^^")
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -142,7 +142,7 @@ public static class SuperScriptDataSources {
                 paragraph.WithContent("Complex: ");
                 IMdNode boldItalic = paragraph.AddBold().AddItalic();
                 boldItalic.WithContent("Bold and italic");
-                boldItalic.AddSuperscript().WithContent("super");
+                boldItalic.AddSuperscript("super");
                 paragraph.WithContent(".");
             }
         );
@@ -167,7 +167,7 @@ public static class SuperScriptDataSources {
                 IMdNode linkNode1 = bold.AddLink();
                 linkNode1.WithAttribute("href", "https://example.com");
                 linkNode1.WithContent("with ");
-                linkNode1.AddSuperscript().WithContent("superscript");
+                linkNode1.AddSuperscript("superscript");
                 linkNode1.WithContent(" text");
                 item1.WithContent(".");
                 
@@ -177,7 +177,7 @@ public static class SuperScriptDataSources {
                 IMdNode linkNode2 = italic.AddLink();
                 linkNode2.WithAttribute("href", "https://example.org");
                 linkNode2.WithContent("and ");
-                linkNode2.AddSuperscript().WithContent("superscript");
+                linkNode2.AddSuperscript("superscript");
                 linkNode2.WithContent(" text");
                 item2.WithContent(".");
             }
@@ -190,7 +190,7 @@ public static class SuperScriptDataSources {
                 IMdNode paragraph = rootNode.AddParagraph();
                 IMdNode super = paragraph.AddSuperscript();
                 super.WithContent("superscript with ");
-                super.AddSubscript().WithContent("subscript");
+                super.AddSubscript("subscript");
                 super.WithContent(" inside");
             }
         );

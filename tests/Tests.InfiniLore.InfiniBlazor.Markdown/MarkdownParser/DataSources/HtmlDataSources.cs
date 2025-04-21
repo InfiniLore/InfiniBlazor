@@ -207,7 +207,7 @@ public class HtmlDataSources {
             """,
             static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                paragraph.AddItalic().WithContent("test");
+                paragraph.AddItalic("test");
                 paragraph.WithContent(" ");
                 paragraph.WithHtmlContent("""
                     <div>
@@ -216,7 +216,7 @@ public class HtmlDataSources {
                     """
                 );
                 paragraph.WithContent(" ");
-                paragraph.AddBold().WithContent("bold this");
+                paragraph.AddBold("bold this");
 
             }
         );
