@@ -69,6 +69,12 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
         dto.AsContent(currentNode, origin, content);
         _stack.Push(dto);
     }
+    
+    public void PushHtmlContentToStack(string content, IMdNode currentNode, ParserOrigin origin) {
+        ParserDataDto dto = ParserDataDtoPool.Get();
+        dto.AsContent(currentNode, origin, content, true);
+        _stack.Push(dto);
+    }
     #endregion
 
     public bool TryPopDto([NotNullWhen(true)] out ParserDataDto? dto) 

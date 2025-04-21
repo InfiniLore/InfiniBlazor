@@ -114,8 +114,12 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
                     
                     // Needed for adding child text content to a node
                     //      Comes from a SingeLine match which had uncaught section and thus needs to be handled to add the text content
-                    case { IsContent: true, Content: {} newContent }: {
+                    case { IsContent: true, Content: {} newContent , IsHtmlElement: null or false,}: {
                         currentNode.WithContent(newContent);
+                        break;
+                    }
+                    case { IsContent: true, Content: {} newContent , IsHtmlElement: true}: {
+                        currentNode.WithHtmlContent(newContent);
                         break;
                     }
                 }

@@ -25,26 +25,26 @@ public class HtmlBodySectionParser : ISectionHandler {
         if (!origin.HasFlag(ParserOrigin.PreserveHtml)) {
             currentNode = currentNode.AddChildNode(MdElement.Paragraph);
         }
-        
-        if (entireMatch.Groups[HtmlPreId].TryGetValue(out string? pre)) {
-            parser.AddSingleLineMatchesToStack(pre, currentNode, origin);
+
+        if (entireMatch.Groups[HtmlPostId].TryGetValue(out string? post)) {
+            parser.AddSingleLineMatchesToStack(post, currentNode, origin);
         }
 
         if (entireMatch.Groups[HtmlBodyId].TryGetValue(out string? htmlBody)) {
             // Span should be the only special case allowed that allows for Markdown parsing within it
             Match match = MarkdownRegexLib.FindSpanHtmlRegex.Match(htmlBody);
             if (match.Groups[SpanTagId].TryGetValue(out string? spanTag) && match.Groups[SpanBodyId].TryGetValue(out string? spanBody)) {
-                currentNode.WithHtmlContent((spanTag));
-                parser.AddMultiLineMatchesToStack(spanBody, currentNode, origin | ParserOrigin.Html);
                 parser.PushContentToStack("</span>", currentNode, origin);
+                parser.AddMultiLineMatchesToStack(spanBody, currentNode, origin | ParserOrigin.Html);
+                parser.PushHtmlContentToStack(spanTag, currentNode, origin);
             }
             else {
-                currentNode.WithHtmlContent(htmlBody);
+                parser.PushHtmlContentToStack(htmlBody, currentNode, origin);
             }
         }
-
-        if (entireMatch.Groups[HtmlPostId].TryGetValue(out string? post)) {
-            parser.AddSingleLineMatchesToStack(post, currentNode, origin);
+        
+        if (entireMatch.Groups[HtmlPreId].TryGetValue(out string? pre)) {
+            parser.AddSingleLineMatchesToStack(pre, currentNode, origin);
         }
     }
 }
