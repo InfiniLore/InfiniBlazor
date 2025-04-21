@@ -1,6 +1,9 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -129,33 +132,67 @@ public static class AggregateDataSources {
             <h2>Nested Lists and Complex Formatting</h2>
             <ul>
                 <li><strong>Main Topic 1</strong>
-                <ul>
-                    <li>Subtopic 1.1
                     <ul>
-                        <li>Detail 1.1.1</li>
-                        <li>Detail 1.1.2
-                        <ul>
-                            <li>Extra Detail 1.1.2.1</li>
-                        </ul>
+                        <li>Subtopic 1.1
+                            <ul>
+                                <li>Detail 1.1.1</li>
+                                <li>Detail 1.1.2
+                                    <ul>
+                                        <li>Extra Detail 1.1.2.1</li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </li>
+                        <li>Subtopic 1.2</li>
                     </ul>
-                    </li>
-                    <li>Subtopic 1.2</li>
-                </ul>
                 </li>
                 <li><strong>Main Topic 2</strong>
-                <ol>
-                    <li>Item 2.1</li>
-                    <li>Item 2.2
-                    <ul>
-                        <li>Sub-Item 2.2.1</li>
-                        <li>Sub-Item 2.2.2</li>
-                    </ul>
-                    </li>
-                </ol>
+                    <ol>
+                        <li>Item 2.1</li>
+                        <li>Item 2.2
+                            <ul>
+                                <li>Sub-Item 2.2.1</li>
+                                <li>Sub-Item 2.2.2</li>
+                            </ul>
+                        </li>
+                    </ol>
                 </li>
             </ul>
-            """
+            """,
+            static rootNode => {
+                IMdNode heading = rootNode.AddH2();
+                heading.WithContent("Nested Lists and Complex Formatting");
+
+                IMdNode unOrderedList = rootNode.AddListUnordered();
+                IMdNode topic1 = unOrderedList.AddListItem();
+                topic1.AddBold().WithContent("Main Topic 1");
+                IMdNode topic1List = topic1.AddListUnordered();
+                IMdNode subtopic1 = topic1List.AddListItem();
+                subtopic1.WithContent("Subtopic 1.1");
+                IMdNode subtopic1List = subtopic1.AddListUnordered();
+                IMdNode detail1 = subtopic1List.AddListItem();
+                detail1.WithContent("Detail 1.1.1");
+                IMdNode detail2 = subtopic1List.AddListItem();
+                detail2.WithContent("Detail 1.1.2");
+                IMdNode detail2List = detail2.AddListUnordered();
+                IMdNode extraDetail = detail2List.AddListItem();
+                extraDetail.WithContent("Extra Detail 1.1.2.1");
+                IMdNode subtopic2 = topic1List.AddListItem();
+                subtopic2.WithContent("Subtopic 1.2");
+                
+                IMdNode topic2 = unOrderedList.AddListItem();
+                topic2.AddBold().WithContent("Main Topic 2");
+                IMdNode topic2List = topic2.AddListOrdered();
+                IMdNode item21 = topic2List.AddListItem();
+                item21.WithContent("Item 2.1");
+                IMdNode item22 = topic2List.AddListItem();
+                item22.WithContent("Item 2.2");
+                IMdNode item22List = item22.AddListUnordered();
+                IMdNode subItem221 = item22List.AddListItem();
+                subItem221.WithContent("Sub-Item 2.2.1");
+                IMdNode subItem222 = item22List.AddListItem();
+                subItem222.WithContent("Sub-Item 2.2.2");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -168,6 +205,7 @@ public static class AggregateDataSources {
             <p>URLs and URLs in angle brackets will automatically get turned into links.
             </p><p>https://www.example.com or &lt;https://www.example.com&gt; and sometimes
             </p><p>example.com (but not on Github, for example).</p>
-            """);
+            """
+        );
     }
 }
