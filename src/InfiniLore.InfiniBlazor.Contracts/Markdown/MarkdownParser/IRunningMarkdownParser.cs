@@ -14,6 +14,6 @@ public interface IRunningMarkdownParser {
     // -----------------------------------------------------------------------------------------------------------------
     void AddMultiLineMatchesToStack(string input, IMdNode node, ParserOrigin origin);
     void AddSingleLineMatchesToStack(string input, IMdNode node, ParserOrigin origin);
-    void PushContentToStack(string span, IMdNode currentNode, ParserOrigin origin);
-    void PushHtmlContentToStack(string span, IMdNode currentNode, ParserOrigin origin);
+    void PushContentToStack(string content, IMdNode currentNode, ParserOrigin origin);
+    void PushElementToStack(string content, IMdNode currentNode, ParserOrigin origin, MdElement element);
 }

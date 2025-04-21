@@ -15,11 +15,11 @@ public interface IParserDataDto {
     Match? Match { get; }
     string? Content { get; }
     [MemberNotNull(nameof(Match))] bool IsMatch { get; }
-    [MemberNotNull(nameof(Content))] bool IsContent { get; }
+    [MemberNotNull(nameof(Content))] bool IsElement { get; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     void AsMatch(IMdNode node, ParserOrigin origin, Match match);
-    void AsContent(IMdNode node, ParserOrigin origin, string value, MdElement element = MdElement.Undefined);
+    void AsElement(IMdNode node, ParserOrigin origin, string value, MdElement element);
 }

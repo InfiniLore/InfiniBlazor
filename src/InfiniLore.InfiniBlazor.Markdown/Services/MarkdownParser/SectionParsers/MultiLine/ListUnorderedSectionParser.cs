@@ -30,21 +30,21 @@ public class ListUnorderedSectionParser : ISectionHandler {
             GroupCollection groups = match.Groups;
 
             IMdNode listItemNode = ulNode.AddChildNode(MdElement.ListItem);
-            if (groups[LTaskId].TryGetValue(out string? taskMarker)) {
-                bool isChecked = taskMarker.Contains('x');
-                IMdNode inputNode = listItemNode.AddChildNode(MdElement.Input);
-                inputNode.WithAttribute("type", "checkbox");
-                inputNode.WithAttribute("disabled", isChecked ? "checked" : "");
-            }
 
             if (groups[LBodyId].TryGetValue(out string? listBody)) {
                 string normalizedBody = NormalizationHelper.NormalizeIndentation(listBody);
                 parser.AddMultiLineMatchesToStack(normalizedBody, listItemNode, origin | ParserOrigin.PreserveHtml);
             }
             
-            // ReSharper disable once InvertIf
             if (groups[LHeadId].TryGetValue(out string? listHeader)) {
                 parser.AddSingleLineMatchesToStack(listHeader, listItemNode, origin);
+            }
+            
+            // ReSharper disable once InvertIf
+            if (groups[LTaskId].TryGetValue(out string? taskMarker)) {
+                bool isChecked = taskMarker.Contains('x');
+                MdElement element = isChecked ? MdElement.CheckboxSelected : MdElement.CheckboxUnselected;
+                parser.PushElementToStack(string.Empty, currentNode, origin, element); 
             }
         }
     }

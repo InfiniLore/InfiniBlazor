@@ -41,4 +41,6 @@ public enum MdElement : uint {
     TableHeadCell,
     TableRow,
     Underline,
+    CheckboxSelected,
+    CheckboxUnselected
 }

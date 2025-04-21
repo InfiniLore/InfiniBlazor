@@ -45,7 +45,7 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
             // If there's text between this match's end and the last position, add it as raw input
             if (matchEnd < currentIndex) {
                 ParserDataDto preDto = ParserDataDtoPool.Get();
-                preDto.AsContent(node, origin, input[matchEnd..currentIndex]);
+                preDto.AsElement(node, origin, input[matchEnd..currentIndex], MdElement.Content);
                 _stack.Push(preDto);
             }
         
@@ -60,19 +60,17 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
         if (currentIndex > 0) {
             // Handle any remaining text before the first match
             ParserDataDto dto = ParserDataDtoPool.Get();
-            dto.AsContent(node, origin, input[..currentIndex]);
+            dto.AsElement(node, origin, input[..currentIndex], MdElement.Content);
             _stack.Push(dto);
         }
     }
     public void PushContentToStack(string content, IMdNode currentNode, ParserOrigin origin) {
-        ParserDataDto dto = ParserDataDtoPool.Get();
-        dto.AsContent(currentNode, origin, content);
-        _stack.Push(dto);
+        PushElementToStack(content, currentNode, origin, MdElement.Content);
     }
     
-    public void PushHtmlContentToStack(string content, IMdNode currentNode, ParserOrigin origin) {
+    public void PushElementToStack(string content, IMdNode currentNode, ParserOrigin origin, MdElement element) {
         ParserDataDto dto = ParserDataDtoPool.Get();
-        dto.AsContent(currentNode, origin, content, MdElement.HtmlContent);
+        dto.AsElement(currentNode, origin, content, element);
         _stack.Push(dto);
     }
     #endregion
