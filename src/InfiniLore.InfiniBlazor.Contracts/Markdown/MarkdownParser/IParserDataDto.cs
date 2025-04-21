@@ -13,13 +13,15 @@ public interface IParserDataDto {
     IMdNode Node { get; }
     ParserOrigin Origin { get; }
     Match? Match { get; }
-    string? RawInput { get; }
+    string? NewContent { get; }
     [MemberNotNull(nameof(Match))] bool IsMatch { get; }
-    [MemberNotNull(nameof(RawInput))] bool IsRawInput { get; }
+    [MemberNotNull(nameof(NewContent))] bool IsNewContent { get; }
+    bool IsOriginalContent { get; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     void AsMatch(IMdNode node, ParserOrigin origin, Match match);
-    void AsString(IMdNode node, ParserOrigin origin, string value);
+    void AsNewContent(IMdNode node, ParserOrigin origin, string value);
+    void AsOriginalContent(IMdNode node, ParserOrigin origin, Range range);
 }

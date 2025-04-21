@@ -9,17 +9,17 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("strike")]
-public class StrikeSectionParser(ICachedRegexGroupNames groupNames) : ISectionHandler {
+public class StrikeSectionParser : ISectionHandler {
     public ParserOrigin SkipOnOrigin => ParserOrigin.Strike;
     
-    private readonly int SId = groupNames.GetSingleLineGroupId("s");
+    private static readonly int SId = CachedRegexGroupNames.GetSingleLineGroupId("s");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[SId].TryGetValue(out string? strikeValue)) return;
         
         IMdNode node = currentNode.AddChildNode(MdElement.Strikethrough);
-        parser.AddSingleLineMatchesToStack(strikeValue, node, origin  | SkipOnOrigin);
+        parser.AddSingleLineMatchesToStack(strikeValue, node, origin | SkipOnOrigin);
     }
 }

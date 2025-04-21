@@ -10,27 +10,27 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("table")]
-public class TableSectionParser(ICachedRegexGroupNames groupName) : ISectionHandler {
+public class TableSectionParser : ISectionHandler {
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     
-    private readonly int TBodyId = groupName.GetMultiLineGroupId("tBody");
-    private readonly int THeadId = groupName.GetMultiLineGroupId("tHead");
-    private readonly int TSepId = groupName.GetMultiLineGroupId("tSep");
+    private static readonly int BodyId = CachedRegexGroupNames.GetMultiLineGroupId("tBody");
+    private static readonly int HeadId = CachedRegexGroupNames.GetMultiLineGroupId("tHead");
+    private static readonly int SepId = CachedRegexGroupNames.GetMultiLineGroupId("tSep");
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(Match entireMatch, Group group, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         // Extract header, separator, and rows
-        ReadOnlySpan<char> header = entireMatch.Groups[THeadId].ValueSpan;
+        ReadOnlySpan<char> header = entireMatch.Groups[HeadId].ValueSpan;
         Span<Range> headerColumns = stackalloc Range[header.Length];
         int headerColumnCount = header.Split(headerColumns, '|', StringSplitOptions.TrimEntries);
 
-        ReadOnlySpan<char> separator = entireMatch.Groups[TSepId].ValueSpan;
+        ReadOnlySpan<char> separator = entireMatch.Groups[SepId].ValueSpan;
         Span<Range> separatorColumns = stackalloc Range[separator.Length];
         int _ = separator.Split(separatorColumns, '|', StringSplitOptions.TrimEntries);
 
-        ReadOnlySpan<char> rows = entireMatch.Groups[TBodyId].ValueSpan;
+        ReadOnlySpan<char> rows = entireMatch.Groups[BodyId].ValueSpan;
         Span<Range> rowRanges = stackalloc Range[rows.Length];
         int rowCount = rows.Split(rowRanges, '\n', StringSplitOptions.TrimEntries);
 

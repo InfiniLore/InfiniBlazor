@@ -10,19 +10,19 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("htmlBody")]
-public class HtmlBodySectionParser(IHtmlSanitizer htmlSanitizer, ICachedRegexGroupNames groupName) : ISectionHandler {
+public class HtmlBodySectionParser(IHtmlSanitizer htmlSanitizer) : ISectionHandler {
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     
-    private readonly int HtmlPreId = groupName.GetMultiLineGroupId("htmlPre");
-    private readonly int HtmlBodyId = groupName.GetMultiLineGroupId("htmlBody");
-    private readonly int HtmlPostId = groupName.GetMultiLineGroupId("htmlPost");
-    private readonly int SpanTagId = groupName.GetSpanGroupId("spanTag");
-    private readonly int SpanBodyId = groupName.GetSpanGroupId("spanBody");
+    private static readonly int HtmlPreId = CachedRegexGroupNames.GetMultiLineGroupId("htmlPre");
+    private static readonly int HtmlBodyId = CachedRegexGroupNames.GetMultiLineGroupId("htmlBody");
+    private static readonly int HtmlPostId = CachedRegexGroupNames.GetMultiLineGroupId("htmlPost");
+    private static readonly int SpanTagId = CachedRegexGroupNames.GetSpanGroupId("spanTag");
+    private static readonly int SpanBodyId = CachedRegexGroupNames.GetSpanGroupId("spanBody");
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(Match entireMatch, Group group, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         bool writeParagraph = !origin.HasFlag(ParserOrigin.PreserveHtml);
         if (writeParagraph) {
             currentNode = currentNode.AddChildNode(MdElement.Paragraph);

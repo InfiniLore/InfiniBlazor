@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("emote")]
-public class EmoteSectionParser(ILogger<EmoteSectionParser> logger, ICachedRegexGroupNames groupNames) : ISectionHandler{
+public class EmoteSectionParser(ILogger<EmoteSectionParser> logger) : ISectionHandler{
     public ParserOrigin SkipOnOrigin => ParserOrigin.Emote;
     
     // TODO Requires some sort of Emote service
@@ -29,11 +29,11 @@ public class EmoteSectionParser(ILogger<EmoteSectionParser> logger, ICachedRegex
     private FrozenDictionary<EmoteKey, string>.AlternateLookup<string>? _emoteLookup;
     private FrozenDictionary<EmoteKey, string>.AlternateLookup<string> EmoteLookup => _emoteLookup ??= EmoteDict.GetAlternateLookup<string>();
 
-    private readonly int EId = groupNames.GetSingleLineGroupId("e");
+    private static readonly int EId = CachedRegexGroupNames.GetSingleLineGroupId("e");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(Match entireMatch, Group group, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[EId].TryGetValue(out string? lookupValue)) return;
         if (!EmoteLookup.TryGetValue(lookupValue, out string? value)) {
             logger.LogWarning("Lookup emote not found: {LookupValue}", lookupValue);

@@ -78,6 +78,7 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
     public void ParseToWriter<T>(string markdown, T writer) where T : TextWriter {
         throw new NotImplementedException();
     }
+    
     public IMdNode ParseToNodeTree(string markdown) {
         var rootNode = new MdNode();
         RunningMarkdownParser runningParser = RunningMarkdownParserPool.Get();
@@ -85,37 +86,38 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
 
         try {
             // Preload matches into the stack
-            MatchCollection matches = MarkdownRegexLib.MultilineStructuresRegex.Matches(markdown);
-            runningParser.PushMatches(matches);
+            runningParser.AddMultiLineMatchesToStack(markdown, rootNode, ParserOrigin.Undefined);
 
             // Process matches
             while (runningParser.TryPopDto(out ParserDataDto? dataDto)) {
                 IMdNode currentNode = dataDto.Node;
                 ParserOrigin origin = dataDto.Origin;
 
-                // Needed for adding child text content to a node
-                if (dataDto is { IsMatch: false, IsRawInput: true } ) {
-                    currentNode.WithContent(dataDto.RawInput);
+                switch (dataDto) {
+                    // Process the match, which will happen most of the time
+                    case { IsMatch: true, Match: var match, }: {
+                        GroupCollection groups = match.Groups;
+                        int count = groups.Count;
+
+                        for (int index = 0; index < count; index++) {
+                            Group group = groups[index];
+                            if (group is not {Success: true, Name: {} name}) continue;
+                            if (!_sectionHandlers.TryGetValue(name, out ISectionHandler? handler)) continue;
+
+                            ParserOrigin handlerOrigin = handler.SkipOnOrigin;
+                            if (handlerOrigin is not ParserOrigin.NotSkipped && (origin & handlerOrigin) == handlerOrigin) continue;
+
+                            handler.HandleMatch(runningParser, currentNode, match, group, origin);
+                        }
+                        break;
+                    }
                     
-                    // Remember to clean up the DTO, else it will not return to the pool
-                    ParserDataDtoPool.Return(dataDto);
-                    continue;
-                }
-
-                // Process the match, which will happen most of the time
-                Match match = dataDto.Match;
-                GroupCollection groups = match.Groups;
-                int count = groups.Count;
-
-                for (int index = 0; index < count; index++) {
-                    Group group = groups[index];
-                    if (!group.Success) continue;
-                    if (!_sectionHandlers.TryGetValue(group.Name, out ISectionHandler? handler)) continue;
-
-                    ParserOrigin handlerOrigin = handler.SkipOnOrigin;
-                    if (handlerOrigin is not ParserOrigin.NotSkipped && (origin & handler.SkipOnOrigin) == handler.SkipOnOrigin) continue;
-
-                    handler.HandleMatch(match, group, origin, currentNode, runningParser);
+                    // Needed for adding child text content to a node
+                    //      Comes from a SingeLine match which had uncaught section and thus needs to be handled to add the text content
+                    case { IsNewContent: true, NewContent: {} newContent }: {
+                        currentNode.WithContent(newContent);
+                        break;
+                    }
                 }
                 
                 // Remember to clean up the DTO, else it will not return to the pool

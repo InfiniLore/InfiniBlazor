@@ -9,17 +9,17 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("linkNested")]
-public class LinkNestedSectionParser(ICachedRegexGroupNames groupNames) : ISectionHandler {
+public class LinkNestedSectionParser : ISectionHandler {
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     
-    private readonly int LnTextId = groupNames.GetSingleLineGroupId("lnText");
-    private readonly int LnHrefId = groupNames.GetSingleLineGroupId("lnHref");
-    private readonly int LnTitleId = groupNames.GetSingleLineGroupId("lnTitle");
-    private readonly int LnBangId = groupNames.GetSingleLineGroupId("lnBang");
+    private static readonly int LnTextId = CachedRegexGroupNames.GetSingleLineGroupId("lnText");
+    private static readonly int LnHrefId = CachedRegexGroupNames.GetSingleLineGroupId("lnHref");
+    private static readonly int LnTitleId = CachedRegexGroupNames.GetSingleLineGroupId("lnTitle");
+    private static readonly int LnBangId = CachedRegexGroupNames.GetSingleLineGroupId("lnBang");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[LnTextId].TryGetValue(out string? linkText)) return;
         if (!entireMatch.Groups[LnHrefId].TryGetValue(out string? linkHref)) return;
 

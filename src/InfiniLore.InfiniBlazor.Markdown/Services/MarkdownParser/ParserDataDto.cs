@@ -10,14 +10,15 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class ParserDataDto : IParserDataDto {
-    public IMdNode Node { get; private set; }
+    public IMdNode Node { get; private set; } = null!;
     public ParserOrigin Origin { get; private set; }
     public Match? Match { get; private set; }
-    public string? RawInput { get; private set; }
+    public string? NewContent { get; private set; }
+    public Range OriginalContent { get; private set; }
     
     [MemberNotNull(nameof(Match))] public bool IsMatch { get; private set; }
-    [MemberNotNull(nameof(RawInput))] public bool IsRawInput { get; private set; }
-
+    [MemberNotNull(nameof(NewContent))] public bool IsNewContent { get; private set; }
+    public bool IsOriginalContent { get; private set; }
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -25,9 +26,9 @@ public class ParserDataDto : IParserDataDto {
         Node = null!;
         Origin = ParserOrigin.NotSkipped;
         Match = null;
-        RawInput = null;
+        NewContent = null;
         IsMatch = false;
-        IsRawInput = false;
+        IsNewContent = false;
     }
     
     public void AsMatch(IMdNode node, ParserOrigin origin, Match match) {
@@ -37,10 +38,17 @@ public class ParserDataDto : IParserDataDto {
         IsMatch = true;
     }
     
-    public void AsString(IMdNode node, ParserOrigin origin, string value) {
+    public void AsNewContent(IMdNode node, ParserOrigin origin, string value) {
         Node = node;
         Origin = origin;
-        RawInput = value;
-        IsRawInput = true;
+        NewContent = value;
+        IsNewContent = true;
+    }
+    
+    public void AsOriginalContent(IMdNode node, ParserOrigin origin, Range range) {
+        Node = node;
+        Origin = origin;
+        OriginalContent = range;
+        IsOriginalContent = true;
     }
 }

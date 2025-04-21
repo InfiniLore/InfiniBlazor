@@ -9,14 +9,14 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("supScript")]
-public class SuperScriptSectionParser(ICachedRegexGroupNames groupNames) : ISectionHandler {
+public class SuperScriptSectionParser : ISectionHandler {
     public ParserOrigin SkipOnOrigin => ParserOrigin.SuperScript;
 
-    private readonly int SpId = groupNames.GetSingleLineGroupId("sp");
+    private static readonly int SpId = CachedRegexGroupNames.GetSingleLineGroupId("sp");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[SpId].TryGetValue(out string? superValue)) return;
         
         IMdNode node = currentNode.AddChildNode(MdElement.Superscript);

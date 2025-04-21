@@ -8,7 +8,8 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 public enum MdElement : uint {
     Undefined = 0,
-    Content = 1,
+    NewContent = 1,
+    OriginalContent = 2,
     
     Blockquote,
     Bold,

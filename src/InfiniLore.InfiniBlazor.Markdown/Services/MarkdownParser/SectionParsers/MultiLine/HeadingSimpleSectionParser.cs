@@ -9,14 +9,14 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("headingSimple")]
-public class HeadingSimpleSectionParser(ICachedRegexGroupNames groupName) : ISectionHandler {
+public class HeadingSimpleSectionParser : ISectionHandler {
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     
-    private readonly int HSTextId = groupName.GetMultiLineGroupId("hsText");
+    private static readonly int HSTextId = CachedRegexGroupNames.GetMultiLineGroupId("hsText");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(Match entireMatch, Group group, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[HSTextId].TryGetValue(out string? headerSimpleText)) return;
 
         

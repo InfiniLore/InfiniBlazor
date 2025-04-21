@@ -11,16 +11,16 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("codeBlock")]
-public class CodeBlockSectionParser(ICachedRegexGroupNames groupNames) : ISectionHandler {
+public class CodeBlockSectionParser : ISectionHandler {
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     
-    private readonly int CBodyId = groupNames.GetMultiLineGroupId("cBody");
-    private readonly int CLangId = groupNames.GetMultiLineGroupId("cLang");
+    private static readonly int CBodyId = CachedRegexGroupNames.GetMultiLineGroupId("cBody");
+    private static readonly int CLangId = CachedRegexGroupNames.GetMultiLineGroupId("cLang");
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[CBodyId].TryGetValueSpan(out ReadOnlySpan<char> codeBlockBody)) return;
 
         IMdNode preNode = currentNode.AddChildNode(MdElement.Pre);

@@ -10,10 +10,8 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ICachedRegexGroupNames>]
-public class CachedRegexGroupNames : ICachedRegexGroupNames{
+public class CachedRegexGroupNames{
     private static FrozenDictionary<string, int> GroupNameToGroupId { get; } = GetGroupNames();
-    private static FrozenDictionary<string, int>.AlternateLookup<ReadOnlySpan<char>> AlternateLookup { get; } = GroupNameToGroupId.GetAlternateLookup<ReadOnlySpan<char>>();
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -23,13 +21,15 @@ public class CachedRegexGroupNames : ICachedRegexGroupNames{
             MarkdownRegexLib.SinglelineStructuresRegex,
             MarkdownRegexLib.MultilineStructuresRegex,
             MarkdownRegexLib.FindSpanHtmlRegex,
-            MarkdownRegexLib.ListItemBodyRegex,
+            MarkdownRegexLib.ListItemBodyRegex
         ];
 
         IEnumerable<(Regex regex, string[])> a = regexes.Select(regex => (regex, regex.GetGroupNames()));
-        var dictionary = new Dictionary<string, int>(32);
+        var dictionary = new Dictionary<string, int>(regexes.Length * 16); // early approximation
         
         foreach ((Regex regex, string[] names) in a) {
+            dictionary.EnsureCapacity(dictionary.Count + names.Length);
+            
             foreach (string name in names) {
                 dictionary.AddOrUpdate(name, regex.GroupNumberFromName(name));
             }
@@ -38,9 +38,9 @@ public class CachedRegexGroupNames : ICachedRegexGroupNames{
         return dictionary.ToFrozenDictionary();
     }
     
-    public int GetSingleLineGroupId(ReadOnlySpan<char> groupName) =>AlternateLookup[groupName]; 
-    public int GetMultiLineGroupId(ReadOnlySpan<char> groupName) =>AlternateLookup[groupName]; 
-    public int GetSpanGroupId(ReadOnlySpan<char> groupName)=>AlternateLookup[groupName]; 
-    public int GetListGroupId(ReadOnlySpan<char> groupName) =>AlternateLookup[groupName]; 
+    public static int GetSingleLineGroupId(string groupName) => GroupNameToGroupId[groupName]; 
+    public static int GetMultiLineGroupId(string groupName) => GroupNameToGroupId[groupName]; 
+    public static int GetSpanGroupId(string groupName)=> GroupNameToGroupId[groupName]; 
+    public static int GetListGroupId(string groupName) => GroupNameToGroupId[groupName]; 
     
 }

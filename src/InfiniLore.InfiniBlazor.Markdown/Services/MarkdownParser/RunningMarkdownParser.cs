@@ -45,7 +45,7 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
             // If there's text between this match's end and the last position, add it as raw input
             if (matchEnd < currentIndex) {
                 ParserDataDto preDto = ParserDataDtoPool.Get();
-                preDto.AsString(node, origin, input[matchEnd..currentIndex]);
+                preDto.AsNewContent(node, origin, input[matchEnd..currentIndex]);
                 _stack.Push(preDto);
             }
         
@@ -60,39 +60,7 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
         if (currentIndex > 0) {
             // Handle any remaining text before the first match
             ParserDataDto dto = ParserDataDtoPool.Get();
-            dto.AsString(node, origin, input[..currentIndex]);
-            _stack.Push(dto);
-        }
-    }
-    
-    private void AddMatchesToStack(MatchCollection matches, string input, IMdNode node, ParserOrigin origin) {
-        _stack.EnsureCapacity(_stack.Count + matches.Count);
-    
-        int currentIndex = input.Length;
-
-        // Process matches in reverse order for _stack
-        IEnumerable<Match> matchesList = matches.ToImmutableArray().Reverse();
-        foreach (Match match in matchesList) {
-            int matchEnd = match.Index + match.Length;
-        
-            // If there's text between this match's end and the last position, add it as raw input
-            if (matchEnd < currentIndex) {
-                ParserDataDto preDto = ParserDataDtoPool.Get();
-                preDto.AsString(node, origin, input[matchEnd..currentIndex]);
-                _stack.Push(preDto);
-            }
-        
-            
-            ParserDataDto dto = ParserDataDtoPool.Get();
-            dto.AsMatch(node, origin, match);
-            _stack.Push(dto);
-            currentIndex = match.Index;
-        }
-
-        // Handle any remaining text before the first match
-        if (currentIndex > 0) {
-            ParserDataDto dto = ParserDataDtoPool.Get();
-            dto.AsString(node, origin, input[..currentIndex]);
+            dto.AsNewContent(node, origin, input[..currentIndex]);
             _stack.Push(dto);
         }
     }
@@ -100,18 +68,6 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
 
     public bool TryPopDto([NotNullWhen(true)] out ParserDataDto? dto) 
         => _stack.TryPop(out dto);
-
-    public void PushMatches(MatchCollection collection) {
-        ImmutableArray<Match> matches = collection.ToImmutableArray();
-        int length = matches.Length;
-        _stack.EnsureCapacity(_stack.Count + length);
-
-        for (int i = length - 1; i >= 0; i--) {
-            ParserDataDto dto = ParserDataDtoPool.Get();
-            dto.AsMatch(RootNode, ParserOrigin.NotSkipped, matches[i]);
-            _stack.Push(dto);
-        }
-    }
     
     public void Clear() {
         while (_stack.TryPop(out ParserDataDto? dto)) ParserDataDtoPool.Return(dto); // Makes sure we clean everything

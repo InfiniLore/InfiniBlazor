@@ -9,15 +9,15 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("heading")]
-public class HeadingSectionParser(ICachedRegexGroupNames groupName) : ISectionHandler {
+public class HeadingSectionParser : ISectionHandler {
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     
-    private readonly int HLevelId = groupName.GetMultiLineGroupId("hLevel");
-    private readonly int HTextId = groupName.GetMultiLineGroupId("hText");
+    private static readonly int HLevelId = CachedRegexGroupNames.GetMultiLineGroupId("hLevel");
+    private static readonly int HTextId = CachedRegexGroupNames.GetMultiLineGroupId("hText");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[HLevelId].TryGetLength(out int headingLevel)) return;
         if (!entireMatch.Groups[HTextId].TryGetValue(out string? headerText)) return;
 

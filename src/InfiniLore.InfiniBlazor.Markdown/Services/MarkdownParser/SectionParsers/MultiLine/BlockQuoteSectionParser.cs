@@ -5,7 +5,6 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.Pools;
 using System.Text;
 using System.Text.RegularExpressions;
-using CodeOfChaos.Extensions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -17,7 +16,7 @@ public class BlockQuoteSectionParser : ISectionHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(Match entireMatch, Group group, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!group.TryGetValueSpan(out ReadOnlySpan<char> blockQuoteBody)) return;
 
         // Replace Regex usage with span-based logic:

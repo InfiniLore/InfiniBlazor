@@ -15,7 +15,7 @@ public class EscapedSectionParser: ISectionHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(Match entireMatch, Group group, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser)  {
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin)  {
         char value = group.ValueSpan[1];
         ReadOnlySpan<char> span = [value];
         if (HtmlSymbolLookup.AlternateLookup.TryGetValue(span, out string? alternate)) {

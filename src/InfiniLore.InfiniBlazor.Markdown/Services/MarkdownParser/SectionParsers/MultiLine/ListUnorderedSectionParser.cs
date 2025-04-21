@@ -9,17 +9,17 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("listUnordered")]
-public class ListUnorderedSectionParser(ICachedRegexGroupNames groupName) : ISectionHandler {
+public class ListUnorderedSectionParser : ISectionHandler {
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
 
-    private readonly int LTaskId = groupName.GetListGroupId("lTask");
-    private readonly int LHeadId = groupName.GetListGroupId("lHead");
-    private readonly int LBodyId = groupName.GetListGroupId("lBody");
+    private static readonly int LTaskId = CachedRegexGroupNames.GetListGroupId("lTask");
+    private static readonly int LHeadId = CachedRegexGroupNames.GetListGroupId("lHead");
+    private static readonly int LBodyId = CachedRegexGroupNames.GetListGroupId("lBody");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(Match entireMatch, Group group, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
-        if (!group.TryGetValue(out string? listUnorderedBody)) return;
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+        if (!entireMatch.TryGetValue(out string? listUnorderedBody)) return;
 
         List<Match> matchCollection = MarkdownRegexLib.ListItemBodyRegex.Matches(listUnorderedBody).ToList();
         int matchCount = matchCollection.Count;

@@ -1,14 +1,17 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using System.Text.RegularExpressions;
+
 namespace InfiniLore.InfiniBlazor.Markdown;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface ICachedRegexGroupNames {
-    int GetSingleLineGroupId(ReadOnlySpan<char> groupName);
-    int GetMultiLineGroupId(ReadOnlySpan<char> groupName);
-    int GetSpanGroupId(ReadOnlySpan<char> groupName);
-    int GetListGroupId(ReadOnlySpan<char> groupName);
+public interface IMatchDataDto {
+    Match Match { get; }
+    Group Group { get; }
+    int OffsetIndex { get; }
+
+    void Populate(Match match, Group group, int offsetIndex);
 }

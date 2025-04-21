@@ -9,14 +9,14 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("italic")]
-public class ItalicSectionParser(ICachedRegexGroupNames groupNames) : ISectionHandler {
+public class ItalicSectionParser : ISectionHandler {
     public ParserOrigin SkipOnOrigin => ParserOrigin.Italic;
     
-    private readonly int IId = groupNames.GetSingleLineGroupId("i");
+    private static readonly int IId = CachedRegexGroupNames.GetSingleLineGroupId("i");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(Match entireMatch, Group _, ParserOrigin origin, IMdNode currentNode, IRunningMarkdownParser parser) {
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[IId].TryGetValue(out string? italicValue)) return;
         
         IMdNode node = currentNode.AddChildNode(MdElement.Italic);

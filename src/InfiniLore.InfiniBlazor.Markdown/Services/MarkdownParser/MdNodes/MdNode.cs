@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
 public class MdNode : IMdNode {
     public MdElement Element { get; set; } = MdElement.Undefined;
     public string Content { get; private set; } = string.Empty;
-    
+
     public List<IMdNode> Children { get; } = new();
     public IMdNode Parent { get; private set; } = null!;
     public HashSet<string> Classes { get; } = new();
@@ -29,7 +29,7 @@ public class MdNode : IMdNode {
     
     public IMdNode WithContent(string content) {
         var child = new MdNode {
-            Element = MdElement.Content,
+            Element = MdElement.NewContent,
             Content = content,
         };
         
