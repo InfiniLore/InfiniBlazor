@@ -39,7 +39,7 @@ public class TableDataSources {
                 </tbody>
             </table>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode table = rootNode.AddTable();
                 IMdNode tableHeader = table.AddTableHead();
                 IMdNode tableHeaderRow = tableHeader.AddTableRow();
@@ -52,7 +52,6 @@ public class TableDataSources {
                 tableBodyRow.AddTableCell("Row 2 col 2");
                 tableBodyRow.AddTableCell("Row 2 col 3");
             }
-            
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -62,13 +61,13 @@ public class TableDataSources {
             | col 3 is      | right-aligned | $1600 |
             | col 2 is      | centered      |   $12 |
             | zebra stripes | are neat      |    $1 |
-            
+
             | Tables        | Are           | Cool  |
             | ------------- | ------------- | ----- |
             | col 3 is      | right-aligned | $1600 |
             | col 2 is      | centered      |   $12 |
             | zebra stripes | are neat      |    $1 |
-            
+
             """,
             """
             <table>
@@ -124,7 +123,7 @@ public class TableDataSources {
                 </tbody>
             </table>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode table = rootNode.AddTable();
                 IMdNode tableHeader = table.AddTableHead();
                 IMdNode tableHeaderRow = tableHeader.AddTableRow();
@@ -144,7 +143,7 @@ public class TableDataSources {
                 tableBodyRow3.AddTableCell("zebra stripes");
                 tableBodyRow3.AddTableCell("are neat");
                 tableBodyRow3.AddTableCell("$1");
-                
+
                 IMdNode table2 = rootNode.AddTable();
                 IMdNode tableHeader2 = table2.AddTableHead();
                 IMdNode tableHeaderRow2 = tableHeader2.AddTableRow();

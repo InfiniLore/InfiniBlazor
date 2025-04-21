@@ -10,20 +10,20 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("linkRegular")]
 public class LinkRegularSectionParser : ISectionHandler {
-    public ParserOrigin SkipOnOrigin => ParserOrigin.Link;
-    
+
     private static readonly int LrTextId = CachedRegexGroupNames.GetSingleLineGroupId("lrText");
     private static readonly int LrHrefId = CachedRegexGroupNames.GetSingleLineGroupId("lrHref");
     private static readonly int LrTitleId = CachedRegexGroupNames.GetSingleLineGroupId("lrTitle");
     private static readonly int LrBangId = CachedRegexGroupNames.GetSingleLineGroupId("lrBang");
-    
+    public ParserOrigin SkipOnOrigin => ParserOrigin.Link;
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[LrTextId].TryGetValue(out string? linkText)) return;
         if (!entireMatch.Groups[LrHrefId].TryGetValue(out string? linkHref)) return;
-        
+
         if (entireMatch.Groups[LrBangId].Success) {
             IMdNode imgNode = currentNode.AddChildNode(MdElement.Image);
             imgNode.WithAttribute("src", $"{linkHref}");
@@ -32,12 +32,13 @@ public class LinkRegularSectionParser : ISectionHandler {
             if (entireMatch.Groups[LrTitleId].TryGetValue(out string? altTextValue)) {
                 imgNode.WithAttribute("title", $"{altTextValue}");
             }
+
             return;
         }
-    
+
         IMdNode linkNode = currentNode.AddChildNode(MdElement.Link);
         linkNode.WithAttribute("href", $"{linkHref}");
-        
+
         parser.AddSingleLineMatchesToStack(linkText, linkNode, origin | SkipOnOrigin);
     }
 }

@@ -11,9 +11,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("code")]
 public class CodeInlineSectionParser : ISectionHandler {
-    public ParserOrigin SkipOnOrigin => ParserOrigin.Code;
 
     private static readonly int CId = CachedRegexGroupNames.GetSingleLineGroupId("c");
+    public ParserOrigin SkipOnOrigin => ParserOrigin.Code;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

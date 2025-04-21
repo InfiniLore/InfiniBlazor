@@ -10,9 +10,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("bold")]
 public class BoldSectionParser : ISectionHandler {
-    public ParserOrigin SkipOnOrigin => ParserOrigin.Bold;
-    
+
     private static readonly int BId = CachedRegexGroupNames.GetSingleLineGroupId("b");
+    public ParserOrigin SkipOnOrigin => ParserOrigin.Bold;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -20,6 +20,6 @@ public class BoldSectionParser : ISectionHandler {
         if (!entireMatch.Groups[BId].TryGetValue(out string? boldValue)) return;
 
         IMdNode boldNode = currentNode.AddChildNode(MdElement.Bold);
-        parser.AddSingleLineMatchesToStack(boldValue, boldNode, origin  | SkipOnOrigin);
+        parser.AddSingleLineMatchesToStack(boldValue, boldNode, origin | SkipOnOrigin);
     }
 }

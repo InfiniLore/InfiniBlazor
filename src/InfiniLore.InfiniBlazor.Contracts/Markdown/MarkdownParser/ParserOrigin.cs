@@ -2,14 +2,13 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 namespace InfiniLore.InfiniBlazor.Markdown;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [Flags]
 public enum ParserOrigin {
     Undefined = 0,
-    
+
     Bold = 1 << 0,
     Italic = 1 << 1,
     Strike = 1 << 2,
@@ -19,9 +18,9 @@ public enum ParserOrigin {
     Emote = 1 << 6,
     SuperScript = 1 << 7,
     SubScript = 1 << 8,
-    
+
     // Special cases
-    PreserveHtml = 1 << 29,  
-    Html = 1 << 30,          
-    NotSkipped = 1 << 31 
+    PreserveHtml = 1 << 29,
+    Html = 1 << 30,
+    NotSkipped = 1 << 31
 }

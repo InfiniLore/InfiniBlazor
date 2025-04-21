@@ -11,11 +11,11 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("table")]
 public class TableSectionParser : ISectionHandler {
-    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
-    
+
     private static readonly int BodyId = CachedRegexGroupNames.GetMultiLineGroupId("tBody");
     private static readonly int HeadId = CachedRegexGroupNames.GetMultiLineGroupId("tHead");
     private static readonly int SepId = CachedRegexGroupNames.GetMultiLineGroupId("tSep");
+    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -36,12 +36,12 @@ public class TableSectionParser : ISectionHandler {
 
         // Construct table HTML
         IMdNode tableNode = currentNode.AddChildNode(MdElement.Table);
-        
+
         // Add headers
         IMdNode tableHeaderNode = tableNode
             .AddChildNode(MdElement.TableHead)
             .AddChildNode(MdElement.TableRow);
-        
+
         for (int index = 0; index < headerColumnCount; index++) {
             IMdNode tableHeadCellNode = tableHeaderNode.AddChildNode(MdElement.TableHeadCell);
             ReadOnlySpan<char> column = header[headerColumns[index]];

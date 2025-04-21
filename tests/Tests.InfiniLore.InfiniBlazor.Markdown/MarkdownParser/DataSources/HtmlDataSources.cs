@@ -52,7 +52,7 @@ public class HtmlDataSources {
                 </table>
             </p>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 rootNode.AddParagraph("Unrelated previous paragraph followed by a blank line");
                 IMdNode paragraph2 = rootNode.AddParagraph();
                 paragraph2.WithHtmlContent("""
@@ -103,23 +103,23 @@ public class HtmlDataSources {
             Mister Death
             </pre></p>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithHtmlContent("""
-                <pre>
-                Buffalo Bill ’s
-                defunct
-                       who used to
-                       ride a watersmooth-silver
-                                                stallion
-                and break onetwothreefourfive pigeonsjustlikethat
-                                                                 Jesus
-                he was a handsome man
-                                     and what i want to know is
-                how do you like your blueeyed boy
-                Mister Death
-                </pre>
-                """);
+                    <pre>
+                    Buffalo Bill ’s
+                    defunct
+                           who used to
+                           ride a watersmooth-silver
+                                                    stallion
+                    and break onetwothreefourfive pigeonsjustlikethat
+                                                                     Jesus
+                    he was a handsome man
+                                         and what i want to know is
+                    how do you like your blueeyed boy
+                    Mister Death
+                    </pre>
+                    """);
             }
         );
 
@@ -134,7 +134,7 @@ public class HtmlDataSources {
             <strong>something</strong>
             </div> </p>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph("test ");
                 paragraph.WithHtmlContent("""
                     <div>
@@ -144,7 +144,7 @@ public class HtmlDataSources {
                 );
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             """
             test <div>
@@ -154,9 +154,9 @@ public class HtmlDataSources {
             """
             <p> test <div></div></p> 
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph("test ");
-                
+
                 // HTML Sanitization is handled as a post-processor, so we can't test it here
                 paragraph.WithHtmlContent("""
                     <div>
@@ -166,29 +166,29 @@ public class HtmlDataSources {
                 );
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             "test <div> <script>something</script> </div>",
             "<p> test <div></div> </p> ",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph("test ");
                 // HTML Sanitization is handled as a post-processor, so we can't test it here
                 paragraph.WithHtmlContent("<div> <script>something</script> </div>"
                 );
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             "test <script>something</script>",
             "<p> test </p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph("test ");
                 // HTML Sanitization is handled as a post-processor, so we can't test it here
                 paragraph.WithHtmlContent("<script>something</script>"
                 );
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             """
             *test* <div>
@@ -200,7 +200,7 @@ public class HtmlDataSources {
             <strong>something</strong>
             </div> <strong>bold this</strong> </p>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.AddItalic("test");
                 paragraph.WithContent(" ");
@@ -210,6 +210,7 @@ public class HtmlDataSources {
                     </div>
                     """
                 );
+
                 paragraph.WithContent(" ");
                 paragraph.AddBold("bold this");
 

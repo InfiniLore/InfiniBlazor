@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 namespace InfiniLore.InfiniBlazor.Markdown;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -12,9 +11,9 @@ public interface IMdNode {
 
     IReadOnlyCollection<IMdNode> Children { get; }
     IMdNode Parent { get; }
-    
+
     IMdNode AddChildNode(MdElement element);
-    
+
     IMdNode WithContent(string content);
     IMdNode WithHtmlContent(string content);
     IMdNode WithClass(string className);

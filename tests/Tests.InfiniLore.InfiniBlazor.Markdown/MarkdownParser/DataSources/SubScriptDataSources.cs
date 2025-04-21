@@ -18,34 +18,34 @@ public static class SubScriptDataSources {
         yield return static () => new MarkdownTestDto(SectionName,
             "^subscript^",
             "<p><sub>subscript</sub></p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.AddSubscript("subscript");
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             "^subscript\\^^",
             "<p><sub>subscript^</sub></p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.AddSubscript("subscript^");
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             "^\\^subscript^",
             "<p><sub>^subscript</sub></p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.AddSubscript("^subscript");
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             "This is a **bold^subscript^ text**.",
             "<p>This is a <strong>bold<sub>subscript</sub> text</strong>.</p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("This is a ");
                 IMdNode bold = paragraph.AddBold("bold");
@@ -58,7 +58,7 @@ public static class SubScriptDataSources {
         yield return static () => new MarkdownTestDto(SectionName,
             "Text with *italic^subscript^ and ^^superscript^^*.",
             "<p>Text with <em>italic<sub>subscript</sub> and <sup>superscript</sup></em>.</p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("Text with ");
                 IMdNode italic = paragraph.AddItalic("italic");
@@ -75,7 +75,7 @@ public static class SubScriptDataSources {
             """
             <p>A <a href="https://example.com">link with <sub>subscript</sub></a>.</p>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("A ");
                 IMdNode link = paragraph.AddLink();
@@ -97,12 +97,12 @@ public static class SubScriptDataSources {
                 <li><em>Italic<sub>sub</sub></em></li>
             </ul>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode list = rootNode.AddListUnordered();
 
                 IMdNode item0 = list.AddListItem();
                 item0.AddBold("Bold").AddSubscript("sub");
-                
+
                 IMdNode item1 = list.AddListItem();
                 item1.AddItalic("Italic").AddSubscript("sub");
             }
@@ -113,7 +113,7 @@ public static class SubScriptDataSources {
             """
             <p><strong>Bold <sub>subscript</sub> in a <a href="https://example.com">link</a></strong>.</p>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 IMdNode bold = paragraph.AddBold("Bold ");
                 bold.AddSubscript("subscript");
@@ -128,7 +128,7 @@ public static class SubScriptDataSources {
         yield return static () => new MarkdownTestDto(SectionName,
             "Inline code with subscript: `x = z^2^`",
             "<p>Inline code with subscript: <code>x = z^2^</code></p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("Inline code with subscript: ");
                 paragraph.AddCode("x = z^2^");
@@ -138,7 +138,7 @@ public static class SubScriptDataSources {
         yield return static () => new MarkdownTestDto(SectionName,
             "***Bold and italic^sub^ and italic^sub^***.",
             "<p><strong><em>Bold and italic<sub>sub</sub> and italic<sub>sub</sub></em></strong>.</p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 IMdNode bold = paragraph.AddBold().AddItalic();
                 bold.WithContent("Bold and italic");
@@ -160,7 +160,7 @@ public static class SubScriptDataSources {
                 <li><em>Italic link <a href="https://example.org">and <sub>sub</sub> text</a></em>.</li>
             </ul>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode list = rootNode.AddListUnordered();
                 IMdNode item1 = list.AddListItem();
                 IMdNode bold = item1.AddBold();
@@ -171,7 +171,7 @@ public static class SubScriptDataSources {
                 link.AddSubscript("sub");
                 link.WithContent(" text");
                 item1.WithContent(".");
-                
+
                 IMdNode item2 = list.AddListItem();
                 IMdNode italic = item2.AddItalic();
                 italic.WithContent("Italic link ");
@@ -183,11 +183,11 @@ public static class SubScriptDataSources {
                 item2.WithContent(".");
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             "^subscript with ^^superscript^^ inside^",
             "<p><sub>subscript with <sup>superscript</sup> inside</sub></p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 IMdNode sub = paragraph.AddSubscript("subscript with ");
                 sub.AddSuperscript("superscript");

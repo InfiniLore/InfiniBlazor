@@ -15,16 +15,16 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 [InjectableTransient<ITextEditor>]
 public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provider) : ITextEditor {
     private int _caretIndexToUpdate = -1;
+    private FrozenDictionary<string, ITextModifier>.AlternateLookup<ReadOnlySpan<char>>? _lookupCache;
 
     private FrozenDictionary<string, ITextModifier> ModifierLookup { get; } = markdownConfig.TextEditorModifierNames.ToFrozenDictionary(
         keySelector: name => name,
         provider.GetRequiredKeyedService<ITextModifier>
     );
-    private FrozenDictionary<string, ITextModifier>.AlternateLookup<ReadOnlySpan<char>>? _lookupCache;
     private FrozenDictionary<string, ITextModifier>.AlternateLookup<ReadOnlySpan<char>> AlternateLookup => _lookupCache ??= ModifierLookup.GetAlternateLookup<ReadOnlySpan<char>>();
 
     public IEnumerable<ITextModifier> Modifiers => ModifierLookup.Values;
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -64,47 +64,6 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
             modifier.Modify(source, new Range(intersectStart, intersectEnd), this);
         }
     }
-    
-    #region Modify Special Structures
-    private bool TryHandleAsLine(ITextSource source, int intersectStart, int intersectEnd, ITextModifier modifier) {
-        Match lineMatch = TextEditorRegexLib.ListItemsRegex.Match(source.Text, intersectStart, intersectEnd - intersectStart);
-        if (!lineMatch.Success || !lineMatch.Groups[1].TryGetLength(out int prefixLength)) return false;
-
-        modifier.Modify(source, new Range(intersectStart + prefixLength, intersectEnd), this);
-        return true;
-    }
-
-    private bool TryHandleAsTableRow(ITextSource source, int intersectStart, int intersectEnd, ITextModifier modifier) {
-        ReadOnlySpan<char> possibleTable = source.Text.AsSpan(intersectStart, intersectEnd - intersectStart);
-        if (TextEditorRegexLib.IsTableLineRegex.IsMatch(possibleTable)) {
-            Regex.ValueMatchEnumerator tableCellMatches = TextEditorRegexLib.TableCellsRegex.EnumerateMatches(possibleTable);
-            Stack<Range> tableCellMatchesStack = RangeStackPool.Get();
-            try {
-                while (tableCellMatches.MoveNext()) {
-                    ValueMatch current = tableCellMatches.Current;
-                    if (current.Index < 0 || current.Length <= 0) continue;
-
-                    tableCellMatchesStack.Push(new Range(
-                        intersectStart + current.Index,
-                        intersectStart + current.Index + current.Length
-                    ));
-                }
-
-                while (tableCellMatchesStack.TryPop(out Range result)) {
-                    modifier.Modify(source, result, this);
-                }
-                return true;
-            }
-            finally {
-                RangeStackPool.Return(tableCellMatchesStack);
-            }
-        }
-
-        if (TextEditorRegexLib.IsTableHeaderLineRegex.IsMatch(possibleTable)) return true;
-
-        return false;
-    }
-    #endregion
 
     public void Insert(ITextSource source, ReadOnlySpan<char> input, Range range) {
         int totalLength = source.Length;
@@ -149,4 +108,46 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
 
         _caretIndexToUpdate = caretIndex;
     }
+
+    #region Modify Special Structures
+    private bool TryHandleAsLine(ITextSource source, int intersectStart, int intersectEnd, ITextModifier modifier) {
+        Match lineMatch = TextEditorRegexLib.ListItemsRegex.Match(source.Text, intersectStart, intersectEnd - intersectStart);
+        if (!lineMatch.Success || !lineMatch.Groups[1].TryGetLength(out int prefixLength)) return false;
+
+        modifier.Modify(source, new Range(intersectStart + prefixLength, intersectEnd), this);
+        return true;
+    }
+
+    private bool TryHandleAsTableRow(ITextSource source, int intersectStart, int intersectEnd, ITextModifier modifier) {
+        ReadOnlySpan<char> possibleTable = source.Text.AsSpan(intersectStart, intersectEnd - intersectStart);
+        if (TextEditorRegexLib.IsTableLineRegex.IsMatch(possibleTable)) {
+            Regex.ValueMatchEnumerator tableCellMatches = TextEditorRegexLib.TableCellsRegex.EnumerateMatches(possibleTable);
+            Stack<Range> tableCellMatchesStack = RangeStackPool.Get();
+            try {
+                while (tableCellMatches.MoveNext()) {
+                    ValueMatch current = tableCellMatches.Current;
+                    if (current.Index < 0 || current.Length <= 0) continue;
+
+                    tableCellMatchesStack.Push(new Range(
+                        intersectStart + current.Index,
+                        intersectStart + current.Index + current.Length
+                    ));
+                }
+
+                while (tableCellMatchesStack.TryPop(out Range result)) {
+                    modifier.Modify(source, result, this);
+                }
+
+                return true;
+            }
+            finally {
+                RangeStackPool.Return(tableCellMatchesStack);
+            }
+        }
+
+        if (TextEditorRegexLib.IsTableHeaderLineRegex.IsMatch(possibleTable)) return true;
+
+        return false;
+    }
+    #endregion
 }

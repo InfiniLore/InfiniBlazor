@@ -28,7 +28,7 @@ public static class BoldDataSources {
             "<p><strong>*bold</strong></p>",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold("*"); // Escaped char
+                IMdNode bold = paragraph.AddBold("*");// Escaped char
                 bold.WithContent("bold");
             });
 
@@ -38,7 +38,7 @@ public static class BoldDataSources {
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 IMdNode bold = paragraph.AddBold("bold");
-                bold.WithContent("*"); // Escaped char
+                bold.WithContent("*");// Escaped char
             }// Escaped char
         );
 
@@ -68,7 +68,7 @@ public static class BoldDataSources {
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 IMdNode bold = paragraph.AddBold(" ");
-                bold.WithContent("*"); // Escaped char
+                bold.WithContent("*");// Escaped char
                 bold.WithContent(" ");
             });
 
@@ -78,9 +78,9 @@ public static class BoldDataSources {
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 IMdNode bold = paragraph.AddBold("bold ");
-                IMdNode italic =  bold.AddItalic();
+                IMdNode italic = bold.AddItalic();
                 italic.WithContent("nested ");
-                italic.WithContent("*"); // Escaped char
+                italic.WithContent("*");// Escaped char
                 italic.WithContent(" italic");
             });
 

@@ -12,7 +12,7 @@ public record MarkdownTestDto(
     string Section,
     string Markdown,
     string ExpectedStringOutput,
-    
+
     // ReSharper disable once NotAccessedPositionalProperty.Global
     Action<IMdNode>? ConfigureExpectedNode = null
 ) {
@@ -23,6 +23,7 @@ public record MarkdownTestDto(
     // -----------------------------------------------------------------------------------------------------------------
     private static MdNode? CreateNode(Action<IMdNode>? configureNode) {
         if (configureNode == null) return null;
+
         var node = new MdNode();
         configureNode.Invoke(node);
         return node;

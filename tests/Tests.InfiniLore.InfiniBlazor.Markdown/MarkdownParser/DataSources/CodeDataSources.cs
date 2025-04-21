@@ -26,7 +26,7 @@ public static class CodeDataSources {
             const code = sample();
             </code></pre>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode pre = rootNode.AddPre();
                 pre.AddCode("const code = sample();\n");
             });
@@ -42,7 +42,7 @@ public static class CodeDataSources {
             const code = sample();
             </code></pre>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode pre = rootNode.AddPre();
                 IMdNode code = pre.AddCode("const code = sample();\n");
                 code.WithClass("language-javascript");
@@ -63,7 +63,7 @@ public static class CodeDataSources {
             end tell
             </code></pre>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode pre = rootNode.AddPre();
                 pre.AddCode("tell application \"Foo\"\n    beep\nend tell\n");
             });
@@ -79,7 +79,7 @@ public static class CodeDataSources {
             **some valid markdown**
             </code></pre>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode pre = rootNode.AddPre();
                 pre.AddCode("**some valid markdown**\n");
             });

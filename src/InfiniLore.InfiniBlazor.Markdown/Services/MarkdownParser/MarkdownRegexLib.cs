@@ -61,16 +61,16 @@ public static partial class MarkdownRegexLib {
           )
         | (?<horizontalRule>^[\-=]{3,64}\s*$)
         | (?<paragraph>(?<p>.+?)(?:\r?\n|$))
-        
+
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex MultilineStructuresRegex { get; }
 
     [GeneratedRegex(@"^[ ]*[-.]?\d*\.?\s+(?<lTask>\[[\ xX]\] )?(?<lHead>[^\r\n]+)(?<lBody>(?:\r?\n[ ]+.+)*)(?<!\r)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex ListItemBodyRegex { get; }
-    
+
     [GeneratedRegex("\r?\n", RegexOptions.Compiled)]
     public static partial Regex NormalizeNewlinesRegex { get; }
-    
+
     [GeneratedRegex("""
         (?<spanTag><(?<tag>span)\b[^>]*>)
         (?<spanBody>

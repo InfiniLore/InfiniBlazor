@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -12,7 +11,7 @@ public static class MdNodeExtensions {
         if (content != null) newNode.WithContent(content);
         return newNode;
     }
-    
+
     public static IMdNode AddBlockquote(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Blockquote, content);
     public static IMdNode AddBold(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Bold, content);
     public static IMdNode AddCode(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Code, content);

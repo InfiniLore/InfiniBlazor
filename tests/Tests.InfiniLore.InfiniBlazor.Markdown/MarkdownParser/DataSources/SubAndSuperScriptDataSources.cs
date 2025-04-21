@@ -18,7 +18,7 @@ public static class SubAndSuperScriptDataSources {
         yield return static () => new MarkdownTestDto(SectionName,
             "Example of ^^super^^ and ^sub^ and ^^^super sub^^^.",
             "<p>Example of <sup>super</sup> and <sub>sub</sub> and <sup><sub>super sub</sub></sup>.</p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("Example of ");
                 paragraph.AddSuperscript("super");
@@ -29,16 +29,16 @@ public static class SubAndSuperScriptDataSources {
                 paragraph.WithContent(".");
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             "A [link with ^^superscript^^ and ^subscript^](https://example.com).",
             """
             <p>A <a href="https://example.com">link with <sup>superscript</sup> and <sub>subscript</sub></a>.</p>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("A ");
-                
+
                 IMdNode link = paragraph.AddLink();
                 link.WithAttribute("href", "https://example.com");
                 link.WithContent("link with ");
@@ -60,11 +60,11 @@ public static class SubAndSuperScriptDataSources {
                 <li><em>Italic<sub>sub</sub></em></li>
             </ul>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode list = rootNode.AddListUnordered();
                 IMdNode item0 = list.AddListItem();
                 item0.AddBold("Bold").AddSuperscript("sup");
-                
+
                 IMdNode item1 = list.AddListItem();
                 item1.AddItalic("Italic").AddSubscript("sub");
             }
@@ -75,7 +75,7 @@ public static class SubAndSuperScriptDataSources {
             """
             <p>Nested formatting: <strong>Bold <sub>subscript</sub> and <sup>superscript</sup> in a <a href="https://example.com">link</a></strong>.</p>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("Nested formatting: ");
                 IMdNode bold = paragraph.AddBold();
@@ -94,7 +94,7 @@ public static class SubAndSuperScriptDataSources {
         yield return static () => new MarkdownTestDto(SectionName,
             "Inline code with superscript and subscript: `x = y^^2^^ - z^2^`",
             "<p>Inline code with superscript and subscript: <code>x = y^^2^^ - z^2^</code></p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("Inline code with superscript and subscript: ");
                 paragraph.AddCode("x = y^^2^^ - z^2^");
@@ -104,7 +104,7 @@ public static class SubAndSuperScriptDataSources {
         yield return static () => new MarkdownTestDto(SectionName,
             "Complex: ***Bold and italic^^super^^ and italic^sub^***.",
             "<p>Complex: <strong><em>Bold and italic<sup>super</sup> and italic<sub>sub</sub></em></strong>.</p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("Complex: ");
                 IMdNode bold = paragraph.AddBold().AddItalic();
@@ -127,7 +127,7 @@ public static class SubAndSuperScriptDataSources {
                 <li><em>Italic link <a href="https://example.org">and subscript <sub>sub</sub> text</a></em>.</li>
             </ul>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode list = rootNode.AddListUnordered();
                 IMdNode item1 = list.AddListItem();
                 IMdNode bold = item1.AddBold();
@@ -138,7 +138,7 @@ public static class SubAndSuperScriptDataSources {
                 link.AddSuperscript("superscript");
                 link.WithContent(" text");
                 item1.WithContent(".");
-                
+
                 IMdNode item2 = list.AddListItem();
                 IMdNode italic = item2.AddItalic();
                 italic.WithContent("Italic link ");
@@ -150,11 +150,11 @@ public static class SubAndSuperScriptDataSources {
                 item2.WithContent(".");
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             "Complex nesting: **Bold ^subscript ^^with superscript^^ inside^ and ^^superscript ^with subscript^ inside^^**",
             "<p>Complex nesting: <strong>Bold <sub>subscript <sup>with superscript</sup> inside</sub> and <sup>superscript <sub>with subscript</sub> inside</sup></strong></p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("Complex nesting: ");
                 IMdNode bold = paragraph.AddBold();

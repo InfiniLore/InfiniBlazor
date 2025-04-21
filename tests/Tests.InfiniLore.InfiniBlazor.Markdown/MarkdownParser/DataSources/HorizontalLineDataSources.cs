@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.MdNodes;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
@@ -25,13 +24,13 @@ public class HorizontalLineDataSources {
 
                 int index = i;
                 yield return () => new MarkdownTestDto(
-                    SectionName, 
+                    SectionName,
                     text,
                     content,
-                     rootNode => {
-                         if (index < 3) rootNode.AddParagraph(text);
-                         else rootNode.AddHorizontalRule();
-                     }
+                    ConfigureExpectedNode: rootNode => {
+                        if (index < 3) rootNode.AddParagraph(text);
+                        else rootNode.AddHorizontalRule();
+                    }
                 );
             }
         }

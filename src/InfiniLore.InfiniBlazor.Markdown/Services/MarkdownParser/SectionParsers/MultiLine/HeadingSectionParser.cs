@@ -10,10 +10,10 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("heading")]
 public class HeadingSectionParser : ISectionHandler {
-    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
-    
+
     private static readonly int HLevelId = CachedRegexGroupNames.GetMultiLineGroupId("hLevel");
     private static readonly int HTextId = CachedRegexGroupNames.GetMultiLineGroupId("hText");
+    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -30,7 +30,7 @@ public class HeadingSectionParser : ISectionHandler {
             6 => MdElement.H6,
             _ => MdElement.H1
         };
-        
+
         IMdNode headingElement = currentNode.AddChildNode(mdElement);
         parser.AddSingleLineMatchesToStack(headerText, headingElement, origin);
     }

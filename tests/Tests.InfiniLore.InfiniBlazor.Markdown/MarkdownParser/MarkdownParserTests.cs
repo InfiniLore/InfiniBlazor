@@ -39,7 +39,7 @@ public class MarkdownParserTests(IMarkdownParser parser) {
     [MethodDataSource(typeof(XSSDataSources), nameof(XSSDataSources.DataSources))]
     public async Task ParseToString_ValidInputs(MarkdownTestDto dto) {
         // Arrange
-        
+
         // Act
         string output = parser.ParseToString(dto.Markdown);
 
@@ -111,7 +111,7 @@ public class MarkdownParserTests(IMarkdownParser parser) {
     [MethodDataSource(typeof(XSSDataSources), nameof(XSSDataSources.DataSources))]
     public async Task ParseToNodeTree_ValidInputs(MarkdownTestDto dto) {
         // Arrange
-        
+
         // Act
         IMdNode output = parser.ParseToNodeTree(dto.Markdown);
         Skip.When(dto.ExpectedNode == null, "The node tree is null and thus cannot be compared.");

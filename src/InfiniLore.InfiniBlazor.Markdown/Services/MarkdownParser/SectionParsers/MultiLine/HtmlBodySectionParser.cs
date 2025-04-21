@@ -10,13 +10,13 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("htmlBody")]
 public class HtmlBodySectionParser : ISectionHandler {
-    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
-    
+
     private static readonly int HtmlPreId = CachedRegexGroupNames.GetMultiLineGroupId("htmlPre");
     private static readonly int HtmlBodyId = CachedRegexGroupNames.GetMultiLineGroupId("htmlBody");
     private static readonly int HtmlPostId = CachedRegexGroupNames.GetMultiLineGroupId("htmlPost");
     private static readonly int SpanTagId = CachedRegexGroupNames.GetSpanGroupId("spanTag");
     private static readonly int SpanBodyId = CachedRegexGroupNames.GetSpanGroupId("spanBody");
+    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -42,7 +42,7 @@ public class HtmlBodySectionParser : ISectionHandler {
                 parser.PushElementToStack(htmlBody, currentNode, origin, MdElement.HtmlContent);
             }
         }
-        
+
         if (entireMatch.Groups[HtmlPreId].TryGetValue(out string? pre)) {
             parser.AddSingleLineMatchesToStack(pre, currentNode, origin);
         }

@@ -10,12 +10,12 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("linkNested")]
 public class LinkNestedSectionParser : ISectionHandler {
-    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
-    
+
     private static readonly int LnTextId = CachedRegexGroupNames.GetSingleLineGroupId("lnText");
     private static readonly int LnHrefId = CachedRegexGroupNames.GetSingleLineGroupId("lnHref");
     private static readonly int LnTitleId = CachedRegexGroupNames.GetSingleLineGroupId("lnTitle");
     private static readonly int LnBangId = CachedRegexGroupNames.GetSingleLineGroupId("lnBang");
+    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -31,12 +31,13 @@ public class LinkNestedSectionParser : ISectionHandler {
             if (entireMatch.Groups[LnTitleId].TryGetValue(out string? altTextValue)) {
                 imgNode.WithAttribute("title", $"{altTextValue}");
             }
+
             return;
         }
-    
+
         IMdNode linkNode = currentNode.AddChildNode(MdElement.Link);
         linkNode.WithAttribute("href", $"{linkHref}");
-        
+
         parser.AddSingleLineMatchesToStack(linkText, linkNode, origin);
     }
 }

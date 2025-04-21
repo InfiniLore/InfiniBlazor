@@ -19,7 +19,7 @@ public class StrikethroughDataSources {
             SectionName,
             "~something~",
             "<p><s>something</s></p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.AddStrikethrough("something");
             }
@@ -29,7 +29,7 @@ public class StrikethroughDataSources {
             SectionName,
             @"\~escaped~",
             "<p>~escaped~</p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("~escaped~");
             }
@@ -39,7 +39,7 @@ public class StrikethroughDataSources {
             SectionName,
             @"~escaped\~",
             "<p>~escaped~</p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("~escaped~");
             }
@@ -49,30 +49,30 @@ public class StrikethroughDataSources {
             SectionName,
             "~nested ~strikethrough~ does not work~",
             "<p><s>nested</s>strikethrough<s> does not work</s></p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.AddStrikethrough("nested ");
                 paragraph.WithContent("strikethrough");
                 paragraph.AddStrikethrough(" does not work");
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(
             SectionName,
             "~**bold and strike-through**~",
             "<p><s><strong>bold and strike-through</strong></s></p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 IMdNode strike = paragraph.AddStrikethrough();
                 strike.AddBold("bold and strike-through");
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(
             SectionName,
             "~*italic and strike-through*~",
             "<p><s><em>italic and strike-through</em></s></p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 IMdNode strike = paragraph.AddStrikethrough();
                 strike.AddItalic("italic and strike-through");
@@ -83,28 +83,28 @@ public class StrikethroughDataSources {
             SectionName,
             "**~bold strike~** normal ~strikethrough~",
             "<p><strong><s>bold strike</s></strong> normal <s>strikethrough</s></p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.AddBold().AddStrikethrough("bold strike");
                 paragraph.WithContent(" normal ");
                 paragraph.AddStrikethrough("strikethrough");
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(
             SectionName,
             "~~",
             "<p>~~</p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 rootNode.AddParagraph("~~");
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(
             SectionName,
             "~one~ and ~two~!",
             "<p><s>one</s> and <s>two</s>!</p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.AddStrikethrough("one");
                 paragraph.WithContent(" and ");

@@ -20,7 +20,7 @@ public class DIDataSourceAttribute : DependencyInjectionDataSourceAttribute<ISer
 
     private static ServiceProvider CreateSharedServiceProvider() {
         var services = new ServiceCollection();
-        
+
         services.AddLogging();
         services.AddLucideIcons();
         services.AddInfiniBlazor(static config => config.AddMarkdown());

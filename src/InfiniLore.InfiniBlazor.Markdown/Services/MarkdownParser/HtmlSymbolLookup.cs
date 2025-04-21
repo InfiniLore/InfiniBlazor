@@ -5,7 +5,6 @@ using System.Collections.Frozen;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -16,19 +15,19 @@ public static class HtmlSymbolLookup {
         { "&", "&amp;" },
         { "<", "&lt;" },
         { ">", "&gt;" },
-        { "\"", "&quot;" },
+        { "\"", "&quot;" }
     }.ToFrozenDictionary();
-    
-    public static FrozenDictionary<string, string> CodeBlockLookup { get; } = new Dictionary<string,string> {
+
+    public static FrozenDictionary<string, string> CodeBlockLookup { get; } = new Dictionary<string, string> {
         { "\r\n", "\n" },
         { "&", "&amp;" },
         { "<", "&lt;" },
-        { ">", "&gt;" },
+        { ">", "&gt;" }
     }.ToFrozenDictionary();
-    
+
     public static FrozenDictionary<string, string>.AlternateLookup<ReadOnlySpan<char>> AlternateLookup { get; } = Lookup.GetAlternateLookup<ReadOnlySpan<char>>();
     public static FrozenDictionary<string, string>.AlternateLookup<ReadOnlySpan<char>> CodeBlockAlternateLookup { get; } = CodeBlockLookup.GetAlternateLookup<ReadOnlySpan<char>>();
-    
+
     public static Regex Regex { get; } = new(string.Join('|', Lookup.Keys), RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.Compiled);
     public static Regex CodeBlockRegex { get; } = new(string.Join('|', CodeBlockLookup.Keys), RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.Compiled);
 }

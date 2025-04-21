@@ -10,16 +10,16 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("subScript")]
 public class SubScriptSectionParser : ISectionHandler {
-    public ParserOrigin SkipOnOrigin => ParserOrigin.SubScript;
 
     private static readonly int SbId = CachedRegexGroupNames.GetSingleLineGroupId("sb");
+    public ParserOrigin SkipOnOrigin => ParserOrigin.SubScript;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[SbId].TryGetValue(out string? subValue)) return;
-        
+
         IMdNode node = currentNode.AddChildNode(MdElement.Subscript);
-        parser.AddSingleLineMatchesToStack(subValue, node, origin  | SkipOnOrigin);
+        parser.AddSingleLineMatchesToStack(subValue, node, origin | SkipOnOrigin);
     }
 }

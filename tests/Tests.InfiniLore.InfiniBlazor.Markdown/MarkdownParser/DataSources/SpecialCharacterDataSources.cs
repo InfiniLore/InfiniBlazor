@@ -18,7 +18,7 @@ public static class SpecialCharacterDataSources {
         yield return static () => new MarkdownTestDto(SectionName,
             "",
             "",
-            static _ => {
+            ConfigureExpectedNode: static _ => {
                 // Nothing to add
             }
         );
@@ -26,7 +26,7 @@ public static class SpecialCharacterDataSources {
         yield return static () => new MarkdownTestDto(SectionName,
             "&",
             "<p>&amp;</p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 rootNode.AddParagraph("&");
             }
         );
@@ -34,7 +34,7 @@ public static class SpecialCharacterDataSources {
         yield return static () => new MarkdownTestDto(SectionName,
             "<",
             "<p>&lt;</p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 rootNode.AddParagraph("<");
             }
         );
@@ -42,7 +42,7 @@ public static class SpecialCharacterDataSources {
         yield return static () => new MarkdownTestDto(SectionName,
             ">",
             "<p>&gt;</p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 rootNode.AddParagraph(">");
             }
         );
@@ -50,7 +50,7 @@ public static class SpecialCharacterDataSources {
         yield return static () => new MarkdownTestDto(SectionName,
             "&copy;",
             "<p>\u00a9</p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 rootNode.AddParagraph("&copy;");
             }
         );
@@ -58,7 +58,7 @@ public static class SpecialCharacterDataSources {
         yield return static () => new MarkdownTestDto(SectionName,
             "This contains an emoji: 😀",
             "<p>This contains an emoji: 😀</p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 rootNode.AddParagraph("This contains an emoji: 😀");
             }
         );
@@ -66,7 +66,7 @@ public static class SpecialCharacterDataSources {
         yield return static () => new MarkdownTestDto(SectionName,
             "@username mentions",
             "<p>@username mentions</p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 rootNode.AddParagraph("@username mentions");
             }
         );
@@ -74,7 +74,7 @@ public static class SpecialCharacterDataSources {
         yield return static () => new MarkdownTestDto(SectionName,
             "test <br/> test",
             "<p>test <br/> test</p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 rootNode.AddParagraph("test <br/> test");
             }
         );

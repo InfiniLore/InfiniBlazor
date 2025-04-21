@@ -12,10 +12,10 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("codeBlock")]
 public class CodeBlockSectionParser : ISectionHandler {
-    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
-    
+
     private static readonly int CBodyId = CachedRegexGroupNames.GetMultiLineGroupId("cBody");
     private static readonly int CLangId = CachedRegexGroupNames.GetMultiLineGroupId("cLang");
+    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -25,10 +25,10 @@ public class CodeBlockSectionParser : ISectionHandler {
 
         IMdNode preNode = currentNode.AddChildNode(MdElement.Pre);
         IMdNode codeNode = preNode.AddChildNode(MdElement.Code);
-        
+
         ReadOnlySpan<char> langNameValue = entireMatch.Groups[CLangId].ValueSpan;
         if (!langNameValue.IsEmpty) codeNode.WithClass($"language-{langNameValue}");
-        
+
         string content = ProcessCodeBlockContent(ref codeBlockBody);
         codeNode.WithContent(content);
     }
@@ -54,12 +54,13 @@ public class CodeBlockSectionParser : ISectionHandler {
             if (currentIndex < content.Length) {
                 sb.Append(content[currentIndex..]);
             }
+
             return sb.ToString();
         }
         finally {
             StringBuilderPool.Return(sb);
         }
 
-        
+
     }
 }

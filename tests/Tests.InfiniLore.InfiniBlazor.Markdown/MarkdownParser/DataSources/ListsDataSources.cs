@@ -36,7 +36,7 @@ public static class ListsDataSources {
                 <li>list</li>
             </ol>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode list = rootNode.AddListOrdered();
                 list.AddListItem("this");
                 list.AddListItem("is");
@@ -65,7 +65,7 @@ public static class ListsDataSources {
                 <li>Item 2</li>
             </ul>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode list = rootNode.AddListUnordered();
                 IMdNode item = list.AddListItem("Item 1");
                 IMdNode sublist = item.AddListUnordered();
@@ -95,7 +95,7 @@ public static class ListsDataSources {
                 <li>Ordered item 3</li>
             </ol>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode list = rootNode.AddListOrdered();
                 list.AddListItem("Ordered item 1");
                 IMdNode item = list.AddListItem("Ordered item 2");
@@ -126,7 +126,7 @@ public static class ListsDataSources {
                 <li>Unordered item 3</li>
             </ul>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode list = rootNode.AddListUnordered();
                 list.AddListItem("Unordered item 1");
                 IMdNode item = list.AddListItem("Unordered item 2");
@@ -155,7 +155,7 @@ public static class ListsDataSources {
                 <li>Second ordered item</li>
             </ol>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode list = rootNode.AddListOrdered();
                 IMdNode item = list.AddListItem("First ordered item");
                 IMdNode sublist = item.AddListUnordered();
@@ -189,7 +189,7 @@ public static class ListsDataSources {
                 </li>
             </ul>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode list = rootNode.AddListUnordered();
                 IMdNode item = list.AddListItem("Top-level item");
                 IMdNode sublist = item.AddListUnordered();
@@ -205,7 +205,7 @@ public static class ListsDataSources {
             """
             - Top item 1
             - Top item 2
-            
+
                 Unrelated text block in the same list
 
             - Top item 3
@@ -220,13 +220,13 @@ public static class ListsDataSources {
                 <li>Top item 3</li>
             </ul>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode list = rootNode.AddListUnordered();
                 list.AddListItem("Top item 1");
                 list.AddListItem("Top item 2");
-                
+
                 rootNode.AddParagraph("Unrelated text block in the same list");
-                
+
                 IMdNode list2 = rootNode.AddListUnordered();
                 list2.AddListItem("Top item 3");
             }
@@ -248,12 +248,12 @@ public static class ListsDataSources {
                 <li>Another item</li>
             </ol>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode list = rootNode.AddListOrdered();
                 IMdNode item = list.AddListItem("Extra spaces for alignment");
                 IMdNode sublist = item.AddListUnordered();
                 sublist.AddListItem("This is a sublist");
-                
+
                 list.AddListItem("Another item");
             }
         );
@@ -271,7 +271,7 @@ public static class ListsDataSources {
                 <li>A list item with <code>inline code</code></li>
             </ul>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode list = rootNode.AddListUnordered();
                 list.AddListItem("A list item with ").AddBold("bold text");
                 list.AddListItem("A list item with ").AddItalic("italic text");
@@ -303,7 +303,7 @@ public static class ListsDataSources {
                 </li>
             </ul>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode list = rootNode.AddListUnordered();
                 IMdNode list2 = list.AddListItem("This list has").AddListUnordered();
                 IMdNode list3 = list2.AddListItem("Uneven indentation").AddListUnordered();
@@ -313,15 +313,15 @@ public static class ListsDataSources {
         );
 
 
-        yield return static () => new MarkdownTestDto( SectionName,
-            Markdown: """
+        yield return static () => new MarkdownTestDto(SectionName,
+            """
             1. this
             2. [ ] is
             3. [x] a
               - [X] nested
             4. todo list
             """,
-            ExpectedStringOutput: """
+            """
             <ol>
                 <li>this</li>
                 <li><input type="checkbox" disabled/>is</li>
@@ -333,7 +333,7 @@ public static class ListsDataSources {
                 <li>todo list</li>
             </ol>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode list = rootNode.AddListOrdered();
                 list.AddListItem("this");
                 IMdNode item1 = list.AddListItem();
@@ -351,7 +351,7 @@ public static class ListsDataSources {
                 list.AddListItem("todo list");
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             """
             - [ ] Task with sublist
@@ -377,7 +377,7 @@ public static class ListsDataSources {
                 </li>
             </ul>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode list = rootNode.AddListUnordered();
                 IMdNode item0 = list.AddListItem();
                 item0.AddCheckboxUnselected();
@@ -385,7 +385,7 @@ public static class ListsDataSources {
                 IMdNode nestedList0 = item0.AddListUnordered();
                 nestedList0.AddListItem("SubItem A");
                 nestedList0.AddListItem("SubItem B");
-                
+
                 IMdNode item1 = list.AddListItem();
                 item1.AddCheckboxSelected();
                 item1.WithContent("Completed task with sublist");
@@ -394,7 +394,7 @@ public static class ListsDataSources {
                 nestedList1.AddListItem("SubItem D");
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             """
             1. Ordered task list
@@ -408,7 +408,7 @@ public static class ListsDataSources {
                 <li><input type="checkbox" disabled checked />Completed task in ordered list</li>
             </ol>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode list = rootNode.AddListOrdered();
                 list.AddListItem("Ordered task list");
 
@@ -419,10 +419,10 @@ public static class ListsDataSources {
                 IMdNode item2 = list.AddListItem();
                 item2.AddCheckboxSelected();
                 item2.WithContent("Completed task in ordered list");
-                
+
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             """
             - [x] Mixed list
@@ -441,7 +441,7 @@ public static class ListsDataSources {
                 <li>Another item</li>
             </ul>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode list = rootNode.AddListUnordered();
                 IMdNode item0 = list.AddListItem();
                 item0.AddCheckboxSelected();
@@ -458,12 +458,12 @@ public static class ListsDataSources {
                 list.AddListItem("Another item");
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             """
             - Normal item
             - [ ] Task item without sublist
-            
+
                 Unrelated paragraph between list items.
 
             - [x] Another completed task
@@ -478,7 +478,7 @@ public static class ListsDataSources {
                 <li><input type="checkbox" disabled checked />Another completed task</li>
             </ul>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode list0 = rootNode.AddListUnordered();
                 list0.AddListItem("Normal item");
                 IMdNode item01 = list0.AddListItem();
@@ -493,7 +493,7 @@ public static class ListsDataSources {
                 item10.WithContent("Another completed task");
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             """
             - Normal item
@@ -509,12 +509,12 @@ public static class ListsDataSources {
                     <p>related paragraph between list items.</p>
                 </li>
             </ul>
-            
+
             <ul>
                 <li><input type="checkbox" disabled checked />Another completed task</li>
             </ul>
             """,
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode list0 = rootNode.AddListUnordered();
                 list0.AddListItem("Normal item");
                 IMdNode item01 = list0.AddListItem();
@@ -528,6 +528,6 @@ public static class ListsDataSources {
                 item10.WithContent("Another completed task");
             }
         );
-        
+
     }
 }

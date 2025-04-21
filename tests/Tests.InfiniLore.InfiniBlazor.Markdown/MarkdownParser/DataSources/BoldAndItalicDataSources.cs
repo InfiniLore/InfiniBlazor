@@ -18,39 +18,39 @@ public static class BoldAndItalicDataSources {
         yield return static () => new MarkdownTestDto(SectionName,
             "***bold and italic***",
             "<p><strong><em>bold and italic</em></strong></p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 IMdNode bold = paragraph.AddBold();
                 bold.AddItalic("bold and italic");
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             @"***\*bold and italic***",
             "<p><strong><em>*bold and italic</em></strong></p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 IMdNode bold = paragraph.AddBold();
                 IMdNode italic = bold.AddItalic();
                 italic.WithContent("*bold and italic");
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             @"***bold and italic\****",
             "<p><strong><em>bold and italic*</em></strong></p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 IMdNode bold = paragraph.AddBold();
                 IMdNode italic = bold.AddItalic();
                 italic.WithContent("bold and italic*");
             }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             @"*** \* \* \* ***",
             "<p><strong><em> * * * </em></strong></p>",
-            static rootNode => {
+            ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 IMdNode bold = paragraph.AddBold();
                 bold.AddItalic(" * * * ");

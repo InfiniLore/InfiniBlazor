@@ -10,11 +10,11 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("listUnordered")]
 public class ListUnorderedSectionParser : ISectionHandler {
-    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
 
     private static readonly int LTaskId = CachedRegexGroupNames.GetListGroupId("lTask");
     private static readonly int LHeadId = CachedRegexGroupNames.GetListGroupId("lHead");
     private static readonly int LBodyId = CachedRegexGroupNames.GetListGroupId("lBody");
+    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ public class ListUnorderedSectionParser : ISectionHandler {
 
         List<Match> matchCollection = MarkdownRegexLib.ListItemBodyRegex.Matches(listUnorderedBody).ToList();
         int matchCount = matchCollection.Count;
-        
+
         IMdNode ulNode = currentNode.AddChildNode(MdElement.ListUnordered);
         for (int index = 0; index < matchCount; index++) {
             Match match = matchCollection[index];
@@ -35,16 +35,16 @@ public class ListUnorderedSectionParser : ISectionHandler {
                 string normalizedBody = NormalizationHelper.NormalizeIndentation(listBody);
                 parser.AddMultiLineMatchesToStack(normalizedBody, listItemNode, origin | ParserOrigin.PreserveHtml);
             }
-            
+
             if (groups[LHeadId].TryGetValue(out string? listHeader)) {
                 parser.AddSingleLineMatchesToStack(listHeader, listItemNode, origin);
             }
-            
+
             // ReSharper disable once InvertIf
             if (groups[LTaskId].TryGetValue(out string? taskMarker)) {
                 bool isChecked = taskMarker.ToLowerInvariant().Contains('x');
                 MdElement element = isChecked ? MdElement.CheckboxSelected : MdElement.CheckboxUnselected;
-                parser.PushElementToStack(null, listItemNode, origin, element); 
+                parser.PushElementToStack(null, listItemNode, origin, element);
             }
         }
     }
