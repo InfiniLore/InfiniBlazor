@@ -1,6 +1,9 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -12,14 +15,29 @@ public class HorizontalLineDataSources {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
-        char[]? chars = new[] { '-', '=' };
+        char[] chars = new[] { '-', '=' };
         foreach (char c in chars) {
             for (int i = 1; i < 10; i++) {
                 string text = new(c, i);
                 string content = i < 3
                     ? $"<p>{text}</p>"
                     : "<hr>";
-                yield return () => new MarkdownTestDto(SectionName, text, content);
+
+                int index = i;
+                yield return () => new MarkdownTestDto(
+                    SectionName, 
+                    text,
+                    content,
+                     rootNode => {
+                         if (index < 3) {
+                             IMdNode paragraph = rootNode.AddParagraph();
+                             paragraph.WithContent(text);
+                             return;
+                         }
+                         
+                         rootNode.AddHorizontalRule();
+                     }
+                );
             }
         }
     }
