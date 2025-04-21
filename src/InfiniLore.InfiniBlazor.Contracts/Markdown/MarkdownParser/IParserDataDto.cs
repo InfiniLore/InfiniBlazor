@@ -21,5 +21,5 @@ public interface IParserDataDto {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     void AsMatch(IMdNode node, ParserOrigin origin, Match match);
-    void AsElement(IMdNode node, ParserOrigin origin, string value, MdElement element);
+    void AsElement(string content, IMdNode node, ParserOrigin origin, MdElement element);
 }

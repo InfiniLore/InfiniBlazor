@@ -38,10 +38,10 @@ public class ParserDataDto : IParserDataDto {
         IsMatch = true;
     }
     
-    public void AsElement(IMdNode node, ParserOrigin origin, string? value, MdElement element) {
+    public void AsElement(string? content, IMdNode node, ParserOrigin origin, MdElement element) {
         Node = node;
         Origin = origin;
-        Content = value;
+        Content = content;
         IsElement = true;
         Element = element;
     }

@@ -45,7 +45,7 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
             // If there's text between this match's end and the last position, add it as raw input
             if (matchEnd < currentIndex) {
                 ParserDataDto preDto = ParserDataDtoPool.Get();
-                preDto.AsElement(node, origin, input[matchEnd..currentIndex], MdElement.Content);
+                preDto.AsElement(input[matchEnd..currentIndex], node, origin, MdElement.Content);
                 _stack.Push(preDto);
             }
         
@@ -60,7 +60,7 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
         if (currentIndex > 0) {
             // Handle any remaining text before the first match
             ParserDataDto dto = ParserDataDtoPool.Get();
-            dto.AsElement(node, origin, input[..currentIndex], MdElement.Content);
+            dto.AsElement(input[..currentIndex], node, origin, MdElement.Content);
             _stack.Push(dto);
         }
     }
@@ -70,7 +70,7 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
     
     public void PushElementToStack(string? content, IMdNode currentNode, ParserOrigin origin, MdElement element) {
         ParserDataDto dto = ParserDataDtoPool.Get();
-        dto.AsElement(currentNode, origin, content, element);
+        dto.AsElement(content, currentNode, origin, element);
         _stack.Push(dto);
     }
     #endregion
