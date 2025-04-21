@@ -21,8 +21,7 @@ public class EmoteDataSources {
             ":flag-transgender:",
             "<p>\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f</p>",
             static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f");
+                rootNode.AddParagraph("\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f");
             }
         );
         
@@ -32,9 +31,8 @@ public class EmoteDataSources {
             "<p><a href=\"https://www.twitch.tv/annasasdev\">\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f</a></p>",
             static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                var link = paragraph.AddLink();
+                IMdNode link = paragraph.AddLink("\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f");
                 link.WithAttribute("href", "https://www.twitch.tv/annasasdev");
-                link.WithContent("\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f");
             }
         );
 
@@ -43,8 +41,7 @@ public class EmoteDataSources {
             ":not-an-emote:",
             "<p>:not-an-emote:</p>",
             static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent(":not-an-emote:");
+                rootNode.AddParagraph(":not-an-emote:");
             }
         );
 

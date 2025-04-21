@@ -302,7 +302,7 @@ public static class BlockQuoteDataSources {
             """,
             static rootNode => {
                 IMdNode blockquote = rootNode.AddBlockquote();
-                IMdNode paragraph = blockquote.AddParagraph("This is a blockquote with escaped characters: *, &gt;, ");
+                IMdNode paragraph = blockquote.AddParagraph("This is a blockquote with escaped characters: *, >, ");
                 paragraph.AddCode("`");
                 paragraph.WithContent(".");
             }
@@ -351,7 +351,27 @@ public static class BlockQuoteDataSources {
             <blockquote>
                 <p><strong>Bold text</strong>, <em>italic text</em>, <code>inline code</code>, <s>strikethrough</s>, and <a href="https://example.com">link</a>.</p>
             </blockquote>
-            """
+            """,
+            static rootNode => {
+                IMdNode blockquote = rootNode.AddBlockquote();
+                IMdNode paragraph = blockquote.AddParagraph();
+                paragraph.AddBold("Bold text");
+                paragraph.WithContent(", ");
+                
+                paragraph.AddItalic("italic text");
+                paragraph.WithContent(", ");
+                
+                paragraph.AddCode("inline code");
+                paragraph.WithContent(", ");
+                
+                paragraph.AddStrikethrough("strikethrough");
+                paragraph.WithContent(", and ");
+                
+                IMdNode link = paragraph.AddLink("link");
+                link.WithAttribute("href", "https://example.com");
+                paragraph.WithContent(".");
+                
+            }
         );
         
         yield return static () => new MarkdownTestDto(SectionName,

@@ -22,9 +22,7 @@ public static class CodeInlineDataSources {
             static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("This is an ");
-                
-                IMdNode code = paragraph.AddCode();
-                code.WithContent("example");
+                paragraph.AddCode("example");
                 paragraph.WithContent(" of some inline code.");
             }
         );
@@ -34,8 +32,7 @@ public static class CodeInlineDataSources {
             "<p><code>`</code></p>",
             static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode code = paragraph.AddCode();
-                code.WithContent("`");
+                paragraph.AddCode("`");
             }
         );
 
@@ -45,10 +42,7 @@ public static class CodeInlineDataSources {
             static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("Here is some ");
-                
-                IMdNode code = paragraph.AddCode();
-                code.WithContent("inline code");
-                
+                paragraph.AddCode("inline code");
                 paragraph.WithContent(" inside a sentence.");
             }
         );
@@ -58,8 +52,7 @@ public static class CodeInlineDataSources {
             "<p><code>code</code> at the start of the line.</p>",
             static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode code = paragraph.AddCode();
-                code.WithContent("code");
+                paragraph.AddCode("code");
                 paragraph.WithContent(" at the start of the line.");
             }
         );
@@ -70,10 +63,7 @@ public static class CodeInlineDataSources {
             static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("This is the ");
-                
-                IMdNode code = paragraph.AddCode();
-                code.WithContent("last example");
-                
+                paragraph.AddCode("last example");
                 paragraph.WithContent(".");
             }
         );
@@ -84,15 +74,9 @@ public static class CodeInlineDataSources {
             static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("Multiple ");
-                
-                IMdNode code = paragraph.AddCode();
-                code.WithContent("inline");
-                
+                paragraph.AddCode("inline");
                 paragraph.WithContent(" ");
-                
-                IMdNode code2 = paragraph.AddCode();
-                code2.WithContent("code");
-                
+                paragraph.AddCode("code");
                 paragraph.WithContent(" segments.");
             }
         );
@@ -103,10 +87,7 @@ public static class CodeInlineDataSources {
             static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("Backticks inside inline code: ");
-                
-                IMdNode code = paragraph.AddCode();
-                code.WithContent("Code with `backticks` inside");
-                
+                paragraph.AddCode("Code with `backticks` inside");
                 paragraph.WithContent(".");
             }
         );
@@ -116,8 +97,7 @@ public static class CodeInlineDataSources {
             "<p><code>Nested </code> is not valid syntax.`</p>",
             static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode code = paragraph.AddCode();
-                code.WithContent("Nested ");
+                paragraph.AddCode("Nested ");
                 paragraph.WithContent(" is not valid syntax.`");
             }
         );
@@ -127,8 +107,7 @@ public static class CodeInlineDataSources {
             "<p><code>inline code with special characters !@#$%^&amp;*()</code></p>",
             static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode code = paragraph.AddCode();
-                code.WithContent("inline code with special characters !@#$%^&amp;*()");
+                paragraph.AddCode("inline code with special characters !@#$%^&amp;*()");
             }
         );
     }

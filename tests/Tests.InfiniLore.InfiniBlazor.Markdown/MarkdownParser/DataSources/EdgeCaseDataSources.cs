@@ -60,16 +60,14 @@ public static class EdgeCaseDataSources {
             "**bold",
             "<p>**bold</p>",
             static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("**bold");
+                rootNode.AddParagraph("**bold");
             });
 
         yield return static () => new MarkdownTestDto(SectionName,
             "*italics",
             "<p>*italics</p>",
             static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("*italics");
+                rootNode.AddParagraph("*italics");
             }
         );
 
@@ -77,8 +75,7 @@ public static class EdgeCaseDataSources {
             "[link](https://example.com",
             "<p>[link](https://example.com</p>",
             static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("[link](https://example.com");
+                rootNode.AddParagraph("[link](https://example.com");
             }
         );
         
@@ -86,8 +83,7 @@ public static class EdgeCaseDataSources {
             "# Heading 1 # Not a heading",
             "<h1>Heading 1 # Not a heading</h1>",
             static rootNode => {
-                IMdNode heading = rootNode.AddH1();
-                heading.WithContent("Heading 1 # Not a heading");
+                rootNode.AddH1("Heading 1 # Not a heading");
             }
         );
 

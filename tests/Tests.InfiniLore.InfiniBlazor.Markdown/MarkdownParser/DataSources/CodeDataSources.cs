@@ -28,8 +28,7 @@ public static class CodeDataSources {
             """,
             static rootNode => {
                 IMdNode pre = rootNode.AddPre();
-                IMdNode code = pre.AddCode();
-                code.WithContent("const code = sample();\n");
+                pre.AddCode("const code = sample();\n");
             });
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -45,9 +44,8 @@ public static class CodeDataSources {
             """,
             static rootNode => {
                 IMdNode pre = rootNode.AddPre();
-                IMdNode code = pre.AddCode();
+                IMdNode code = pre.AddCode("const code = sample();\n");
                 code.WithClass("language-javascript");
-                code.WithContent("const code = sample();\n");
             });
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -67,8 +65,7 @@ public static class CodeDataSources {
             """,
             static rootNode => {
                 IMdNode pre = rootNode.AddPre();
-                IMdNode code = pre.AddCode();
-                code.WithContent("tell application \"Foo\"\n    beep\nend tell\n");
+                pre.AddCode("tell application \"Foo\"\n    beep\nend tell\n");
             });
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -84,8 +81,7 @@ public static class CodeDataSources {
             """,
             static rootNode => {
                 IMdNode pre = rootNode.AddPre();
-                IMdNode code = pre.AddCode();
-                code.WithContent("**some valid markdown**\n");
+                pre.AddCode("**some valid markdown**\n");
             });
     }
 }

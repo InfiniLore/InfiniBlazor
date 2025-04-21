@@ -21,8 +21,7 @@ public static class BoldAndItalicDataSources {
             static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 IMdNode bold = paragraph.AddBold();
-                IMdNode italic = bold.AddItalic();
-                italic.WithContent("bold and italic");
+                bold.AddItalic("bold and italic");
             }
         );
         
@@ -33,8 +32,7 @@ public static class BoldAndItalicDataSources {
                 IMdNode paragraph = rootNode.AddParagraph();
                 IMdNode bold = paragraph.AddBold();
                 IMdNode italic = bold.AddItalic();
-                italic.WithContent("*"); // Escaped char
-                italic.WithContent("bold and italic");
+                italic.WithContent("*bold and italic");
             }
         );
         
@@ -45,8 +43,7 @@ public static class BoldAndItalicDataSources {
                 IMdNode paragraph = rootNode.AddParagraph();
                 IMdNode bold = paragraph.AddBold();
                 IMdNode italic = bold.AddItalic();
-                italic.WithContent("bold and italic");
-                italic.WithContent("*"); // Escaped char
+                italic.WithContent("bold and italic*");
             }
         );
         
@@ -56,14 +53,7 @@ public static class BoldAndItalicDataSources {
             static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 IMdNode bold = paragraph.AddBold();
-                IMdNode italic = bold.AddItalic();
-                italic.WithContent(" ");
-                italic.WithContent("*"); // Escaped char
-                italic.WithContent(" ");
-                italic.WithContent("*"); // Escaped char
-                italic.WithContent(" ");
-                italic.WithContent("*"); // Escaped char
-                italic.WithContent(" ");
+                bold.AddItalic(" * * * ");
             }
         );
     }

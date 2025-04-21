@@ -20,8 +20,7 @@ public static class BoldDataSources {
             "<p><strong>bold</strong></p>",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold();
-                bold.WithContent("bold");
+                paragraph.AddBold("bold");
             });
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -29,8 +28,7 @@ public static class BoldDataSources {
             "<p><strong>*bold</strong></p>",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold();
-                bold.WithContent("*"); // Escaped char
+                IMdNode bold = paragraph.AddBold("*"); // Escaped char
                 bold.WithContent("bold");
             });
 
@@ -39,8 +37,7 @@ public static class BoldDataSources {
             "<p><strong>bold*</strong></p>",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold();
-                bold.WithContent("bold");
+                IMdNode bold = paragraph.AddBold("bold");
                 bold.WithContent("*"); // Escaped char
             }// Escaped char
         );
@@ -50,8 +47,7 @@ public static class BoldDataSources {
             "<p><strong>bold <em>nested italic</em></strong></p>",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold();
-                bold.WithContent("bold ");
+                IMdNode bold = paragraph.AddBold("bold ");
                 bold.AddItalic("nested italic");
             });
 
@@ -71,8 +67,7 @@ public static class BoldDataSources {
             "<p><strong> * </strong></p>",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold();
-                bold.WithContent(" ");
+                IMdNode bold = paragraph.AddBold(" ");
                 bold.WithContent("*"); // Escaped char
                 bold.WithContent(" ");
             });
@@ -82,8 +77,7 @@ public static class BoldDataSources {
             "<p><strong>bold <em>nested * italic</em></strong></p>",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold();
-                bold.WithContent("bold ");
+                IMdNode bold = paragraph.AddBold("bold ");
                 IMdNode italic =  bold.AddItalic();
                 italic.WithContent("nested ");
                 italic.WithContent("*"); // Escaped char
