@@ -1,6 +1,9 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -32,7 +35,16 @@ public static class ListsDataSources {
                 </li>
                 <li>list</li>
             </ol>
-            """
+            """,
+            static rootNode => {
+                IMdNode list = rootNode.AddListOrdered();
+                list.AddListItem("this");
+                list.AddListItem("is");
+                IMdNode item = list.AddListItem("a");
+                IMdNode sublist = item.AddListUnordered();
+                sublist.AddListItem("nested");
+                list.AddListItem("list");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -52,7 +64,15 @@ public static class ListsDataSources {
                 </li>
                 <li>Item 2</li>
             </ul>
-            """
+            """,
+            static rootNode => {
+                IMdNode list = rootNode.AddListUnordered();
+                IMdNode item = list.AddListItem("Item 1");
+                IMdNode sublist = item.AddListUnordered();
+                sublist.AddListItem("Subitem 1.1");
+                sublist.AddListItem("Subitem 1.2");
+                list.AddListItem("Item 2");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -74,7 +94,16 @@ public static class ListsDataSources {
                 </li>
                 <li>Ordered item 3</li>
             </ol>
-            """
+            """,
+            static rootNode => {
+                IMdNode list = rootNode.AddListOrdered();
+                list.AddListItem("Ordered item 1");
+                IMdNode item = list.AddListItem("Ordered item 2");
+                IMdNode sublist = item.AddListOrdered();
+                sublist.AddListItem("Nested ordered item 2.1");
+                sublist.AddListItem("Nested ordered item 2.2");
+                list.AddListItem("Ordered item 3");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -96,7 +125,16 @@ public static class ListsDataSources {
                 </li>
                 <li>Unordered item 3</li>
             </ul>
-            """
+            """,
+            static rootNode => {
+                IMdNode list = rootNode.AddListUnordered();
+                list.AddListItem("Unordered item 1");
+                IMdNode item = list.AddListItem("Unordered item 2");
+                IMdNode sublist = item.AddListOrdered();
+                sublist.AddListItem("Mixed nested ordered item 2.1");
+                sublist.AddListItem("Mixed nested ordered item 2.2");
+                list.AddListItem("Unordered item 3");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -116,7 +154,15 @@ public static class ListsDataSources {
                 </li>
                 <li>Second ordered item</li>
             </ol>
-            """
+            """,
+            static rootNode => {
+                IMdNode list = rootNode.AddListOrdered();
+                IMdNode item = list.AddListItem("First ordered item");
+                IMdNode sublist = item.AddListUnordered();
+                sublist.AddListItem("Subitem A");
+                sublist.AddListItem("Subitem B");
+                list.AddListItem("Second ordered item");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -142,7 +188,17 @@ public static class ListsDataSources {
                     </ul>
                 </li>
             </ul>
-            """
+            """,
+            static rootNode => {
+                IMdNode list = rootNode.AddListUnordered();
+                IMdNode item = list.AddListItem("Top-level item");
+                IMdNode sublist = item.AddListUnordered();
+                IMdNode subitem1 = sublist.AddListItem("Subitem level 1");
+                IMdNode subList1 = subitem1.AddListUnordered();
+                IMdNode subitem2 = subList1.AddListItem("Subitem level 2");
+                IMdNode subList2 = subitem2.AddListUnordered();
+                subList2.AddListItem("Subitem level 3");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -163,7 +219,17 @@ public static class ListsDataSources {
             <ul>
                 <li>Top item 3</li>
             </ul>
-            """
+            """,
+            static rootNode => {
+                IMdNode list = rootNode.AddListUnordered();
+                list.AddListItem("Top item 1");
+                list.AddListItem("Top item 2");
+                
+                rootNode.AddParagraph("Unrelated text block in the same list");
+                
+                IMdNode list2 = rootNode.AddListUnordered();
+                list2.AddListItem("Top item 3");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -181,7 +247,15 @@ public static class ListsDataSources {
                 </li>
                 <li>Another item</li>
             </ol>
-            """
+            """,
+            static rootNode => {
+                IMdNode list = rootNode.AddListOrdered();
+                IMdNode item = list.AddListItem("Extra spaces for alignment");
+                IMdNode sublist = item.AddListUnordered();
+                sublist.AddListItem("This is a sublist");
+                
+                list.AddListItem("Another item");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -196,7 +270,13 @@ public static class ListsDataSources {
                 <li>A list item with <em>italic text</em></li>
                 <li>A list item with <code>inline code</code></li>
             </ul>
-            """
+            """,
+            static rootNode => {
+                IMdNode list = rootNode.AddListUnordered();
+                list.AddListItem("A list item with ").AddBold("bold text");
+                list.AddListItem("A list item with ").AddItalic("italic text");
+                list.AddListItem("A list item with ").AddCode("inline code");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,

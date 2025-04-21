@@ -29,13 +29,8 @@ public class HorizontalLineDataSources {
                     text,
                     content,
                      rootNode => {
-                         if (index < 3) {
-                             IMdNode paragraph = rootNode.AddParagraph();
-                             paragraph.WithContent(text);
-                             return;
-                         }
-                         
-                         rootNode.AddHorizontalRule();
+                         if (index < 3) rootNode.AddParagraph(text);
+                         else rootNode.AddHorizontalRule();
                      }
                 );
             }

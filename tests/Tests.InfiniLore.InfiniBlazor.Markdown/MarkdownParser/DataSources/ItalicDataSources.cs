@@ -1,6 +1,9 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -14,37 +17,66 @@ public static class ItalicDataSources {
     public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
         yield return static () => new MarkdownTestDto(SectionName,
             "*italic*",
-            "<p><em>italic</em></p>"
+            "<p><em>italic</em></p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.AddItalic("italic");
+            }
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
             @"*\*italic*",
-            "<p><em>*italic</em></p>"
+            "<p><em>*italic</em></p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.AddItalic("*italic");
+            }
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
             @"*italic\**",
-            "<p><em>italic*</em></p>"
+            "<p><em>italic*</em></p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.AddItalic("italic*");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             @"* \* *",
-            "<p><em> * </em></p>"
+            "<p><em> * </em></p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.AddItalic(" * ");
+            }
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
             "* something **bold** in italic *",
-            "<p><em>something <strong>bold</strong> in italic</em></p>"
+            "<p><em>something <strong>bold</strong> in italic</em></p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                IMdNode italic = paragraph.AddItalic(" something ");
+                italic.AddBold("bold");
+                italic.WithContent(" in italic ");
+            }
         );
         
         yield return static () => new MarkdownTestDto(SectionName,
             "**", 
-            "<p>**</p>"
+            "<p>**</p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph("**");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "some text ****",  // to exclude the <hr> tag being triggered
-            "<p>some text <em>**</em></p>"
+            "<p>some text <em>**</em></p>",
+            static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph("some text ");
+                paragraph.AddItalic("**");
+            }
         );
     }
 }

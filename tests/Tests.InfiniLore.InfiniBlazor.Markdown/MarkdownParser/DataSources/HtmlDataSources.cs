@@ -53,8 +53,7 @@ public class HtmlDataSources {
             </p>
             """,
             static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("Unrelated previous paragraph followed by a blank line");
+                rootNode.AddParagraph("Unrelated previous paragraph followed by a blank line");
                 IMdNode paragraph2 = rootNode.AddParagraph();
                 paragraph2.WithHtmlContent("""
                     <table>
@@ -136,8 +135,7 @@ public class HtmlDataSources {
             </div> </p>
             """,
             static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("test ");
+                IMdNode paragraph = rootNode.AddParagraph("test ");
                 paragraph.WithHtmlContent("""
                     <div>
                     <strong>something</strong>
@@ -157,8 +155,7 @@ public class HtmlDataSources {
             <p> test <div></div></p> 
             """,
             static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("test ");
+                IMdNode paragraph = rootNode.AddParagraph("test ");
                 
                 // HTML Sanitization is handled as a post-processor, so we can't test it here
                 paragraph.WithHtmlContent("""
@@ -174,8 +171,7 @@ public class HtmlDataSources {
             "test <div> <script>something</script> </div>",
             "<p> test <div></div> </p> ",
             static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("test ");
+                IMdNode paragraph = rootNode.AddParagraph("test ");
                 // HTML Sanitization is handled as a post-processor, so we can't test it here
                 paragraph.WithHtmlContent("<div> <script>something</script> </div>"
                 );
@@ -186,8 +182,7 @@ public class HtmlDataSources {
             "test <script>something</script>",
             "<p> test </p>",
             static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("test ");
+                IMdNode paragraph = rootNode.AddParagraph("test ");
                 // HTML Sanitization is handled as a post-processor, so we can't test it here
                 paragraph.WithHtmlContent("<script>something</script>"
                 );
