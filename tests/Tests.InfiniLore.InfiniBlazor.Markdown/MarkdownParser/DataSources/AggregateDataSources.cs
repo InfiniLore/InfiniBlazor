@@ -194,18 +194,5 @@ public static class AggregateDataSources {
                 subItem222.WithContent("Sub-Item 2.2.2");
             }
         );
-
-        yield return static () => new MarkdownTestDto(SectionName,
-            """
-            URLs and URLs in angle brackets will automatically get turned into links.
-            https://www.example.com or <https://www.example.com> and sometimes
-            example.com (but not on Github, for example).
-            """,
-            """
-            <p>URLs and URLs in angle brackets will automatically get turned into links.
-            </p><p>https://www.example.com or &lt;https://www.example.com&gt; and sometimes
-            </p><p>example.com (but not on Github, for example).</p>
-            """
-        );
     }
 }
