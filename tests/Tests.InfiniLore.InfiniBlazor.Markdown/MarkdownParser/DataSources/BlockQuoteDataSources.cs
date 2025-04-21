@@ -471,7 +471,7 @@ public static class BlockQuoteDataSources {
             """,
             static rootNode => {
                 IMdNode blockquote = rootNode.AddBlockquote();
-                blockquote.WithContent("<div>This is a div inside a blockquote.</div>");
+                blockquote.WithHtmlContent("<div>This is a div inside a blockquote.</div>");
             }
         );
         

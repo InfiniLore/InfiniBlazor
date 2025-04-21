@@ -13,12 +13,10 @@ public class ParserDataDto : IParserDataDto {
     public IMdNode Node { get; private set; } = null!;
     public ParserOrigin Origin { get; private set; }
     public Match? Match { get; private set; }
-    public string? NewContent { get; private set; }
-    public Range OriginalContent { get; private set; }
+    public string? Content { get; private set; } 
     
     [MemberNotNull(nameof(Match))] public bool IsMatch { get; private set; }
-    [MemberNotNull(nameof(NewContent))] public bool IsNewContent { get; private set; }
-    public bool IsOriginalContent { get; private set; }
+    [MemberNotNull(nameof(Content))] public bool IsContent { get; private set; }
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -26,9 +24,9 @@ public class ParserDataDto : IParserDataDto {
         Node = null!;
         Origin = ParserOrigin.NotSkipped;
         Match = null;
-        NewContent = null;
+        Content = null;
         IsMatch = false;
-        IsNewContent = false;
+        IsContent = false;
     }
     
     public void AsMatch(IMdNode node, ParserOrigin origin, Match match) {
@@ -38,17 +36,10 @@ public class ParserDataDto : IParserDataDto {
         IsMatch = true;
     }
     
-    public void AsNewContent(IMdNode node, ParserOrigin origin, string value) {
+    public void AsContent(IMdNode node, ParserOrigin origin, string value) {
         Node = node;
         Origin = origin;
-        NewContent = value;
-        IsNewContent = true;
-    }
-    
-    public void AsOriginalContent(IMdNode node, ParserOrigin origin, Range range) {
-        Node = node;
-        Origin = origin;
-        OriginalContent = range;
-        IsOriginalContent = true;
+        Content = value;
+        IsContent = true;
     }
 }

@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using Ganss.Xss;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
@@ -10,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("htmlBody")]
-public class HtmlBodySectionParser(IHtmlSanitizer htmlSanitizer) : ISectionHandler {
+public class HtmlBodySectionParser : ISectionHandler {
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     
     private static readonly int HtmlPreId = CachedRegexGroupNames.GetMultiLineGroupId("htmlPre");
@@ -23,23 +22,24 @@ public class HtmlBodySectionParser(IHtmlSanitizer htmlSanitizer) : ISectionHandl
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
-        bool writeParagraph = !origin.HasFlag(ParserOrigin.PreserveHtml);
-        if (writeParagraph) {
+        if (!origin.HasFlag(ParserOrigin.PreserveHtml)) {
             currentNode = currentNode.AddChildNode(MdElement.Paragraph);
         }
+        
         if (entireMatch.Groups[HtmlPreId].TryGetValue(out string? pre)) {
             parser.AddSingleLineMatchesToStack(pre, currentNode, origin);
         }
 
         if (entireMatch.Groups[HtmlBodyId].TryGetValue(out string? htmlBody)) {
-            // Span should be only special case allowed which allows for markdown parsing within it
+            // Span should be the only special case allowed that allows for Markdown parsing within it
             Match match = MarkdownRegexLib.FindSpanHtmlRegex.Match(htmlBody);
             if (match.Groups[SpanTagId].TryGetValue(out string? spanTag) && match.Groups[SpanBodyId].TryGetValue(out string? spanBody)) {
-                currentNode.WithContent(htmlSanitizer.Sanitize(spanTag).AsSpan()[..^7].ToString());
+                currentNode.WithHtmlContent((spanTag));
                 parser.AddMultiLineMatchesToStack(spanBody, currentNode, origin | ParserOrigin.Html);
+                parser.PushContentToStack("</span>", currentNode, origin);
             }
             else {
-                currentNode.WithContent(htmlSanitizer.Sanitize(htmlBody));
+                currentNode.WithHtmlContent(htmlBody);
             }
         }
 

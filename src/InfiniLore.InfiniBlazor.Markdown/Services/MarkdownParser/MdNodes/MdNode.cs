@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdNode : IMdNode {
     public MdElement Element { get; set; } = MdElement.Undefined;
-    public string Content { get; private set; } = string.Empty;
+    public string? Content { get; private set; } = string.Empty;
 
     public List<IMdNode> Children { get; } = new();
     public IMdNode Parent { get; private set; } = null!;
@@ -19,24 +19,17 @@ public class MdNode : IMdNode {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public IMdNode AddChildNode(MdElement element) {
-        var child = new MdNode {
-            Element = element,
-        };
-        Children.Add(child);
-        child.Parent = this;
-        return child;
+        return CreateChildNode(element);
     }
-    
+
     public IMdNode WithContent(string content) {
-        var child = new MdNode {
-            Element = MdElement.NewContent,
-            Content = content,
-        };
-        
-        Children.Add(child);
-        
-        child.Parent = this;
-        return this;   
+        CreateChildNode(MdElement.Content, content);
+        return this;
+    }
+
+    public IMdNode WithHtmlContent(string content) {
+        CreateChildNode(MdElement.HtmlContent, content);
+        return this;
     }
 
     public IMdNode WithClass(string className) {
@@ -47,4 +40,16 @@ public class MdNode : IMdNode {
         Attributes.AddOrUpdate(key, value);
         return this;   
     }
+    
+    
+    private MdNode CreateChildNode(MdElement element, string? content = null) {
+        var child = new MdNode {
+            Element = element,
+            Content = content
+        };
+        Children.Add(child);
+        child.Parent = this;
+        return child;
+    }
+
 }
