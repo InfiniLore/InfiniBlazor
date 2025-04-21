@@ -34,7 +34,7 @@ public class HtmlBodySectionParser : ISectionHandler {
             // Span should be the only special case allowed that allows for Markdown parsing within it
             Match match = MarkdownRegexLib.FindSpanHtmlRegex.Match(htmlBody);
             if (match.Groups[SpanTagId].TryGetValue(out string? spanTag) && match.Groups[SpanBodyId].TryGetValue(out string? spanBody)) {
-                parser.PushContentToStack("</span>", currentNode, origin);
+                parser.PushHtmlContentToStack("</span>", currentNode, origin);
                 parser.AddMultiLineMatchesToStack(spanBody, currentNode, origin | ParserOrigin.Html);
                 parser.PushHtmlContentToStack(spanTag, currentNode, origin);
             }

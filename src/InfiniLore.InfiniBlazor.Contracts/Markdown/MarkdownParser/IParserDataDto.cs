@@ -21,5 +21,5 @@ public interface IParserDataDto {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     void AsMatch(IMdNode node, ParserOrigin origin, Match match);
-    void AsContent(IMdNode node, ParserOrigin origin, string value, bool? isHtmlElement = null);
+    void AsContent(IMdNode node, ParserOrigin origin, string value, MdElement element = MdElement.Undefined);
 }

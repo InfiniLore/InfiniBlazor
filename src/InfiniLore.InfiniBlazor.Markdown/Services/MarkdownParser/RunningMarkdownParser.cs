@@ -72,7 +72,7 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
     
     public void PushHtmlContentToStack(string content, IMdNode currentNode, ParserOrigin origin) {
         ParserDataDto dto = ParserDataDtoPool.Get();
-        dto.AsContent(currentNode, origin, content, true);
+        dto.AsContent(currentNode, origin, content, MdElement.HtmlContent);
         _stack.Push(dto);
     }
     #endregion
