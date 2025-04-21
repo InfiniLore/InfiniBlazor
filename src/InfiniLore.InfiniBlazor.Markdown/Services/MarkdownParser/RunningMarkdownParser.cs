@@ -26,9 +26,7 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
         
         // Process matches in reverse order for _stack
         foreach (Match match in matchesList) {
-            ParserDataDto dto = ParserDataDtoPool.Get();
-            dto.AsMatch(node, origin, match);
-            _stack.Push(dto);
+            PushMatchToStack(match, node, origin);
         }
     }
     
@@ -49,10 +47,7 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
                 _stack.Push(preDto);
             }
         
-            
-            ParserDataDto dto = ParserDataDtoPool.Get();
-            dto.AsMatch(node, origin, match);
-            _stack.Push(dto);
+            PushMatchToStack(match, node, origin);
             currentIndex = match.Index;
         }
 
@@ -71,6 +66,12 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
     public void PushElementToStack(string? content, IMdNode currentNode, ParserOrigin origin, MdElement element) {
         ParserDataDto dto = ParserDataDtoPool.Get();
         dto.AsElement(content, currentNode, origin, element);
+        _stack.Push(dto);
+    }
+    
+    private void PushMatchToStack(Match match, IMdNode currentNode, ParserOrigin origin) {
+        ParserDataDto dto = ParserDataDtoPool.Get();
+        dto.AsMatch(match, currentNode, origin);
         _stack.Push(dto);
     }
     #endregion

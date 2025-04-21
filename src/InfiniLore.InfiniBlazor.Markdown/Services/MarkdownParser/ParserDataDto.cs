@@ -31,7 +31,7 @@ public class ParserDataDto : IParserDataDto {
         Element = MdElement.Undefined;
     }
     
-    public void AsMatch(IMdNode node, ParserOrigin origin, Match match) {
+    public void AsMatch(Match match, IMdNode node, ParserOrigin origin) {
         Node = node;
         Origin = origin;
         Match = match;
