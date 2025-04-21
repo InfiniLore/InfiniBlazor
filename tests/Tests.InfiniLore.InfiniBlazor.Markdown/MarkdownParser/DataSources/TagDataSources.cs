@@ -18,20 +18,20 @@ public static class TagDataSources {
             "#tag",
             "<p><span>#tag</span></p>",
             static rootNode => rootNode.AddParagraph()
-                .AddSpan("#tag")
+                .AddTag("tag")
         );
         yield return static () => new MarkdownTestDto(SectionName,
             "#不",
             "<p><span>#不</span></p>",
             static rootNode => rootNode.AddParagraph()
-                .AddSpan("#不")
+                .AddTag("不")
             
         );
         yield return static () => new MarkdownTestDto(SectionName,
             "#öäüÖÄÜß",
             "<p><span>#öäüÖÄÜß</span></p>",
             static rootNode => rootNode.AddParagraph()
-                .AddSpan("#öäüÖÄÜß")
+                .AddTag("öäüÖÄÜß")
             
         );
 
@@ -39,14 +39,14 @@ public static class TagDataSources {
             "**#tag**",
             "<p><strong><span>#tag</span></strong></p>",
             static rootNode => rootNode.AddParagraph()
-                .AddBold().AddSpan("#tag")
+                .AddBold().AddTag("tag")
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "*#tag*",
             "<p><em><span>#tag</span></em></p>",
             static rootNode => rootNode.AddParagraph()
-            .AddItalic().AddSpan("#tag")
+            .AddItalic().AddTag("tag")
         );
     }
 }

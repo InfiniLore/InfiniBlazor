@@ -33,6 +33,7 @@ public static class MdNodeExtensions {
     public static IMdNode AddParagraph(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Paragraph, content);
     public static IMdNode AddPre(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Pre, content);
     public static IMdNode AddSpan(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Span, content);
+    public static IMdNode AddTag(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Tag, content);
     public static IMdNode AddStrikethrough(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Strikethrough, content);
     public static IMdNode AddSubscript(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Subscript, content);
     public static IMdNode AddSuperscript(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Superscript, content);

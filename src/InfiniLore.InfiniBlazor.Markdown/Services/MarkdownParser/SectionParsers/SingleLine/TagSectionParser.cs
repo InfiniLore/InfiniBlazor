@@ -12,14 +12,14 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 public class TagSectionParser : ISectionHandler {
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
 
-    private static readonly int TTextId = CachedRegexGroupNames.GetSingleLineGroupId("tText");
+    private static readonly int TextId = CachedRegexGroupNames.GetSingleLineGroupId("tText");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
-        if (!entireMatch.Groups[TTextId].TryGetValueSpan(out ReadOnlySpan<char> tagValue)) return;
+        if (!entireMatch.Groups[TextId].TryGetValue(out string? tagValue)) return;
         
-        IMdNode spanNode = currentNode.AddChildNode(MdElement.Span);
-        spanNode.WithContent($"#{tagValue}");
+        IMdNode spanNode = currentNode.AddChildNode(MdElement.Tag);
+        spanNode.WithContent(tagValue);
     }
 }
