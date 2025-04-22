@@ -24,7 +24,7 @@ public record MarkdownTestDto(
     private static MdNode? CreateNode(Action<IMdNode>? configureNode) {
         if (configureNode == null) return null;
 
-        var node = new MdNode();
+        MdNode node = MdNode.AsRootNode();
         configureNode.Invoke(node);
         return node;
     }

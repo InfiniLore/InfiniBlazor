@@ -21,9 +21,7 @@ public static class EscapedCharacterDataSources {
             "<p>*literal asterisks*</p>",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("*");// Escaped char
-                paragraph.WithContent("literal asterisks");
-                paragraph.WithContent("*");// Escaped char
+                paragraph.WithContent("*literal asterisks*");
             }
         );
 

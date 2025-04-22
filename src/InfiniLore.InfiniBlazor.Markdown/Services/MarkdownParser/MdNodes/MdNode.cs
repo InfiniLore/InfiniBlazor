@@ -22,6 +22,12 @@ public class MdNode : IMdNode {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public static MdNode AsRootNode() {
+        var node = new MdNode();
+        node.Parent = node;
+        return node;
+    }
+    
     public IMdNode AddChildNode(MdElement element) => CreateChildNode(element);
 
     public IMdNode WithContent(string content) {
@@ -53,6 +59,7 @@ public class MdNode : IMdNode {
             Content = content
         };
 
+        _childNodes.EnsureCapacity(_childNodes.Count + 1);
         _childNodes.Add(child);
         child.Parent = this;
         return child;
