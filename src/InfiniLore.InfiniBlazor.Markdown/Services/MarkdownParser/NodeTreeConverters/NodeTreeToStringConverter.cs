@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown.Pools;
+using System.Buffers;
 using System.Collections.Frozen;
 using System.Text;
 
@@ -12,7 +13,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.NodeTreeConverters;
 // ---------------------------------------------------------------------------------------------------------------------
 public class NodeTreeToStringConverter : IMdNodeTreeConverter<string> {
 
-    public static FrozenDictionary<MdElement, (string, string)> MdElementLookup = new Dictionary<MdElement, (string, string)>() {
+    private static FrozenDictionary<MdElement, (string, string)> MdElementLookup = new Dictionary<MdElement, (string, string)>() {
         {MdElement.Blockquote, ("<blockquote","</blockquote>")},
         {MdElement.Bold, ("<strong","</strong>")},
         {MdElement.CheckboxSelected, ("<input type=\"checkbox\" disabled checked /",string.Empty)},
@@ -51,8 +52,8 @@ public class NodeTreeToStringConverter : IMdNodeTreeConverter<string> {
     // -----------------------------------------------------------------------------------------------------------------
     public string Convert(IMdNodeTree tree) {
         StringBuilder builder = StringBuilderPool.Get();
+        Dictionary<int, MdElement> depthCache = DepthCachePool.Get();
         try {
-            var dictionary = new Dictionary<int, MdElement>();
             int lastKnownDepth = -1;
             
             foreach (IMdNodeVisitor nodeVisitor in tree) {
@@ -61,15 +62,7 @@ public class NodeTreeToStringConverter : IMdNodeTreeConverter<string> {
 
                 // write the end tag of a previous sibling
                 if (lastKnownDepth >= depth) {
-                    int[] oldKeys = dictionary.Keys.Where(k => k >= depth).ToArray();
-                    Array.Sort(oldKeys);
-                    Array.Reverse(oldKeys);
-                    foreach (int key in oldKeys) {
-                        MdElement closingEl = dictionary[key];
-                        (string _, string closingTag) = MdElementLookup[closingEl];
-                        builder.Append(closingTag.AsSpan());
-                        dictionary.Remove(key);   
-                    }
+                    CloseOpenTags(builder, depthCache, depth);
                 }
                 
                 // write the current html tag
@@ -114,16 +107,35 @@ public class NodeTreeToStringConverter : IMdNodeTreeConverter<string> {
                     case MdElement.Tag :
                     case MdElement.Underline : {
                         (string tagOpen, string tagClose) = MdElementLookup[element];
-                        builder.Append(tagOpen.AsSpan());
-                        if (node.Classes.Count > 0) builder.Append($" class=\"{string.Join(' ', node.Classes)}\"");
+                        ReadOnlySpan<char> tagOpenSpan = tagOpen.AsSpan();
+                        ReadOnlySpan<char> tagCloseSpan = tagClose.AsSpan();
+                        
+                        builder.Append(tagOpenSpan);
+                        if (node.Classes.Count > 0) {
+                            builder.Append(" class=\"".AsSpan());
+                            bool isFirst = true;
+                            foreach (ReadOnlySpan<char> cssClass in node.Classes) {
+                                if(!isFirst) builder.Append(' ');
+                                builder.Append(cssClass);
+                                isFirst = false;
+                            }
+                            builder.Append('"');   
+                        }
                         if (node.Attributes.Count > 0) {
+                            builder.Append(' ');
                             foreach (KeyValuePair<string, string> attribute in node.Attributes) {
-                                builder.Append($" {attribute.Key}=\"{attribute.Value}\"");
+                                ReadOnlySpan<char> keySpan = attribute.Key.AsSpan();
+                                ReadOnlySpan<char> valueSpan = attribute.Value.AsSpan();
+                                
+                                builder.Append(keySpan);
+                                builder.Append("=\"".AsSpan());
+                                builder.Append(valueSpan);
+                                builder.Append('"');
                             }
                         }
                         builder.Append('>');
                         
-                        if (tagClose.IsNotNullOrEmpty()) dictionary.AddOrUpdate(depth, element);
+                        if (tagCloseSpan.Length != 0) depthCache.AddOrUpdate(depth, element);
                         lastKnownDepth = depth;
                         break;  
                     }
@@ -131,23 +143,41 @@ public class NodeTreeToStringConverter : IMdNodeTreeConverter<string> {
                     case MdElement.Undefined:
                     default: break;
                 }
-                // write the data
             }
             
             // write the end tags of all remaining siblings
-            int[] keys = dictionary.Keys.ToArray();
-            Array.Sort(keys);
-            Array.Reverse(keys);
-            foreach (int key in keys) {
-                MdElement closingElement = dictionary[key];
-                (string _, string closingTag) = MdElementLookup[closingElement];
-                builder.Append(closingTag.AsSpan());
-            }
+            CloseOpenTags(builder, depthCache, -1);
             
+            // write the data
             return builder.ToString();
         }
         finally {
             StringBuilderPool.Return(builder);
+            DepthCachePool.Return(depthCache);
         }
+    }
+    private static void CloseOpenTags(StringBuilder builder, Dictionary<int, MdElement> depthCache, int depth) {
+        int[] oldKeysArr = ArrayPool<int>.Shared.Rent(depthCache.Count);
+        int count = 0;
+                    
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+        foreach (int k in depthCache.Keys) {
+            if (k < depth) continue;
+            oldKeysArr[count++] = k;
+        }
+
+        Array.Sort(oldKeysArr, 0, count);
+        Array.Reverse(oldKeysArr,0, count);
+                    
+        for (int i = 0; i < count; i++) {
+            int key = oldKeysArr[i];
+            MdElement closingEl = depthCache[key];
+            (string _, string closingTag) = MdElementLookup[closingEl];
+            ReadOnlySpan<char> closingTagSpan = closingTag.AsSpan();
+            builder.Append(closingTagSpan);
+            depthCache.Remove(key);
+        }
+                    
+        ArrayPool<int>.Shared.Return(oldKeysArr);
     }
 }

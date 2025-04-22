@@ -50,14 +50,14 @@ public class MarkdownBenchmarks {
         return output;
     }
 
-    [Benchmark]
-    public StringWriter RenderMarkdownToStream() {
-        var streamWriter = new StringWriter();
-
-        Parser.ParseToWriter(Markdown, streamWriter);
-
-        streamWriter.Flush();
-        return streamWriter;
-
-    }
+    // [Benchmark]
+    // public StringWriter RenderMarkdownToStream() {
+    //     var streamWriter = new StringWriter();
+    //
+    //     Parser.ParseToWriter(Markdown, streamWriter);
+    //
+    //     streamWriter.Flush();
+    //     return streamWriter;
+    //
+    // }
 }

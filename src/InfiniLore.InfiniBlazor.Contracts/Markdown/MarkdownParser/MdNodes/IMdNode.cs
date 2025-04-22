@@ -11,7 +11,7 @@ public interface IMdNode {
 
     IReadOnlyCollection<IMdNode> Children { get; }
     IReadOnlyDictionary<string, string> Attributes { get; }
-    IReadOnlySet<string> Classes { get; }
+    IReadOnlyCollection<string> Classes { get; }
     
     IMdNode Parent { get; }
 
