@@ -14,7 +14,8 @@ public static class MdNodeExtensions {
 
     public static IMdNode AddBlockquote(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Blockquote, content);
     public static IMdNode AddBold(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Bold, content);
-    public static IMdNode AddCode(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Code, content);
+    public static IMdNode AddCodeInline(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.CodeInline, content);
+    public static IMdNode AddCodeBlock(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.CodeBlock, content);
     public static IMdNode AddH1(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.H1, content);
     public static IMdNode AddH2(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.H2, content);
     public static IMdNode AddH3(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.H3, content);
@@ -30,7 +31,7 @@ public static class MdNodeExtensions {
     public static IMdNode AddListOrdered(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.ListOrdered, content);
     public static IMdNode AddListUnordered(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.ListUnordered, content);
     public static IMdNode AddParagraph(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Paragraph, content);
-    public static IMdNode AddPre(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Pre, content);
+    public static IMdNode AddPre(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.CodeBlock, content);
     public static IMdNode AddSpan(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Span, content);
     public static IMdNode AddTag(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Tag, content);
     public static IMdNode AddStrikethrough(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Strikethrough, content);

@@ -23,7 +23,7 @@ public class CodeInlineSectionParser : ISectionHandler {
         string normalizedBackticks = codeValue.Replace("\\`", "`");
         string output = HtmlEncoder.Default.Encode(normalizedBackticks);
 
-        IMdNode codeNode = currentNode.AddChildNode(MdElement.Code);
+        IMdNode codeNode = currentNode.AddChildNode(MdElement.CodeInline);
         codeNode.WithContent(output);
     }
 }

@@ -131,7 +131,7 @@ public static class SuperScriptDataSources {
             "<p>Inline code with superscript: <code>x = y^^2^^</code></p>",
             ConfigureExpectedNode: static rootNode => rootNode.AddParagraph()
                 .WithContent("Inline code with superscript: ")
-                .AddCode("x = y^^2^^")
+                .AddCodeInline("x = y^^2^^")
         );
 
         yield return static () => new MarkdownTestDto(SectionName,

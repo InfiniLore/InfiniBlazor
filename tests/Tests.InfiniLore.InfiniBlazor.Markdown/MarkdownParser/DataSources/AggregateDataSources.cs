@@ -120,12 +120,12 @@ public static class AggregateDataSources {
                 paragraph0.WithContent(", ");
                 paragraph0.AddItalic("italic");
                 paragraph0.WithContent(", and ");
-                paragraph0.AddCode("code");
+                paragraph0.AddCodeInline("code");
                 paragraph0.WithContent(" formatting.");
 
                 rootNode.AddH3("Code Snippet");
                 rootNode.AddParagraph("Below is an example of a C# code snippet:");
-                IMdNode csharpCode = rootNode.AddPre().AddCode("public class Program {\n    public static void Main() {\n        Console.WriteLine(\"Hello, World!\");\n    }\n}\n");
+                IMdNode csharpCode = rootNode.AddCodeBlock("public class Program {\n    public static void Main() {\n        Console.WriteLine(\"Hello, World!\");\n    }\n}\n");
                 csharpCode.WithClass("language-csharp");
 
                 rootNode.AddH3("Bullet Points");

@@ -97,7 +97,7 @@ public static class SubAndSuperScriptDataSources {
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("Inline code with superscript and subscript: ");
-                paragraph.AddCode("x = y^^2^^ - z^2^");
+                paragraph.AddCodeInline("x = y^^2^^ - z^2^");
             }
         );
 

@@ -23,8 +23,7 @@ public class CodeBlockSectionParser : ISectionHandler {
     public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[CBodyId].TryGetValueSpan(out ReadOnlySpan<char> codeBlockBody)) return;
 
-        IMdNode preNode = currentNode.AddChildNode(MdElement.Pre);
-        IMdNode codeNode = preNode.AddChildNode(MdElement.Code);
+        IMdNode codeNode = currentNode.AddChildNode(MdElement.CodeBlock);
 
         ReadOnlySpan<char> langNameValue = entireMatch.Groups[CLangId].ValueSpan;
         if (!langNameValue.IsEmpty) codeNode.WithClass($"language-{langNameValue}");

@@ -91,7 +91,7 @@ public static class EscapedCharacterDataSources {
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("Inline code with escaped backticks: ");
-                IMdNode code = paragraph.AddCode();
+                IMdNode code = paragraph.AddCodeInline();
                 code.WithContent("code with `escaped backticks`");
             }
         );
@@ -134,7 +134,7 @@ public static class EscapedCharacterDataSources {
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("Inline code containing emphasis: ");
-                IMdNode code = paragraph.AddCode();
+                IMdNode code = paragraph.AddCodeInline();
                 code.WithContent(@"\*code with emphasis\*");
             }
         );
@@ -145,7 +145,7 @@ public static class EscapedCharacterDataSources {
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("Trying to confuse the parser: `");
-                IMdNode code = paragraph.AddCode();
+                IMdNode code = paragraph.AddCodeInline();
                 code.WithContent("code`");
                 paragraph.WithContent(@" and backslashes \\\`");
             }

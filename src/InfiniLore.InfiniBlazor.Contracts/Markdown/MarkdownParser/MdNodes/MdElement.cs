@@ -12,7 +12,7 @@ public enum MdElement : uint {
 
     Blockquote,
     Bold,
-    Code,
+    CodeInline,
     H1,
     H2,
     H3,
@@ -28,7 +28,7 @@ public enum MdElement : uint {
     ListOrdered,
     ListUnordered,
     Paragraph,
-    Pre,
+    CodeBlock,
     Span,
     Strikethrough,
     Subscript,

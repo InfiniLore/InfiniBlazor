@@ -212,7 +212,7 @@ public static class BlockQuoteDataSources {
                 paragraph2.AddItalic("italic");
                 paragraph2.WithContent(", ");
 
-                paragraph2.AddCode("code");
+                paragraph2.AddCodeInline("code");
                 paragraph2.WithContent(", and ");
 
                 IMdNode link = paragraph2.AddLink("link");
@@ -304,7 +304,7 @@ public static class BlockQuoteDataSources {
             ConfigureExpectedNode: static rootNode => {
                 IMdNode blockquote = rootNode.AddBlockquote();
                 IMdNode paragraph = blockquote.AddParagraph("This is a blockquote with escaped characters: *, >, ");
-                paragraph.AddCode("`");
+                paragraph.AddCodeInline("`");
                 paragraph.WithContent(".");
             }
         );
@@ -362,7 +362,7 @@ public static class BlockQuoteDataSources {
                 paragraph.AddItalic("italic text");
                 paragraph.WithContent(", ");
 
-                paragraph.AddCode("inline code");
+                paragraph.AddCodeInline("inline code");
                 paragraph.WithContent(", ");
 
                 paragraph.AddStrikethrough("strikethrough");
@@ -412,7 +412,7 @@ public static class BlockQuoteDataSources {
             ConfigureExpectedNode: static rootNode => {
                 IMdNode blockquote = rootNode.AddBlockquote();
                 blockquote.AddParagraph("This is a paragraph.");
-                blockquote.AddPre().AddCode("Code block inside a blockquote.\n");
+                blockquote.AddCodeBlock("Code block inside a blockquote.\n");
             }
         );
 

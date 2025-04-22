@@ -275,7 +275,7 @@ public static class ListsDataSources {
                 IMdNode list = rootNode.AddListUnordered();
                 list.AddListItem("A list item with ").AddBold("bold text");
                 list.AddListItem("A list item with ").AddItalic("italic text");
-                list.AddListItem("A list item with ").AddCode("inline code");
+                list.AddListItem("A list item with ").AddCodeInline("inline code");
             }
         );
 

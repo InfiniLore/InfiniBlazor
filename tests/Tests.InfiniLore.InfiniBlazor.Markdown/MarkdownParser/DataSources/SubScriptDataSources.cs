@@ -131,7 +131,7 @@ public static class SubScriptDataSources {
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("Inline code with subscript: ");
-                paragraph.AddCode("x = z^2^");
+                paragraph.AddCodeInline("x = z^2^");
             }
         );
 
