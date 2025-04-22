@@ -66,7 +66,7 @@ public static class ItalicDataSources {
             "**",
             "<p>**</p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph("**");
+                rootNode.AddParagraph("**");
             }
         );
 

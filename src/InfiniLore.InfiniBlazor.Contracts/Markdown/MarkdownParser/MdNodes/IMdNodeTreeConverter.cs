@@ -10,6 +10,6 @@ public interface IMdNodeTreeConverter<out T> {
     T Convert(IMdNodeTree tree);
 }
 
-public interface IMdNodeTreeToWriterConverter<T> where T : TextWriter {
+public interface IMdNodeTreeToWriterConverter<in T> where T : TextWriter {
     void Convert(IMdNodeTree tree, T writer);
 }
