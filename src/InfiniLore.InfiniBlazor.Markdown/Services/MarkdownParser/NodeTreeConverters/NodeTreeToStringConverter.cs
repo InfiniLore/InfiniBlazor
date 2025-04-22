@@ -57,7 +57,7 @@ public class NodeTreeToStringConverter : IMdNodeTreeConverter<string> {
         try {
             int lastKnownDepth = -1;
             
-            foreach (IMdNodeVisitor mdNodeVisitor in tree) {
+            foreach (IMdNodeVisitor mdNodeVisitor in tree.VisitNodes()) {
                 int depth = mdNodeVisitor.Depth;
                 IMdNode node = mdNodeVisitor.Node;
 

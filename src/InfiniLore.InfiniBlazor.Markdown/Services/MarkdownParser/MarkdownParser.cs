@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown;
@@ -72,16 +73,26 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
     #endregion
 
     #region Parsing Methods
-    public string ParseToString(string markdown) {
-        IMdNodeTree nodeTree = ParseToNodeTree(markdown);
-        var converter = new NodeTreeToStringConverter();
-        return converter.Convert(nodeTree);
+    public bool TryParseToString(string markdown,[NotNullWhen(true)] out string? output) {
+        output = null;
+        if (markdown.IsNullOrWhiteSpace()) return false;
+
+        try {
+            IMdNodeTree nodeTree = ParseToNodeTree(markdown);
+            var converter = new NodeTreeToStringConverter();
+            output = converter.Convert(nodeTree);
+            return true;
+        }
+        catch (Exception e) {
+            logger.LogError(e, "Error parsing markdown.");
+            return false;
+        }
     }
 
     public void ParseToWriter<T>(string markdown, T writer) where T : TextWriter {
         IMdNodeTree nodeTree = ParseToNodeTree(markdown);
-        var converter = new NodeTreeToTextWriterConverter<T>(writer);
-        converter.Convert(nodeTree);
+        var converter = new NodeTreeToTextWriterConverter<T>();
+        converter.Convert(nodeTree, writer);
     }
 
     public IMdNodeTree ParseToNodeTree(string markdown) {

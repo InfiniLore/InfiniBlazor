@@ -41,10 +41,13 @@ public class MarkdownParserTests(IMarkdownParser parser) {
         // Arrange
 
         // Act
-        string output = parser.ParseToString(dto.Markdown);
+        bool result = parser.TryParseToString(dto.Markdown, out string? output);
 
         // Assert
-        await Assert.That(output).IsEqualTo(dto.ExpectedStringOutput).IgnoringWhitespace();
+        await Assert.That(result).IsTrue();
+        await Assert.That(output)
+            .IsNotNullOrWhitespace()
+            .IsEqualTo(dto.ExpectedStringOutput).IgnoringWhitespace();
     }
 
     [Test]

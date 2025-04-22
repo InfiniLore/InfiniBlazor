@@ -6,6 +6,8 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMdNodeTree : IEnumerable<IMdNodeVisitor> {
-    public IMdNode RootNode { get; }
+public interface IMdNodeTree {
+    IMdNode RootNode { get; }
+
+    IEnumerable<IMdNodeVisitor> VisitNodes();
 }

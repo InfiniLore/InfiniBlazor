@@ -14,15 +14,6 @@ public static class SpecialCharacterDataSources {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
-
-        yield return static () => new MarkdownTestDto(SectionName,
-            "",
-            "",
-            ConfigureExpectedNode: static _ => {
-                // Nothing to add
-            }
-        );
-
         yield return static () => new MarkdownTestDto(SectionName,
             "&",
             "<p>&</p>",

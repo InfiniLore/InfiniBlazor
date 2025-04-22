@@ -45,8 +45,7 @@ public class MarkdownBenchmarks {
     [Benchmark(Baseline = true)]
     public string RenderMarkdown() {
         string input = Markdown;
-
-        string output = Parser.ParseToString(input);
+        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 

@@ -8,8 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.NodeTreeConverters;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class NodeTreeToTextWriterConverter<T>(T writer) : IMdNodeTreeConverter where T : TextWriter {
-
+public class NodeTreeToTextWriterConverter<T> : IMdNodeTreeToWriterConverter<T> where T : TextWriter {
     private readonly FrozenDictionary<MdElement, (string, string)> MdElementLookup = new Dictionary<MdElement, (string, string)> {
         {MdElement.Blockquote, ("<blockquote","</blockquote>")},
         {MdElement.Bold, ("<strong","</strong>")},
@@ -47,11 +46,11 @@ public class NodeTreeToTextWriterConverter<T>(T writer) : IMdNodeTreeConverter w
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void Convert(IMdNodeTree tree) {
+    public void Convert(IMdNodeTree tree, T writer) {
         var dictionary = new Dictionary<int, MdElement>();
             int lastKnownDepth = -1;
             
-            foreach (IMdNodeVisitor nodeVisitor in tree) {
+            foreach (IMdNodeVisitor nodeVisitor in tree.VisitNodes()) {
                 int depth = nodeVisitor.Depth;
                 IMdNode node = nodeVisitor.Node;
 

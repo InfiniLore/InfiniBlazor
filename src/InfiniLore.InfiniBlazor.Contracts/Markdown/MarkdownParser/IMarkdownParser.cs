@@ -1,12 +1,15 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using System.Diagnostics.CodeAnalysis;
+
 namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMarkdownParser {
-    string ParseToString(string markdown);
+    bool TryParseToString(string markdown, [NotNullWhen(true)] out string? output);
     void ParseToWriter<T>(string markdown, T writer) where T : TextWriter;
+    
     public IMdNodeTree ParseToNodeTree(string markdown);
 }

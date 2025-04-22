@@ -47,7 +47,8 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
     }
     
     private void UpdateMarkdown() {
-        MarkdownOutput = new MarkupString(markdownParser.ParseToString(Source.Text));
+        if (!markdownParser.TryParseToString(Source.Text, out string? output)) return; // TODO create some form of error popup
+        MarkdownOutput = new MarkupString(output);
     }
     
     private async Task OnModifierClickAsync(string modifierName) {

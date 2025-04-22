@@ -2,10 +2,8 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown.Pools;
-using System.Collections;
 
 namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -15,8 +13,7 @@ public class MdNodeTree : IMdNodeTree {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-    public IEnumerator<IMdNodeVisitor> GetEnumerator() {
+    public IEnumerable<IMdNodeVisitor> VisitNodes() {
         Stack<MdNodeVisitor> stack = MdNodeVisitorStackPool.Get();
         try {
             // Add Root children directly to avoid an extra if call during the while loop
@@ -48,7 +45,7 @@ public class MdNodeTree : IMdNodeTree {
             }
         }
         finally {
-            // Also handles MdNodeVisitorPool.Return(visitor) if the stack isnt empty yet
+            // Also handles MdNodeVisitorPool.Return(visitor) if the stack isn't empty yet
             MdNodeVisitorStackPool.Return(stack);
         }
     }
