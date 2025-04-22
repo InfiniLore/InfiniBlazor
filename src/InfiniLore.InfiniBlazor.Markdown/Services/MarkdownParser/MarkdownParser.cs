@@ -77,14 +77,14 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
         throw new NotImplementedException();
     }
 
-    public IMdNode ParseToNodeTree(string markdown) {
-        var rootNode = new MdNode();
+    public IMdNodeTree ParseToNodeTree(string markdown) {
         RunningMarkdownParser runningParser = RunningMarkdownParserPool.Get();
-        runningParser.RootNode = rootNode;
+        var nodeTree = new MdNodeTree();
+        runningParser.NodeTree = nodeTree;
 
         try {
             // Preload matches into the stack
-            runningParser.AddMultiLineMatchesToStack(markdown, rootNode, ParserOrigin.Undefined);
+            runningParser.AddMultiLineMatchesToStack(markdown, nodeTree.RootNode, ParserOrigin.Undefined);
 
             // Process matches
             while (runningParser.TryPopDto(out ParserDataDto? dataDto)) {
@@ -134,7 +134,7 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
                 ParserDataDtoPool.Return(dataDto);
             }
 
-            return rootNode;
+            return nodeTree;
         }
         finally {
             // Also handles ParserDataDto cleanup if still present, so no nested try-finally block needed.

@@ -36,9 +36,7 @@ public class UnderlineDataSources {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("something ");
                 paragraph.AddUnderline()
-                    .WithContent("underlined with an ")
-                    .WithContent("_")// Escaped char
-                    .WithContent(" escaped");
+                    .WithContent("underlined with an _ escaped");
             }
         );
 

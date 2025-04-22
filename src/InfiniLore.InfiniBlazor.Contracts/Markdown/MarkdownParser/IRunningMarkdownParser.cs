@@ -6,7 +6,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IRunningMarkdownParser {
-    IMdNode RootNode { get; }
+    IMdNodeTree NodeTree { get; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

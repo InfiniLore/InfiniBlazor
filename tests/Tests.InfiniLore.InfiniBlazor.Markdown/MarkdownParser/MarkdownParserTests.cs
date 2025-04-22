@@ -113,10 +113,10 @@ public class MarkdownParserTests(IMarkdownParser parser) {
         // Arrange
 
         // Act
-        IMdNode output = parser.ParseToNodeTree(dto.Markdown);
+        IMdNodeTree output = parser.ParseToNodeTree(dto.Markdown);
         Skip.When(dto.ExpectedNode == null, "The node tree is null and thus cannot be compared.");
 
         // Assert
-        await Assert.That(output).IsEquivalentTo(dto.ExpectedNode);
+        await Assert.That(output.RootNode).IsEquivalentTo(dto.ExpectedNode);
     }
 }

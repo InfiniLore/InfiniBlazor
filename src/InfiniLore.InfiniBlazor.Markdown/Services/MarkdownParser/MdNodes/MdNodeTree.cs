@@ -1,12 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Markdown;
+namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMarkdownParser {
-    string ParseToString(string markdown);
-    void ParseToWriter<T>(string markdown, T writer) where T : TextWriter;
-    public IMdNodeTree ParseToNodeTree(string markdown);
+public class MdNodeTree : IMdNodeTree {
+    public IMdNode RootNode { get; } = new MdNode();
 }

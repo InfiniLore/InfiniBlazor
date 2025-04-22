@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 public class RunningMarkdownParser : IRunningMarkdownParser {
     private readonly Stack<ParserDataDto> _stack = new();
-    public IMdNode RootNode { get; set; } = null!;
+    public IMdNodeTree NodeTree { get; set; } = null!;
 
     public bool TryPopDto([NotNullWhen(true)] out ParserDataDto? dto)
         => _stack.TryPop(out dto);
@@ -20,7 +20,7 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
     public void Clear() {
         while (_stack.TryPop(out ParserDataDto? dto)) ParserDataDtoPool.Return(dto);// Makes sure we clean everything
         _stack.Clear();
-        RootNode = null!;
+        NodeTree = null!;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
