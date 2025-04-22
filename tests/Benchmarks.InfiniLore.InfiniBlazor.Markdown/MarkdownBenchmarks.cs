@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
-using InfiniLore.InfiniBlazor;
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.Config;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,19 +45,18 @@ public class MarkdownBenchmarks {
     [Benchmark(Baseline = true)]
     public string RenderMarkdown() {
         string input = Markdown;
-
-        string output = Parser.Parse(input);
+        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
-    [Benchmark]
-    public StringWriter RenderMarkdownToStream() {
-        var streamWriter = new StringWriter();
-
-        Parser.Parse(Markdown, streamWriter);
-
-        streamWriter.Flush();
-        return streamWriter;
-
-    }
+    // [Benchmark]
+    // public StringWriter RenderMarkdownToStream() {
+    //     var streamWriter = new StringWriter();
+    //
+    //     Parser.ParseToWriter(Markdown, streamWriter);
+    //
+    //     streamWriter.Flush();
+    //     return streamWriter;
+    //
+    // }
 }

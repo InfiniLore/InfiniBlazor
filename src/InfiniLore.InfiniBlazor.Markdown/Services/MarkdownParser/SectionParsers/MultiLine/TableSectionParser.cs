@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
 using System.Buffers;
 using System.Text.RegularExpressions;
 
@@ -10,47 +9,47 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMultiLineSectionParser>("table")]
-public class TableSectionParser(IServiceProvider provider, ICachedRegexGroupNames groupName) : IMultiLineSectionParser {
-    private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
-    
-    private readonly int TBodyId = groupName.GetMultiLineGroupId("tBody");
-    private readonly int THeadId = groupName.GetMultiLineGroupId("tHead");
-    private readonly int TSepId = groupName.GetMultiLineGroupId("tSep");
+[InjectableSingleton<ISectionHandler>("table")]
+public class TableSectionParser : ISectionHandler {
+
+    private static readonly int BodyId = CachedRegexGroupNames.GetMultiLineGroupId("tBody");
+    private static readonly int HeadId = CachedRegexGroupNames.GetMultiLineGroupId("tHead");
+    private static readonly int SepId = CachedRegexGroupNames.GetMultiLineGroupId("tSep");
+    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, MultiLineOrigin origin) {
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         // Extract header, separator, and rows
-        ReadOnlySpan<char> header = entireMatch.Groups[THeadId].ValueSpan;
+        ReadOnlySpan<char> header = entireMatch.Groups[HeadId].ValueSpan;
         Span<Range> headerColumns = stackalloc Range[header.Length];
         int headerColumnCount = header.Split(headerColumns, '|', StringSplitOptions.TrimEntries);
 
-        ReadOnlySpan<char> separator = entireMatch.Groups[TSepId].ValueSpan;
+        ReadOnlySpan<char> separator = entireMatch.Groups[SepId].ValueSpan;
         Span<Range> separatorColumns = stackalloc Range[separator.Length];
         int _ = separator.Split(separatorColumns, '|', StringSplitOptions.TrimEntries);
 
-        ReadOnlySpan<char> rows = entireMatch.Groups[TBodyId].ValueSpan;
+        ReadOnlySpan<char> rows = entireMatch.Groups[BodyId].ValueSpan;
         Span<Range> rowRanges = stackalloc Range[rows.Length];
         int rowCount = rows.Split(rowRanges, '\n', StringSplitOptions.TrimEntries);
 
         // Construct table HTML
-        writer.Write("<table>");
+        IMdNode tableNode = currentNode.AddChildNode(MdElement.Table);
 
         // Add headers
-        writer.Write("<thead><tr>");
+        IMdNode tableHeaderNode = tableNode
+            .AddChildNode(MdElement.TableHead)
+            .AddChildNode(MdElement.TableRow);
+
         for (int index = 0; index < headerColumnCount; index++) {
-            writer.Write("<th>");
+            IMdNode tableHeadCellNode = tableHeaderNode.AddChildNode(MdElement.TableHeadCell);
             ReadOnlySpan<char> column = header[headerColumns[index]];
-            _markdownParser.Value.ParseSingleline(column.ToString(), writer);
-            writer.Write("</th>");
+            parser.AddSingleLineMatchesToStack(column.ToString(), tableHeadCellNode, origin);
         }
 
-        writer.Write("</tr></thead>");
-
         // Add rows
-        writer.Write("<tbody>");
+        IMdNode tableBodyNode = tableNode.AddChildNode(MdElement.TableBody);
         ArrayPool<Range> bufferPool = ArrayPool<Range>.Shared;
         const int maxExpectedRowLength = 512;// Based on expected data characteristics
         Range[] rowColumnRanges = bufferPool.Rent(maxExpectedRowLength);
@@ -63,20 +62,13 @@ public class TableSectionParser(IServiceProvider provider, ICachedRegexGroupName
             // Split the row
             int rowColumnCount = row.Split(rowColumnRanges.AsSpan(0, row.Length), '|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
-            writer.Write("<tr>");
+            IMdNode rowNode = tableBodyNode.AddChildNode(MdElement.TableRow);
             for (int columnIndex = 0; columnIndex < rowColumnCount; columnIndex++) {
-                writer.Write("<td>");
+                IMdNode cellNode = rowNode.AddChildNode(MdElement.TableCell);
                 Range columnRange = rowColumnRanges[columnIndex];
                 ReadOnlySpan<char> column = row[columnRange];
-                _markdownParser.Value.ParseSingleline(column.ToString(), writer);
-                writer.Write("</td>");
+                parser.AddSingleLineMatchesToStack(column.ToString(), cellNode, origin);
             }
-
-            writer.Write("</tr>");
         }
-
-        writer.Write("</tbody>");
-
-        writer.Write("</table>");
     }
 }

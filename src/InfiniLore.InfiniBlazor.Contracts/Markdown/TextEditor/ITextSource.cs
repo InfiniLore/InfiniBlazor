@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 public interface ITextSource {
     string Text { get; set; }
     ReadOnlySpan<char> TextSpan { get; }
-    
+
     int Length { get; }
     IReadOnlyList<Range> Lines { get; }
 }

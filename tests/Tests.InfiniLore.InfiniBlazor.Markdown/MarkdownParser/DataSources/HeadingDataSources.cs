@@ -1,6 +1,8 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -17,7 +19,19 @@ public static class HeadingDataSources {
             int depth = i;
             yield return () => new MarkdownTestDto(SectionName,
                 $"{heading} Heading",
-                $"<h{depth}>Heading</h{depth}>"
+                $"<h{depth}>Heading</h{depth}>",
+                ConfigureExpectedNode: rootNode => {
+                    _ = depth switch {
+                        1 => rootNode.AddH1("Heading"),
+                        2 => rootNode.AddH2("Heading"),
+                        3 => rootNode.AddH3("Heading"),
+                        4 => rootNode.AddH4("Heading"),
+                        5 => rootNode.AddH5("Heading"),
+                        6 => rootNode.AddH6("Heading"),
+                        _ => throw new ArgumentOutOfRangeException(nameof(depth), depth, null)
+                    };
+
+                }
             );
         }
 
@@ -26,15 +40,23 @@ public static class HeadingDataSources {
             Heading
             --
             """,
-            "<p>Heading</p><p>--</p>"
+            "<p>Heading</p><p>--</p>",
+            ConfigureExpectedNode: static rootNode => {
+                rootNode.AddParagraph("Heading");
+                rootNode.AddParagraph("--");
+            }
         );
-        
+
         yield return () => new MarkdownTestDto(SectionName,
             """
             Heading
             ==
             """,
-            "<p>Heading</p><p>==</p>"
+            "<p>Heading</p><p>==</p>",
+            ConfigureExpectedNode: static rootNode => {
+                rootNode.AddParagraph("Heading");
+                rootNode.AddParagraph("==");
+            }
         );
 
         yield return () => new MarkdownTestDto(SectionName,
@@ -42,7 +64,10 @@ public static class HeadingDataSources {
             Heading
             ---
             """,
-            "<h1>Heading</h1>"
+            "<h1>Heading</h1>",
+            ConfigureExpectedNode: static rootNode => {
+                rootNode.AddH1("Heading");
+            }
         );
 
         yield return () => new MarkdownTestDto(SectionName,
@@ -50,7 +75,10 @@ public static class HeadingDataSources {
             Heading
             ===
             """,
-            "<h1>Heading</h1>"
+            "<h1>Heading</h1>",
+            ConfigureExpectedNode: static rootNode => {
+                rootNode.AddH1("Heading");
+            }
         );
 
         yield return () => new MarkdownTestDto(SectionName,
@@ -58,15 +86,21 @@ public static class HeadingDataSources {
             Heading
                 ========
             """,
-            "<h1>Heading</h1>"
+            "<h1>Heading</h1>",
+            ConfigureExpectedNode: static rootNode => {
+                rootNode.AddH1("Heading");
+            }
         );
-        
+
         yield return () => new MarkdownTestDto(SectionName,
             """
             Heading
                 --------
             """,
-            "<h1>Heading</h1>"
+            "<h1>Heading</h1>",
+            ConfigureExpectedNode: static rootNode => {
+                rootNode.AddH1("Heading");
+            }
         );
     }
 }

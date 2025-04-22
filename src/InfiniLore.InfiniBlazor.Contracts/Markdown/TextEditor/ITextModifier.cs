@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 namespace InfiniLore.InfiniBlazor.Markdown;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -10,6 +9,6 @@ public interface ITextModifier {
     string IconName { get; }
     string ModifierName { get; }
     bool IsSingleLineStructure { get; }
-    
+
     void Modify(ITextSource source, Range range, ITextEditor editor);
 }

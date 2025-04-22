@@ -1,12 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Text.RegularExpressions;
+namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
 
-namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMultiLineSectionParser {
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, MultiLineOrigin origin);
+public class MdNodeVisitor : IMdNodeVisitor {
+    public int Depth { get; set; } = -1;
+    public IMdNode Node { get; set; } = null!;
 }

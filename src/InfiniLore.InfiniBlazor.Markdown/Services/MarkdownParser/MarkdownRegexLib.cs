@@ -33,11 +33,11 @@ public static partial class MarkdownRegexLib {
     public static partial Regex SinglelineStructuresRegex { get; }
 
     [GeneratedRegex("""
-          (?<heading>^(?<hLevel>\#{1,6})\s+(?<hText>.+))
+          (?<heading>^(?<hLevel>\#{1,6})\s+(?<hText>[^\r\n]+)\r?\n?)
         | (?<codeBlock>`{3}(?<cLang>.*?)?\r?\n(?<cBody>[\s\S]*?)`{3})
         | (?<headingSimple>^(?<hsText>.+?)\r?\n[\ ]*[-=]{3,})
-        | (?<listUnordered>(?:^[^\S\r\n]*-\s+.*(?:\n(?:[^\S\r\n]*[\-.]\d*\.?\s+.*|[^\S\r\n]+.*))*))
-        | (?<listOrdered>(?:^[^\S\r\n]*\d+\.\s+?.*(?:\n(?:[^\S\r\n]*[\-.]?\d+\.?\s+.*|[^\S\r\n]+.*))*))
+        | (?<listUnordered>(?:^[^\S\r\n]*-\s+.*(?:\r?\n(?:[^\S\r\n]*[\-.]\d*\.?\s+.*|[^\S\r\n]+.*))*))
+        | (?<listOrdered>(?:^[^\S\r\n]*\d+\.\s+?.*(?:\r?\n(?:[^\S\r\n]*[\-.]?\d+\.?\s+.*|[^\S\r\n]+.*))*))
         | (?<table>
             ^\|(?<tHead>.+)\|\s*\r?\n
             ^\|(?<tSep>[:\-|\ ]+?)\|\s*\r?\n
@@ -60,20 +60,17 @@ public static partial class MarkdownRegexLib {
             (?<htmlPost>.+)?
           )
         | (?<horizontalRule>^[\-=]{3,64}\s*$)
-        | (?<remainder>.+?(?:\r?\n|$))
-        
+        | (?<paragraph>(?<p>.+?)(?:\r?\n|$))
+
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex MultilineStructuresRegex { get; }
 
-    [GeneratedRegex(@"^[ ]*[-.]?\d*\.?\s+(?<lTask>\[[\ xX]\])?(?<lHead>.+)(?<lBody>(?:\n[ ]+.+)*)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"^[ ]*[-.]?\d*\.?\s+(?<lTask>\[[\ xX]\] )?(?<lHead>[^\r\n]+)(?<lBody>(?:\r?\n[ ]+.+)*)(?<!\r)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex ListItemBodyRegex { get; }
 
-    [GeneratedRegex("^>", RegexOptions.Multiline | RegexOptions.Compiled)]
-    public static partial Regex NormalizeBlockQuoteRegex { get; }
-    
     [GeneratedRegex("\r?\n", RegexOptions.Compiled)]
     public static partial Regex NormalizeNewlinesRegex { get; }
-    
+
     [GeneratedRegex("""
         (?<spanTag><(?<tag>span)\b[^>]*>)
         (?<spanBody>

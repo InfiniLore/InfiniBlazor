@@ -2,54 +2,49 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using Ganss.Xss;
-using Microsoft.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMultiLineSectionParser>("htmlBody")]
-public class HtmlBodySectionParser(IServiceProvider provider, IHtmlSanitizer htmlSanitizer, ICachedRegexGroupNames groupName) : IMultiLineSectionParser {
-    private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
-    
-    private readonly int HtmlPreId = groupName.GetMultiLineGroupId("htmlPre");
-    private readonly int HtmlBodyId = groupName.GetMultiLineGroupId("htmlBody");
-    private readonly int HtmlPostId = groupName.GetMultiLineGroupId("htmlPost");
-    private readonly int SpanTagId = groupName.GetSpanGroupId("spanTag");
-    private readonly int SpanBodyId = groupName.GetSpanGroupId("spanBody");
+[InjectableSingleton<ISectionHandler>("htmlBody")]
+public class HtmlBodySectionParser : ISectionHandler {
+
+    private static readonly int HtmlPreId = CachedRegexGroupNames.GetMultiLineGroupId("htmlPre");
+    private static readonly int HtmlBodyId = CachedRegexGroupNames.GetMultiLineGroupId("htmlBody");
+    private static readonly int HtmlPostId = CachedRegexGroupNames.GetMultiLineGroupId("htmlPost");
+    private static readonly int SpanTagId = CachedRegexGroupNames.GetSpanGroupId("spanTag");
+    private static readonly int SpanBodyId = CachedRegexGroupNames.GetSpanGroupId("spanBody");
+    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, MultiLineOrigin origin) {
-        bool writeParagraph = !origin.HasFlag(MultiLineOrigin.PreserveHtml);
-        if (writeParagraph) {
-            writer.Write("<p>");
-        }
-        if (entireMatch.Groups[HtmlPreId].TryGetValue(out string? pre)) {
-            _markdownParser.Value.ParseSingleline(pre, writer);
-        }
-
-        if (entireMatch.Groups[HtmlBodyId].TryGetValue(out string? htmlBody)) {
-            // Span should be only special case allowed which allows for markdown parsing within it
-            Match match = MarkdownRegexLib.FindSpanHtmlRegex.Match(htmlBody);
-            if (match.Groups[SpanTagId].TryGetValue(out string? spanTag) && match.Groups[SpanBodyId].TryGetValue(out string? spanBody)) {
-                writer.Write(htmlSanitizer.Sanitize(spanTag).AsSpan()[..^7]);
-                _markdownParser.Value.ParseMultiline(spanBody, writer, origin | MultiLineOrigin.Html);
-                writer.Write("</span>");
-            }
-            else {
-                writer.Write(htmlSanitizer.Sanitize(htmlBody));
-            }
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+        if (!origin.HasFlag(ParserOrigin.PreserveHtml)) {
+            currentNode = currentNode.AddChildNode(MdElement.Paragraph);
         }
 
         if (entireMatch.Groups[HtmlPostId].TryGetValue(out string? post)) {
-            _markdownParser.Value.ParseSingleline(post, writer);
+            parser.AddSingleLineMatchesToStack(post, currentNode, origin);
         }
-        if (writeParagraph) {
-            writer.Write("</p>");
+
+        if (entireMatch.Groups[HtmlBodyId].TryGetValue(out string? htmlBody)) {
+            // Span should be the only special case allowed that allows for Markdown parsing within it
+            Match match = MarkdownRegexLib.FindSpanHtmlRegex.Match(htmlBody);
+            if (match.Groups[SpanTagId].TryGetValue(out string? spanTag) && match.Groups[SpanBodyId].TryGetValue(out string? spanBody)) {
+                parser.PushElementToStack("</span>", currentNode, origin, MdElement.HtmlContent);
+                parser.AddMultiLineMatchesToStack(spanBody, currentNode, origin | ParserOrigin.Html);
+                parser.PushElementToStack(spanTag, currentNode, origin, MdElement.HtmlContent);
+            }
+            else {
+                parser.PushElementToStack(htmlBody, currentNode, origin, MdElement.HtmlContent);
+            }
+        }
+
+        if (entireMatch.Groups[HtmlPreId].TryGetValue(out string? pre)) {
+            parser.AddSingleLineMatchesToStack(pre, currentNode, origin);
         }
     }
 }

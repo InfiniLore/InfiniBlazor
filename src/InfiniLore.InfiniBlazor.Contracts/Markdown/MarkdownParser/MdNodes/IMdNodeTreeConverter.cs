@@ -1,14 +1,15 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Text.RegularExpressions;
-
 namespace InfiniLore.InfiniBlazor.Markdown;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface ISingleLineSectionParser {
-    public SingleLineOrigin SkipOnOrigin { get; }
+public interface IMdNodeTreeConverter<out T> {
+    T Convert(IMdNodeTree tree);
+}
 
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, SingleLineOrigin origin);
+public interface IMdNodeTreeToWriterConverter<in T> where T : TextWriter {
+    void Convert(IMdNodeTree tree, T writer);
 }

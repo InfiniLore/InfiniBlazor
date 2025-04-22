@@ -9,22 +9,21 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISingleLineSectionParser>("code")]
-public class CodeInlineSectionParser(ICachedRegexGroupNames groupNames) : ISingleLineSectionParser {
-    public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.Code;
+[InjectableSingleton<ISectionHandler>("code")]
+public class CodeInlineSectionParser : ISectionHandler {
 
-    private readonly int CId = groupNames.GetSingleLineGroupId("c");
+    private static readonly int CId = CachedRegexGroupNames.GetSingleLineGroupId("c");
+    public ParserOrigin SkipOnOrigin => ParserOrigin.Code;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, SingleLineOrigin origin) {
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[CId].TryGetValue(out string? codeValue)) return;
 
         string normalizedBackticks = codeValue.Replace("\\`", "`");
         string output = HtmlEncoder.Default.Encode(normalizedBackticks);
 
-        writer.Write("<code>");
-        writer.Write(output);
-        writer.Write("</code>");
+        IMdNode codeNode = currentNode.AddChildNode(MdElement.CodeInline);
+        codeNode.WithContent(output);
     }
 }

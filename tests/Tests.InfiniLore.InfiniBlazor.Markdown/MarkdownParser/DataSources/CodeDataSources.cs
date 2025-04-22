@@ -1,6 +1,9 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -22,8 +25,10 @@ public static class CodeDataSources {
             <pre><code>
             const code = sample();
             </code></pre>
-            """
-        );
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                rootNode.AddCodeBlock("const code = sample();\n");
+            });
 
         yield return static () => new MarkdownTestDto(SectionName,
             """
@@ -35,8 +40,11 @@ public static class CodeDataSources {
             <pre><code class="language-javascript">
             const code = sample();
             </code></pre>
-            """
-        );
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode code = rootNode.AddCodeBlock("const code = sample();\n");
+                code.WithClass("language-javascript");
+            });
 
         yield return static () => new MarkdownTestDto(SectionName,
             """
@@ -46,14 +54,16 @@ public static class CodeDataSources {
             end tell
             ```
             """,
-            $"""
+            """
             <pre><code>
             tell application "Foo"
                 beep
             end tell
             </code></pre>
-            """
-        );
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                rootNode.AddCodeBlock("tell application \"Foo\"\n    beep\nend tell\n");
+            });
 
         yield return static () => new MarkdownTestDto(SectionName,
             """
@@ -65,7 +75,9 @@ public static class CodeDataSources {
             <pre><code>
             **some valid markdown**
             </code></pre>
-            """
-        );
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                rootNode.AddCodeBlock("**some valid markdown**\n");
+            });
     }
 }

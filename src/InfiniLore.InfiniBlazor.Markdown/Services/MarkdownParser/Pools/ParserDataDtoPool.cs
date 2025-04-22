@@ -2,21 +2,20 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using Microsoft.Extensions.ObjectPool;
-using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Pools;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class MatchQueuePool {
-    private const int InitialCapacity = 100;
-    private static readonly ObjectPool<Queue<Match>> Pool =
-        new DefaultObjectPool<Queue<Match>>(new DefaultPooledObjectPolicy<Queue<Match>>(), InitialCapacity);
+public static class ParserDataDtoPool {
+    private const int InitialCapacity = 255;
+    private static readonly ObjectPool<ParserDataDto> Pool =
+        new DefaultObjectPool<ParserDataDto>(new DefaultPooledObjectPolicy<ParserDataDto>(), InitialCapacity);
 
-    public static Queue<Match> Get() => Pool.Get();
+    public static ParserDataDto Get() => Pool.Get();
 
-    public static void Return(Queue<Match> builder) {
-        builder.Clear();
-        Pool.Return(builder);
+    public static void Return(ParserDataDto stack) {
+        stack.Clear();
+        Pool.Return(stack);
     }
 }

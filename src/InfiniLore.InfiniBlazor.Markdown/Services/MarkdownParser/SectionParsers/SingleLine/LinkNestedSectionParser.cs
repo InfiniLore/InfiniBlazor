@@ -2,47 +2,42 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISingleLineSectionParser>("linkNested")]
-public class LinkNestedSectionParser(IServiceProvider provider, ICachedRegexGroupNames groupNames) : ISingleLineSectionParser {
-    private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
-    public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.NotSkipped;
-    
-    private readonly int LnTextId = groupNames.GetSingleLineGroupId("lnText");
-    private readonly int LnHrefId = groupNames.GetSingleLineGroupId("lnHref");
-    private readonly int LnTitleId = groupNames.GetSingleLineGroupId("lnTitle");
-    private readonly int LnBangId = groupNames.GetSingleLineGroupId("lnBang");
+[InjectableSingleton<ISectionHandler>("linkNested")]
+public class LinkNestedSectionParser : ISectionHandler {
+
+    private static readonly int LnTextId = CachedRegexGroupNames.GetSingleLineGroupId("lnText");
+    private static readonly int LnHrefId = CachedRegexGroupNames.GetSingleLineGroupId("lnHref");
+    private static readonly int LnTitleId = CachedRegexGroupNames.GetSingleLineGroupId("lnTitle");
+    private static readonly int LnBangId = CachedRegexGroupNames.GetSingleLineGroupId("lnBang");
+    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, SingleLineOrigin origin) {
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[LnTextId].TryGetValue(out string? linkText)) return;
         if (!entireMatch.Groups[LnHrefId].TryGetValue(out string? linkHref)) return;
 
-        string titleText = entireMatch.Groups[LnTitleId].TryGetValue(out string? altTextValue) ? $" title=\"{altTextValue}\"" : string.Empty;
-
         if (entireMatch.Groups[LnBangId].Success) {
-            writer.Write("<img src=\"");
-            writer.Write(linkHref);
-            writer.Write("\" alt=\"");
-            writer.Write(linkText);
-            writer.Write('"');
-            writer.Write(titleText);
-            writer.Write('>');
+            IMdNode imgNode = currentNode.AddChildNode(MdElement.Image);
+            imgNode.WithAttribute("src", $"{linkHref}");
+            imgNode.WithAttribute("alt", $"{linkText}");
+
+            if (entireMatch.Groups[LnTitleId].TryGetValue(out string? altTextValue)) {
+                imgNode.WithAttribute("title", $"{altTextValue}");
+            }
+
             return;
         }
 
-        writer.Write("<a href=\"");
-        writer.Write(linkHref);
-        writer.Write("\">");
+        IMdNode linkNode = currentNode.AddChildNode(MdElement.Link);
+        linkNode.WithAttribute("href", $"{linkHref}");
 
-        _markdownParser.Value.ParseSingleline(linkText, writer, origin);
-        writer.Write("</a>");
+        parser.AddSingleLineMatchesToStack(linkText, linkNode, origin);
     }
 }

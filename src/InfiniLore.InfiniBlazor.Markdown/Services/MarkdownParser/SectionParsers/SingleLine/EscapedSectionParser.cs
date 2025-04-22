@@ -8,21 +8,15 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISingleLineSectionParser>("escaped")]
-public class EscapedSectionParser: ISingleLineSectionParser {
-    public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.NotSkipped;
+[InjectableSingleton<ISectionHandler>("escaped")]
+public class EscapedSectionParser : ISectionHandler {
+    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match _, Group group, IMarkdownWriter writer, SingleLineOrigin origin) {
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         char value = group.ValueSpan[1];
-        ReadOnlySpan<char> span = [value];
-        if (HtmlSymbolLookup.AlternateLookup.TryGetValue(span, out string? alternate)) {
-            writer.Write(alternate);
-            return;
-        }
-        
-        writer.Write(value);
+        currentNode.WithContent(value.ToString());
     }
 }

@@ -2,26 +2,25 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMultiLineSectionParser>("headingSimple")]
-public class HeadingSimpleSectionParser(IServiceProvider provider, ICachedRegexGroupNames groupName) : IMultiLineSectionParser {
-    private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
-    
-    private readonly int HSTextId = groupName.GetMultiLineGroupId("hsText");
+[InjectableSingleton<ISectionHandler>("headingSimple")]
+public class HeadingSimpleSectionParser : ISectionHandler {
+
+    private static readonly int HSTextId = CachedRegexGroupNames.GetMultiLineGroupId("hsText");
+    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, MultiLineOrigin origin) {
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[HSTextId].TryGetValue(out string? headerSimpleText)) return;
 
-        writer.Write("<h1>");
-        _markdownParser.Value.ParseSingleline(headerSimpleText, writer);
-        writer.Write("</h1>");
+
+        IMdNode headingElement = currentNode.AddChildNode(MdElement.H1);
+        parser.AddSingleLineMatchesToStack(headerSimpleText, headingElement, origin);
     }
 }

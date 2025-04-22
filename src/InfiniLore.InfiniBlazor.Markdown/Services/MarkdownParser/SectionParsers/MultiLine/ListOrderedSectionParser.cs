@@ -2,53 +2,51 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMultiLineSectionParser>("listOrdered")]
-public class ListOrderedSectionParser(IServiceProvider provider, ICachedRegexGroupNames groupName) : IMultiLineSectionParser {
-    private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
-    
-    private readonly int LTaskId = groupName.GetListGroupId("lTask");
-    private readonly int LHeadId = groupName.GetListGroupId("lHead");
-    private readonly int LBodyId = groupName.GetListGroupId("lBody");
-    
+[InjectableSingleton<ISectionHandler>("listOrdered")]
+public class ListOrderedSectionParser : ISectionHandler {
+    private readonly int LBodyId = CachedRegexGroupNames.GetListGroupId("lBody");
+    private readonly int LHeadId = CachedRegexGroupNames.GetListGroupId("lHead");
+
+    private readonly int LTaskId = CachedRegexGroupNames.GetListGroupId("lTask");
+    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, MultiLineOrigin origin) {
-        if (!group.TryGetValue(out string? listOrderedBody)) return;
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+        if (!entireMatch.TryGetValue(out string? listOrderedBody)) return;
 
         List<Match> matchCollection = MarkdownRegexLib.ListItemBodyRegex.Matches(listOrderedBody).ToList();
         int matchCount = matchCollection.Count;
 
-        writer.Write("<ol>");
+        IMdNode olNode = currentNode.AddChildNode(MdElement.ListOrdered);
         for (int index = 0; index < matchCount; index++) {
             Match match = matchCollection[index];
             GroupCollection groups = match.Groups;
 
-            writer.Write("<li>");
+            IMdNode listItemNode = olNode.AddChildNode(MdElement.ListItem);
+
+            if (groups[LBodyId].TryGetValue(out string? listBody) && listBody.IsNotNullOrWhiteSpace()) {
+                string normalizedBody = NormalizationHelper.NormalizeIndentation(listBody);
+                parser.AddMultiLineMatchesToStack(normalizedBody, listItemNode, origin | ParserOrigin.PreserveHtml);
+            }
+
+            if (groups[LHeadId].TryGetValue(out string? listHeader)) {
+                parser.AddSingleLineMatchesToStack(listHeader, listItemNode, origin);
+            }
+
+            // ReSharper disable once InvertIf
             if (groups[LTaskId].TryGetValue(out string? taskMarker)) {
                 bool isChecked = taskMarker.Contains('x');
-                writer.Write($"<input type=\"checkbox\" disabled {(isChecked ? "checked" : "")} /> ");
+                MdElement element = isChecked ? MdElement.CheckboxSelected : MdElement.CheckboxUnselected;
+                parser.PushElementToStack(null, listItemNode, origin, element);
             }
-            
-            if (groups[LHeadId].TryGetValue(out string? listHeader)) {
-                _markdownParser.Value.ParseSingleline(listHeader, writer);
-            }
-
-            if (groups[LBodyId].TryGetValue(out string? listBody)) {
-                string normalizedBody = NormalizationHelper.NormalizeIndentation(listBody);
-                _markdownParser.Value.ParseMultiline(normalizedBody, writer,origin | MultiLineOrigin.PreserveHtml);
-            }
-
-            writer.Write("</li>");
         }
-
-        writer.Write("</ol>");
     }
 }

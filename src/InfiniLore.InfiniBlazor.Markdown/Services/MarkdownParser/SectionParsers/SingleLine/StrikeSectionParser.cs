@@ -2,27 +2,24 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISingleLineSectionParser>("strike")]
-public class StrikeSectionParser(IServiceProvider provider, ICachedRegexGroupNames groupNames) : ISingleLineSectionParser {
-    private readonly Lazy<IMarkdownParser> _markdownParser = new(provider.GetRequiredService<IMarkdownParser>);
-    public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.Strike;
-    
-    private readonly int SId = groupNames.GetSingleLineGroupId("s");
+[InjectableSingleton<ISectionHandler>("strike")]
+public class StrikeSectionParser : ISectionHandler {
+
+    private static readonly int SId = CachedRegexGroupNames.GetSingleLineGroupId("s");
+    public ParserOrigin SkipOnOrigin => ParserOrigin.Strike;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, SingleLineOrigin origin) {
-        if (!entireMatch.Groups[SId].TryGetValue(out string? italicValue)) return;
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+        if (!entireMatch.Groups[SId].TryGetValue(out string? strikeValue)) return;
 
-        writer.Write("<s>");
-        _markdownParser.Value.ParseSingleline(italicValue, writer, origin | SkipOnOrigin);
-        writer.Write("</s>");
+        IMdNode node = currentNode.AddChildNode(MdElement.Strikethrough);
+        parser.AddSingleLineMatchesToStack(strikeValue, node, origin | SkipOnOrigin);
     }
 }

@@ -1,6 +1,9 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -14,42 +17,81 @@ public static class BoldDataSources {
     public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
         yield return static () => new MarkdownTestDto(SectionName,
             "**bold**",
-            "<p><strong>bold</strong></p>"
-        );
-        
+            "<p><strong>bold</strong></p>",
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.AddBold("bold");
+            });
+
         yield return static () => new MarkdownTestDto(SectionName,
             @"**\*bold**",
-            "<p><strong>*bold</strong></p>"
-        );
-        
+            "<p><strong>*bold</strong></p>",
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                IMdNode bold = paragraph.AddBold("*");// Escaped char
+                bold.WithContent("bold");
+            });
+
         yield return static () => new MarkdownTestDto(SectionName,
             @"**bold\***",
-            "<p><strong>bold*</strong></p>"
+            "<p><strong>bold*</strong></p>",
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                IMdNode bold = paragraph.AddBold("bold");
+                bold.WithContent("*");// Escaped char
+            }// Escaped char
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "**bold *nested italic***",
-            "<p><strong>bold <em>nested italic</em></strong></p>"
-        );
+            "<p><strong>bold <em>nested italic</em></strong></p>",
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                IMdNode bold = paragraph.AddBold("bold ");
+                bold.AddItalic("nested italic");
+            });
 
         yield return static () => new MarkdownTestDto(SectionName,
             "***nested italic* bold**",
-            "<p><strong><em>nested italic</em> bold</strong></p>"
+            "<p><strong><em>nested italic</em> bold</strong></p>",
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                IMdNode bold = paragraph.AddBold();
+                bold.AddItalic("nested italic");
+                bold.WithContent(" bold");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "** \\* **",
-            "<p><strong> * </strong></p>"
-        );
+            "<p><strong> * </strong></p>",
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                IMdNode bold = paragraph.AddBold(" ");
+                bold.WithContent("*");// Escaped char
+                bold.WithContent(" ");
+            });
 
         yield return static () => new MarkdownTestDto(SectionName,
             "**bold *nested \\* italic***",
-            "<p><strong>bold <em>nested * italic</em></strong></p>"
-        );
+            "<p><strong>bold <em>nested * italic</em></strong></p>",
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                IMdNode bold = paragraph.AddBold("bold ");
+                IMdNode italic = bold.AddItalic();
+                italic.WithContent("nested ");
+                italic.WithContent("*");// Escaped char
+                italic.WithContent(" italic");
+            });
 
         yield return static () => new MarkdownTestDto(SectionName,
-            "some text *****",  // to exclude the <hr> tag being triggered
-            "<p>some text <strong>*</strong></p>"
+            "some text *****",// to exclude the <hr> tag being triggered
+            "<p>some text <strong>*</strong></p>",
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.WithContent("some text ");
+                paragraph.AddBold("*");
+            }
         );
     }
 }

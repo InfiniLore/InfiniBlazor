@@ -2,13 +2,13 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using InfiniLore.InfiniBlazor.Markdown.MarkdownWriters;
+using InfiniLore.InfiniBlazor.Markdown.MdNodes;
 using InfiniLore.InfiniBlazor.Markdown.Pools;
-using InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown;
@@ -16,12 +16,16 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableService<IMarkdownParser>(ServiceLifetime.Singleton)]
-public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownParser> logger) : IMarkdownParser {
-    private readonly FrozenDictionary<string, IMultiLineSectionParser> _multilineGroupToParsers = ToFrozenDictionary<IMultiLineSectionParser>(MultilineGroupNames, logger, serviceProvider);
-    private readonly FrozenDictionary<string, ISingleLineSectionParser> _singlelineGroupToParsers = ToFrozenDictionary<ISingleLineSectionParser>(SinglelineGroupNames, logger, serviceProvider);
+public class MarkdownParser(
+    IServiceProvider serviceProvider,
+    IMdNodeTreeConverter<string> stringTreeConverter,
+    ILogger<MarkdownParser> logger
+) : IMarkdownParser {
+    private readonly FrozenDictionary<string, ISectionHandler> _sectionHandlers = ToFrozenDictionary<ISectionHandler>(GroupNames, logger, serviceProvider);
 
-    private static ImmutableArray<string> MultilineGroupNames => [
-        "remainder",
+    private static ImmutableArray<string> GroupNames => [
+        // Multiline
+        "paragraph",
         "heading",
         "codeBlock",
         "headingSimple",
@@ -30,10 +34,9 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
         "table",
         "blockQuote",
         "htmlBody",
-        "horizontalRule"
-    ];
+        "horizontalRule",
 
-    private static ImmutableArray<string> SinglelineGroupNames => [
+        // Singleline
         "escaped",
         "bold",
         "italic",
@@ -46,28 +49,12 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
         "underline",
         "emote",
         "tag"
-        // "remainder" // Remainder for single-lines are their own separate thing, see service below
     ];
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public string Parse(string markdown) {
-        StringBuilderMarkdownWriter writer = StringBuilderMarkdownWriterPool.Get();
-        try {
-            ParseMultiline(markdown, writer);
-            return writer.ToString();
-        }
-        finally {
-            StringBuilderMarkdownWriterPool.Return(writer);
-        }
-    }
-
-    public void Parse<T>(string markdown, T writer) where T : TextWriter {
-        var markdownWriter = new TextWriterMarkdownWriter<T>(writer);
-        ParseMultiline(markdown, markdownWriter);
-    }
-
+    #region Constructor Helpers
     private static FrozenDictionary<string, T> ToFrozenDictionary<T>(ImmutableArray<string> keyNames, ILogger<MarkdownParser> logger, IServiceProvider serviceProvider) {
         int keyCount = keyNames.Length;
         var dictionaryBuilder = new Dictionary<string, T>(keyCount);
@@ -86,87 +73,94 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
         return dictionaryBuilder.ToFrozenDictionary();
 
     }
+    #endregion
 
     #region Parsing Methods
-    public void ParseMultiline(string markdown, IMarkdownWriter writer, MultiLineOrigin origin = MultiLineOrigin.Undefined) {
-        Queue<Match> matchesQueue = MatchQueuePool.Get();
+    public bool TryParseToString(string markdown,[NotNullWhen(true)] out string? output) {
+        output = null;
+        if (markdown.IsNullOrWhiteSpace()) return false;
 
         try {
-            // Preload matches into the queue
-            MatchCollection matches = MarkdownRegexLib.MultilineStructuresRegex.Matches(markdown);
-            matchesQueue.EnsureCapacity(matches.Count);
-            foreach (Match match in matches) {
-                matchesQueue.Enqueue(match);
-            }
-
-            // Process matches
-            while (matchesQueue.TryDequeue(out Match? match)) {
-                GroupCollection groups = match.Groups;
-                int count = groups.Count;
-
-                for (int index = 0; index < count; index++) {
-                    Group group = groups[index];
-                    if (!group.Success) continue;
-                    if (!_multilineGroupToParsers.TryGetValue(group.Name, out IMultiLineSectionParser? sectionParser)) continue;
-
-                    sectionParser.ParseToStringBuilder(match, group, writer, origin);
-                }
-            }
+            IMdNodeTree nodeTree = ParseToNodeTree(markdown);
+            output = stringTreeConverter.Convert(nodeTree);
+            return true;
         }
-        finally {
-            MatchQueuePool.Return(matchesQueue);
+        catch (Exception e) {
+            logger.LogError(e, "Error parsing markdown.");
+            return false;
         }
     }
 
+    public void ParseToWriter<T>(string markdown, T writer) where T : TextWriter {
+        IMdNodeTree nodeTree = ParseToNodeTree(markdown);
+        var converter = serviceProvider.GetRequiredService<IMdNodeTreeToWriterConverter<T>>();
+        converter.Convert(nodeTree, writer);
+    }
 
-    public void ParseSingleline(string markdown, IMarkdownWriter writer, SingleLineOrigin origin = SingleLineOrigin.Undefined) {
-        Queue<Match> matchesQueue = MatchQueuePool.Get();
-
+    public IMdNodeTree ParseToNodeTree(string markdown) {
+        RunningMarkdownParser runningParser = RunningMarkdownParserPool.Get();
         try {
-            // Preload matches into the queue
-            MatchCollection matches = MarkdownRegexLib.SinglelineStructuresRegex.Matches(markdown);
-            matchesQueue.EnsureCapacity(matches.Count);
-            foreach (Match match in matches) {
-                matchesQueue.Enqueue(match);
-            }
+            var nodeTree = new MdNodeTree();
+            runningParser.NodeTree = nodeTree;
+        
+            // ReSharper disable once SuggestVarOrType_Elsewhere
+            var alternateLookup = _sectionHandlers.GetAlternateLookup<ReadOnlySpan<char>>();
+            
+            // Preload matches into the stack
+            runningParser.AddMultiLineMatchesToStack(markdown, nodeTree.RootNode, ParserOrigin.Undefined);
 
-            int currentIndex = 0;
-            ReadOnlySpan<char> markdownSpan = markdown.AsSpan();
+            // Process matches
+            while (runningParser.TryPopDto(out ParserDataDto? dataDto)) {
+                IMdNode currentNode = dataDto.Node;
+                ParserOrigin origin = dataDto.Origin;
 
-            while (matchesQueue.TryDequeue(out Match? match)) {
-                GroupCollection groups = match.Groups;
-                int count = groups.Count;
-                int matchIndex = match.Index;
+                switch (dataDto) {
+                    // Process the match, which will happen most of the time
+                    case { IsMatch: true, Match: var match }: {
+                        GroupCollection groups = match.Groups;
+                        int count = groups.Count;
 
-                // Add unmatched text before the current match
-                if (matchIndex > currentIndex) {
-                    ReadOnlySpan<char> unmatchedText = markdownSpan.Slice(currentIndex, matchIndex - currentIndex);
-                    RemainderSectionParser.ParseToStringBuilder(ref unmatchedText, writer);
+                        for (int index = 0; index < count; index++) {
+                            Group group = groups[index];
+                            if (group is not { Success: true, Name: {} name }) continue;
+                            if (!alternateLookup.TryGetValue(name, out ISectionHandler? handler)) continue;
+
+                            ParserOrigin handlerOrigin = handler.SkipOnOrigin;
+                            if (handlerOrigin is not ParserOrigin.NotSkipped && (origin & handlerOrigin) == handlerOrigin) continue;
+
+                            handler.HandleMatch(runningParser, currentNode, match, group, origin);
+                        }
+                        break;
+                    }
+
+                    // Needed for adding child text content to a node
+                    //      Comes from a SingeLine match which had uncaught section and thus needs to be handled to add the text content
+                    case {Element: MdElement.HtmlContent, Content: {} newContent}: {
+                        currentNode.WithHtmlContent(newContent);
+                        break;
+                    }
+
+                    case {Element: MdElement.Content, Content: {} newContent }: {
+                        currentNode.WithContent(newContent);
+                        break;
+                    }
+
+                    case {Element: var element, Content: var newContent }: {
+                        IMdNode newNode = currentNode.AddChildNode(element);
+                        if (newContent is not null) newNode.WithContent(newContent);
+                        break;
+                    }
                 }
 
-                for (int index = 0; index < count; index++) {
-                    Group group = groups[index];
-                    if (!group.Success) continue;
-                    if (!_singlelineGroupToParsers.TryGetValue(group.Name, out ISingleLineSectionParser? sectionParser)) continue;
-
-                    SingleLineOrigin sectionParserOrigin = sectionParser.SkipOnOrigin;
-                    if ((origin & sectionParserOrigin) == sectionParserOrigin) continue;
-
-                    sectionParser.ParseToStringBuilder(match, group, writer, origin);
-                }
-
-                // Update the current position to the end of the current match
-                currentIndex = matchIndex + match.Length;
+                // Remember to clean up the DTO, else it will not return to the pool
+                ParserDataDtoPool.Return(dataDto);
             }
 
-            // ReSharper disable once InvertIf
-            if (currentIndex < markdown.Length) {
-                ReadOnlySpan<char> remainingText = markdownSpan[currentIndex..];
-                RemainderSectionParser.ParseToStringBuilder(ref remainingText, writer);
-            }
+            return nodeTree;
         }
         finally {
-            MatchQueuePool.Return(matchesQueue);
+            // Also handles ParserDataDto cleanup if still present, so no nested try-finally block needed.
+            RunningMarkdownParserPool.Return(runningParser);
         }
     }
     #endregion

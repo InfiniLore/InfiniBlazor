@@ -8,20 +8,18 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISingleLineSectionParser>("tag")]
-public class TagSectionParser(ICachedRegexGroupNames groupNames) : ISingleLineSectionParser {
-    public SingleLineOrigin SkipOnOrigin => SingleLineOrigin.NotSkipped;
+[InjectableSingleton<ISectionHandler>("tag")]
+public class TagSectionParser : ISectionHandler {
 
-    private readonly int TTextId = groupNames.GetSingleLineGroupId("tText");
+    private static readonly int TextId = CachedRegexGroupNames.GetSingleLineGroupId("tText");
+    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void ParseToStringBuilder(Match entireMatch, Group group, IMarkdownWriter writer, SingleLineOrigin origin) {
-        if (!entireMatch.Groups[TTextId].TryGetValueSpan(out ReadOnlySpan<char> tagValue)) return;
+    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+        if (!entireMatch.Groups[TextId].TryGetValue(out string? tagValue)) return;
 
-        writer.Write("<span>");
-        writer.Write("#");
-        writer.Write(tagValue);
-        writer.Write("</span>");
+        IMdNode spanNode = currentNode.AddChildNode(MdElement.Tag);
+        spanNode.WithContent(tagValue);
     }
 }

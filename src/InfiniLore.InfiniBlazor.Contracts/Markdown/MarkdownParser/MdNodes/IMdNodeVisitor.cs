@@ -2,12 +2,11 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 namespace InfiniLore.InfiniBlazor.Markdown;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMarkdownWriter {
-    IMarkdownWriter Write(string value);
-    IMarkdownWriter Write(char value);
-    IMarkdownWriter Write(int value);
-    IMarkdownWriter Write(ReadOnlySpan<char> value);
+public interface IMdNodeVisitor {
+    int Depth { get; }
+    IMdNode Node { get; }
 }

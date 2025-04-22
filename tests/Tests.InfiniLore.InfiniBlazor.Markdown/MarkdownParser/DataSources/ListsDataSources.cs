@@ -1,6 +1,9 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -32,7 +35,16 @@ public static class ListsDataSources {
                 </li>
                 <li>list</li>
             </ol>
-            """
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode list = rootNode.AddListOrdered();
+                list.AddListItem("this");
+                list.AddListItem("is");
+                IMdNode item = list.AddListItem("a");
+                IMdNode sublist = item.AddListUnordered();
+                sublist.AddListItem("nested");
+                list.AddListItem("list");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -52,7 +64,15 @@ public static class ListsDataSources {
                 </li>
                 <li>Item 2</li>
             </ul>
-            """
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode list = rootNode.AddListUnordered();
+                IMdNode item = list.AddListItem("Item 1");
+                IMdNode sublist = item.AddListUnordered();
+                sublist.AddListItem("Subitem 1.1");
+                sublist.AddListItem("Subitem 1.2");
+                list.AddListItem("Item 2");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -74,7 +94,16 @@ public static class ListsDataSources {
                 </li>
                 <li>Ordered item 3</li>
             </ol>
-            """
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode list = rootNode.AddListOrdered();
+                list.AddListItem("Ordered item 1");
+                IMdNode item = list.AddListItem("Ordered item 2");
+                IMdNode sublist = item.AddListOrdered();
+                sublist.AddListItem("Nested ordered item 2.1");
+                sublist.AddListItem("Nested ordered item 2.2");
+                list.AddListItem("Ordered item 3");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -96,7 +125,16 @@ public static class ListsDataSources {
                 </li>
                 <li>Unordered item 3</li>
             </ul>
-            """
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode list = rootNode.AddListUnordered();
+                list.AddListItem("Unordered item 1");
+                IMdNode item = list.AddListItem("Unordered item 2");
+                IMdNode sublist = item.AddListOrdered();
+                sublist.AddListItem("Mixed nested ordered item 2.1");
+                sublist.AddListItem("Mixed nested ordered item 2.2");
+                list.AddListItem("Unordered item 3");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -116,7 +154,15 @@ public static class ListsDataSources {
                 </li>
                 <li>Second ordered item</li>
             </ol>
-            """
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode list = rootNode.AddListOrdered();
+                IMdNode item = list.AddListItem("First ordered item");
+                IMdNode sublist = item.AddListUnordered();
+                sublist.AddListItem("Subitem A");
+                sublist.AddListItem("Subitem B");
+                list.AddListItem("Second ordered item");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -142,14 +188,24 @@ public static class ListsDataSources {
                     </ul>
                 </li>
             </ul>
-            """
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode list = rootNode.AddListUnordered();
+                IMdNode item = list.AddListItem("Top-level item");
+                IMdNode sublist = item.AddListUnordered();
+                IMdNode subitem1 = sublist.AddListItem("Subitem level 1");
+                IMdNode subList1 = subitem1.AddListUnordered();
+                IMdNode subitem2 = subList1.AddListItem("Subitem level 2");
+                IMdNode subList2 = subitem2.AddListUnordered();
+                subList2.AddListItem("Subitem level 3");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             """
             - Top item 1
             - Top item 2
-            
+
                 Unrelated text block in the same list
 
             - Top item 3
@@ -163,7 +219,17 @@ public static class ListsDataSources {
             <ul>
                 <li>Top item 3</li>
             </ul>
-            """
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode list = rootNode.AddListUnordered();
+                list.AddListItem("Top item 1");
+                list.AddListItem("Top item 2");
+
+                rootNode.AddParagraph("Unrelated text block in the same list");
+
+                IMdNode list2 = rootNode.AddListUnordered();
+                list2.AddListItem("Top item 3");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -181,7 +247,15 @@ public static class ListsDataSources {
                 </li>
                 <li>Another item</li>
             </ol>
-            """
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode list = rootNode.AddListOrdered();
+                IMdNode item = list.AddListItem("Extra spaces for alignment");
+                IMdNode sublist = item.AddListUnordered();
+                sublist.AddListItem("This is a sublist");
+
+                list.AddListItem("Another item");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -196,7 +270,13 @@ public static class ListsDataSources {
                 <li>A list item with <em>italic text</em></li>
                 <li>A list item with <code>inline code</code></li>
             </ul>
-            """
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode list = rootNode.AddListUnordered();
+                list.AddListItem("A list item with ").AddBold("bold text");
+                list.AddListItem("A list item with ").AddItalic("italic text");
+                list.AddListItem("A list item with ").AddCodeInline("inline code");
+            }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -222,60 +302,99 @@ public static class ListsDataSources {
                     </ul>
                 </li>
             </ul>
-            """
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode list = rootNode.AddListUnordered();
+                IMdNode list2 = list.AddListItem("This list has").AddListUnordered();
+                IMdNode list3 = list2.AddListItem("Uneven indentation").AddListUnordered();
+                IMdNode list4 = list3.AddListItem("But still renders").AddListUnordered();
+                list4.AddListItem("Correctly!");
+            }
         );
 
 
-        yield return static () => new MarkdownTestDto( SectionName,
-            Markdown: """
+        yield return static () => new MarkdownTestDto(SectionName,
+            """
             1. this
             2. [ ] is
             3. [x] a
               - [X] nested
             4. todo list
             """,
-            HtmlOutput: """
+            """
             <ol>
                 <li>this</li>
                 <li><input type="checkbox" disabled/>is</li>
                 <li><input type="checkbox" disabled checked/>a
                     <ul>
-                    <li>
-                    <input type="checkbox" disabled checked/>nested</li>
+                        <li><input type="checkbox" disabled checked/>nested</li>
                     </ul>
                 </li>
                 <li>todo list</li>
             </ol>
-            """
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode list = rootNode.AddListOrdered();
+                list.AddListItem("this");
+                IMdNode item1 = list.AddListItem();
+                item1.AddCheckboxUnselected();
+                item1.WithContent("is");
+
+                IMdNode item2 = list.AddListItem();
+                item2.AddCheckboxSelected();
+                item2.WithContent("a");
+                IMdNode sublist = item2.AddListUnordered();
+                IMdNode item3 = sublist.AddListItem();
+                item3.AddCheckboxSelected();
+                item3.WithContent("nested");
+
+                list.AddListItem("todo list");
+            }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             """
             - [ ] Task with sublist
-              - Subitem A
-              - Subitem B
+              - SubItem A
+              - SubItem B
             - [x] Completed task with sublist
-              - Subitem C
-              - Subitem D
+              - SubItem C
+              - SubItem D
             """,
             """
             <ul>
                 <li><input type="checkbox" disabled />Task with sublist
                     <ul>
-                        <li>Subitem A</li>
-                        <li>Subitem B</li>
+                        <li>SubItem A</li>
+                        <li>SubItem B</li>
                     </ul>
                 </li>
                 <li><input type="checkbox" disabled checked />Completed task with sublist
                     <ul>
-                        <li>Subitem C</li>
-                        <li>Subitem D</li>
+                        <li>SubItem C</li>
+                        <li>SubItem D</li>
                     </ul>
                 </li>
             </ul>
-            """
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode list = rootNode.AddListUnordered();
+                IMdNode item0 = list.AddListItem();
+                item0.AddCheckboxUnselected();
+                item0.WithContent("Task with sublist");
+                IMdNode nestedList0 = item0.AddListUnordered();
+                nestedList0.AddListItem("SubItem A");
+                nestedList0.AddListItem("SubItem B");
+
+                IMdNode item1 = list.AddListItem();
+                item1.AddCheckboxSelected();
+                item1.WithContent("Completed task with sublist");
+                IMdNode nestedList1 = item1.AddListUnordered();
+                nestedList1.AddListItem("SubItem C");
+                nestedList1.AddListItem("SubItem D");
+            }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             """
             1. Ordered task list
@@ -288,9 +407,22 @@ public static class ListsDataSources {
                 <li><input type="checkbox" disabled />Incomplete task in ordered list</li>
                 <li><input type="checkbox" disabled checked />Completed task in ordered list</li>
             </ol>
-            """
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode list = rootNode.AddListOrdered();
+                list.AddListItem("Ordered task list");
+
+                IMdNode item1 = list.AddListItem();
+                item1.AddCheckboxUnselected();
+                item1.WithContent("Incomplete task in ordered list");
+
+                IMdNode item2 = list.AddListItem();
+                item2.AddCheckboxSelected();
+                item2.WithContent("Completed task in ordered list");
+
+            }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             """
             - [x] Mixed list
@@ -308,14 +440,30 @@ public static class ListsDataSources {
                 </li>
                 <li>Another item</li>
             </ul>
-            """
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode list = rootNode.AddListUnordered();
+                IMdNode item0 = list.AddListItem();
+                item0.AddCheckboxSelected();
+                item0.WithContent("Mixed list");
+
+                IMdNode nestedList = item0.AddListOrdered();
+                IMdNode item0A = nestedList.AddListItem();
+                item0A.AddCheckboxUnselected();
+                item0A.WithContent("Subtask 1");
+                IMdNode item0B = nestedList.AddListItem();
+                item0B.AddCheckboxSelected();
+                item0B.WithContent("Subtask 2");
+
+                list.AddListItem("Another item");
+            }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             """
             - Normal item
             - [ ] Task item without sublist
-            
+
                 Unrelated paragraph between list items.
 
             - [x] Another completed task
@@ -329,9 +477,23 @@ public static class ListsDataSources {
             <ul>
                 <li><input type="checkbox" disabled checked />Another completed task</li>
             </ul>
-            """
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode list0 = rootNode.AddListUnordered();
+                list0.AddListItem("Normal item");
+                IMdNode item01 = list0.AddListItem();
+                item01.AddCheckboxUnselected();
+                item01.WithContent("Task item without sublist");
+
+                rootNode.AddParagraph("Unrelated paragraph between list items.");
+
+                IMdNode list1 = rootNode.AddListUnordered();
+                IMdNode item10 = list1.AddListItem();
+                item10.AddCheckboxSelected();
+                item10.WithContent("Another completed task");
+            }
         );
-        
+
         yield return static () => new MarkdownTestDto(SectionName,
             """
             - Normal item
@@ -347,12 +509,25 @@ public static class ListsDataSources {
                     <p>related paragraph between list items.</p>
                 </li>
             </ul>
-            
+
             <ul>
                 <li><input type="checkbox" disabled checked />Another completed task</li>
             </ul>
-            """
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode list0 = rootNode.AddListUnordered();
+                list0.AddListItem("Normal item");
+                IMdNode item01 = list0.AddListItem();
+                item01.AddCheckboxUnselected();
+                item01.WithContent("Task item without sublist");
+                item01.AddParagraph("related paragraph between list items.");
+
+                IMdNode list1 = rootNode.AddListUnordered();
+                IMdNode item10 = list1.AddListItem();
+                item10.AddCheckboxSelected();
+                item10.WithContent("Another completed task");
+            }
         );
-        
+
     }
 }
