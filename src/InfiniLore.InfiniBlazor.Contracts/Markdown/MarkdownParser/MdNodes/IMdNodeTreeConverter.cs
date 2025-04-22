@@ -6,6 +6,10 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMdNodeTreeConverter<T> {
+public interface IMdNodeTreeConverter<out T> {
     T Convert(IMdNodeTree tree);
+}
+
+public interface IMdNodeTreeConverter {
+    void Convert(IMdNodeTree tree);
 }

@@ -79,7 +79,9 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
     }
 
     public void ParseToWriter<T>(string markdown, T writer) where T : TextWriter {
-        throw new NotImplementedException();
+        IMdNodeTree nodeTree = ParseToNodeTree(markdown);
+        var converter = new NodeTreeToTextWriterConverter<T>(writer);
+        converter.Convert(nodeTree);
     }
 
     public IMdNodeTree ParseToNodeTree(string markdown) {
