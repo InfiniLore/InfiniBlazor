@@ -46,7 +46,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="InfiniLore.Lucide" Version="0.24.501" />
+        <PackageReference Include="InfiniLore.Lucide" Version="0.26.503" />
     </ItemGroup>
 
     <ItemGroup>
