@@ -18,7 +18,7 @@ public static class XSSDataSources {
     public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
         yield return static () => new MarkdownTestDto(SectionName,
             "<a href=\"javascript:alert('XSS')\">Click Me</a>",
-            "<p><a>Click Me</a></p>",
+            "<p><a href=\"javascript:alert('XSS')\">Click Me</a></p>",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithHtmlContent("<a href=\"javascript:alert('XSS')\">Click Me</a>");
@@ -28,7 +28,7 @@ public static class XSSDataSources {
         // Some tests based on https://github.com/cujanovic/Markdown-XSS-Payloads/blob/master/Markdown-XSS-Payloads.txt
         yield return static () => new MarkdownTestDto(SectionName,
             "![Uh oh...](\"onerror=\"alert('XSS'))",
-            "<p>![Uhoh...](&quot;onerror=&quot;alert('XSS'))</p>",
+            "<p>![Uhoh...](\"onerror=\"alert('XSS'))</p>",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("![Uh oh...](\"onerror=\"alert('XSS'))");
@@ -55,7 +55,7 @@ public static class XSSDataSources {
 
         yield return static () => new MarkdownTestDto(SectionName,
             "<javascript:prompt(document.cookie)>",
-            "<p>&lt;javascript:prompt(document.cookie)&gt;</p>",
+            "<p><javascript:prompt(document.cookie)></p>",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("<javascript:prompt(document.cookie)>");

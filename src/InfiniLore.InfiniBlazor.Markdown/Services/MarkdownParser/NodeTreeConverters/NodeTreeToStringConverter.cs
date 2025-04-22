@@ -1,0 +1,153 @@
+﻿// ---------------------------------------------------------------------------------------------------------------------
+// Imports
+// ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown.Pools;
+using System.Collections.Frozen;
+using System.Text;
+
+namespace InfiniLore.InfiniBlazor.Markdown.NodeTreeConverters;
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Code
+// ---------------------------------------------------------------------------------------------------------------------
+public class NodeTreeToStringConverter : IMdNodeTreeConverter<string> {
+
+    public static FrozenDictionary<MdElement, (string, string)> MdElementLookup = new Dictionary<MdElement, (string, string)>() {
+        {MdElement.Blockquote, ("<blockquote","</blockquote>")},
+        {MdElement.Bold, ("<strong","</strong>")},
+        {MdElement.CheckboxSelected, ("<input type=\"checkbox\" disabled checked /",string.Empty)},
+        {MdElement.CheckboxUnselected, ("<input type=\"checkbox\" disabled /",string.Empty)},
+        {MdElement.CodeBlock, ("<pre><code ","</code></pre>")},
+        {MdElement.CodeInline, ("<code","</code>")},
+        {MdElement.H1, ("<h1","</h1>")},
+        {MdElement.H2, ("<h2","</h2>")},
+        {MdElement.H3, ("<h3","</h3>")},
+        {MdElement.H4, ("<h4","</h4>")},
+        {MdElement.H5, ("<h5","</h5>")},
+        {MdElement.H6, ("<h6","</h6>")},
+        {MdElement.HorizontalRule, ("<hr",string.Empty)},
+        {MdElement.Image, ("<img",string.Empty)},
+        {MdElement.Italic, ("<em","</em>")},
+        {MdElement.Link, ("<a","</a>")},
+        {MdElement.ListItem, ("<li","</li>")},
+        {MdElement.ListOrdered, ("<ol","</ol>")},
+        {MdElement.ListUnordered, ("<ul","</ul>")},
+        {MdElement.Paragraph, ("<p","</p>")},
+        {MdElement.Strikethrough, ("<s","</s>")},
+        {MdElement.Subscript, ("<sub","</sub>")},
+        {MdElement.Superscript, ("<sup","</sup>")},
+        {MdElement.Table, ("<table","</table>")},
+        {MdElement.TableBody, ("<tbody","</tbody>")},
+        {MdElement.TableCell, ("<td","</td>")},
+        {MdElement.TableHead, ("<thead","</thead>")},
+        {MdElement.TableHeadCell, ("<th","</th>")},
+        {MdElement.TableRow, ("<tr","</tr>")},
+        {MdElement.Tag, ("<span class=\"tag\"","</span>")},
+        {MdElement.Underline, ("<span style=\"text-decoration: underline;\"","</span>")},
+    }.ToFrozenDictionary();
+    
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    public string Convert(IMdNodeTree tree) {
+        StringBuilder builder = StringBuilderPool.Get();
+        try {
+            var dictionary = new Dictionary<int, MdElement>();
+            int lastKnownDepth = -1;
+            
+            foreach (IMdNodeVisitor nodeVisitor in tree) {
+                int depth = nodeVisitor.Depth;
+                IMdNode node = nodeVisitor.CurrentNode;
+
+                // write the end tag of a previous sibling
+                if (lastKnownDepth >= depth) {
+                    int[] oldKeys = dictionary.Keys.Where(k => k >= depth).ToArray();
+                    Array.Sort(oldKeys);
+                    Array.Reverse(oldKeys);
+                    foreach (int key in oldKeys) {
+                        MdElement closingEl = dictionary[key];
+                        (string _, string closingTag) = MdElementLookup[closingEl];
+                        builder.Append(closingTag.AsSpan());
+                        dictionary.Remove(key);   
+                    }
+                }
+                
+                // write the current html tag
+                MdElement element = node.Element;
+                switch (element) {
+                    case MdElement.Content :
+                    case MdElement.HtmlContent : {
+                        builder.Append(node.Content.AsSpan());
+                        break;    
+                    }
+
+                    // Elements with Children
+                    case MdElement.CodeBlock: 
+                    case MdElement.Blockquote :
+                    case MdElement.Bold :
+                    case MdElement.CheckboxSelected :
+                    case MdElement.CheckboxUnselected :
+                    case MdElement.CodeInline :
+                    case MdElement.H1 :
+                    case MdElement.H2 :
+                    case MdElement.H3 :
+                    case MdElement.H4 :
+                    case MdElement.H5 :
+                    case MdElement.H6 :
+                    case MdElement.HorizontalRule :
+                    case MdElement.Image :
+                    case MdElement.Italic :
+                    case MdElement.Link :
+                    case MdElement.ListItem :
+                    case MdElement.ListOrdered :
+                    case MdElement.ListUnordered :
+                    case MdElement.Paragraph :
+                    case MdElement.Strikethrough :
+                    case MdElement.Subscript :
+                    case MdElement.Superscript :
+                    case MdElement.Table :
+                    case MdElement.TableBody :
+                    case MdElement.TableCell :
+                    case MdElement.TableHead :
+                    case MdElement.TableHeadCell :
+                    case MdElement.TableRow :
+                    case MdElement.Tag :
+                    case MdElement.Underline : {
+                        (string tagOpen, string tagClose) = MdElementLookup[element];
+                        builder.Append(tagOpen.AsSpan());
+                        if (node.Classes.Count > 0) builder.Append($" class=\"{string.Join(' ', node.Classes)}\"");
+                        if (node.Attributes.Count > 0) {
+                            foreach (KeyValuePair<string, string> attribute in node.Attributes) {
+                                builder.Append($" {attribute.Key}=\"{attribute.Value}\"");
+                            }
+                        }
+                        builder.Append('>');
+                        
+                        if (tagClose.IsNotNullOrEmpty()) dictionary.AddOrUpdate(depth, element);
+                        lastKnownDepth = depth;
+                        break;  
+                    }
+
+                    case MdElement.Undefined:
+                    default: break;
+                }
+                // write the data
+            }
+            
+            // write the end tags of all remaining siblings
+            int[] keys = dictionary.Keys.ToArray();
+            Array.Sort(keys);
+            Array.Reverse(keys);
+            foreach (int key in keys) {
+                MdElement closingElement = dictionary[key];
+                (string _, string closingTag) = MdElementLookup[closingElement];
+                builder.Append(closingTag.AsSpan());
+            }
+            
+            return builder.ToString();
+        }
+        finally {
+            StringBuilderPool.Return(builder);
+        }
+    }
+}

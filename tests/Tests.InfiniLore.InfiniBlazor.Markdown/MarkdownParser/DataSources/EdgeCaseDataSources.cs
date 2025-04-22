@@ -89,7 +89,7 @@ public static class EdgeCaseDataSources {
         // Span should be allowed
         yield return static () => new MarkdownTestDto(SectionName,
             "<span style=\"color: red\">**red bold?**</span>",
-            "<p><span style=\"color: rgba(255,0,0,1)\"><strong>red bold?</strong></span></p>",
+            "<p><span style=\"color: red\"><strong>red bold?</strong></span></p>",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithHtmlContent("<span style=\"color: red\">");

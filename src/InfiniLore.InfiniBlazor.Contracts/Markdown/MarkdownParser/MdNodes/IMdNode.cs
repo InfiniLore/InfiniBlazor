@@ -10,6 +10,9 @@ public interface IMdNode {
     string? Content { get; }
 
     IReadOnlyCollection<IMdNode> Children { get; }
+    IReadOnlyDictionary<string, string> Attributes { get; }
+    IReadOnlySet<string> Classes { get; }
+    
     IMdNode Parent { get; }
 
     IMdNode AddChildNode(MdElement element);

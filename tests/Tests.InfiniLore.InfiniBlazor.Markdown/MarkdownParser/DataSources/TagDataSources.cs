@@ -16,35 +16,35 @@ public static class TagDataSources {
     public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
         yield return static () => new MarkdownTestDto(SectionName,
             "#tag",
-            "<p><span>#tag</span></p>",
+            "<p><span class=\"tag\">tag</span></p>",
             ConfigureExpectedNode: static rootNode => rootNode.AddParagraph()
                 .AddTag("tag")
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "#不",
-            "<p><span>#不</span></p>",
+            "<p><span class=\"tag\">不</span></p>",
             ConfigureExpectedNode: static rootNode => rootNode.AddParagraph()
                 .AddTag("不")
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "#öäüÖÄÜß",
-            "<p><span>#öäüÖÄÜß</span></p>",
+            "<p><span class=\"tag\">öäüÖÄÜß</span></p>",
             ConfigureExpectedNode: static rootNode => rootNode.AddParagraph()
                 .AddTag("öäüÖÄÜß")
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "**#tag**",
-            "<p><strong><span>#tag</span></strong></p>",
+            "<p><strong><span class=\"tag\">tag</span></strong></p>",
             ConfigureExpectedNode: static rootNode => rootNode.AddParagraph()
                 .AddBold().AddTag("tag")
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
             "*#tag*",
-            "<p><em><span>#tag</span></em></p>",
+            "<p><em><span class=\"tag\">tag</span></em></p>",
             ConfigureExpectedNode: static rootNode => rootNode.AddParagraph()
                 .AddItalic().AddTag("tag")
         );

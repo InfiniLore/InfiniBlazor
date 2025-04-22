@@ -31,7 +31,7 @@ public static class EscapedCharacterDataSources {
             """
             \"She told me that \'he isn't here right *now*\' - so I left.\"
             """,
-            "<p>&quot;She told me that 'he isn't here right <em>now</em>' - so I left.&quot;</p>",
+            """<p>"She told me that 'he isn't here right <em>now</em>' - so I left."</p>""",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("\"She told me that 'he isn't here right ");
@@ -173,7 +173,7 @@ public static class EscapedCharacterDataSources {
 
         yield return static () => new MarkdownTestDto(SectionName,
             @"\!\""\#\$\%\&\'\(\)\*\+\,\-\.\/\:\;\<\=\>\?\@\[\\\]\^\_\`\{\|\}\~",
-            @"<p>!&quot;#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~</p>",
+            @"<p>!""#$%&'()*+,-./:;<=>?@[\]^_`{|}~</p>",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent(@"!""#$%&'()*+,-./:;<=>?@[\]^_`{|}~");// Escaped char

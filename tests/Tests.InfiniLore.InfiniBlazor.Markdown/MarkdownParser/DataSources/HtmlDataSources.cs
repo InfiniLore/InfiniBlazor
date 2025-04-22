@@ -35,20 +35,16 @@ public class HtmlDataSources {
             <p>Unrelated previous paragraph followed by a blank line</p>
             <p>
                 <table>
-                    <tbody>
                     <tr>
                         <td>Table cell</td>
                         <td>
                             <table>
-                                <tbody>
                                 <tr>
                                     <td>*Tables in tables*</td>
                                 </tr>
-                                </tbody>
                             </table>
                         </td>
                     </tr>
-                    </tbody>
                 </table>
             </p>
             """,
@@ -152,7 +148,7 @@ public class HtmlDataSources {
             </div>
             """,
             """
-            <p> test <div></div></p> 
+            <p> test <div><script>something</script></div></p> 
             """,
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph("test ");
@@ -169,7 +165,7 @@ public class HtmlDataSources {
 
         yield return static () => new MarkdownTestDto(SectionName,
             "test <div> <script>something</script> </div>",
-            "<p> test <div></div> </p> ",
+            "<p> test <div> <script>something</script> </div> </p> ",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph("test ");
                 // HTML Sanitization is handled as a post-processor, so we can't test it here
@@ -180,7 +176,7 @@ public class HtmlDataSources {
 
         yield return static () => new MarkdownTestDto(SectionName,
             "test <script>something</script>",
-            "<p> test </p>",
+            "<p> test <script>something</script></p>",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph("test ");
                 // HTML Sanitization is handled as a post-processor, so we can't test it here

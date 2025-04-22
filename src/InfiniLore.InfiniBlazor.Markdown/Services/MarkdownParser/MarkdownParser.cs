@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.NodeTreeConverters;
 using InfiniLore.InfiniBlazor.Markdown.Pools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -71,7 +72,11 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
     #endregion
 
     #region Parsing Methods
-    public string ParseToString(string markdown) => throw new NotImplementedException();
+    public string ParseToString(string markdown) {
+        IMdNodeTree nodeTree = ParseToNodeTree(markdown);
+        var converter = new NodeTreeToStringConverter();
+        return converter.Convert(nodeTree);
+    }
 
     public void ParseToWriter<T>(string markdown, T writer) where T : TextWriter {
         throw new NotImplementedException();
@@ -90,7 +95,7 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
             while (runningParser.TryPopDto(out ParserDataDto? dataDto)) {
                 IMdNode currentNode = dataDto.Node;
                 ParserOrigin origin = dataDto.Origin;
-
+                
                 switch (dataDto) {
                     // Process the match, which will happen most of the time
                     case { IsMatch: true, Match: var match }: {

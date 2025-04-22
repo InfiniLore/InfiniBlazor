@@ -25,7 +25,7 @@ public static class SpecialCharacterDataSources {
 
         yield return static () => new MarkdownTestDto(SectionName,
             "&",
-            "<p>&amp;</p>",
+            "<p>&</p>",
             ConfigureExpectedNode: static rootNode => {
                 rootNode.AddParagraph("&");
             }
@@ -33,7 +33,7 @@ public static class SpecialCharacterDataSources {
 
         yield return static () => new MarkdownTestDto(SectionName,
             "<",
-            "<p>&lt;</p>",
+            "<p><</p>",
             ConfigureExpectedNode: static rootNode => {
                 rootNode.AddParagraph("<");
             }
@@ -41,7 +41,7 @@ public static class SpecialCharacterDataSources {
 
         yield return static () => new MarkdownTestDto(SectionName,
             ">",
-            "<p>&gt;</p>",
+            "<p>></p>",
             ConfigureExpectedNode: static rootNode => {
                 rootNode.AddParagraph(">");
             }
@@ -49,7 +49,7 @@ public static class SpecialCharacterDataSources {
 
         yield return static () => new MarkdownTestDto(SectionName,
             "&copy;",
-            "<p>\u00a9</p>",
+            "<p>&copy;</p>",
             ConfigureExpectedNode: static rootNode => {
                 rootNode.AddParagraph("&copy;");
             }

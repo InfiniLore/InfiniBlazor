@@ -24,15 +24,12 @@ public static class MdNodeExtensions {
     public static IMdNode AddH6(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.H6, content);
     public static IMdNode AddHorizontalRule(this IMdNode node) => AddNodeWithContent(node, MdElement.HorizontalRule);
     public static IMdNode AddImage(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Image, content);
-    public static IMdNode AddInput(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Input, content);
     public static IMdNode AddItalic(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Italic, content);
     public static IMdNode AddLink(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Link, content);
     public static IMdNode AddListItem(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.ListItem, content);
     public static IMdNode AddListOrdered(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.ListOrdered, content);
     public static IMdNode AddListUnordered(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.ListUnordered, content);
     public static IMdNode AddParagraph(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Paragraph, content);
-    public static IMdNode AddPre(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.CodeBlock, content);
-    public static IMdNode AddSpan(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Span, content);
     public static IMdNode AddTag(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Tag, content);
     public static IMdNode AddStrikethrough(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Strikethrough, content);
     public static IMdNode AddSubscript(this IMdNode node, string? content = null) => AddNodeWithContent(node, MdElement.Subscript, content);

@@ -7,12 +7,15 @@ namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdNode : IMdNode {
     private List<MdNode> ChildNodes { get; } = new();
-    public HashSet<string> Classes { get; } = new();
-    public Dictionary<string, string> Attributes { get; } = new();
+    public HashSet<string> ClassesDictionary { get; } = new();
+    
+    public Dictionary<string, string> AttributesDictionary { get; } = new();
     public MdElement Element { get; set; } = MdElement.Undefined;
     public string? Content { get; private set; } = string.Empty;
 
     public IReadOnlyCollection<IMdNode> Children => ChildNodes;
+    public IReadOnlyDictionary<string, string> Attributes => AttributesDictionary;
+    public IReadOnlySet<string> Classes => ClassesDictionary;
 
     public IMdNode Parent { get; private set; } = null!;
 
@@ -34,11 +37,12 @@ public class MdNode : IMdNode {
     }
 
     public IMdNode WithClass(string className) {
-        Classes.Add(className);
+        ClassesDictionary.Add(className);
         return this;
     }
+    
     public IMdNode WithAttribute(string key, string value) {
-        Attributes.AddOrUpdate(key, value);
+        AttributesDictionary.AddOrUpdate(key, value);
         return this;
     }
 

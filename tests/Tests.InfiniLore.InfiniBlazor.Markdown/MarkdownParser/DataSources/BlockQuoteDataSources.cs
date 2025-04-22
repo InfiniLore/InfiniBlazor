@@ -274,7 +274,7 @@ public static class BlockQuoteDataSources {
 
         yield return static () => new MarkdownTestDto(SectionName,
             ">",
-            "<p>&gt;</p>",// an empty blockquote is not parsed as a blockquote
+            "<p>></p>",// an empty blockquote is not parsed as a blockquote
             ConfigureExpectedNode: static rootNode => {
                 rootNode.AddParagraph(">");
             });
@@ -298,7 +298,7 @@ public static class BlockQuoteDataSources {
             """,
             """
             <blockquote>
-                <p>This is a blockquote with escaped characters: *, &gt;, <code>`</code>.</p>
+                <p>This is a blockquote with escaped characters: *, >, <code>`</code>.</p>
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {
@@ -458,7 +458,7 @@ public static class BlockQuoteDataSources {
             """
             <blockquote>
                 <p>Level 1</p>
-                <p>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;Level 20</p>
+                <p>>>>>>>>>>>>>>>>>>>>Level 20</p>
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {

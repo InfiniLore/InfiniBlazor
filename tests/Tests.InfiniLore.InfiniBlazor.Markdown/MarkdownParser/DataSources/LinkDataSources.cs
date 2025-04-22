@@ -17,7 +17,7 @@ public static class LinkDataSources {
     public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
         yield return static () => new MarkdownTestDto(SectionName,
             "This is an [-->*example*<--](https://www.transgenderinfo.be) of a link.",
-            """<p>This is an <a href="https://www.transgenderinfo.be">--&gt;<em>example</em>&lt;--</a> of a link.</p>""",
+            """<p>This is an <a href="https://www.transgenderinfo.be">--><em>example</em><--</a> of a link.</p>""",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph("This is an ");
                 IMdNode link = paragraph.AddLink();
@@ -32,7 +32,7 @@ public static class LinkDataSources {
 
         yield return static () => new MarkdownTestDto(SectionName,
             "This is an **[-->*example*<--](https://www.transgenderinfo.be)** of a link.",
-            """<p>This is an <strong><a href="https://www.transgenderinfo.be">--&gt;<em>example</em>&lt;--</a></strong> of a link.</p>""",
+            """<p>This is an <strong><a href="https://www.transgenderinfo.be">--><em>example</em><--</a></strong> of a link.</p>""",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph("This is an ");
                 IMdNode bold = paragraph.AddBold();
@@ -48,7 +48,7 @@ public static class LinkDataSources {
 
         yield return static () => new MarkdownTestDto(SectionName,
             "This is an ^[-->*example*<--](https://www.transgenderinfo.be)^ of a link.",
-            """<p>This is an <sub><a href="https://www.transgenderinfo.be">--&gt;<em>example</em>&lt;--</a></sub> of a link.</p>""",
+            """<p>This is an <sub><a href="https://www.transgenderinfo.be">--><em>example</em><--</a></sub> of a link.</p>""",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph("This is an ");
                 IMdNode sub = paragraph.AddSubscript();
@@ -64,7 +64,7 @@ public static class LinkDataSources {
 
         yield return static () => new MarkdownTestDto(SectionName,
             "This is an ^^[-->*example*<--](https://www.transgenderinfo.be)^^ of a link.",
-            """<p>This is an <sup><a href="https://www.transgenderinfo.be">--&gt;<em>example</em>&lt;--</a></sup> of a link.</p>""",
+            """<p>This is an <sup><a href="https://www.transgenderinfo.be">--><em>example</em><--</a></sup> of a link.</p>""",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph("This is an ");
                 IMdNode super = paragraph.AddSuperscript();
