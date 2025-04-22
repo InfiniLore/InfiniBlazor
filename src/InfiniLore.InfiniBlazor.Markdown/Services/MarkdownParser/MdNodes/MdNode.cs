@@ -6,16 +6,16 @@ namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdNode : IMdNode {
-    private List<MdNode> ChildNodes { get; } = new();
-    public HashSet<string> ClassesSet { get; } = new();
-    
-    public Dictionary<string, string> AttributesDictionary { get; } = new();
-    public MdElement Element { get; set; } = MdElement.Undefined;
-    public string? Content { get; private set; } = string.Empty;
+    private readonly List<MdNode> _childNodes = new();
+    private readonly HashSet<string> _classes = new();
+    private readonly Dictionary<string, string> _attributes = new();
 
-    public IReadOnlyCollection<IMdNode> Children => ChildNodes;
-    public IReadOnlyDictionary<string, string> Attributes => AttributesDictionary;
-    public IReadOnlyCollection<string> Classes => ClassesSet;
+    public MdElement Element { get; private init; } = MdElement.Undefined;
+    public string? Content { get; private set; }
+
+    public IReadOnlyCollection<IMdNode> Children => _childNodes;
+    public IReadOnlyDictionary<string, string> Attributes => _attributes;
+    public IReadOnlyCollection<string> Classes => _classes;
 
     public IMdNode Parent { get; private set; } = null!;
 
@@ -25,8 +25,8 @@ public class MdNode : IMdNode {
     public IMdNode AddChildNode(MdElement element) => CreateChildNode(element);
 
     public IMdNode WithContent(string content) {
-        if (ChildNodes.LastOrDefault() is not { Element: MdElement.Content } lastNode) CreateChildNode(MdElement.Content, content);
-        else lastNode.Content += content;
+        if (_childNodes.LastOrDefault() is not { Element: MdElement.Content } lastNode) CreateChildNode(MdElement.Content, content);
+        else lastNode.Content = string.Concat(lastNode.Content, content.AsSpan());
 
         return this;
     }
@@ -37,12 +37,12 @@ public class MdNode : IMdNode {
     }
 
     public IMdNode WithClass(string className) {
-        ClassesSet.Add(className);
+        _classes.Add(className);
         return this;
     }
     
     public IMdNode WithAttribute(string key, string value) {
-        AttributesDictionary.AddOrUpdate(key, value);
+        _attributes.AddOrUpdate(key, value);
         return this;
     }
 
@@ -53,7 +53,7 @@ public class MdNode : IMdNode {
             Content = content
         };
 
-        ChildNodes.Add(child);
+        _childNodes.Add(child);
         child.Parent = this;
         return child;
     }

@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.NodeTreeConverters;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class NodeTreeToStringConverter : IMdNodeTreeConverter<string> {
-    private static readonly FrozenDictionary<MdElement, (string, string)> MdElementLookup = new Dictionary<MdElement, (string, string)>() {
+    private static readonly FrozenDictionary<MdElement, (string, string)> MdElementLookup = new Dictionary<MdElement, (string, string)> {
         {MdElement.Blockquote, ("<blockquote","</blockquote>")},
         {MdElement.Bold, ("<strong","</strong>")},
         {MdElement.CheckboxSelected, ("<input type=\"checkbox\" disabled checked /",string.Empty)},
@@ -46,6 +46,8 @@ public class NodeTreeToStringConverter : IMdNodeTreeConverter<string> {
         {MdElement.Underline, ("<span style=\"text-decoration: underline;\"","</span>")},
     }.ToFrozenDictionary();
     
+    private static readonly FrozenSet<MdElement> DefinedElements = MdElementLookup.Keys.ToFrozenSet();
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -60,88 +62,50 @@ public class NodeTreeToStringConverter : IMdNodeTreeConverter<string> {
                 IMdNode node = mdNodeVisitor.Node;
 
                 // write the end tag of a previous sibling
-                if (lastKnownDepth >= depth) {
-                    CloseOpenTags(builder, depthCache, depth);
-                }
+                if (lastKnownDepth + 1 > depth) CloseOpenTags(builder, depthCache, depth);
                 
-                // write the current html tag
+                // write the current HTML tag
                 MdElement element = node.Element;
-                switch (element) {
-                    case MdElement.Content :
-                    case MdElement.HtmlContent : {
-                        builder.Append(node.Content.AsSpan());
-                        break;    
-                    }
-
-                    // Elements with Children
-                    case MdElement.CodeBlock: 
-                    case MdElement.Blockquote :
-                    case MdElement.Bold :
-                    case MdElement.CheckboxSelected :
-                    case MdElement.CheckboxUnselected :
-                    case MdElement.CodeInline :
-                    case MdElement.H1 :
-                    case MdElement.H2 :
-                    case MdElement.H3 :
-                    case MdElement.H4 :
-                    case MdElement.H5 :
-                    case MdElement.H6 :
-                    case MdElement.HorizontalRule :
-                    case MdElement.Image :
-                    case MdElement.Italic :
-                    case MdElement.Link :
-                    case MdElement.ListItem :
-                    case MdElement.ListOrdered :
-                    case MdElement.ListUnordered :
-                    case MdElement.Paragraph :
-                    case MdElement.Strikethrough :
-                    case MdElement.Subscript :
-                    case MdElement.Superscript :
-                    case MdElement.Table :
-                    case MdElement.TableBody :
-                    case MdElement.TableCell :
-                    case MdElement.TableHead :
-                    case MdElement.TableHeadCell :
-                    case MdElement.TableRow :
-                    case MdElement.Tag :
-                    case MdElement.Underline : {
-                        (string tagOpen, string tagClose) = MdElementLookup[element];
-                        ReadOnlySpan<char> tagOpenSpan = tagOpen.AsSpan();
-                        ReadOnlySpan<char> tagCloseSpan = tagClose.AsSpan();
-                        
-                        builder.Append(tagOpenSpan);
-                        if (node.Classes.Count > 0) {
-                            builder.Append(" class=\"".AsSpan());
-                            bool isFirst = true;
-                            foreach (ReadOnlySpan<char> cssClass in node.Classes) {
-                                if(!isFirst) builder.Append(' ');
-                                builder.Append(cssClass);
-                                isFirst = false;
-                            }
-                            builder.Append('"');   
-                        }
-                        if (node.Attributes.Count > 0) {
-                            builder.Append(' ');
-                            foreach (KeyValuePair<string, string> attribute in node.Attributes) {
-                                ReadOnlySpan<char> keySpan = attribute.Key.AsSpan();
-                                ReadOnlySpan<char> valueSpan = attribute.Value.AsSpan();
-                                
-                                builder.Append(keySpan);
-                                builder.Append("=\"".AsSpan());
-                                builder.Append(valueSpan);
-                                builder.Append('"');
-                            }
-                        }
-                        builder.Append('>');
-                        
-                        if (tagCloseSpan.Length != 0) depthCache.AddOrUpdate(depth, element);
-                        lastKnownDepth = depth;
-                        break;  
-                    }
-
-                    case MdElement.Undefined:
-                    default: break;
+                if ( element is  MdElement.Content or MdElement.HtmlContent) {
+                    ReadOnlySpan<char> content = node.Content;
+                    if (content.Length == 0) continue;
+                    builder.Append(content);
+                    continue;
                 }
+                if (!DefinedElements.Contains(element)) continue; // Our parser doesn't handle component
+
+                // Elements with Children
+                (string tagOpen, string tagClose) = MdElementLookup[element];
+                ReadOnlySpan<char> tagOpenSpan = tagOpen.AsSpan();
+                ReadOnlySpan<char> tagCloseSpan = tagClose.AsSpan();
+
+                builder.Append(tagOpenSpan);
+                if (!node.Classes.IsEmpty()) {
+                    builder.Append(" class=\"".AsSpan());
+                    foreach (ReadOnlySpan<char> cssClass in node.Classes) {
+                        builder.Append(' ');
+                        builder.Append(cssClass);
+                    }
+                    builder.Append('"');
+                }
+
+                if (!node.Attributes.IsEmpty()) {
+                    builder.Append(' ');
+                    foreach (KeyValuePair<string, string> attribute in node.Attributes) {
+                        ReadOnlySpan<char> keySpan = attribute.Key.AsSpan();
+                        ReadOnlySpan<char> valueSpan = attribute.Value.AsSpan();
+
+                        builder.Append(keySpan);
+                        builder.Append("=\"".AsSpan());
+                        builder.Append(valueSpan);
+                        builder.Append('"');
+                    }
+                }
+
+                builder.Append('>');
+
+                if (tagCloseSpan.Length != 0) depthCache.AddOrUpdate(depth, element);
+                lastKnownDepth = depth;
             }
             
             // write the end tags of all remaining siblings
