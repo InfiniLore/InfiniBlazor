@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.MdNodes;
-using InfiniLore.InfiniBlazor.Markdown.NodeTreeConverters;
 using InfiniLore.InfiniBlazor.Markdown.Pools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -17,7 +16,11 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableService<IMarkdownParser>(ServiceLifetime.Singleton)]
-public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownParser> logger) : IMarkdownParser {
+public class MarkdownParser(
+    IServiceProvider serviceProvider,
+    IMdNodeTreeConverter<string> stringTreeConverter,
+    ILogger<MarkdownParser> logger
+) : IMarkdownParser {
     private readonly FrozenDictionary<string, ISectionHandler> _sectionHandlers = ToFrozenDictionary<ISectionHandler>(GroupNames, logger, serviceProvider);
 
     private static ImmutableArray<string> GroupNames => [
@@ -47,7 +50,7 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
         "emote",
         "tag"
     ];
-
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -79,8 +82,7 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
 
         try {
             IMdNodeTree nodeTree = ParseToNodeTree(markdown);
-            var converter = new NodeTreeToStringConverter();
-            output = converter.Convert(nodeTree);
+            output = stringTreeConverter.Convert(nodeTree);
             return true;
         }
         catch (Exception e) {
@@ -91,16 +93,19 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
 
     public void ParseToWriter<T>(string markdown, T writer) where T : TextWriter {
         IMdNodeTree nodeTree = ParseToNodeTree(markdown);
-        var converter = new NodeTreeToTextWriterConverter<T>();
+        var converter = serviceProvider.GetRequiredService<IMdNodeTreeToWriterConverter<T>>();
         converter.Convert(nodeTree, writer);
     }
 
     public IMdNodeTree ParseToNodeTree(string markdown) {
         RunningMarkdownParser runningParser = RunningMarkdownParserPool.Get();
-        var nodeTree = new MdNodeTree();
-        runningParser.NodeTree = nodeTree;
-
         try {
+            var nodeTree = new MdNodeTree();
+            runningParser.NodeTree = nodeTree;
+        
+            // ReSharper disable once SuggestVarOrType_Elsewhere
+            var alternateLookup = _sectionHandlers.GetAlternateLookup<ReadOnlySpan<char>>();
+            
             // Preload matches into the stack
             runningParser.AddMultiLineMatchesToStack(markdown, nodeTree.RootNode, ParserOrigin.Undefined);
 
@@ -118,7 +123,7 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
                         for (int index = 0; index < count; index++) {
                             Group group = groups[index];
                             if (group is not { Success: true, Name: {} name }) continue;
-                            if (!_sectionHandlers.TryGetValue(name, out ISectionHandler? handler)) continue;
+                            if (!alternateLookup.TryGetValue(name, out ISectionHandler? handler)) continue;
 
                             ParserOrigin handlerOrigin = handler.SkipOnOrigin;
                             if (handlerOrigin is not ParserOrigin.NotSkipped && (origin & handlerOrigin) == handlerOrigin) continue;
@@ -130,17 +135,17 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
 
                     // Needed for adding child text content to a node
                     //      Comes from a SingeLine match which had uncaught section and thus needs to be handled to add the text content
-                    case { IsElement: true, Content: {} newContent, Element: MdElement.HtmlContent }: {
+                    case {Element: MdElement.HtmlContent, Content: {} newContent}: {
                         currentNode.WithHtmlContent(newContent);
                         break;
                     }
 
-                    case { IsElement: true, Content: {} newContent, Element: MdElement.Content }: {
+                    case {Element: MdElement.Content, Content: {} newContent }: {
                         currentNode.WithContent(newContent);
                         break;
                     }
 
-                    case { IsElement: true, Content: var newContent, Element: var element }: {
+                    case {Element: var element, Content: var newContent }: {
                         IMdNode newNode = currentNode.AddChildNode(element);
                         if (newContent is not null) newNode.WithContent(newContent);
                         break;
