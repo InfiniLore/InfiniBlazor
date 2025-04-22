@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdNodeTree : IMdNodeTree {
-    public IMdNode RootNode { get; } = new MdNode();
+    public IMdNode RootNode { get; } = MdNode.AsRootNode();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
