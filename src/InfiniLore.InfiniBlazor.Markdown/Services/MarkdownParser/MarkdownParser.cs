@@ -97,7 +97,7 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
             while (runningParser.TryPopDto(out ParserDataDto? dataDto)) {
                 IMdNode currentNode = dataDto.Node;
                 ParserOrigin origin = dataDto.Origin;
-                
+
                 switch (dataDto) {
                     // Process the match, which will happen most of the time
                     case { IsMatch: true, Match: var match }: {
@@ -114,7 +114,6 @@ public class MarkdownParser(IServiceProvider serviceProvider, ILogger<MarkdownPa
 
                             handler.HandleMatch(runningParser, currentNode, match, group, origin);
                         }
-
                         break;
                     }
 

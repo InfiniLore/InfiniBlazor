@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
 using System.Collections.Frozen;
 
 namespace InfiniLore.InfiniBlazor.Markdown.NodeTreeConverters;
@@ -11,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.NodeTreeConverters;
 // ---------------------------------------------------------------------------------------------------------------------
 public class NodeTreeToTextWriterConverter<T>(T writer) : IMdNodeTreeConverter where T : TextWriter {
 
-    public static FrozenDictionary<MdElement, (string, string)> MdElementLookup = new Dictionary<MdElement, (string, string)>() {
+    private readonly FrozenDictionary<MdElement, (string, string)> MdElementLookup = new Dictionary<MdElement, (string, string)> {
         {MdElement.Blockquote, ("<blockquote","</blockquote>")},
         {MdElement.Bold, ("<strong","</strong>")},
         {MdElement.CheckboxSelected, ("<input type=\"checkbox\" disabled checked /",string.Empty)},
