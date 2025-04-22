@@ -12,8 +12,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.NodeTreeConverters;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class NodeTreeToStringConverter : IMdNodeTreeConverter<string> {
-
-    private static FrozenDictionary<MdElement, (string, string)> MdElementLookup = new Dictionary<MdElement, (string, string)>() {
+    private static readonly FrozenDictionary<MdElement, (string, string)> MdElementLookup = new Dictionary<MdElement, (string, string)>() {
         {MdElement.Blockquote, ("<blockquote","</blockquote>")},
         {MdElement.Bold, ("<strong","</strong>")},
         {MdElement.CheckboxSelected, ("<input type=\"checkbox\" disabled checked /",string.Empty)},
@@ -56,9 +55,9 @@ public class NodeTreeToStringConverter : IMdNodeTreeConverter<string> {
         try {
             int lastKnownDepth = -1;
             
-            foreach (IMdNodeVisitor nodeVisitor in tree) {
-                int depth = nodeVisitor.Depth;
-                IMdNode node = nodeVisitor.CurrentNode;
+            foreach (IMdNodeVisitor mdNodeVisitor in tree) {
+                int depth = mdNodeVisitor.Depth;
+                IMdNode node = mdNodeVisitor.Node;
 
                 // write the end tag of a previous sibling
                 if (lastKnownDepth >= depth) {

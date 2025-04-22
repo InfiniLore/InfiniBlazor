@@ -1,12 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Markdown;
+namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMdNodeVisitor {
-    int Depth { get; }
-    IMdNode Node { get; }
+public class MdNodeVisitor : IMdNodeVisitor {
+    public int Depth { get; set; } = -1;
+    public IMdNode Node { get; set; } = null!;
 }

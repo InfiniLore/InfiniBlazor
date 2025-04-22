@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown.MdNodes;
 using System.Collections.Frozen;
 
 namespace InfiniLore.InfiniBlazor.Markdown.NodeTreeConverters;
@@ -53,7 +54,7 @@ public class NodeTreeToTextWriterConverter<T>(T writer) : IMdNodeTreeConverter w
             
             foreach (IMdNodeVisitor nodeVisitor in tree) {
                 int depth = nodeVisitor.Depth;
-                IMdNode node = nodeVisitor.CurrentNode;
+                IMdNode node = nodeVisitor.Node;
 
                 // write the end tag of a previous sibling
                 if (lastKnownDepth >= depth) {
