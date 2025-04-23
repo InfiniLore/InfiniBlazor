@@ -1,7 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown.Pools;
+using Microsoft.Extensions.ObjectPool;
 using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
@@ -10,18 +10,12 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class RunningMarkdownParser : IRunningMarkdownParser {
+public class RunningMarkdownParser : IRunningMarkdownParser, IResettable {
     private readonly Stack<ParserDataDto> _stack = new();
     public IMdNodeTree NodeTree { get; set; } = null!;
 
     public bool TryPopDto([NotNullWhen(true)] out ParserDataDto? dto)
         => _stack.TryPop(out dto);
-
-    public void Clear() {
-        while (_stack.TryPop(out ParserDataDto? dto)) ParserDataDtoPool.Return(dto); // Makes sure we clean everything
-        _stack.Clear();
-        NodeTree = null!;
-    }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -79,15 +73,22 @@ public class RunningMarkdownParser : IRunningMarkdownParser {
         => PushElementToStack(content, currentNode, origin, MdElement.Content);
 
     public void PushElementToStack(string? content, IMdNode currentNode, ParserOrigin origin, MdElement element) {
-        ParserDataDto dto = ParserDataDtoPool.Get();
+        ParserDataDto dto = PoolCache.ParserDataDtoPool.Get();
         dto.AsElement(content, currentNode, origin, element);
         _stack.Push(dto);
     }
 
     private void PushMatchToStack(Match match, IMdNode currentNode, ParserOrigin origin) {
-        ParserDataDto dto = ParserDataDtoPool.Get();
+        ParserDataDto dto = PoolCache.ParserDataDtoPool.Get();
         dto.AsMatch(match, currentNode, origin);
         _stack.Push(dto);
     }
     #endregion
+    
+    public bool TryReset() {
+        while (_stack.TryPop(out ParserDataDto? dto)) PoolCache.ParserDataDtoPool.Return(dto); // Makes sure we clean everything
+        NodeTree = null!;
+        
+        return _stack.Count == 0 ;
+    }
 }

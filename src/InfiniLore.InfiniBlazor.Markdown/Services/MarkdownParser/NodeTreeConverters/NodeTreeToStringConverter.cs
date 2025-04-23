@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown.Pools;
 using System.Buffers;
 using System.Collections.Frozen;
 using System.Text;
@@ -52,8 +51,8 @@ public class NodeTreeToStringConverter : IMdNodeTreeConverter<string> {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public string Convert(IMdNodeTree tree) {
-        StringBuilder builder = StringBuilderPool.Get();
-        Dictionary<int, MdElement> depthCache = DepthCachePool.Get();
+        StringBuilder builder = PoolCache.StringBuilderPool.Get();
+        Dictionary<int, MdElement> depthCache = PoolCache.DepthCachePool.Get();
         try {
             int lastKnownDepth = -1;
             
@@ -115,8 +114,8 @@ public class NodeTreeToStringConverter : IMdNodeTreeConverter<string> {
             return builder.ToString();
         }
         finally {
-            StringBuilderPool.Return(builder);
-            DepthCachePool.Return(depthCache);
+            PoolCache.StringBuilderPool.Return(builder);
+            PoolCache.DepthCachePool.Return(depthCache);
         }
     }
     private static void CloseOpenTags(StringBuilder builder, Dictionary<int, MdElement> depthCache, int depth) {

@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown.Pools;
 using System.Buffers;
 using System.Text;
 
@@ -31,7 +30,7 @@ public static class NormalizationHelper {
     }
 
     private static string ProcessLargerInput(string[] lines, int minIndent, int lineCount) {
-        StringBuilder stringBuilder = StringBuilderPool.Get();
+        StringBuilder stringBuilder = PoolCache.StringBuilderPool.Get();
 
         try {
             for (int index = 0; index < lineCount; index++) {
@@ -43,7 +42,7 @@ public static class NormalizationHelper {
             return stringBuilder.ToString();
         }
         finally {
-            StringBuilderPool.Return(stringBuilder);
+            PoolCache.StringBuilderPool.Return(stringBuilder);
         }
     }
 

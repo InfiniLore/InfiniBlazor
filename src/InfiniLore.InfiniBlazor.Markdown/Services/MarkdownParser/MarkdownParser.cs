@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.MdNodes;
-using InfiniLore.InfiniBlazor.Markdown.Pools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
@@ -98,7 +97,7 @@ public class MarkdownParser(
     }
 
     public IMdNodeTree ParseToNodeTree(string markdown) {
-        RunningMarkdownParser runningParser = RunningMarkdownParserPool.Get();
+        RunningMarkdownParser runningParser = PoolCache.RunningMarkdownParserPool.Get();
         try {
             var nodeTree = new MdNodeTree();
             runningParser.NodeTree = nodeTree;
@@ -153,14 +152,14 @@ public class MarkdownParser(
                 }
 
                 // Remember to clean up the DTO, else it will not return to the pool
-                ParserDataDtoPool.Return(dataDto);
+                PoolCache.ParserDataDtoPool.Return(dataDto);
             }
 
             return nodeTree;
         }
         finally {
             // Also handles ParserDataDto cleanup if still present, so no nested try-finally block needed.
-            RunningMarkdownParserPool.Return(runningParser);
+            PoolCache.RunningMarkdownParserPool.Return(runningParser);
         }
     }
     #endregion

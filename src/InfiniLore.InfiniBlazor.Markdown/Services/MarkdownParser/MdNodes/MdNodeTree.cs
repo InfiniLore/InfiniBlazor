@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown.Pools;
 
 namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -14,13 +13,13 @@ public class MdNodeTree : IMdNodeTree {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public IEnumerable<IMdNodeVisitor> VisitNodes() {
-        Stack<MdNodeVisitor> stack = MdNodeVisitorStackPool.Get();
+        Stack<MdNodeVisitor> stack = PoolCache.MdNodeVisitorStackPool.Get();
         try {
             // Add Root children directly to avoid an extra if call during the while loop
             for (int i = RootNode.Children.Count - 1; i >= 0; i--) {
                 if (RootNode.Children.ElementAtOrDefault(i) is not {} child) continue;
 
-                MdNodeVisitor visitor = MdNodeVisitorPool.Get();
+                MdNodeVisitor visitor = PoolCache.MdNodeVisitorPool.Get();
                 visitor.Depth = 1;
                 visitor.Node = child;
                 stack.Push(visitor);
@@ -31,13 +30,13 @@ public class MdNodeTree : IMdNodeTree {
                 IReadOnlyCollection<IMdNode> children = visitor.Node.Children;
             
                 yield return visitor;
-                MdNodeVisitorPool.Return(visitor);
+                PoolCache.MdNodeVisitorPool.Return(visitor);
 
                 // Push children in reverse order so they're processed in the correct order when popped
                 for (int i = children.Count - 1; i >= 0; i--) {
                     if (children.ElementAtOrDefault(i) is not {} child) continue;
                     
-                    MdNodeVisitor childVisitor = MdNodeVisitorPool.Get();
+                    MdNodeVisitor childVisitor = PoolCache.MdNodeVisitorPool.Get();
                     childVisitor.Depth = depth + 1;
                     childVisitor.Node = child;
                     stack.Push(childVisitor);
@@ -46,7 +45,7 @@ public class MdNodeTree : IMdNodeTree {
         }
         finally {
             // Also handles MdNodeVisitorPool.Return(visitor) if the stack isn't empty yet
-            MdNodeVisitorStackPool.Return(stack);
+            PoolCache.MdNodeVisitorStackPool.Return(stack);
         }
     }
 }

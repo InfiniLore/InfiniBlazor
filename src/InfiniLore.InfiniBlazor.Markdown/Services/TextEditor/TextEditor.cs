@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Config;
-using InfiniLore.InfiniBlazor.Markdown.Pools;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Frozen;
 using System.Text.RegularExpressions;
@@ -122,7 +121,7 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
         ReadOnlySpan<char> possibleTable = source.Text.AsSpan(intersectStart, intersectEnd - intersectStart);
         if (TextEditorRegexLib.IsTableLineRegex.IsMatch(possibleTable)) {
             Regex.ValueMatchEnumerator tableCellMatches = TextEditorRegexLib.TableCellsRegex.EnumerateMatches(possibleTable);
-            Stack<Range> tableCellMatchesStack = RangeStackPool.Get();
+            Stack<Range> tableCellMatchesStack = PoolCache.RangeStackPool.Get();
             try {
                 while (tableCellMatches.MoveNext()) {
                     ValueMatch current = tableCellMatches.Current;
@@ -141,7 +140,7 @@ public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provide
                 return true;
             }
             finally {
-                RangeStackPool.Return(tableCellMatchesStack);
+                PoolCache.RangeStackPool.Return(tableCellMatchesStack);
             }
         }
 

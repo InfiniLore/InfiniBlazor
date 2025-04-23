@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using InfiniLore.InfiniBlazor.Markdown.Pools;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -29,7 +28,7 @@ public class BlockQuoteSectionParser : ISectionHandler {
 
     private static string NormalizeBlockQuote(ref ReadOnlySpan<char> span) {
         // Use a ValueStringBuilder for efficient memory writing
-        StringBuilder builder = StringBuilderPool.Get();
+        StringBuilder builder = PoolCache.StringBuilderPool.Get();
         try {
             foreach (ReadOnlySpan<char> line in span.EnumerateLines()) {
                 // Example: Remove leading '>' and any extra whitespace
@@ -47,7 +46,7 @@ public class BlockQuoteSectionParser : ISectionHandler {
             return builder.ToString().TrimEnd('\n');
         }
         finally {
-            StringBuilderPool.Return(builder);
+            PoolCache.StringBuilderPool.Return(builder);
         }
 
     }

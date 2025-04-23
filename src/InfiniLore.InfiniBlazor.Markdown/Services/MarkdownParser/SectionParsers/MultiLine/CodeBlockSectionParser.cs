@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using InfiniLore.InfiniBlazor.Markdown.Pools;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -34,7 +33,7 @@ public class CodeBlockSectionParser : ISectionHandler {
 
     private static string ProcessCodeBlockContent(ref ReadOnlySpan<char> content) {
         int currentIndex = 0;
-        StringBuilder sb = StringBuilderPool.Get();
+        StringBuilder sb = PoolCache.StringBuilderPool.Get();
         try {
             foreach (ValueMatch match in HtmlSymbolLookup.CodeBlockRegex.EnumerateMatches(content)) {
                 int matchIndex = match.Index;
@@ -57,7 +56,7 @@ public class CodeBlockSectionParser : ISectionHandler {
             return sb.ToString();
         }
         finally {
-            StringBuilderPool.Return(sb);
+            PoolCache.StringBuilderPool.Return(sb);
         }
 
 

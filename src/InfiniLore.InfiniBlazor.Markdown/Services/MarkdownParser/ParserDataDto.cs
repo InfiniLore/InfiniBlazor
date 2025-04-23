@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using Microsoft.Extensions.ObjectPool;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
@@ -8,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class ParserDataDto : IParserDataDto {
+public class ParserDataDto : IParserDataDto, IResettable {
     public MdElement Element { get; private set; }
     public IMdNode Node { get; private set; } = null!;
     public ParserOrigin Origin { get; private set; }
@@ -35,7 +36,7 @@ public class ParserDataDto : IParserDataDto {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void Clear() {
+    public bool TryReset() {
         Node = null!;
         Origin = ParserOrigin.NotSkipped;
         Match = null;
@@ -43,5 +44,7 @@ public class ParserDataDto : IParserDataDto {
         IsMatch = false;
         IsElement = false;
         Element = MdElement.Undefined;
+
+        return true;
     }
 }
