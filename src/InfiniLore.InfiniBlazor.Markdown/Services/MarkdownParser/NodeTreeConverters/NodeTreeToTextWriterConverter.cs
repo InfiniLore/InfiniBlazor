@@ -4,140 +4,137 @@
 using System.Collections.Frozen;
 
 namespace InfiniLore.InfiniBlazor.Markdown.NodeTreeConverters;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
+
+// ReSharper disable StaticMemberInGenericType
 public class NodeTreeToTextWriterConverter<T> : IMdNodeTreeToWriterConverter<T> where T : TextWriter {
-    private readonly FrozenDictionary<MdElement, (string, string)> MdElementLookup = new Dictionary<MdElement, (string, string)> {
-        {MdElement.Blockquote, ("<blockquote","</blockquote>")},
-        {MdElement.Bold, ("<strong","</strong>")},
-        {MdElement.CheckboxSelected, ("<input type=\"checkbox\" disabled checked /",string.Empty)},
-        {MdElement.CheckboxUnselected, ("<input type=\"checkbox\" disabled /",string.Empty)},
-        {MdElement.CodeBlock, ("<pre><code ","</code></pre>")},
-        {MdElement.CodeInline, ("<code","</code>")},
-        {MdElement.H1, ("<h1","</h1>")},
-        {MdElement.H2, ("<h2","</h2>")},
-        {MdElement.H3, ("<h3","</h3>")},
-        {MdElement.H4, ("<h4","</h4>")},
-        {MdElement.H5, ("<h5","</h5>")},
-        {MdElement.H6, ("<h6","</h6>")},
-        {MdElement.HorizontalRule, ("<hr",string.Empty)},
-        {MdElement.Image, ("<img",string.Empty)},
-        {MdElement.Italic, ("<em","</em>")},
-        {MdElement.Link, ("<a","</a>")},
-        {MdElement.ListItem, ("<li","</li>")},
-        {MdElement.ListOrdered, ("<ol","</ol>")},
-        {MdElement.ListUnordered, ("<ul","</ul>")},
-        {MdElement.Paragraph, ("<p","</p>")},
-        {MdElement.Strikethrough, ("<s","</s>")},
-        {MdElement.Subscript, ("<sub","</sub>")},
-        {MdElement.Superscript, ("<sup","</sup>")},
-        {MdElement.Table, ("<table","</table>")},
-        {MdElement.TableBody, ("<tbody","</tbody>")},
-        {MdElement.TableCell, ("<td","</td>")},
-        {MdElement.TableHead, ("<thead","</thead>")},
-        {MdElement.TableHeadCell, ("<th","</th>")},
-        {MdElement.TableRow, ("<tr","</tr>")},
-        {MdElement.Tag, ("<span class=\"tag\"","</span>")},
-        {MdElement.Underline, ("<span style=\"text-decoration: underline;\"","</span>")},
+    private static readonly FrozenDictionary<MdElement, HtmlTag> MdElementLookup = new Dictionary<MdElement, HtmlTag> {
+        { MdElement.Blockquote, HtmlTag.Create("blockquote") },
+        { MdElement.Bold, HtmlTag.Create("strong") },
+        { MdElement.CheckboxSelected, HtmlTag.CreateVoid("input type=\"checkbox\" disabled checked/") },
+        { MdElement.CheckboxUnselected, HtmlTag.CreateVoid("input type=\"checkbox\" disabled/") },
+        { MdElement.CodeBlock, new HtmlTag("<pre><code", "</code></pre>") },
+        { MdElement.CodeInline, HtmlTag.Create("code") },
+        { MdElement.H1, HtmlTag.Create("h1") },
+        { MdElement.H2, HtmlTag.Create("h2") },
+        { MdElement.H3, HtmlTag.Create("h3") },
+        { MdElement.H4, HtmlTag.Create("h4") },
+        { MdElement.H5, HtmlTag.Create("h5") },
+        { MdElement.H6, HtmlTag.Create("h6") },
+        { MdElement.HorizontalRule, HtmlTag.CreateVoid("hr") },
+        { MdElement.Image, HtmlTag.CreateVoid("img") },
+        { MdElement.Italic, HtmlTag.Create("em") },
+        { MdElement.Link, HtmlTag.Create("a") },
+        { MdElement.ListItem, HtmlTag.Create("li") },
+        { MdElement.ListOrdered, HtmlTag.Create("ol") },
+        { MdElement.ListUnordered, HtmlTag.Create("ul") },
+        { MdElement.Paragraph, HtmlTag.Create("p") },
+        { MdElement.Strikethrough, HtmlTag.Create("s") },
+        { MdElement.Subscript, HtmlTag.Create("sub") },
+        { MdElement.Superscript, HtmlTag.Create("sup") },
+        { MdElement.Table, HtmlTag.Create("table") },
+        { MdElement.TableBody, HtmlTag.Create("tbody") },
+        { MdElement.TableCell, HtmlTag.Create("td") },
+        { MdElement.TableHead, HtmlTag.Create("thead") },
+        { MdElement.TableHeadCell, HtmlTag.Create("th") },
+        { MdElement.TableRow, HtmlTag.Create("tr") },
+        { MdElement.Tag, HtmlTag.CreateWithClass("span", "tag") },
+        { MdElement.Underline, HtmlTag.CreateWithStyle("span", "text-decoration: underline;") }
     }.ToFrozenDictionary();
-    
+
+    private static readonly FrozenSet<MdElement> DefinedElements = MdElementLookup.Keys.ToFrozenSet();
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void Convert(IMdNodeTree tree, T writer) {
-        var dictionary = new Dictionary<int, MdElement>();
+        Dictionary<int, MdElement> depthCache = PoolCache.DepthCachePool.Get();
+        try {
             int lastKnownDepth = -1;
-            
-            foreach (IMdNodeVisitor nodeVisitor in tree.VisitNodesBreadthFirst()) {
-                int depth = nodeVisitor.Depth;
-                IMdNode node = nodeVisitor.Node;
+
+            foreach (IMdNodeVisitor mdNodeVisitor in tree.VisitNodesBreadthFirst()) {
+                int depth = mdNodeVisitor.Depth;
+                IMdNode node = mdNodeVisitor.Node;
 
                 // write the end tag of a previous sibling
-                if (lastKnownDepth >= depth) {
-                    int[] oldKeys = dictionary.Keys.Where(k => k >= depth).ToArray();
-                    Array.Sort(oldKeys);
-                    Array.Reverse(oldKeys);
-                    foreach (int key in oldKeys) {
-                        MdElement closingEl = dictionary[key];
-                        (string _, string closingTag) = MdElementLookup[closingEl];
-                        writer.Write(closingTag.AsSpan());
-                        dictionary.Remove(key);   
-                    }
-                }
-                
-                // write the current html tag
+                if (lastKnownDepth + 1 > depth) CloseOpenTags(writer, depthCache, depth);
+
+                // write the current HTML tag
                 MdElement element = node.Element;
-                switch (element) {
-                    case MdElement.Content :
-                    case MdElement.HtmlContent : {
-                        writer.Write(node.Content.AsSpan());
-                        break;    
-                    }
+                if (element is MdElement.Content or MdElement.HtmlContent) {
+                    ReadOnlySpan<char> content = node.Content;
+                    if (content.Length == 0) continue;
 
-                    // Elements with Children
-                    case MdElement.CodeBlock: 
-                    case MdElement.Blockquote :
-                    case MdElement.Bold :
-                    case MdElement.CheckboxSelected :
-                    case MdElement.CheckboxUnselected :
-                    case MdElement.CodeInline :
-                    case MdElement.H1 :
-                    case MdElement.H2 :
-                    case MdElement.H3 :
-                    case MdElement.H4 :
-                    case MdElement.H5 :
-                    case MdElement.H6 :
-                    case MdElement.HorizontalRule :
-                    case MdElement.Image :
-                    case MdElement.Italic :
-                    case MdElement.Link :
-                    case MdElement.ListItem :
-                    case MdElement.ListOrdered :
-                    case MdElement.ListUnordered :
-                    case MdElement.Paragraph :
-                    case MdElement.Strikethrough :
-                    case MdElement.Subscript :
-                    case MdElement.Superscript :
-                    case MdElement.Table :
-                    case MdElement.TableBody :
-                    case MdElement.TableCell :
-                    case MdElement.TableHead :
-                    case MdElement.TableHeadCell :
-                    case MdElement.TableRow :
-                    case MdElement.Tag :
-                    case MdElement.Underline : {
-                        (string tagOpen, string tagClose) = MdElementLookup[element];
-                        writer.Write(tagOpen.AsSpan());
-                        if (node.Classes.Count > 0) writer.Write($" class=\"{string.Join(' ', node.Classes)}\"");
-                        if (node.Attributes.Count > 0) {
-                            foreach (KeyValuePair<string, string> attribute in node.Attributes) {
-                                writer.Write($" {attribute.Key}=\"{attribute.Value}\"");
-                            }
-                        }
-                        writer.Write('>');
-                        
-                        if (tagClose.IsNotNullOrEmpty()) dictionary.AddOrUpdate(depth, element);
-                        lastKnownDepth = depth;
-                        break;  
-                    }
-
-                    case MdElement.Undefined:
-                    default: break;
+                    writer.Write(content);
+                    continue;
                 }
-                // write the data
+
+                if (!DefinedElements.Contains(element)) continue;// Our parser doesn't handle component
+
+                // Elements with Children
+                HtmlTag htmlTag = MdElementLookup[element];
+                writer.Write(htmlTag.OpenTagSpan);
+
+                if (!node.Classes.IsEmpty()) {
+                    writer.Write(" class=\"".AsSpan());
+                    foreach (ReadOnlySpan<char> cssClass in node.Classes) {
+                        writer.Write(' ');
+                        writer.Write(cssClass);
+                    }
+
+                    writer.Write('"');
+                }
+
+                if (!node.Attributes.IsEmpty()) {
+                    writer.Write(' ');
+                    foreach (KeyValuePair<string, string> attribute in node.Attributes) {
+                        ReadOnlySpan<char> keySpan = attribute.Key.AsSpan();
+                        ReadOnlySpan<char> valueSpan = attribute.Value.AsSpan();
+
+                        writer.Write(keySpan);
+                        writer.Write("=\"");
+                        writer.Write(valueSpan);
+                        writer.Write('"');
+                    }
+                }
+
+                writer.Write('>');
+
+                if (htmlTag.HasClosingTag) depthCache.AddOrUpdate(depth, element);
+                lastKnownDepth = depth;
             }
-            
+
             // write the end tags of all remaining siblings
-            int[] keys = dictionary.Keys.ToArray();
-            Array.Sort(keys);
-            Array.Reverse(keys);
-            foreach (int key in keys) {
-                MdElement closingElement = dictionary[key];
-                (string _, string closingTag) = MdElementLookup[closingElement];
-                writer.Write(closingTag);
-            }
-            
+            CloseOpenTags(writer, depthCache, -1);
+        }
+        finally {
+            PoolCache.DepthCachePool.Return(depthCache);
+        }
+    }
+    
+    private static void CloseOpenTags(T writer, Dictionary<int, MdElement> depthCache, int depth) {
+        if (depthCache.Count == 0) return;
+
+        Span<int> keysToRemove = stackalloc int[depthCache.Count];
+        int count = 0;
+
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+        foreach (int k in depthCache.Keys) {
+            if (k < depth) continue;
+
+            keysToRemove[count++] = k;
+        }
+
+        Span<int> slice = keysToRemove[..count];
+        slice.Sort();
+        for (int i = count - 1; i >= 0; i--) {
+            int key = slice[i];
+            MdElement closingEl = depthCache[key];
+            HtmlTag htmlTag = MdElementLookup[closingEl];
+            writer.Write(htmlTag.CloseTagSpan);
+            depthCache.Remove(key);
+        }
     }
 }

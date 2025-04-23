@@ -43,7 +43,6 @@ public class NodeTreeToStringConverter : IMdNodeTreeConverter<string> {
         { MdElement.Underline, HtmlTag.CreateWithStyle("span", "text-decoration: underline;") }
     }.ToFrozenDictionary();
 
-
     private static readonly FrozenSet<MdElement> DefinedElements = MdElementLookup.Keys.ToFrozenSet();
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -95,7 +94,7 @@ public class NodeTreeToStringConverter : IMdNodeTreeConverter<string> {
                         ReadOnlySpan<char> valueSpan = attribute.Value.AsSpan();
 
                         builder.Append(keySpan);
-                        builder.Append("=\"".AsSpan());
+                        builder.Append("=\"");
                         builder.Append(valueSpan);
                         builder.Append('"');
                     }
