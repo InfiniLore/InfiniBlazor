@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown;
@@ -64,6 +65,34 @@ public static partial class MarkdownRegexLib {
 
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex MultilineStructuresRegex { get; }
+
+    public static ImmutableArray<string> MarkdownStructureGroupNames => [
+        // Multiline
+        "paragraph",
+        "heading",
+        "codeBlock",
+        "headingSimple",
+        "listUnordered",
+        "listOrdered",
+        "table",
+        "blockQuote",
+        "htmlBody",
+        "horizontalRule",
+
+        // Singleline
+        "escaped",
+        "bold",
+        "italic",
+        "supScript",
+        "subScript",
+        "strike",
+        "code",
+        "linkNested",
+        "linkRegular",
+        "underline",
+        "emote",
+        "tag"
+    ];
 
     [GeneratedRegex(@"^[ ]*[-.]?\d*\.?\s+(?<lTask>\[[\ xX]\] )?(?<lHead>[^\r\n]+)(?<lBody>(?:\r?\n[ ]+.+)*)(?<!\r)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex ListItemBodyRegex { get; }

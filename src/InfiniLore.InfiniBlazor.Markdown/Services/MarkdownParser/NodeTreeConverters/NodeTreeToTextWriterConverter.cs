@@ -50,7 +50,7 @@ public class NodeTreeToTextWriterConverter<T> : IMdNodeTreeToWriterConverter<T> 
         var dictionary = new Dictionary<int, MdElement>();
             int lastKnownDepth = -1;
             
-            foreach (IMdNodeVisitor nodeVisitor in tree.VisitNodes()) {
+            foreach (IMdNodeVisitor nodeVisitor in tree.VisitNodesBreadthFirst()) {
                 int depth = nodeVisitor.Depth;
                 IMdNode node = nodeVisitor.Node;
 

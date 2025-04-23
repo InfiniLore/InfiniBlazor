@@ -2,23 +2,10 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 namespace InfiniLore.InfiniBlazor.Markdown;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMdNode {
-    MdElement Element { get; }
-    string? Content { get; }
-
-    IReadOnlyList<IMdNode> Children { get; }
-    IReadOnlyDictionary<string, string> Attributes { get; }
-    IReadOnlySet<string> Classes { get; }
-    
-    IMdNode Parent { get; }
-
-    IMdNode AddChildNode(MdElement element);
-
-    IMdNode WithContent(string content);
-    IMdNode WithHtmlContent(string content);
-    IMdNode WithClass(string className);
-    IMdNode WithAttribute(string key, string value);
+public interface IMdNodeTreeParser {
+    void ParseToNodeTree(string markdown, IMdNodeTree nodeTree);
 }

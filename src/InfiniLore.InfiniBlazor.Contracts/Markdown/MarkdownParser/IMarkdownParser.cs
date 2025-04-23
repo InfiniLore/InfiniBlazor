@@ -10,6 +10,4 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 public interface IMarkdownParser {
     bool TryParseToString(string markdown, [NotNullWhen(true)] out string? output);
     void ParseToWriter<T>(string markdown, T writer) where T : TextWriter;
-    
-    public IMdNodeTree ParseToNodeTree(string markdown);
 }

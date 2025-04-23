@@ -9,5 +9,6 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 public interface IMdNodeTree {
     IMdNode RootNode { get; }
 
-    IEnumerable<IMdNodeVisitor> VisitNodes();
+    IEnumerable<IMdNodeVisitor> VisitNodesBreadthFirst();
+    IEnumerable<IMdNodeVisitor> VisitNodesDeepestFirst();
 }

@@ -1,21 +1,23 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using Microsoft.Extensions.ObjectPool;
+
 namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MdNode : IMdNode {
+public class MdNode : IMdNode, IResettable {
     private readonly List<MdNode> _childNodes = new();
     private readonly HashSet<string> _classes = new();
     private readonly Dictionary<string, string> _attributes = new();
 
-    public MdElement Element { get; private init; } = MdElement.Undefined;
+    public MdElement Element { get; private set; } = MdElement.Undefined;
     public string? Content { get; private set; }
 
-    public IReadOnlyCollection<IMdNode> Children => _childNodes;
+    public IReadOnlyList<IMdNode> Children => _childNodes;
     public IReadOnlyDictionary<string, string> Attributes => _attributes;
-    public IReadOnlyCollection<string> Classes => _classes;
+    public IReadOnlySet<string> Classes => _classes;
 
     public IMdNode Parent { get; private set; } = null!;
 
@@ -23,7 +25,7 @@ public class MdNode : IMdNode {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static MdNode AsRootNode() {
-        var node = new MdNode();
+        MdNode node = PoolCache.MdNodePool.Get();
         node.Parent = node;
         return node;
     }
@@ -54,14 +56,23 @@ public class MdNode : IMdNode {
 
 
     private MdNode CreateChildNode(MdElement element, string? content = null) {
-        var child = new MdNode {
-            Element = element,
-            Content = content
-        };
+        MdNode child = PoolCache.MdNodePool.Get();
+        child.Element = element;
+        child.Content = content;
+        child.Parent = this;
 
         _childNodes.EnsureCapacity(_childNodes.Count + 1);
         _childNodes.Add(child);
-        child.Parent = this;
         return child;
+    }
+
+    public bool TryReset() {
+        _childNodes.Clear();
+        _classes.Clear();
+        _attributes.Clear();
+        Element = MdElement.Undefined;
+        Content = null;
+        Parent = null!;
+        return true;
     }
 }

@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.MdNodes;
 using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
@@ -9,7 +10,7 @@ namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [DIDataSource]
-public class MarkdownParserTests(IMarkdownParser parser) {
+public class MarkdownParserTests(IMarkdownParser parser, IMdNodeTreeParser nodeTreeParser) {
 
     // see https://spec-md.com/
     [Test]
@@ -114,12 +115,13 @@ public class MarkdownParserTests(IMarkdownParser parser) {
     [MethodDataSource(typeof(XSSDataSources), nameof(XSSDataSources.DataSources))]
     public async Task ParseToNodeTree_ValidInputs(MarkdownTestDto dto) {
         // Arrange
+        var nodeTree = new MdNodeTree();
 
         // Act
-        IMdNodeTree output = parser.ParseToNodeTree(dto.Markdown);
+        nodeTreeParser.ParseToNodeTree(dto.Markdown, nodeTree);
         Skip.When(dto.ExpectedNode == null, "The node tree is null and thus cannot be compared.");
 
         // Assert
-        await Assert.That(output.RootNode).IsEquivalentTo(dto.ExpectedNode);
+        await Assert.That(nodeTree.RootNode).IsEquivalentTo(dto.ExpectedNode);
     }
 }

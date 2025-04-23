@@ -5,10 +5,7 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.MdNodes;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Collections.Frozen;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -18,69 +15,20 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 public class MarkdownParser(
     IServiceProvider serviceProvider,
     IMdNodeTreeConverter<string> stringTreeConverter,
-    ILogger<MarkdownParser> logger
+    ILogger<MarkdownParser> logger,
+    IMdNodeTreeParser nodeTreeParser
 ) : IMarkdownParser {
-    private readonly FrozenDictionary<string, ISectionHandler> _sectionHandlers = ToFrozenDictionary<ISectionHandler>(GroupNames, logger, serviceProvider);
-
-    private static ImmutableArray<string> GroupNames => [
-        // Multiline
-        "paragraph",
-        "heading",
-        "codeBlock",
-        "headingSimple",
-        "listUnordered",
-        "listOrdered",
-        "table",
-        "blockQuote",
-        "htmlBody",
-        "horizontalRule",
-
-        // Singleline
-        "escaped",
-        "bold",
-        "italic",
-        "supScript",
-        "subScript",
-        "strike",
-        "code",
-        "linkNested",
-        "linkRegular",
-        "underline",
-        "emote",
-        "tag"
-    ];
-    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    #region Constructor Helpers
-    private static FrozenDictionary<string, T> ToFrozenDictionary<T>(ImmutableArray<string> keyNames, ILogger<MarkdownParser> logger, IServiceProvider serviceProvider) {
-        int keyCount = keyNames.Length;
-        var dictionaryBuilder = new Dictionary<string, T>(keyCount);
-
-        for (int index = 0; index < keyCount; index++) {
-            string groupName = keyNames[index];
-            var service = serviceProvider.GetKeyedService<T>(groupName);
-            if (service is null) {
-                logger.LogWarning("No service found for group name '{groupName}' for type '{name}'.", groupName, typeof(T).Name);
-                continue;
-            }
-
-            dictionaryBuilder[groupName] = service;
-        }
-
-        return dictionaryBuilder.ToFrozenDictionary();
-
-    }
-    #endregion
-
     #region Parsing Methods
     public bool TryParseToString(string markdown,[NotNullWhen(true)] out string? output) {
         output = null;
         if (markdown.IsNullOrWhiteSpace()) return false;
+        MdNodeTree nodeTree = PoolCache.MdNodeTreePool.Get();
 
         try {
-            IMdNodeTree nodeTree = ParseToNodeTree(markdown);
+            nodeTreeParser.ParseToNodeTree(markdown, nodeTree);
             output = stringTreeConverter.Convert(nodeTree);
             return true;
         }
@@ -88,78 +36,21 @@ public class MarkdownParser(
             logger.LogError(e, "Error parsing markdown.");
             return false;
         }
+        finally {
+            PoolCache.MdNodeTreePool.Return(nodeTree);
+        }
     }
 
     public void ParseToWriter<T>(string markdown, T writer) where T : TextWriter {
-        IMdNodeTree nodeTree = ParseToNodeTree(markdown);
-        var converter = serviceProvider.GetRequiredService<IMdNodeTreeToWriterConverter<T>>();
-        converter.Convert(nodeTree, writer);
-    }
-
-    public IMdNodeTree ParseToNodeTree(string markdown) {
-        RunningMarkdownParser runningParser = PoolCache.RunningMarkdownParserPool.Get();
-        try {
-            var nodeTree = new MdNodeTree();
-            runningParser.NodeTree = nodeTree;
+        MdNodeTree nodeTree = PoolCache.MdNodeTreePool.Get();
         
-            // ReSharper disable once SuggestVarOrType_Elsewhere
-            var alternateLookup = _sectionHandlers.GetAlternateLookup<ReadOnlySpan<char>>();
-            
-            // Preload matches into the stack
-            runningParser.AddMultiLineMatchesToStack(markdown, nodeTree.RootNode, ParserOrigin.Undefined);
-
-            // Process matches
-            while (runningParser.TryPopDto(out ParserDataDto? dataDto)) {
-                IMdNode currentNode = dataDto.Node;
-                ParserOrigin origin = dataDto.Origin;
-
-                switch (dataDto) {
-                    // Process the match, which will happen most of the time
-                    case { IsMatch: true, Match: var match }: {
-                        GroupCollection groups = match.Groups;
-                        int count = groups.Count;
-
-                        for (int index = 0; index < count; index++) {
-                            Group group = groups[index];
-                            if (group is not { Success: true, Name: {} name }) continue;
-                            if (!alternateLookup.TryGetValue(name, out ISectionHandler? handler)) continue;
-
-                            ParserOrigin handlerOrigin = handler.SkipOnOrigin;
-                            if (handlerOrigin is not ParserOrigin.NotSkipped && (origin & handlerOrigin) == handlerOrigin) continue;
-
-                            handler.HandleMatch(runningParser, currentNode, match, group, origin);
-                        }
-                        break;
-                    }
-
-                    // Needed for adding child text content to a node
-                    //      Comes from a SingeLine match which had uncaught section and thus needs to be handled to add the text content
-                    case {Element: MdElement.HtmlContent, Content: {} newContent}: {
-                        currentNode.WithHtmlContent(newContent);
-                        break;
-                    }
-
-                    case {Element: MdElement.Content, Content: {} newContent }: {
-                        currentNode.WithContent(newContent);
-                        break;
-                    }
-
-                    case {Element: var element, Content: var newContent }: {
-                        IMdNode newNode = currentNode.AddChildNode(element);
-                        if (newContent is not null) newNode.WithContent(newContent);
-                        break;
-                    }
-                }
-
-                // Remember to clean up the DTO, else it will not return to the pool
-                PoolCache.ParserDataDtoPool.Return(dataDto);
-            }
-
-            return nodeTree;
+        try {
+            nodeTreeParser.ParseToNodeTree(markdown, nodeTree);
+            var converter = serviceProvider.GetRequiredService<IMdNodeTreeToWriterConverter<T>>();
+            converter.Convert(nodeTree, writer);
         }
         finally {
-            // Also handles ParserDataDto cleanup if still present, so no nested try-finally block needed.
-            PoolCache.RunningMarkdownParserPool.Return(runningParser);
+            PoolCache.MdNodeTreePool.Return(nodeTree);
         }
     }
     #endregion
