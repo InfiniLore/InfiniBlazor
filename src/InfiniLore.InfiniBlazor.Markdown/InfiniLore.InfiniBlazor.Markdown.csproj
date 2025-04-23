@@ -29,12 +29,13 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CodeOfChaos.Extensions" Version="0.60.0" />
-        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" Version="0.60.0" />
-        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators" Version="0.60.0">
+        <PackageReference Include="CodeOfChaos.Extensions" Version="0.61.0" />
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" Version="0.61.0" />
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators" Version="0.61.0">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="CodeOfChaos.Extensions.ObjectPool" Version="0.61.0" />
         <PackageReference Include="HtmlSanitizer" Version="9.0.884" />
         <PackageReference Include="InfiniLore.Lucide" Version="0.26.503" />
 
