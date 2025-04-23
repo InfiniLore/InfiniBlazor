@@ -45,9 +45,6 @@ public class MdNodeTreeParser(IServiceProvider serviceProvider, ILogger<MdNodeTr
         RunningMarkdownParser runningParser = PoolCache.RunningMarkdownParserPool.Get();
         try {
             runningParser.NodeTree = nodeTree;
-        
-            // ReSharper disable once SuggestVarOrType_Elsewhere
-            var alternateLookup = _sectionHandlers.GetAlternateLookup<ReadOnlySpan<char>>();
             
             // Preload matches into the stack
             runningParser.AddMultiLineMatchesToStack(markdown, nodeTree.RootNode, ParserOrigin.Undefined);
@@ -66,7 +63,7 @@ public class MdNodeTreeParser(IServiceProvider serviceProvider, ILogger<MdNodeTr
                         for (int index = 0; index < count; index++) {
                             Group group = groups[index];
                             if (group is not { Success: true, Name: {} name }) continue;
-                            if (!alternateLookup.TryGetValue(name, out ISectionHandler? handler)) continue;
+                            if (!_sectionHandlers.TryGetValue(name, out ISectionHandler? handler)) continue;
 
                             ParserOrigin handlerOrigin = handler.SkipOnOrigin;
                             if (handlerOrigin is not ParserOrigin.NotSkipped && (origin & handlerOrigin) == handlerOrigin) continue;
