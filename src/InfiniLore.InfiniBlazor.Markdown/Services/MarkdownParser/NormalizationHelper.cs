@@ -1,81 +1,58 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Buffers;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public static class NormalizationHelper {
-    public static string NormalizeIndentation(string input) {
-        const int smallLineThreshold = 10;
-        string[] lines = MarkdownRegexLib.NormalizeNewlinesRegex.Split(input);
-        int lineCount = lines.Length;
+    public static string NormalizeIndentation(ref ReadOnlySpan<char> input) {
+        Regex.ValueSplitEnumerator splits = MarkdownRegexLib.NormalizeNewlinesRegex.EnumerateSplits(input);
         int minIndent = int.MaxValue;
 
-        for (int index = 0; index < lineCount; index++) {
-            string line = lines[index];
-            ReadOnlySpan<char> trimmed = line.AsSpan().TrimStart();
+        foreach (Range split in splits) {
+            ReadOnlySpan<char> line = input[split];
+            ReadOnlySpan<char> trimmed = line.TrimStart();
             if (trimmed.IsEmpty) continue;
-
             minIndent = Math.Min(minIndent, line.Length - trimmed.Length);
         }
+        
+        if (minIndent == int.MaxValue) return input.ToString();
+        
 
-        if (minIndent == int.MaxValue) return input;
-        if (lineCount <= smallLineThreshold) return ProcessSmallerInput(lines, minIndent, lineCount);
-
-        return ProcessLargerInput(lines, minIndent, lineCount);
-    }
-
-    private static string ProcessLargerInput(string[] lines, int minIndent, int lineCount) {
+        splits = MarkdownRegexLib.NormalizeNewlinesRegex.EnumerateSplits(input);
         StringBuilder stringBuilder = PoolCache.StringBuilderPool.Get();
 
         try {
-            for (int index = 0; index < lineCount; index++) {
-                ReadOnlySpan<char> trimmed = lines[index].AsSpan();
-                stringBuilder.Append(trimmed.Length >= minIndent ? trimmed[minIndent..] : trimmed);
+            foreach (Range range in splits) {
+                ReadOnlySpan<char> line = input[range];
+                if (!line.IsEmpty) {
+                    int currentIndent = CountLeadingWhitespace(ref line);
+                    stringBuilder.Append(line[Math.Min(currentIndent, minIndent)..]);
+                }
                 stringBuilder.Append('\n');
             }
-
+            // Remove the last newline if it wasn't in the original input
+            if (stringBuilder.Length > 0 && !input.EndsWith('\n')) {
+                stringBuilder.Length--;
+            }
+            
             return stringBuilder.ToString();
         }
         finally {
             PoolCache.StringBuilderPool.Return(stringBuilder);
         }
     }
-
-    private static string ProcessSmallerInput(string[] lines, int minIndent, int lineCount) {
-        int totalLength = 0;
-        for (int index = 0; index < lineCount; index++) {
-            int lineLength = lines[index].Length;
-            if (lineLength > minIndent) totalLength += lineLength - minIndent + 1;// Include space for '\n'
-            else totalLength += 1;// Only the '\n'
-        }
-
-        char[] buffer = ArrayPool<char>.Shared.Rent(totalLength);
-        try {
-            Span<char> resultSpan = buffer.AsSpan(0, totalLength);
-            int position = 0;
-
-            // ReSharper disable once ForCanBeConvertedToForeach
-            for (int index = 0; index < lineCount; index++) {
-                string line = lines[index];
-                ReadOnlySpan<char> trimmed = line.Length >= minIndent
-                    ? line.AsSpan(minIndent)
-                    : line.AsSpan();
-
-                trimmed.CopyTo(resultSpan[position..]);
-                resultSpan[position += trimmed.Length] = '\n';// Write the newline directly
-                position += 1;
-
-            }
-
-            return resultSpan[..(position - 1)].ToString();// Exclude trailing newline
-        }
-        finally {
-            ArrayPool<char>.Shared.Return(buffer);
-        }
+    
+    private static int CountLeadingWhitespace(ref ReadOnlySpan<char> line)
+    {
+        int count = 0;
+        while (count < line.Length && line[count] <= ' ' && line[count] != '\n')
+            count++;
+        return count;
     }
+
 }

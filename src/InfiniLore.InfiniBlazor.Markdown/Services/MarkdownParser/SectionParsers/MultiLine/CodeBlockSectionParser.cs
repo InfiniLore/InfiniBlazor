@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using System.Collections.Frozen;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -15,6 +16,16 @@ public class CodeBlockSectionParser : ISectionHandler {
     private static readonly int CBodyId = CachedRegexGroupNames.GetMultiLineGroupId("cBody");
     private static readonly int CLangId = CachedRegexGroupNames.GetMultiLineGroupId("cLang");
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
+
+    private static FrozenDictionary<string, string> CodeBlockLookup { get; } = new Dictionary<string, string> {
+        { "\r\n", "\n" },
+        { "&", "&amp;" },
+        { "<", "&lt;" },
+        { ">", "&gt;" }
+    }.ToFrozenDictionary();
+
+    private static FrozenDictionary<string, string>.AlternateLookup<ReadOnlySpan<char>> CodeBlockAlternateLookup { get; } = CodeBlockLookup.GetAlternateLookup<ReadOnlySpan<char>>();
+    private static Regex CodeBlockRegex { get; } = new(string.Join('|', CodeBlockLookup.Keys), RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.Compiled);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -35,14 +46,14 @@ public class CodeBlockSectionParser : ISectionHandler {
         int currentIndex = 0;
         StringBuilder sb = PoolCache.StringBuilderPool.Get();
         try {
-            foreach (ValueMatch match in HtmlSymbolLookup.CodeBlockRegex.EnumerateMatches(content)) {
+            foreach (ValueMatch match in CodeBlockRegex.EnumerateMatches(content)) {
                 int matchIndex = match.Index;
                 int matchLength = match.Length;
                 if (currentIndex < matchIndex) {
                     sb.Append(content.Slice(currentIndex, matchIndex - currentIndex));
                 }
 
-                if (HtmlSymbolLookup.CodeBlockAlternateLookup.TryGetValue(content.Slice(matchIndex, matchLength), out string? replacement)) {
+                if (CodeBlockAlternateLookup.TryGetValue(content.Slice(matchIndex, matchLength), out string? replacement)) {
                     sb.Append(replacement.AsSpan());
                 }
 

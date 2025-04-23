@@ -19,8 +19,8 @@ public class BlockQuoteSectionParser : ISectionHandler {
         if (!group.TryGetValueSpan(out ReadOnlySpan<char> blockQuoteBody)) return;
 
         // Replace Regex usage with span-based logic:
-        string normalized = NormalizeBlockQuote(ref blockQuoteBody);
-        string adjustedBlockquote = NormalizationHelper.NormalizeIndentation(normalized);
+        ReadOnlySpan<char> normalized = NormalizeBlockQuote(ref blockQuoteBody).AsSpan();
+        string adjustedBlockquote = NormalizationHelper.NormalizeIndentation(ref normalized);
 
         IMdNode blockquoteNode = currentNode.AddChildNode(MdElement.Blockquote);
         parser.AddMultiLineMatchesToStack(adjustedBlockquote, blockquoteNode, origin | ParserOrigin.PreserveHtml);

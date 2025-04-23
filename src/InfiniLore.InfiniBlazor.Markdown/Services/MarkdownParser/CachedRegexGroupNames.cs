@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class CachedRegexGroupNames {
+public static class CachedRegexGroupNames {
     private static FrozenDictionary<string, int> GroupNameToGroupId { get; } = GetGroupNames();
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -22,17 +22,15 @@ public class CachedRegexGroupNames {
             MarkdownRegexLib.ListItemBodyRegex
         ];
 
-        IEnumerable<(Regex regex, string[])> a = regexes.Select(regex => (regex, regex.GetGroupNames()));
-        var dictionary = new Dictionary<string, int>(regexes.Length * 16);// early approximation
+        int totalGroups = regexes.Sum(regex => regex.GetGroupNames().Length);
+        Dictionary<string, int> dictionary = new(totalGroups);
 
-        foreach ((Regex regex, string[] names) in a) {
-            dictionary.EnsureCapacity(dictionary.Count + names.Length);
-
+        foreach (Regex regex in regexes) {
+            string[] names = regex.GetGroupNames();
             foreach (string name in names) {
                 dictionary.AddOrUpdate(name, regex.GroupNumberFromName(name));
             }
         }
-
         return dictionary.ToFrozenDictionary();
     }
 

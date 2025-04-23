@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using System.Buffers;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
@@ -22,31 +23,43 @@ public class ListOrderedSectionParser : ISectionHandler {
     public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.TryGetValue(out string? listOrderedBody)) return;
 
-        List<Match> matchCollection = MarkdownRegexLib.ListItemBodyRegex.Matches(listOrderedBody).ToList();
+        MatchCollection matchCollection = MarkdownRegexLib.ListItemBodyRegex.Matches(listOrderedBody);
         int matchCount = matchCollection.Count;
-
-        IMdNode olNode = currentNode.AddChildNode(MdElement.ListOrdered);
-        for (int index = 0; index < matchCount; index++) {
-            Match match = matchCollection[index];
-            GroupCollection groups = match.Groups;
-
-            IMdNode listItemNode = olNode.AddChildNode(MdElement.ListItem);
-
-            if (groups[LBodyId].TryGetValue(out string? listBody) && listBody.IsNotNullOrWhiteSpace()) {
-                string normalizedBody = NormalizationHelper.NormalizeIndentation(listBody);
-                parser.AddMultiLineMatchesToStack(normalizedBody, listItemNode, origin | ParserOrigin.PreserveHtml);
+        GroupCollection[] groupCollections = ArrayPool<GroupCollection>.Shared.Rent(matchCount);
+        
+        try {
+            for (int i = matchCount - 1; i >= 0; i--) {
+                Match match = matchCollection[i];
+                groupCollections[i] = match.Groups;
             }
 
-            if (groups[LHeadId].TryGetValue(out string? listHeader)) {
-                parser.AddSingleLineMatchesToStack(listHeader, listItemNode, origin);
-            }
+            IMdNode olNode = currentNode.AddChildNode(MdElement.ListOrdered);
+            for (int i = 0; i < matchCount; i++) {
+                GroupCollection groups = groupCollections[i];
 
-            // ReSharper disable once InvertIf
-            if (groups[LTaskId].TryGetValue(out string? taskMarker)) {
-                bool isChecked = taskMarker.Contains('x');
-                MdElement element = isChecked ? MdElement.CheckboxSelected : MdElement.CheckboxUnselected;
-                parser.PushElementToStack(null, listItemNode, origin, element);
+                IMdNode listItemNode = olNode.AddChildNode(MdElement.ListItem);
+            
+                if (groups[LBodyId].TryGetValueSpan(out ReadOnlySpan<char> listBody) && !listBody.IsEmpty) {
+                    string normalizedBody = NormalizationHelper.NormalizeIndentation(ref listBody);
+                    parser.AddMultiLineMatchesToStack(normalizedBody, listItemNode, origin | ParserOrigin.PreserveHtml);
+                }
+
+                if (groups[LHeadId].TryGetValue(out string? listHeader)) {
+                    parser.AddSingleLineMatchesToStack(listHeader, listItemNode, origin);
+                }
+
+                // ReSharper disable once InvertIf
+                if (groups[LTaskId].TryGetValue(out string? taskMarker)) {
+                    bool isChecked = taskMarker.Contains('x');
+                    MdElement element = isChecked ? MdElement.CheckboxSelected : MdElement.CheckboxUnselected;
+                    parser.PushElementToStack(null, listItemNode, origin, element);
+                }
             }
         }
+
+        finally {
+            ArrayPool<GroupCollection>.Shared.Return(groupCollections);
+        }
+        
     }
 }

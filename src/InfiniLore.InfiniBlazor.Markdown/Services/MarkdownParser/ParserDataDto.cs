@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class ParserDataDto : IParserDataDto, IResettable {
+public class ParserDataDto : IResettable {
     public MdElement Element { get; private set; }
     public IMdNode Node { get; private set; } = null!;
     public ParserOrigin Origin { get; private set; }
