@@ -5,12 +5,15 @@ namespace InfiniLore.InfiniBlazor.Markdown.NodeTreeConverters;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public readonly record struct HtmlTag(string OpenTag, string CloseTag) {
+public record HtmlTag(string OpenTag, string CloseTag) {
     public ReadOnlySpan<char> OpenTagSpan => OpenTag.AsSpan();
     public ReadOnlySpan<char> CloseTagSpan => CloseTag.AsSpan();
-    
-    public bool HasClosingTag => CloseTag.Length > 0;
 
+    public bool HasClosingTag { get; } = CloseTag.Length > 0;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
     public static HtmlTag Create(string tag)
         => new($"<{tag}", $"</{tag}>");
     

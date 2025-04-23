@@ -24,16 +24,13 @@ public class ListUnorderedSectionParser : ISectionHandler {
 
         MatchCollection matchCollection = MarkdownRegexLib.ListItemBodyRegex.Matches(listUnorderedBody);
         int matchCount = matchCollection.Count;
-        GroupCollection[] groupCollections = ArrayPool<GroupCollection>.Shared.Rent(matchCount);
+        Match[] matchArray = ArrayPool<Match>.Shared.Rent(matchCount);
         try {
-            for (int i = matchCount - 1; i >= 0; i--) {
-                Match match = matchCollection[i];
-                groupCollections[i] = match.Groups;
-            }
+            matchCollection.CopyTo(matchArray, 0);
 
             IMdNode ulNode = currentNode.AddChildNode(MdElement.ListUnordered);
             for (int i = 0; i < matchCount; i++) {
-                GroupCollection groups = groupCollections[i];
+                GroupCollection groups = matchArray[i].Groups;
 
                 IMdNode listItemNode = ulNode.AddChildNode(MdElement.ListItem);
 
@@ -56,7 +53,7 @@ public class ListUnorderedSectionParser : ISectionHandler {
         }
 
         finally {
-            ArrayPool<GroupCollection>.Shared.Return(groupCollections);
+            ArrayPool<Match>.Shared.Return(matchArray);
         }
         
     }

@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdNodeVisitorStackPoolPolicy(ObjectPool<MdNodeVisitor> visitorPool) : IPooledObjectPolicy<Stack<MdNodeVisitor>> {
-    public Stack<MdNodeVisitor> Create() => new();
+    public Stack<MdNodeVisitor> Create() => new(255);
     public bool Return(Stack<MdNodeVisitor> obj) {
         while (obj.TryPop(out MdNodeVisitor? visitor)) {
             visitorPool.Return(visitor);
