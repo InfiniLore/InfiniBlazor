@@ -2,20 +2,24 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using Microsoft.Extensions.ObjectPool;
+using System.Buffers;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdNode : IMdNode, IResettable {
-    private readonly List<MdNode> _childNodes = new();
+    private const int MinimumCapacity = 4; 
+    private int _childCount;
+    private MdNode[] _childNodes = ArrayPool<MdNode>.Shared.Rent(MinimumCapacity);
     private readonly HashSet<string> _classes = new();
     private readonly Dictionary<string, string> _attributes = new();
 
     public MdElement Element { get; private set; } = MdElement.Undefined;
     public string? Content { get; private set; }
-
-    public IReadOnlyList<IMdNode> Children => _childNodes;
+    
     public IReadOnlyDictionary<string, string> Attributes => _attributes;
     public IReadOnlySet<string> Classes => _classes;
 
@@ -28,6 +32,16 @@ public class MdNode : IMdNode, IResettable {
         MdNode node = PoolCache.MdNodePool.Get();
         node.Parent = node;
         return node;
+    }
+
+    public ReadOnlySpan<T> GetChildrenSpan<T>(out int length) where T : IMdNode {
+        length = _childCount;
+        if (_childCount == 0) return ReadOnlySpan<T>.Empty;
+        
+        return MemoryMarshal.CreateReadOnlySpan(
+            ref Unsafe.As<MdNode, T>(ref MemoryMarshal.GetArrayDataReference(_childNodes)),
+            _childCount
+        );
     }
     
     public IMdNode AddChildNode(MdElement element) => CreateChildNode(element);
@@ -61,13 +75,28 @@ public class MdNode : IMdNode, IResettable {
         child.Content = content;
         child.Parent = this;
 
-        _childNodes.EnsureCapacity(_childNodes.Count + 1);
-        _childNodes.Add(child);
+        // Check if we need to resize
+        if (_childCount == _childNodes.Length) {
+            int newSize = Math.Max(MinimumCapacity, _childNodes.Length * 2);
+            MdNode[] newArray = ArrayPool<MdNode>.Shared.Rent(newSize);
+            Array.Copy(_childNodes, newArray, _childCount);
+            
+            MdNode[] oldArray = _childNodes;
+            _childNodes = newArray;
+            if (_childNodes.Length > 0)  ArrayPool<MdNode>.Shared.Return(oldArray, clearArray: true);
+        }
+
+        _childNodes[_childCount] = child;
+        _childCount++;
+
         return child;
     }
 
     public bool TryReset() {
-        _childNodes.Clear();
+        if (_childNodes.Length > 0) ArrayPool<MdNode>.Shared.Return(_childNodes, clearArray: true);
+        _childNodes = ArrayPool<MdNode>.Shared.Rent(MinimumCapacity);
+        _childCount = 0;
+
         _classes.Clear();
         _attributes.Clear();
         Element = MdElement.Undefined;
