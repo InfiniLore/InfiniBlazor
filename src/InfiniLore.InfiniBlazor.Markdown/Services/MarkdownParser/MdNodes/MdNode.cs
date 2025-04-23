@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdNode : IMdNode, IResettable {
-    private const int MinimumCapacity = 4; 
+    private const int MinimumCapacity = 4;
     private int _childCount;
     private MdNode[] _childNodes = ArrayPool<MdNode>.Shared.Rent(MinimumCapacity);
     private readonly HashSet<string> _classes = new();
@@ -19,7 +19,7 @@ public class MdNode : IMdNode, IResettable {
 
     public MdElement Element { get; private set; } = MdElement.Undefined;
     public string? Content { get; private set; }
-    
+
     public IReadOnlyDictionary<string, string> Attributes => _attributes;
     public IReadOnlySet<string> Classes => _classes;
 
@@ -36,18 +36,31 @@ public class MdNode : IMdNode, IResettable {
     public ReadOnlySpan<T> GetChildrenSpan<T>(out int length) where T : IMdNode {
         length = _childCount;
         if (_childCount == 0) return ReadOnlySpan<T>.Empty;
-        
+
         return MemoryMarshal.CreateReadOnlySpan(
             ref Unsafe.As<MdNode, T>(ref MemoryMarshal.GetArrayDataReference(_childNodes)),
             _childCount
         );
     }
-    
+
     public IMdNode AddChildNode(MdElement element) => CreateChildNode(element);
 
     public IMdNode WithContent(string content) {
-        if (_childNodes.LastOrDefault() is not { Element: MdElement.Content } lastNode) CreateChildNode(MdElement.Content, content);
-        else lastNode.Content = string.Concat(lastNode.Content, content.AsSpan());
+        if (_childNodes.LastOrDefault() is not { Element: MdElement.Content } lastNode) {
+            CreateChildNode(MdElement.Content, content);
+            return this;
+
+        }
+
+        int contentLength = lastNode.Content?.Length ?? 0;
+        int length = contentLength + content.Length;
+        lastNode.Content = string.Create(
+            length,
+            (contentLength, OriginalContent: lastNode.Content, NewContent: content),
+            action: static (span, state) => {
+                state.OriginalContent.AsSpan().CopyTo(span);
+                state.NewContent.AsSpan().CopyTo(span[state.contentLength..]);
+            });
 
         return this;
     }
@@ -61,12 +74,12 @@ public class MdNode : IMdNode, IResettable {
         _classes.Add(className);
         return this;
     }
-    
+
     public IMdNode WithAttribute(string key, string value) {
         _attributes.AddOrUpdate(key, value);
         return this;
     }
-    
+
     private MdNode CreateChildNode(MdElement element, string? content = null) {
         MdNode child = PoolCache.MdNodePool.Get();
         child.Element = element;
@@ -78,10 +91,9 @@ public class MdNode : IMdNode, IResettable {
             int newSize = Math.Max(MinimumCapacity, _childNodes.Length * 2);
             MdNode[] newArray = ArrayPool<MdNode>.Shared.Rent(newSize);
             Array.Copy(_childNodes, newArray, _childCount);
-            
-            MdNode[] oldArray = _childNodes;
+
+            ArrayPool<MdNode>.Shared.Return(_childNodes, true);
             _childNodes = newArray;
-            if (_childNodes.Length > 0)  ArrayPool<MdNode>.Shared.Return(oldArray, clearArray: true);
         }
 
         _childNodes[_childCount] = child;
@@ -91,7 +103,7 @@ public class MdNode : IMdNode, IResettable {
     }
 
     public bool TryReset() {
-        if (_childNodes.Length > 0) ArrayPool<MdNode>.Shared.Return(_childNodes, clearArray: true);
+        if (_childNodes.Length > 0) ArrayPool<MdNode>.Shared.Return(_childNodes, true);
         _childNodes = ArrayPool<MdNode>.Shared.Rent(MinimumCapacity);
         _childCount = 0;
 

@@ -56,7 +56,7 @@ public class MdNodeTree : IMdNodeTree, IResettable {
 
     public IEnumerable<IMdNodeVisitor> VisitNodesDeepestFirst() {
         ReadOnlySpan<MdNode> rootNodeChildren = RootNode.GetChildrenSpan<MdNode>(out int rootNodeChildCount);
-        if (rootNodeChildCount == 0) yield break;// Early exit for empty trees
+        if (rootNodeChildCount == 0) yield break; // Early exit for empty trees
 
         Stack<MdNodeVisitor> stackCache = PoolCache.MdNodeVisitorStackPool.Get();
         Stack<MdNodeVisitor> outputStack = PoolCache.MdNodeVisitorStackPool.Get();

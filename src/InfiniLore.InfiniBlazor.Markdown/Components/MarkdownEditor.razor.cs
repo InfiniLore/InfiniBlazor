@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using Ganss.Xss;
 using InfiniLore.InfiniBlazor.JsRuntime;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -9,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsRuntimeHelper, IMarkdownParser markdownParser) : ComponentBase {
+public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsRuntimeHelper, IMarkdownParser markdownParser, IHtmlSanitizer sanitizer) : ComponentBase {
     private MarkupString MarkdownOutput { get; set; }
     private ElementReference _textareaRef;
     private string _lastPressedKey = string.Empty;
@@ -48,7 +49,8 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
     
     private void UpdateMarkdown() {
         if (!markdownParser.TryParseToString(Source.Text, out string? output)) return; // TODO create some form of error popup
-        MarkdownOutput = new MarkupString(output);
+        string sanitizedOutput = sanitizer.Sanitize(output);
+        MarkdownOutput = new MarkupString(sanitizedOutput);
     }
     
     private async Task OnModifierClickAsync(string modifierName) {

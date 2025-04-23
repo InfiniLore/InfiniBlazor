@@ -17,7 +17,7 @@ public static class PoolCache {
     public static readonly ObjectPool<MdNodeVisitor> MdNodeVisitorPool = CreateResettablePool<MdNodeVisitor>(24);
     public static readonly ObjectPool<ParserDataDto> ParserDataDtoPool = CreateResettablePool<ParserDataDto>(256);
     public static readonly ObjectPool<Stack<Range>> RangeStackPool = CreateStackPool<Stack<Range>, Range>(16);
-    public static readonly ObjectPool<Stack<MdNodeVisitor>> MdNodeVisitorStackPool = CreateMdNodeVisitorStackPool(2);
+    public static readonly ObjectPool<Stack<MdNodeVisitor>> MdNodeVisitorStackPool = CreateMdNodeVisitorStackPool(4);
     public static readonly ObjectPool<StringBuilder> StringBuilderPool = CreateStringBuilderPool(8);
     public static readonly ObjectPool<MdNode> MdNodePool = CreateResettablePool<MdNode>(256);
     public static readonly ObjectPool<Stack<MdNode>> MdNodeStackPool = CreateStackPool<Stack<MdNode>, MdNode>(16);
