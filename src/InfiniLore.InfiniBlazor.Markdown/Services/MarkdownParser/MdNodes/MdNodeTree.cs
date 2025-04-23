@@ -15,11 +15,11 @@ public class MdNodeTree : IMdNodeTree, IResettable {
     // -----------------------------------------------------------------------------------------------------------------
     #region Visit Nodes
     public IEnumerable<IMdNodeVisitor> VisitNodesBreadthFirst() {
+        ReadOnlySpan<MdNode> rootNodeChildren = RootNode.GetChildrenSpan<MdNode>(out int rootNodeChildCount);
+        if (rootNodeChildCount == 0) yield break;// Early exit for empty tree nodes
+
         Stack<MdNodeVisitor> stack = PoolCache.MdNodeVisitorStackPool.Get();
         try {
-            ReadOnlySpan<MdNode> rootNodeChildren = RootNode.GetChildrenSpan<MdNode>(out int rootNodeChildCount);
-            if (rootNodeChildCount == 0) yield break;// Early exit for empty treMdNodees
-
             // Add Root children directly to avoid an extra if call during the while loop
             for (int i = rootNodeChildCount - 1; i >= 0; i--) {
                 MdNodeVisitor visitor = PoolCache.MdNodeVisitorPool.Get();
@@ -55,13 +55,13 @@ public class MdNodeTree : IMdNodeTree, IResettable {
     }
 
     public IEnumerable<IMdNodeVisitor> VisitNodesDeepestFirst() {
+        ReadOnlySpan<MdNode> rootNodeChildren = RootNode.GetChildrenSpan<MdNode>(out int rootNodeChildCount);
+        if (rootNodeChildCount == 0) yield break;// Early exit for empty trees
+
         Stack<MdNodeVisitor> stackCache = PoolCache.MdNodeVisitorStackPool.Get();
         Stack<MdNodeVisitor> outputStack = PoolCache.MdNodeVisitorStackPool.Get();
 
         try {
-            ReadOnlySpan<MdNode> rootNodeChildren = RootNode.GetChildrenSpan<MdNode>(out int rootNodeChildCount);
-            if (rootNodeChildCount == 0) yield break;// Early exit for empty trees
-
             stackCache.EnsureCapacity(rootNodeChildCount);
             outputStack.EnsureCapacity(rootNodeChildCount);
 
@@ -107,59 +107,37 @@ public class MdNodeTree : IMdNodeTree, IResettable {
     #endregion
 
     public bool TryReset() {
-        Stack<MdNode> cleanupStack = GetCleanupStack();
-        while (cleanupStack.TryPop(out MdNode? node)) {
-            PoolCache.MdNodePool.Return(node);
-        }
-
-        PoolCache.MdNodeStackPool.Return(cleanupStack);
-
         if (RootNode is not MdNode rootNode) return false;
 
-        PoolCache.MdNodePool.Return(rootNode);
-        RootNode = MdNode.AsRootNode();
-        return true;
-    }
-
-    private Stack<MdNode> GetCleanupStack() {
-        Stack<MdNode> stackCache = PoolCache.MdNodeStackPool.Get();
-        Stack<MdNode> cleanupStack = PoolCache.MdNodeStackPool.Get();
-
+        // Using depth-first traversal with a single stack
+        Stack<MdNode> stack = PoolCache.MdNodeStackPool.Get();
         try {
-            ReadOnlySpan<MdNode> rootNodeChildren = RootNode.GetChildrenSpan<MdNode>(out int rootNodeChildCount);
+            ReadOnlySpan<MdNode> children = rootNode.GetChildrenSpan<MdNode>(out int childCount);
+            stack.EnsureCapacity(childCount);
 
-            stackCache.EnsureCapacity(rootNodeChildCount);
-            cleanupStack.EnsureCapacity(rootNodeChildCount);
-
-            // Add Root children directly to avoid an extra if call during the while loop
-            for (int i = 0; i < rootNodeChildCount; i++) {
-                stackCache.Push(rootNodeChildren[i]);
+            for (int i = 0; i < childCount; i++) {
+                stack.Push(children[i]);
             }
 
-            // First pass: build the traversal order
-            while (stackCache.TryPop(out MdNode? currentNode)) {
-                cleanupStack.Push(currentNode);
+            // Process all nodes depth-first
+            while (stack.TryPop(out MdNode? node)) {
+                children = node.GetChildrenSpan<MdNode>(out childCount);
+                stack.EnsureCapacity(stack.Count + childCount);
 
-                // Use the current node's children instead of root node's
-                ReadOnlySpan<MdNode> children = currentNode.GetChildrenSpan<MdNode>(out int childrenCount);
-                stackCache.EnsureCapacity(stackCache.Count + childrenCount);
-                cleanupStack.EnsureCapacity(cleanupStack.Count + childrenCount);
-
-                for (int i = 0; i < childrenCount; i++) {
-                    stackCache.Push(children[i]);
+                for (int i = 0; i < childCount; i++) {
+                    stack.Push(children[i]);
                 }
+
+                PoolCache.MdNodePool.Return(node);
             }
-        }
-        catch {
-            PoolCache.MdNodeStackPool.Return(cleanupStack);
-            PoolCache.MdNodeStackPool.Return(stackCache);
-            throw;
+
+            // Finally, reset and replace the root node
+            PoolCache.MdNodePool.Return(rootNode);
+            RootNode = MdNode.AsRootNode();
+            return true;
         }
         finally {
-            PoolCache.MdNodeStackPool.Return(stackCache);
+            PoolCache.MdNodeStackPool.Return(stack);
         }
-
-        return cleanupStack;
     }
-
 }

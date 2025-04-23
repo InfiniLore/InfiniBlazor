@@ -24,7 +24,6 @@ public class MdNode : IMdNode, IResettable {
     public IReadOnlySet<string> Classes => _classes;
 
     public IMdNode Parent { get; private set; } = null!;
-
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -67,8 +66,7 @@ public class MdNode : IMdNode, IResettable {
         _attributes.AddOrUpdate(key, value);
         return this;
     }
-
-
+    
     private MdNode CreateChildNode(MdElement element, string? content = null) {
         MdNode child = PoolCache.MdNodePool.Get();
         child.Element = element;
