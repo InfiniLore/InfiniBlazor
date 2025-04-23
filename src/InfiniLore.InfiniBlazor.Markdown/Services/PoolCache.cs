@@ -17,8 +17,8 @@ public static class PoolCache {
     public static readonly ObjectPool<MdNodeVisitor> MdNodeVisitorPool = CreateResettablePool<MdNodeVisitor>(24);
     public static readonly ObjectPool<ParserDataDto> ParserDataDtoPool = CreateResettablePool<ParserDataDto>(256);
     public static readonly ObjectPool<Stack<Range>> RangeStackPool = CreateStackPool<Stack<Range>, Range>(16);
-    public static readonly ObjectPool<Stack<MdNodeVisitor>> MdNodeVisitorStackPool = new DefaultObjectPool<Stack<MdNodeVisitor>>(new MdNodeVisitorStackPoolPolicy(MdNodeVisitorPool), 2);
-    public static readonly ObjectPool<StringBuilder> StringBuilderPool = new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy {MaximumRetainedCapacity = int.MaxValue}, 8);
+    public static readonly ObjectPool<Stack<MdNodeVisitor>> MdNodeVisitorStackPool = CreateMdNodeVisitorStackPool(2);
+    public static readonly ObjectPool<StringBuilder> StringBuilderPool = CreateStringBuilderPool(8);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -31,4 +31,10 @@ public static class PoolCache {
 
     private static ObjectPool<T> CreateStackPool<T, TItem>(int maxRetained) where T : Stack<TItem>, new() 
         => new DefaultObjectPool<T>(new StackPoolPolicy<T,TItem>(), maxRetained);
+    
+    private static ObjectPool<Stack<MdNodeVisitor>> CreateMdNodeVisitorStackPool(int maxRetained) 
+        => new DefaultObjectPool<Stack<MdNodeVisitor>>(new MdNodeVisitorStackPoolPolicy(MdNodeVisitorPool), maxRetained);
+    
+    private static ObjectPool<StringBuilder> CreateStringBuilderPool(int maxRetained)
+        => new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy {MaximumRetainedCapacity = int.MaxValue}, maxRetained);
 }
