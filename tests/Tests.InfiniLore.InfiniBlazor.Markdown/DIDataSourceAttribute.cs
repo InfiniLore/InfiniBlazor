@@ -51,7 +51,7 @@ public class SanitizedDiDataSourceAttribute : DependencyInjectionDataSourceAttri
         services.AddLucideIcons();
         services.AddInfiniBlazor(static config => config.AddMarkdown(
             static config => {
-                config.AddMarkdownParser<string,string>()
+                config.AddMarkdownParser<string, string>()
                     .AddPreProcessor<StringInputProcessor>()
                     .AddPostProcessor<SanitizerPostProcessor>();
             }));

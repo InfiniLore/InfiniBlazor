@@ -10,7 +10,7 @@ namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 [DiDataSource]
 public class MarkdownParserTests(IMarkdownParser<string, string> parser) {
-
+    
     [Test]
     [MethodDataSource(typeof(AggregateDataSources), nameof(AggregateDataSources.DataSources))]
     [MethodDataSource(typeof(BlockQuoteDataSources), nameof(BlockQuoteDataSources.DataSources))]
