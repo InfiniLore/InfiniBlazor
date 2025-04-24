@@ -18,6 +18,9 @@ public class MarkdownFragment : IMarkdownFragment, IResettable {
 
     [MemberNotNull(nameof(Match))] public bool IsMatch { get; private set; }
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
     public void AsMatch(Match match, IMarkdownSyntaxNode node, HandlerOrigin origin) {
         Node = node;
         Origin = origin;
@@ -32,9 +35,6 @@ public class MarkdownFragment : IMarkdownFragment, IResettable {
         Element = element;
         IsMatch = false;
     }
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
     public bool TryReset() {
         Node = null!;
         Origin = HandlerOrigin.NotSkipped;

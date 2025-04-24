@@ -27,7 +27,7 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
         
         Match[] matchArray = ArrayPool<Match>.Shared.Rent(count);
         matches.CopyTo(matchArray, 0);
-        _stack.EnsureCapacity(_stack.Count + matches.Count);
+        _stack.EnsureCapacity(_stack.Count + count);
 
         // Process matches in reverse order for _stack
         for (int i = count - 1; i >= 0; i--) {
@@ -43,7 +43,7 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
         
         Match[] matchArray = ArrayPool<Match>.Shared.Rent(count);
         matches.CopyTo(matchArray, 0);
-        _stack.EnsureCapacity(_stack.Count + matches.Count);
+        _stack.EnsureCapacity(_stack.Count + count);
         
         int currentIndex = input.Length;
 
