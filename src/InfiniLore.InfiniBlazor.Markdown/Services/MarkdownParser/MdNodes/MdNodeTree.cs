@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdNodeTree : IMdNodeTree, IResettable {
-    public IMdNode RootNode { get; private set; } = MdNode.AsRootNode();
+    public IMdNode RootNode { get; private set; } = PoolCache.MdNodePool.Get();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -133,7 +133,7 @@ public class MdNodeTree : IMdNodeTree, IResettable {
 
             // Finally, reset and replace the root node
             PoolCache.MdNodePool.Return(rootNode);
-            RootNode = MdNode.AsRootNode();
+            RootNode = PoolCache.MdNodePool.Get();
             return true;
         }
         finally {

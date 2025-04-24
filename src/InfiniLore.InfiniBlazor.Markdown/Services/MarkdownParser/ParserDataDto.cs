@@ -45,4 +45,15 @@ public class ParserDataDto : IParserDataDto, IResettable {
 
         return true;
     }
+
+    public bool TryGetAsMatch([NotNullWhen(true)] out Match? match) {
+        match = Match;
+        return IsMatch;
+    }
+    
+    public bool TryGetAsElement(out MdElement element, out string? content) {
+        content = Content;
+        element = Element;
+        return !IsMatch;
+    }
 }

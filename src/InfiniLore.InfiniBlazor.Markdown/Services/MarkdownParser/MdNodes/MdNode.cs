@@ -27,12 +27,6 @@ public class MdNode : IMdNode, IResettable {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static MdNode AsRootNode() {
-        MdNode node = PoolCache.MdNodePool.Get();
-        node.Parent = node;
-        return node;
-    }
-
     public ReadOnlySpan<T> GetChildrenSpan<T>(out int length) where T : IMdNode {
         length = _childCount;
         if (_childCount == 0) return ReadOnlySpan<T>.Empty;
@@ -43,43 +37,7 @@ public class MdNode : IMdNode, IResettable {
         );
     }
 
-    public IMdNode AddChildNode(MdElement element) => CreateChildNode(element);
-
-    public IMdNode WithContent(string content) {
-        if (_childNodes.LastOrDefault() is not { Element: MdElement.Content } lastNode) {
-            CreateChildNode(MdElement.Content, content);
-            return this;
-        }
-
-        int contentLength = lastNode.Content?.Length ?? 0;
-        int length = contentLength + content.Length;
-        lastNode.Content = string.Create(
-            length,
-            (contentLength, OriginalContent: lastNode.Content, NewContent: content),
-            action: static (span, state) => {
-                state.OriginalContent.AsSpan().CopyTo(span);
-                state.NewContent.AsSpan().CopyTo(span[state.contentLength..]);
-            });
-
-        return this;
-    }
-
-    public IMdNode WithHtmlContent(string content) {
-        CreateChildNode(MdElement.HtmlContent, content);
-        return this;
-    }
-
-    public IMdNode WithClass(string className) {
-        _classes.Add(className);
-        return this;
-    }
-
-    public IMdNode WithAttribute(string key, string value) {
-        _attributes.AddOrUpdate(key, value);
-        return this;
-    }
-
-    private MdNode CreateChildNode(MdElement element, string? content = null) {
+    public IMdNode AddChildNode(MdElement element, string? content = null) {
         MdNode child = PoolCache.MdNodePool.Get();
         child.Element = element;
         child.Content = content;
@@ -98,6 +56,42 @@ public class MdNode : IMdNode, IResettable {
         _childNodes[_childCount++] = child;
 
         return child;
+    }
+
+
+    public IMdNode WithContent(string? content) {
+        if (content.IsNullOrWhiteSpace()) return this;
+        if (_childNodes.LastOrDefault() is not { Element: MdElement.Content } lastNode) {
+            AddChildNode(MdElement.Content, content);
+            return this;
+        }
+
+        int contentLength = lastNode.Content?.Length ?? 0;
+        int length = contentLength + content.Length;
+        lastNode.Content = string.Create(
+            length,
+            (contentLength, OriginalContent: lastNode.Content, NewContent: content),
+            action: static (span, state) => {
+                state.OriginalContent.AsSpan().CopyTo(span);
+                state.NewContent.AsSpan().CopyTo(span[state.contentLength..]);
+            });
+
+        return this;
+    }
+
+    public IMdNode WithHtmlContent(string? content) {
+        AddChildNode(MdElement.HtmlContent, content);
+        return this;
+    }
+
+    public IMdNode WithClass(string className) {
+        _classes.Add(className);
+        return this;
+    }
+
+    public IMdNode WithAttribute(string key, string value) {
+        _attributes.AddOrUpdate(key, value);
+        return this;
     }
 
     public bool TryReset() {
