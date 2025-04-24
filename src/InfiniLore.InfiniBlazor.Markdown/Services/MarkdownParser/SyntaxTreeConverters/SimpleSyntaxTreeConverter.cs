@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using System.Collections.Frozen;
 
-namespace InfiniLore.InfiniBlazor.Markdown.NodeTreeConverters;
+namespace InfiniLore.InfiniBlazor.Markdown.SyntaxTreeConverters;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

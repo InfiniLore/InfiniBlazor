@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Config;
-using InfiniLore.InfiniBlazor.Markdown.NodeTreeConverters;
+using InfiniLore.InfiniBlazor.Markdown.SyntaxTreeConverters;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Config;
