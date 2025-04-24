@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
@@ -49,5 +50,26 @@ public static class TagDataSources {
             ConfigureExpectedNode: static rootNode => rootNode.AddParagraph()
                 .AddItalic().AddTag("tag")
         );
+
+        yield return static () => new MarkdownTestDto(SectionName,
+            "#this is not a valid tag",
+            "<p><span class=\"tag\">this</span> is not a valid tag</p>",
+            ConfigureExpectedNode: static rootNode => {
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                paragraph.AddTag("this");
+                paragraph.WithContent(" is not a valid tag");
+            });
+        
+        yield return static () => new MarkdownTestDto(SectionName,
+            "#[link](https://www.transgenderinfo.be)",
+            "<p>#<a href=\"https://www.transgenderinfo.be\">link</a></p>",
+            ConfigureExpectedNode: static rootNode => {
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                paragraph.WithContent("#"); 
+                
+                IMarkdownSyntaxNode link = paragraph.AddLink("link");
+                link.WithAttribute("href", "https://www.transgenderinfo.be");
+                
+            });
     }
 }

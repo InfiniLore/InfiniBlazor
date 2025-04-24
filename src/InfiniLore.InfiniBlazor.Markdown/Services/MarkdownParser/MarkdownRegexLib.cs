@@ -30,7 +30,7 @@ public static partial class MarkdownRegexLib {
             \[(?<lrText>[^\]]+?)\]
             \((?<lrHref>http(?:\?)?[^\)]+?)(?:\s?"(?<lrTitle>[^"]*)")?\)
           )
-        | (?<tag>\#(?<tText>[^#\s]+))
+        | (?<tag>\#(?<tText>[\p{L}\p{N}\-_/]+))
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex SinglelineStructuresRegex { get; }
 
