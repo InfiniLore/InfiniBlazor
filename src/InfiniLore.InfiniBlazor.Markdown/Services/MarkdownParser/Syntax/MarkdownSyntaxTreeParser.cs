@@ -5,7 +5,6 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
-using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
@@ -21,14 +20,16 @@ public sealed class MarkdownSyntaxTreeParser(IServiceProvider serviceProvider, I
     // -----------------------------------------------------------------------------------------------------------------
     #region Constructor Helpers
     private static FrozenDictionary<string, T> ToFrozenDictionary<T>(ILogger logger, IServiceProvider serviceProvider) {
-        ImmutableArray<string> keyNames = MarkdownRegexLib.MarkdownStructureGroupNames;
+        ReadOnlySpan<string> keyNames = MarkdownRegexLib.MarkdownStructureGroupNames.AsSpan();
         var dictionaryBuilder = new Dictionary<string, T>(keyNames.Length);
 
-        foreach (string groupName in keyNames) {
+        for (int index = keyNames.Length - 1; index >= 0; index--) {
+            string groupName = keyNames[index];
             if (serviceProvider.GetKeyedService<T>(groupName) is not {} service) {
                 logger.LogWarning("No service found for group name '{groupName}' for type '{name}'.", groupName, typeof(T).Name);
                 continue;
             }
+
             dictionaryBuilder[groupName] = service;
         }
 
@@ -48,12 +49,14 @@ public sealed class MarkdownSyntaxTreeParser(IServiceProvider serviceProvider, I
                     IMarkdownSyntaxNode currentNode = fragment.Node;
                     HandlerOrigin origin = fragment.Origin;
 
-                    if (fragment.TryGetAsMatch(out Match? match)) {
-                        ProcessMatch(match, currentNode, origin, runningParser);
+                    if (fragment.IsMatch) {
+                        ProcessMatch(fragment.Match, currentNode, origin, runningParser);
                         continue;
                     }
-                    if (fragment.TryGetAsElement(out MarkdownElement element, out string? content)) {
-                        ProcessElement(element, content, currentNode);
+
+                    // ReSharper disable once InvertIf
+                    if (fragment.Element is not MarkdownElement.Undefined) {
+                        ProcessElement(fragment.Element, fragment.Content, currentNode);
                     }
                 }
                 finally {
@@ -69,12 +72,12 @@ public sealed class MarkdownSyntaxTreeParser(IServiceProvider serviceProvider, I
     private void ProcessMatch(Match match, IMarkdownSyntaxNode currentNode, HandlerOrigin origin, IMarkdownParserEngine runningParser) {
         GroupCollection groups = match.Groups;
         for (int i = 0; i < groups.Count; i++) {
-            if (groups[i] is not { Success: true, Name: var name }) continue;
+            if (groups[i] is not { Success: true, Name: var name } group) continue;
             if (!_elementHandlers.TryGetValue(name, out IMarkdownElementHandler? handler)) continue;
 
             HandlerOrigin handlerOrigin = handler.SkipOnOrigin;
             if (handlerOrigin is HandlerOrigin.NotSkipped || !origin.HasFlagFast(handlerOrigin)) {
-                handler.HandleMatch(runningParser, currentNode, match, groups[i], origin);
+                handler.HandleMatch(runningParser, currentNode, match, group, origin);
             }
         }
     }

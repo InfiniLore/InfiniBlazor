@@ -45,15 +45,4 @@ public class MarkdownFragment : IMarkdownFragment, IResettable {
 
         return true;
     }
-
-    public bool TryGetAsMatch([NotNullWhen(true)] out Match? match) {
-        match = Match;
-        return IsMatch;
-    }
-    
-    public bool TryGetAsElement(out MarkdownElement element, out string? content) {
-        content = Content;
-        element = Element;
-        return !IsMatch;
-    }
 }

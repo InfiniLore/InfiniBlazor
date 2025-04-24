@@ -67,7 +67,7 @@ public static partial class MarkdownRegexLib {
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex MultilineStructuresRegex { get; }
 
-    public static ImmutableArray<string> MarkdownStructureGroupNames => [
+    public static ImmutableArray<string> MarkdownStructureGroupNames = [ 
         // Multiline
         "paragraph",
         "heading",
