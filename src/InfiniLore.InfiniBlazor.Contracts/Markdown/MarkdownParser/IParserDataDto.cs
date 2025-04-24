@@ -9,6 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IParserDataDto {
+    MdElement Element { get; }
     IMdNode Node { get; }
     ParserOrigin Origin { get; }
     Match? Match { get; }
