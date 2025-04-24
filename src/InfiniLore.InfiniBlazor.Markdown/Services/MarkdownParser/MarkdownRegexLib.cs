@@ -1,6 +1,8 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using System.Collections.Frozen;
+using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown;
@@ -17,7 +19,7 @@ public static partial class MarkdownRegexLib {
         | (?<strike>~(?<s>.+?)(?<!\\)~)
         | (?<underline>_(?<u>.+?)(?<!\\)_)
         | (?<code>(?<open>`+)(?<c>(?>[^`\\]+|\\.|`(?!\k<open>))*?)\k<open>)
-        | (?<emote>:(?<e>[a-zA-Z0-9-_]+):)
+        | (?<emote>:(?<e>[\p{L}\p{N}\-_]+):)
         | (?<linkNested>
             (?<lnBang>!)?
             \[(?<lnText>!?\[.+?\]\(.+?\))\]
@@ -28,7 +30,7 @@ public static partial class MarkdownRegexLib {
             \[(?<lrText>[^\]]+?)\]
             \((?<lrHref>http(?:\?)?[^\)]+?)(?:\s?"(?<lrTitle>[^"]*)")?\)
           )
-        | (?<tag>\#(?<tText>[^#\s]+))
+        | (?<tag>\#(?<tText>[\p{L}\p{N}\-_/]+))
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex SinglelineStructuresRegex { get; }
 
@@ -65,6 +67,34 @@ public static partial class MarkdownRegexLib {
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex MultilineStructuresRegex { get; }
 
+    public static ImmutableArray<string> MarkdownStructureGroupNames = [ 
+        // Multiline
+        "paragraph",
+        "heading",
+        "codeBlock",
+        "headingSimple",
+        "listUnordered",
+        "listOrdered",
+        "table",
+        "blockQuote",
+        "htmlBody",
+        "horizontalRule",
+
+        // Singleline
+        "escaped",
+        "bold",
+        "italic",
+        "supScript",
+        "subScript",
+        "strike",
+        "code",
+        "linkNested",
+        "linkRegular",
+        "underline",
+        "emote",
+        "tag"
+    ];
+
     [GeneratedRegex(@"^[ ]*[-.]?\d*\.?\s+(?<lTask>\[[\ xX]\] )?(?<lHead>[^\r\n]+)(?<lBody>(?:\r?\n[ ]+.+)*)(?<!\r)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex ListItemBodyRegex { get; }
 
@@ -85,4 +115,34 @@ public static partial class MarkdownRegexLib {
         (</\k<tag>>)
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.Compiled)]
     public static partial Regex FindSpanHtmlRegex { get; }
+    
+    private static FrozenDictionary<string, int> GroupNameToGroupId { get; } = GetGroupNames();
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private static FrozenDictionary<string, int> GetGroupNames() {
+        Regex[] regexes = [
+            SinglelineStructuresRegex,
+            MultilineStructuresRegex,
+            FindSpanHtmlRegex,
+            ListItemBodyRegex
+        ];
+
+        int totalGroups = regexes.Sum(regex => regex.GetGroupNames().Length);
+        Dictionary<string, int> dictionary = new(totalGroups);
+
+        foreach (Regex regex in regexes) {
+            string[] names = regex.GetGroupNames();
+            foreach (string name in names) {
+                dictionary.AddOrUpdate(name, regex.GroupNumberFromName(name));
+            }
+        }
+        return dictionary.ToFrozenDictionary();
+    }
+
+    public static int GetSingleLineGroupId(string groupName) => GroupNameToGroupId[groupName];
+    public static int GetMultiLineGroupId(string groupName) => GroupNameToGroupId[groupName];
+    public static int GetSpanGroupId(string groupName) => GroupNameToGroupId[groupName];
+    public static int GetListGroupId(string groupName) => GroupNameToGroupId[groupName];
+    
 }

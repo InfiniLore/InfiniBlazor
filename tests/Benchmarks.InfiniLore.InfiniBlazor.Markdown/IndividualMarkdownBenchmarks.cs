@@ -14,7 +14,7 @@ namespace Benchmarks.InfiniLore.InfiniBlazor.Markdown;
 [MemoryDiagnoser]
 [Orderer(SummaryOrderPolicy.Declared)]
 public class IndividualMarkdownBenchmarks {
-    private IMarkdownParser Parser { get; set; } = null!;
+    private IMarkdownParser<string, string> Parser { get; set; } = null!;
 
     [GlobalSetup]
     public void Setup() {
@@ -22,7 +22,7 @@ public class IndividualMarkdownBenchmarks {
         serviceCollection.AddInfiniBlazor(config => config.AddMarkdown());
         serviceCollection.AddLogging();
         ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
-        Parser = serviceProvider.GetRequiredService<IMarkdownParser>();
+        Parser = serviceProvider.GetRequiredService<IMarkdownParser<string, string>>();
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -32,98 +32,98 @@ public class IndividualMarkdownBenchmarks {
     [Benchmark]
     public string EscapedCharacters() {
         const string input = @"\*escaped text\*";
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
     public string BoldAndItalic() {
         const string input = "***bold and italic***";
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
     public string BoldOnly() {
         const string input = "**bold**";
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
     public string ItalicOnly() {
         const string input = "*italic*";
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
     public string Superscript() {
         const string input = "^^sup-script^^";
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
     public string Subscript() {
         const string input = "^^sub-script^^";
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
     public string Strikethrough() {
         const string input = "~~strikethrough~~";
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
     public string Underline() {
         const string input = "_underline_";
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
     public string InlineCode() {
         const string input = "`inline code`";
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
     public string Emotes() {
         const string input = ":flag-trans:";
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
     public string NestedLinks() {
         const string input = "[![nested link](image_url)](outer_url)";
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
     public string RegularLinks() {
         const string input = "[Regular Link](https://example.com)";
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
     public string Tags() {
         const string input = "#tag";
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
     public string HtmlSpecialCharacters() {
         const string input = "&copy; & < >";
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
@@ -138,7 +138,7 @@ public class IndividualMarkdownBenchmarks {
             ## Header 2
             ### Header 3
             """;
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
@@ -149,7 +149,7 @@ public class IndividualMarkdownBenchmarks {
             code block
             ```
             """;
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
@@ -159,7 +159,7 @@ public class IndividualMarkdownBenchmarks {
             Simple Heading
             ---
             """;
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
@@ -170,7 +170,7 @@ public class IndividualMarkdownBenchmarks {
             - Item 2
               - Nested Item
             """;
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
@@ -181,7 +181,7 @@ public class IndividualMarkdownBenchmarks {
             2. Second Item
               3. Nested Item
             """;
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
@@ -193,7 +193,7 @@ public class IndividualMarkdownBenchmarks {
             |----------|----------|
             | Value 1  | Value 2  |
             """;
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
@@ -203,14 +203,14 @@ public class IndividualMarkdownBenchmarks {
             > A blockquote
             > with multiple lines.
             """;
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
     public string HtmlBlocks() {
         const string input = "<div><p>HTML content</p></div>";
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
@@ -223,14 +223,14 @@ public class IndividualMarkdownBenchmarks {
 
             ___
             """;
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
     public string RemainderText() {
         const string input = "This is normal text left over.";
-        if(!Parser.TryParseToString(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 }
