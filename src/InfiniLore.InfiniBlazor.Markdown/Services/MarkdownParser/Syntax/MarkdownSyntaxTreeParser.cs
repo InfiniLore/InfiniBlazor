@@ -14,7 +14,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
 [InjectableSingleton<IMarkdownSyntaxTreeParser<string>>]
 public sealed class MarkdownSyntaxTreeParser(IServiceProvider serviceProvider, ILogger<MarkdownSyntaxTreeParser> logger) : IMarkdownSyntaxTreeParser<string> {
     private readonly FrozenDictionary<string, IMarkdownElementHandler> _elementHandlers = ToFrozenDictionary<IMarkdownElementHandler>(logger, serviceProvider);
-
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
