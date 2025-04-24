@@ -49,7 +49,6 @@ public class MdNode : IMdNode, IResettable {
         if (_childNodes.LastOrDefault() is not { Element: MdElement.Content } lastNode) {
             CreateChildNode(MdElement.Content, content);
             return this;
-
         }
 
         int contentLength = lastNode.Content?.Length ?? 0;
@@ -96,8 +95,7 @@ public class MdNode : IMdNode, IResettable {
             _childNodes = newArray;
         }
 
-        _childNodes[_childCount] = child;
-        _childCount++;
+        _childNodes[_childCount++] = child;
 
         return child;
     }
