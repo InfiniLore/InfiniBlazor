@@ -4,9 +4,10 @@
 using System.Diagnostics.CodeAnalysis;
 
 namespace InfiniLore.InfiniBlazor.Markdown;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMarkdownParser<in TInput, TOutput> {
-    bool TryParse(TInput markdown, [NotNullWhen(true)] out TOutput? output);
+public interface IMarkdownPostProcessor<T> {
+    public bool TryProcess(T input,[NotNullWhen(true)] out T? output);
 }

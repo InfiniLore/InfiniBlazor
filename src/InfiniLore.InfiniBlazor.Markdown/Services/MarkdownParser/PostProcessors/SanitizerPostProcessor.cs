@@ -1,11 +1,17 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Markdown;
+using Ganss.Xss;
+using System.Diagnostics.CodeAnalysis;
+
+namespace InfiniLore.InfiniBlazor.Markdown.PostProcessors;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMarkdownSyntaxTreeParser {
-    void ParseToNodeTree(string markdown, IMarkdownSyntaxTree nodeTree);
+public class SanitizerPostProcessor(IHtmlSanitizer sanitizer) : IMarkdownPostProcessor<string> {
+    public bool TryProcess(string input, [NotNullWhen(true)] out string? output) {
+        output = sanitizer.Sanitize(input);
+        return true;
+    }
 }

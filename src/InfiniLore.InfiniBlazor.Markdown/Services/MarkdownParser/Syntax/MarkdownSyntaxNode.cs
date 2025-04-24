@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MarkdownSyntaxNode : IMarkdownSyntaxNode, IResettable {
-    private const int MinimumCapacity = 4;
+    private const int MinimumCapacity = 2;
     private int _childCount;
     private MarkdownSyntaxNode[] _childNodes = ArrayPool<MarkdownSyntaxNode>.Shared.Rent(MinimumCapacity);
     private readonly HashSet<string> _classes = new();

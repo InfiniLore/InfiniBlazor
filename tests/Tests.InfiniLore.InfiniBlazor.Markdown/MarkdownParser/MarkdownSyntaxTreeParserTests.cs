@@ -11,7 +11,7 @@ namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [DIDataSource]
-public class MarkdownSyntaxTreeParserTests(IMarkdownSyntaxTreeParser nodeTreeParser)  {
+public class MarkdownSyntaxTreeParserTests(IMarkdownSyntaxTreeParser<string> nodeTreeParser)  {
 
     [Test]
     [MethodDataSource(typeof(AggregateDataSources), nameof(AggregateDataSources.DataSources))]

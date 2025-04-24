@@ -1,8 +1,8 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Ganss.Xss;
 using InfiniLore.InfiniBlazor.Config;
+using InfiniLore.InfiniBlazor.Markdown.PostProcessors;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Config;
@@ -11,10 +11,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Config;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MarkdownParserConfig(IInfiniBlazorConfig config) {
-    public MarkdownParserConfig AddDefaultSanitizer() {
-        var sanitizer = new HtmlSanitizer();
-        
-        config.Services.AddSingleton<IHtmlSanitizer>(sanitizer);
+    public MarkdownParserConfig AddSanitizerPostProcessor() {
+        config.Services.AddSingleton<IMarkdownPostProcessor<string>, SanitizerPostProcessor>();
         return this;
     }
 }

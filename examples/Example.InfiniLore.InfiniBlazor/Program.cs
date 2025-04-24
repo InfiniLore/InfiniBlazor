@@ -13,7 +13,9 @@ public class Program {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddInfiniBlazor(config => {
-            config.AddMarkdown();
+            config.AddMarkdown(static config => {
+                config.Parser.AddSanitizerPostProcessor();
+            });
         });
         
         builder.Services.AddRazorComponents()

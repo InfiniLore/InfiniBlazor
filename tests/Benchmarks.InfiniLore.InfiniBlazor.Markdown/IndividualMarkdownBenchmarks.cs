@@ -14,7 +14,7 @@ namespace Benchmarks.InfiniLore.InfiniBlazor.Markdown;
 [MemoryDiagnoser]
 [Orderer(SummaryOrderPolicy.Declared)]
 public class IndividualMarkdownBenchmarks {
-    private IMarkdownParser Parser { get; set; } = null!;
+    private IMarkdownParser<string, string> Parser { get; set; } = null!;
 
     [GlobalSetup]
     public void Setup() {
@@ -22,7 +22,7 @@ public class IndividualMarkdownBenchmarks {
         serviceCollection.AddInfiniBlazor(config => config.AddMarkdown());
         serviceCollection.AddLogging();
         ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
-        Parser = serviceProvider.GetRequiredService<IMarkdownParser>();
+        Parser = serviceProvider.GetRequiredService<IMarkdownParser<string, string>>();
     }
 
     // -----------------------------------------------------------------------------------------------------------------

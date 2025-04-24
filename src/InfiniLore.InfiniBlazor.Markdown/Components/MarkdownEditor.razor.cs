@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsRuntimeHelper, IMarkdownParser markdownParser, IHtmlSanitizer sanitizer) : ComponentBase {
+public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsRuntimeHelper, IMarkdownParser<string,string> markdownParser, IHtmlSanitizer sanitizer) : ComponentBase {
     private MarkupString MarkdownOutput { get; set; }
     private ElementReference _textareaRef;
     private string _lastPressedKey = string.Empty;
