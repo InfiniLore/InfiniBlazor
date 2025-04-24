@@ -1,18 +1,31 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+
+namespace Tests.InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IRunningMarkdownParser {
-    IMdNodeTree NodeTree { get; }
+public record MarkdownTestDto(
+    string Section,
+    string Markdown,
+    string ExpectedStringOutput,
+
+    // ReSharper disable once NotAccessedPositionalProperty.Global
+    Action<IMdNode>? ConfigureExpectedNode = null
+) {
+    public IMdNode? ExpectedNode { get; } = CreateNode(ConfigureExpectedNode);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    void AddMultiLineMatchesToStack(string input, IMdNode node, ParserOrigin origin);
-    void AddSingleLineMatchesToStack(string input, IMdNode node, ParserOrigin origin);
-    void PushContentToStack(string content, IMdNode currentNode, ParserOrigin origin);
-    void PushElementToStack(string? content, IMdNode currentNode, ParserOrigin origin, MdElement element);
+    private static MdNode? CreateNode(Action<IMdNode>? configureNode) {
+        if (configureNode == null) return null;
+
+        var node = new MdNode();
+        configureNode.Invoke(node);
+        return node;
+    }
 }

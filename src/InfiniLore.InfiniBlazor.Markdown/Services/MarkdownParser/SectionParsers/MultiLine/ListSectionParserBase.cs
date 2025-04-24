@@ -21,7 +21,7 @@ public abstract class ListSectionParserBase : ISectionHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.TryGetValue(out string? listBody)) return;
 
         MatchCollection matchCollection = MarkdownRegexLib.ListItemBodyRegex.Matches(listBody);
@@ -39,18 +39,18 @@ public abstract class ListSectionParserBase : ISectionHandler {
             
                 if (groups[LBodyId].TryGetValueSpan(out ReadOnlySpan<char> itemBody) && !itemBody.IsEmpty) {
                     string normalizedBody = NormalizationHelper.NormalizeIndentation(itemBody);
-                    parser.AddMultiLineMatchesToStack(normalizedBody, listItemNode, origin | ParserOrigin.PreserveHtml);
+                    engine.AddMultiLineMatchesToStack(normalizedBody, listItemNode, origin | ParserOrigin.PreserveHtml);
                 }
 
                 if (groups[LHeadId].TryGetValue(out string? listHeader)) {
-                    parser.AddSingleLineMatchesToStack(listHeader, listItemNode, origin);
+                    engine.AddSingleLineMatchesToStack(listHeader, listItemNode, origin);
                 }
 
                 // ReSharper disable once InvertIf
                 if (groups[LTaskId].TryGetValue(out string? taskMarker)) {
                     bool isChecked = taskMarker.ToLowerInvariant().Contains('x');
                     MdElement element = isChecked ? MdElement.CheckboxSelected : MdElement.CheckboxUnselected;
-                    parser.PushElementToStack(null, listItemNode, origin, element);
+                    engine.PushElementToStack(null, listItemNode, origin, element);
                 }
             }
         }

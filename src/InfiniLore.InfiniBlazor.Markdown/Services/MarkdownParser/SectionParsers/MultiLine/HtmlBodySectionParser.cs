@@ -21,30 +21,30 @@ public class HtmlBodySectionParser : ISectionHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!origin.HasFlag(ParserOrigin.PreserveHtml)) {
             currentNode = currentNode.AddChildNode(MdElement.Paragraph);
         }
 
         if (entireMatch.Groups[HtmlPostId].TryGetValue(out string? post)) {
-            parser.AddSingleLineMatchesToStack(post, currentNode, origin);
+            engine.AddSingleLineMatchesToStack(post, currentNode, origin);
         }
 
         if (entireMatch.Groups[HtmlBodyId].TryGetValue(out string? htmlBody)) {
             // Span should be the only special case allowed that allows for Markdown parsing within it
             Match match = MarkdownRegexLib.FindSpanHtmlRegex.Match(htmlBody);
             if (match.Groups[SpanTagId].TryGetValue(out string? spanTag) && match.Groups[SpanBodyId].TryGetValue(out string? spanBody)) {
-                parser.PushElementToStack("</span>", currentNode, origin, MdElement.HtmlContent);
-                parser.AddMultiLineMatchesToStack(spanBody, currentNode, origin | ParserOrigin.Html);
-                parser.PushElementToStack(spanTag, currentNode, origin, MdElement.HtmlContent);
+                engine.PushElementToStack("</span>", currentNode, origin, MdElement.HtmlContent);
+                engine.AddMultiLineMatchesToStack(spanBody, currentNode, origin | ParserOrigin.Html);
+                engine.PushElementToStack(spanTag, currentNode, origin, MdElement.HtmlContent);
             }
             else {
-                parser.PushElementToStack(htmlBody, currentNode, origin, MdElement.HtmlContent);
+                engine.PushElementToStack(htmlBody, currentNode, origin, MdElement.HtmlContent);
             }
         }
 
         if (entireMatch.Groups[HtmlPreId].TryGetValue(out string? pre)) {
-            parser.AddSingleLineMatchesToStack(pre, currentNode, origin);
+            engine.AddSingleLineMatchesToStack(pre, currentNode, origin);
         }
     }
 }

@@ -16,10 +16,10 @@ public class SubScriptSectionParser : ISectionHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[SbId].TryGetValue(out string? subValue)) return;
 
         IMdNode node = currentNode.AddChildNode(MdElement.Subscript);
-        parser.AddSingleLineMatchesToStack(subValue, node, origin | SkipOnOrigin);
+        engine.AddSingleLineMatchesToStack(subValue, node, origin | SkipOnOrigin);
     }
 }

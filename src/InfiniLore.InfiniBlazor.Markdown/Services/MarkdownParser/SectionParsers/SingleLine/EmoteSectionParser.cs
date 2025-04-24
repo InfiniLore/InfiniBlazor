@@ -31,7 +31,7 @@ public class EmoteSectionParser(ILogger<EmoteSectionParser> logger) : ISectionHa
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[EId].TryGetValue(out string? lookupValue)) return;
 
         if (!EmoteLookup.TryGetValue(lookupValue, out string? value)) {

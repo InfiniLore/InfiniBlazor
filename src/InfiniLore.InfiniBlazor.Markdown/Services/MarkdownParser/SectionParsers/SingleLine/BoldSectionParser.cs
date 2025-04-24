@@ -16,10 +16,10 @@ public class BoldSectionParser : ISectionHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[BId].TryGetValue(out string? boldValue)) return;
 
         IMdNode boldNode = currentNode.AddChildNode(MdElement.Bold);
-        parser.AddSingleLineMatchesToStack(boldValue, boldNode, origin | SkipOnOrigin);
+        engine.AddSingleLineMatchesToStack(boldValue, boldNode, origin | SkipOnOrigin);
     }
 }

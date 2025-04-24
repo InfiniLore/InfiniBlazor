@@ -16,10 +16,10 @@ public class StrikeSectionParser : ISectionHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[SId].TryGetValue(out string? strikeValue)) return;
 
         IMdNode node = currentNode.AddChildNode(MdElement.Strikethrough);
-        parser.AddSingleLineMatchesToStack(strikeValue, node, origin | SkipOnOrigin);
+        engine.AddSingleLineMatchesToStack(strikeValue, node, origin | SkipOnOrigin);
     }
 }

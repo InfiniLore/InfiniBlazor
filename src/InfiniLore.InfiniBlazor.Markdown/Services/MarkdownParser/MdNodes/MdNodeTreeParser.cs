@@ -37,7 +37,7 @@ public sealed class MdNodeTreeParser(IServiceProvider serviceProvider, ILogger<M
     #endregion
     
     public void ParseToNodeTree(string markdown, IMdNodeTree nodeTree) {
-        RunningMarkdownParser runningParser = PoolCache.RunningMarkdownParserPool.Get();
+        MarkdownParserEngine runningParser = PoolCache.RunningMarkdownParserPool.Get();
 
         try {
             runningParser.NodeTree = nodeTree;
@@ -66,7 +66,7 @@ public sealed class MdNodeTreeParser(IServiceProvider serviceProvider, ILogger<M
         }
     }
 
-    private void ProcessMatch(Match match, IMdNode currentNode, ParserOrigin origin, RunningMarkdownParser runningParser) {
+    private void ProcessMatch(Match match, IMdNode currentNode, ParserOrigin origin, IMarkdownParserEngine runningParser) {
         GroupCollection groups = match.Groups;
         for (int i = 0; i < groups.Count; i++) {
             if (groups[i] is not { Success: true, Name: var name }) continue;

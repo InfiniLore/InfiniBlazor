@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.MdNodes;
-using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
+using Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
@@ -38,7 +38,7 @@ public class NodeTreeConverterTests(IMdNodeTreeConverter<string> toStringConvert
     [MethodDataSource(typeof(TagDataSources), nameof(TagDataSources.DataSources))]
     [MethodDataSource(typeof(UnderlineDataSources), nameof(UnderlineDataSources.DataSources))]
     [MethodDataSource(typeof(XSSDataSources), nameof(XSSDataSources.DataSources))]
-    public async Task ParseToNodeTree_ValidInputs(MarkdownTestDto dto) {
+    public async Task Convert_ValidInputs(MarkdownTestDto dto) {
         // Arrange
         Skip.When(dto.ExpectedNode == null, "The node tree is null and thus cannot be compared.");
         MdNodeTree nodeTree = MdNodeTree.WithRootNode(dto.ExpectedNode);

@@ -3,8 +3,9 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
-namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
+namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

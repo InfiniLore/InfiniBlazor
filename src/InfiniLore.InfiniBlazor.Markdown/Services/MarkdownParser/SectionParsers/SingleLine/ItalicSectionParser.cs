@@ -16,10 +16,10 @@ public class ItalicSectionParser : ISectionHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[IId].TryGetValue(out string? italicValue)) return;
 
         IMdNode node = currentNode.AddChildNode(MdElement.Italic);
-        parser.AddSingleLineMatchesToStack(italicValue, node, origin | SkipOnOrigin);
+        engine.AddSingleLineMatchesToStack(italicValue, node, origin | SkipOnOrigin);
     }
 }

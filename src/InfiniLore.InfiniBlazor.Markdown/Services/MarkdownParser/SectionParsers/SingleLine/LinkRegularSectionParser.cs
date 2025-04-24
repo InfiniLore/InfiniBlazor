@@ -20,7 +20,7 @@ public class LinkRegularSectionParser : ISectionHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[LrTextId].TryGetValue(out string? linkText)) return;
         if (!entireMatch.Groups[LrHrefId].TryGetValue(out string? linkHref)) return;
 
@@ -39,6 +39,6 @@ public class LinkRegularSectionParser : ISectionHandler {
         IMdNode linkNode = currentNode.AddChildNode(MdElement.Link);
         linkNode.WithAttribute("href", linkHref);
 
-        parser.AddSingleLineMatchesToStack(linkText, linkNode, origin | SkipOnOrigin);
+        engine.AddSingleLineMatchesToStack(linkText, linkNode, origin | SkipOnOrigin);
     }
 }

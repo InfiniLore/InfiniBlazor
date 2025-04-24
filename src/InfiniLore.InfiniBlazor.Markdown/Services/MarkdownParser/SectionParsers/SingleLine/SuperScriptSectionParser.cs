@@ -16,10 +16,10 @@ public class SuperScriptSectionParser : ISectionHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[SpId].TryGetValue(out string? superValue)) return;
 
         IMdNode node = currentNode.AddChildNode(MdElement.Superscript);
-        parser.AddSingleLineMatchesToStack(superValue, node, origin | SkipOnOrigin);
+        engine.AddSingleLineMatchesToStack(superValue, node, origin | SkipOnOrigin);
     }
 }

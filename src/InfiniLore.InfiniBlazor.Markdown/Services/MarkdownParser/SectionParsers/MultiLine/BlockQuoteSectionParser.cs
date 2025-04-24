@@ -15,7 +15,7 @@ public class BlockQuoteSectionParser : ISectionHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!group.TryGetValueSpan(out ReadOnlySpan<char> blockQuoteBody)) return;
 
         // Replace Regex usage with span-based logic:
@@ -23,7 +23,7 @@ public class BlockQuoteSectionParser : ISectionHandler {
         string adjustedBlockquote = NormalizationHelper.NormalizeIndentation(normalized);
 
         IMdNode blockquoteNode = currentNode.AddChildNode(MdElement.Blockquote);
-        parser.AddMultiLineMatchesToStack(adjustedBlockquote, blockquoteNode, origin | ParserOrigin.PreserveHtml);
+        engine.AddMultiLineMatchesToStack(adjustedBlockquote, blockquoteNode, origin | ParserOrigin.PreserveHtml);
     }
 
     private static ReadOnlySpan<char> NormalizeBlockQuote(ReadOnlySpan<char> span) {

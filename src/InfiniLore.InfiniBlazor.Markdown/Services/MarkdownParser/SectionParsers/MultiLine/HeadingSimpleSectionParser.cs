@@ -16,11 +16,11 @@ public class HeadingSimpleSectionParser : ISectionHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[HsTextId].TryGetValue(out string? headerSimpleText)) return;
 
 
         IMdNode headingElement = currentNode.AddChildNode(MdElement.H1);
-        parser.AddSingleLineMatchesToStack(headerSimpleText, headingElement, origin);
+        engine.AddSingleLineMatchesToStack(headerSimpleText, headingElement, origin);
     }
 }

@@ -21,7 +21,7 @@ public class TableSectionParser : ISectionHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         // Extract header, separator, and rows
         ReadOnlySpan<char> header = entireMatch.Groups[HeadId].ValueSpan;
         Span<Range> headerColumns = stackalloc Range[header.Length];
@@ -46,7 +46,7 @@ public class TableSectionParser : ISectionHandler {
         for (int index = 0; index < headerColumnCount; index++) {
             IMdNode tableHeadCellNode = tableHeaderNode.AddChildNode(MdElement.TableHeadCell);
             ReadOnlySpan<char> column = header[headerColumns[index]];
-            parser.AddSingleLineMatchesToStack(column.ToString(), tableHeadCellNode, origin);
+            engine.AddSingleLineMatchesToStack(column.ToString(), tableHeadCellNode, origin);
         }
 
         // Add rows
@@ -70,7 +70,7 @@ public class TableSectionParser : ISectionHandler {
                 IMdNode rowNode = tableBodyNode.AddChildNode(MdElement.TableRow);
                 for (int columnIndex = 0; columnIndex < rowColumnCount; columnIndex++) {
                     IMdNode cellNode = rowNode.AddChildNode(MdElement.TableCell);
-                    parser.AddSingleLineMatchesToStack(
+                    engine.AddSingleLineMatchesToStack(
                         row[columnBuffer[columnIndex]].ToString(), 
                         cellNode, 
                         origin);

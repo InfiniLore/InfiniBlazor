@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public static class PoolCache {
-    public static readonly ObjectPool<RunningMarkdownParser> RunningMarkdownParserPool = CreateResettablePool<RunningMarkdownParser>(4);
+    public static readonly ObjectPool<MarkdownParserEngine> RunningMarkdownParserPool = CreateResettablePool<MarkdownParserEngine>(4);
     public static readonly ObjectPool<Dictionary<int, MdElement>> DepthCachePool = CreateCollectionPool<Dictionary<int, MdElement>, KeyValuePair<int, MdElement>>(2);
     public static readonly ObjectPool<MdNodeVisitor> MdNodeVisitorPool = CreateResettablePool<MdNodeVisitor>(24);
     public static readonly ObjectPool<ParserDataDto> ParserDataDtoPool = CreateResettablePool<ParserDataDto>(256);

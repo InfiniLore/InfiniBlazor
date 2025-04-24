@@ -19,7 +19,7 @@ public class LinkNestedSectionParser : ISectionHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[LnTextId].TryGetValue(out string? linkText)) return;
         if (!entireMatch.Groups[LnHrefId].TryGetValue(out string? linkHref)) return;
 
@@ -38,6 +38,6 @@ public class LinkNestedSectionParser : ISectionHandler {
         IMdNode linkNode = currentNode.AddChildNode(MdElement.Link);
         linkNode.WithAttribute("href", linkHref);
 
-        parser.AddSingleLineMatchesToStack(linkText, linkNode, origin);
+        engine.AddSingleLineMatchesToStack(linkText, linkNode, origin);
     }
 }

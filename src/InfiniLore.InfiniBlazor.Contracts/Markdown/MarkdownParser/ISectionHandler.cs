@@ -10,5 +10,5 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 public interface ISectionHandler {
     ParserOrigin SkipOnOrigin { get; }
 
-    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin);
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin);
 }

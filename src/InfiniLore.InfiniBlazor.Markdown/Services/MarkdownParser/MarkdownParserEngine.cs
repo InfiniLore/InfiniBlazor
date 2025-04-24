@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class RunningMarkdownParser : IRunningMarkdownParser, IResettable {
+public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
     private readonly Stack<ParserDataDto> _stack = new();
     public IMdNodeTree NodeTree { get; set; } = null!;
 

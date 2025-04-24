@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
+using Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ public class MarkdownParserTests(IMarkdownParser parser) {
     [MethodDataSource(typeof(TagDataSources), nameof(TagDataSources.DataSources))]
     [MethodDataSource(typeof(UnderlineDataSources), nameof(UnderlineDataSources.DataSources))]
     [MethodDataSource(typeof(XSSDataSources), nameof(XSSDataSources.DataSources))]
-    public async Task ParseToString_ValidInputs(MarkdownTestDto dto) {
+    public async Task TryParse_String_ValidInputs(MarkdownTestDto dto) {
         // Arrange
 
         // Act
@@ -75,7 +75,7 @@ public class MarkdownParserTests(IMarkdownParser parser) {
     [MethodDataSource(typeof(TagDataSources), nameof(TagDataSources.DataSources))]
     [MethodDataSource(typeof(UnderlineDataSources), nameof(UnderlineDataSources.DataSources))]
     [MethodDataSource(typeof(XSSDataSources), nameof(XSSDataSources.DataSources))]
-    public async Task Parse_ValidInputs_WithTextWriter(MarkdownTestDto dto) {
+    public async Task ParseToWriter_StringWriter_ValidInputs(MarkdownTestDto dto) {
         // Arrange
 
         // Act

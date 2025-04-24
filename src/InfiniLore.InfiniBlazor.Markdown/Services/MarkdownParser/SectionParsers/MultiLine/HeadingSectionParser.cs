@@ -17,7 +17,7 @@ public class HeadingSectionParser : ISectionHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[HLevelId].TryGetLength(out int headingLevel)) return;
         if (!entireMatch.Groups[HTextId].TryGetValue(out string? headerText)) return;
 
@@ -32,6 +32,6 @@ public class HeadingSectionParser : ISectionHandler {
         };
 
         IMdNode headingElement = currentNode.AddChildNode(mdElement);
-        parser.AddSingleLineMatchesToStack(headerText, headingElement, origin);
+        engine.AddSingleLineMatchesToStack(headerText, headingElement, origin);
     }
 }

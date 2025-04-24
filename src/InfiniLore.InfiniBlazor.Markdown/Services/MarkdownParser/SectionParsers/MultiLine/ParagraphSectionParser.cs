@@ -16,13 +16,13 @@ public class ParagraphSectionParser : ISectionHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IRunningMarkdownParser parser, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
         if (!entireMatch.Groups[PId].TryGetValue(out string? paragraph)) return;
         if (paragraph.IsNullOrWhiteSpace()) return;
 
         bool writeParagraph = !origin.HasFlag(ParserOrigin.Html);
 
         if (writeParagraph) currentNode = currentNode.AddChildNode(MdElement.Paragraph);
-        parser.AddSingleLineMatchesToStack(paragraph.TrimStart(), currentNode, origin);
+        engine.AddSingleLineMatchesToStack(paragraph.TrimStart(), currentNode, origin);
     }
 }

@@ -3,57 +3,63 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
-namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser.DataSources;
+namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class BoldAndItalicDataSources {
-    private static readonly string SectionName = nameof(BoldAndItalicDataSources)[..^nameof(DataSources).Length];
+// ReSharper disable once InconsistentNaming
+public static class XSSDataSources {
+    private static readonly string SectionName = nameof(XSSDataSources)[..^nameof(DataSources).Length];
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
         yield return static () => new MarkdownTestDto(SectionName,
-            "***bold and italic***",
-            "<p><strong><em>bold and italic</em></strong></p>",
+            "<a href=\"javascript:alert('XSS')\">Click Me</a>",
+            "<p><a href=\"javascript:alert('XSS')\">Click Me</a></p>",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold();
-                bold.AddItalic("bold and italic");
+                paragraph.WithHtmlContent("<a href=\"javascript:alert('XSS')\">Click Me</a>");
+            }
+        );
+
+        // Some tests based on https://github.com/cujanovic/Markdown-XSS-Payloads/blob/master/Markdown-XSS-Payloads.txt
+        yield return static () => new MarkdownTestDto(SectionName,
+            "![Uh oh...](\"onerror=\"alert('XSS'))",
+            "<p>![Uhoh...](\"onerror=\"alert('XSS'))</p>",
+            ConfigureExpectedNode: static rootNode => {
+                IMdNode paragraph = rootNode.AddParagraph();
+                paragraph.WithContent("![Uh oh...](\"onerror=\"alert('XSS'))");
             }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
-            @"***\*bold and italic***",
-            "<p><strong><em>*bold and italic</em></strong></p>",
+            "[a](javascript:prompt(document.cookie))",
+            "<p>[a](javascript:prompt(document.cookie))</p>",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold();
-                IMdNode italic = bold.AddItalic();
-                italic.WithContent("*bold and italic");
+                paragraph.WithContent("[a](javascript:prompt(document.cookie))");
             }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
-            @"***bold and italic\****",
-            "<p><strong><em>bold and italic*</em></strong></p>",
+            "![a](javascript:prompt(document.cookie))\\",
+            "<p>![a](javascript:prompt(document.cookie))\\</p>",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold();
-                IMdNode italic = bold.AddItalic();
-                italic.WithContent("bold and italic*");
+                paragraph.WithContent("![a](javascript:prompt(document.cookie))\\");
             }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
-            @"*** \* \* \* ***",
-            "<p><strong><em> * * * </em></strong></p>",
+            "<javascript:prompt(document.cookie)>",
+            "<p><javascript:prompt(document.cookie)></p>",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold();
-                bold.AddItalic(" * * * ");
+                paragraph.WithContent("<javascript:prompt(document.cookie)>");
             }
         );
     }
