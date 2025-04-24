@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 [InjectableSingleton<ISectionHandler>("underline")]
 public class UnderlineSectionParser : ISectionHandler {
 
-    private static readonly int UId = CachedRegexGroupNames.GetSingleLineGroupId("u");
+    private static readonly int UId = MarkdownRegexLib.GetSingleLineGroupId("u");
     public ParserOrigin SkipOnOrigin => ParserOrigin.Underline;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

@@ -11,11 +11,11 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 [InjectableSingleton<ISectionHandler>("htmlBody")]
 public class HtmlBodySectionParser : ISectionHandler {
 
-    private static readonly int HtmlPreId = CachedRegexGroupNames.GetMultiLineGroupId("htmlPre");
-    private static readonly int HtmlBodyId = CachedRegexGroupNames.GetMultiLineGroupId("htmlBody");
-    private static readonly int HtmlPostId = CachedRegexGroupNames.GetMultiLineGroupId("htmlPost");
-    private static readonly int SpanTagId = CachedRegexGroupNames.GetSpanGroupId("spanTag");
-    private static readonly int SpanBodyId = CachedRegexGroupNames.GetSpanGroupId("spanBody");
+    private static readonly int HtmlPreId = MarkdownRegexLib.GetMultiLineGroupId("htmlPre");
+    private static readonly int HtmlBodyId = MarkdownRegexLib.GetMultiLineGroupId("htmlBody");
+    private static readonly int HtmlPostId = MarkdownRegexLib.GetMultiLineGroupId("htmlPost");
+    private static readonly int SpanTagId = MarkdownRegexLib.GetSpanGroupId("spanTag");
+    private static readonly int SpanBodyId = MarkdownRegexLib.GetSpanGroupId("spanBody");
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------

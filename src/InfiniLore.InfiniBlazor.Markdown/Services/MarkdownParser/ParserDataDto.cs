@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class ParserDataDto : IResettable {
+public class ParserDataDto : IParserDataDto, IResettable {
     public MdElement Element { get; private set; }
     public IMdNode Node { get; private set; } = null!;
     public ParserOrigin Origin { get; private set; }
@@ -17,7 +17,6 @@ public class ParserDataDto : IResettable {
     public string? Content { get; private set; }
 
     [MemberNotNull(nameof(Match))] public bool IsMatch { get; private set; }
-    public bool IsElement { get; private set; }
 
     public void AsMatch(Match match, IMdNode node, ParserOrigin origin) {
         Node = node;
@@ -30,8 +29,8 @@ public class ParserDataDto : IResettable {
         Node = node;
         Origin = origin;
         Content = content;
-        IsElement = true;
         Element = element;
+        IsMatch = false;
     }
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -42,7 +41,6 @@ public class ParserDataDto : IResettable {
         Match = null;
         Content = null;
         IsMatch = false;
-        IsElement = false;
         Element = MdElement.Undefined;
 
         return true;

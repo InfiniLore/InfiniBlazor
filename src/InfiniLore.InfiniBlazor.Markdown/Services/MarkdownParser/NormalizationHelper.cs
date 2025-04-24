@@ -10,34 +10,46 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public static class NormalizationHelper {
+    private const int StackAllocThreshold = 256;
+
     public static string NormalizeIndentation(ref ReadOnlySpan<char> input) {
         int matchCount = input.Count('\n');
-        int splitCount = matchCount + 1; // add one for the last split
+        int splitCount = matchCount + 1;
 
-        Regex.ValueSplitEnumerator splits = MarkdownRegexLib.NormalizeNewlinesRegex.EnumerateSplits(input);
-        int minIndent = int.MaxValue;
-
+        // Estimate initial capacity to avoid reallocations
+        int estimatedCapacity = input.Length;
         StringBuilder stringBuilder = PoolCache.StringBuilderPool.Get();
-        Range[] rangeArray = ArrayPool<Range>.Shared.Rent(splitCount);
+        stringBuilder.EnsureCapacity(estimatedCapacity);
+
+        Range[]? rentedArray = null;
+        Span<Range> rangeSpan = splitCount <= StackAllocThreshold
+            ? stackalloc Range[splitCount]
+            : rentedArray = ArrayPool<Range>.Shared.Rent(splitCount);
 
         try {
+            int minIndent = int.MaxValue;
             int index = 0;
-            // Fill the array with ranges & calc the min indent
-            foreach (Range split in splits) {
-                rangeArray[index++] = split;
-                
-                ReadOnlySpan<char> line = input[split];
-                ReadOnlySpan<char> trimmed = line.TrimStart();
-                if (trimmed.IsEmpty) continue;
 
-                minIndent = Math.Min(minIndent, line.Length - trimmed.Length);
+            Regex.ValueSplitEnumerator splits = MarkdownRegexLib.NormalizeNewlinesRegex.EnumerateSplits(input);
+            foreach (Range split in splits) {
+                ReadOnlySpan<char> line = input[split];
+                rangeSpan[index++] = split;
+
+                if (line.IsEmpty) continue;
+
+                int currentIndent = CountLeadingWhitespace(ref line);
+                
+                // Only consider non-empty lines for minIndent
+                if (line.Length > currentIndent) {
+                    minIndent = Math.Min(minIndent, currentIndent);
+                }
             }
 
             if (minIndent == int.MaxValue) return input.ToString();
 
+            // Process and append lines
             for (int i = 0; i < splitCount; i++) {
-                Range range = rangeArray[i];
-                ReadOnlySpan<char> line = input[range];
+                ReadOnlySpan<char> line = input[rangeSpan[i]];
                 if (!line.IsEmpty) {
                     int currentIndent = CountLeadingWhitespace(ref line);
                     stringBuilder.Append(line[Math.Min(currentIndent, minIndent)..]);
@@ -55,13 +67,13 @@ public static class NormalizationHelper {
         }
         finally {
             PoolCache.StringBuilderPool.Return(stringBuilder);
-            ArrayPool<Range>.Shared.Return(rangeArray);
+            if (rentedArray is not null) ArrayPool<Range>.Shared.Return(rentedArray);
         }
     }
 
     private static int CountLeadingWhitespace(ref ReadOnlySpan<char> line) {
         int count = 0;
-        while (count < line.Length && line[count] <= ' ' && line[count] != '\n')
+        while (count < line.Length && char.IsWhiteSpace(line[count]) && line[count] != '\n')
             count++;
 
         return count;

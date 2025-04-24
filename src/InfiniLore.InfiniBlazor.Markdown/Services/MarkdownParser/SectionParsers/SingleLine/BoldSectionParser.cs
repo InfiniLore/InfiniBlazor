@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 [InjectableSingleton<ISectionHandler>("bold")]
 public class BoldSectionParser : ISectionHandler {
 
-    private static readonly int BId = CachedRegexGroupNames.GetSingleLineGroupId("b");
+    private static readonly int BId = MarkdownRegexLib.GetSingleLineGroupId("b");
     public ParserOrigin SkipOnOrigin => ParserOrigin.Bold;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

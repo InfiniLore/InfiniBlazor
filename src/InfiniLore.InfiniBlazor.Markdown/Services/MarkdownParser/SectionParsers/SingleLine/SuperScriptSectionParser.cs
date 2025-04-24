@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 [InjectableSingleton<ISectionHandler>("supScript")]
 public class SuperScriptSectionParser : ISectionHandler {
 
-    private static readonly int SpId = CachedRegexGroupNames.GetSingleLineGroupId("sp");
+    private static readonly int SpId = MarkdownRegexLib.GetSingleLineGroupId("sp");
     public ParserOrigin SkipOnOrigin => ParserOrigin.SuperScript;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

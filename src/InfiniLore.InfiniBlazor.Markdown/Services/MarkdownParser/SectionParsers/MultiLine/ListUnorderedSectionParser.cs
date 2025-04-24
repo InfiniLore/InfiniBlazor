@@ -12,9 +12,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 [InjectableSingleton<ISectionHandler>("listUnordered")]
 public class ListUnorderedSectionParser : ISectionHandler {
 
-    private static readonly int LTaskId = CachedRegexGroupNames.GetListGroupId("lTask");
-    private static readonly int LHeadId = CachedRegexGroupNames.GetListGroupId("lHead");
-    private static readonly int LBodyId = CachedRegexGroupNames.GetListGroupId("lBody");
+    private static readonly int LTaskId = MarkdownRegexLib.GetListGroupId("lTask");
+    private static readonly int LHeadId = MarkdownRegexLib.GetListGroupId("lHead");
+    private static readonly int LBodyId = MarkdownRegexLib.GetListGroupId("lBody");
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

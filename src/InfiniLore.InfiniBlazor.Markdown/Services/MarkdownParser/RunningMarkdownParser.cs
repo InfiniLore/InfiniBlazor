@@ -33,7 +33,7 @@ public class RunningMarkdownParser : IRunningMarkdownParser, IResettable {
         for (int i = count - 1; i >= 0; i--) {
             PushMatchToStack(matchArray[i], node, origin);
         }
-        
+
         ArrayPool<Match>.Shared.Return(matchArray);
     }
 

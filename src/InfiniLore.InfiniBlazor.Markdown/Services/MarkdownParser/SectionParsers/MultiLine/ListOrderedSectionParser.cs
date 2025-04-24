@@ -11,10 +11,10 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("listOrdered")]
 public class ListOrderedSectionParser : ISectionHandler {
-    private readonly int LBodyId = CachedRegexGroupNames.GetListGroupId("lBody");
-    private readonly int LHeadId = CachedRegexGroupNames.GetListGroupId("lHead");
+    private readonly int LBodyId = MarkdownRegexLib.GetListGroupId("lBody");
+    private readonly int LHeadId = MarkdownRegexLib.GetListGroupId("lHead");
 
-    private readonly int LTaskId = CachedRegexGroupNames.GetListGroupId("lTask");
+    private readonly int LTaskId = MarkdownRegexLib.GetListGroupId("lTask");
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------

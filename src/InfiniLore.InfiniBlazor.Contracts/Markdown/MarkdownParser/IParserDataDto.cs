@@ -13,8 +13,8 @@ public interface IParserDataDto {
     ParserOrigin Origin { get; }
     Match? Match { get; }
     string? Content { get; }
+    
     [MemberNotNull(nameof(Match))] bool IsMatch { get; }
-    [MemberNotNull(nameof(Content))] bool IsElement { get; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 [InjectableSingleton<ISectionHandler>("headingSimple")]
 public class HeadingSimpleSectionParser : ISectionHandler {
 
-    private static readonly int HsTextId = CachedRegexGroupNames.GetMultiLineGroupId("hsText");
+    private static readonly int HsTextId = MarkdownRegexLib.GetMultiLineGroupId("hsText");
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

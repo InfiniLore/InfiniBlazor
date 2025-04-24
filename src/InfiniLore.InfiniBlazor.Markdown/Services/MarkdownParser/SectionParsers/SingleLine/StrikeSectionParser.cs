@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 [InjectableSingleton<ISectionHandler>("strike")]
 public class StrikeSectionParser : ISectionHandler {
 
-    private static readonly int SId = CachedRegexGroupNames.GetSingleLineGroupId("s");
+    private static readonly int SId = MarkdownRegexLib.GetSingleLineGroupId("s");
     public ParserOrigin SkipOnOrigin => ParserOrigin.Strike;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

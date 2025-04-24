@@ -12,9 +12,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 [InjectableSingleton<ISectionHandler>("table")]
 public class TableSectionParser : ISectionHandler {
 
-    private static readonly int BodyId = CachedRegexGroupNames.GetMultiLineGroupId("tBody");
-    private static readonly int HeadId = CachedRegexGroupNames.GetMultiLineGroupId("tHead");
-    private static readonly int SepId = CachedRegexGroupNames.GetMultiLineGroupId("tSep");
+    private static readonly int BodyId = MarkdownRegexLib.GetMultiLineGroupId("tBody");
+    private static readonly int HeadId = MarkdownRegexLib.GetMultiLineGroupId("tHead");
+    private static readonly int SepId = MarkdownRegexLib.GetMultiLineGroupId("tSep");
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------

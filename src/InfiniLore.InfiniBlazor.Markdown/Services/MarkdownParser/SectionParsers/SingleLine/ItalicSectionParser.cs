@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 [InjectableSingleton<ISectionHandler>("italic")]
 public class ItalicSectionParser : ISectionHandler {
 
-    private static readonly int IId = CachedRegexGroupNames.GetSingleLineGroupId("i");
+    private static readonly int IId = MarkdownRegexLib.GetSingleLineGroupId("i");
     public ParserOrigin SkipOnOrigin => ParserOrigin.Italic;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

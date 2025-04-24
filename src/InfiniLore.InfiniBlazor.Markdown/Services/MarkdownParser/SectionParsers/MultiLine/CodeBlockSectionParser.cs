@@ -12,8 +12,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 [InjectableSingleton<ISectionHandler>("codeBlock")]
 public class CodeBlockSectionParser : ISectionHandler {
 
-    private static readonly int CBodyId = CachedRegexGroupNames.GetMultiLineGroupId("cBody");
-    private static readonly int CLangId = CachedRegexGroupNames.GetMultiLineGroupId("cLang");
+    private static readonly int CBodyId = MarkdownRegexLib.GetMultiLineGroupId("cBody");
+    private static readonly int CLangId = MarkdownRegexLib.GetMultiLineGroupId("cLang");
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------

@@ -37,8 +37,15 @@ public class MarkdownParser(
     
     public bool TryParse<T>(string markdown, [NotNullWhen(true)] out T? output) where T : class {
         output = null;
-        if (markdown.IsNullOrWhiteSpace()) return false;
-        if (serviceProvider.GetService<IMdNodeTreeConverter<T>>() is not {} converter) return false;
+        if (markdown.IsNullOrWhiteSpace()) {
+            logger.LogWarning("Markdown is empty.");
+            return false;
+        }
+
+        if (serviceProvider.GetService<IMdNodeTreeConverter<T>>() is not {} converter) {
+            logger.LogWarning("No converter found for type {Type}.", typeof(T));
+            return false;
+        }
         
         MdNodeTree nodeTree = PoolCache.MdNodeTreePool.Get();
 

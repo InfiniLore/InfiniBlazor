@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 [InjectableSingleton<ISectionHandler>("paragraph")]
 public class ParagraphSectionParser : ISectionHandler {
 
-    private static readonly int PId = CachedRegexGroupNames.GetSingleLineGroupId("p");
+    private static readonly int PId = MarkdownRegexLib.GetSingleLineGroupId("p");
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

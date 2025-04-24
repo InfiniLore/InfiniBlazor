@@ -13,7 +13,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 [InjectableSingleton<ISectionHandler>("emote")]
 public class EmoteSectionParser(ILogger<EmoteSectionParser> logger) : ISectionHandler {
 
-    private static readonly int EId = CachedRegexGroupNames.GetSingleLineGroupId("e");
+    private static readonly int EId = MarkdownRegexLib.GetSingleLineGroupId("e");
 
     // TODO Requires some sort of Emote service
     private FrozenDictionary<EmoteKey, string> EmoteDict { get; } = new Dictionary<EmoteKey, string> {

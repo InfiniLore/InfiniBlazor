@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 [InjectableSingleton<ISectionHandler>("tag")]
 public class TagSectionParser : ISectionHandler {
 
-    private static readonly int TextId = CachedRegexGroupNames.GetSingleLineGroupId("tText");
+    private static readonly int TextId = MarkdownRegexLib.GetSingleLineGroupId("tText");
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

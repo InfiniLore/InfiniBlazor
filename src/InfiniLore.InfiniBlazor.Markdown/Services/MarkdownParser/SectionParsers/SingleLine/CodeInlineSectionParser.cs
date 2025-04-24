@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 [InjectableSingleton<ISectionHandler>("code")]
 public class CodeInlineSectionParser : ISectionHandler {
 
-    private static readonly int CId = CachedRegexGroupNames.GetSingleLineGroupId("c");
+    private static readonly int CId = MarkdownRegexLib.GetSingleLineGroupId("c");
     public ParserOrigin SkipOnOrigin => ParserOrigin.Code;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

@@ -11,10 +11,10 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
 [InjectableSingleton<ISectionHandler>("linkNested")]
 public class LinkNestedSectionParser : ISectionHandler {
 
-    private static readonly int LnTextId = CachedRegexGroupNames.GetSingleLineGroupId("lnText");
-    private static readonly int LnHrefId = CachedRegexGroupNames.GetSingleLineGroupId("lnHref");
-    private static readonly int LnTitleId = CachedRegexGroupNames.GetSingleLineGroupId("lnTitle");
-    private static readonly int LnBangId = CachedRegexGroupNames.GetSingleLineGroupId("lnBang");
+    private static readonly int LnTextId = MarkdownRegexLib.GetSingleLineGroupId("lnText");
+    private static readonly int LnHrefId = MarkdownRegexLib.GetSingleLineGroupId("lnHref");
+    private static readonly int LnTitleId = MarkdownRegexLib.GetSingleLineGroupId("lnTitle");
+    private static readonly int LnBangId = MarkdownRegexLib.GetSingleLineGroupId("lnBang");
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
