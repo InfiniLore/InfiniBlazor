@@ -10,6 +10,11 @@ namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
 public class MdNodeTree : IMdNodeTree, IResettable {
     public IMdNode RootNode { get; private set; } = PoolCache.MdNodePool.Get();
 
+    public static MdNodeTree WithRootNode(IMdNode rootNode) {
+        if (rootNode is not MdNode node) throw new ArgumentException("Root node must be of type MdNode.", nameof(rootNode));
+        return new MdNodeTree { RootNode = node };
+    }
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

@@ -107,7 +107,7 @@ public static class CodeInlineDataSources {
             "<p><code>inline code with special characters !@#$%^&*()</code></p>",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
-                paragraph.AddCodeInline("inline code with special characters !@#$%^&amp;*()");
+                paragraph.AddCodeInline("inline code with special characters !@#$%^&*()");
             }
         );
     }
