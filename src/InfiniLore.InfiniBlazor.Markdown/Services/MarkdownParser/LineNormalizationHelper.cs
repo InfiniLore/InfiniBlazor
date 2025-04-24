@@ -37,7 +37,7 @@ public static class LineNormalizationHelper {
 
                 if (line.IsEmpty) continue;
 
-                int currentIndent = CountLeadingWhitespace(ref line);
+                int currentIndent = CountLeadingWhitespace(line);
                 
                 // Only consider non-empty lines for minIndent
                 if (line.Length > currentIndent) {
@@ -51,7 +51,7 @@ public static class LineNormalizationHelper {
             for (int i = 0; i < splitCount; i++) {
                 ReadOnlySpan<char> line = input[rangeSpan[i]];
                 if (!line.IsEmpty) {
-                    int currentIndent = CountLeadingWhitespace(ref line);
+                    int currentIndent = CountLeadingWhitespace(line);
                     stringBuilder.Append(line[Math.Min(currentIndent, minIndent)..]);
                 }
 
@@ -71,7 +71,7 @@ public static class LineNormalizationHelper {
         }
     }
 
-    private static int CountLeadingWhitespace(ref ReadOnlySpan<char> line) {
+    private static int CountLeadingWhitespace(ReadOnlySpan<char> line) {
         int count = 0;
         while (count < line.Length && char.IsWhiteSpace(line[count]) && line[count] != '\n')
             count++;
