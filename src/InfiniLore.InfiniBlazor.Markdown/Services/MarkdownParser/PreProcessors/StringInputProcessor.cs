@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using JetBrains.Annotations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace InfiniLore.InfiniBlazor.Markdown.PreProcessors;
@@ -8,6 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.PreProcessors;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
+[UsedImplicitly]
 public class StringInputProcessor : IMarkdownPreProcessor<string> {
     public bool TryProcess(string input, [NotNullWhen(true)] out string? output) {
         output = input;
