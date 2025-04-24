@@ -2,6 +2,8 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown.Config;
+using InfiniLore.InfiniBlazor.Markdown.PostProcessors;
+using InfiniLore.InfiniBlazor.Markdown.PreProcessors;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown;
@@ -9,7 +11,7 @@ namespace Tests.InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 // ReSharper disable once InconsistentNaming
-public class DIDataSourceAttribute : DependencyInjectionDataSourceAttribute<IServiceScope> {
+public class DiDataSourceAttribute : DependencyInjectionDataSourceAttribute<IServiceScope> {
     private static readonly IServiceProvider ServiceProvider = CreateSharedServiceProvider();
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -23,13 +25,16 @@ public class DIDataSourceAttribute : DependencyInjectionDataSourceAttribute<ISer
 
         services.AddLogging();
         services.AddLucideIcons();
-        services.AddInfiniBlazor(static config => config.AddMarkdown());
+        services.AddInfiniBlazor(static config => config.AddMarkdown(
+            static config => {
+                config.Parser.AddPreProcessor<StringInputProcessor, string>();
+            }));
 
         return services.BuildServiceProvider();
     }
 }
 
-public class SanitizedDIDataSourceAttribute : DependencyInjectionDataSourceAttribute<IServiceScope> {
+public class SanitizedDiDataSourceAttribute : DependencyInjectionDataSourceAttribute<IServiceScope> {
     private static readonly IServiceProvider ServiceProvider = CreateSharedServiceProvider();
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -43,7 +48,11 @@ public class SanitizedDIDataSourceAttribute : DependencyInjectionDataSourceAttri
 
         services.AddLogging();
         services.AddLucideIcons();
-        services.AddInfiniBlazor(static config => config.AddMarkdown(static config => config.Parser.AddSanitizerPostProcessor()));
+        services.AddInfiniBlazor(static config => config.AddMarkdown(
+            static config => {
+                config.Parser.AddPreProcessor<StringInputProcessor, string>();
+                config.Parser.AddPostProcessor<SanitizerPostProcessor, string>();
+            }));
 
         return services.BuildServiceProvider();
     }

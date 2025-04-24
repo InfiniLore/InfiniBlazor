@@ -1,9 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 
 namespace InfiniLore.InfiniBlazor.Markdown;
@@ -14,12 +16,11 @@ public class MarkdownParser<TInput, TOutput>(
     IServiceProvider serviceProvider,
     ILogger<MarkdownParser<TInput, TOutput>> logger,
     IMarkdownSyntaxTreeParser<TInput> nodeTreeParser,
-    IEnumerable<IMarkdownPreProcessor<TInput>> preProcessors,
-    IEnumerable<IMarkdownPostProcessor<TOutput>> postProcessors
+    IMarkdownConfig config
 ) : IMarkdownParser<TInput, TOutput> {
     
-    private readonly Lazy<IMarkdownPreProcessor<TInput>[]> PreProcessors = new (preProcessors.ToArray);
-    private readonly Lazy<IMarkdownPostProcessor<TOutput>[]> PostProcessors = new (postProcessors.ToArray);
+    private readonly Lazy<ImmutableArray<IMarkdownPreProcessor<TInput>>> PreProcessors = new (config.GetPreProcessors<TInput>);
+    private readonly Lazy<ImmutableArray<IMarkdownPostProcessor<TOutput>>> PostProcessors = new (config.GetPostProcessors<TOutput>);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -36,7 +37,7 @@ public class MarkdownParser<TInput, TOutput>(
 
         try {
             TInput? processedInput = input;
-            ReadOnlySpan<IMarkdownPreProcessor<TInput>> preProcessorsSpan = PreProcessors.Value;
+            ReadOnlySpan<IMarkdownPreProcessor<TInput>> preProcessorsSpan = PreProcessors.Value.AsSpan();
             foreach (IMarkdownPreProcessor<TInput> preProcessor in preProcessorsSpan) {
                 // ReSharper disable once InvertIf
                 if (!preProcessor.TryProcess(processedInput, out processedInput)) {
@@ -48,7 +49,7 @@ public class MarkdownParser<TInput, TOutput>(
             nodeTreeParser.ParseToNodeTree(processedInput, nodeTree);
             output = converter.Convert(nodeTree);
             
-            ReadOnlySpan<IMarkdownPostProcessor<TOutput>> postProcessorsSpan = PostProcessors.Value;
+            ReadOnlySpan<IMarkdownPostProcessor<TOutput>> postProcessorsSpan = PostProcessors.Value.AsSpan();
             foreach (IMarkdownPostProcessor<TOutput> postProcessor in postProcessorsSpan) {
                 // ReSharper disable once InvertIf
                 if (!postProcessor.TryProcess(output, out output)) {

@@ -8,10 +8,9 @@ namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[DIDataSource]
+[DiDataSource]
 public class MarkdownParserTests(IMarkdownParser<string, string> parser) {
 
-    // see https://spec-md.com/
     [Test]
     [MethodDataSource(typeof(AggregateDataSources), nameof(AggregateDataSources.DataSources))]
     [MethodDataSource(typeof(BlockQuoteDataSources), nameof(BlockQuoteDataSources.DataSources))]

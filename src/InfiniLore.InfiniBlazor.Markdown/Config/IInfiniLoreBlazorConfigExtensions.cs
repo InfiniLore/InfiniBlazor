@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using Ganss.Xss;
 using InfiniLore.InfiniBlazor.Config;
-using InfiniLore.InfiniBlazor.Markdown.PreProcessors;
 using InfiniLore.InfiniBlazor.Markdown.SyntaxTreeConverters;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,8 +17,6 @@ public static class IInfiniLoreBlazorConfigExtensions {
         config.Services.AddSingleton(typeof(IMarkdownParser<,>), typeof(MarkdownParser<,>));
         config.Services.AddSingleton<IMarkdownSyntaxTreeConverter<string>, ToStringConverter>();
         config.Services.AddSingleton(typeof(IMarkdownSyntaxTreeToWriterConverter<>), typeof(ToTextWriterConverter<>));
-
-        config.Services.AddSingleton<IMarkdownPreProcessor<string>, StringInputProcessor>();
         
         var markdownConfig = new MarkdownConfig(config);
         markdownConfig.TextEditor.AddDefaultModifiers();
@@ -27,6 +24,17 @@ public static class IInfiniLoreBlazorConfigExtensions {
         
         configure?.Invoke(markdownConfig);
 
-        config.Services.AddSingleton<IMarkdownConfig>(FrozenMarkdownConfig.FromConfig(markdownConfig));
+        config.Services.AddSingleton(markdownConfig);
+        config.Services.AddSingleton<IMarkdownConfig>(FrozenMarkdownConfigFactory.FromServiceProvider);
+
+        IEnumerable<Type> preProcessors = markdownConfig.Parser.PreProcessors.SelectMany(preProcessorPair => preProcessorPair.Value);
+        foreach (Type preProcessorType in preProcessors) {
+            config.Services.AddSingleton(preProcessorType);
+        }
+
+        IEnumerable<Type> postProcessors = markdownConfig.Parser.PostProcessors.SelectMany(postProcessorPair => postProcessorPair.Value);
+        foreach (Type postProcessorType in postProcessors) {
+            config.Services.AddSingleton(postProcessorType);
+        }
     }
 }

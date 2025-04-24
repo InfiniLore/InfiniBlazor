@@ -24,7 +24,7 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
     public void AddMultiLineMatchesToStack(string input, IMarkdownSyntaxNode node, HandlerOrigin origin) {
         MatchCollection matches = MarkdownRegexLib.MultilineStructuresRegex.Matches(input);
         int count = matches.Count;
-        
+
         Match[] matchArray = ArrayPool<Match>.Shared.Rent(count);
         matches.CopyTo(matchArray, 0);
         _stack.EnsureCapacity(_stack.Count + count);
@@ -40,11 +40,11 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
     public void AddSingleLineMatchesToStack(string input, IMarkdownSyntaxNode node, HandlerOrigin origin) {
         MatchCollection matches = MarkdownRegexLib.SinglelineStructuresRegex.Matches(input);
         int count = matches.Count;
-        
+
         Match[] matchArray = ArrayPool<Match>.Shared.Rent(count);
         matches.CopyTo(matchArray, 0);
         _stack.EnsureCapacity(_stack.Count + count);
-        
+
         int currentIndex = input.Length;
 
         // Process matches in reverse order for _stack
@@ -66,10 +66,11 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
             // Handle any remaining text before the first match
             PushContentToStack(input[..currentIndex], node, origin);
         }
+
         ArrayPool<Match>.Shared.Return(matchArray);
     }
 
-    public void PushContentToStack(string content, IMarkdownSyntaxNode currentNode, HandlerOrigin origin) 
+    public void PushContentToStack(string content, IMarkdownSyntaxNode currentNode, HandlerOrigin origin)
         => PushElementToStack(content, currentNode, origin, MarkdownElement.Content);
 
     public void PushElementToStack(string? content, IMarkdownSyntaxNode currentNode, HandlerOrigin origin, MarkdownElement element) {
@@ -84,11 +85,14 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
         _stack.Push(fragment);
     }
     #endregion
-    
+
     public bool TryReset() {
-        while (_stack.TryPop(out MarkdownFragment? fragment)) PoolCache.MarkdownFragmentPool.Return(fragment); // Makes sure we clean everything
+        while (_stack.TryPop(out MarkdownFragment? fragment)) {
+            PoolCache.MarkdownFragmentPool.Return(fragment);// Makes sure we clean everything
+        }
+
         NodeTree = null!;
-        
-        return _stack.Count == 0 ;
+
+        return _stack.Count == 0;
     }
 }

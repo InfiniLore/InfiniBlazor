@@ -1,17 +1,16 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using Ganss.Xss;
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[DiDataSource]
-public class MarkdownSyntaxTreeParserTests(IMarkdownSyntaxTreeParser<string> nodeTreeParser)  {
+[SanitizedDiDataSource]
+public class SanitizedMarkdownParserTests(IMarkdownParser<string, string> parser, IHtmlSanitizer sanitizer) {
 
     [Test]
     [MethodDataSource(typeof(AggregateDataSources), nameof(AggregateDataSources.DataSources))]
@@ -38,16 +37,16 @@ public class MarkdownSyntaxTreeParserTests(IMarkdownSyntaxTreeParser<string> nod
     [MethodDataSource(typeof(TagDataSources), nameof(TagDataSources.DataSources))]
     [MethodDataSource(typeof(UnderlineDataSources), nameof(UnderlineDataSources.DataSources))]
     [MethodDataSource(typeof(XSSDataSources), nameof(XSSDataSources.DataSources))]
-    public async Task ParseToNodeTree_ValidInputs(MarkdownTestDto dto) {
+    public async Task TryParse_String_ValidInputs(MarkdownTestDto dto) {
         // Arrange
-        var nodeTree = new MarkdownSyntaxTree();
 
         // Act
-        nodeTreeParser.ParseToNodeTree(dto.Markdown, nodeTree);
-        Skip.When(dto.ExpectedNode == null, "The node tree is null and thus cannot be compared.");
+        bool result = parser.TryParse(dto.Markdown, out string? output);
 
         // Assert
-        await Assert.That(nodeTree.RootNode).IsEquivalentTo(dto.ExpectedNode);
+        await Assert.That(result).IsTrue();
+        await Assert.That(output)
+            .IsNotNullOrWhitespace()
+            .IsEqualTo(sanitizer.Sanitize(dto.ExpectedStringOutput)).IgnoringWhitespace();
     }
-    
 }

@@ -30,7 +30,7 @@ public class MarkdownSyntaxNode : IMarkdownSyntaxNode, IResettable {
     public ReadOnlySpan<T> GetChildrenSpan<T>(out int length) where T : IMarkdownSyntaxNode {
         length = _childCount;
         if (_childCount == 0) return ReadOnlySpan<T>.Empty;
-
+        
         return MemoryMarshal.CreateReadOnlySpan(
             ref Unsafe.As<MarkdownSyntaxNode, T>(ref MemoryMarshal.GetArrayDataReference(_childNodes)),
             _childCount

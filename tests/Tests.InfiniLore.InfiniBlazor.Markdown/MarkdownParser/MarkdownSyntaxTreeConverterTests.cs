@@ -10,7 +10,7 @@ namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[DIDataSource]
+[DiDataSource]
 public class MarkdownSyntaxTreeConverterTests(IMarkdownSyntaxTreeConverter<string> toStringConverter) {
     
     [Test]
