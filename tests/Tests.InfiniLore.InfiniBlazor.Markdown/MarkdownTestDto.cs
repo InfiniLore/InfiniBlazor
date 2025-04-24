@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -14,17 +14,17 @@ public record MarkdownTestDto(
     string ExpectedStringOutput,
 
     // ReSharper disable once NotAccessedPositionalProperty.Global
-    Action<IMdNode>? ConfigureExpectedNode = null
+    Action<IMarkdownSyntaxNode>? ConfigureExpectedNode = null
 ) {
-    public IMdNode? ExpectedNode { get; } = CreateNode(ConfigureExpectedNode);
+    public IMarkdownSyntaxNode? ExpectedNode { get; } = CreateNode(ConfigureExpectedNode);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private static MdNode? CreateNode(Action<IMdNode>? configureNode) {
+    private static MarkdownSyntaxNode? CreateNode(Action<IMarkdownSyntaxNode>? configureNode) {
         if (configureNode == null) return null;
 
-        var node = new MdNode();
+        var node = new MarkdownSyntaxNode();
         configureNode.Invoke(node);
         return node;
     }

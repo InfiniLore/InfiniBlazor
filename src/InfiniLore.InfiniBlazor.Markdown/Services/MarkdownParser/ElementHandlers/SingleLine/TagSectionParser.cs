@@ -16,10 +16,10 @@ public class TagHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!entireMatch.Groups[TextId].TryGetValue(out string? tagValue)) return;
 
-        IMdNode spanNode = currentNode.AddChildNode(MdElement.Tag);
+        IMarkdownSyntaxNode spanNode = currentNode.AddChildNode(MarkdownElement.Tag);
         spanNode.WithContent(tagValue);
     }
 }

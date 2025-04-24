@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.ElementHandlers.MultiLine;
 public class HorizontalRuleHandler : IMarkdownElementHandler {
     public HandlerOrigin SkipOnOrigin => HandlerOrigin.NotSkipped;
 
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
-        currentNode.AddChildNode(MdElement.HorizontalRule);
+    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+        currentNode.AddChildNode(MarkdownElement.HorizontalRule);
     }
 }

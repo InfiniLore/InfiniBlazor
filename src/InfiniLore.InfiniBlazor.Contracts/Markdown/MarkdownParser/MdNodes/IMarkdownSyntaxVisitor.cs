@@ -1,20 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Microsoft.Extensions.ObjectPool;
-
-namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
+namespace InfiniLore.InfiniBlazor.Markdown;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MdNodeVisitor : IMdNodeVisitor, IResettable {
-    public int Depth { get; set; } = -1;
-    public IMdNode Node { get; set; } = null!;
-    
-    public bool TryReset() {
-        Depth = -1;
-        Node = null!;
-        return true;
-    }
+public interface IMarkdownSyntaxVisitor {
+    int Depth { get; }
+    IMarkdownSyntaxNode Node { get; }
 }

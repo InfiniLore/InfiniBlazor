@@ -16,10 +16,10 @@ public class UnderlineHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!entireMatch.Groups[UId].TryGetValue(out string? underlineValue)) return;
 
-        IMdNode underlineNode = currentNode.AddChildNode(MdElement.Underline);
+        IMarkdownSyntaxNode underlineNode = currentNode.AddChildNode(MarkdownElement.Underline);
         engine.AddSingleLineMatchesToStack(underlineValue, underlineNode, origin | SkipOnOrigin);
     }
 }

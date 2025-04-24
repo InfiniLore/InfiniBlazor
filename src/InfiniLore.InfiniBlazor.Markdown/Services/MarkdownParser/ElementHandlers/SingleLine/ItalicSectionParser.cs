@@ -16,10 +16,10 @@ public class ItalicHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!entireMatch.Groups[IId].TryGetValue(out string? italicValue)) return;
 
-        IMdNode node = currentNode.AddChildNode(MdElement.Italic);
+        IMarkdownSyntaxNode node = currentNode.AddChildNode(MarkdownElement.Italic);
         engine.AddSingleLineMatchesToStack(italicValue, node, origin | SkipOnOrigin);
     }
 }

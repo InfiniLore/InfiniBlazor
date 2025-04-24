@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
@@ -20,7 +20,7 @@ public static class SubScriptDataSources {
             "^subscript^",
             "<p><sub>subscript</sub></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.AddSubscript("subscript");
             }
         );
@@ -29,7 +29,7 @@ public static class SubScriptDataSources {
             "^subscript\\^^",
             "<p><sub>subscript^</sub></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.AddSubscript("subscript^");
             }
         );
@@ -38,7 +38,7 @@ public static class SubScriptDataSources {
             "^\\^subscript^",
             "<p><sub>^subscript</sub></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.AddSubscript("^subscript");
             }
         );
@@ -47,9 +47,9 @@ public static class SubScriptDataSources {
             "This is a **bold^subscript^ text**.",
             "<p>This is a <strong>bold<sub>subscript</sub> text</strong>.</p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("This is a ");
-                IMdNode bold = paragraph.AddBold("bold");
+                IMarkdownSyntaxNode bold = paragraph.AddBold("bold");
                 bold.AddSubscript("subscript");
                 bold.WithContent(" text");
                 paragraph.WithContent(".");
@@ -60,12 +60,12 @@ public static class SubScriptDataSources {
             "Text with *italic^subscript^ and ^^superscript^^*.",
             "<p>Text with <em>italic<sub>subscript</sub> and <sup>superscript</sup></em>.</p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("Text with ");
-                IMdNode italic = paragraph.AddItalic("italic");
+                IMarkdownSyntaxNode italic = paragraph.AddItalic("italic");
                 italic.AddSubscript("subscript");
                 italic.WithContent(" and ");
-                IMdNode sup = italic.AddSuperscript();
+                IMarkdownSyntaxNode sup = italic.AddSuperscript();
                 sup.WithContent("superscript");
                 paragraph.WithContent(".");
             }
@@ -77,9 +77,9 @@ public static class SubScriptDataSources {
             <p>A <a href="https://example.com">link with <sub>subscript</sub></a>.</p>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("A ");
-                IMdNode link = paragraph.AddLink();
+                IMarkdownSyntaxNode link = paragraph.AddLink();
                 link.WithAttribute("href", "https://example.com");
                 link.WithContent("link with ");
                 link.AddSubscript("subscript");
@@ -99,12 +99,12 @@ public static class SubScriptDataSources {
             </ul>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list = rootNode.AddListUnordered();
+                IMarkdownSyntaxNode list = rootNode.AddListUnordered();
 
-                IMdNode item0 = list.AddListItem();
+                IMarkdownSyntaxNode item0 = list.AddListItem();
                 item0.AddBold("Bold").AddSubscript("sub");
 
-                IMdNode item1 = list.AddListItem();
+                IMarkdownSyntaxNode item1 = list.AddListItem();
                 item1.AddItalic("Italic").AddSubscript("sub");
             }
         );
@@ -115,11 +115,11 @@ public static class SubScriptDataSources {
             <p><strong>Bold <sub>subscript</sub> in a <a href="https://example.com">link</a></strong>.</p>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold("Bold ");
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode bold = paragraph.AddBold("Bold ");
                 bold.AddSubscript("subscript");
                 bold.WithContent(" in a ");
-                IMdNode link = bold.AddLink();
+                IMarkdownSyntaxNode link = bold.AddLink();
                 link.WithAttribute("href", "https://example.com");
                 link.WithContent("link");
                 paragraph.WithContent(".");
@@ -130,7 +130,7 @@ public static class SubScriptDataSources {
             "Inline code with subscript: `x = z^2^`",
             "<p>Inline code with subscript: <code>x = z^2^</code></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("Inline code with subscript: ");
                 paragraph.AddCodeInline("x = z^2^");
             }
@@ -140,8 +140,8 @@ public static class SubScriptDataSources {
             "***Bold and italic^sub^ and italic^sub^***.",
             "<p><strong><em>Bold and italic<sub>sub</sub> and italic<sub>sub</sub></em></strong>.</p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold().AddItalic();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode bold = paragraph.AddBold().AddItalic();
                 bold.WithContent("Bold and italic");
                 bold.AddSubscript("sub");
                 bold.WithContent(" and italic");
@@ -162,21 +162,21 @@ public static class SubScriptDataSources {
             </ul>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list = rootNode.AddListUnordered();
-                IMdNode item1 = list.AddListItem();
-                IMdNode bold = item1.AddBold();
+                IMarkdownSyntaxNode list = rootNode.AddListUnordered();
+                IMarkdownSyntaxNode item1 = list.AddListItem();
+                IMarkdownSyntaxNode bold = item1.AddBold();
                 bold.WithContent("Bold link ");
-                IMdNode link = bold.AddLink();
+                IMarkdownSyntaxNode link = bold.AddLink();
                 link.WithAttribute("href", "https://example.com");
                 link.WithContent("with ");
                 link.AddSubscript("sub");
                 link.WithContent(" text");
                 item1.WithContent(".");
 
-                IMdNode item2 = list.AddListItem();
-                IMdNode italic = item2.AddItalic();
+                IMarkdownSyntaxNode item2 = list.AddListItem();
+                IMarkdownSyntaxNode italic = item2.AddItalic();
                 italic.WithContent("Italic link ");
-                IMdNode link2 = italic.AddLink();
+                IMarkdownSyntaxNode link2 = italic.AddLink();
                 link2.WithAttribute("href", "https://example.org");
                 link2.WithContent("and ");
                 link2.AddSubscript("sub");
@@ -189,8 +189,8 @@ public static class SubScriptDataSources {
             "^subscript with ^^superscript^^ inside^",
             "<p><sub>subscript with <sup>superscript</sup> inside</sub></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode sub = paragraph.AddSubscript("subscript with ");
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode sub = paragraph.AddSubscript("subscript with ");
                 sub.AddSuperscript("superscript");
                 sub.WithContent(" inside");
             }

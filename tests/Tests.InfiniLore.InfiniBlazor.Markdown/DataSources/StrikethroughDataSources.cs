@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
@@ -21,7 +21,7 @@ public class StrikethroughDataSources {
             "~something~",
             "<p><s>something</s></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.AddStrikethrough("something");
             }
         );
@@ -31,7 +31,7 @@ public class StrikethroughDataSources {
             @"\~escaped~",
             "<p>~escaped~</p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("~escaped~");
             }
         );
@@ -41,7 +41,7 @@ public class StrikethroughDataSources {
             @"~escaped\~",
             "<p>~escaped~</p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("~escaped~");
             }
         );
@@ -51,7 +51,7 @@ public class StrikethroughDataSources {
             "~nested ~strikethrough~ does not work~",
             "<p><s>nested</s>strikethrough<s> does not work</s></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.AddStrikethrough("nested ");
                 paragraph.WithContent("strikethrough");
                 paragraph.AddStrikethrough(" does not work");
@@ -63,8 +63,8 @@ public class StrikethroughDataSources {
             "~**bold and strike-through**~",
             "<p><s><strong>bold and strike-through</strong></s></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode strike = paragraph.AddStrikethrough();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode strike = paragraph.AddStrikethrough();
                 strike.AddBold("bold and strike-through");
             }
         );
@@ -74,8 +74,8 @@ public class StrikethroughDataSources {
             "~*italic and strike-through*~",
             "<p><s><em>italic and strike-through</em></s></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode strike = paragraph.AddStrikethrough();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode strike = paragraph.AddStrikethrough();
                 strike.AddItalic("italic and strike-through");
             }
         );
@@ -85,7 +85,7 @@ public class StrikethroughDataSources {
             "**~bold strike~** normal ~strikethrough~",
             "<p><strong><s>bold strike</s></strong> normal <s>strikethrough</s></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.AddBold().AddStrikethrough("bold strike");
                 paragraph.WithContent(" normal ");
                 paragraph.AddStrikethrough("strikethrough");
@@ -106,7 +106,7 @@ public class StrikethroughDataSources {
             "~one~ and ~two~!",
             "<p><s>one</s> and <s>two</s>!</p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.AddStrikethrough("one");
                 paragraph.WithContent(" and ");
                 paragraph.AddStrikethrough("two");

@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
@@ -11,8 +11,8 @@ namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [DIDataSource]
-public class NodeTreeConverterTests(IMdNodeTreeConverter<string> toStringConverter) {
-    
+public class MarkdownSyntaxTreeParserTests(IMarkdownSyntaxTreeParser nodeTreeParser)  {
+
     [Test]
     [MethodDataSource(typeof(AggregateDataSources), nameof(AggregateDataSources.DataSources))]
     [MethodDataSource(typeof(BlockQuoteDataSources), nameof(BlockQuoteDataSources.DataSources))]
@@ -38,15 +38,16 @@ public class NodeTreeConverterTests(IMdNodeTreeConverter<string> toStringConvert
     [MethodDataSource(typeof(TagDataSources), nameof(TagDataSources.DataSources))]
     [MethodDataSource(typeof(UnderlineDataSources), nameof(UnderlineDataSources.DataSources))]
     [MethodDataSource(typeof(XSSDataSources), nameof(XSSDataSources.DataSources))]
-    public async Task Convert_ValidInputs(MarkdownTestDto dto) {
+    public async Task ParseToNodeTree_ValidInputs(MarkdownTestDto dto) {
         // Arrange
-        Skip.When(dto.ExpectedNode == null, "The node tree is null and thus cannot be compared.");
-        MdNodeTree nodeTree = MdNodeTree.WithRootNode(dto.ExpectedNode);
-        
+        var nodeTree = new MarkdownSyntaxTree();
+
         // Act
-        string output = toStringConverter.Convert(nodeTree);
+        nodeTreeParser.ParseToNodeTree(dto.Markdown, nodeTree);
+        Skip.When(dto.ExpectedNode == null, "The node tree is null and thus cannot be compared.");
 
         // Assert
-        await Assert.That(output).IsEqualTo(dto.ExpectedStringOutput).IgnoringWhitespace();
+        await Assert.That(nodeTree.RootNode).IsEquivalentTo(dto.ExpectedNode);
     }
+    
 }

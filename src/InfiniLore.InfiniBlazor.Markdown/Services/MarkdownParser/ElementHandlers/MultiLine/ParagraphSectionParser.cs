@@ -16,13 +16,13 @@ public class ParagraphHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!entireMatch.Groups[PId].TryGetValue(out string? paragraph)) return;
         if (paragraph.IsNullOrWhiteSpace()) return;
 
         bool writeParagraph = !origin.HasFlag(HandlerOrigin.Html);
 
-        if (writeParagraph) currentNode = currentNode.AddChildNode(MdElement.Paragraph);
+        if (writeParagraph) currentNode = currentNode.AddChildNode(MarkdownElement.Paragraph);
         engine.AddSingleLineMatchesToStack(paragraph.TrimStart(), currentNode, origin);
     }
 }

@@ -8,12 +8,12 @@ using System.Collections.Frozen;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
+namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdNodeTreeParser>]
-public sealed class MdNodeTreeParser(IServiceProvider serviceProvider, ILogger<MdNodeTreeParser> logger) : IMdNodeTreeParser {
+[InjectableSingleton<IMarkdownSyntaxTreeParser>]
+public sealed class MarkdownSyntaxTreeParser(IServiceProvider serviceProvider, ILogger<MarkdownSyntaxTreeParser> logger) : IMarkdownSyntaxTreeParser {
     private readonly FrozenDictionary<string, IMarkdownElementHandler> _elementHandlers = ToFrozenDictionary<IMarkdownElementHandler>(logger, serviceProvider);
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -36,7 +36,7 @@ public sealed class MdNodeTreeParser(IServiceProvider serviceProvider, ILogger<M
     }
     #endregion
     
-    public void ParseToNodeTree(string markdown, IMdNodeTree nodeTree) {
+    public void ParseToNodeTree(string markdown, IMarkdownSyntaxTree nodeTree) {
         MarkdownParserEngine runningParser = PoolCache.RunningMarkdownParserPool.Get();
 
         try {
@@ -45,14 +45,14 @@ public sealed class MdNodeTreeParser(IServiceProvider serviceProvider, ILogger<M
 
             while (runningParser.TryPopDto(out MarkdownFragment? fragment)) {
                 try {
-                    IMdNode currentNode = fragment.Node;
+                    IMarkdownSyntaxNode currentNode = fragment.Node;
                     HandlerOrigin origin = fragment.Origin;
 
                     if (fragment.TryGetAsMatch(out Match? match)) {
                         ProcessMatch(match, currentNode, origin, runningParser);
                         continue;
                     }
-                    if (fragment.TryGetAsElement(out MdElement element, out string? content)) {
+                    if (fragment.TryGetAsElement(out MarkdownElement element, out string? content)) {
                         ProcessElement(element, content, currentNode);
                     }
                 }
@@ -66,7 +66,7 @@ public sealed class MdNodeTreeParser(IServiceProvider serviceProvider, ILogger<M
         }
     }
 
-    private void ProcessMatch(Match match, IMdNode currentNode, HandlerOrigin origin, IMarkdownParserEngine runningParser) {
+    private void ProcessMatch(Match match, IMarkdownSyntaxNode currentNode, HandlerOrigin origin, IMarkdownParserEngine runningParser) {
         GroupCollection groups = match.Groups;
         for (int i = 0; i < groups.Count; i++) {
             if (groups[i] is not { Success: true, Name: var name }) continue;
@@ -79,12 +79,12 @@ public sealed class MdNodeTreeParser(IServiceProvider serviceProvider, ILogger<M
         }
     }
 
-    private static void ProcessElement(MdElement element, string? content, IMdNode currentNode) {
+    private static void ProcessElement(MarkdownElement element, string? content, IMarkdownSyntaxNode currentNode) {
         // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
         switch (element) {
-            case MdElement.HtmlContent: currentNode.WithHtmlContent(content);
+            case MarkdownElement.HtmlContent: currentNode.WithHtmlContent(content);
                 break;
-            case MdElement.Content: currentNode.WithContent(content);
+            case MarkdownElement.Content: currentNode.WithContent(content);
                 break;
             default: currentNode.AddChildNode(element, content);
                 break;

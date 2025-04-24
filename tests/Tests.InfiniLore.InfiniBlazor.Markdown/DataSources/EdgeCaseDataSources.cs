@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
@@ -92,7 +92,7 @@ public static class EdgeCaseDataSources {
             "<span style=\"color: red\">**red bold?**</span>",
             "<p><span style=\"color: red\"><strong>red bold?</strong></span></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithHtmlContent("<span style=\"color: red\">");
                 paragraph.AddBold("red bold?");
                 paragraph.WithHtmlContent("</span>");

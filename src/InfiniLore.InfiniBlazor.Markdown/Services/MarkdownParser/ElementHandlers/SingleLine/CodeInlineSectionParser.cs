@@ -16,12 +16,12 @@ public class CodeInlineHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!entireMatch.Groups[CId].TryGetValue(out string? codeValue)) return;
 
         string normalizedBackticks = codeValue.Replace("\\`", "`");
 
-        IMdNode codeNode = currentNode.AddChildNode(MdElement.CodeInline);
+        IMarkdownSyntaxNode codeNode = currentNode.AddChildNode(MarkdownElement.CodeInline);
         codeNode.WithContent(normalizedBackticks);
     }
 }

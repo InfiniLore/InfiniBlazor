@@ -16,12 +16,12 @@ public abstract class ListHandlerBase : IMarkdownElementHandler {
     
     public HandlerOrigin SkipOnOrigin => HandlerOrigin.NotSkipped;
     
-    protected abstract MdElement ListType { get; }
+    protected abstract MarkdownElement ListType { get; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!entireMatch.TryGetValue(out string? listBody)) return;
 
         MatchCollection matchCollection = MarkdownRegexLib.ListItemBodyRegex.Matches(listBody);
@@ -31,11 +31,11 @@ public abstract class ListHandlerBase : IMarkdownElementHandler {
         try {
             matchCollection.CopyTo(matchArray, 0);
 
-            IMdNode listNode = currentNode.AddChildNode(ListType);
+            IMarkdownSyntaxNode listNode = currentNode.AddChildNode(ListType);
             for (int i = 0; i < matchCount; i++) {
                 GroupCollection groups = matchArray[i].Groups;
 
-                IMdNode listItemNode = listNode.AddChildNode(MdElement.ListItem);
+                IMarkdownSyntaxNode listItemNode = listNode.AddChildNode(MarkdownElement.ListItem);
             
                 if (groups[LBodyId].TryGetValueSpan(out ReadOnlySpan<char> itemBody) && !itemBody.IsEmpty) {
                     string normalizedBody = LineNormalizationHelper.NormalizeLineIndentation(itemBody);
@@ -49,7 +49,7 @@ public abstract class ListHandlerBase : IMarkdownElementHandler {
                 // ReSharper disable once InvertIf
                 if (groups[LTaskId].TryGetValue(out string? taskMarker)) {
                     bool isChecked = taskMarker.ToLowerInvariant().Contains('x');
-                    MdElement element = isChecked ? MdElement.CheckboxSelected : MdElement.CheckboxUnselected;
+                    MarkdownElement element = isChecked ? MarkdownElement.CheckboxSelected : MarkdownElement.CheckboxUnselected;
                     engine.PushElementToStack(null, listItemNode, origin, element);
                 }
             }
@@ -62,10 +62,10 @@ public abstract class ListHandlerBase : IMarkdownElementHandler {
 
 [InjectableSingleton<IMarkdownElementHandler>("listOrdered")]
 public class ListOrderedHandlerBase : ListHandlerBase {
-    protected override MdElement ListType => MdElement.ListOrdered;
+    protected override MarkdownElement ListType => MarkdownElement.ListOrdered;
 }
 
 [InjectableSingleton<IMarkdownElementHandler>("listUnordered")]
 public class ListUnorderedHandler : ListHandlerBase {
-    protected override MdElement ListType => MdElement.ListUnordered;
+    protected override MarkdownElement ListType => MarkdownElement.ListUnordered;
 }

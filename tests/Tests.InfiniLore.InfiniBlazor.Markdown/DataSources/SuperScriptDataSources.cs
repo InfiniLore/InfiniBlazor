@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
@@ -42,9 +42,9 @@ public static class SuperScriptDataSources {
             "This is a **bold^^superscript^^ text**.",
             "<p>This is a <strong>bold<sup>superscript</sup> text</strong>.</p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("This is a ");
-                IMdNode bold = paragraph.AddBold();
+                IMarkdownSyntaxNode bold = paragraph.AddBold();
                 bold.WithContent("bold");
                 bold.AddSuperscript("superscript");
                 bold.WithContent(" text");
@@ -56,9 +56,9 @@ public static class SuperScriptDataSources {
             "Text with *italic^^superscript^^*.",
             "<p>Text with <em>italic<sup>superscript</sup></em>.</p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("Text with ");
-                IMdNode italic = paragraph.AddItalic();
+                IMarkdownSyntaxNode italic = paragraph.AddItalic();
                 italic.WithContent("italic");
                 italic.AddSuperscript("superscript");
                 paragraph.WithContent(".");
@@ -71,9 +71,9 @@ public static class SuperScriptDataSources {
             <p>A <a href="https://example.com">link with <sup>superscript</sup></a>.</p>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("A ");
-                IMdNode linkNode = paragraph.AddLink();
+                IMarkdownSyntaxNode linkNode = paragraph.AddLink();
                 linkNode.WithAttribute("href", "https://example.com");
                 linkNode.WithContent("link with ");
                 linkNode.AddSuperscript("superscript");
@@ -93,14 +93,14 @@ public static class SuperScriptDataSources {
             </ul>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list = rootNode.AddListUnordered();
-                IMdNode item1 = list.AddListItem();
+                IMarkdownSyntaxNode list = rootNode.AddListUnordered();
+                IMarkdownSyntaxNode item1 = list.AddListItem();
                 item1.AddBold()
                     .WithContent("Bold")
                     .AddSuperscript()
                     .WithContent("sup");
 
-                IMdNode item2 = list.AddListItem();
+                IMarkdownSyntaxNode item2 = list.AddListItem();
                 item2.AddItalic()
                     .WithContent("Italic")
                     .AddSuperscript()
@@ -114,13 +114,13 @@ public static class SuperScriptDataSources {
             <p>Nested formatting: <strong>Bold <sup>superscript</sup> in a <a href="https://example.com">link</a></strong>.</p>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("Nested formatting: ");
-                IMdNode bold = paragraph.AddBold();
+                IMarkdownSyntaxNode bold = paragraph.AddBold();
                 bold.WithContent("Bold ");
                 bold.AddSuperscript("superscript");
                 bold.WithContent(" in a ");
-                IMdNode linkNode = bold.AddLink();
+                IMarkdownSyntaxNode linkNode = bold.AddLink();
                 linkNode.WithAttribute("href", "https://example.com");
                 linkNode.WithContent("link");
                 paragraph.WithContent(".");
@@ -139,9 +139,9 @@ public static class SuperScriptDataSources {
             "Complex: ***Bold and italic^^super^^***.",
             "<p>Complex: <strong><em>Bold and italic<sup>super</sup></em></strong>.</p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("Complex: ");
-                IMdNode boldItalic = paragraph.AddBold().AddItalic();
+                IMarkdownSyntaxNode boldItalic = paragraph.AddBold().AddItalic();
                 boldItalic.WithContent("Bold and italic");
                 boldItalic.AddSuperscript("super");
                 paragraph.WithContent(".");
@@ -160,22 +160,22 @@ public static class SuperScriptDataSources {
             </ul>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list = rootNode.AddListUnordered();
+                IMarkdownSyntaxNode list = rootNode.AddListUnordered();
 
-                IMdNode item1 = list.AddListItem();
-                IMdNode bold = item1.AddBold();
+                IMarkdownSyntaxNode item1 = list.AddListItem();
+                IMarkdownSyntaxNode bold = item1.AddBold();
                 bold.WithContent("Bold link ");
-                IMdNode linkNode1 = bold.AddLink();
+                IMarkdownSyntaxNode linkNode1 = bold.AddLink();
                 linkNode1.WithAttribute("href", "https://example.com");
                 linkNode1.WithContent("with ");
                 linkNode1.AddSuperscript("superscript");
                 linkNode1.WithContent(" text");
                 item1.WithContent(".");
 
-                IMdNode item2 = list.AddListItem();
-                IMdNode italic = item2.AddItalic();
+                IMarkdownSyntaxNode item2 = list.AddListItem();
+                IMarkdownSyntaxNode italic = item2.AddItalic();
                 italic.WithContent("Italic link ");
-                IMdNode linkNode2 = italic.AddLink();
+                IMarkdownSyntaxNode linkNode2 = italic.AddLink();
                 linkNode2.WithAttribute("href", "https://example.org");
                 linkNode2.WithContent("and ");
                 linkNode2.AddSuperscript("superscript");
@@ -188,8 +188,8 @@ public static class SuperScriptDataSources {
             "^^superscript with ^subscript^ inside^^",
             "<p><sup>superscript with <sub>subscript</sub> inside</sup></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode super = paragraph.AddSuperscript();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode super = paragraph.AddSuperscript();
                 super.WithContent("superscript with ");
                 super.AddSubscript("subscript");
                 super.WithContent(" inside");

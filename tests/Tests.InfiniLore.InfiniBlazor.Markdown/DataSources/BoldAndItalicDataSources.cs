@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
@@ -20,8 +20,8 @@ public static class BoldAndItalicDataSources {
             "***bold and italic***",
             "<p><strong><em>bold and italic</em></strong></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode bold = paragraph.AddBold();
                 bold.AddItalic("bold and italic");
             }
         );
@@ -30,9 +30,9 @@ public static class BoldAndItalicDataSources {
             @"***\*bold and italic***",
             "<p><strong><em>*bold and italic</em></strong></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold();
-                IMdNode italic = bold.AddItalic();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode bold = paragraph.AddBold();
+                IMarkdownSyntaxNode italic = bold.AddItalic();
                 italic.WithContent("*bold and italic");
             }
         );
@@ -41,9 +41,9 @@ public static class BoldAndItalicDataSources {
             @"***bold and italic\****",
             "<p><strong><em>bold and italic*</em></strong></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold();
-                IMdNode italic = bold.AddItalic();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode bold = paragraph.AddBold();
+                IMarkdownSyntaxNode italic = bold.AddItalic();
                 italic.WithContent("bold and italic*");
             }
         );
@@ -52,8 +52,8 @@ public static class BoldAndItalicDataSources {
             @"*** \* \* \* ***",
             "<p><strong><em> * * * </em></strong></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode bold = paragraph.AddBold();
                 bold.AddItalic(" * * * ");
             }
         );

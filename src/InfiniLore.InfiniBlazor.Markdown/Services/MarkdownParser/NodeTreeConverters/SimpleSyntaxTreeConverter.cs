@@ -8,61 +8,61 @@ namespace InfiniLore.InfiniBlazor.Markdown.NodeTreeConverters;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public abstract class SimpleNodeTreeConverter {
-    private static readonly FrozenDictionary<MdElement, HtmlTag> MdElementLookup = new Dictionary<MdElement, HtmlTag> {
-        { MdElement.Blockquote, HtmlTag.Create("blockquote") },
-        { MdElement.Bold, HtmlTag.Create("strong") },
-        { MdElement.CheckboxSelected, HtmlTag.CreateVoid("input type=\"checkbox\" disabled checked/") },
-        { MdElement.CheckboxUnselected, HtmlTag.CreateVoid("input type=\"checkbox\" disabled/") },
-        { MdElement.CodeBlock, new HtmlTag("<pre><code", "</code></pre>") },
-        { MdElement.CodeInline, HtmlTag.Create("code") },
-        { MdElement.H1, HtmlTag.Create("h1") },
-        { MdElement.H2, HtmlTag.Create("h2") },
-        { MdElement.H3, HtmlTag.Create("h3") },
-        { MdElement.H4, HtmlTag.Create("h4") },
-        { MdElement.H5, HtmlTag.Create("h5") },
-        { MdElement.H6, HtmlTag.Create("h6") },
-        { MdElement.HorizontalRule, HtmlTag.CreateVoid("hr") },
-        { MdElement.Image, HtmlTag.CreateVoid("img") },
-        { MdElement.Italic, HtmlTag.Create("em") },
-        { MdElement.Link, HtmlTag.Create("a") },
-        { MdElement.ListItem, HtmlTag.Create("li") },
-        { MdElement.ListOrdered, HtmlTag.Create("ol") },
-        { MdElement.ListUnordered, HtmlTag.Create("ul") },
-        { MdElement.Paragraph, HtmlTag.Create("p") },
-        { MdElement.Strikethrough, HtmlTag.Create("s") },
-        { MdElement.Subscript, HtmlTag.Create("sub") },
-        { MdElement.Superscript, HtmlTag.Create("sup") },
-        { MdElement.Table, HtmlTag.Create("table") },
-        { MdElement.TableBody, HtmlTag.Create("tbody") },
-        { MdElement.TableCell, HtmlTag.Create("td") },
-        { MdElement.TableHead, HtmlTag.Create("thead") },
-        { MdElement.TableHeadCell, HtmlTag.Create("th") },
-        { MdElement.TableRow, HtmlTag.Create("tr") },
-        { MdElement.Tag, HtmlTag.CreateWithClass("span", "tag") },
-        { MdElement.Underline, HtmlTag.CreateWithStyle("span", "text-decoration: underline;") }
+public abstract class SimpleSyntaxTreeConverter {
+    private static readonly FrozenDictionary<MarkdownElement, HtmlTag> MdElementLookup = new Dictionary<MarkdownElement, HtmlTag> {
+        { MarkdownElement.Blockquote, HtmlTag.Create("blockquote") },
+        { MarkdownElement.Bold, HtmlTag.Create("strong") },
+        { MarkdownElement.CheckboxSelected, HtmlTag.CreateVoid("input type=\"checkbox\" disabled checked/") },
+        { MarkdownElement.CheckboxUnselected, HtmlTag.CreateVoid("input type=\"checkbox\" disabled/") },
+        { MarkdownElement.CodeBlock, new HtmlTag("<pre><code", "</code></pre>") },
+        { MarkdownElement.CodeInline, HtmlTag.Create("code") },
+        { MarkdownElement.H1, HtmlTag.Create("h1") },
+        { MarkdownElement.H2, HtmlTag.Create("h2") },
+        { MarkdownElement.H3, HtmlTag.Create("h3") },
+        { MarkdownElement.H4, HtmlTag.Create("h4") },
+        { MarkdownElement.H5, HtmlTag.Create("h5") },
+        { MarkdownElement.H6, HtmlTag.Create("h6") },
+        { MarkdownElement.HorizontalRule, HtmlTag.CreateVoid("hr") },
+        { MarkdownElement.Image, HtmlTag.CreateVoid("img") },
+        { MarkdownElement.Italic, HtmlTag.Create("em") },
+        { MarkdownElement.Link, HtmlTag.Create("a") },
+        { MarkdownElement.ListItem, HtmlTag.Create("li") },
+        { MarkdownElement.ListOrdered, HtmlTag.Create("ol") },
+        { MarkdownElement.ListUnordered, HtmlTag.Create("ul") },
+        { MarkdownElement.Paragraph, HtmlTag.Create("p") },
+        { MarkdownElement.Strikethrough, HtmlTag.Create("s") },
+        { MarkdownElement.Subscript, HtmlTag.Create("sub") },
+        { MarkdownElement.Superscript, HtmlTag.Create("sup") },
+        { MarkdownElement.Table, HtmlTag.Create("table") },
+        { MarkdownElement.TableBody, HtmlTag.Create("tbody") },
+        { MarkdownElement.TableCell, HtmlTag.Create("td") },
+        { MarkdownElement.TableHead, HtmlTag.Create("thead") },
+        { MarkdownElement.TableHeadCell, HtmlTag.Create("th") },
+        { MarkdownElement.TableRow, HtmlTag.Create("tr") },
+        { MarkdownElement.Tag, HtmlTag.CreateWithClass("span", "tag") },
+        { MarkdownElement.Underline, HtmlTag.CreateWithStyle("span", "text-decoration: underline;") }
     }.ToFrozenDictionary();
 
-    private static readonly FrozenSet<MdElement> DefinedElements = MdElementLookup.Keys.ToFrozenSet();
+    private static readonly FrozenSet<MarkdownElement> DefinedElements = MdElementLookup.Keys.ToFrozenSet();
 
     protected delegate void WriteDelegate<in T>(T writer, ReadOnlySpan<char> content);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected static void ProcessNodeTree<T>(IMdNodeTree tree, T writer, WriteDelegate<T> writeContent) {
-        Dictionary<int, MdElement> depthCache = PoolCache.DepthCachePool.Get();
+    protected static void ProcessNodeTree<T>(IMarkdownSyntaxTree tree, T writer, WriteDelegate<T> writeContent) {
+        Dictionary<int, MarkdownElement> depthCache = PoolCache.DepthCachePool.Get();
         try {
             int lastKnownDepth = -1;
 
-            foreach (IMdNodeVisitor mdNodeVisitor in tree.VisitNodesBreadthFirst()) {
+            foreach (IMarkdownSyntaxVisitor mdNodeVisitor in tree.VisitNodesBreadthFirst()) {
                 int depth = mdNodeVisitor.Depth;
-                IMdNode node = mdNodeVisitor.Node;
+                IMarkdownSyntaxNode node = mdNodeVisitor.Node;
 
                 if (lastKnownDepth + 1 > depth) 
                     CloseOpenTags(writer, depthCache, depth, writeContent);
 
-                MdElement element = node.Element;
-                if (element is MdElement.Content or MdElement.HtmlContent) {
+                MarkdownElement element = node.Element;
+                if (element is MarkdownElement.Content or MarkdownElement.HtmlContent) {
                     ReadOnlySpan<char> content = node.Content;
                     if (content.Length == 0) continue;
 
@@ -107,7 +107,7 @@ public abstract class SimpleNodeTreeConverter {
         }
     }
 
-    private static void CloseOpenTags<T>(T writer, Dictionary<int, MdElement> depthCache, int depth, WriteDelegate<T> writeContent) {
+    private static void CloseOpenTags<T>(T writer, Dictionary<int, MarkdownElement> depthCache, int depth, WriteDelegate<T> writeContent) {
         if (depthCache.Count == 0) return;
 
         Span<int> keysToRemove = stackalloc int[depthCache.Count];
@@ -123,7 +123,7 @@ public abstract class SimpleNodeTreeConverter {
         slice.Sort();
         for (int i = count - 1; i >= 0; i--) {
             int key = slice[i];
-            MdElement closingEl = depthCache[key];
+            MarkdownElement closingEl = depthCache[key];
             HtmlTag htmlTag = MdElementLookup[closingEl];
             writeContent(writer, htmlTag.CloseTagSpan);
             depthCache.Remove(key);

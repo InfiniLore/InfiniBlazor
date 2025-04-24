@@ -20,12 +20,12 @@ public class LinkRegularHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!entireMatch.Groups[LrTextId].TryGetValue(out string? linkText)) return;
         if (!entireMatch.Groups[LrHrefId].TryGetValue(out string? linkHref)) return;
 
         if (entireMatch.Groups[LrBangId].Success) {
-            IMdNode imgNode = currentNode.AddChildNode(MdElement.Image);
+            IMarkdownSyntaxNode imgNode = currentNode.AddChildNode(MarkdownElement.Image);
             imgNode.WithAttribute("src", linkHref);
             imgNode.WithAttribute("alt", linkText);
 
@@ -36,7 +36,7 @@ public class LinkRegularHandler : IMarkdownElementHandler {
             return;
         }
 
-        IMdNode linkNode = currentNode.AddChildNode(MdElement.Link);
+        IMarkdownSyntaxNode linkNode = currentNode.AddChildNode(MarkdownElement.Link);
         linkNode.WithAttribute("href", linkHref);
 
         engine.AddSingleLineMatchesToStack(linkText, linkNode, origin | SkipOnOrigin);

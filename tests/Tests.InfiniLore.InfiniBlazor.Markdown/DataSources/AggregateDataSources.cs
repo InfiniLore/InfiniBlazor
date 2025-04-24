@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
@@ -115,7 +115,7 @@ public static class AggregateDataSources {
                 rootNode.AddH2("Longer Example with Multiple Sections");
 
                 rootNode.AddH3("Introduction");
-                IMdNode paragraph0 = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph0 = rootNode.AddParagraph();
                 paragraph0.WithContent("Welcome to this test. This section introduces the topic, along with ");
                 paragraph0.AddBold("bold");
                 paragraph0.WithContent(", ");
@@ -126,46 +126,46 @@ public static class AggregateDataSources {
 
                 rootNode.AddH3("Code Snippet");
                 rootNode.AddParagraph("Below is an example of a C# code snippet:");
-                IMdNode csharpCode = rootNode.AddCodeBlock("public class Program {\n    public static void Main() {\n        Console.WriteLine(\"Hello, World!\");\n    }\n}\n");
+                IMarkdownSyntaxNode csharpCode = rootNode.AddCodeBlock("public class Program {\n    public static void Main() {\n        Console.WriteLine(\"Hello, World!\");\n    }\n}\n");
                 csharpCode.WithClass("language-csharp");
 
                 rootNode.AddH3("Bullet Points");
                 rootNode.AddParagraph("Here are some bullet points:");
-                IMdNode bulletList = rootNode.AddListUnordered();
+                IMarkdownSyntaxNode bulletList = rootNode.AddListUnordered();
                 bulletList.AddListItem("Point one");
-                IMdNode nestedItem = bulletList.AddListItem("Point two");
-                IMdNode bulletList2 = nestedItem.AddListUnordered();
+                IMarkdownSyntaxNode nestedItem = bulletList.AddListItem("Point two");
+                IMarkdownSyntaxNode bulletList2 = nestedItem.AddListUnordered();
                 bulletList2.AddListItem("Subpoint A");
                 bulletList2.AddListItem("Subpoint B");
 
                 rootNode.AddH3("Blockquote");
-                IMdNode blockquote = rootNode.AddBlockquote();
+                IMarkdownSyntaxNode blockquote = rootNode.AddBlockquote();
                 blockquote.AddParagraph("This is a blockquote. It can contain multiple lines of text");
                 blockquote.AddParagraph("and demonstrates how Markdown handles quoted content.");
 
                 rootNode.AddH3("Table Example");
-                IMdNode table = rootNode.AddTable();
-                IMdNode tableHeader = table.AddTableHead();
-                IMdNode tableHeaderRow = tableHeader.AddTableRow();
+                IMarkdownSyntaxNode table = rootNode.AddTable();
+                IMarkdownSyntaxNode tableHeader = table.AddTableHead();
+                IMarkdownSyntaxNode tableHeaderRow = tableHeader.AddTableRow();
                 tableHeaderRow.AddTableHeadCell("Column 1");
                 tableHeaderRow.AddTableHeadCell("Column 2");
                 tableHeaderRow.AddTableHeadCell("Column 3");
-                IMdNode tableBody = table.AddTableBody();
-                IMdNode tableBodyRow0 = tableBody.AddTableRow();
+                IMarkdownSyntaxNode tableBody = table.AddTableBody();
+                IMarkdownSyntaxNode tableBodyRow0 = tableBody.AddTableRow();
                 tableBodyRow0.AddTableCell("Data 1");
                 tableBodyRow0.AddTableCell("Data 2");
                 tableBodyRow0.AddTableCell("Data 3");
-                IMdNode tableBodyRow1 = tableBody.AddTableRow();
+                IMarkdownSyntaxNode tableBodyRow1 = tableBody.AddTableRow();
                 tableBodyRow1.AddTableCell("Data 4");
                 tableBodyRow1.AddTableCell("Data 5");
                 tableBodyRow1.AddTableCell("Data 6");
 
                 rootNode.AddH3("Links and Images");
-                IMdNode paragraph1 = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph1 = rootNode.AddParagraph();
                 paragraph1.WithContent("You can visit ");
                 paragraph1.AddLink("Google").WithAttribute("href", "https://www.google.com");
                 paragraph1.WithContent(" or check out the following image:");
-                IMdNode image = rootNode.AddParagraph().AddImage();
+                IMarkdownSyntaxNode image = rootNode.AddParagraph().AddImage();
                 image.WithAttribute("src", "https://via.placeholder.com/150");
                 image.WithAttribute("alt", "Placeholder Image");
             }
@@ -219,37 +219,37 @@ public static class AggregateDataSources {
             </ul>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode heading = rootNode.AddH2();
+                IMarkdownSyntaxNode heading = rootNode.AddH2();
                 heading.WithContent("Nested Lists and Complex Formatting");
 
-                IMdNode unOrderedList = rootNode.AddListUnordered();
-                IMdNode topic1 = unOrderedList.AddListItem();
+                IMarkdownSyntaxNode unOrderedList = rootNode.AddListUnordered();
+                IMarkdownSyntaxNode topic1 = unOrderedList.AddListItem();
                 topic1.AddBold("Main Topic 1");
-                IMdNode topic1List = topic1.AddListUnordered();
-                IMdNode subtopic1 = topic1List.AddListItem();
+                IMarkdownSyntaxNode topic1List = topic1.AddListUnordered();
+                IMarkdownSyntaxNode subtopic1 = topic1List.AddListItem();
                 subtopic1.WithContent("Subtopic 1.1");
-                IMdNode subtopic1List = subtopic1.AddListUnordered();
-                IMdNode detail1 = subtopic1List.AddListItem();
+                IMarkdownSyntaxNode subtopic1List = subtopic1.AddListUnordered();
+                IMarkdownSyntaxNode detail1 = subtopic1List.AddListItem();
                 detail1.WithContent("Detail 1.1.1");
-                IMdNode detail2 = subtopic1List.AddListItem();
+                IMarkdownSyntaxNode detail2 = subtopic1List.AddListItem();
                 detail2.WithContent("Detail 1.1.2");
-                IMdNode detail2List = detail2.AddListUnordered();
-                IMdNode extraDetail = detail2List.AddListItem();
+                IMarkdownSyntaxNode detail2List = detail2.AddListUnordered();
+                IMarkdownSyntaxNode extraDetail = detail2List.AddListItem();
                 extraDetail.WithContent("Extra Detail 1.1.2.1");
-                IMdNode subtopic2 = topic1List.AddListItem();
+                IMarkdownSyntaxNode subtopic2 = topic1List.AddListItem();
                 subtopic2.WithContent("Subtopic 1.2");
 
-                IMdNode topic2 = unOrderedList.AddListItem();
+                IMarkdownSyntaxNode topic2 = unOrderedList.AddListItem();
                 topic2.AddBold("Main Topic 2");
-                IMdNode topic2List = topic2.AddListOrdered();
-                IMdNode item21 = topic2List.AddListItem();
+                IMarkdownSyntaxNode topic2List = topic2.AddListOrdered();
+                IMarkdownSyntaxNode item21 = topic2List.AddListItem();
                 item21.WithContent("Item 2.1");
-                IMdNode item22 = topic2List.AddListItem();
+                IMarkdownSyntaxNode item22 = topic2List.AddListItem();
                 item22.WithContent("Item 2.2");
-                IMdNode item22List = item22.AddListUnordered();
-                IMdNode subItem221 = item22List.AddListItem();
+                IMarkdownSyntaxNode item22List = item22.AddListUnordered();
+                IMarkdownSyntaxNode subItem221 = item22List.AddListItem();
                 subItem221.WithContent("Sub-Item 2.2.1");
-                IMdNode subItem222 = item22List.AddListItem();
+                IMarkdownSyntaxNode subItem222 = item22List.AddListItem();
                 subItem222.WithContent("Sub-Item 2.2.2");
             }
         );

@@ -1,21 +1,15 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
-using Microsoft.Extensions.ObjectPool;
-
 namespace InfiniLore.InfiniBlazor.Markdown;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MdNodeVisitorStackPoolPolicy(ObjectPool<MdNodeVisitor> visitorPool) : IPooledObjectPolicy<Stack<MdNodeVisitor>> {
-    public Stack<MdNodeVisitor> Create() => new(255);
-    public bool Return(Stack<MdNodeVisitor> obj) {
-        while (obj.TryPop(out MdNodeVisitor? visitor)) {
-            visitorPool.Return(visitor);
-        }
-        obj.Clear();
-        return true;
-    }
+public interface IMarkdownSyntaxTreeConverter<out T> {
+    T Convert(IMarkdownSyntaxTree tree);
+}
+
+public interface IMarkdownSyntaxTreeToWriterConverter<in T> where T : TextWriter {
+    void Convert(IMarkdownSyntaxTree tree, T writer);
 }

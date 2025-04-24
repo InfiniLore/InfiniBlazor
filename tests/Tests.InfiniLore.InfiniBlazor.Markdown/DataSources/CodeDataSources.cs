@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
@@ -43,7 +43,7 @@ public static class CodeDataSources {
             </code></pre>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode code = rootNode.AddCodeBlock("const code = sample();");
+                IMarkdownSyntaxNode code = rootNode.AddCodeBlock("const code = sample();");
                 code.WithClass("language-javascript");
             });
 

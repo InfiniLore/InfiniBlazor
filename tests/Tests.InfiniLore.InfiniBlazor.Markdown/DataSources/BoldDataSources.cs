@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
@@ -20,7 +20,7 @@ public static class BoldDataSources {
             "**bold**",
             "<p><strong>bold</strong></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.AddBold("bold");
             });
 
@@ -28,8 +28,8 @@ public static class BoldDataSources {
             @"**\*bold**",
             "<p><strong>*bold</strong></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold("*");// Escaped char
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode bold = paragraph.AddBold("*");// Escaped char
                 bold.WithContent("bold");
             });
 
@@ -37,8 +37,8 @@ public static class BoldDataSources {
             @"**bold\***",
             "<p><strong>bold*</strong></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold("bold");
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode bold = paragraph.AddBold("bold");
                 bold.WithContent("*");// Escaped char
             }// Escaped char
         );
@@ -47,8 +47,8 @@ public static class BoldDataSources {
             "**bold *nested italic***",
             "<p><strong>bold <em>nested italic</em></strong></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold("bold ");
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode bold = paragraph.AddBold("bold ");
                 bold.AddItalic("nested italic");
             });
 
@@ -56,8 +56,8 @@ public static class BoldDataSources {
             "***nested italic* bold**",
             "<p><strong><em>nested italic</em> bold</strong></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode bold = paragraph.AddBold();
                 bold.AddItalic("nested italic");
                 bold.WithContent(" bold");
             }
@@ -67,8 +67,8 @@ public static class BoldDataSources {
             "** \\* **",
             "<p><strong> * </strong></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold(" ");
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode bold = paragraph.AddBold(" ");
                 bold.WithContent("*");// Escaped char
                 bold.WithContent(" ");
             });
@@ -77,9 +77,9 @@ public static class BoldDataSources {
             "**bold *nested \\* italic***",
             "<p><strong>bold <em>nested * italic</em></strong></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode bold = paragraph.AddBold("bold ");
-                IMdNode italic = bold.AddItalic();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode bold = paragraph.AddBold("bold ");
+                IMarkdownSyntaxNode italic = bold.AddItalic();
                 italic.WithContent("nested ");
                 italic.WithContent("*");// Escaped char
                 italic.WithContent(" italic");
@@ -89,7 +89,7 @@ public static class BoldDataSources {
             "some text *****",// to exclude the <hr> tag being triggered
             "<p>some text <strong>*</strong></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("some text ");
                 paragraph.AddBold("*");
             }

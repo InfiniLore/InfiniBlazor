@@ -16,10 +16,10 @@ public class BoldHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!entireMatch.Groups[BId].TryGetValue(out string? boldValue)) return;
 
-        IMdNode boldNode = currentNode.AddChildNode(MdElement.Bold);
+        IMarkdownSyntaxNode boldNode = currentNode.AddChildNode(MarkdownElement.Bold);
         engine.AddSingleLineMatchesToStack(boldValue, boldNode, origin | SkipOnOrigin);
     }
 }

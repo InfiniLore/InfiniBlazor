@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
@@ -22,7 +22,7 @@ public class UnderlineDataSources {
             <p>something <span style="text-decoration: underline;">underlined</span></p>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("something ");
                 paragraph.AddUnderline("underlined");
             }
@@ -34,7 +34,7 @@ public class UnderlineDataSources {
             <p>something <span style="text-decoration: underline;">underlined with an _ escaped</span></p>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("something ");
                 paragraph.AddUnderline()
                     .WithContent("underlined with an _ escaped");
@@ -47,7 +47,7 @@ public class UnderlineDataSources {
             <p>something <span style="text-decoration: underline;"><strong>bold and underlined</strong></span></p>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("something ");
                 paragraph.AddUnderline()
                     .AddBold()
@@ -61,7 +61,7 @@ public class UnderlineDataSources {
             <p>something <span style="text-decoration: underline;"><em>italic and underlined</em></span></p>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("something ");
                 paragraph.AddUnderline()
                     .AddItalic()
@@ -75,7 +75,7 @@ public class UnderlineDataSources {
             <p>something <span style="text-decoration: underline;"><strong><em>bold, italic, and underlined</em></strong></span></p>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("something ");
                 paragraph.AddUnderline()
                     .AddBold()
@@ -90,7 +90,7 @@ public class UnderlineDataSources {
             <p>click <span style="text-decoration: underline;"><a href="https://example.com">here</a></span></p>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("click ");
                 paragraph.AddUnderline()
                     .AddLink()
@@ -105,7 +105,7 @@ public class UnderlineDataSources {
             <p>something <span style="text-decoration: underline;"><strong><a href="https://example.com">bold link</a></strong></span></p>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("something ");
                 paragraph.AddUnderline()
                     .AddBold()
@@ -122,9 +122,9 @@ public class UnderlineDataSources {
             <p>this has <span style="text-decoration: underline;"><strong>multiple</strong> elements to<em> underline</em></span></p>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("this has ");
-                IMdNode underline = paragraph.AddUnderline();
+                IMarkdownSyntaxNode underline = paragraph.AddUnderline();
                 underline.AddBold("multiple");
                 underline.WithContent(" elements to ");
                 underline.AddItalic("underline");

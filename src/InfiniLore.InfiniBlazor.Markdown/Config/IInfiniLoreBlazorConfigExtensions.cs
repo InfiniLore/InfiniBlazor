@@ -13,8 +13,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Config;
 public static class IInfiniLoreBlazorConfigExtensions {
     public static void AddMarkdown(this IInfiniBlazorConfig config, Action<MarkdownConfig>? configure = null) {
         config.Services.RegisterServicesFromInfiniLoreInfiniBlazorMarkdown();
-        config.Services.AddSingleton<IMdNodeTreeConverter<string>, NodeTreeToStringConverter>();
-        config.Services.AddSingleton(typeof(IMdNodeTreeToWriterConverter<>), typeof(NodeTreeToTextWriterConverter<>));
+        config.Services.AddSingleton<IMarkdownSyntaxTreeConverter<string>, ToStringConverter>();
+        config.Services.AddSingleton(typeof(IMarkdownSyntaxTreeToWriterConverter<>), typeof(ToTextWriterConverter<>));
         
         var markdownConfig = new MarkdownConfig(config);
         markdownConfig.TextEditor.AddDefaultModifiers();

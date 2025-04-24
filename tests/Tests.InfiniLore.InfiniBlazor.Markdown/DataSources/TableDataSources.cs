@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
@@ -41,14 +41,14 @@ public class TableDataSources {
             </table>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode table = rootNode.AddTable();
-                IMdNode tableHeader = table.AddTableHead();
-                IMdNode tableHeaderRow = tableHeader.AddTableRow();
+                IMarkdownSyntaxNode table = rootNode.AddTable();
+                IMarkdownSyntaxNode tableHeader = table.AddTableHead();
+                IMarkdownSyntaxNode tableHeaderRow = tableHeader.AddTableRow();
                 tableHeaderRow.AddTableHeadCell("Column 1");
                 tableHeaderRow.AddTableHeadCell("Column 2");
                 tableHeaderRow.AddTableHeadCell("Column 3");
-                IMdNode tableBody = table.AddTableBody();
-                IMdNode tableBodyRow = tableBody.AddTableRow();
+                IMarkdownSyntaxNode tableBody = table.AddTableBody();
+                IMarkdownSyntaxNode tableBodyRow = tableBody.AddTableRow();
                 tableBodyRow.AddTableCell("Row 2 col 1");
                 tableBodyRow.AddTableCell("Row 2 col 2");
                 tableBodyRow.AddTableCell("Row 2 col 3");
@@ -125,42 +125,42 @@ public class TableDataSources {
             </table>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode table = rootNode.AddTable();
-                IMdNode tableHeader = table.AddTableHead();
-                IMdNode tableHeaderRow = tableHeader.AddTableRow();
+                IMarkdownSyntaxNode table = rootNode.AddTable();
+                IMarkdownSyntaxNode tableHeader = table.AddTableHead();
+                IMarkdownSyntaxNode tableHeaderRow = tableHeader.AddTableRow();
                 tableHeaderRow.AddTableHeadCell("Tables");
                 tableHeaderRow.AddTableHeadCell("Are");
                 tableHeaderRow.AddTableHeadCell("Cool");
-                IMdNode tableBody = table.AddTableBody();
-                IMdNode tableRow1 = tableBody.AddTableRow();
+                IMarkdownSyntaxNode tableBody = table.AddTableBody();
+                IMarkdownSyntaxNode tableRow1 = tableBody.AddTableRow();
                 tableRow1.AddTableCell("col 3 is");
                 tableRow1.AddTableCell("right-aligned");
                 tableRow1.AddTableCell("$1600");
-                IMdNode tableRow2 = tableBody.AddTableRow();
+                IMarkdownSyntaxNode tableRow2 = tableBody.AddTableRow();
                 tableRow2.AddTableCell("col 2 is");
                 tableRow2.AddTableCell("centered");
                 tableRow2.AddTableCell("$12");
-                IMdNode tableBodyRow3 = tableBody.AddTableRow();
+                IMarkdownSyntaxNode tableBodyRow3 = tableBody.AddTableRow();
                 tableBodyRow3.AddTableCell("zebra stripes");
                 tableBodyRow3.AddTableCell("are neat");
                 tableBodyRow3.AddTableCell("$1");
 
-                IMdNode table2 = rootNode.AddTable();
-                IMdNode tableHeader2 = table2.AddTableHead();
-                IMdNode tableHeaderRow2 = tableHeader2.AddTableRow();
+                IMarkdownSyntaxNode table2 = rootNode.AddTable();
+                IMarkdownSyntaxNode tableHeader2 = table2.AddTableHead();
+                IMarkdownSyntaxNode tableHeaderRow2 = tableHeader2.AddTableRow();
                 tableHeaderRow2.AddTableHeadCell("Tables");
                 tableHeaderRow2.AddTableHeadCell("Are");
                 tableHeaderRow2.AddTableHeadCell("Cool");
-                IMdNode tableBody2 = table2.AddTableBody();
-                IMdNode tableRow12 = tableBody2.AddTableRow();
+                IMarkdownSyntaxNode tableBody2 = table2.AddTableBody();
+                IMarkdownSyntaxNode tableRow12 = tableBody2.AddTableRow();
                 tableRow12.AddTableCell("col 3 is");
                 tableRow12.AddTableCell("right-aligned");
                 tableRow12.AddTableCell("$1600");
-                IMdNode tableRow22 = tableBody2.AddTableRow();
+                IMarkdownSyntaxNode tableRow22 = tableBody2.AddTableRow();
                 tableRow22.AddTableCell("col 2 is");
                 tableRow22.AddTableCell("centered");
                 tableRow22.AddTableCell("$12");
-                IMdNode tableBodyRow32 = tableBody2.AddTableRow();
+                IMarkdownSyntaxNode tableBodyRow32 = tableBody2.AddTableRow();
                 tableBodyRow32.AddTableCell("zebra stripes");
                 tableBodyRow32.AddTableCell("are neat");
                 tableBodyRow32.AddTableCell("$1");

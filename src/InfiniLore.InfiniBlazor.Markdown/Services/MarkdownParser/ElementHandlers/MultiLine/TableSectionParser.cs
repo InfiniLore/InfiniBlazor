@@ -21,7 +21,7 @@ public class TableHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         // Extract header, separator, and rows
         ReadOnlySpan<char> header = entireMatch.Groups[HeadId].ValueSpan;
         Span<Range> headerColumns = stackalloc Range[header.Length];
@@ -36,21 +36,21 @@ public class TableHandler : IMarkdownElementHandler {
         int rowCount = rows.Split(rowRanges, '\n', StringSplitOptions.TrimEntries);
 
         // Construct table HTML
-        IMdNode tableNode = currentNode.AddChildNode(MdElement.Table);
+        IMarkdownSyntaxNode tableNode = currentNode.AddChildNode(MarkdownElement.Table);
 
         // Add headers
-        IMdNode tableHeaderNode = tableNode
-            .AddChildNode(MdElement.TableHead)
-            .AddChildNode(MdElement.TableRow);
+        IMarkdownSyntaxNode tableHeaderNode = tableNode
+            .AddChildNode(MarkdownElement.TableHead)
+            .AddChildNode(MarkdownElement.TableRow);
 
         for (int index = 0; index < headerColumnCount; index++) {
-            IMdNode tableHeadCellNode = tableHeaderNode.AddChildNode(MdElement.TableHeadCell);
+            IMarkdownSyntaxNode tableHeadCellNode = tableHeaderNode.AddChildNode(MarkdownElement.TableHeadCell);
             ReadOnlySpan<char> column = header[headerColumns[index]];
             engine.AddSingleLineMatchesToStack(column.ToString(), tableHeadCellNode, origin);
         }
 
         // Add rows
-        IMdNode tableBodyNode = tableNode.AddChildNode(MdElement.TableBody);
+        IMarkdownSyntaxNode tableBodyNode = tableNode.AddChildNode(MarkdownElement.TableBody);
 
         Range[]? rowColumnRanges = null;
         Span<Range> columnBuffer = headerColumnCount <= StackAllocThreshold 
@@ -67,9 +67,9 @@ public class TableHandler : IMarkdownElementHandler {
 
                 if (rowColumnCount != headerColumnCount) continue; // Skip malformed rows
 
-                IMdNode rowNode = tableBodyNode.AddChildNode(MdElement.TableRow);
+                IMarkdownSyntaxNode rowNode = tableBodyNode.AddChildNode(MarkdownElement.TableRow);
                 for (int columnIndex = 0; columnIndex < rowColumnCount; columnIndex++) {
-                    IMdNode cellNode = rowNode.AddChildNode(MdElement.TableCell);
+                    IMarkdownSyntaxNode cellNode = rowNode.AddChildNode(MarkdownElement.TableCell);
                     engine.AddSingleLineMatchesToStack(
                         row[columnBuffer[columnIndex]].ToString(), 
                         cellNode, 

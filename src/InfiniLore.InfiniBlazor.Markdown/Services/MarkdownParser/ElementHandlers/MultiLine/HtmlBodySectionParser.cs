@@ -21,9 +21,9 @@ public class HtmlBodyHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!origin.HasFlag(HandlerOrigin.PreserveHtml)) {
-            currentNode = currentNode.AddChildNode(MdElement.Paragraph);
+            currentNode = currentNode.AddChildNode(MarkdownElement.Paragraph);
         }
 
         if (entireMatch.Groups[HtmlPostId].TryGetValue(out string? post)) {
@@ -34,12 +34,12 @@ public class HtmlBodyHandler : IMarkdownElementHandler {
             // Span should be the only special case allowed that allows for Markdown parsing within it
             Match match = MarkdownRegexLib.FindSpanHtmlRegex.Match(htmlBody);
             if (match.Groups[SpanTagId].TryGetValue(out string? spanTag) && match.Groups[SpanBodyId].TryGetValue(out string? spanBody)) {
-                engine.PushElementToStack("</span>", currentNode, origin, MdElement.HtmlContent);
+                engine.PushElementToStack("</span>", currentNode, origin, MarkdownElement.HtmlContent);
                 engine.AddMultiLineMatchesToStack(spanBody, currentNode, origin | HandlerOrigin.Html);
-                engine.PushElementToStack(spanTag, currentNode, origin, MdElement.HtmlContent);
+                engine.PushElementToStack(spanTag, currentNode, origin, MarkdownElement.HtmlContent);
             }
             else {
-                engine.PushElementToStack(htmlBody, currentNode, origin, MdElement.HtmlContent);
+                engine.PushElementToStack(htmlBody, currentNode, origin, MarkdownElement.HtmlContent);
             }
         }
 

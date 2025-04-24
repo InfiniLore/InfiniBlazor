@@ -16,10 +16,10 @@ public class StrikeHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!entireMatch.Groups[SId].TryGetValue(out string? strikeValue)) return;
 
-        IMdNode node = currentNode.AddChildNode(MdElement.Strikethrough);
+        IMarkdownSyntaxNode node = currentNode.AddChildNode(MarkdownElement.Strikethrough);
         engine.AddSingleLineMatchesToStack(strikeValue, node, origin | SkipOnOrigin);
     }
 }

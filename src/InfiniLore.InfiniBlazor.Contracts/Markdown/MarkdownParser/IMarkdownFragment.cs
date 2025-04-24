@@ -9,8 +9,8 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMarkdownFragment {
-    MdElement Element { get; }
-    IMdNode Node { get; }
+    MarkdownElement Element { get; }
+    IMarkdownSyntaxNode Node { get; }
     HandlerOrigin Origin { get; }
     Match? Match { get; }
     string? Content { get; }
@@ -20,6 +20,6 @@ public interface IMarkdownFragment {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    void AsMatch(Match match, IMdNode node, HandlerOrigin origin);
-    void AsElement(string content, IMdNode node, HandlerOrigin origin, MdElement element);
+    void AsMatch(Match match, IMarkdownSyntaxNode node, HandlerOrigin origin);
+    void AsElement(string content, IMarkdownSyntaxNode node, HandlerOrigin origin, MarkdownElement element);
 }

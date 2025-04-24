@@ -6,39 +6,39 @@ using System.Buffers;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
+namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MdNode : IMdNode, IResettable {
+public class MarkdownSyntaxNode : IMarkdownSyntaxNode, IResettable {
     private const int MinimumCapacity = 4;
     private int _childCount;
-    private MdNode[] _childNodes = ArrayPool<MdNode>.Shared.Rent(MinimumCapacity);
+    private MarkdownSyntaxNode[] _childNodes = ArrayPool<MarkdownSyntaxNode>.Shared.Rent(MinimumCapacity);
     private readonly HashSet<string> _classes = new();
     private readonly Dictionary<string, string> _attributes = new();
 
-    public MdElement Element { get; private set; } = MdElement.Undefined;
+    public MarkdownElement Element { get; private set; } = MarkdownElement.Undefined;
     public string? Content { get; private set; }
 
     public IReadOnlyDictionary<string, string> Attributes => _attributes;
     public IReadOnlySet<string> Classes => _classes;
 
-    public IMdNode Parent { get; private set; } = null!;
+    public IMarkdownSyntaxNode Parent { get; private set; } = null!;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public ReadOnlySpan<T> GetChildrenSpan<T>(out int length) where T : IMdNode {
+    public ReadOnlySpan<T> GetChildrenSpan<T>(out int length) where T : IMarkdownSyntaxNode {
         length = _childCount;
         if (_childCount == 0) return ReadOnlySpan<T>.Empty;
 
         return MemoryMarshal.CreateReadOnlySpan(
-            ref Unsafe.As<MdNode, T>(ref MemoryMarshal.GetArrayDataReference(_childNodes)),
+            ref Unsafe.As<MarkdownSyntaxNode, T>(ref MemoryMarshal.GetArrayDataReference(_childNodes)),
             _childCount
         );
     }
 
-    public IMdNode AddChildNode(MdElement element, string? content = null) {
-        MdNode child = PoolCache.MdNodePool.Get();
+    public IMarkdownSyntaxNode AddChildNode(MarkdownElement element, string? content = null) {
+        MarkdownSyntaxNode child = PoolCache.MdNodePool.Get();
         child.Element = element;
         child.Content = content;
         child.Parent = this;
@@ -46,10 +46,10 @@ public class MdNode : IMdNode, IResettable {
         // Check if we need to resize
         if (_childCount == _childNodes.Length) {
             int newSize = Math.Max(MinimumCapacity, _childNodes.Length * 2);
-            MdNode[] newArray = ArrayPool<MdNode>.Shared.Rent(newSize);
+            MarkdownSyntaxNode[] newArray = ArrayPool<MarkdownSyntaxNode>.Shared.Rent(newSize);
             Array.Copy(_childNodes, newArray, _childCount);
 
-            ArrayPool<MdNode>.Shared.Return(_childNodes, true);
+            ArrayPool<MarkdownSyntaxNode>.Shared.Return(_childNodes, true);
             _childNodes = newArray;
         }
 
@@ -59,10 +59,10 @@ public class MdNode : IMdNode, IResettable {
     }
 
 
-    public IMdNode WithContent(string? content) {
+    public IMarkdownSyntaxNode WithContent(string? content) {
         if (content.IsNullOrWhiteSpace()) return this;
-        if (_childNodes.LastOrDefault() is not { Element: MdElement.Content } lastNode) {
-            AddChildNode(MdElement.Content, content);
+        if (_childNodes.LastOrDefault() is not { Element: MarkdownElement.Content } lastNode) {
+            AddChildNode(MarkdownElement.Content, content);
             return this;
         }
 
@@ -79,29 +79,29 @@ public class MdNode : IMdNode, IResettable {
         return this;
     }
 
-    public IMdNode WithHtmlContent(string? content) {
-        AddChildNode(MdElement.HtmlContent, content);
+    public IMarkdownSyntaxNode WithHtmlContent(string? content) {
+        AddChildNode(MarkdownElement.HtmlContent, content);
         return this;
     }
 
-    public IMdNode WithClass(string className) {
+    public IMarkdownSyntaxNode WithClass(string className) {
         _classes.Add(className);
         return this;
     }
 
-    public IMdNode WithAttribute(string key, string value) {
+    public IMarkdownSyntaxNode WithAttribute(string key, string value) {
         _attributes.AddOrUpdate(key, value);
         return this;
     }
 
     public bool TryReset() {
-        if (_childNodes.Length > 0) ArrayPool<MdNode>.Shared.Return(_childNodes, true);
-        _childNodes = ArrayPool<MdNode>.Shared.Rent(MinimumCapacity);
+        if (_childNodes.Length > 0) ArrayPool<MarkdownSyntaxNode>.Shared.Return(_childNodes, true);
+        _childNodes = ArrayPool<MarkdownSyntaxNode>.Shared.Rent(MinimumCapacity);
         _childCount = 0;
 
         _classes.Clear();
         _attributes.Clear();
-        Element = MdElement.Undefined;
+        Element = MarkdownElement.Undefined;
         Content = null;
         Parent = null!;
         return true;

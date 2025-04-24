@@ -10,22 +10,22 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MarkdownFragment : IMarkdownFragment, IResettable {
-    public MdElement Element { get; private set; }
-    public IMdNode Node { get; private set; } = null!;
+    public MarkdownElement Element { get; private set; }
+    public IMarkdownSyntaxNode Node { get; private set; } = null!;
     public HandlerOrigin Origin { get; private set; }
     public Match? Match { get; private set; }
     public string? Content { get; private set; }
 
     [MemberNotNull(nameof(Match))] public bool IsMatch { get; private set; }
 
-    public void AsMatch(Match match, IMdNode node, HandlerOrigin origin) {
+    public void AsMatch(Match match, IMarkdownSyntaxNode node, HandlerOrigin origin) {
         Node = node;
         Origin = origin;
         Match = match;
         IsMatch = true;
     }
 
-    public void AsElement(string? content, IMdNode node, HandlerOrigin origin, MdElement element) {
+    public void AsElement(string? content, IMarkdownSyntaxNode node, HandlerOrigin origin, MarkdownElement element) {
         Node = node;
         Origin = origin;
         Content = content;
@@ -41,7 +41,7 @@ public class MarkdownFragment : IMarkdownFragment, IResettable {
         Match = null;
         Content = null;
         IsMatch = false;
-        Element = MdElement.Undefined;
+        Element = MarkdownElement.Undefined;
 
         return true;
     }
@@ -51,7 +51,7 @@ public class MarkdownFragment : IMarkdownFragment, IResettable {
         return IsMatch;
     }
     
-    public bool TryGetAsElement(out MdElement element, out string? content) {
+    public bool TryGetAsElement(out MarkdownElement element, out string? content) {
         content = Content;
         element = Element;
         return !IsMatch;

@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
@@ -20,8 +20,8 @@ public static class LinkDataSources {
             "This is an [-->*example*<--](https://www.transgenderinfo.be) of a link.",
             """<p>This is an <a href="https://www.transgenderinfo.be">--><em>example</em><--</a> of a link.</p>""",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph("This is an ");
-                IMdNode link = paragraph.AddLink();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph("This is an ");
+                IMarkdownSyntaxNode link = paragraph.AddLink();
                 link.WithAttribute("href", "https://www.transgenderinfo.be");
 
                 link.WithContent("-->");
@@ -35,9 +35,9 @@ public static class LinkDataSources {
             "This is an **[-->*example*<--](https://www.transgenderinfo.be)** of a link.",
             """<p>This is an <strong><a href="https://www.transgenderinfo.be">--><em>example</em><--</a></strong> of a link.</p>""",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph("This is an ");
-                IMdNode bold = paragraph.AddBold();
-                IMdNode link = bold.AddLink();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph("This is an ");
+                IMarkdownSyntaxNode bold = paragraph.AddBold();
+                IMarkdownSyntaxNode link = bold.AddLink();
                 link.WithAttribute("href", "https://www.transgenderinfo.be");
 
                 link.WithContent("-->");
@@ -51,9 +51,9 @@ public static class LinkDataSources {
             "This is an ^[-->*example*<--](https://www.transgenderinfo.be)^ of a link.",
             """<p>This is an <sub><a href="https://www.transgenderinfo.be">--><em>example</em><--</a></sub> of a link.</p>""",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph("This is an ");
-                IMdNode sub = paragraph.AddSubscript();
-                IMdNode link = sub.AddLink();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph("This is an ");
+                IMarkdownSyntaxNode sub = paragraph.AddSubscript();
+                IMarkdownSyntaxNode link = sub.AddLink();
                 link.WithAttribute("href", "https://www.transgenderinfo.be");
 
                 link.WithContent("-->");
@@ -67,9 +67,9 @@ public static class LinkDataSources {
             "This is an ^^[-->*example*<--](https://www.transgenderinfo.be)^^ of a link.",
             """<p>This is an <sup><a href="https://www.transgenderinfo.be">--><em>example</em><--</a></sup> of a link.</p>""",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph("This is an ");
-                IMdNode super = paragraph.AddSuperscript();
-                IMdNode link = super.AddLink();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph("This is an ");
+                IMarkdownSyntaxNode super = paragraph.AddSuperscript();
+                IMarkdownSyntaxNode link = super.AddLink();
                 link.WithAttribute("href", "https://www.transgenderinfo.be");
 
                 link.WithContent("-->");
@@ -83,7 +83,7 @@ public static class LinkDataSources {
             "![Specs](https://i.imgur.com/aV8o3rE.png)",
             "<p><img src=\"https://i.imgur.com/aV8o3rE.png\" alt=\"Specs\"></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.AddImage()
                     .WithAttribute("src", "https://i.imgur.com/aV8o3rE.png")
                     .WithAttribute("alt", "Specs");
@@ -100,10 +100,10 @@ public static class LinkDataSources {
             </p>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode link = paragraph.AddLink();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode link = paragraph.AddLink();
                 link.WithAttribute("href", "https://imgur.com/");
-                IMdNode image = link.AddImage();
+                IMarkdownSyntaxNode image = link.AddImage();
                 image.WithAttribute("src", "https://i.imgur.com/aV8o3rE.png");
                 image.WithAttribute("alt", "Specs");
             }

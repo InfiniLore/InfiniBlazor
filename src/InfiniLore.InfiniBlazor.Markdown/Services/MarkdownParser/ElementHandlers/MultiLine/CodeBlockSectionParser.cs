@@ -19,10 +19,10 @@ public class CodeBlockHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!entireMatch.Groups[CBodyId].TryGetValueSpan(out ReadOnlySpan<char> codeBlockBody)) return;
 
-        IMdNode codeNode = currentNode.AddChildNode(MdElement.CodeBlock);
+        IMarkdownSyntaxNode codeNode = currentNode.AddChildNode(MarkdownElement.CodeBlock);
 
         ReadOnlySpan<char> langNameValue = entireMatch.Groups[CLangId].ValueSpan;
         if (!langNameValue.IsEmpty) codeNode.WithClass($"language-{langNameValue}");

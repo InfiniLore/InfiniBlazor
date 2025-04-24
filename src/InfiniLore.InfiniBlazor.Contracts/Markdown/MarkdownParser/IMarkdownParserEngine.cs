@@ -6,13 +6,13 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMarkdownParserEngine {
-    IMdNodeTree NodeTree { get; }
+    IMarkdownSyntaxTree NodeTree { get; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    void AddMultiLineMatchesToStack(string input, IMdNode node, HandlerOrigin origin);
-    void AddSingleLineMatchesToStack(string input, IMdNode node, HandlerOrigin origin);
-    void PushContentToStack(string content, IMdNode currentNode, HandlerOrigin origin);
-    void PushElementToStack(string? content, IMdNode currentNode, HandlerOrigin origin, MdElement element);
+    void AddMultiLineMatchesToStack(string input, IMarkdownSyntaxNode node, HandlerOrigin origin);
+    void AddSingleLineMatchesToStack(string input, IMarkdownSyntaxNode node, HandlerOrigin origin);
+    void PushContentToStack(string content, IMarkdownSyntaxNode currentNode, HandlerOrigin origin);
+    void PushElementToStack(string? content, IMarkdownSyntaxNode currentNode, HandlerOrigin origin, MarkdownElement element);
 }

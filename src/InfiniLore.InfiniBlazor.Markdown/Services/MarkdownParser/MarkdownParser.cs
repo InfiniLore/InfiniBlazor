@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
@@ -15,7 +15,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 public class MarkdownParser(
     IServiceProvider serviceProvider,
     ILogger<MarkdownParser> logger,
-    IMdNodeTreeParser nodeTreeParser
+    IMarkdownSyntaxTreeParser nodeTreeParser
 ) : IMarkdownParser {
     
     // -----------------------------------------------------------------------------------------------------------------
@@ -23,8 +23,8 @@ public class MarkdownParser(
     // -----------------------------------------------------------------------------------------------------------------
     #region Parsing Methods
     public void ParseToWriter<T>(string markdown, T writer) where T : TextWriter {
-        if (serviceProvider.GetService<IMdNodeTreeToWriterConverter<T>>() is not {} converter) return;
-        MdNodeTree nodeTree = PoolCache.MdNodeTreePool.Get();
+        if (serviceProvider.GetService<IMarkdownSyntaxTreeToWriterConverter<T>>() is not {} converter) return;
+        MarkdownSyntaxTree nodeTree = PoolCache.MdNodeTreePool.Get();
         
         try {
             nodeTreeParser.ParseToNodeTree(markdown, nodeTree);
@@ -42,12 +42,12 @@ public class MarkdownParser(
             return false;
         }
 
-        if (serviceProvider.GetService<IMdNodeTreeConverter<T>>() is not {} converter) {
+        if (serviceProvider.GetService<IMarkdownSyntaxTreeConverter<T>>() is not {} converter) {
             logger.LogWarning("No converter found for type {Type}.", typeof(T));
             return false;
         }
         
-        MdNodeTree nodeTree = PoolCache.MdNodeTreePool.Get();
+        MarkdownSyntaxTree nodeTree = PoolCache.MdNodeTreePool.Get();
 
         try {
             nodeTreeParser.ParseToNodeTree(markdown, nodeTree);

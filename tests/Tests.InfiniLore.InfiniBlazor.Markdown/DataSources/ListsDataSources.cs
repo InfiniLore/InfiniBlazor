@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
@@ -38,11 +38,11 @@ public static class ListsDataSources {
             </ol>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list = rootNode.AddListOrdered();
+                IMarkdownSyntaxNode list = rootNode.AddListOrdered();
                 list.AddListItem("this");
                 list.AddListItem("is");
-                IMdNode item = list.AddListItem("a");
-                IMdNode sublist = item.AddListUnordered();
+                IMarkdownSyntaxNode item = list.AddListItem("a");
+                IMarkdownSyntaxNode sublist = item.AddListUnordered();
                 sublist.AddListItem("nested");
                 list.AddListItem("list");
             }
@@ -67,9 +67,9 @@ public static class ListsDataSources {
             </ul>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list = rootNode.AddListUnordered();
-                IMdNode item = list.AddListItem("Item 1");
-                IMdNode sublist = item.AddListUnordered();
+                IMarkdownSyntaxNode list = rootNode.AddListUnordered();
+                IMarkdownSyntaxNode item = list.AddListItem("Item 1");
+                IMarkdownSyntaxNode sublist = item.AddListUnordered();
                 sublist.AddListItem("Subitem 1.1");
                 sublist.AddListItem("Subitem 1.2");
                 list.AddListItem("Item 2");
@@ -97,10 +97,10 @@ public static class ListsDataSources {
             </ol>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list = rootNode.AddListOrdered();
+                IMarkdownSyntaxNode list = rootNode.AddListOrdered();
                 list.AddListItem("Ordered item 1");
-                IMdNode item = list.AddListItem("Ordered item 2");
-                IMdNode sublist = item.AddListOrdered();
+                IMarkdownSyntaxNode item = list.AddListItem("Ordered item 2");
+                IMarkdownSyntaxNode sublist = item.AddListOrdered();
                 sublist.AddListItem("Nested ordered item 2.1");
                 sublist.AddListItem("Nested ordered item 2.2");
                 list.AddListItem("Ordered item 3");
@@ -128,10 +128,10 @@ public static class ListsDataSources {
             </ul>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list = rootNode.AddListUnordered();
+                IMarkdownSyntaxNode list = rootNode.AddListUnordered();
                 list.AddListItem("Unordered item 1");
-                IMdNode item = list.AddListItem("Unordered item 2");
-                IMdNode sublist = item.AddListOrdered();
+                IMarkdownSyntaxNode item = list.AddListItem("Unordered item 2");
+                IMarkdownSyntaxNode sublist = item.AddListOrdered();
                 sublist.AddListItem("Mixed nested ordered item 2.1");
                 sublist.AddListItem("Mixed nested ordered item 2.2");
                 list.AddListItem("Unordered item 3");
@@ -157,9 +157,9 @@ public static class ListsDataSources {
             </ol>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list = rootNode.AddListOrdered();
-                IMdNode item = list.AddListItem("First ordered item");
-                IMdNode sublist = item.AddListUnordered();
+                IMarkdownSyntaxNode list = rootNode.AddListOrdered();
+                IMarkdownSyntaxNode item = list.AddListItem("First ordered item");
+                IMarkdownSyntaxNode sublist = item.AddListUnordered();
                 sublist.AddListItem("Subitem A");
                 sublist.AddListItem("Subitem B");
                 list.AddListItem("Second ordered item");
@@ -191,13 +191,13 @@ public static class ListsDataSources {
             </ul>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list = rootNode.AddListUnordered();
-                IMdNode item = list.AddListItem("Top-level item");
-                IMdNode sublist = item.AddListUnordered();
-                IMdNode subitem1 = sublist.AddListItem("Subitem level 1");
-                IMdNode subList1 = subitem1.AddListUnordered();
-                IMdNode subitem2 = subList1.AddListItem("Subitem level 2");
-                IMdNode subList2 = subitem2.AddListUnordered();
+                IMarkdownSyntaxNode list = rootNode.AddListUnordered();
+                IMarkdownSyntaxNode item = list.AddListItem("Top-level item");
+                IMarkdownSyntaxNode sublist = item.AddListUnordered();
+                IMarkdownSyntaxNode subitem1 = sublist.AddListItem("Subitem level 1");
+                IMarkdownSyntaxNode subList1 = subitem1.AddListUnordered();
+                IMarkdownSyntaxNode subitem2 = subList1.AddListItem("Subitem level 2");
+                IMarkdownSyntaxNode subList2 = subitem2.AddListUnordered();
                 subList2.AddListItem("Subitem level 3");
             }
         );
@@ -222,13 +222,13 @@ public static class ListsDataSources {
             </ul>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list = rootNode.AddListUnordered();
+                IMarkdownSyntaxNode list = rootNode.AddListUnordered();
                 list.AddListItem("Top item 1");
                 list.AddListItem("Top item 2");
 
                 rootNode.AddParagraph("Unrelated text block in the same list");
 
-                IMdNode list2 = rootNode.AddListUnordered();
+                IMarkdownSyntaxNode list2 = rootNode.AddListUnordered();
                 list2.AddListItem("Top item 3");
             }
         );
@@ -250,9 +250,9 @@ public static class ListsDataSources {
             </ol>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list = rootNode.AddListOrdered();
-                IMdNode item = list.AddListItem("Extra spaces for alignment");
-                IMdNode sublist = item.AddListUnordered();
+                IMarkdownSyntaxNode list = rootNode.AddListOrdered();
+                IMarkdownSyntaxNode item = list.AddListItem("Extra spaces for alignment");
+                IMarkdownSyntaxNode sublist = item.AddListUnordered();
                 sublist.AddListItem("This is a sublist");
 
                 list.AddListItem("Another item");
@@ -273,7 +273,7 @@ public static class ListsDataSources {
             </ul>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list = rootNode.AddListUnordered();
+                IMarkdownSyntaxNode list = rootNode.AddListUnordered();
                 list.AddListItem("A list item with ").AddBold("bold text");
                 list.AddListItem("A list item with ").AddItalic("italic text");
                 list.AddListItem("A list item with ").AddCodeInline("inline code");
@@ -305,10 +305,10 @@ public static class ListsDataSources {
             </ul>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list = rootNode.AddListUnordered();
-                IMdNode list2 = list.AddListItem("This list has").AddListUnordered();
-                IMdNode list3 = list2.AddListItem("Uneven indentation").AddListUnordered();
-                IMdNode list4 = list3.AddListItem("But still renders").AddListUnordered();
+                IMarkdownSyntaxNode list = rootNode.AddListUnordered();
+                IMarkdownSyntaxNode list2 = list.AddListItem("This list has").AddListUnordered();
+                IMarkdownSyntaxNode list3 = list2.AddListItem("Uneven indentation").AddListUnordered();
+                IMarkdownSyntaxNode list4 = list3.AddListItem("But still renders").AddListUnordered();
                 list4.AddListItem("Correctly!");
             }
         );
@@ -335,17 +335,17 @@ public static class ListsDataSources {
             </ol>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list = rootNode.AddListOrdered();
+                IMarkdownSyntaxNode list = rootNode.AddListOrdered();
                 list.AddListItem("this");
-                IMdNode item1 = list.AddListItem();
+                IMarkdownSyntaxNode item1 = list.AddListItem();
                 item1.AddCheckboxUnselected();
                 item1.WithContent("is");
 
-                IMdNode item2 = list.AddListItem();
+                IMarkdownSyntaxNode item2 = list.AddListItem();
                 item2.AddCheckboxSelected();
                 item2.WithContent("a");
-                IMdNode sublist = item2.AddListUnordered();
-                IMdNode item3 = sublist.AddListItem();
+                IMarkdownSyntaxNode sublist = item2.AddListUnordered();
+                IMarkdownSyntaxNode item3 = sublist.AddListItem();
                 item3.AddCheckboxSelected();
                 item3.WithContent("nested");
 
@@ -379,18 +379,18 @@ public static class ListsDataSources {
             </ul>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list = rootNode.AddListUnordered();
-                IMdNode item0 = list.AddListItem();
+                IMarkdownSyntaxNode list = rootNode.AddListUnordered();
+                IMarkdownSyntaxNode item0 = list.AddListItem();
                 item0.AddCheckboxUnselected();
                 item0.WithContent("Task with sublist");
-                IMdNode nestedList0 = item0.AddListUnordered();
+                IMarkdownSyntaxNode nestedList0 = item0.AddListUnordered();
                 nestedList0.AddListItem("SubItem A");
                 nestedList0.AddListItem("SubItem B");
 
-                IMdNode item1 = list.AddListItem();
+                IMarkdownSyntaxNode item1 = list.AddListItem();
                 item1.AddCheckboxSelected();
                 item1.WithContent("Completed task with sublist");
-                IMdNode nestedList1 = item1.AddListUnordered();
+                IMarkdownSyntaxNode nestedList1 = item1.AddListUnordered();
                 nestedList1.AddListItem("SubItem C");
                 nestedList1.AddListItem("SubItem D");
             }
@@ -410,14 +410,14 @@ public static class ListsDataSources {
             </ol>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list = rootNode.AddListOrdered();
+                IMarkdownSyntaxNode list = rootNode.AddListOrdered();
                 list.AddListItem("Ordered task list");
 
-                IMdNode item1 = list.AddListItem();
+                IMarkdownSyntaxNode item1 = list.AddListItem();
                 item1.AddCheckboxUnselected();
                 item1.WithContent("Incomplete task in ordered list");
 
-                IMdNode item2 = list.AddListItem();
+                IMarkdownSyntaxNode item2 = list.AddListItem();
                 item2.AddCheckboxSelected();
                 item2.WithContent("Completed task in ordered list");
 
@@ -443,16 +443,16 @@ public static class ListsDataSources {
             </ul>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list = rootNode.AddListUnordered();
-                IMdNode item0 = list.AddListItem();
+                IMarkdownSyntaxNode list = rootNode.AddListUnordered();
+                IMarkdownSyntaxNode item0 = list.AddListItem();
                 item0.AddCheckboxSelected();
                 item0.WithContent("Mixed list");
 
-                IMdNode nestedList = item0.AddListOrdered();
-                IMdNode item0A = nestedList.AddListItem();
+                IMarkdownSyntaxNode nestedList = item0.AddListOrdered();
+                IMarkdownSyntaxNode item0A = nestedList.AddListItem();
                 item0A.AddCheckboxUnselected();
                 item0A.WithContent("Subtask 1");
-                IMdNode item0B = nestedList.AddListItem();
+                IMarkdownSyntaxNode item0B = nestedList.AddListItem();
                 item0B.AddCheckboxSelected();
                 item0B.WithContent("Subtask 2");
 
@@ -480,16 +480,16 @@ public static class ListsDataSources {
             </ul>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list0 = rootNode.AddListUnordered();
+                IMarkdownSyntaxNode list0 = rootNode.AddListUnordered();
                 list0.AddListItem("Normal item");
-                IMdNode item01 = list0.AddListItem();
+                IMarkdownSyntaxNode item01 = list0.AddListItem();
                 item01.AddCheckboxUnselected();
                 item01.WithContent("Task item without sublist");
 
                 rootNode.AddParagraph("Unrelated paragraph between list items.");
 
-                IMdNode list1 = rootNode.AddListUnordered();
-                IMdNode item10 = list1.AddListItem();
+                IMarkdownSyntaxNode list1 = rootNode.AddListUnordered();
+                IMarkdownSyntaxNode item10 = list1.AddListItem();
                 item10.AddCheckboxSelected();
                 item10.WithContent("Another completed task");
             }
@@ -516,15 +516,15 @@ public static class ListsDataSources {
             </ul>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list0 = rootNode.AddListUnordered();
+                IMarkdownSyntaxNode list0 = rootNode.AddListUnordered();
                 list0.AddListItem("Normal item");
-                IMdNode item01 = list0.AddListItem();
+                IMarkdownSyntaxNode item01 = list0.AddListItem();
                 item01.AddCheckboxUnselected();
                 item01.WithContent("Task item without sublist");
                 item01.AddParagraph("related paragraph between list items.");
 
-                IMdNode list1 = rootNode.AddListUnordered();
-                IMdNode item10 = list1.AddListItem();
+                IMarkdownSyntaxNode list1 = rootNode.AddListUnordered();
+                IMarkdownSyntaxNode item10 = list1.AddListItem();
                 item10.AddCheckboxSelected();
                 item10.WithContent("Another completed task");
             }

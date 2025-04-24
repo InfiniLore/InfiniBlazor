@@ -15,14 +15,14 @@ public class BlockQuoteHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!group.TryGetValueSpan(out ReadOnlySpan<char> blockQuoteBody)) return;
 
         // Replace Regex usage with span-based logic:
         ReadOnlySpan<char> normalized = NormalizeBlockQuote(blockQuoteBody);
         string adjustedBlockquote = LineNormalizationHelper.NormalizeLineIndentation(normalized);
 
-        IMdNode blockquoteNode = currentNode.AddChildNode(MdElement.Blockquote);
+        IMarkdownSyntaxNode blockquoteNode = currentNode.AddChildNode(MarkdownElement.Blockquote);
         engine.AddMultiLineMatchesToStack(adjustedBlockquote, blockquoteNode, origin | HandlerOrigin.PreserveHtml);
     }
 

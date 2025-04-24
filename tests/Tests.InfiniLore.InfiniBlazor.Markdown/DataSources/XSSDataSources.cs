@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
@@ -21,7 +21,7 @@ public static class XSSDataSources {
             "<a href=\"javascript:alert('XSS')\">Click Me</a>",
             "<p><a href=\"javascript:alert('XSS')\">Click Me</a></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithHtmlContent("<a href=\"javascript:alert('XSS')\">Click Me</a>");
             }
         );
@@ -31,7 +31,7 @@ public static class XSSDataSources {
             "![Uh oh...](\"onerror=\"alert('XSS'))",
             "<p>![Uhoh...](\"onerror=\"alert('XSS'))</p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("![Uh oh...](\"onerror=\"alert('XSS'))");
             }
         );
@@ -40,7 +40,7 @@ public static class XSSDataSources {
             "[a](javascript:prompt(document.cookie))",
             "<p>[a](javascript:prompt(document.cookie))</p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("[a](javascript:prompt(document.cookie))");
             }
         );
@@ -49,7 +49,7 @@ public static class XSSDataSources {
             "![a](javascript:prompt(document.cookie))\\",
             "<p>![a](javascript:prompt(document.cookie))\\</p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("![a](javascript:prompt(document.cookie))\\");
             }
         );
@@ -58,7 +58,7 @@ public static class XSSDataSources {
             "<javascript:prompt(document.cookie)>",
             "<p><javascript:prompt(document.cookie)></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("<javascript:prompt(document.cookie)>");
             }
         );

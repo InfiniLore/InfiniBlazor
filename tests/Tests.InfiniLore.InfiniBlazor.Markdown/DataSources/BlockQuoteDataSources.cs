@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
@@ -38,13 +38,13 @@ public static class BlockQuoteDataSources {
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode blockquote = rootNode.AddBlockquote();
+                IMarkdownSyntaxNode blockquote = rootNode.AddBlockquote();
                 blockquote.AddH1("test");
 
-                IMdNode nestedBlockquote = blockquote.AddBlockquote();
+                IMarkdownSyntaxNode nestedBlockquote = blockquote.AddBlockquote();
                 nestedBlockquote.AddParagraph("test");
 
-                IMdNode list = blockquote.AddListUnordered();
+                IMarkdownSyntaxNode list = blockquote.AddListUnordered();
                 list.AddListItem("test");
                 list.AddListItem("test");
             }
@@ -68,13 +68,13 @@ public static class BlockQuoteDataSources {
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode blockquote = rootNode.AddBlockquote();
+                IMarkdownSyntaxNode blockquote = rootNode.AddBlockquote();
                 blockquote.AddParagraph("blockQuote 1");
 
-                IMdNode nestedBlockquote = blockquote.AddBlockquote();
+                IMarkdownSyntaxNode nestedBlockquote = blockquote.AddBlockquote();
                 nestedBlockquote.AddParagraph("...blockQuote 2");
 
-                IMdNode nestedNestedBlockquote = nestedBlockquote.AddBlockquote();
+                IMarkdownSyntaxNode nestedNestedBlockquote = nestedBlockquote.AddBlockquote();
                 nestedNestedBlockquote.AddParagraph("...blockQuote 3");
             }
         );
@@ -101,18 +101,18 @@ public static class BlockQuoteDataSources {
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode blockquote = rootNode.AddBlockquote();
-                IMdNode paragraph = blockquote.AddParagraph();
+                IMarkdownSyntaxNode blockquote = rootNode.AddBlockquote();
+                IMarkdownSyntaxNode paragraph = blockquote.AddParagraph();
                 paragraph.WithContent("This is a blockquote with ");
                 paragraph.AddBold("bold text");
                 paragraph.WithContent(" and ");
                 paragraph.AddItalic("italic text");
                 paragraph.WithContent(".");
 
-                IMdNode list = blockquote.AddListOrdered();
+                IMarkdownSyntaxNode list = blockquote.AddListOrdered();
                 list.AddListItem("First item");
 
-                IMdNode secondListItem = list.AddListItem("Second item");
+                IMarkdownSyntaxNode secondListItem = list.AddListItem("Second item");
                 secondListItem.AddListUnordered().AddListItem("Sub-item");
                 ;
             }
@@ -140,16 +140,16 @@ public static class BlockQuoteDataSources {
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode blockquote = rootNode.AddBlockquote();
+                IMarkdownSyntaxNode blockquote = rootNode.AddBlockquote();
                 blockquote.AddParagraph("Nested quotes:");
 
-                IMdNode nestedBlockquote = blockquote.AddBlockquote();
+                IMarkdownSyntaxNode nestedBlockquote = blockquote.AddBlockquote();
                 nestedBlockquote.AddParagraph("Level 2");
 
-                IMdNode nestedNestedBlockquote = nestedBlockquote.AddBlockquote();
+                IMarkdownSyntaxNode nestedNestedBlockquote = nestedBlockquote.AddBlockquote();
                 nestedNestedBlockquote.AddParagraph("Level 3");
 
-                IMdNode nestedNestedNestedBlockquote = nestedNestedBlockquote.AddBlockquote();
+                IMarkdownSyntaxNode nestedNestedNestedBlockquote = nestedNestedBlockquote.AddBlockquote();
                 nestedNestedNestedBlockquote.AddParagraph("Level 4");
             }
         );
@@ -176,16 +176,16 @@ public static class BlockQuoteDataSources {
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode blockquote = rootNode.AddBlockquote();
+                IMarkdownSyntaxNode blockquote = rootNode.AddBlockquote();
                 blockquote.AddParagraph("Combining elements:");
 
                 blockquote.AddH3("Heading inside blockquote");
 
-                IMdNode list = blockquote.AddListUnordered();
+                IMarkdownSyntaxNode list = blockquote.AddListUnordered();
                 list.AddListItem("List item");
                 list.AddListItem("Another item");
 
-                IMdNode nestedBlockquote = blockquote.AddBlockquote();
+                IMarkdownSyntaxNode nestedBlockquote = blockquote.AddBlockquote();
                 nestedBlockquote.AddParagraph("Sub blockquote");
             }
         );
@@ -202,10 +202,10 @@ public static class BlockQuoteDataSources {
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode blockquote = rootNode.AddBlockquote();
+                IMarkdownSyntaxNode blockquote = rootNode.AddBlockquote();
                 blockquote.AddParagraph("Inline formatting:");
 
-                IMdNode paragraph2 = blockquote.AddParagraph();
+                IMarkdownSyntaxNode paragraph2 = blockquote.AddParagraph();
 
                 paragraph2.AddBold("Bold");
                 paragraph2.WithContent(", ");
@@ -216,7 +216,7 @@ public static class BlockQuoteDataSources {
                 paragraph2.AddCodeInline("code");
                 paragraph2.WithContent(", and ");
 
-                IMdNode link = paragraph2.AddLink("link");
+                IMarkdownSyntaxNode link = paragraph2.AddLink("link");
                 link.WithAttribute("href", "https://example.com");
 
                 paragraph2.WithContent(".");
@@ -257,18 +257,18 @@ public static class BlockQuoteDataSources {
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode blockquote = rootNode.AddBlockquote();
+                IMarkdownSyntaxNode blockquote = rootNode.AddBlockquote();
                 blockquote.AddParagraph("Mixed levels and lists:");
 
-                IMdNode list = blockquote.AddListOrdered();
-                IMdNode firstListItem = list.AddListItem("First");
-                IMdNode nestedBlockquote = firstListItem.AddBlockquote();
+                IMarkdownSyntaxNode list = blockquote.AddListOrdered();
+                IMarkdownSyntaxNode firstListItem = list.AddListItem("First");
+                IMarkdownSyntaxNode nestedBlockquote = firstListItem.AddBlockquote();
                 nestedBlockquote.AddParagraph("Nested blockquote with text.");
 
-                IMdNode secondListItem = list.AddListItem("Second");
-                IMdNode nestedList = secondListItem.AddListUnordered();
-                IMdNode subItem = nestedList.AddListItem("Sub-item");
-                IMdNode nestedNestedBlockquote = subItem.AddBlockquote();
+                IMarkdownSyntaxNode secondListItem = list.AddListItem("Second");
+                IMarkdownSyntaxNode nestedList = secondListItem.AddListUnordered();
+                IMarkdownSyntaxNode subItem = nestedList.AddListItem("Sub-item");
+                IMarkdownSyntaxNode nestedNestedBlockquote = subItem.AddBlockquote();
                 nestedNestedBlockquote.AddParagraph("Another nested quote.");
             }
         );
@@ -289,7 +289,7 @@ public static class BlockQuoteDataSources {
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode blockquote = rootNode.AddBlockquote();
+                IMarkdownSyntaxNode blockquote = rootNode.AddBlockquote();
                 blockquote.AddParagraph("Plain text blockquote.");
             });
 
@@ -303,8 +303,8 @@ public static class BlockQuoteDataSources {
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode blockquote = rootNode.AddBlockquote();
-                IMdNode paragraph = blockquote.AddParagraph("This is a blockquote with escaped characters: *, >, ");
+                IMarkdownSyntaxNode blockquote = rootNode.AddBlockquote();
+                IMarkdownSyntaxNode paragraph = blockquote.AddParagraph("This is a blockquote with escaped characters: *, >, ");
                 paragraph.AddCodeInline("`");
                 paragraph.WithContent(".");
             }
@@ -332,15 +332,15 @@ public static class BlockQuoteDataSources {
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode blockquote = rootNode.AddBlockquote();
+                IMarkdownSyntaxNode blockquote = rootNode.AddBlockquote();
                 blockquote.AddParagraph("Level 1");
 
-                IMdNode nestedBlockquote = blockquote.AddBlockquote();
+                IMarkdownSyntaxNode nestedBlockquote = blockquote.AddBlockquote();
                 nestedBlockquote.AddParagraph("Level 2");
 
                 blockquote.AddParagraph("Back to Level 1");
 
-                IMdNode nestedNestedBlockquote = blockquote.AddBlockquote().AddBlockquote();
+                IMarkdownSyntaxNode nestedNestedBlockquote = blockquote.AddBlockquote().AddBlockquote();
                 nestedNestedBlockquote.AddParagraph("Level 3");
             }
         );
@@ -355,8 +355,8 @@ public static class BlockQuoteDataSources {
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode blockquote = rootNode.AddBlockquote();
-                IMdNode paragraph = blockquote.AddParagraph();
+                IMarkdownSyntaxNode blockquote = rootNode.AddBlockquote();
+                IMarkdownSyntaxNode paragraph = blockquote.AddParagraph();
                 paragraph.AddBold("Bold text");
                 paragraph.WithContent(", ");
 
@@ -369,7 +369,7 @@ public static class BlockQuoteDataSources {
                 paragraph.AddStrikethrough("strikethrough");
                 paragraph.WithContent(", and ");
 
-                IMdNode link = paragraph.AddLink("link");
+                IMarkdownSyntaxNode link = paragraph.AddLink("link");
                 link.WithAttribute("href", "https://example.com");
                 paragraph.WithContent(".");
 
@@ -390,7 +390,7 @@ public static class BlockQuoteDataSources {
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode blockquote = rootNode.AddBlockquote();
+                IMarkdownSyntaxNode blockquote = rootNode.AddBlockquote();
                 blockquote.AddParagraph("Line 1");
                 blockquote.AddParagraph("Line 2");
             }
@@ -411,7 +411,7 @@ public static class BlockQuoteDataSources {
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode blockquote = rootNode.AddBlockquote();
+                IMarkdownSyntaxNode blockquote = rootNode.AddBlockquote();
                 blockquote.AddParagraph("This is a paragraph.");
                 blockquote.AddCodeBlock("Code block inside a blockquote.\n");
             }
@@ -430,7 +430,7 @@ public static class BlockQuoteDataSources {
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode blockquote = rootNode.AddBlockquote();
+                IMarkdownSyntaxNode blockquote = rootNode.AddBlockquote();
                 blockquote.AddParagraph("This is the first paragraph.");
                 blockquote.AddParagraph("This is the second paragraph, separated by an empty line.");
             }
@@ -446,7 +446,7 @@ public static class BlockQuoteDataSources {
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode blockquote = rootNode.AddBlockquote();
+                IMarkdownSyntaxNode blockquote = rootNode.AddBlockquote();
                 blockquote.WithHtmlContent("<div>This is a div inside a blockquote.</div>");
             }
         );
@@ -463,7 +463,7 @@ public static class BlockQuoteDataSources {
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode blockQuote = rootNode.AddBlockquote();
+                IMarkdownSyntaxNode blockQuote = rootNode.AddBlockquote();
                 blockQuote.AddParagraph("Level 1");
                 blockQuote.AddParagraph(">>>>>>>>>>>>>>>>>>> Level 20");
             }
@@ -488,10 +488,10 @@ public static class BlockQuoteDataSources {
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode blockQuote = rootNode.AddBlockquote();
-                IMdNode list = blockQuote.AddListUnordered();
-                IMdNode li1 = list.AddListItem("First item");
-                IMdNode li2 = li1.AddListUnordered().AddListItem();
+                IMarkdownSyntaxNode blockQuote = rootNode.AddBlockquote();
+                IMarkdownSyntaxNode list = blockQuote.AddListUnordered();
+                IMarkdownSyntaxNode li1 = list.AddListItem("First item");
+                IMarkdownSyntaxNode li2 = li1.AddListUnordered().AddListItem();
                 li2.WithContent("Nested item with ");
                 li2.AddBold("bold text");
                 li2.WithContent(".");
@@ -520,11 +520,11 @@ public static class BlockQuoteDataSources {
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode blockQuote = rootNode.AddBlockquote();
+                IMarkdownSyntaxNode blockQuote = rootNode.AddBlockquote();
                 blockQuote.AddParagraph("Line 1");
-                IMdNode blockQuote2 = blockQuote.AddBlockquote();
+                IMarkdownSyntaxNode blockQuote2 = blockQuote.AddBlockquote();
                 blockQuote2.AddParagraph("Line 2");
-                IMdNode blockQuote3 = blockQuote2.AddBlockquote();
+                IMarkdownSyntaxNode blockQuote3 = blockQuote2.AddBlockquote();
                 blockQuote3.AddParagraph("Line 3");
                 blockQuote.AddParagraph("Line 4");
             }
@@ -547,11 +547,11 @@ public static class BlockQuoteDataSources {
             </blockquote>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode blockquote = rootNode.AddBlockquote();
-                IMdNode paragraph = blockquote.AddParagraph();
+                IMarkdownSyntaxNode blockquote = rootNode.AddBlockquote();
+                IMarkdownSyntaxNode paragraph = blockquote.AddParagraph();
                 paragraph.WithContent("This is a blockquote");
 
-                IMdNode list = blockquote.AddListUnordered();
+                IMarkdownSyntaxNode list = blockquote.AddListUnordered();
                 list.AddListItem(content: "List item 1");
                 list.AddListItem(content: "List item 2");
             }
@@ -573,10 +573,10 @@ public static class BlockQuoteDataSources {
             </ul>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode list = rootNode.AddListUnordered();
-                IMdNode listItem = list.AddListItem(content: "List item");
+                IMarkdownSyntaxNode list = rootNode.AddListUnordered();
+                IMarkdownSyntaxNode listItem = list.AddListItem(content: "List item");
 
-                IMdNode blockquote = listItem.AddBlockquote();
+                IMarkdownSyntaxNode blockquote = listItem.AddBlockquote();
                 blockquote.AddParagraph("This is a blockquote inside a list item.");
             }
         );

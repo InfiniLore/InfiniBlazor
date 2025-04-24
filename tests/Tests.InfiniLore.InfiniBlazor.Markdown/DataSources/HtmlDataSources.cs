@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
@@ -51,7 +51,7 @@ public class HtmlDataSources {
             """,
             ConfigureExpectedNode: static rootNode => {
                 rootNode.AddParagraph("Unrelated previous paragraph followed by a blank line");
-                IMdNode paragraph2 = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph2 = rootNode.AddParagraph();
                 paragraph2.WithHtmlContent("""
                     <table>
                         <tr>
@@ -101,7 +101,7 @@ public class HtmlDataSources {
             </pre></p>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithHtmlContent("""
                     <pre>
                     Buffalo Bill ’s
@@ -132,7 +132,7 @@ public class HtmlDataSources {
             </div> </p>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph("test ");
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph("test ");
                 paragraph.WithHtmlContent("""
                     <div>
                     <strong>something</strong>
@@ -152,7 +152,7 @@ public class HtmlDataSources {
             <p> test <div><script>something</script></div></p> 
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph("test ");
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph("test ");
 
                 // HTML Sanitization is handled as a post-processor, so we can't test it here
                 paragraph.WithHtmlContent("""
@@ -168,7 +168,7 @@ public class HtmlDataSources {
             "test <div> <script>something</script> </div>",
             "<p> test <div> <script>something</script> </div> </p> ",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph("test ");
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph("test ");
                 // HTML Sanitization is handled as a post-processor, so we can't test it here
                 paragraph.WithHtmlContent("<div> <script>something</script> </div>"
                 );
@@ -179,7 +179,7 @@ public class HtmlDataSources {
             "test <script>something</script>",
             "<p> test <script>something</script></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph("test ");
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph("test ");
                 // HTML Sanitization is handled as a post-processor, so we can't test it here
                 paragraph.WithHtmlContent("<script>something</script>"
                 );
@@ -198,7 +198,7 @@ public class HtmlDataSources {
             </div> <strong>bold this</strong> </p>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.AddItalic("test");
                 paragraph.WithContent(" ");
                 paragraph.WithHtmlContent("""

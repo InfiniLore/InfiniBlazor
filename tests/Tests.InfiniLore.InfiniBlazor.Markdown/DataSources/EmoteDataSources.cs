@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
@@ -30,8 +30,8 @@ public class EmoteDataSources {
             "[:flag-transgender:](https://www.twitch.tv/annasasdev)",
             "<p><a href=\"https://www.twitch.tv/annasasdev\">\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f</a></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode link = paragraph.AddLink("\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f");
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode link = paragraph.AddLink("\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f");
                 link.WithAttribute("href", "https://www.twitch.tv/annasasdev");
             }
         );

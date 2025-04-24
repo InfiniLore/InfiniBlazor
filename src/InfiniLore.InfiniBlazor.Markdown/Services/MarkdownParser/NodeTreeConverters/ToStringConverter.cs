@@ -7,8 +7,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.NodeTreeConverters;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class NodeTreeToStringConverter : SimpleNodeTreeConverter, IMdNodeTreeConverter<string> {
-    public string Convert(IMdNodeTree tree) {
+public class ToStringConverter : SimpleSyntaxTreeConverter, IMarkdownSyntaxTreeConverter<string> {
+    public string Convert(IMarkdownSyntaxTree tree) {
         StringBuilder builder = PoolCache.StringBuilderPool.Get();
         try {
             ProcessNodeTree(tree, builder, static (sb, content) => sb.Append(content));

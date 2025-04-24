@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
     private readonly Stack<MarkdownFragment> _stack = new();
-    public IMdNodeTree NodeTree { get; set; } = null!;
+    public IMarkdownSyntaxTree NodeTree { get; set; } = null!;
 
     public bool TryPopDto([NotNullWhen(true)] out MarkdownFragment? dto)
         => _stack.TryPop(out dto);
@@ -21,7 +21,7 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region AddToStack
-    public void AddMultiLineMatchesToStack(string input, IMdNode node, HandlerOrigin origin) {
+    public void AddMultiLineMatchesToStack(string input, IMarkdownSyntaxNode node, HandlerOrigin origin) {
         MatchCollection matches = MarkdownRegexLib.MultilineStructuresRegex.Matches(input);
         int count = matches.Count;
         
@@ -37,7 +37,7 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
         ArrayPool<Match>.Shared.Return(matchArray);
     }
 
-    public void AddSingleLineMatchesToStack(string input, IMdNode node, HandlerOrigin origin) {
+    public void AddSingleLineMatchesToStack(string input, IMarkdownSyntaxNode node, HandlerOrigin origin) {
         MatchCollection matches = MarkdownRegexLib.SinglelineStructuresRegex.Matches(input);
         int count = matches.Count;
         
@@ -69,16 +69,16 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
         ArrayPool<Match>.Shared.Return(matchArray);
     }
 
-    public void PushContentToStack(string content, IMdNode currentNode, HandlerOrigin origin) 
-        => PushElementToStack(content, currentNode, origin, MdElement.Content);
+    public void PushContentToStack(string content, IMarkdownSyntaxNode currentNode, HandlerOrigin origin) 
+        => PushElementToStack(content, currentNode, origin, MarkdownElement.Content);
 
-    public void PushElementToStack(string? content, IMdNode currentNode, HandlerOrigin origin, MdElement element) {
+    public void PushElementToStack(string? content, IMarkdownSyntaxNode currentNode, HandlerOrigin origin, MarkdownElement element) {
         MarkdownFragment fragment = PoolCache.MarkdownFragmentPool.Get();
         fragment.AsElement(content, currentNode, origin, element);
         _stack.Push(fragment);
     }
 
-    private void PushMatchToStack(Match match, IMdNode currentNode, HandlerOrigin origin) {
+    private void PushMatchToStack(Match match, IMarkdownSyntaxNode currentNode, HandlerOrigin origin) {
         MarkdownFragment fragment = PoolCache.MarkdownFragmentPool.Get();
         fragment.AsMatch(match, currentNode, origin);
         _stack.Push(fragment);

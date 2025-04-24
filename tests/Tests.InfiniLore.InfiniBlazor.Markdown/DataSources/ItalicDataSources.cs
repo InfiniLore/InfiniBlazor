@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.MdNodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
@@ -20,7 +20,7 @@ public static class ItalicDataSources {
             "*italic*",
             "<p><em>italic</em></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.AddItalic("italic");
             }
         );
@@ -29,7 +29,7 @@ public static class ItalicDataSources {
             @"*\*italic*",
             "<p><em>*italic</em></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.AddItalic("*italic");
             }
         );
@@ -38,7 +38,7 @@ public static class ItalicDataSources {
             @"*italic\**",
             "<p><em>italic*</em></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.AddItalic("italic*");
             }
         );
@@ -47,7 +47,7 @@ public static class ItalicDataSources {
             @"* \* *",
             "<p><em> * </em></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.AddItalic(" * ");
             }
         );
@@ -56,8 +56,8 @@ public static class ItalicDataSources {
             "* something **bold** in italic *",
             "<p><em>something <strong>bold</strong> in italic</em></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph();
-                IMdNode italic = paragraph.AddItalic(" something ");
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                IMarkdownSyntaxNode italic = paragraph.AddItalic(" something ");
                 italic.AddBold("bold");
                 italic.WithContent(" in italic ");
             }
@@ -75,7 +75,7 @@ public static class ItalicDataSources {
             "some text ****",// to exclude the <hr> tag being triggered
             "<p>some text <em>**</em></p>",
             ConfigureExpectedNode: static rootNode => {
-                IMdNode paragraph = rootNode.AddParagraph("some text ");
+                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph("some text ");
                 paragraph.AddItalic("**");
             }
         );

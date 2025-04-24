@@ -31,7 +31,7 @@ public class EmoteHandler(ILogger<EmoteHandler> logger) : IMarkdownElementHandle
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!entireMatch.Groups[EId].TryGetValue(out string? lookupValue)) return;
 
         if (!EmoteLookup.TryGetValue(lookupValue, out string? value)) {
