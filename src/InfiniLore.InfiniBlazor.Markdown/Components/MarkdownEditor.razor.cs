@@ -48,7 +48,7 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
     }
     
     private void UpdateMarkdown() {
-        if (!markdownParser.TryParseToString(Source.Text, out string? output)) return; // TODO create some form of error popup
+        if (!markdownParser.TryParse(Source.Text, out string? output)) return; // TODO create some form of error popup
         string sanitizedOutput = sanitizer.Sanitize(output);
         MarkdownOutput = new MarkupString(sanitizedOutput);
     }

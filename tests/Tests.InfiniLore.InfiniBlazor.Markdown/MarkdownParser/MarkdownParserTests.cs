@@ -41,7 +41,7 @@ public class MarkdownParserTests(IMarkdownParser parser) {
         // Arrange
 
         // Act
-        bool result = parser.TryParseToString(dto.Markdown, out string? output);
+        bool result = parser.TryParse(dto.Markdown, out string? output);
 
         // Assert
         await Assert.That(result).IsTrue();

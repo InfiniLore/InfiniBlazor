@@ -14,40 +14,42 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 [InjectableService<IMarkdownParser>(ServiceLifetime.Singleton)]
 public class MarkdownParser(
     IServiceProvider serviceProvider,
-    IMdNodeTreeConverter<string> stringTreeConverter,
     ILogger<MarkdownParser> logger,
     IMdNodeTreeParser nodeTreeParser
 ) : IMarkdownParser {
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region Parsing Methods
-    public bool TryParseToString(string markdown,[NotNullWhen(true)] out string? output) {
-        output = null;
-        if (markdown.IsNullOrWhiteSpace()) return false;
+    public void ParseToWriter<T>(string markdown, T writer) where T : TextWriter {
+        if (serviceProvider.GetService<IMdNodeTreeToWriterConverter<T>>() is not {} converter) return;
         MdNodeTree nodeTree = PoolCache.MdNodeTreePool.Get();
-
+        
         try {
             nodeTreeParser.ParseToNodeTree(markdown, nodeTree);
-            output = stringTreeConverter.Convert(nodeTree);
-            return true;
-        }
-        catch (Exception e) {
-            logger.LogError(e, "Error parsing markdown.");
-            return false;
+            converter.Convert(nodeTree, writer);
         }
         finally {
             PoolCache.MdNodeTreePool.Return(nodeTree);
         }
     }
-
-    public void ParseToWriter<T>(string markdown, T writer) where T : TextWriter {
-        MdNodeTree nodeTree = PoolCache.MdNodeTreePool.Get();
+    
+    public bool TryParse<T>(string markdown, [NotNullWhen(true)] out T? output) where T : class {
+        output = null;
+        if (markdown.IsNullOrWhiteSpace()) return false;
+        if (serviceProvider.GetService<IMdNodeTreeConverter<T>>() is not {} converter) return false;
         
+        MdNodeTree nodeTree = PoolCache.MdNodeTreePool.Get();
+
         try {
             nodeTreeParser.ParseToNodeTree(markdown, nodeTree);
-            var converter = serviceProvider.GetRequiredService<IMdNodeTreeToWriterConverter<T>>();
-            converter.Convert(nodeTree, writer);
+            output = converter.Convert(nodeTree);
+            return true;
+        }
+        catch (Exception e) {
+            logger.LogError(e, "Error parsing markdown.");
+            return false;
         }
         finally {
             PoolCache.MdNodeTreePool.Return(nodeTree);
