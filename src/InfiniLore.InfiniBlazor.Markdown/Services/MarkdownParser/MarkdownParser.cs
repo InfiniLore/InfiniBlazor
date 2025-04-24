@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -16,11 +15,13 @@ public class MarkdownParser<TInput, TOutput>(
     IServiceProvider serviceProvider,
     ILogger<MarkdownParser<TInput, TOutput>> logger,
     IMarkdownSyntaxTreeParser<TInput> nodeTreeParser,
-    IMarkdownConfig config
+    IEnumerable<IMarkdownPreProcessor<TInput>> preProcessors,
+    IEnumerable<IMarkdownPostProcessor<TOutput>> postProcessors
+    
 ) : IMarkdownParser<TInput, TOutput> {
     
-    private readonly Lazy<ImmutableArray<IMarkdownPreProcessor<TInput>>> PreProcessors = new (config.GetPreProcessors<TInput>);
-    private readonly Lazy<ImmutableArray<IMarkdownPostProcessor<TOutput>>> PostProcessors = new (config.GetPostProcessors<TOutput>);
+    private readonly Lazy<ImmutableArray<IMarkdownPreProcessor<TInput>>> PreProcessors = new (preProcessors.ToImmutableArray);
+    private readonly Lazy<ImmutableArray<IMarkdownPostProcessor<TOutput>>> PostProcessors = new (postProcessors.ToImmutableArray);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

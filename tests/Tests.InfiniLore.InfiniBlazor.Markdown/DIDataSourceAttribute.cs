@@ -27,7 +27,8 @@ public class DiDataSourceAttribute : DependencyInjectionDataSourceAttribute<ISer
         services.AddLucideIcons();
         services.AddInfiniBlazor(static config => config.AddMarkdown(
             static config => {
-                config.Parser.AddPreProcessor<StringInputProcessor, string>();
+                config.AddMarkdownParser<string,string>()
+                    .AddPreProcessor<StringInputProcessor>();
             }));
 
         return services.BuildServiceProvider();
@@ -50,8 +51,9 @@ public class SanitizedDiDataSourceAttribute : DependencyInjectionDataSourceAttri
         services.AddLucideIcons();
         services.AddInfiniBlazor(static config => config.AddMarkdown(
             static config => {
-                config.Parser.AddPreProcessor<StringInputProcessor, string>();
-                config.Parser.AddPostProcessor<SanitizerPostProcessor, string>();
+                config.AddMarkdownParser<string,string>()
+                    .AddPreProcessor<StringInputProcessor>()
+                    .AddPostProcessor<SanitizerPostProcessor>();
             }));
 
         return services.BuildServiceProvider();

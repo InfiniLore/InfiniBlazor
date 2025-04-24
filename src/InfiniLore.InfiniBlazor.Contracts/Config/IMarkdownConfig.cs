@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown;
 using System.Collections.Immutable;
 
 namespace InfiniLore.InfiniBlazor.Config;
@@ -11,6 +10,4 @@ namespace InfiniLore.InfiniBlazor.Config;
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMarkdownConfig {
     ImmutableArray<string> TextEditorModifierNames { get; }
-    public ImmutableArray<IMarkdownPreProcessor<T>> GetPreProcessors<T>();
-    public ImmutableArray<IMarkdownPostProcessor<T>> GetPostProcessors<T>();
 }

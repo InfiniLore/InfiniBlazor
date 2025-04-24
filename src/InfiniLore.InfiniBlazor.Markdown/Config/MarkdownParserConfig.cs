@@ -2,28 +2,28 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Config;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Config;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MarkdownParserConfig(IInfiniBlazorConfig config) {
-    public Dictionary<Type, List<Type>> PreProcessors { get; } = new();
-    public Dictionary<Type, List<Type>> PostProcessors { get; } = new();
-
+public class MarkdownParserConfig<TInput, TOutput>(IInfiniBlazorConfig config) {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public MarkdownParserConfig AddPreProcessor<TProcessor, TInput>() where TProcessor : IMarkdownPreProcessor<TInput> {
-        if(PreProcessors.TryGetValue(typeof(TInput), out List<Type>? list)) list.Add(typeof(TProcessor));
-        else PreProcessors.Add(typeof(TInput), new List<Type> { typeof(TProcessor) });
+    public MarkdownParserConfig<TInput, TOutput> AddPreProcessor<TProcessor>() 
+        where TProcessor : class, IMarkdownPreProcessor<TInput> 
+    {
+        config.Services.AddSingleton<IMarkdownPreProcessor<TInput>, TProcessor>();
         return this;
     }
     
-    public MarkdownParserConfig AddPostProcessor<TProcessor, TOutput>() where TProcessor : IMarkdownPostProcessor<TOutput> {
-        if(PostProcessors.TryGetValue(typeof(TOutput), out List<Type>? list)) list.Add(typeof(TProcessor));
-        else PostProcessors.Add(typeof(TOutput), new List<Type> { typeof(TProcessor) });
+    public MarkdownParserConfig<TInput, TOutput> AddPostProcessor<TProcessor>()
+        where TProcessor : class, IMarkdownPostProcessor<TOutput> 
+    {
+        config.Services.AddSingleton<IMarkdownPostProcessor<TOutput>, TProcessor>();
         return this;
     }
 }

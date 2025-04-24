@@ -3,6 +3,8 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using Example.Components;
 using InfiniLore.InfiniBlazor.Markdown.Config;
+using InfiniLore.InfiniBlazor.Markdown.PostProcessors;
+using InfiniLore.InfiniBlazor.Markdown.PreProcessors;
 
 namespace Example;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -14,7 +16,9 @@ public class Program {
 
         builder.Services.AddInfiniBlazor(config => {
             config.AddMarkdown(static config => {
-                config.Parser.AddSanitizerPostProcessor();
+                config.AddMarkdownParser<string, string>()
+                    .AddPreProcessor<StringInputProcessor>()
+                    .AddPostProcessor<SanitizerPostProcessor>();
             });
         });
         
