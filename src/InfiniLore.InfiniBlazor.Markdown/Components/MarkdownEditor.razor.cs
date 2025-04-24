@@ -17,7 +17,7 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
     private string Text {
         get => Source.Text;
         set {
-            // needed to fix a but that places the caret at the end of the text, see https://github.com/dotnet/aspnetcore/issues/20072
+            // needed to fix a bit that places the caret at the end of the text, see https://github.com/dotnet/aspnetcore/issues/20072
             Source.Text = value;
             UpdateMarkdown();
         }
@@ -36,7 +36,7 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
             return;
         }
 
-        // place the caret in newly requested location
+        // place the caret in a newly requested location
         if (textEditor.TryGetCaretUpdate(out int index)) {
             await jsRuntimeHelper.SetSelectionRangeAsync(_textareaRef, index, index);
         }
