@@ -18,6 +18,9 @@ public class MarkdownParser<TInput, TOutput>(
     IEnumerable<IMarkdownPostProcessor<TOutput>> postProcessors
 ) : IMarkdownParser<TInput, TOutput> {
     
+    private readonly Lazy<IMarkdownPreProcessor<TInput>[]> PreProcessors = new (preProcessors.ToArray);
+    private readonly Lazy<IMarkdownPostProcessor<TOutput>[]> PostProcessors = new (postProcessors.ToArray);
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -33,17 +36,25 @@ public class MarkdownParser<TInput, TOutput>(
 
         try {
             TInput? processedInput = input;
-            ReadOnlySpan<IMarkdownPreProcessor<TInput>> preProcessorsSpan = preProcessors.ToArray();
+            ReadOnlySpan<IMarkdownPreProcessor<TInput>> preProcessorsSpan = PreProcessors.Value;
             foreach (IMarkdownPreProcessor<TInput> preProcessor in preProcessorsSpan) {
-                if (!preProcessor.TryProcess(processedInput, out processedInput)) return false;
+                // ReSharper disable once InvertIf
+                if (!preProcessor.TryProcess(processedInput, out processedInput)) {
+                    logger.LogWarning("Preprocessor {PreProcessor} failed.", preProcessor.GetType());
+                    return false;
+                }
             }
             
             nodeTreeParser.ParseToNodeTree(processedInput, nodeTree);
             output = converter.Convert(nodeTree);
             
-            ReadOnlySpan<IMarkdownPostProcessor<TOutput>> postProcessorsSpan = postProcessors.ToArray();
+            ReadOnlySpan<IMarkdownPostProcessor<TOutput>> postProcessorsSpan = PostProcessors.Value;
             foreach (IMarkdownPostProcessor<TOutput> postProcessor in postProcessorsSpan) {
-                if (!postProcessor.TryProcess(output, out output)) return false;
+                // ReSharper disable once InvertIf
+                if (!postProcessor.TryProcess(output, out output)) {
+                    logger.LogWarning("Postprocessor {PostProcessor} failed.", postProcessor.GetType());
+                    return false;
+                }
             }
             return output is not null;
         }
