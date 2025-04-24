@@ -11,6 +11,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ISectionHandler>("table")]
 public class TableSectionParser : ISectionHandler {
+    private const int StackAllocThreshold = 16;
 
     private static readonly int BodyId = MarkdownRegexLib.GetMultiLineGroupId("tBody");
     private static readonly int HeadId = MarkdownRegexLib.GetMultiLineGroupId("tHead");
@@ -50,29 +51,34 @@ public class TableSectionParser : ISectionHandler {
 
         // Add rows
         IMdNode tableBodyNode = tableNode.AddChildNode(MdElement.TableBody);
-        const int maxExpectedRowLength = 512;// Based on expected data characteristics
-        Range[] rowColumnRanges = ArrayPool<Range>.Shared.Rent(maxExpectedRowLength);
 
+        Range[]? rowColumnRanges = null;
+        Span<Range> columnBuffer = headerColumnCount <= StackAllocThreshold 
+            ? stackalloc Range[StackAllocThreshold]
+            : rowColumnRanges = ArrayPool<Range>.Shared.Rent(headerColumnCount);
+        
         try {
             for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-                Range rowRange = rowRanges[rowIndex];
-                ReadOnlySpan<char> row = rows[rowRange].Trim();
+                ReadOnlySpan<char> row = rows[rowRanges[rowIndex]].Trim();
                 if (row.IsEmpty) continue;
 
-                // Split the row
-                int rowColumnCount = row.Split(rowColumnRanges.AsSpan(0, row.Length), '|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                int rowColumnCount = row.Split(columnBuffer, '|', 
+                    StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+                if (rowColumnCount != headerColumnCount) continue; // Skip malformed rows
 
                 IMdNode rowNode = tableBodyNode.AddChildNode(MdElement.TableRow);
                 for (int columnIndex = 0; columnIndex < rowColumnCount; columnIndex++) {
                     IMdNode cellNode = rowNode.AddChildNode(MdElement.TableCell);
-                    Range columnRange = rowColumnRanges[columnIndex];
-                    ReadOnlySpan<char> column = row[columnRange];
-                    parser.AddSingleLineMatchesToStack(column.ToString(), cellNode, origin);
+                    parser.AddSingleLineMatchesToStack(
+                        row[columnBuffer[columnIndex]].ToString(), 
+                        cellNode, 
+                        origin);
                 }
             }
         }
         finally {
-            ArrayPool<Range>.Shared.Return(rowColumnRanges);
+            if (rowColumnRanges != null) ArrayPool<Range>.Shared.Return(rowColumnRanges);
         }
     }
 }
