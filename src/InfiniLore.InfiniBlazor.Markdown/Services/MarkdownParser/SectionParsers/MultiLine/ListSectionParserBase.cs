@@ -38,7 +38,7 @@ public abstract class ListSectionParserBase : ISectionHandler {
                 IMdNode listItemNode = listNode.AddChildNode(MdElement.ListItem);
             
                 if (groups[LBodyId].TryGetValueSpan(out ReadOnlySpan<char> itemBody) && !itemBody.IsEmpty) {
-                    string normalizedBody = NormalizationHelper.NormalizeIndentation(ref itemBody);
+                    string normalizedBody = NormalizationHelper.NormalizeIndentation(itemBody);
                     parser.AddMultiLineMatchesToStack(normalizedBody, listItemNode, origin | ParserOrigin.PreserveHtml);
                 }
 

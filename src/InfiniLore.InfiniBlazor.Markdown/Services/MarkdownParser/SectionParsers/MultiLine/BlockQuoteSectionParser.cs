@@ -19,14 +19,14 @@ public class BlockQuoteSectionParser : ISectionHandler {
         if (!group.TryGetValueSpan(out ReadOnlySpan<char> blockQuoteBody)) return;
 
         // Replace Regex usage with span-based logic:
-        ReadOnlySpan<char> normalized = NormalizeBlockQuote(ref blockQuoteBody).AsSpan();
-        string adjustedBlockquote = NormalizationHelper.NormalizeIndentation(ref normalized);
+        ReadOnlySpan<char> normalized = NormalizeBlockQuote(blockQuoteBody);
+        string adjustedBlockquote = NormalizationHelper.NormalizeIndentation(normalized);
 
         IMdNode blockquoteNode = currentNode.AddChildNode(MdElement.Blockquote);
         parser.AddMultiLineMatchesToStack(adjustedBlockquote, blockquoteNode, origin | ParserOrigin.PreserveHtml);
     }
 
-    private static string NormalizeBlockQuote(ref ReadOnlySpan<char> span) {
+    private static ReadOnlySpan<char> NormalizeBlockQuote(ReadOnlySpan<char> span) {
         // Use a ValueStringBuilder for efficient memory writing
         StringBuilder builder = PoolCache.StringBuilderPool.Get();
         try {
@@ -42,8 +42,8 @@ public class BlockQuoteSectionParser : ISectionHandler {
                 builder.Append(trimmedLine);
                 builder.Append('\n');
             }
-
-            return builder.ToString().TrimEnd('\n');
+            if (builder.Length > 0) builder.Length--; // Remove the last newline
+            return builder.ToString();
         }
         finally {
             PoolCache.StringBuilderPool.Return(builder);

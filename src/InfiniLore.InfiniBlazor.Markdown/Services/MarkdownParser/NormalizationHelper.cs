@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 public static class NormalizationHelper {
     private const int StackAllocThreshold = 256;
 
-    public static string NormalizeIndentation(ref ReadOnlySpan<char> input) {
+    public static string NormalizeIndentation(ReadOnlySpan<char> input) {
         int matchCount = input.Count('\n');
         int splitCount = matchCount + 1;
 
