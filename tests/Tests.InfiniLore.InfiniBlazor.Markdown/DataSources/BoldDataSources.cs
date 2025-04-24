@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
-using Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
