@@ -2,8 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using System.Collections.Frozen;
-using System.Text;
+using System.Buffers;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
@@ -16,16 +15,6 @@ public class CodeBlockSectionParser : ISectionHandler {
     private static readonly int CBodyId = CachedRegexGroupNames.GetMultiLineGroupId("cBody");
     private static readonly int CLangId = CachedRegexGroupNames.GetMultiLineGroupId("cLang");
     public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
-
-    private static FrozenDictionary<string, string> CodeBlockLookup { get; } = new Dictionary<string, string> {
-        { "\r\n", "\n" },
-        { "&", "&amp;" },
-        { "<", "&lt;" },
-        { ">", "&gt;" }
-    }.ToFrozenDictionary();
-
-    private static FrozenDictionary<string, string>.AlternateLookup<ReadOnlySpan<char>> CodeBlockAlternateLookup { get; } = CodeBlockLookup.GetAlternateLookup<ReadOnlySpan<char>>();
-    private static Regex CodeBlockRegex { get; } = new(string.Join('|', CodeBlockLookup.Keys), RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.Compiled);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -43,33 +32,52 @@ public class CodeBlockSectionParser : ISectionHandler {
     }
 
     private static string ProcessCodeBlockContent(ref ReadOnlySpan<char> content) {
-        int currentIndex = 0;
-        StringBuilder sb = PoolCache.StringBuilderPool.Get();
+        if (!content.Contains('\r')) return content.ToString();
+
+        const int stackAllocThreshold = 1024;
+
+        if (content.Length <= stackAllocThreshold) {
+            // Use stack allocation for small strings
+            Span<char> result = stackalloc char[content.Length];
+            int length = ProcessContent(content, result);
+            return new string(result[..length]);
+        }
+
+        // Use array pool for larger strings
+        char[] rentedArray = ArrayPool<char>.Shared.Rent(content.Length);
         try {
-            foreach (ValueMatch match in CodeBlockRegex.EnumerateMatches(content)) {
-                int matchIndex = match.Index;
-                int matchLength = match.Length;
-                if (currentIndex < matchIndex) {
-                    sb.Append(content.Slice(currentIndex, matchIndex - currentIndex));
-                }
-
-                if (CodeBlockAlternateLookup.TryGetValue(content.Slice(matchIndex, matchLength), out string? replacement)) {
-                    sb.Append(replacement.AsSpan());
-                }
-
-                currentIndex = matchIndex + matchLength;
-            }
-
-            if (currentIndex < content.Length) {
-                sb.Append(content[currentIndex..]);
-            }
-
-            return sb.ToString();
+            Span<char> asSpan = rentedArray.AsSpan();
+            int length = ProcessContent(content, asSpan);
+            return new string(rentedArray.AsSpan(0, length));
         }
         finally {
-            PoolCache.StringBuilderPool.Return(sb);
+            ArrayPool<char>.Shared.Return(rentedArray);
+        }
+    }
+
+    private static int ProcessContent(ReadOnlySpan<char> content, Span<char> result) {
+        int destinationIndex = 0;
+
+        for (int i = 0; i < content.Length; i++) {
+            switch (content[i]) {
+                case '\r' when i + 1 < content.Length && content[i + 1] == '\n': {
+                    // Don't add a newline if it's the last character sequence
+                    if (i + 2 < content.Length) {
+                        result[destinationIndex++] = '\n';
+                    }
+                    i++; // Skip the \n
+                    break;
+                }
+                default: result[destinationIndex++] = content[i];
+                    break;
+
+                // Skip the last single \n if present
+                case '\n' when i == content.Length - 1:
+                    break;
+            }
         }
 
-
+        return destinationIndex;
     }
+
 }

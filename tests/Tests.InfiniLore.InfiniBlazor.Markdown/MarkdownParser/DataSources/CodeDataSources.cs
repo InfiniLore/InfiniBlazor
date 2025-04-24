@@ -27,7 +27,7 @@ public static class CodeDataSources {
             </code></pre>
             """,
             ConfigureExpectedNode: static rootNode => {
-                rootNode.AddCodeBlock("const code = sample();\n");
+                rootNode.AddCodeBlock("const code = sample();");
             });
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -42,7 +42,7 @@ public static class CodeDataSources {
             </code></pre>
             """,
             ConfigureExpectedNode: static rootNode => {
-                IMdNode code = rootNode.AddCodeBlock("const code = sample();\n");
+                IMdNode code = rootNode.AddCodeBlock("const code = sample();");
                 code.WithClass("language-javascript");
             });
 
@@ -62,7 +62,7 @@ public static class CodeDataSources {
             </code></pre>
             """,
             ConfigureExpectedNode: static rootNode => {
-                rootNode.AddCodeBlock("tell application \"Foo\"\n    beep\nend tell\n");
+                rootNode.AddCodeBlock("tell application \"Foo\"\n    beep\nend tell");
             });
 
         yield return static () => new MarkdownTestDto(SectionName,
@@ -77,7 +77,7 @@ public static class CodeDataSources {
             </code></pre>
             """,
             ConfigureExpectedNode: static rootNode => {
-                rootNode.AddCodeBlock("**some valid markdown**\n");
+                rootNode.AddCodeBlock("**some valid markdown**");
             });
     }
 }
