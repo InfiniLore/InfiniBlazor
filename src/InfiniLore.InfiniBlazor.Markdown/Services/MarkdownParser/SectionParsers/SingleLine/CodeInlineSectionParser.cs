@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using System.Text.Encodings.Web;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
@@ -21,9 +20,8 @@ public class CodeInlineSectionParser : ISectionHandler {
         if (!entireMatch.Groups[CId].TryGetValue(out string? codeValue)) return;
 
         string normalizedBackticks = codeValue.Replace("\\`", "`");
-        string output = HtmlEncoder.Default.Encode(normalizedBackticks);
 
         IMdNode codeNode = currentNode.AddChildNode(MdElement.CodeInline);
-        codeNode.WithContent(output);
+        codeNode.WithContent(normalizedBackticks);
     }
 }

@@ -104,7 +104,7 @@ public static class CodeInlineDataSources {
 
         yield return static () => new MarkdownTestDto(SectionName,
             "`inline code with special characters !@#$%^&*()`",
-            "<p><code>inline code with special characters !@#$%^&amp;*()</code></p>",
+            "<p><code>inline code with special characters !@#$%^&*()</code></p>",
             ConfigureExpectedNode: static rootNode => {
                 IMdNode paragraph = rootNode.AddParagraph();
                 paragraph.AddCodeInline("inline code with special characters !@#$%^&amp;*()");
