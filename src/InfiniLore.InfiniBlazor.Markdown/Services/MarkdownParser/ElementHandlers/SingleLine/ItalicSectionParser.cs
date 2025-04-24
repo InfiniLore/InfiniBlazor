@@ -4,22 +4,22 @@
 using CodeOfChaos.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.ElementHandlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISectionHandler>("strike")]
-public class StrikeSectionParser : ISectionHandler {
+[InjectableSingleton<IMarkdownElementHandler>("italic")]
+public class ItalicHandler : IMarkdownElementHandler {
 
-    private static readonly int SId = MarkdownRegexLib.GetSingleLineGroupId("s");
-    public ParserOrigin SkipOnOrigin => ParserOrigin.Strike;
+    private static readonly int IId = MarkdownRegexLib.GetSingleLineGroupId("i");
+    public HandlerOrigin SkipOnOrigin => HandlerOrigin.Italic;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
-        if (!entireMatch.Groups[SId].TryGetValue(out string? strikeValue)) return;
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+        if (!entireMatch.Groups[IId].TryGetValue(out string? italicValue)) return;
 
-        IMdNode node = currentNode.AddChildNode(MdElement.Strikethrough);
-        engine.AddSingleLineMatchesToStack(strikeValue, node, origin | SkipOnOrigin);
+        IMdNode node = currentNode.AddChildNode(MdElement.Italic);
+        engine.AddSingleLineMatchesToStack(italicValue, node, origin | SkipOnOrigin);
     }
 }

@@ -4,22 +4,22 @@
 using CodeOfChaos.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.ElementHandlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISectionHandler>("subScript")]
-public class SubScriptSectionParser : ISectionHandler {
+[InjectableSingleton<IMarkdownElementHandler>("bold")]
+public class BoldHandler : IMarkdownElementHandler {
 
-    private static readonly int SbId = MarkdownRegexLib.GetSingleLineGroupId("sb");
-    public ParserOrigin SkipOnOrigin => ParserOrigin.SubScript;
+    private static readonly int BId = MarkdownRegexLib.GetSingleLineGroupId("b");
+    public HandlerOrigin SkipOnOrigin => HandlerOrigin.Bold;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
-        if (!entireMatch.Groups[SbId].TryGetValue(out string? subValue)) return;
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+        if (!entireMatch.Groups[BId].TryGetValue(out string? boldValue)) return;
 
-        IMdNode node = currentNode.AddChildNode(MdElement.Subscript);
-        engine.AddSingleLineMatchesToStack(subValue, node, origin | SkipOnOrigin);
+        IMdNode boldNode = currentNode.AddChildNode(MdElement.Bold);
+        engine.AddSingleLineMatchesToStack(boldValue, boldNode, origin | SkipOnOrigin);
     }
 }

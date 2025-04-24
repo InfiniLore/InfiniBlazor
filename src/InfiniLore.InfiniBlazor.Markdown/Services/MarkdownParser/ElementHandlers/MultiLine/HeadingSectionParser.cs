@@ -4,20 +4,20 @@
 using CodeOfChaos.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
+namespace InfiniLore.InfiniBlazor.Markdown.ElementHandlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISectionHandler>("heading")]
-public class HeadingSectionParser : ISectionHandler {
+[InjectableSingleton<IMarkdownElementHandler>("heading")]
+public class HeadingHandler : IMarkdownElementHandler {
 
     private static readonly int HLevelId = MarkdownRegexLib.GetMultiLineGroupId("hLevel");
     private static readonly int HTextId = MarkdownRegexLib.GetMultiLineGroupId("hText");
-    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
+    public HandlerOrigin SkipOnOrigin => HandlerOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!entireMatch.Groups[HLevelId].TryGetLength(out int headingLevel)) return;
         if (!entireMatch.Groups[HTextId].TryGetValue(out string? headerText)) return;
 

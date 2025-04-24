@@ -4,22 +4,24 @@
 using CodeOfChaos.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.ElementHandlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISectionHandler>("tag")]
-public class TagSectionParser : ISectionHandler {
+[InjectableSingleton<IMarkdownElementHandler>("code")]
+public class CodeInlineHandler : IMarkdownElementHandler {
 
-    private static readonly int TextId = MarkdownRegexLib.GetSingleLineGroupId("tText");
-    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
+    private static readonly int CId = MarkdownRegexLib.GetSingleLineGroupId("c");
+    public HandlerOrigin SkipOnOrigin => HandlerOrigin.Code;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
-        if (!entireMatch.Groups[TextId].TryGetValue(out string? tagValue)) return;
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+        if (!entireMatch.Groups[CId].TryGetValue(out string? codeValue)) return;
 
-        IMdNode spanNode = currentNode.AddChildNode(MdElement.Tag);
-        spanNode.WithContent(tagValue);
+        string normalizedBackticks = codeValue.Replace("\\`", "`");
+
+        IMdNode codeNode = currentNode.AddChildNode(MdElement.CodeInline);
+        codeNode.WithContent(normalizedBackticks);
     }
 }

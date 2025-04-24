@@ -5,25 +5,25 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
+namespace InfiniLore.InfiniBlazor.Markdown.ElementHandlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISectionHandler>("blockQuote")]
-public class BlockQuoteSectionParser : ISectionHandler {
-    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
+[InjectableSingleton<IMarkdownElementHandler>("blockQuote")]
+public class BlockQuoteHandler : IMarkdownElementHandler {
+    public HandlerOrigin SkipOnOrigin => HandlerOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!group.TryGetValueSpan(out ReadOnlySpan<char> blockQuoteBody)) return;
 
         // Replace Regex usage with span-based logic:
         ReadOnlySpan<char> normalized = NormalizeBlockQuote(blockQuoteBody);
-        string adjustedBlockquote = NormalizationHelper.NormalizeIndentation(normalized);
+        string adjustedBlockquote = LineNormalizationHelper.NormalizeLineIndentation(normalized);
 
         IMdNode blockquoteNode = currentNode.AddChildNode(MdElement.Blockquote);
-        engine.AddMultiLineMatchesToStack(adjustedBlockquote, blockquoteNode, origin | ParserOrigin.PreserveHtml);
+        engine.AddMultiLineMatchesToStack(adjustedBlockquote, blockquoteNode, origin | HandlerOrigin.PreserveHtml);
     }
 
     private static ReadOnlySpan<char> NormalizeBlockQuote(ReadOnlySpan<char> span) {

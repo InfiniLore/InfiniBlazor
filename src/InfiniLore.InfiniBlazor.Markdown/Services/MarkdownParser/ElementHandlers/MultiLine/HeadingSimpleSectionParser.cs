@@ -4,24 +4,23 @@
 using CodeOfChaos.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.ElementHandlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISectionHandler>("code")]
-public class CodeInlineSectionParser : ISectionHandler {
+[InjectableSingleton<IMarkdownElementHandler>("headingSimple")]
+public class HeadingSimpleHandler : IMarkdownElementHandler {
 
-    private static readonly int CId = MarkdownRegexLib.GetSingleLineGroupId("c");
-    public ParserOrigin SkipOnOrigin => ParserOrigin.Code;
+    private static readonly int HsTextId = MarkdownRegexLib.GetMultiLineGroupId("hsText");
+    public HandlerOrigin SkipOnOrigin => HandlerOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
-        if (!entireMatch.Groups[CId].TryGetValue(out string? codeValue)) return;
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+        if (!entireMatch.Groups[HsTextId].TryGetValue(out string? headerSimpleText)) return;
 
-        string normalizedBackticks = codeValue.Replace("\\`", "`");
 
-        IMdNode codeNode = currentNode.AddChildNode(MdElement.CodeInline);
-        codeNode.WithContent(normalizedBackticks);
+        IMdNode headingElement = currentNode.AddChildNode(MdElement.H1);
+        engine.AddSingleLineMatchesToStack(headerSimpleText, headingElement, origin);
     }
 }

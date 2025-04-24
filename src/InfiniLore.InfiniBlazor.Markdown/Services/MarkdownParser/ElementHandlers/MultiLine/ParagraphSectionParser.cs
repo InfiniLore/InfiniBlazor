@@ -4,22 +4,25 @@
 using CodeOfChaos.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.ElementHandlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISectionHandler>("underline")]
-public class UnderlineSectionParser : ISectionHandler {
+[InjectableSingleton<IMarkdownElementHandler>("paragraph")]
+public class ParagraphHandler : IMarkdownElementHandler {
 
-    private static readonly int UId = MarkdownRegexLib.GetSingleLineGroupId("u");
-    public ParserOrigin SkipOnOrigin => ParserOrigin.Underline;
+    private static readonly int PId = MarkdownRegexLib.GetSingleLineGroupId("p");
+    public HandlerOrigin SkipOnOrigin => HandlerOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
-        if (!entireMatch.Groups[UId].TryGetValue(out string? underlineValue)) return;
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+        if (!entireMatch.Groups[PId].TryGetValue(out string? paragraph)) return;
+        if (paragraph.IsNullOrWhiteSpace()) return;
 
-        IMdNode underlineNode = currentNode.AddChildNode(MdElement.Underline);
-        engine.AddSingleLineMatchesToStack(underlineValue, underlineNode, origin | SkipOnOrigin);
+        bool writeParagraph = !origin.HasFlag(HandlerOrigin.Html);
+
+        if (writeParagraph) currentNode = currentNode.AddChildNode(MdElement.Paragraph);
+        engine.AddSingleLineMatchesToStack(paragraph.TrimStart(), currentNode, origin);
     }
 }

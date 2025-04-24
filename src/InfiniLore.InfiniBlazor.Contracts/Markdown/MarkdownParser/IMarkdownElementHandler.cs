@@ -1,26 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using System.Text.RegularExpressions;
+
 namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[Flags]
-public enum ParserOrigin {
-    Undefined = 0,
+internal interface IMarkdownElementHandler{
+    HandlerOrigin SkipOnOrigin { get; }
 
-    Bold = 1 << 0,
-    Italic = 1 << 1,
-    Strike = 1 << 2,
-    Code = 1 << 3,
-    Link = 1 << 4,
-    Underline = 1 << 5,
-    Emote = 1 << 6,
-    SuperScript = 1 << 7,
-    SubScript = 1 << 8,
-
-    // Special cases
-    PreserveHtml = 1 << 29,
-    Html = 1 << 30,
-    NotSkipped = 1 << 31
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin);
 }

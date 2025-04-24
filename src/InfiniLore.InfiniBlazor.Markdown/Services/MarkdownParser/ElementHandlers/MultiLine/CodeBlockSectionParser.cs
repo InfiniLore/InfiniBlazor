@@ -5,21 +5,21 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using System.Buffers;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
+namespace InfiniLore.InfiniBlazor.Markdown.ElementHandlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISectionHandler>("codeBlock")]
-public class CodeBlockSectionParser : ISectionHandler {
+[InjectableSingleton<IMarkdownElementHandler>("codeBlock")]
+public class CodeBlockHandler : IMarkdownElementHandler {
 
     private static readonly int CBodyId = MarkdownRegexLib.GetMultiLineGroupId("cBody");
     private static readonly int CLangId = MarkdownRegexLib.GetMultiLineGroupId("cLang");
-    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
+    public HandlerOrigin SkipOnOrigin => HandlerOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!entireMatch.Groups[CBodyId].TryGetValueSpan(out ReadOnlySpan<char> codeBlockBody)) return;
 
         IMdNode codeNode = currentNode.AddChildNode(MdElement.CodeBlock);

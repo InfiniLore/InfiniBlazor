@@ -9,10 +9,10 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class NormalizationHelper {
+public static class LineNormalizationHelper {
     private const int StackAllocThreshold = 256;
 
-    public static string NormalizeIndentation(ReadOnlySpan<char> input) {
+    public static string NormalizeLineIndentation(ReadOnlySpan<char> input) {
         int matchCount = input.Count('\n');
         int splitCount = matchCount + 1;
 

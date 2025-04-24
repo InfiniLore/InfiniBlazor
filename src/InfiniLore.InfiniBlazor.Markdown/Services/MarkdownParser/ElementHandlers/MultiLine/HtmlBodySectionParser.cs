@@ -4,25 +4,25 @@
 using CodeOfChaos.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
+namespace InfiniLore.InfiniBlazor.Markdown.ElementHandlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISectionHandler>("htmlBody")]
-public class HtmlBodySectionParser : ISectionHandler {
+[InjectableSingleton<IMarkdownElementHandler>("htmlBody")]
+public class HtmlBodyHandler : IMarkdownElementHandler {
 
     private static readonly int HtmlPreId = MarkdownRegexLib.GetMultiLineGroupId("htmlPre");
     private static readonly int HtmlBodyId = MarkdownRegexLib.GetMultiLineGroupId("htmlBody");
     private static readonly int HtmlPostId = MarkdownRegexLib.GetMultiLineGroupId("htmlPost");
     private static readonly int SpanTagId = MarkdownRegexLib.GetSpanGroupId("spanTag");
     private static readonly int SpanBodyId = MarkdownRegexLib.GetSpanGroupId("spanBody");
-    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
+    public HandlerOrigin SkipOnOrigin => HandlerOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
-        if (!origin.HasFlag(ParserOrigin.PreserveHtml)) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+        if (!origin.HasFlag(HandlerOrigin.PreserveHtml)) {
             currentNode = currentNode.AddChildNode(MdElement.Paragraph);
         }
 
@@ -35,7 +35,7 @@ public class HtmlBodySectionParser : ISectionHandler {
             Match match = MarkdownRegexLib.FindSpanHtmlRegex.Match(htmlBody);
             if (match.Groups[SpanTagId].TryGetValue(out string? spanTag) && match.Groups[SpanBodyId].TryGetValue(out string? spanBody)) {
                 engine.PushElementToStack("</span>", currentNode, origin, MdElement.HtmlContent);
-                engine.AddMultiLineMatchesToStack(spanBody, currentNode, origin | ParserOrigin.Html);
+                engine.AddMultiLineMatchesToStack(spanBody, currentNode, origin | HandlerOrigin.Html);
                 engine.PushElementToStack(spanTag, currentNode, origin, MdElement.HtmlContent);
             }
             else {

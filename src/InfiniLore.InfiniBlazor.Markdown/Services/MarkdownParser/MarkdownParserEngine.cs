@@ -11,17 +11,17 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
-    private readonly Stack<ParserDataDto> _stack = new();
+    private readonly Stack<MarkdownFragment> _stack = new();
     public IMdNodeTree NodeTree { get; set; } = null!;
 
-    public bool TryPopDto([NotNullWhen(true)] out ParserDataDto? dto)
+    public bool TryPopDto([NotNullWhen(true)] out MarkdownFragment? dto)
         => _stack.TryPop(out dto);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region AddToStack
-    public void AddMultiLineMatchesToStack(string input, IMdNode node, ParserOrigin origin) {
+    public void AddMultiLineMatchesToStack(string input, IMdNode node, HandlerOrigin origin) {
         MatchCollection matches = MarkdownRegexLib.MultilineStructuresRegex.Matches(input);
         int count = matches.Count;
         
@@ -37,7 +37,7 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
         ArrayPool<Match>.Shared.Return(matchArray);
     }
 
-    public void AddSingleLineMatchesToStack(string input, IMdNode node, ParserOrigin origin) {
+    public void AddSingleLineMatchesToStack(string input, IMdNode node, HandlerOrigin origin) {
         MatchCollection matches = MarkdownRegexLib.SinglelineStructuresRegex.Matches(input);
         int count = matches.Count;
         
@@ -69,24 +69,24 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
         ArrayPool<Match>.Shared.Return(matchArray);
     }
 
-    public void PushContentToStack(string content, IMdNode currentNode, ParserOrigin origin) 
+    public void PushContentToStack(string content, IMdNode currentNode, HandlerOrigin origin) 
         => PushElementToStack(content, currentNode, origin, MdElement.Content);
 
-    public void PushElementToStack(string? content, IMdNode currentNode, ParserOrigin origin, MdElement element) {
-        ParserDataDto dto = PoolCache.ParserDataDtoPool.Get();
-        dto.AsElement(content, currentNode, origin, element);
-        _stack.Push(dto);
+    public void PushElementToStack(string? content, IMdNode currentNode, HandlerOrigin origin, MdElement element) {
+        MarkdownFragment fragment = PoolCache.MarkdownFragmentPool.Get();
+        fragment.AsElement(content, currentNode, origin, element);
+        _stack.Push(fragment);
     }
 
-    private void PushMatchToStack(Match match, IMdNode currentNode, ParserOrigin origin) {
-        ParserDataDto dto = PoolCache.ParserDataDtoPool.Get();
-        dto.AsMatch(match, currentNode, origin);
-        _stack.Push(dto);
+    private void PushMatchToStack(Match match, IMdNode currentNode, HandlerOrigin origin) {
+        MarkdownFragment fragment = PoolCache.MarkdownFragmentPool.Get();
+        fragment.AsMatch(match, currentNode, origin);
+        _stack.Push(fragment);
     }
     #endregion
     
     public bool TryReset() {
-        while (_stack.TryPop(out ParserDataDto? dto)) PoolCache.ParserDataDtoPool.Return(dto); // Makes sure we clean everything
+        while (_stack.TryPop(out MarkdownFragment? fragment)) PoolCache.MarkdownFragmentPool.Return(fragment); // Makes sure we clean everything
         NodeTree = null!;
         
         return _stack.Count == 0 ;

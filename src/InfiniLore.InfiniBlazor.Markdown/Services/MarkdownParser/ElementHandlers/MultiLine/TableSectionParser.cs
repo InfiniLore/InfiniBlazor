@@ -5,23 +5,23 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using System.Buffers;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
+namespace InfiniLore.InfiniBlazor.Markdown.ElementHandlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISectionHandler>("table")]
-public class TableSectionParser : ISectionHandler {
+[InjectableSingleton<IMarkdownElementHandler>("table")]
+public class TableHandler : IMarkdownElementHandler {
     private const int StackAllocThreshold = 16;
 
     private static readonly int BodyId = MarkdownRegexLib.GetMultiLineGroupId("tBody");
     private static readonly int HeadId = MarkdownRegexLib.GetMultiLineGroupId("tHead");
     private static readonly int SepId = MarkdownRegexLib.GetMultiLineGroupId("tSep");
-    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
+    public HandlerOrigin SkipOnOrigin => HandlerOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         // Extract header, separator, and rows
         ReadOnlySpan<char> header = entireMatch.Groups[HeadId].ValueSpan;
         Span<Range> headerColumns = stackalloc Range[header.Length];

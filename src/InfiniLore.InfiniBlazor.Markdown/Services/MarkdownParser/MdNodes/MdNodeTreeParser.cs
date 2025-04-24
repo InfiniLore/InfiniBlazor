@@ -14,7 +14,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.MdNodes;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdNodeTreeParser>]
 public sealed class MdNodeTreeParser(IServiceProvider serviceProvider, ILogger<MdNodeTreeParser> logger) : IMdNodeTreeParser {
-    private readonly FrozenDictionary<string, ISectionHandler> _sectionHandlers = ToFrozenDictionary<ISectionHandler>(logger, serviceProvider);
+    private readonly FrozenDictionary<string, IMarkdownElementHandler> _elementHandlers = ToFrozenDictionary<IMarkdownElementHandler>(logger, serviceProvider);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -41,23 +41,23 @@ public sealed class MdNodeTreeParser(IServiceProvider serviceProvider, ILogger<M
 
         try {
             runningParser.NodeTree = nodeTree;
-            runningParser.AddMultiLineMatchesToStack(markdown, nodeTree.RootNode, ParserOrigin.Undefined);
+            runningParser.AddMultiLineMatchesToStack(markdown, nodeTree.RootNode, HandlerOrigin.Undefined);
 
-            while (runningParser.TryPopDto(out ParserDataDto? dataDto)) {
+            while (runningParser.TryPopDto(out MarkdownFragment? fragment)) {
                 try {
-                    IMdNode currentNode = dataDto.Node;
-                    ParserOrigin origin = dataDto.Origin;
+                    IMdNode currentNode = fragment.Node;
+                    HandlerOrigin origin = fragment.Origin;
 
-                    if (dataDto.TryGetAsMatch(out Match? match)) {
+                    if (fragment.TryGetAsMatch(out Match? match)) {
                         ProcessMatch(match, currentNode, origin, runningParser);
                         continue;
                     }
-                    if (dataDto.TryGetAsElement(out MdElement element, out string? content)) {
+                    if (fragment.TryGetAsElement(out MdElement element, out string? content)) {
                         ProcessElement(element, content, currentNode);
                     }
                 }
                 finally {
-                    PoolCache.ParserDataDtoPool.Return(dataDto);
+                    PoolCache.MarkdownFragmentPool.Return(fragment);
                 }
             }
         }
@@ -66,14 +66,14 @@ public sealed class MdNodeTreeParser(IServiceProvider serviceProvider, ILogger<M
         }
     }
 
-    private void ProcessMatch(Match match, IMdNode currentNode, ParserOrigin origin, IMarkdownParserEngine runningParser) {
+    private void ProcessMatch(Match match, IMdNode currentNode, HandlerOrigin origin, IMarkdownParserEngine runningParser) {
         GroupCollection groups = match.Groups;
         for (int i = 0; i < groups.Count; i++) {
             if (groups[i] is not { Success: true, Name: var name }) continue;
-            if (!_sectionHandlers.TryGetValue(name, out ISectionHandler? handler)) continue;
+            if (!_elementHandlers.TryGetValue(name, out IMarkdownElementHandler? handler)) continue;
 
-            ParserOrigin handlerOrigin = handler.SkipOnOrigin;
-            if (handlerOrigin is ParserOrigin.NotSkipped || (origin & handlerOrigin) != handlerOrigin) {
+            HandlerOrigin handlerOrigin = handler.SkipOnOrigin;
+            if (handlerOrigin is HandlerOrigin.NotSkipped || !origin.HasFlagFast(handlerOrigin)) {
                 handler.HandleMatch(runningParser, currentNode, match, groups[i], origin);
             }
         }

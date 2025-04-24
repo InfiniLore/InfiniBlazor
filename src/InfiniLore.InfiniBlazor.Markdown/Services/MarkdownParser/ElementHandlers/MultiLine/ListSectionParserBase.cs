@@ -5,23 +5,23 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using System.Buffers;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
+namespace InfiniLore.InfiniBlazor.Markdown.ElementHandlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public abstract class ListSectionParserBase : ISectionHandler {
+public abstract class ListHandlerBase : IMarkdownElementHandler {
     private static readonly int LTaskId = MarkdownRegexLib.GetListGroupId("lTask");
     private static readonly int LHeadId = MarkdownRegexLib.GetListGroupId("lHead");
     private static readonly int LBodyId = MarkdownRegexLib.GetListGroupId("lBody");
     
-    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
+    public HandlerOrigin SkipOnOrigin => HandlerOrigin.NotSkipped;
     
     protected abstract MdElement ListType { get; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!entireMatch.TryGetValue(out string? listBody)) return;
 
         MatchCollection matchCollection = MarkdownRegexLib.ListItemBodyRegex.Matches(listBody);
@@ -38,8 +38,8 @@ public abstract class ListSectionParserBase : ISectionHandler {
                 IMdNode listItemNode = listNode.AddChildNode(MdElement.ListItem);
             
                 if (groups[LBodyId].TryGetValueSpan(out ReadOnlySpan<char> itemBody) && !itemBody.IsEmpty) {
-                    string normalizedBody = NormalizationHelper.NormalizeIndentation(itemBody);
-                    engine.AddMultiLineMatchesToStack(normalizedBody, listItemNode, origin | ParserOrigin.PreserveHtml);
+                    string normalizedBody = LineNormalizationHelper.NormalizeLineIndentation(itemBody);
+                    engine.AddMultiLineMatchesToStack(normalizedBody, listItemNode, origin | HandlerOrigin.PreserveHtml);
                 }
 
                 if (groups[LHeadId].TryGetValue(out string? listHeader)) {
@@ -60,12 +60,12 @@ public abstract class ListSectionParserBase : ISectionHandler {
     }
 }
 
-[InjectableSingleton<ISectionHandler>("listOrdered")]
-public class ListOrderedSectionParserBase : ListSectionParserBase {
+[InjectableSingleton<IMarkdownElementHandler>("listOrdered")]
+public class ListOrderedHandlerBase : ListHandlerBase {
     protected override MdElement ListType => MdElement.ListOrdered;
 }
 
-[InjectableSingleton<ISectionHandler>("listUnordered")]
-public class ListUnorderedSectionParser : ListSectionParserBase {
+[InjectableSingleton<IMarkdownElementHandler>("listUnordered")]
+public class ListUnorderedHandler : ListHandlerBase {
     protected override MdElement ListType => MdElement.ListUnordered;
 }

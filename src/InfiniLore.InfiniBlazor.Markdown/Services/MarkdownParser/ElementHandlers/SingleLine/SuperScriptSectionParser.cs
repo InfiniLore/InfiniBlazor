@@ -4,19 +4,22 @@
 using CodeOfChaos.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.ElementHandlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISectionHandler>("escaped")]
-public class EscapedSectionParser : ISectionHandler {
-    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
+[InjectableSingleton<IMarkdownElementHandler>("supScript")]
+public class SuperScriptHandler : IMarkdownElementHandler {
 
+    private static readonly int SpId = MarkdownRegexLib.GetSingleLineGroupId("sp");
+    public HandlerOrigin SkipOnOrigin => HandlerOrigin.SuperScript;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
-        char value = group.ValueSpan[1];
-        currentNode.WithContent(value.ToString());
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+        if (!entireMatch.Groups[SpId].TryGetValue(out string? superValue)) return;
+
+        IMdNode node = currentNode.AddChildNode(MdElement.Superscript);
+        engine.AddSingleLineMatchesToStack(superValue, node, origin | SkipOnOrigin);
     }
 }

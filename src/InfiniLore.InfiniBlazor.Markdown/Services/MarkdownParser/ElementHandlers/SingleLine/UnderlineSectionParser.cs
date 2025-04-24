@@ -4,25 +4,22 @@
 using CodeOfChaos.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
+namespace InfiniLore.InfiniBlazor.Markdown.ElementHandlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISectionHandler>("paragraph")]
-public class ParagraphSectionParser : ISectionHandler {
+[InjectableSingleton<IMarkdownElementHandler>("underline")]
+public class UnderlineHandler : IMarkdownElementHandler {
 
-    private static readonly int PId = MarkdownRegexLib.GetSingleLineGroupId("p");
-    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
+    private static readonly int UId = MarkdownRegexLib.GetSingleLineGroupId("u");
+    public HandlerOrigin SkipOnOrigin => HandlerOrigin.Underline;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
-        if (!entireMatch.Groups[PId].TryGetValue(out string? paragraph)) return;
-        if (paragraph.IsNullOrWhiteSpace()) return;
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+        if (!entireMatch.Groups[UId].TryGetValue(out string? underlineValue)) return;
 
-        bool writeParagraph = !origin.HasFlag(ParserOrigin.Html);
-
-        if (writeParagraph) currentNode = currentNode.AddChildNode(MdElement.Paragraph);
-        engine.AddSingleLineMatchesToStack(paragraph.TrimStart(), currentNode, origin);
+        IMdNode underlineNode = currentNode.AddChildNode(MdElement.Underline);
+        engine.AddSingleLineMatchesToStack(underlineValue, underlineNode, origin | SkipOnOrigin);
     }
 }

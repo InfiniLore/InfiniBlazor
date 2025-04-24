@@ -4,15 +4,15 @@
 using CodeOfChaos.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.MultiLine;
+namespace InfiniLore.InfiniBlazor.Markdown.ElementHandlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISectionHandler>("horizontalRule")]
-public class HorizontalRuleSectionParser : ISectionHandler {
-    public ParserOrigin SkipOnOrigin => ParserOrigin.NotSkipped;
+[InjectableSingleton<IMarkdownElementHandler>("horizontalRule")]
+public class HorizontalRuleHandler : IMarkdownElementHandler {
+    public HandlerOrigin SkipOnOrigin => HandlerOrigin.NotSkipped;
 
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         currentNode.AddChildNode(MdElement.HorizontalRule);
     }
 }

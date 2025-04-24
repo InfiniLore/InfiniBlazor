@@ -1,25 +1,25 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Diagnostics.CodeAnalysis;
+using CodeOfChaos.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown;
+namespace InfiniLore.InfiniBlazor.Markdown.ElementHandlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IParserDataDto {
-    MdElement Element { get; }
-    IMdNode Node { get; }
-    ParserOrigin Origin { get; }
-    Match? Match { get; }
-    string? Content { get; }
-    
-    [MemberNotNull(nameof(Match))] bool IsMatch { get; }
+[InjectableSingleton<IMarkdownElementHandler>("strike")]
+public class StrikeHandler : IMarkdownElementHandler {
 
+    private static readonly int SId = MarkdownRegexLib.GetSingleLineGroupId("s");
+    public HandlerOrigin SkipOnOrigin => HandlerOrigin.Strike;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    void AsMatch(Match match, IMdNode node, ParserOrigin origin);
-    void AsElement(string content, IMdNode node, ParserOrigin origin, MdElement element);
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+        if (!entireMatch.Groups[SId].TryGetValue(out string? strikeValue)) return;
+
+        IMdNode node = currentNode.AddChildNode(MdElement.Strikethrough);
+        engine.AddSingleLineMatchesToStack(strikeValue, node, origin | SkipOnOrigin);
+    }
 }

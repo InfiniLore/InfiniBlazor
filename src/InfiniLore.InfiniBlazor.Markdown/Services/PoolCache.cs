@@ -15,7 +15,7 @@ public static class PoolCache {
     public static readonly ObjectPool<MarkdownParserEngine> RunningMarkdownParserPool = CreateResettablePool<MarkdownParserEngine>(4);
     public static readonly ObjectPool<Dictionary<int, MdElement>> DepthCachePool = CreateCollectionPool<Dictionary<int, MdElement>, KeyValuePair<int, MdElement>>(2);
     public static readonly ObjectPool<MdNodeVisitor> MdNodeVisitorPool = CreateResettablePool<MdNodeVisitor>(24);
-    public static readonly ObjectPool<ParserDataDto> ParserDataDtoPool = CreateResettablePool<ParserDataDto>(256);
+    public static readonly ObjectPool<MarkdownFragment> MarkdownFragmentPool = CreateResettablePool<MarkdownFragment>(256);
     public static readonly ObjectPool<Stack<Range>> RangeStackPool = CreateStackPool<Stack<Range>, Range>(16);
     public static readonly ObjectPool<Stack<MdNodeVisitor>> MdNodeVisitorStackPool = CreateMdNodeVisitorStackPool(4);
     public static readonly ObjectPool<StringBuilder> StringBuilderPool = CreateStringBuilderPool(8);

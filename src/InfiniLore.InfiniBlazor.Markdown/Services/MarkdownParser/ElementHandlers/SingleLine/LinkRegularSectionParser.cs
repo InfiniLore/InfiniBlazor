@@ -4,23 +4,23 @@
 using CodeOfChaos.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.ElementHandlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISectionHandler>("linkRegular")]
-public class LinkRegularSectionParser : ISectionHandler {
+[InjectableSingleton<IMarkdownElementHandler>("linkRegular")]
+public class LinkRegularHandler : IMarkdownElementHandler {
 
     private static readonly int LrTextId = MarkdownRegexLib.GetSingleLineGroupId("lrText");
     private static readonly int LrHrefId = MarkdownRegexLib.GetSingleLineGroupId("lrHref");
     private static readonly int LrTitleId = MarkdownRegexLib.GetSingleLineGroupId("lrTitle");
     private static readonly int LrBangId = MarkdownRegexLib.GetSingleLineGroupId("lrBang");
-    public ParserOrigin SkipOnOrigin => ParserOrigin.Link;
+    public HandlerOrigin SkipOnOrigin => HandlerOrigin.Link;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!entireMatch.Groups[LrTextId].TryGetValue(out string? linkText)) return;
         if (!entireMatch.Groups[LrHrefId].TryGetValue(out string? linkHref)) return;
 

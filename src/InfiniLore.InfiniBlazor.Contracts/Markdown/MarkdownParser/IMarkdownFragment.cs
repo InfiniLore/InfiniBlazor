@@ -1,25 +1,25 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISectionHandler>("supScript")]
-public class SuperScriptSectionParser : ISectionHandler {
+public interface IMarkdownFragment {
+    MdElement Element { get; }
+    IMdNode Node { get; }
+    HandlerOrigin Origin { get; }
+    Match? Match { get; }
+    string? Content { get; }
+    
+    [MemberNotNull(nameof(Match))] bool IsMatch { get; }
 
-    private static readonly int SpId = MarkdownRegexLib.GetSingleLineGroupId("sp");
-    public ParserOrigin SkipOnOrigin => ParserOrigin.SuperScript;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
-        if (!entireMatch.Groups[SpId].TryGetValue(out string? superValue)) return;
-
-        IMdNode node = currentNode.AddChildNode(MdElement.Superscript);
-        engine.AddSingleLineMatchesToStack(superValue, node, origin | SkipOnOrigin);
-    }
+    void AsMatch(Match match, IMdNode node, HandlerOrigin origin);
+    void AsElement(string content, IMdNode node, HandlerOrigin origin, MdElement element);
 }

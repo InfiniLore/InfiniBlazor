@@ -4,22 +4,19 @@
 using CodeOfChaos.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.ElementHandlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISectionHandler>("italic")]
-public class ItalicSectionParser : ISectionHandler {
+[InjectableSingleton<IMarkdownElementHandler>("escaped")]
+public class EscapedHandler : IMarkdownElementHandler {
+    public HandlerOrigin SkipOnOrigin => HandlerOrigin.NotSkipped;
 
-    private static readonly int IId = MarkdownRegexLib.GetSingleLineGroupId("i");
-    public ParserOrigin SkipOnOrigin => ParserOrigin.Italic;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
-        if (!entireMatch.Groups[IId].TryGetValue(out string? italicValue)) return;
-
-        IMdNode node = currentNode.AddChildNode(MdElement.Italic);
-        engine.AddSingleLineMatchesToStack(italicValue, node, origin | SkipOnOrigin);
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+        char value = group.ValueSpan[1];
+        currentNode.WithContent(value.ToString());
     }
 }

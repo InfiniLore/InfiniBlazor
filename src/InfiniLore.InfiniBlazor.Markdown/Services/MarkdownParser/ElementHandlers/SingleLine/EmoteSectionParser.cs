@@ -6,12 +6,12 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.SectionParsers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.ElementHandlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ISectionHandler>("emote")]
-public class EmoteSectionParser(ILogger<EmoteSectionParser> logger) : ISectionHandler {
+[InjectableSingleton<IMarkdownElementHandler>("emote")]
+public class EmoteHandler(ILogger<EmoteHandler> logger) : IMarkdownElementHandler {
 
     private static readonly int EId = MarkdownRegexLib.GetSingleLineGroupId("e");
 
@@ -27,11 +27,11 @@ public class EmoteSectionParser(ILogger<EmoteSectionParser> logger) : ISectionHa
     }.ToFrozenDictionary(comparer: new EmoteKeyComparer());
 
     private FrozenDictionary<EmoteKey, string>.AlternateLookup<string> EmoteLookup => EmoteDict.GetAlternateLookup<string>();
-    public ParserOrigin SkipOnOrigin => ParserOrigin.Emote;
+    public HandlerOrigin SkipOnOrigin => HandlerOrigin.Emote;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, ParserOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!entireMatch.Groups[EId].TryGetValue(out string? lookupValue)) return;
 
         if (!EmoteLookup.TryGetValue(lookupValue, out string? value)) {
