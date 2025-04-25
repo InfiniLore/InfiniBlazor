@@ -15,7 +15,7 @@ public class MarkdownSyntaxNode : IMarkdownSyntaxNode, IResettable {
     private int _childCount;
     private MarkdownSyntaxNode[] _childNodes = ArrayPool<MarkdownSyntaxNode>.Shared.Rent(MinimumCapacity);
 
-    private int _attributeCount;
+    public int AttributeCount { get; private set; }
     private MarkdownAttribute[] _attributes = ArrayPool<MarkdownAttribute>.Shared.Rent(MinimumCapacity);
     private readonly Dictionary<MarkdownAttribute, string> _attributesSource = new();
 
@@ -35,10 +35,10 @@ public class MarkdownSyntaxNode : IMarkdownSyntaxNode, IResettable {
             _childCount
         );
     }
-    public ReadOnlySpan<MarkdownAttribute> GetAttributes(out int count, out IReadOnlyDictionary<MarkdownAttribute, string> source) {
+    
+    public ReadOnlySpan<MarkdownAttribute> GetAttributes(out IReadOnlyDictionary<MarkdownAttribute, string> source) {
         source = _attributesSource;
-        count = _attributeCount;
-        if (_attributeCount == 0) return ReadOnlySpan<MarkdownAttribute>.Empty;
+        if (AttributeCount == 0) return ReadOnlySpan<MarkdownAttribute>.Empty;
         return _attributes;
     }
 
@@ -91,7 +91,7 @@ public class MarkdownSyntaxNode : IMarkdownSyntaxNode, IResettable {
 
     public IMarkdownSyntaxNode WithAttribute(MarkdownAttribute attribute, string value) {
         // Check if we need to resize
-        if (_attributeCount == _attributes.Length) {
+        if (AttributeCount == _attributes.Length) {
             int newSize = Math.Max(MinimumCapacity, _attributes.Length * 2);
             MarkdownAttribute[] newArray = ArrayPool<MarkdownAttribute>.Shared.Rent(newSize);
             Array.Copy(_attributes, newArray, _childCount);
@@ -99,7 +99,7 @@ public class MarkdownSyntaxNode : IMarkdownSyntaxNode, IResettable {
             ArrayPool<MarkdownAttribute>.Shared.Return(_attributes, true);
             _attributes = newArray;
         }
-        _attributes[_attributeCount++] = attribute;
+        _attributes[AttributeCount++] = attribute;
         _attributesSource.AddOrUpdate(attribute, value);
         return this;
     }
@@ -111,7 +111,7 @@ public class MarkdownSyntaxNode : IMarkdownSyntaxNode, IResettable {
         }
         _childCount = 0;
 
-        _attributeCount = 0;
+        AttributeCount = 0;
         if (_attributes.Length > 0) {
             ArrayPool<MarkdownAttribute>.Shared.Return(_attributes, true);
             _attributes = ArrayPool<MarkdownAttribute>.Shared.Rent(MinimumCapacity);
