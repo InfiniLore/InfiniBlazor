@@ -4,7 +4,6 @@
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 
 namespace InfiniLore.InfiniBlazor.Markdown;
@@ -20,8 +19,11 @@ public class MarkdownParser<TInput, TOutput>(
     
 ) : IMarkdownParser<TInput, TOutput> {
     
-    private readonly Lazy<ImmutableArray<IMarkdownPreProcessor<TInput>>> PreProcessors = new (preProcessors.ToImmutableArray);
-    private readonly Lazy<ImmutableArray<IMarkdownPostProcessor<TOutput>>> PostProcessors = new (postProcessors.ToImmutableArray);
+    // ReSharper disable PossibleMultipleEnumeration
+    private readonly int _preProcessorCount = preProcessors.Count();
+    private readonly int _postProcessorCount = postProcessors.Count();
+    private readonly Lazy<IMarkdownPreProcessor<TInput>[]> PreProcessors = new (preProcessors.ToArray);
+    private readonly Lazy<IMarkdownPostProcessor<TOutput>[]> PostProcessors = new (postProcessors.ToArray);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -38,24 +40,28 @@ public class MarkdownParser<TInput, TOutput>(
 
         try {
             TInput? processedInput = input;
-            ReadOnlySpan<IMarkdownPreProcessor<TInput>> preProcessorsSpan = PreProcessors.Value.AsSpan();
-            foreach (IMarkdownPreProcessor<TInput> preProcessor in preProcessorsSpan) {
-                // ReSharper disable once InvertIf
-                if (!preProcessor.TryProcess(processedInput, out processedInput)) {
-                    logger.LogWarning("Preprocessor {PreProcessor} failed.", preProcessor.GetType());
-                    return false;
+            if (_preProcessorCount != 0) {
+                ReadOnlySpan<IMarkdownPreProcessor<TInput>> preProcessorsSpan = PreProcessors.Value.AsSpan();
+                foreach (IMarkdownPreProcessor<TInput> preProcessor in preProcessorsSpan) {
+                    // ReSharper disable once InvertIf
+                    if (!preProcessor.TryProcess(processedInput, out processedInput)) {
+                        logger.LogWarning("Preprocessor {PreProcessor} failed.", preProcessor.GetType());
+                        return false;
+                    }
                 }
             }
             
             nodeTreeParser.ParseToNodeTree(processedInput, nodeTree);
             output = converter.Convert(nodeTree);
-            
-            ReadOnlySpan<IMarkdownPostProcessor<TOutput>> postProcessorsSpan = PostProcessors.Value.AsSpan();
-            foreach (IMarkdownPostProcessor<TOutput> postProcessor in postProcessorsSpan) {
-                // ReSharper disable once InvertIf
-                if (!postProcessor.TryProcess(output, out output)) {
-                    logger.LogWarning("Postprocessor {PostProcessor} failed.", postProcessor.GetType());
-                    return false;
+
+            if (_postProcessorCount != 0) {
+                ReadOnlySpan<IMarkdownPostProcessor<TOutput>> postProcessorsSpan = PostProcessors.Value.AsSpan();
+                foreach (IMarkdownPostProcessor<TOutput> postProcessor in postProcessorsSpan) {
+                    // ReSharper disable once InvertIf
+                    if (!postProcessor.TryProcess(output, out output)) {
+                        logger.LogWarning("Postprocessor {PostProcessor} failed.", postProcessor.GetType());
+                        return false;
+                    }
                 }
             }
             return output is not null;

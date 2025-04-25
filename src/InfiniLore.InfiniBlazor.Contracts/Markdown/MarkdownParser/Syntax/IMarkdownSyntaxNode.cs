@@ -9,10 +9,10 @@ public interface IMarkdownSyntaxNode {
     MarkdownElement Element { get; }
     string? Content { get; }
     IMarkdownSyntaxNode Parent { get; }
-    int AttributeCount { get; }
     
     ReadOnlySpan<T> GetChildrenSpan<T>(out int length) where T : IMarkdownSyntaxNode;
-    ReadOnlySpan<MarkdownAttribute> GetAttributes(out IReadOnlyDictionary<MarkdownAttribute, string> source);
+    
+    bool TryGetAttributes(out int count, out ReadOnlySpan<MarkdownAttribute> attributes, out ReadOnlySpan<string> sources);
 
     IMarkdownSyntaxNode AddChildNode(MarkdownElement element, string? content = null);
 

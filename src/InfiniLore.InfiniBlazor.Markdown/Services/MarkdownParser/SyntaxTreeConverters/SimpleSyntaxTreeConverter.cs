@@ -74,8 +74,8 @@ public abstract class SimpleSyntaxTreeConverter {
 
                 HtmlTag htmlTag = MdElementLookup[element];
                 writeContent(writer, htmlTag.OpenTagSpan);
-                
-                if (node.AttributeCount != 0) WriteAttributes(writer, writeContent, node);
+
+                WriteAttributes(writer, writeContent, node);
 
                 writeContent(writer, ">");
 
@@ -90,9 +90,8 @@ public abstract class SimpleSyntaxTreeConverter {
         }
     }
     private static void WriteAttributes<T>(T writer, WriteDelegate<T> writeContent, IMarkdownSyntaxNode node) {
-        ReadOnlySpan<MarkdownAttribute> attributes = node.GetAttributes(out IReadOnlyDictionary<MarkdownAttribute, string> source);
-        
-        for (int i = 0; i < node.AttributeCount; i++) {
+        if (!node.TryGetAttributes(out int count, out ReadOnlySpan<MarkdownAttribute> attributes, out ReadOnlySpan<string> source)) return;
+        for (int i = 0; i < count; i++) {
             MarkdownAttribute attribute = attributes[i];
             switch (attribute) {
                 case MarkdownAttribute.CodeLanguage: {
@@ -122,7 +121,7 @@ public abstract class SimpleSyntaxTreeConverter {
                 default: return;
             }
 
-            writeContent(writer, source[attribute]);
+            writeContent(writer, source[i]);
             writeContent(writer, "\"");
         }
     }
