@@ -92,35 +92,14 @@ public abstract class SimpleSyntaxTreeConverter {
     private static void WriteAttributes<T>(T writer, WriteDelegate<T> writeContent, IMarkdownSyntaxNode node) {
         if (!node.TryGetAttributes(out int count, out ReadOnlySpan<MarkdownAttribute> attributes, out ReadOnlySpan<string> source)) return;
         for (int i = 0; i < count; i++) {
-            MarkdownAttribute attribute = attributes[i];
-            switch (attribute) {
-                case MarkdownAttribute.CodeLanguage: {
-                    writeContent(writer, " class=\"language-");
-                    break;
-                }
-
-                case MarkdownAttribute.LinkHref: {
-                    writeContent(writer, " href=\"");
-                    break;
-                }
-
-                case MarkdownAttribute.ImageTitle: {
-                    writeContent(writer, " title=\"");
-                    break;
-                }
-
-                case MarkdownAttribute.ImageSource: {
-                    writeContent(writer, " src=\"");
-                    break;
-                }
-
-                case MarkdownAttribute.ImageAlt: {
-                    writeContent(writer, " alt=\"");
-                    break;
-                }
-                default: return;
-            }
-
+            writeContent(writer, attributes[i] switch {
+                MarkdownAttribute.CodeLanguage => " class=\"language-",
+                MarkdownAttribute.LinkHref => " href=\"",
+                MarkdownAttribute.ImageTitle => " title=\"",
+                MarkdownAttribute.ImageSource => " src=\"",
+                MarkdownAttribute.ImageAlt => " alt=\"",
+                _ =>  throw new NotImplementedException()
+            });
             writeContent(writer, source[i]);
             writeContent(writer, "\"");
         }

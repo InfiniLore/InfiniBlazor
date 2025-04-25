@@ -28,11 +28,7 @@ public class MarkdownBenchmarks {
         // Read the file content
         Markdown = await File.ReadAllTextAsync(filePath);
         if (Markdown.IsNullOrWhiteSpace()) throw new InvalidOperationException("The Markdown input should not be empty.");
-
         
-        string firstLine = Markdown.Split('\n')[0];
-        if (!firstLine.StartsWith("# Headers")) throw new InvalidOperationException("The first line should start with '# Headers'.");
-
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddInfiniBlazor(config => config.AddMarkdown());
         serviceCollection.AddLogging();

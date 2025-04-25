@@ -132,8 +132,8 @@ public class MarkdownSyntaxNode : IMarkdownSyntaxNode, IResettable {
 
         if (_attributes?.Length > 0) {
             ArrayPool<MarkdownAttribute>.Shared.Return(_attributes, true);
-            _attributes = null;
             ArrayPool<string>.Shared.Return(_attributesSource!, true);
+            _attributes = null;
             _attributesSource = null;
         }
         _attributeCount = 0;
