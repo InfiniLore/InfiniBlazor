@@ -9,7 +9,7 @@ namespace Benchmarks.InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 public static class Program {
     public static void Main(string[] args) {
-        // BenchmarkRunner.Run<MarkdownBenchmarks>();
-        BenchmarkRunner.Run<IndividualMarkdownBenchmarks>();
+        BenchmarkRunner.Run<MarkdownBenchmarks>();
+        // BenchmarkRunner.Run<IndividualMarkdownBenchmarks>();
     }
 }

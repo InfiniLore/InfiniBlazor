@@ -22,13 +22,14 @@ public class MarkdownBenchmarks {
     // -----------------------------------------------------------------------------------------------------------------
     [GlobalSetup]
     public async Task Setup() {
-        const string url = "https://gist.githubusercontent.com/allysonsilva/85fff14a22bbdf55485be947566cc09e/raw/fa8048a906ebed3c445d08b20c9173afd1b4a1e5/Full-Markdown.md";
-        var client = new HttpClient{Timeout = TimeSpan.FromSeconds(10)};
-        HttpResponseMessage response = await client.GetAsync(url);
-        
-        // Check that the first line has "# Headers"
-        Markdown = await response.Content.ReadAsStringAsync();
+        const string filePath = "markdownBenchmark.md";
+
+        if (!File.Exists(filePath)) throw new FileNotFoundException($"The file {filePath} does not exist.");
+
+        // Read the file content
+        Markdown = await File.ReadAllTextAsync(filePath);
         if (Markdown.IsNullOrWhiteSpace()) throw new InvalidOperationException("The Markdown input should not be empty.");
+
         
         string firstLine = Markdown.Split('\n')[0];
         if (!firstLine.StartsWith("# Headers")) throw new InvalidOperationException("The first line should start with '# Headers'.");
