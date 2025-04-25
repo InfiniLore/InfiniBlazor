@@ -4,6 +4,7 @@
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 
 namespace InfiniLore.InfiniBlazor.Markdown;
@@ -19,11 +20,8 @@ public class MarkdownParser<TInput, TOutput>(
     
 ) : IMarkdownParser<TInput, TOutput> {
     
-    // ReSharper disable PossibleMultipleEnumeration
-    // private readonly int _preProcessorCount = preProcessors.Count();
-    // private readonly int _postProcessorCount = postProcessors.Count();
-    private readonly IMarkdownPreProcessor<TInput>[] PreProcessors = preProcessors.ToArray();
-    private readonly IMarkdownPostProcessor<TOutput>[] PostProcessors = postProcessors.ToArray();
+    private readonly ImmutableArray<IMarkdownPreProcessor<TInput>> PreProcessors = preProcessors.ToImmutableArray();
+    private readonly ImmutableArray<IMarkdownPostProcessor<TOutput>> PostProcessors = postProcessors.ToImmutableArray();
     private bool? _hasPreProcessors;
     private bool? _hasPostProcessors;
     
@@ -63,9 +61,8 @@ public class MarkdownParser<TInput, TOutput>(
         if (!state) return true; // Skip
 
         int count = PreProcessors.Length;
-        ReadOnlySpan<IMarkdownPreProcessor<TInput>> preProcessorsSpan = PreProcessors.AsSpan();
         for (int i = 0; i < count; i++) {
-            IMarkdownPreProcessor<TInput> processor = preProcessorsSpan[i];
+            IMarkdownPreProcessor<TInput> processor = PreProcessors[i];
             
             // ReSharper disable once InvertIf
             if (!processor.TryProcess(processedInput, out processedInput)) {
@@ -81,9 +78,8 @@ public class MarkdownParser<TInput, TOutput>(
         if (!state) return true; // Skip
 
         int count = PostProcessors.Length;
-        ReadOnlySpan<IMarkdownPostProcessor<TOutput>> postProcessorsSpan = PostProcessors.AsSpan();
         for (int i = 0; i < count; i++) {
-            IMarkdownPostProcessor<TOutput> processor = postProcessorsSpan[i];
+            IMarkdownPostProcessor<TOutput> processor = PostProcessors[i];
             
             // ReSharper disable once InvertIf
             if (!processor.TryProcess(output, out output)) {
