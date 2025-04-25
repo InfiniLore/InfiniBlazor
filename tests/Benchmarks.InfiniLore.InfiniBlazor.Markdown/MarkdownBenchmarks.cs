@@ -34,7 +34,7 @@ public class MarkdownBenchmarks {
         if (!firstLine.StartsWith("# Headers")) throw new InvalidOperationException("The first line should start with '# Headers'.");
 
         var serviceCollection = new ServiceCollection();
-        serviceCollection.AddInfiniBlazor(config => config.AddMarkdown());
+        serviceCollection.AddInfiniBlazor(config => config.AddMarkdown(static config => config.AddMarkdownParser<string, string>()));
         serviceCollection.AddLogging();
         ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
         Parser = serviceProvider.GetRequiredService<IMarkdownParser<string, string>>();

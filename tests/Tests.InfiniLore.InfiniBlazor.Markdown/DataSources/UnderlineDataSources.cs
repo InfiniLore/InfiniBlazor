@@ -93,7 +93,7 @@ public class UnderlineDataSources {
                 paragraph.WithContent("click ");
                 paragraph.AddUnderline()
                     .AddLink()
-                    .WithAttribute("href", "https://example.com")
+                    .WithAttribute(MarkdownAttribute.LinkHref, "https://example.com")
                     .WithContent("here");
             }
         );
@@ -109,7 +109,7 @@ public class UnderlineDataSources {
                 paragraph.AddUnderline()
                     .AddBold()
                     .AddLink()
-                    .WithAttribute("href", "https://example.com")
+                    .WithAttribute(MarkdownAttribute.LinkHref, "https://example.com")
                     .WithContent("bold link");
             }
         );

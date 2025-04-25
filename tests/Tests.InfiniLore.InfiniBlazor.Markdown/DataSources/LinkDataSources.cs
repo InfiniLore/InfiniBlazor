@@ -21,7 +21,7 @@ public static class LinkDataSources {
             ConfigureExpectedNode: static rootNode => {
                 IMarkdownSyntaxNode paragraph = rootNode.AddParagraph("This is an ");
                 IMarkdownSyntaxNode link = paragraph.AddLink();
-                link.WithAttribute("href", "https://www.transgenderinfo.be");
+                link.WithAttribute(MarkdownAttribute.LinkHref, "https://www.transgenderinfo.be");
 
                 link.WithContent("-->");
                 link.AddItalic("example");
@@ -37,7 +37,7 @@ public static class LinkDataSources {
                 IMarkdownSyntaxNode paragraph = rootNode.AddParagraph("This is an ");
                 IMarkdownSyntaxNode bold = paragraph.AddBold();
                 IMarkdownSyntaxNode link = bold.AddLink();
-                link.WithAttribute("href", "https://www.transgenderinfo.be");
+                link.WithAttribute(MarkdownAttribute.LinkHref, "https://www.transgenderinfo.be");
 
                 link.WithContent("-->");
                 link.AddItalic("example");
@@ -53,7 +53,7 @@ public static class LinkDataSources {
                 IMarkdownSyntaxNode paragraph = rootNode.AddParagraph("This is an ");
                 IMarkdownSyntaxNode sub = paragraph.AddSubscript();
                 IMarkdownSyntaxNode link = sub.AddLink();
-                link.WithAttribute("href", "https://www.transgenderinfo.be");
+                link.WithAttribute(MarkdownAttribute.LinkHref, "https://www.transgenderinfo.be");
 
                 link.WithContent("-->");
                 link.AddItalic("example");
@@ -69,7 +69,7 @@ public static class LinkDataSources {
                 IMarkdownSyntaxNode paragraph = rootNode.AddParagraph("This is an ");
                 IMarkdownSyntaxNode super = paragraph.AddSuperscript();
                 IMarkdownSyntaxNode link = super.AddLink();
-                link.WithAttribute("href", "https://www.transgenderinfo.be");
+                link.WithAttribute(MarkdownAttribute.LinkHref, "https://www.transgenderinfo.be");
 
                 link.WithContent("-->");
                 link.AddItalic("example");
@@ -84,8 +84,8 @@ public static class LinkDataSources {
             ConfigureExpectedNode: static rootNode => {
                 IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.AddImage()
-                    .WithAttribute("src", "https://i.imgur.com/aV8o3rE.png")
-                    .WithAttribute("alt", "Specs");
+                    .WithAttribute(MarkdownAttribute.ImageSource, "https://i.imgur.com/aV8o3rE.png")
+                    .WithAttribute(MarkdownAttribute.ImageAlt, "Specs");
             }
         );
 
@@ -101,10 +101,10 @@ public static class LinkDataSources {
             ConfigureExpectedNode: static rootNode => {
                 IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 IMarkdownSyntaxNode link = paragraph.AddLink();
-                link.WithAttribute("href", "https://imgur.com/");
+                link.WithAttribute(MarkdownAttribute.LinkHref, "https://imgur.com/");
                 IMarkdownSyntaxNode image = link.AddImage();
-                image.WithAttribute("src", "https://i.imgur.com/aV8o3rE.png");
-                image.WithAttribute("alt", "Specs");
+                image.WithAttribute(MarkdownAttribute.ImageSource, "https://i.imgur.com/aV8o3rE.png");
+                image.WithAttribute(MarkdownAttribute.ImageAlt, "Specs");
             }
         );
     }

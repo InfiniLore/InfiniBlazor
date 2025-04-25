@@ -14,15 +14,14 @@ public class MarkdownSyntaxNode : IMarkdownSyntaxNode, IResettable {
     private const int MinimumCapacity = 2;
     private int _childCount;
     private MarkdownSyntaxNode[] _childNodes = ArrayPool<MarkdownSyntaxNode>.Shared.Rent(MinimumCapacity);
-    private readonly HashSet<string> _classes = new();
-    private readonly Dictionary<string, string> _attributes = new();
+
+    private int _attributeCount;
+    private MarkdownAttribute[] _attributes = ArrayPool<MarkdownAttribute>.Shared.Rent(MinimumCapacity);
+    private readonly Dictionary<MarkdownAttribute, string> _attributesSource = new();
 
     public MarkdownElement Element { get; private set; } = MarkdownElement.Undefined;
     public string? Content { get; private set; }
-
-    public IReadOnlyDictionary<string, string> Attributes => _attributes;
-    public IReadOnlySet<string> Classes => _classes;
-
+    
     public IMarkdownSyntaxNode Parent { get; private set; } = null!;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -35,6 +34,12 @@ public class MarkdownSyntaxNode : IMarkdownSyntaxNode, IResettable {
             ref Unsafe.As<MarkdownSyntaxNode, T>(ref MemoryMarshal.GetArrayDataReference(_childNodes)),
             _childCount
         );
+    }
+    public ReadOnlySpan<MarkdownAttribute> GetAttributes(out int count, out IReadOnlyDictionary<MarkdownAttribute, string> source) {
+        source = _attributesSource;
+        count = _attributeCount;
+        if (_attributeCount == 0) return ReadOnlySpan<MarkdownAttribute>.Empty;
+        return _attributes;
     }
 
     public IMarkdownSyntaxNode AddChildNode(MarkdownElement element, string? content = null) {
@@ -84,23 +89,34 @@ public class MarkdownSyntaxNode : IMarkdownSyntaxNode, IResettable {
         return this;
     }
 
-    public IMarkdownSyntaxNode WithClass(string className) {
-        _classes.Add(className);
-        return this;
-    }
+    public IMarkdownSyntaxNode WithAttribute(MarkdownAttribute attribute, string value) {
+        // Check if we need to resize
+        if (_attributeCount == _attributes.Length) {
+            int newSize = Math.Max(MinimumCapacity, _attributes.Length * 2);
+            MarkdownAttribute[] newArray = ArrayPool<MarkdownAttribute>.Shared.Rent(newSize);
+            Array.Copy(_attributes, newArray, _childCount);
 
-    public IMarkdownSyntaxNode WithAttribute(string key, string value) {
-        _attributes.AddOrUpdate(key, value);
+            ArrayPool<MarkdownAttribute>.Shared.Return(_attributes, true);
+            _attributes = newArray;
+        }
+        _attributes[_attributeCount++] = attribute;
+        _attributesSource.AddOrUpdate(attribute, value);
         return this;
     }
 
     public bool TryReset() {
-        if (_childNodes.Length > 0) ArrayPool<MarkdownSyntaxNode>.Shared.Return(_childNodes, true);
-        _childNodes = ArrayPool<MarkdownSyntaxNode>.Shared.Rent(MinimumCapacity);
+        if (_childNodes.Length > 0) {
+            ArrayPool<MarkdownSyntaxNode>.Shared.Return(_childNodes, true);
+            _childNodes = ArrayPool<MarkdownSyntaxNode>.Shared.Rent(MinimumCapacity);
+        }
         _childCount = 0;
 
-        _classes.Clear();
-        _attributes.Clear();
+        _attributeCount = 0;
+        if (_attributes.Length > 0) {
+            ArrayPool<MarkdownAttribute>.Shared.Return(_attributes, true);
+            _attributes = ArrayPool<MarkdownAttribute>.Shared.Rent(MinimumCapacity);
+        }
+        _attributesSource.Clear();
         Element = MarkdownElement.Undefined;
         Content = null;
         Parent = null!;

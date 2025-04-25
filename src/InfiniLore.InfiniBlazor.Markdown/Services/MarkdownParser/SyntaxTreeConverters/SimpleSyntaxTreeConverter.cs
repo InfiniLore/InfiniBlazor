@@ -74,25 +74,8 @@ public abstract class SimpleSyntaxTreeConverter {
 
                 HtmlTag htmlTag = MdElementLookup[element];
                 writeContent(writer, htmlTag.OpenTagSpan);
-
-                if (!node.Classes.IsEmpty()) {
-                    writeContent(writer, " class=\"");
-                    foreach (ReadOnlySpan<char> cssClass in node.Classes) {
-                        writeContent(writer, " ");
-                        writeContent(writer, cssClass);
-                    }
-                    writeContent(writer, "\"");
-                }
-
-                if (!node.Attributes.IsEmpty()) {
-                    writeContent(writer, " ");
-                    foreach (KeyValuePair<string, string> attribute in node.Attributes) {
-                        writeContent(writer, attribute.Key);
-                        writeContent(writer, "=\"");
-                        writeContent(writer, attribute.Value);
-                        writeContent(writer, "\"");
-                    }
-                }
+                
+                WriteAttributes(writer, writeContent, node);
 
                 writeContent(writer, ">");
 
@@ -104,6 +87,44 @@ public abstract class SimpleSyntaxTreeConverter {
         }
         finally {
             PoolCache.DepthCachePool.Return(depthCache);
+        }
+    }
+    private static void WriteAttributes<T>(T writer, WriteDelegate<T> writeContent, IMarkdownSyntaxNode node) {
+        ReadOnlySpan<MarkdownAttribute> attributes = node.GetAttributes(out int count, out IReadOnlyDictionary<MarkdownAttribute, string> source);
+        if (count == 0) return;
+        
+        for (int i = 0; i < count; i++) {
+            MarkdownAttribute attribute = attributes[i];
+            switch (attribute) {
+                case MarkdownAttribute.CodeLanguage: {
+                    writeContent(writer, " class=\"language-");
+                    break;
+                }
+
+                case MarkdownAttribute.LinkHref: {
+                    writeContent(writer, " href=\"");
+                    break;
+                }
+
+                case MarkdownAttribute.ImageTitle: {
+                    writeContent(writer, " title=\"");
+                    break;
+                }
+
+                case MarkdownAttribute.ImageSource: {
+                    writeContent(writer, " src=\"");
+                    break;
+                }
+
+                case MarkdownAttribute.ImageAlt: {
+                    writeContent(writer, " alt=\"");
+                    break;
+                }
+                default: return;
+            }
+
+            writeContent(writer, source[attribute]);
+            writeContent(writer, "\"");
         }
     }
 

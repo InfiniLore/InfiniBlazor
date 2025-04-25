@@ -8,16 +8,14 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 public interface IMarkdownSyntaxNode {
     MarkdownElement Element { get; }
     string? Content { get; }
-    IReadOnlyDictionary<string, string> Attributes { get; }
-    IReadOnlySet<string> Classes { get; }
     IMarkdownSyntaxNode Parent { get; }
     
     ReadOnlySpan<T> GetChildrenSpan<T>(out int length) where T : IMarkdownSyntaxNode;
+    ReadOnlySpan<MarkdownAttribute> GetAttributes(out int count, out IReadOnlyDictionary<MarkdownAttribute, string> source);
 
     IMarkdownSyntaxNode AddChildNode(MarkdownElement element, string? content = null);
 
     IMarkdownSyntaxNode WithContent(string? content);
     IMarkdownSyntaxNode WithHtmlContent(string? content);
-    IMarkdownSyntaxNode WithClass(string className);
-    IMarkdownSyntaxNode WithAttribute(string key, string value);
+    IMarkdownSyntaxNode WithAttribute(MarkdownAttribute attribute, string value);
 }

@@ -24,8 +24,8 @@ public class CodeBlockHandler : IMarkdownElementHandler {
 
         IMarkdownSyntaxNode codeNode = currentNode.AddChildNode(MarkdownElement.CodeBlock);
 
-        ReadOnlySpan<char> langNameValue = entireMatch.Groups[CLangId].ValueSpan;
-        if (!langNameValue.IsEmpty) codeNode.WithClass($"language-{langNameValue}");
+        string langNameValue = entireMatch.Groups[CLangId].Value;
+        if (!langNameValue.IsEmpty()) codeNode.WithAttribute(MarkdownAttribute.CodeLanguage, langNameValue);
 
         string content = ProcessCodeBlockContent(ref codeBlockBody);
         codeNode.WithContent(content);

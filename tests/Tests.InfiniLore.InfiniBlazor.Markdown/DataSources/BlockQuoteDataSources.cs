@@ -216,7 +216,7 @@ public static class BlockQuoteDataSources {
                 paragraph2.WithContent(", and ");
 
                 IMarkdownSyntaxNode link = paragraph2.AddLink("link");
-                link.WithAttribute("href", "https://example.com");
+                link.WithAttribute(MarkdownAttribute.LinkHref, "https://example.com");
 
                 paragraph2.WithContent(".");
             }
@@ -369,7 +369,7 @@ public static class BlockQuoteDataSources {
                 paragraph.WithContent(", and ");
 
                 IMarkdownSyntaxNode link = paragraph.AddLink("link");
-                link.WithAttribute("href", "https://example.com");
+                link.WithAttribute(MarkdownAttribute.LinkHref, "https://example.com");
                 paragraph.WithContent(".");
 
             }

@@ -126,8 +126,7 @@ public static class AggregateDataSources {
                 rootNode.AddH3("Code Snippet");
                 rootNode.AddParagraph("Below is an example of a C# code snippet:");
                 IMarkdownSyntaxNode csharpCode = rootNode.AddCodeBlock("public class Program {\n    public static void Main() {\n        Console.WriteLine(\"Hello, World!\");\n    }\n}\n");
-                csharpCode.WithClass("language-csharp");
-
+                csharpCode.WithAttribute(MarkdownAttribute.CodeLanguage, "csharp");
                 rootNode.AddH3("Bullet Points");
                 rootNode.AddParagraph("Here are some bullet points:");
                 IMarkdownSyntaxNode bulletList = rootNode.AddListUnordered();
@@ -162,11 +161,11 @@ public static class AggregateDataSources {
                 rootNode.AddH3("Links and Images");
                 IMarkdownSyntaxNode paragraph1 = rootNode.AddParagraph();
                 paragraph1.WithContent("You can visit ");
-                paragraph1.AddLink("Google").WithAttribute("href", "https://www.google.com");
+                paragraph1.AddLink("Google").WithAttribute(MarkdownAttribute.LinkHref, "https://www.google.com");
                 paragraph1.WithContent(" or check out the following image:");
                 IMarkdownSyntaxNode image = rootNode.AddParagraph().AddImage();
-                image.WithAttribute("src", "https://via.placeholder.com/150");
-                image.WithAttribute("alt", "Placeholder Image");
+                image.WithAttribute(MarkdownAttribute.ImageSource, "https://via.placeholder.com/150");
+                image.WithAttribute(MarkdownAttribute.ImageAlt, "Placeholder Image");
             }
         );
 

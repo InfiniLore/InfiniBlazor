@@ -31,7 +31,7 @@ public class EmoteDataSources {
             ConfigureExpectedNode: static rootNode => {
                 IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 IMarkdownSyntaxNode link = paragraph.AddLink("\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f");
-                link.WithAttribute("href", "https://www.twitch.tv/annasasdev");
+                link.WithAttribute(MarkdownAttribute.LinkHref, "https://www.twitch.tv/annasasdev");
             }
         );
 

@@ -25,18 +25,18 @@ public class LinkNestedHandler : IMarkdownElementHandler {
 
         if (entireMatch.Groups[LnBangId].Success) {
             IMarkdownSyntaxNode imgNode = currentNode.AddChildNode(MarkdownElement.Image);
-            imgNode.WithAttribute("src",linkHref);
-            imgNode.WithAttribute("alt", linkText);
+            imgNode.WithAttribute(MarkdownAttribute.ImageSource, linkHref);
+            imgNode.WithAttribute(MarkdownAttribute.ImageAlt, linkText);
 
             if (entireMatch.Groups[LnTitleId].TryGetValue(out string? altTextValue)) {
-                imgNode.WithAttribute("title", altTextValue);
+                imgNode.WithAttribute(MarkdownAttribute.ImageTitle, altTextValue);
             }
 
             return;
         }
 
         IMarkdownSyntaxNode linkNode = currentNode.AddChildNode(MarkdownElement.Link);
-        linkNode.WithAttribute("href", linkHref);
+        linkNode.WithAttribute(MarkdownAttribute.LinkHref, linkHref);
 
         engine.AddSingleLineMatchesToStack(linkText, linkNode, origin);
     }

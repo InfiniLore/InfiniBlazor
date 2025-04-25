@@ -79,7 +79,7 @@ public static class SubScriptDataSources {
                 IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("A ");
                 IMarkdownSyntaxNode link = paragraph.AddLink();
-                link.WithAttribute("href", "https://example.com");
+                link.WithAttribute(MarkdownAttribute.LinkHref, "https://example.com");
                 link.WithContent("link with ");
                 link.AddSubscript("subscript");
                 paragraph.WithContent(".");
@@ -119,7 +119,7 @@ public static class SubScriptDataSources {
                 bold.AddSubscript("subscript");
                 bold.WithContent(" in a ");
                 IMarkdownSyntaxNode link = bold.AddLink();
-                link.WithAttribute("href", "https://example.com");
+                link.WithAttribute(MarkdownAttribute.LinkHref, "https://example.com");
                 link.WithContent("link");
                 paragraph.WithContent(".");
             }
@@ -166,7 +166,7 @@ public static class SubScriptDataSources {
                 IMarkdownSyntaxNode bold = item1.AddBold();
                 bold.WithContent("Bold link ");
                 IMarkdownSyntaxNode link = bold.AddLink();
-                link.WithAttribute("href", "https://example.com");
+                link.WithAttribute(MarkdownAttribute.LinkHref, "https://example.com");
                 link.WithContent("with ");
                 link.AddSubscript("sub");
                 link.WithContent(" text");
@@ -176,7 +176,7 @@ public static class SubScriptDataSources {
                 IMarkdownSyntaxNode italic = item2.AddItalic();
                 italic.WithContent("Italic link ");
                 IMarkdownSyntaxNode link2 = italic.AddLink();
-                link2.WithAttribute("href", "https://example.org");
+                link2.WithAttribute(MarkdownAttribute.LinkHref, "https://example.org");
                 link2.WithContent("and ");
                 link2.AddSubscript("sub");
                 link2.WithContent(" text");

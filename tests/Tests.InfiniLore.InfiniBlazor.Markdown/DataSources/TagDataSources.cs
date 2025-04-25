@@ -67,7 +67,7 @@ public static class TagDataSources {
                 paragraph.WithContent("#"); 
                 
                 IMarkdownSyntaxNode link = paragraph.AddLink("link");
-                link.WithAttribute("href", "https://www.transgenderinfo.be");
+                link.WithAttribute(MarkdownAttribute.LinkHref, "https://www.transgenderinfo.be");
                 
             });
     }

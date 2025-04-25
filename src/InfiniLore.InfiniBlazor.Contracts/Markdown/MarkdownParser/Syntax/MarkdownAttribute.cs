@@ -1,15 +1,15 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using BenchmarkDotNet.Running;
+namespace InfiniLore.InfiniBlazor.Markdown;
 
-namespace Benchmarks.InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class Program {
-    public static void Main(string[] args) {
-        // BenchmarkRunner.Run<MarkdownBenchmarks>();
-        BenchmarkRunner.Run<IndividualMarkdownBenchmarks>();
-    }
+public enum MarkdownAttribute {
+    CodeLanguage,
+    LinkHref,
+    ImageAlt,
+    ImageSource,
+    ImageTitle
 }

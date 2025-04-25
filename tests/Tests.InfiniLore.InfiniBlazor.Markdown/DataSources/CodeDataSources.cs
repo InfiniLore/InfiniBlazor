@@ -43,7 +43,7 @@ public static class CodeDataSources {
             """,
             ConfigureExpectedNode: static rootNode => {
                 IMarkdownSyntaxNode code = rootNode.AddCodeBlock("const code = sample();");
-                code.WithClass("language-javascript");
+                code.WithAttribute(MarkdownAttribute.CodeLanguage, "javascript");
             });
 
         yield return static () => new MarkdownTestDto(SectionName,

@@ -73,7 +73,7 @@ public static class SuperScriptDataSources {
                 IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("A ");
                 IMarkdownSyntaxNode linkNode = paragraph.AddLink();
-                linkNode.WithAttribute("href", "https://example.com");
+                linkNode.WithAttribute(MarkdownAttribute.LinkHref, "https://example.com");
                 linkNode.WithContent("link with ");
                 linkNode.AddSuperscript("superscript");
                 paragraph.WithContent(".");
@@ -120,7 +120,7 @@ public static class SuperScriptDataSources {
                 bold.AddSuperscript("superscript");
                 bold.WithContent(" in a ");
                 IMarkdownSyntaxNode linkNode = bold.AddLink();
-                linkNode.WithAttribute("href", "https://example.com");
+                linkNode.WithAttribute(MarkdownAttribute.LinkHref, "https://example.com");
                 linkNode.WithContent("link");
                 paragraph.WithContent(".");
             }
@@ -165,7 +165,7 @@ public static class SuperScriptDataSources {
                 IMarkdownSyntaxNode bold = item1.AddBold();
                 bold.WithContent("Bold link ");
                 IMarkdownSyntaxNode linkNode1 = bold.AddLink();
-                linkNode1.WithAttribute("href", "https://example.com");
+                linkNode1.WithAttribute(MarkdownAttribute.LinkHref, "https://example.com");
                 linkNode1.WithContent("with ");
                 linkNode1.AddSuperscript("superscript");
                 linkNode1.WithContent(" text");
@@ -175,7 +175,7 @@ public static class SuperScriptDataSources {
                 IMarkdownSyntaxNode italic = item2.AddItalic();
                 italic.WithContent("Italic link ");
                 IMarkdownSyntaxNode linkNode2 = italic.AddLink();
-                linkNode2.WithAttribute("href", "https://example.org");
+                linkNode2.WithAttribute(MarkdownAttribute.LinkHref, "https://example.org");
                 linkNode2.WithContent("and ");
                 linkNode2.AddSuperscript("superscript");
                 linkNode2.WithContent(" text");
