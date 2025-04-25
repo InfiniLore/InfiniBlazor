@@ -37,11 +37,11 @@ public class MarkdownSyntaxNode : IMarkdownSyntaxNode, IResettable {
         );
     }
     
-    public bool TryGetAttributes(out int count, out ReadOnlySpan<MarkdownAttribute> attributes, out ReadOnlySpan<string> sources) {
+    public bool TryGetAttributesSpan(out int count, out ReadOnlySpan<MarkdownAttribute> attributes, out ReadOnlySpan<string> sources) {
         if (_attributeCount == 0) {
             count = -1;
-            attributes = default;
-            sources = default;
+            attributes = ReadOnlySpan<MarkdownAttribute>.Empty;
+            sources = ReadOnlySpan<string>.Empty;
             return false;
         }
 

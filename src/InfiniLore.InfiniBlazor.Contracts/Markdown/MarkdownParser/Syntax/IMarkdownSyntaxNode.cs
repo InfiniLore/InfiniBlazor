@@ -12,7 +12,7 @@ public interface IMarkdownSyntaxNode {
     
     ReadOnlySpan<T> GetChildrenSpan<T>(out int length) where T : IMarkdownSyntaxNode;
     
-    bool TryGetAttributes(out int count, out ReadOnlySpan<MarkdownAttribute> attributes, out ReadOnlySpan<string> sources);
+    bool TryGetAttributesSpan(out int count, out ReadOnlySpan<MarkdownAttribute> attributes, out ReadOnlySpan<string> sources);
 
     IMarkdownSyntaxNode AddChildNode(MarkdownElement element, string? content = null);
 

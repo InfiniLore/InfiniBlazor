@@ -90,7 +90,7 @@ public abstract class SimpleSyntaxTreeConverter {
         }
     }
     private static void WriteAttributes<T>(T writer, WriteDelegate<T> writeContent, IMarkdownSyntaxNode node) {
-        if (!node.TryGetAttributes(out int count, out ReadOnlySpan<MarkdownAttribute> attributes, out ReadOnlySpan<string> source)) return;
+        if (!node.TryGetAttributesSpan(out int count, out ReadOnlySpan<MarkdownAttribute> attributes, out ReadOnlySpan<string> source)) return;
         for (int i = 0; i < count; i++) {
             writeContent(writer, attributes[i] switch {
                 MarkdownAttribute.CodeLanguage => " class=\"language-",
