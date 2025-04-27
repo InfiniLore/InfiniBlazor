@@ -1,23 +1,23 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace Tests.InfiniLore.InfiniBlazor.Markdown.TextEditor.DataSources;
+namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources.TextEditor;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class ModifyItalicMultiLineDataSources {
-    private const string SectionName = "italic";
+public static class ModifyBoldMultiLineDataSources {
+    private const string SectionName = "bold";
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static IEnumerable<Func<(string, int, int, string)>> HelloWoldDataSource() {
         const string input = "Hello World!";
-        const string format = "*";
+        const string boldFormat = "**";
 
         for (int start = 0; start <= input.Length; start++) {
             for (int end = input.Length; end >= start; end--) {
-                string modified = $"{input[..start]}{format}{input[start..end]}{format}{input[end..]}";
+                string modified = $"{input[..start]}{boldFormat}{input[start..end]}{boldFormat}{input[end..]}";
                 int i = start;
                 int j = end;
                 yield return () => (SectionName, i, j, modified);
@@ -29,19 +29,19 @@ public static class ModifyItalicMultiLineDataSources {
         yield return () => (
             SectionName,
             "- ",
-            "- **"
+            "- ****"
         );
 
         yield return () => (
             SectionName,
             "- Hello World!",
-            "- *Hello World!*"
+            "- **Hello World!**"
         );
 
         yield return () => (
             SectionName,
             "1. Hello World!",
-            "1. *Hello World!*"
+            "1. **Hello World!**"
         );
 
         yield return () => (
@@ -51,8 +51,8 @@ public static class ModifyItalicMultiLineDataSources {
             - Hello World!
             """,
             """
-            - *Hello World!*
-            - *Hello World!*
+            - **Hello World!**
+            - **Hello World!**
             """
         );
 
@@ -63,8 +63,8 @@ public static class ModifyItalicMultiLineDataSources {
             2. Hello World!
             """,
             """
-            1. *Hello World!*
-            2. *Hello World!*
+            1. **Hello World!**
+            2. **Hello World!**
             """
         );
 
@@ -76,28 +76,28 @@ public static class ModifyItalicMultiLineDataSources {
             | alpha | beta |
             """,
             """
-            | *test* | *something* |
+            | **test** | **something** |
             | ---- | --------- |
-            | *alpha* | *beta* |
+            | **alpha** | **beta** |
             """
         );
 
         yield return () => (
             SectionName,
             "alpha | beta |",
-            "*alpha* | *beta* |"
+            "**alpha** | **beta** |"
         );
 
         yield return () => (
             SectionName,
             "alpha | beta",
-            "*alpha* | *beta*"
+            "**alpha** | **beta**"
         );
 
         yield return () => (
             SectionName,
             "| alpha | beta",
-            "| *alpha* | *beta*"
+            "| **alpha** | **beta**"
         );
     }
 }

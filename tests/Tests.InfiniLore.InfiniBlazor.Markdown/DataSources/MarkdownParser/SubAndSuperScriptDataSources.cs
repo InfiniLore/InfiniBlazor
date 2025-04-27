@@ -4,83 +4,46 @@
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 
-namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
+namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class SubScriptDataSources {
-    private static readonly string SectionName = nameof(SubScriptDataSources)[..^nameof(DataSources).Length];
+public static class SubAndSuperScriptDataSources {
+    private static readonly string SectionName = nameof(SubAndSuperScriptDataSources)[..^nameof(DataSources).Length];
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
         yield return static () => new MarkdownTestDto(SectionName,
-            "^subscript^",
-            "<p><sub>subscript</sub></p>",
+            "Example of ^^super^^ and ^sub^ and ^^^super sub^^^.",
+            "<p>Example of <sup>super</sup> and <sub>sub</sub> and <sup><sub>super sub</sub></sup>.</p>",
             ConfigureExpectedNode: static rootNode => {
                 IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.AddSubscript("subscript");
-            }
-        );
-
-        yield return static () => new MarkdownTestDto(SectionName,
-            "^subscript\\^^",
-            "<p><sub>subscript^</sub></p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.AddSubscript("subscript^");
-            }
-        );
-
-        yield return static () => new MarkdownTestDto(SectionName,
-            "^\\^subscript^",
-            "<p><sub>^subscript</sub></p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.AddSubscript("^subscript");
-            }
-        );
-
-        yield return static () => new MarkdownTestDto(SectionName,
-            "This is a **bold^subscript^ text**.",
-            "<p>This is a <strong>bold<sub>subscript</sub> text</strong>.</p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("This is a ");
-                IMarkdownSyntaxNode bold = paragraph.AddBold("bold");
-                bold.AddSubscript("subscript");
-                bold.WithContent(" text");
+                paragraph.WithContent("Example of ");
+                paragraph.AddSuperscript("super");
+                paragraph.WithContent(" and ");
+                paragraph.AddSubscript("sub");
+                paragraph.WithContent(" and ");
+                paragraph.AddSuperscript().AddSubscript("super sub");
                 paragraph.WithContent(".");
             }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
-            "Text with *italic^subscript^ and ^^superscript^^*.",
-            "<p>Text with <em>italic<sub>subscript</sub> and <sup>superscript</sup></em>.</p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("Text with ");
-                IMarkdownSyntaxNode italic = paragraph.AddItalic("italic");
-                italic.AddSubscript("subscript");
-                italic.WithContent(" and ");
-                IMarkdownSyntaxNode sup = italic.AddSuperscript();
-                sup.WithContent("superscript");
-                paragraph.WithContent(".");
-            }
-        );
-
-        yield return static () => new MarkdownTestDto(SectionName,
-            "A [link with ^subscript^](https://example.com).",
+            "A [link with ^^superscript^^ and ^subscript^](https://example.com).",
             """
-            <p>A <a href="https://example.com">link with <sub>subscript</sub></a>.</p>
+            <p>A <a href="https://example.com">link with <sup>superscript</sup> and <sub>subscript</sub></a>.</p>
             """,
             ConfigureExpectedNode: static rootNode => {
                 IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
                 paragraph.WithContent("A ");
+
                 IMarkdownSyntaxNode link = paragraph.AddLink();
                 link.WithAttribute(MarkdownAttribute.LinkHref, "https://example.com");
                 link.WithContent("link with ");
+                link.AddSuperscript("superscript");
+                link.WithContent(" and ");
                 link.AddSubscript("subscript");
                 paragraph.WithContent(".");
             }
@@ -88,20 +51,19 @@ public static class SubScriptDataSources {
 
         yield return static () => new MarkdownTestDto(SectionName,
             """
-            - **Bold^sub^**
+            - **Bold^^sup^^**
             - *Italic^sub^*
             """,
             """
             <ul>
-                <li><strong>Bold<sub>sub</sub></strong></li>
+                <li><strong>Bold<sup>sup</sup></strong></li>
                 <li><em>Italic<sub>sub</sub></em></li>
             </ul>
             """,
             ConfigureExpectedNode: static rootNode => {
                 IMarkdownSyntaxNode list = rootNode.AddListUnordered();
-
                 IMarkdownSyntaxNode item0 = list.AddListItem();
-                item0.AddBold("Bold").AddSubscript("sub");
+                item0.AddBold("Bold").AddSuperscript("sup");
 
                 IMarkdownSyntaxNode item1 = list.AddListItem();
                 item1.AddItalic("Italic").AddSubscript("sub");
@@ -109,14 +71,18 @@ public static class SubScriptDataSources {
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
-            "**Bold ^subscript^ in a [link](https://example.com)**.",
+            "Nested formatting: **Bold ^subscript^ and ^^superscript^^ in a [link](https://example.com)**.",
             """
-            <p><strong>Bold <sub>subscript</sub> in a <a href="https://example.com">link</a></strong>.</p>
+            <p>Nested formatting: <strong>Bold <sub>subscript</sub> and <sup>superscript</sup> in a <a href="https://example.com">link</a></strong>.</p>
             """,
             ConfigureExpectedNode: static rootNode => {
                 IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                IMarkdownSyntaxNode bold = paragraph.AddBold("Bold ");
+                paragraph.WithContent("Nested formatting: ");
+                IMarkdownSyntaxNode bold = paragraph.AddBold();
+                bold.WithContent("Bold ");
                 bold.AddSubscript("subscript");
+                bold.WithContent(" and ");
+                bold.AddSuperscript("superscript");
                 bold.WithContent(" in a ");
                 IMarkdownSyntaxNode link = bold.AddLink();
                 link.WithAttribute(MarkdownAttribute.LinkHref, "https://example.com");
@@ -126,23 +92,24 @@ public static class SubScriptDataSources {
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
-            "Inline code with subscript: `x = z^2^`",
-            "<p>Inline code with subscript: <code>x = z^2^</code></p>",
+            "Inline code with superscript and subscript: `x = y^^2^^ - z^2^`",
+            "<p>Inline code with superscript and subscript: <code>x = y^^2^^ - z^2^</code></p>",
             ConfigureExpectedNode: static rootNode => {
                 IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("Inline code with subscript: ");
-                paragraph.AddCodeInline("x = z^2^");
+                paragraph.WithContent("Inline code with superscript and subscript: ");
+                paragraph.AddCodeInline("x = y^^2^^ - z^2^");
             }
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
-            "***Bold and italic^sub^ and italic^sub^***.",
-            "<p><strong><em>Bold and italic<sub>sub</sub> and italic<sub>sub</sub></em></strong>.</p>",
+            "Complex: ***Bold and italic^^super^^ and italic^sub^***.",
+            "<p>Complex: <strong><em>Bold and italic<sup>super</sup> and italic<sub>sub</sub></em></strong>.</p>",
             ConfigureExpectedNode: static rootNode => {
                 IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
+                paragraph.WithContent("Complex: ");
                 IMarkdownSyntaxNode bold = paragraph.AddBold().AddItalic();
                 bold.WithContent("Bold and italic");
-                bold.AddSubscript("sub");
+                bold.AddSuperscript("super");
                 bold.WithContent(" and italic");
                 bold.AddSubscript("sub");
                 paragraph.WithContent(".");
@@ -151,13 +118,13 @@ public static class SubScriptDataSources {
 
         yield return static () => new MarkdownTestDto(SectionName,
             """
-            - **Bold link [with ^sub^ text](https://example.com)**.
-            - *Italic link [and ^sub^ text](https://example.org)*.
+            - **Bold link [with ^^superscript^^ text](https://example.com)**.
+            - *Italic link [and subscript ^sub^ text](https://example.org)*.
             """,
             """
             <ul>
-                <li><strong>Bold link <a href="https://example.com">with <sub>sub</sub> text</a></strong>.</li>
-                <li><em>Italic link <a href="https://example.org">and <sub>sub</sub> text</a></em>.</li>
+                <li><strong>Bold link <a href="https://example.com">with <sup>superscript</sup> text</a></strong>.</li>
+                <li><em>Italic link <a href="https://example.org">and subscript <sub>sub</sub> text</a></em>.</li>
             </ul>
             """,
             ConfigureExpectedNode: static rootNode => {
@@ -168,7 +135,7 @@ public static class SubScriptDataSources {
                 IMarkdownSyntaxNode link = bold.AddLink();
                 link.WithAttribute(MarkdownAttribute.LinkHref, "https://example.com");
                 link.WithContent("with ");
-                link.AddSubscript("sub");
+                link.AddSuperscript("superscript");
                 link.WithContent(" text");
                 item1.WithContent(".");
 
@@ -177,7 +144,7 @@ public static class SubScriptDataSources {
                 italic.WithContent("Italic link ");
                 IMarkdownSyntaxNode link2 = italic.AddLink();
                 link2.WithAttribute(MarkdownAttribute.LinkHref, "https://example.org");
-                link2.WithContent("and ");
+                link2.WithContent("and subscript ");
                 link2.AddSubscript("sub");
                 link2.WithContent(" text");
                 item2.WithContent(".");
@@ -185,13 +152,20 @@ public static class SubScriptDataSources {
         );
 
         yield return static () => new MarkdownTestDto(SectionName,
-            "^subscript with ^^superscript^^ inside^",
-            "<p><sub>subscript with <sup>superscript</sup> inside</sub></p>",
+            "Complex nesting: **Bold ^subscript ^^with superscript^^ inside^ and ^^superscript ^with subscript^ inside^^**",
+            "<p>Complex nesting: <strong>Bold <sub>subscript <sup>with superscript</sup> inside</sub> and <sup>superscript <sub>with subscript</sub> inside</sup></strong></p>",
             ConfigureExpectedNode: static rootNode => {
                 IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                IMarkdownSyntaxNode sub = paragraph.AddSubscript("subscript with ");
-                sub.AddSuperscript("superscript");
+                paragraph.WithContent("Complex nesting: ");
+                IMarkdownSyntaxNode bold = paragraph.AddBold();
+                bold.WithContent("Bold ");
+                IMarkdownSyntaxNode sub = bold.AddSubscript("subscript ");
+                sub.AddSuperscript("with superscript");
                 sub.WithContent(" inside");
+                bold.WithContent(" and ");
+                IMarkdownSyntaxNode super = bold.AddSuperscript("superscript ");
+                super.AddSubscript("with subscript");
+                super.WithContent(" inside");
             }
         );
     }
