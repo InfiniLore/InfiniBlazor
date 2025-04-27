@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown.Processors;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Immutable;
 
@@ -12,13 +11,12 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MarkdownParser<TInput, TOutput>(
-    IServiceProvider serviceProvider,
     ILogger<MarkdownParser<TInput, TOutput>> logger,
     IMarkdownSyntaxTreeParser<TInput> nodeTreeParser,
+    IMarkdownSyntaxTreeConverter<TOutput> converter,
     IEnumerable<IMarkdownInputProcessor<TInput>> inputProcessors,
     IEnumerable<IMarkdownPostProcessor<TInput>> postProcessors,
     IEnumerable<IMarkdownOutputProcessor<TOutput>> outputProcessors
-    
 ) : IMarkdownParser<TInput, TOutput> {
     
     private readonly ImmutableArray<IMarkdownInputProcessor<TInput>> InputProcessors = inputProcessors.ToImmutableArray();
@@ -32,11 +30,6 @@ public class MarkdownParser<TInput, TOutput>(
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public async ValueTask<TOutput?> TryParseAsync(TInput input, CancellationToken ct = default) {
-        if (serviceProvider.GetService<IMarkdownSyntaxTreeConverter<TOutput>>() is not {} converter) {
-            logger.LogWarning("No converter found for type {Type}.", typeof(TOutput));
-            return default;
-        }
-        
         MarkdownSyntaxTree nodeTree = PoolCache.MarkdownSyntaxTreePool.Get();
 
         try {
@@ -77,6 +70,7 @@ public class MarkdownParser<TInput, TOutput>(
             PoolCache.MarkdownSyntaxTreePool.Return(nodeTree);
         }
     }
+    
     private async ValueTask<TInput?> ExecuteInputProcessorsAsync(TInput processedInput, CancellationToken ct) {
         int count = InputProcessors.Length;
         TInput? inputProcessed = processedInput;
