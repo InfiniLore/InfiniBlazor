@@ -9,7 +9,7 @@ namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[SanitizedDiDataSource]
+[DiSanitizedDataSource]
 public class SanitizedMarkdownParserTests(IHtmlSanitizer sanitizer, IMarkdownParser<string, string> parser, IMarkdownParser<ITextSource, string> textSourceParser) {
 
     [Test]
