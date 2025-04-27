@@ -22,8 +22,7 @@ public static class PoolCache {
     public static readonly ObjectPool<MarkdownSyntaxNode> MdNodePool = CreateResettablePool<MarkdownSyntaxNode>(256);
     public static readonly ObjectPool<Stack<MarkdownSyntaxNode>> MdNodeStackPool = CreateStackPool<MarkdownSyntaxNode>(16);
     public static readonly ObjectPool<MarkdownSyntaxTree> MdNodeTreePool = CreateResettablePool<MarkdownSyntaxTree>(8);
-    public static readonly ObjectPool<Dictionary<MarkdownAttribute, string>> AttributePool = CreateDictionaryPool<MarkdownAttribute, string>(16);
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
