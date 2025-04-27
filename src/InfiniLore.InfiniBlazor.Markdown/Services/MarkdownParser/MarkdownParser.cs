@@ -48,7 +48,7 @@ public class MarkdownParser<TInput, TOutput>(
             }
 
             await nodeTreeParser.ParseToNodeTreeAsync(processedInput, nodeTree, ct);
-            if (HasPostProcessors && !await ExecutePostProcessorsAsync(input, nodeTree)) return default;
+            if (HasPostProcessors && !await ExecutePostProcessorsAsync(input, nodeTree, ct)) return default;
             ct.ThrowIfCancellationRequested();
 
             TOutput output = await converter.ConvertAsync(nodeTree, ct);
@@ -94,13 +94,13 @@ public class MarkdownParser<TInput, TOutput>(
         return inputProcessed;
     }
     
-    private async ValueTask<bool> ExecutePostProcessorsAsync(TInput input, IMarkdownSyntaxTree syntaxTree) {
+    private async ValueTask<bool> ExecutePostProcessorsAsync(TInput input, IMarkdownSyntaxTree syntaxTree, CancellationToken ct) {
         int count = PostProcessors.Length;
         for (int i = 0; i < count; i++) {
             IMarkdownPostProcessor<TInput> processor = PostProcessors[i];
             
             // ReSharper disable once InvertIf 
-            if (!await processor.TryProcessAsync(input, syntaxTree)) {
+            if (!await processor.TryProcessAsync(input, syntaxTree, ct)) {
                 logger.LogWarning("PostProcessor {processor} failed.", processor.GetType());
                 return false;
             }
