@@ -25,9 +25,9 @@ public class MarkdownParser<TInput, TOutput>(
     private readonly ImmutableArray<IMarkdownInputProcessor<TInput>> InputProcessors = inputProcessors.ToImmutableArray();
     private readonly ImmutableArray<IMarkdownPostProcessor<TInput>> PostProcessors = postProcessors.ToImmutableArray();
     private readonly ImmutableArray<IMarkdownOutputProcessor<TOutput>> OutputProcessors = outputProcessors.ToImmutableArray();
-    private bool? _hasInputProcessors;
-    private bool? _hasPostProcessors;
-    private bool? _hasOutputProcessors;
+    private bool HasInputProcessors => InputProcessors.Length > 0;
+    private bool HasPostProcessors => PostProcessors.Length > 0;
+    private bool HasOutputProcessors => OutputProcessors.Length > 0;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -62,9 +62,9 @@ public class MarkdownParser<TInput, TOutput>(
             PoolCache.MdNodeTreePool.Return(nodeTree);
         }
     }
+    
     private bool TryExecuteInputProcessors([DisallowNull] ref TInput? processedInput) {
-        bool state = _hasInputProcessors ??= !InputProcessors.IsEmpty();
-        if (!state) return true; // Skip
+        if (!HasInputProcessors) return true; // Skip
 
         int count = InputProcessors.Length;
         for (int i = 0; i < count; i++) {
@@ -81,8 +81,7 @@ public class MarkdownParser<TInput, TOutput>(
     }
     
     private bool TryExecutePostProcessors(TInput input, IMarkdownSyntaxTree syntaxTree) {
-        bool state = _hasPostProcessors ??= !PostProcessors.IsEmpty();
-        if (!state) return true; // Skip
+        if (!HasPostProcessors) return true; // Skip
 
         int count = PostProcessors.Length;
         for (int i = 0; i < count; i++) {
@@ -99,8 +98,7 @@ public class MarkdownParser<TInput, TOutput>(
     }
     
     private bool TryExecuteOutputProcessors( [DisallowNull] ref TOutput? output) {
-        bool state = _hasOutputProcessors ??= !OutputProcessors.IsEmpty();
-        if (!state) return true; // Skip
+        if (!HasOutputProcessors) return true; // Skip
 
         int count = OutputProcessors.Length;
         for (int i = 0; i < count; i++) {
