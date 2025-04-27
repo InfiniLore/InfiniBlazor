@@ -12,10 +12,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
     private readonly Stack<MarkdownFragment> _stack = new();
     public IMarkdownSyntaxTree NodeTree { get; set; } = null!;
-
-    public bool TryPopDto([NotNullWhen(true)] out MarkdownFragment? dto)
-        => _stack.TryPop(out dto);
-
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -79,6 +76,9 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
     }
     #endregion
 
+    public bool TryPopDto([NotNullWhen(true)] out MarkdownFragment? dto)
+        => _stack.TryPop(out dto);
+    
     public bool TryReset() {
         while (_stack.TryPop(out MarkdownFragment? fragment)) {
             PoolCache.MarkdownFragmentPool.Return(fragment);// Makes sure we clean everything
