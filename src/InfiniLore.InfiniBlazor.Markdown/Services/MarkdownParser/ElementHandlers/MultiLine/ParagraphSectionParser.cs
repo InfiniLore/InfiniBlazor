@@ -24,6 +24,7 @@ public class ParagraphHandler : IMarkdownElementHandler {
         HandlerOrigin origin,
         CancellationToken ct = default
     ) {
+        // ReSharper disable once DuplicatedSequentialIfBodies
         if (!entireMatch.Groups[PId].TryGetValue(out string? paragraph)) return ValueTask.CompletedTask;
         if (paragraph.IsNullOrWhiteSpace()) return ValueTask.CompletedTask;
 

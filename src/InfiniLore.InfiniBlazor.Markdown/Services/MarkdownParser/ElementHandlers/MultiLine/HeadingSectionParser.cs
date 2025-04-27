@@ -25,6 +25,7 @@ public class HeadingHandler : IMarkdownElementHandler {
         HandlerOrigin origin,
         CancellationToken ct = default
     ) {
+        // ReSharper disable once DuplicatedSequentialIfBodies
         if (!entireMatch.Groups[HLevelId].TryGetLength(out int headingLevel)) return ValueTask.CompletedTask;
         if (!entireMatch.Groups[HTextId].TryGetValue(out string? headerText)) return ValueTask.CompletedTask;
 

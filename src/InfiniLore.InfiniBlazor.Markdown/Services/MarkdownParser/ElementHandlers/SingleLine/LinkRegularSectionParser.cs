@@ -28,6 +28,7 @@ public class LinkRegularHandler : IMarkdownElementHandler {
         HandlerOrigin origin,
         CancellationToken ct = default
     ) {
+        // ReSharper disable once DuplicatedSequentialIfBodies
         if (!entireMatch.Groups[LrTextId].TryGetValue(out string? linkText)) return ValueTask.CompletedTask;
         if (!entireMatch.Groups[LrHrefId].TryGetValue(out string? linkHref)) return ValueTask.CompletedTask;
 
