@@ -1,12 +1,10 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Diagnostics.CodeAnalysis;
-
 namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMarkdownParser<in TInput, TOutput> {
-    bool TryParse(TInput markdown, [NotNullWhen(true)] out TOutput? output);
+    ValueTask<TOutput?> TryParseAsync(TInput markdown, CancellationToken ct = default);
 }

@@ -6,7 +6,6 @@ using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
 
 namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -32,63 +31,67 @@ public class MarkdownParser<TInput, TOutput>(
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public bool TryParse(TInput input, [NotNullWhen(true)] out TOutput? output) {
-        output = default;
-
+    public async ValueTask<TOutput?> TryParseAsync(TInput input, CancellationToken ct = default) {
         if (serviceProvider.GetService<IMarkdownSyntaxTreeConverter<TOutput>>() is not {} converter) {
             logger.LogWarning("No converter found for type {Type}.", typeof(TOutput));
-            return false;
+            return default;
         }
         
         MarkdownSyntaxTree nodeTree = PoolCache.MdNodeTreePool.Get();
 
         try {
             TInput? processedInput = input;
-            if (!TryExecuteInputProcessors(ref processedInput)) return false;
+            if (HasInputProcessors) {
+                processedInput = await ExecuteInputProcessorsAsync(processedInput, ct);
+                if (processedInput is null) return default;
+            }
             
-            nodeTreeParser.ParseToNodeTree(processedInput!, nodeTree);
-            if (!TryExecutePostProcessors(input, nodeTree)) return false;
+            await nodeTreeParser.ParseToNodeTreeAsync(processedInput, nodeTree, ct);
+            if (HasPostProcessors && !await ExecutePostProcessorsAsync(input, nodeTree)) return default;
             
-            output = converter.Convert(nodeTree);
-            if (!TryExecuteOutputProcessors(ref output)) return false;
+            TOutput output = await converter.ConvertAsync(nodeTree, ct);
+            TOutput? processedOutput = output;
             
-            return output is not null;
+            // ReSharper disable once InvertIf
+            if (HasOutputProcessors) {
+                processedOutput = await ExecuteOutputProcessors(processedOutput, ct);
+                if (processedOutput is null) return default;
+            }
+            
+            return processedOutput;
         }
         catch (Exception e) {
             logger.LogError(e, "Error parsing markdown.");
-            return false;
+            return default;
         }
         finally {
             PoolCache.MdNodeTreePool.Return(nodeTree);
         }
     }
-    
-    private bool TryExecuteInputProcessors([DisallowNull] ref TInput? processedInput) {
-        if (!HasInputProcessors) return true; // Skip
-
+    private async ValueTask<TInput?> ExecuteInputProcessorsAsync(TInput processedInput, CancellationToken ct) {
         int count = InputProcessors.Length;
+        TInput? inputProcessed = processedInput;
         for (int i = 0; i < count; i++) {
             IMarkdownInputProcessor<TInput> processor = InputProcessors[i];
+            inputProcessed = await processor.TryProcessInput(inputProcessed, ct);
             
             // ReSharper disable once InvertIf
-            if (!processor.TryProcessInput(processedInput, out processedInput)) {
+            if (inputProcessed is null) {
                 logger.LogWarning("Input Processor {processor} failed.", processor.GetType());
-                return false;
+                return default;
             }
         }
 
-        return true;
+        return inputProcessed;
     }
     
-    private bool TryExecutePostProcessors(TInput input, IMarkdownSyntaxTree syntaxTree) {
-        if (!HasPostProcessors) return true; // Skip
-
+    private async ValueTask<bool> ExecutePostProcessorsAsync(TInput input, IMarkdownSyntaxTree syntaxTree) {
         int count = PostProcessors.Length;
         for (int i = 0; i < count; i++) {
             IMarkdownPostProcessor<TInput> processor = PostProcessors[i];
             
-            // ReSharper disable once InvertIf
-            if (!processor.TryProcess(input, syntaxTree)) {
+            // ReSharper disable once InvertIf 
+            if (!await processor.TryProcessAsync(input, syntaxTree)) {
                 logger.LogWarning("PostProcessor {processor} failed.", processor.GetType());
                 return false;
             }
@@ -97,20 +100,20 @@ public class MarkdownParser<TInput, TOutput>(
         return true;
     }
     
-    private bool TryExecuteOutputProcessors([DisallowNull] ref TOutput? output) {
-        if (!HasOutputProcessors) return true; // Skip
-
+    private async ValueTask<TOutput?> ExecuteOutputProcessors(TOutput output, CancellationToken ct) {
         int count = OutputProcessors.Length;
+        TOutput? outputProcessed = output;
         for (int i = 0; i < count; i++) {
             IMarkdownOutputProcessor<TOutput> processor = OutputProcessors[i];
+            outputProcessed = await processor.TryProcessOutputAsync(output, ct);
             
             // ReSharper disable once InvertIf
-            if (!processor.TryProcessOutput(output, out output)) {
+            if (outputProcessed is null) {
                 logger.LogWarning("OutputProcessor {processor} failed.", processor.GetType());
-                return false;
+                return default;
             }
         }
         
-        return true;
+        return outputProcessed;
     }
 }

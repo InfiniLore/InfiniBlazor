@@ -19,9 +19,9 @@ public class LinkNestedHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
-        if (!entireMatch.Groups[LnTextId].TryGetValue(out string? linkText)) return;
-        if (!entireMatch.Groups[LnHrefId].TryGetValue(out string? linkHref)) return;
+    public ValueTask HandleMatchAsync(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin, CancellationToken ct = default) {
+        if (!entireMatch.Groups[LnTextId].TryGetValue(out string? linkText)) return ValueTask.CompletedTask;
+        if (!entireMatch.Groups[LnHrefId].TryGetValue(out string? linkHref)) return ValueTask.CompletedTask;
 
         if (entireMatch.Groups[LnBangId].Success) {
             IMarkdownSyntaxNode imgNode = currentNode.AddChildNode(MarkdownElement.Image);
@@ -32,12 +32,13 @@ public class LinkNestedHandler : IMarkdownElementHandler {
                 imgNode.WithAttribute(MarkdownAttribute.ImageTitle, altTextValue);
             }
 
-            return;
+            return ValueTask.CompletedTask;
         }
 
         IMarkdownSyntaxNode linkNode = currentNode.AddChildNode(MarkdownElement.Link);
         linkNode.WithAttribute(MarkdownAttribute.LinkHref, linkHref);
 
         engine.AddSingleLineMatchesToStack(linkText, linkNode, origin);
+        return ValueTask.CompletedTask;
     }
 }

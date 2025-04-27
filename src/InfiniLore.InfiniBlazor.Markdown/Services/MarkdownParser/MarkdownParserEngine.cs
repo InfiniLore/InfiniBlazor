@@ -24,24 +24,20 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
         MatchCollection matches = MarkdownRegexLib.MultilineStructuresRegex.Matches(input);
         int count = matches.Count;
 
-        // Match[] matchArray = ArrayPool<Match>.Shared.Rent(count);
-        // matches.CopyTo(matchArray, 0);
+        // ArrayPooling this is not needed, ensuring capacity should do it
         _stack.EnsureCapacity(_stack.Count + count);
 
         // Process matches in reverse order for _stack
         for (int i = count - 1; i >= 0; i--) {
             PushMatchToStack(matches[i], node, origin);
         }
-
-        // ArrayPool<Match>.Shared.Return(matchArray);
     }
 
     public void AddSingleLineMatchesToStack(string input, IMarkdownSyntaxNode node, HandlerOrigin origin) {
         MatchCollection matches = MarkdownRegexLib.SinglelineStructuresRegex.Matches(input);
         int count = matches.Count;
 
-        // Match[] matchArray = ArrayPool<Match>.Shared.Rent(count);
-        // matches.CopyTo(matchArray, 0);
+        // ArrayPooling this is not needed, ensuring capacity should do it
         _stack.EnsureCapacity(_stack.Count + count);
 
         int currentIndex = input.Length;
@@ -65,8 +61,6 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
             // Handle any remaining text before the first match
             PushContentToStack(input[..currentIndex], node, origin);
         }
-
-        // ArrayPool<Match>.Shared.Return(matchArray);
     }
 
     public void PushContentToStack(string content, IMarkdownSyntaxNode currentNode, HandlerOrigin origin)

@@ -20,9 +20,9 @@ public class LinkRegularHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
-        if (!entireMatch.Groups[LrTextId].TryGetValue(out string? linkText)) return;
-        if (!entireMatch.Groups[LrHrefId].TryGetValue(out string? linkHref)) return;
+    public ValueTask HandleMatchAsync(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin, CancellationToken ct = default) {
+        if (!entireMatch.Groups[LrTextId].TryGetValue(out string? linkText)) return ValueTask.CompletedTask;
+        if (!entireMatch.Groups[LrHrefId].TryGetValue(out string? linkHref)) return ValueTask.CompletedTask;
 
         if (entireMatch.Groups[LrBangId].Success) {
             IMarkdownSyntaxNode imgNode = currentNode.AddChildNode(MarkdownElement.Image);
@@ -33,12 +33,13 @@ public class LinkRegularHandler : IMarkdownElementHandler {
                 imgNode.WithAttribute(MarkdownAttribute.ImageTitle, altTextValue);
             }
 
-            return;
+            return ValueTask.CompletedTask;
         }
 
         IMarkdownSyntaxNode linkNode = currentNode.AddChildNode(MarkdownElement.Link);
         linkNode.WithAttribute(MarkdownAttribute.LinkHref, linkHref);
 
         engine.AddSingleLineMatchesToStack(linkText, linkNode, origin | SkipOnOrigin);
+        return ValueTask.CompletedTask;
     }
 }

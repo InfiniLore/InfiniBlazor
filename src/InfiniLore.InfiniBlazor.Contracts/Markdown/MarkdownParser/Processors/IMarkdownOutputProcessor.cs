@@ -9,5 +9,5 @@ namespace InfiniLore.InfiniBlazor.Markdown.Processors;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMarkdownOutputProcessor<T> {
-    public bool TryProcessOutput(T output,[NotNullWhen(true)] out T? refinedOutput);
+    public ValueTask<T?> TryProcessOutputAsync(T output, CancellationToken ct = default);
 }

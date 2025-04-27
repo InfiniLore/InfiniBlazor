@@ -41,10 +41,9 @@ public class SanitizedMarkdownParserTests(IMarkdownParser<string, string> parser
         // Arrange
 
         // Act
-        bool result = parser.TryParse(dto.Markdown, out string? output);
+        string? output = await parser.TryParseAsync(dto.Markdown);
 
         // Assert
-        await Assert.That(result).IsTrue();
         await Assert.That(output)
             .IsNotNullOrWhitespace()
             .IsEqualTo(sanitizer.Sanitize(dto.ExpectedStringOutput)).IgnoringWhitespace();

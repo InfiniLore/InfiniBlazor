@@ -44,7 +44,7 @@ public class MarkdownSyntaxTreeConverterTests(IMarkdownSyntaxTreeConverter<strin
         MarkdownSyntaxTree nodeTree = MarkdownSyntaxTree.WithRootNode(dto.ExpectedNode);
         
         // Act
-        string output = toStringConverter.Convert(nodeTree);
+        string output = await toStringConverter.ConvertAsync(nodeTree);
 
         // Assert
         await Assert.That(output).IsEqualTo(dto.ExpectedStringOutput).IgnoringWhitespace();

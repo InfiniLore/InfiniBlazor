@@ -45,9 +45,10 @@ public class MarkdownBenchmarks {
 
     // [Benchmark(OperationsPerInvoke = 1000)]
     [Benchmark(Baseline = true)]
-    public string RenderMarkdown() {
+    public async ValueTask<string> RenderMarkdown() {
         string input = Markdown;
-        if(!Parser.TryParse(input, out string? output)) throw new InvalidOperationException("The Markdown input should not be empty.");
+        string? output = await Parser.TryParseAsync(input);
+        if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 

@@ -21,7 +21,7 @@ public class HtmlBodyHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+    public ValueTask HandleMatchAsync(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin, CancellationToken ct = default) {
         if (!origin.HasFlag(HandlerOrigin.PreserveHtml)) {
             currentNode = currentNode.AddChildNode(MarkdownElement.Paragraph);
         }
@@ -46,5 +46,6 @@ public class HtmlBodyHandler : IMarkdownElementHandler {
         if (entireMatch.Groups[HtmlPreId].TryGetValue(out string? pre)) {
             engine.AddSingleLineMatchesToStack(pre, currentNode, origin);
         }
+        return ValueTask.CompletedTask;
     }
 }

@@ -7,5 +7,5 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMarkdownSyntaxTreeParser<in TInput> {
-    void ParseToNodeTree(TInput input, IMarkdownSyntaxTree nodeTree);
+    ValueTask ParseToNodeTreeAsync(TInput input, IMarkdownSyntaxTree nodeTree, CancellationToken ct = default);
 }

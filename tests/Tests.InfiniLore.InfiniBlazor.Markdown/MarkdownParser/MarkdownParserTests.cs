@@ -40,10 +40,9 @@ public class MarkdownParserTests(IMarkdownParser<string, string> parser, IMarkdo
         // Arrange
 
         // Act
-        bool result = parser.TryParse(dto.Markdown, out string? output);
+        string? output = await parser.TryParseAsync(dto.Markdown);
 
-        // Assert
-        await Assert.That(result).IsTrue();
+        // Assert;
         await Assert.That(output)
             .IsNotNullOrWhitespace()
             .IsEqualTo(dto.ExpectedStringOutput).IgnoringWhitespace();
@@ -82,10 +81,9 @@ public class MarkdownParserTests(IMarkdownParser<string, string> parser, IMarkdo
         };
 
         // Act
-        bool result = textSourceParser.TryParse(textSource, out string? output);
+        string? output = await textSourceParser.TryParseAsync(textSource);
 
         // Assert
-        await Assert.That(result).IsTrue();
         await Assert.That(output)
             .IsNotNullOrWhitespace()
             .IsEqualTo(dto.ExpectedStringOutput).IgnoringWhitespace();

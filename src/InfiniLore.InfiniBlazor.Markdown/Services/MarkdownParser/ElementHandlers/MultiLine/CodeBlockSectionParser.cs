@@ -19,8 +19,8 @@ public class CodeBlockHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
-        if (!entireMatch.Groups[CBodyId].TryGetValueSpan(out ReadOnlySpan<char> codeBlockBody)) return;
+    public ValueTask HandleMatchAsync(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin, CancellationToken ct = default) {
+        if (!entireMatch.Groups[CBodyId].TryGetValueSpan(out ReadOnlySpan<char> codeBlockBody)) return ValueTask.CompletedTask;
 
         IMarkdownSyntaxNode codeNode = currentNode.AddChildNode(MarkdownElement.CodeBlock);
 
@@ -28,7 +28,8 @@ public class CodeBlockHandler : IMarkdownElementHandler {
         if (!langNameValue.IsEmpty()) codeNode.WithAttribute(MarkdownAttribute.CodeLanguage, langNameValue);
 
         string content = ProcessCodeBlockContent(ref codeBlockBody);
-        codeNode.WithContent(content);
+        codeNode.WithContent(content);return ValueTask.CompletedTask;
+        
     }
 
     private static string ProcessCodeBlockContent(ref ReadOnlySpan<char> content) {

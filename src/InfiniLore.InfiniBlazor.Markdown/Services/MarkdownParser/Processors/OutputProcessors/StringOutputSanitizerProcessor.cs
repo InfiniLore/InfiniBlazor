@@ -4,7 +4,6 @@
 using Ganss.Xss;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics.CodeAnalysis;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Processors.OutputProcessors;
 
@@ -13,15 +12,14 @@ namespace InfiniLore.InfiniBlazor.Markdown.Processors.OutputProcessors;
 // ---------------------------------------------------------------------------------------------------------------------
 [UsedImplicitly]
 public class StringOutputSanitizerProcessor(IHtmlSanitizer sanitizer, ILogger<StringOutputSanitizerProcessor> logger) : IMarkdownOutputProcessor<string> {
-    public bool TryProcessOutput(string output,[NotNullWhen(true)] out string? refinedOutput) {
+    public ValueTask<string?> TryProcessOutputAsync(string output, CancellationToken ct = default) {
         try {
-            refinedOutput = sanitizer.Sanitize(output);
-            return true;
+            string refinedOutput = sanitizer.Sanitize(output);
+            return ValueTask.FromResult<string?>(refinedOutput);
         }
         catch (Exception e) {
             logger.LogError(e, "Sanitize failed");
-            refinedOutput = null;
-            return false;
+            return ValueTask.FromResult<string?>(null);
         }
     }
 }

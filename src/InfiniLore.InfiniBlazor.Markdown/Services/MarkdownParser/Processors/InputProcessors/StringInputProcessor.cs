@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using JetBrains.Annotations;
-using System.Diagnostics.CodeAnalysis;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Processors.InputProcessors;
 
@@ -11,10 +10,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.Processors.InputProcessors;
 // ---------------------------------------------------------------------------------------------------------------------
 [UsedImplicitly]
 public class StringInputProcessor : IMarkdownInputProcessor<string> {
-    public bool TryProcessInput(string input, [NotNullWhen(true)] out string? output) {
-        output = null;
-        if (input.IsNullOrWhiteSpace()) return false;
-        output = input.Trim();
-        return true;
+    public ValueTask<string?> TryProcessInput(string input, CancellationToken ct = default) {
+        if (input.IsNullOrWhiteSpace()) return ValueTask.FromResult<string?>(input);
+        string output = input.Trim();
+        return ValueTask.FromResult<string?>(output);
     }
 }

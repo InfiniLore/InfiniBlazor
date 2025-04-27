@@ -60,7 +60,8 @@ public class SanitizedDiDataSourceAttribute : DependencyInjectionDataSourceAttri
                     .AddPostProcessor<StringOutputSanitizerProcessor>();
 
                 config.AddMarkdownParser<ITextSource, string>()
-                    .AddPreProcessor<TextSourceInputProcessor>();
+                    .AddPreProcessor<TextSourceInputProcessor>()
+                    .AddPostProcessor<StringOutputSanitizerProcessor>();
             }));
 
         return services.BuildServiceProvider();
