@@ -50,8 +50,8 @@ public class MarkdownParser<TInput, TOutput>(
             if (!TryExecutePostProcessors(input, nodeTree)) return false;
             
             output = converter.Convert(nodeTree);
-
             if (!TryExecuteOutputProcessors(ref output)) return false;
+            
             return output is not null;
         }
         catch (Exception e) {
@@ -97,7 +97,7 @@ public class MarkdownParser<TInput, TOutput>(
         return true;
     }
     
-    private bool TryExecuteOutputProcessors( [DisallowNull] ref TOutput? output) {
+    private bool TryExecuteOutputProcessors([DisallowNull] ref TOutput? output) {
         if (!HasOutputProcessors) return true; // Skip
 
         int count = OutputProcessors.Length;
