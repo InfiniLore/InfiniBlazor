@@ -12,21 +12,21 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMarkdownSyntaxTreeParser<string>>]
-public sealed class MarkdownSyntaxTreeParser(IServiceProvider serviceProvider, ILogger<MarkdownSyntaxTreeParser> logger) : IMarkdownSyntaxTreeParser<string> {
-    private readonly FrozenDictionary<string, IMarkdownElementHandler> _elementHandlers = ToFrozenDictionary<IMarkdownElementHandler>(logger, serviceProvider);
+public class StringMarkdownSyntaxTreeParser(IServiceProvider serviceProvider, ILogger<StringMarkdownSyntaxTreeParser> logger) : IMarkdownSyntaxTreeParser<string> {
+    private readonly FrozenDictionary<string, IMarkdownElementHandler> _elementHandlers = ToFrozenDictionary(logger, serviceProvider);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region Constructor Helpers
-    private static FrozenDictionary<string, T> ToFrozenDictionary<T>(ILogger logger, IServiceProvider serviceProvider) {
+    private static FrozenDictionary<string, IMarkdownElementHandler> ToFrozenDictionary(ILogger logger, IServiceProvider serviceProvider) {
         ReadOnlySpan<string> keyNames = MarkdownRegexLib.MarkdownStructureGroupNames.AsSpan();
-        var dictionaryBuilder = new Dictionary<string, T>(keyNames.Length);
+        var dictionaryBuilder = new Dictionary<string, IMarkdownElementHandler>(keyNames.Length);
 
         for (int index = keyNames.Length - 1; index >= 0; index--) {
             string groupName = keyNames[index];
-            if (serviceProvider.GetKeyedService<T>(groupName) is not {} service) {
-                logger.LogWarning("No service found for group name '{groupName}' for type '{name}'.", groupName, typeof(T).Name);
+            if (serviceProvider.GetKeyedService<IMarkdownElementHandler>(groupName) is not {} service) {
+                logger.LogWarning("No MarkdownElementHandler service found for group name '{groupName}'", groupName);
                 continue;
             }
 

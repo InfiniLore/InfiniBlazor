@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.Config;
 using InfiniLore.InfiniBlazor.Markdown.Processors.InputProcessors;
 using InfiniLore.InfiniBlazor.Markdown.Processors.OutputProcessors;
@@ -29,6 +30,9 @@ public class DiDataSourceAttribute : DependencyInjectionDataSourceAttribute<ISer
             static config => {
                 config.AddMarkdownParser<string,string>()
                     .AddPreProcessor<StringInputProcessor>();
+
+                config.AddMarkdownParser<ITextSource, string>()
+                    .AddPreProcessor<TextSourceInputProcessor>();
             }));
 
         return services.BuildServiceProvider();
@@ -54,6 +58,9 @@ public class SanitizedDiDataSourceAttribute : DependencyInjectionDataSourceAttri
                 config.AddMarkdownParser<string, string>()
                     .AddPreProcessor<StringInputProcessor>()
                     .AddPostProcessor<StringOutputSanitizerProcessor>();
+
+                config.AddMarkdownParser<ITextSource, string>()
+                    .AddPreProcessor<TextSourceInputProcessor>();
             }));
 
         return services.BuildServiceProvider();
