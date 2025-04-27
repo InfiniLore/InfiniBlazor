@@ -3,11 +3,11 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using System.Diagnostics.CodeAnalysis;
 
-namespace InfiniLore.InfiniBlazor.Markdown;
+namespace InfiniLore.InfiniBlazor.Markdown.Processors;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMarkdownPostProcessor<T> {
-    public bool TryProcess(T input,[NotNullWhen(true)] out T? output);
+public interface IMarkdownOutputProcessor<T> {
+    public bool TryProcessOutput(T output,[NotNullWhen(true)] out T? refinedOutput);
 }

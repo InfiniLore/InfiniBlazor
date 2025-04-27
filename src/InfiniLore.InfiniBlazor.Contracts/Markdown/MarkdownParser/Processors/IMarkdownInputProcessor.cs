@@ -1,20 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using JetBrains.Annotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace InfiniLore.InfiniBlazor.Markdown.PreProcessors;
+namespace InfiniLore.InfiniBlazor.Markdown.Processors;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[UsedImplicitly]
-public class StringInputProcessor : IMarkdownPreProcessor<string> {
-    public bool TryProcess(string input, [NotNullWhen(true)] out string? output) {
-        output = null;
-        if (input.IsNullOrWhiteSpace()) return false;
-        output = input.Trim();
-        return true;
-    }
+public interface IMarkdownInputProcessor<T> {
+    public bool TryProcessInput(T input,[NotNullWhen(true)] out T? output);
 }

@@ -3,8 +3,8 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using Example.Components;
 using InfiniLore.InfiniBlazor.Markdown.Config;
-using InfiniLore.InfiniBlazor.Markdown.PostProcessors;
-using InfiniLore.InfiniBlazor.Markdown.PreProcessors;
+using InfiniLore.InfiniBlazor.Markdown.Processors.InputProcessors;
+using InfiniLore.InfiniBlazor.Markdown.Processors.OutputProcessors;
 
 namespace Example;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@ public class Program {
             config.AddMarkdown(static config => {
                 config.AddMarkdownParser<string, string>()
                     .AddPreProcessor<StringInputProcessor>()
-                    .AddPostProcessor<SanitizerPostProcessor>();
+                    .AddPostProcessor<StringOutputSanitizerProcessor>();
             });
         });
         

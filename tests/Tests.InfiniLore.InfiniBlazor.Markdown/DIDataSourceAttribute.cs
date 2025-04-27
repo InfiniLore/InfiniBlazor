@@ -2,8 +2,8 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown.Config;
-using InfiniLore.InfiniBlazor.Markdown.PostProcessors;
-using InfiniLore.InfiniBlazor.Markdown.PreProcessors;
+using InfiniLore.InfiniBlazor.Markdown.Processors.InputProcessors;
+using InfiniLore.InfiniBlazor.Markdown.Processors.OutputProcessors;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown;
@@ -53,7 +53,7 @@ public class SanitizedDiDataSourceAttribute : DependencyInjectionDataSourceAttri
             static config => {
                 config.AddMarkdownParser<string, string>()
                     .AddPreProcessor<StringInputProcessor>()
-                    .AddPostProcessor<SanitizerPostProcessor>();
+                    .AddPostProcessor<StringOutputSanitizerProcessor>();
             }));
 
         return services.BuildServiceProvider();
