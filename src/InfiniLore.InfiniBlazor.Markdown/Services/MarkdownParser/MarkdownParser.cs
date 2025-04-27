@@ -37,7 +37,7 @@ public class MarkdownParser<TInput, TOutput>(
             return default;
         }
         
-        MarkdownSyntaxTree nodeTree = PoolCache.MdNodeTreePool.Get();
+        MarkdownSyntaxTree nodeTree = PoolCache.MarkdownSyntaxTreePool.Get();
 
         try {
             TInput? processedInput = input;
@@ -65,7 +65,7 @@ public class MarkdownParser<TInput, TOutput>(
             return default;
         }
         finally {
-            PoolCache.MdNodeTreePool.Return(nodeTree);
+            PoolCache.MarkdownSyntaxTreePool.Return(nodeTree);
         }
     }
     private async ValueTask<TInput?> ExecuteInputProcessorsAsync(TInput processedInput, CancellationToken ct) {

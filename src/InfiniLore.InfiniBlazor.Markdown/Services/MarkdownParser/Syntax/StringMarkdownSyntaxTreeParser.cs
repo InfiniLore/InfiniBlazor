@@ -38,7 +38,7 @@ public class StringMarkdownSyntaxTreeParser(IServiceProvider serviceProvider, IL
     #endregion
     
     public async ValueTask ParseToNodeTreeAsync(string markdown, IMarkdownSyntaxTree nodeTree, CancellationToken ct = default) {
-        MarkdownParserEngine runningParser = PoolCache.RunningMarkdownParserPool.Get();
+        MarkdownParserEngine runningParser = PoolCache.MarkdownParserEnginePool.Get();
 
         try {
             runningParser.NodeTree = nodeTree;
@@ -65,7 +65,7 @@ public class StringMarkdownSyntaxTreeParser(IServiceProvider serviceProvider, IL
             }
         }
         finally {
-            PoolCache.RunningMarkdownParserPool.Return(runningParser);
+            PoolCache.MarkdownParserEnginePool.Return(runningParser);
         }
     }
 

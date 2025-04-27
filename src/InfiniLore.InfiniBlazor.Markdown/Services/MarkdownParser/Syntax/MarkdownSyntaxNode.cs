@@ -52,7 +52,7 @@ public class MarkdownSyntaxNode : IMarkdownSyntaxNode, IResettable {
     }
 
     public IMarkdownSyntaxNode AddChildNode(MarkdownElement element, string? content = null) {
-        MarkdownSyntaxNode child = PoolCache.MdNodePool.Get();
+        MarkdownSyntaxNode child = PoolCache.MarkdownSyntaxNodePool.Get();
         child.Element = element;
         child.Content = content;
         child.Parent = this;

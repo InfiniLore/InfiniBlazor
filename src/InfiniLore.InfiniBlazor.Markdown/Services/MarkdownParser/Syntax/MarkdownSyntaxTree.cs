@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MarkdownSyntaxTree : IMarkdownSyntaxTree, IResettable {
-    public IMarkdownSyntaxNode RootNode { get; private set; } = PoolCache.MdNodePool.Get();
+    public IMarkdownSyntaxNode RootNode { get; private set; } = PoolCache.MarkdownSyntaxNodePool.Get();
 
     public static MarkdownSyntaxTree WithRootNode(IMarkdownSyntaxNode rootNode) {
         if (rootNode is not MarkdownSyntaxNode node) throw new ArgumentException("Root node must be of type MdNode.", nameof(rootNode));
@@ -23,7 +23,7 @@ public class MarkdownSyntaxTree : IMarkdownSyntaxTree, IResettable {
         ReadOnlySpan<MarkdownSyntaxNode> rootNodeChildren = RootNode.GetChildrenSpan<MarkdownSyntaxNode>(out int rootNodeChildCount);
         if (rootNodeChildCount == 0) yield break;// Early exit for empty tree nodes
 
-        Stack<MarkdownSyntaxVisitor> stack = PoolCache.MMarkdownSyntaxVisitorStackPool.Get();
+        Stack<MarkdownSyntaxVisitor> stack = PoolCache.MarkdownSyntaxVisitorStackPool.Get();
         try {
             // Add Root children directly to avoid an extra if call during the while loop
             for (int i = rootNodeChildCount - 1; i >= 0; i--) {
@@ -55,7 +55,7 @@ public class MarkdownSyntaxTree : IMarkdownSyntaxTree, IResettable {
         }
         finally {
             // Also handles MdNodeVisitorPool.Return(visitor) if the stack isn't empty yet
-            PoolCache.MMarkdownSyntaxVisitorStackPool.Return(stack);
+            PoolCache.MarkdownSyntaxVisitorStackPool.Return(stack);
         }
     }
 
@@ -63,8 +63,8 @@ public class MarkdownSyntaxTree : IMarkdownSyntaxTree, IResettable {
         ReadOnlySpan<MarkdownSyntaxNode> rootNodeChildren = RootNode.GetChildrenSpan<MarkdownSyntaxNode>(out int rootNodeChildCount);
         if (rootNodeChildCount == 0) yield break; // Early exit for empty trees
 
-        Stack<MarkdownSyntaxVisitor> stackCache = PoolCache.MMarkdownSyntaxVisitorStackPool.Get();
-        Stack<MarkdownSyntaxVisitor> outputStack = PoolCache.MMarkdownSyntaxVisitorStackPool.Get();
+        Stack<MarkdownSyntaxVisitor> stackCache = PoolCache.MarkdownSyntaxVisitorStackPool.Get();
+        Stack<MarkdownSyntaxVisitor> outputStack = PoolCache.MarkdownSyntaxVisitorStackPool.Get();
 
         try {
             stackCache.EnsureCapacity(rootNodeChildCount);
@@ -105,8 +105,8 @@ public class MarkdownSyntaxTree : IMarkdownSyntaxTree, IResettable {
         }
         finally {
             // Clean up both stacks
-            PoolCache.MMarkdownSyntaxVisitorStackPool.Return(stackCache);
-            PoolCache.MMarkdownSyntaxVisitorStackPool.Return(outputStack);
+            PoolCache.MarkdownSyntaxVisitorStackPool.Return(stackCache);
+            PoolCache.MarkdownSyntaxVisitorStackPool.Return(outputStack);
         }
     }
     #endregion
@@ -115,7 +115,7 @@ public class MarkdownSyntaxTree : IMarkdownSyntaxTree, IResettable {
         if (RootNode is not MarkdownSyntaxNode rootNode) return false;
 
         // Using depth-first traversal with a single stack
-        Stack<MarkdownSyntaxNode> stack = PoolCache.MdNodeStackPool.Get();
+        Stack<MarkdownSyntaxNode> stack = PoolCache.MarkdownSyntaxNodeStackPool.Get();
         try {
             ReadOnlySpan<MarkdownSyntaxNode> children = rootNode.GetChildrenSpan<MarkdownSyntaxNode>(out int childCount);
             stack.EnsureCapacity(childCount);
@@ -133,16 +133,16 @@ public class MarkdownSyntaxTree : IMarkdownSyntaxTree, IResettable {
                     stack.Push(children[i]);
                 }
 
-                PoolCache.MdNodePool.Return(node);
+                PoolCache.MarkdownSyntaxNodePool.Return(node);
             }
 
             // Finally, reset and replace the root node
-            PoolCache.MdNodePool.Return(rootNode);
-            RootNode = PoolCache.MdNodePool.Get();
+            PoolCache.MarkdownSyntaxNodePool.Return(rootNode);
+            RootNode = PoolCache.MarkdownSyntaxNodePool.Get();
             return true;
         }
         finally {
-            PoolCache.MdNodeStackPool.Return(stack);
+            PoolCache.MarkdownSyntaxNodeStackPool.Return(stack);
         }
     }
 }
