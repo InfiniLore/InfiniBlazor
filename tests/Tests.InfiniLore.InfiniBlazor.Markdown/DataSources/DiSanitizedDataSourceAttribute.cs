@@ -29,12 +29,12 @@ public class DiSanitizedDataSourceAttribute : DependencyInjectionDataSourceAttri
         services.AddInfiniBlazor(static config => config.AddMarkdown(
             static config => {
                 config.AddMarkdownParser<string, string>()
-                    .AddPreProcessor<StringInputProcessor>()
-                    .AddPostProcessor<StringOutputSanitizerProcessor>();
+                    .AddInputProcessor<StringInputProcessor>()
+                    .AddOutputProcessor<StringOutputSanitizerProcessor>();
 
                 config.AddMarkdownParser<ITextSource, string>()
-                    .AddPreProcessor<TextSourceInputProcessor>()
-                    .AddPostProcessor<StringOutputSanitizerProcessor>();
+                    .AddInputProcessor<TextSourceInputProcessor>()
+                    .AddOutputProcessor<StringOutputSanitizerProcessor>();
             }));
 
         return services.BuildServiceProvider();

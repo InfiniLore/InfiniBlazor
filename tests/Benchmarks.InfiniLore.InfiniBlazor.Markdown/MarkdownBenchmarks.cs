@@ -5,6 +5,7 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.Config;
+using InfiniLore.InfiniBlazor.Markdown.Processors.OutputProcessors;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 
@@ -17,6 +18,7 @@ namespace Benchmarks.InfiniLore.InfiniBlazor.Markdown;
 public class MarkdownBenchmarks {
     private string Markdown { get; set; } = string.Empty;
     private IMarkdownParser<string, string> Parser { get; set; } = null!;
+    private IMarkdownParser<string, string> SanitizedParser { get; set; } = null!;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -31,23 +33,34 @@ public class MarkdownBenchmarks {
         // const string url = "https://gist.githubusercontent.com/allysonsilva/85fff14a22bbdf55485be947566cc09e/raw/fa8048a906ebed3c445d08b20c9173afd1b4a1e5/Full-Markdown.md";
         // var client = new HttpClient{Timeout = TimeSpan.FromSeconds(10)};
         // HttpResponseMessage response = await client.GetAsync(url);
-        //
-        // // Check that the first line has "# Headers"
         // Markdown = await response.Content.ReadAsStringAsync();
         
+        Parser = CreateParser();
+        SanitizedParser = CreateParser(static config => {
+            config.AddMarkdownParser<string, string>()
+                .AddOutputProcessor<StringOutputSanitizerProcessor>();
+        });
+    }
+    private static IMarkdownParser<string, string> CreateParser(Action<MarkdownConfig>? configure = null) {
         var serviceCollection = new ServiceCollection();
-        serviceCollection.AddInfiniBlazor(config => config.AddMarkdown());
+        serviceCollection.AddInfiniBlazor(config => config.AddMarkdown(configure));
         serviceCollection.AddLogging();
         ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
-        Parser = serviceProvider.GetRequiredService<IMarkdownParser<string, string>>();
+        return serviceProvider.GetRequiredService<IMarkdownParser<string, string>>();
     }
 
-
-    // [Benchmark(OperationsPerInvoke = 1000)]
     [Benchmark(Baseline = true)]
     public async ValueTask<string> RenderMarkdown() {
         string input = Markdown;
         string? output = await Parser.TryParseAsync(input);
+        if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
+        return output;
+    }
+    
+    [Benchmark()]
+    public async ValueTask<string> RenderMarkdownSanitized() {
+        string input = Markdown;
+        string? output = await SanitizedParser.TryParseAsync(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }

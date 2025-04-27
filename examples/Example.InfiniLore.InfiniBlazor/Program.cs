@@ -17,8 +17,8 @@ public class Program {
         builder.Services.AddInfiniBlazor(config => {
             config.AddMarkdown(static config => {
                 config.AddMarkdownParser<string, string>()
-                    .AddPreProcessor<StringInputProcessor>()
-                    .AddPostProcessor<StringOutputSanitizerProcessor>();
+                    .AddInputProcessor<StringInputProcessor>()
+                    .AddOutputProcessor<StringOutputSanitizerProcessor>();
             });
         });
         

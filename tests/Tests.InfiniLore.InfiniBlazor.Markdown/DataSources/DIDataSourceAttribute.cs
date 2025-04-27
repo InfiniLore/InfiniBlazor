@@ -28,10 +28,10 @@ public class DiDataSourceAttribute : DependencyInjectionDataSourceAttribute<ISer
         services.AddInfiniBlazor(static config => config.AddMarkdown(
             static config => {
                 config.AddMarkdownParser<string,string>()
-                    .AddPreProcessor<StringInputProcessor>();
+                    .AddInputProcessor<StringInputProcessor>();
 
                 config.AddMarkdownParser<ITextSource, string>()
-                    .AddPreProcessor<TextSourceInputProcessor>();
+                    .AddInputProcessor<TextSourceInputProcessor>();
             }));
 
         return services.BuildServiceProvider();

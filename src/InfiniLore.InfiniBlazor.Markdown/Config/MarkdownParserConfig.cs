@@ -14,14 +14,14 @@ public class MarkdownParserConfig<TInput, TOutput>(IInfiniBlazorConfig config) {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public MarkdownParserConfig<TInput, TOutput> AddPreProcessor<TProcessor>() 
+    public MarkdownParserConfig<TInput, TOutput> AddInputProcessor<TProcessor>() 
         where TProcessor : class, IMarkdownInputProcessor<TInput> 
     {
         config.Services.AddSingleton<IMarkdownInputProcessor<TInput>, TProcessor>();
         return this;
     }
     
-    public MarkdownParserConfig<TInput, TOutput> AddPostProcessor<TProcessor>()
+    public MarkdownParserConfig<TInput, TOutput> AddOutputProcessor<TProcessor>()
         where TProcessor : class, IMarkdownOutputProcessor<TOutput> 
     {
         config.Services.AddSingleton<IMarkdownOutputProcessor<TOutput>, TProcessor>();
