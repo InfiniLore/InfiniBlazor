@@ -20,7 +20,14 @@ public class LinkRegularHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public ValueTask HandleMatchAsync(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin, CancellationToken ct = default) {
+    public ValueTask HandleMatchAsync(
+        IMarkdownParserEngine engine,
+        IMarkdownSyntaxNode currentNode,
+        Match entireMatch,
+        Group group,
+        HandlerOrigin origin,
+        CancellationToken ct = default
+    ) {
         if (!entireMatch.Groups[LrTextId].TryGetValue(out string? linkText)) return ValueTask.CompletedTask;
         if (!entireMatch.Groups[LrHrefId].TryGetValue(out string? linkHref)) return ValueTask.CompletedTask;
 
