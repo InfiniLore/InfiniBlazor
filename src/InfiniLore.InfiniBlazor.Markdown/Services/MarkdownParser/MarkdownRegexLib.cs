@@ -23,12 +23,12 @@ public static partial class MarkdownRegexLib {
         | (?<linkNested>
             (?<lnBang>!)?
             \[(?<lnText>!?\[.+?\]\(.+?\))\]
-            \((?<lnHref>.+?)(?:\s?"(?<lnTitle>[^"]*)")?\)
+            \((?<lnHref>http(?:s)?[^\)]+?)(?:\s?"(?<lnTitle>[^"]*)")?\)
           )
         | (?<linkRegular>
             (?<lrBang>!)?
             \[(?<lrText>[^\]]+?)\]
-            \((?<lrHref>http(?:\?)?[^\)]+?)(?:\s?"(?<lrTitle>[^"]*)")?\)
+            \((?<lrHref>http(?:s)?[^\)]+?)(?:\s?"(?<lrTitle>[^"]*)")?\)
           )
         | (?<tag>\#(?<tText>[\p{L}\p{N}\-_/]+))
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
