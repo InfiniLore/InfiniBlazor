@@ -44,22 +44,31 @@ public class MarkdownParser<TInput, TOutput>(
             if (HasInputProcessors) {
                 processedInput = await ExecuteInputProcessorsAsync(processedInput, ct);
                 if (processedInput is null) return default;
+                ct.ThrowIfCancellationRequested();
             }
-            
+
             await nodeTreeParser.ParseToNodeTreeAsync(processedInput, nodeTree, ct);
             if (HasPostProcessors && !await ExecutePostProcessorsAsync(input, nodeTree)) return default;
-            
+            ct.ThrowIfCancellationRequested();
+
             TOutput output = await converter.ConvertAsync(nodeTree, ct);
             TOutput? processedOutput = output;
-            
+
             // ReSharper disable once InvertIf
             if (HasOutputProcessors) {
                 processedOutput = await ExecuteOutputProcessors(processedOutput, ct);
                 if (processedOutput is null) return default;
+                ct.ThrowIfCancellationRequested();
             }
-            
+
+
             return processedOutput;
         }
+        catch (OperationCanceledException e) {
+            logger.LogError(e, "Operation cancelled");
+            return default;
+        }
+        
         catch (Exception e) {
             logger.LogError(e, "Error parsing markdown.");
             return default;
