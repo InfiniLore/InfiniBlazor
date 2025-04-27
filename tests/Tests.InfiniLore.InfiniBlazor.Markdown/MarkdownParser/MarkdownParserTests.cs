@@ -48,7 +48,6 @@ public class MarkdownParserTests(IMarkdownParser<string, string> parser, IMarkdo
             .IsEqualTo(dto.ExpectedStringOutput).IgnoringWhitespace();
     }
     
-    
     [Test]
     [MethodDataSource(typeof(AggregateDataSources), nameof(AggregateDataSources.DataSources))]
     [MethodDataSource(typeof(BlockQuoteDataSources), nameof(BlockQuoteDataSources.DataSources))]

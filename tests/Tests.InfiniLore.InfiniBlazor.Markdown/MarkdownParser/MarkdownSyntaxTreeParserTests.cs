@@ -43,7 +43,7 @@ public class MarkdownSyntaxTreeParserTests(IMarkdownSyntaxTreeParser<string> nod
         var nodeTree = new MarkdownSyntaxTree();
 
         // Act
-        nodeTreeParser.ParseToNodeTreeAsync(dto.Markdown, nodeTree);
+        await nodeTreeParser.ParseToNodeTreeAsync(dto.Markdown, nodeTree);
         Skip.When(dto.ExpectedNode == null, "The node tree is null and thus cannot be compared.");
 
         // Assert
