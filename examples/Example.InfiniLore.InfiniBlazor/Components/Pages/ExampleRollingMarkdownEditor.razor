@@ -14,31 +14,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<style>
-    .editor-container {
-        min-height: 200px;
-        border: 1px solid #ccc;
-        padding: 10px;
-    }
-
-    .paragraph-editor {
-        padding: 5px;
-        background-color: #f8f9fa;
-        border: 1px dashed #ccc;
-        margin: 5px 0;
-        white-space: pre-wrap;
-    }
-
-    .paragraph-editor ::spelling-error {
-        text-decoration: wavy red;
-        text-decoration-thickness: 2px;
-    }
-
-    .markdown-content {
-        padding: 5px;
-    }
-</style>
-
 <div class="editor-container">
     @for (int i = 0; i < Paragraphs.Count; i++) {
         int index = i;
@@ -58,31 +33,9 @@
         }
     }
 </div>
-
-
-<script>
-    window.getInnerText = (element) => element.innerText;
-    window.focusElement = (element) => {
-        element.focus();
-        const range = document.createRange();
-        const selection = window.getSelection();
-        range.selectNodeContents(element);
-        range.collapse(false);
-        selection.removeAllRanges();
-        selection.addRange(range);
-    }
-    window.setElementText = (element, text) => {
-        element.innerText = text;
-        window.focusElement(element);
-    }
-</script>
-
-
-
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
     private readonly List<string> Paragraphs = new() { "" };
     private int _activeParagraphIndex;
@@ -110,6 +63,7 @@
 
         return Task.CompletedTask;
     }
+    
     protected override async Task OnAfterRenderAsync(bool firstRender) {
         if (_pendingActivation) {
             _pendingActivation = false;
@@ -119,7 +73,7 @@
     }
 
     private Task OnParagraphBlur(int index) {
-        // If the paragraph is empty and it's not the last one, remove it
+        // If the paragraph is empty, and it's not the last one, remove it
         if (string.IsNullOrWhiteSpace(Paragraphs[index]) && Paragraphs.Count > 1) {
             Paragraphs.RemoveAt(index);
             _activeParagraphIndex = Math.Max(0, index - 1);
@@ -155,7 +109,7 @@
             // Insert new paragraphs after the current one
             Paragraphs.InsertRange(index + 1, parts.Skip(1));
 
-            // Set active paragraph to the last inserted one
+            // Set the active paragraph to the last inserted one
             _activeParagraphIndex = index + parts.Length - 1;
             await ActivateParagraph(_activeParagraphIndex);
         } else {
@@ -172,7 +126,7 @@
             if (e.ShiftKey) {
                 // For Shift+Enter, update the current paragraph with the line break
                 Paragraphs[index] = text + "\n";
-                await ActivateParagraph(index); // Stay in same paragraph
+                await ActivateParagraph(index); // Stay in the same paragraph
                 return;
             }
 
