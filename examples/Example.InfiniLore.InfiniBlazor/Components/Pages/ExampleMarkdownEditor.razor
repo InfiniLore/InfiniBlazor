@@ -2,6 +2,7 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Markdown
+@using System.Text.RegularExpressions
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -16,39 +17,68 @@
 @* <MarkdownEditor Source="@TextSource" ></MarkdownEditor> *@
 
 <style>
-    .editor {
+    .editor-container {
         min-height: 200px;
         border: 1px solid #ccc;
         padding: 10px;
+    }
+
+    .paragraph-editor {
+        padding: 5px;
+        background-color: #f8f9fa;
+        border: 1px dashed #ccc;
+        margin: 5px 0;
         white-space: pre-wrap;
     }
 
-    .editor ::spelling-error {
+    .paragraph-editor ::spelling-error {
         text-decoration: wavy red;
         text-decoration-thickness: 2px;
     }
 
-    .preview {
-        margin-top: 20px;
-        padding: 10px;
-        border: 1px solid #eee;
+    .markdown-content {
+        padding: 5px;
     }
 </style>
 
-<div class="editor"
-     contenteditable="true"
-     spellcheck="true"
-     @ref="_editableDiv"
-     @oninput="OnInput">
+<div class="editor-container">
+    @for (int i = 0; i < Paragraphs.Count; i++) {
+        int index = i;
+        if (index == _activeParagraphIndex) {
+            <div class="paragraph-editor"
+                 contenteditable="true"
+                 spellcheck="true"
+                 @ref="_editableDiv"
+                 @oninput="@(e => OnParagraphInput(e, index))"
+                 @onkeydown="@(e => OnKeyDown(e, index))"
+                 @onblur="@(() => OnParagraphBlur(index))"></div>
+
+        } else {
+            <div class="markdown-content" @onclick="@(() => ActivateParagraph(index))">
+                @((MarkupString)GetParsedParagraph(index))
+            </div>
+        }
+    }
 </div>
 
-<div class="preview">
-    @((MarkupString)ParsedMarkdown)
-</div>
 
 <script>
     window.getInnerText = (element) => element.innerText;
+    window.focusElement = (element) => {
+        element.focus();
+        const range = document.createRange();
+        const selection = window.getSelection();
+        range.selectNodeContents(element);
+        range.collapse(false);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+    window.setElementText = (element, text) => {
+        element.innerText = text;
+        window.focusElement(element);
+    }
 </script>
+
 
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -56,18 +86,130 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
-    private ITextSource TextSource { get; } = new TextSource();
+    private readonly List<string> Paragraphs = new() { "" };
+    private int _activeParagraphIndex;
     private ElementReference _editableDiv;
-    private string ParsedMarkdown { get; set; } = string.Empty;
+    private bool _isActivating;
+    private bool _pendingActivation;
+    private int _pendingIndex;
 
-    private async Task OnInput(ChangeEventArgs args) {
-        // Get the text content
-        string text = await JsRuntime.InvokeAsync<string>("getInnerText", _editableDiv);
-        TextSource.Text = text;
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private Task ActivateParagraph(int index) {
+        if (_isActivating) return Task.CompletedTask;
 
-        string? parsed = await Parser.TryParseAsync(TextSource.Text);
-        ParsedMarkdown = parsed ?? string.Empty;
+        try {
+            _isActivating = true;
+            _activeParagraphIndex = index;
+            _pendingActivation = true;
+            _pendingIndex = index;
+            StateHasChanged();
+        }
+        finally {
+            _isActivating = false;
+        }
+
+        return Task.CompletedTask;
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        if (_pendingActivation) {
+            _pendingActivation = false;
+            await Task.Delay(10);// Small delay to ensure DOM is ready
+            await JsRuntime.InvokeVoidAsync("setElementText", _editableDiv, Paragraphs[_pendingIndex]);
+        }
+    }
+
+    private Task OnParagraphBlur(int index) {
+        // If the paragraph is empty and it's not the last one, remove it
+        if (string.IsNullOrWhiteSpace(Paragraphs[index]) && Paragraphs.Count > 1) {
+            Paragraphs.RemoveAt(index);
+            _activeParagraphIndex = Math.Max(0, index - 1);
+        }
+        // If we're at the end of the last paragraph, add a new one
+        else if (index == Paragraphs.Count - 1) {
+            Paragraphs.Add("");
+            _activeParagraphIndex = Paragraphs.Count - 1;
+        }
+
         StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private async Task OnParagraphInput(ChangeEventArgs _, int index) {
+        string text = await JsRuntime.InvokeAsync<string>("getInnerText", _editableDiv);
+
+        // Don't split if the text starts with list markers, table markers, or is part of a code block
+        bool shouldSplit = !text.StartsWith("```")
+            && !text.StartsWith("|")
+            && !text.StartsWith("-")
+            && !text.StartsWith("*")
+            && !text.StartsWith("+")
+            && !text.StartsWith(">")
+            && !Regex.IsMatch(text, @"^\d+\.");
+
+        if (shouldSplit && text.Contains("\n\n")) {
+            string[] parts = text.Split(new[] { "\n" }, StringSplitOptions.None);
+
+            // Update current paragraph
+            Paragraphs[index] = parts[0];
+
+            // Insert new paragraphs after the current one
+            Paragraphs.InsertRange(index + 1, parts.Skip(1));
+
+            // Set active paragraph to the last inserted one
+            _activeParagraphIndex = index + parts.Length - 1;
+            await ActivateParagraph(_activeParagraphIndex);
+        } else {
+            Paragraphs[index] = text;
+        }
+
+        StateHasChanged();
+    }
+
+    private async Task OnKeyDown(KeyboardEventArgs e, int index) {
+        if (e.Key == "Enter") {
+            string text = await JsRuntime.InvokeAsync<string>("getInnerText", _editableDiv);
+
+            if (e.ShiftKey) {
+                // Handle Shift+Enter for line breaks within the same paragraph
+                string[] parts = text.Split(new[] { "\n" }, 2, StringSplitOptions.None);
+
+                if (parts.Length > 1) {
+                    Paragraphs[index] = parts[0];
+                    Paragraphs.Insert(index + 1, parts[1]);
+                    _activeParagraphIndex = index + 1;
+                    StateHasChanged();
+                    await ActivateParagraph(_activeParagraphIndex);
+                }
+            } else {
+                // Create a new paragraph
+                string[] lines = text.Split('\n');
+                string currentLine = lines.Last();
+
+                // Update the current paragraph to exclude the last line
+                Paragraphs[index] = string.Join("\n", lines.Take(lines.Length - 1));
+
+                // Insert a new paragraph with the last line
+                Paragraphs.Insert(index + 1, currentLine);
+                _activeParagraphIndex = index + 1;
+                StateHasChanged();
+                await ActivateParagraph(_activeParagraphIndex);
+            }
+        }
+    }
+
+
+    private string GetParsedParagraph(int index) {
+        string paragraph = Paragraphs[index];
+        return Parser.TryParseAsync(paragraph).Result ?? string.Empty;
+    }
+
+    protected override void OnInitialized() {
+        // Initialize with an empty paragraph
+        if (!Paragraphs.Any()) {
+            Paragraphs.Add("");
+        }
     }
 }
 
