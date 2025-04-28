@@ -41,6 +41,7 @@ public class MarkdownBenchmarks {
                 .AddOutputProcessor<StringOutputSanitizerProcessor>();
         });
     }
+    
     private static IMarkdownParser<string, string> CreateParser(Action<MarkdownConfig>? configure = null) {
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddInfiniBlazor(config => config.AddMarkdown(configure));
@@ -57,22 +58,11 @@ public class MarkdownBenchmarks {
         return output;
     }
     
-    [Benchmark()]
-    public async ValueTask<string> RenderMarkdownSanitized() {
-        string input = Markdown;
-        string? output = await SanitizedParser.TryParseAsync(input);
-        if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
-        return output;
-    }
-
-    // [Benchmark]
-    // public StringWriter RenderMarkdownToStream() {
-    //     var streamWriter = new StringWriter();
-    //
-    //     Parser.ParseToWriter(Markdown, streamWriter);
-    //
-    //     streamWriter.Flush();
-    //     return streamWriter;
-    //
+    // [Benchmark()]
+    // public async ValueTask<string> RenderMarkdownSanitized() {
+    //     string input = Markdown;
+    //     string? output = await SanitizedParser.TryParseAsync(input);
+    //     if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
+    //     return output;
     // }
 }
