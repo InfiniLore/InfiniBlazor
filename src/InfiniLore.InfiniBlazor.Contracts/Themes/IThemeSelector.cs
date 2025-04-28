@@ -7,7 +7,12 @@ namespace InfiniLore.InfiniBlazor.Themes;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IThemeSelector {
-    public IInfiniLoreTheme CurrentTheme { get; }
-    
-    public void SelectTheme(string themeName);
+    event Action? ThemeChanged;
+    IInfiniLoreTheme? CurrentTheme { get; }
+     
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    bool TrySelectTheme(string themeName);
+    string GetCurrentThemeCss();
 }

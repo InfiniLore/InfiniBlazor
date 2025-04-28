@@ -16,13 +16,13 @@
 >
     <span class="flex flex-nowrap items-center justify-center">
         <!-- Icon -->
-        <span class="w-6 h-6 text-white group-hover:text-white flex-shrink-0 ">
+        <span class="w-6 h-6 text-(--nav-menu-item-text) group-hover:text-white flex-shrink-0">
             @Icon
         </span>
 
         <!-- Text with fade effect -->
         <span class="@($"transition-all duration-300 overflow-hidden {(IsMenuCollapsed ? "w-0 opacity-0 whitespace-nowrap" : "ml-2 opacity-100")}")">
-            <span class="@($"text-white transition-[word-break] duration-300 delay-300 {(IsMenuCollapsed ? "break-normal" : "break-words")}")">
+            <span class="@($"text-(--nav-menu-item-text) transition-[word-break] duration-300 delay-300 {(IsMenuCollapsed ? "break-normal" : "break-words")}")">
                 @Text
             </span>
         </span>

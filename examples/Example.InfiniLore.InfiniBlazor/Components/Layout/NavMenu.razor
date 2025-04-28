@@ -2,10 +2,12 @@
 @* Imports *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Components.CollapsibleMenu
+@using InfiniLore.InfiniBlazor.Themes
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InteractiveServer
+@inject IThemeSelector ThemeSelector
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -33,6 +35,7 @@
             <Icon><LiPackage/></Icon>
             <Text>Github</Text>
         </CollapsibleMenuButton>
+        <button @onclick="Callback" class="bg-red-600" >TESTING</button>
     </Footer>
 </CollapsibleMenu>
 
@@ -40,5 +43,14 @@
 @* Code *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
+    private string Theme { get; set; } = "light";
     private bool IsMenuCollapsed { get; set; } = false; // Tracks whether the menu is collapsed
+    private void Callback() {
+        Theme = Theme switch {
+            "light" => "dark",
+            "dark" => "light",
+            _ => Theme
+        };
+        ThemeSelector.TrySelectTheme(Theme);
+    }
 }

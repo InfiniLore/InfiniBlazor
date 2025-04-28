@@ -6,6 +6,9 @@ namespace InfiniLore.InfiniBlazor.Themes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IInfiniLoreTheme {
-    Dictionary<string, string> Theme { get; }
+public class ThemeDark : IInfiniLoreTheme {
+    public Dictionary<string, string> Theme { get; } = new() {
+        { ThemeVariables.NavMenuItemIcon, "#000000" },
+        { ThemeVariables.NavMenuItemText, "#000000" }
+    };
 }
