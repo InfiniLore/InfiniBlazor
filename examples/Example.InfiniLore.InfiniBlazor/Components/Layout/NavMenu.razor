@@ -35,7 +35,11 @@
             <Icon><LiPackage/></Icon>
             <Text>Github</Text>
         </CollapsibleMenuButton>
-        <button @onclick="Callback" class="bg-red-600" >TESTING</button>
+        <div>
+            <button @onclick="SwitchTheme" class="bg-red-600" >THEME</button>
+            <button @onclick="ThemeSelector.ToggleMode" class="bg-green-600"> MODE </button>
+            
+        </div>
     </Footer>
 </CollapsibleMenu>
 
@@ -43,14 +47,17 @@
 @* Code *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private string Theme { get; set; } = "light";
+    private string Theme { get; set; } = "default";
     private bool IsMenuCollapsed { get; set; } = false; // Tracks whether the menu is collapsed
-    private void Callback() {
+    private void SwitchTheme() {
         Theme = Theme switch {
-            "light" => "dark",
-            "dark" => "light",
+            "default" => "anna",
+            "anna" => "default",
             _ => Theme
         };
         ThemeSelector.TrySelectTheme(Theme);
+    }
+    private void switchMode() {
+        throw new NotImplementedException();
     }
 }

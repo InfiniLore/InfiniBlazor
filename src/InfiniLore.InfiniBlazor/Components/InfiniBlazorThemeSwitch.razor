@@ -14,19 +14,19 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <!--suppress HtmlDeprecatedAttribute -->
 <style type="text/css">
-    @Css
+    @_css
 </style>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    public string Css = string.Empty;
+    private string _css = string.Empty;
     protected override void OnInitialized() {
         ThemeSelector.ThemeChanged += OnThemeChanged;
-        Css = ThemeSelector.GetCurrentThemeCss();
+        _css = ThemeSelector.GetCurrentThemeCss();
     }
     private void OnThemeChanged() {
-        Css = ThemeSelector.GetCurrentThemeCss();
+        _css = ThemeSelector.GetCurrentThemeCss();
         InvokeAsync(StateHasChanged);
     }
     public void Dispose() {

@@ -16,6 +16,7 @@ public class ThemeSelector(ILogger<ThemeSelector> logger) : IThemeSelector {
 
     private Dictionary<string, IInfiniLoreTheme> Themes { get; set; } = new() {
         { "default", new ThemeDefault() },
+        { "anna", new ThemeAnna() },
     };
     
     public IInfiniLoreTheme? CurrentTheme { get; private set; }
