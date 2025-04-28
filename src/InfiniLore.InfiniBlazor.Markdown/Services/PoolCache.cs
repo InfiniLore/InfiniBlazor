@@ -12,17 +12,23 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public static class PoolCache {
-    public static readonly ObjectPool<MarkdownParserEngine> RunningMarkdownParserPool = CreateResettablePool<MarkdownParserEngine>(4);
-    public static readonly ObjectPool<Dictionary<int, MarkdownElement>> DepthCachePool = CreateDictionaryPool<int, MarkdownElement>(2);
-    public static readonly ObjectPool<MarkdownSyntaxVisitor> MarkdownSyntaxVisitorPool = CreateResettablePool<MarkdownSyntaxVisitor>(24);
-    public static readonly ObjectPool<MarkdownFragment> MarkdownFragmentPool = CreateResettablePool<MarkdownFragment>(256);
-    public static readonly ObjectPool<Stack<Range>> RangeStackPool = CreateStackPool<Range>(16);
-    public static readonly ObjectPool<Stack<MarkdownSyntaxVisitor>> MMarkdownSyntaxVisitorStackPool = CreateMdNodeVisitorStackPool(4);
-    public static readonly ObjectPool<StringBuilder> StringBuilderPool = CreateStringBuilderPool(8);
-    public static readonly ObjectPool<MarkdownSyntaxNode> MdNodePool = CreateResettablePool<MarkdownSyntaxNode>(256);
-    public static readonly ObjectPool<Stack<MarkdownSyntaxNode>> MdNodeStackPool = CreateStackPool<MarkdownSyntaxNode>(16);
-    public static readonly ObjectPool<MarkdownSyntaxTree> MdNodeTreePool = CreateResettablePool<MarkdownSyntaxTree>(8);
+    private const int ParsersRetained = 8;
+    private const int NodesPerParserRetained = 96;
+    private const int VisitorPerParserRetained = 16;
     
+    public static readonly ObjectPool<MarkdownParserEngine> MarkdownParserEnginePool = CreateResettablePool<MarkdownParserEngine>(ParsersRetained);
+    public static readonly ObjectPool<Dictionary<int, MarkdownElement>> DepthCachePool = CreateDictionaryPool<int, MarkdownElement>(ParsersRetained);
+    public static readonly ObjectPool<Stack<MarkdownSyntaxVisitor>> MarkdownSyntaxVisitorStackPool = CreateMdNodeVisitorStackPool(ParsersRetained);
+    public static readonly ObjectPool<Stack<MarkdownSyntaxNode>> MarkdownSyntaxNodeStackPool = CreateStackPool<MarkdownSyntaxNode>(ParsersRetained);
+    public static readonly ObjectPool<MarkdownSyntaxTree> MarkdownSyntaxTreePool = CreateResettablePool<MarkdownSyntaxTree>(ParsersRetained);
+    public static readonly ObjectPool<MarkdownSyntaxNode> MarkdownSyntaxNodePool = CreateResettablePool<MarkdownSyntaxNode>(ParsersRetained * NodesPerParserRetained);
+    public static readonly ObjectPool<MarkdownFragment> MarkdownFragmentPool = CreateResettablePool<MarkdownFragment>(ParsersRetained * VisitorPerParserRetained);
+    public static readonly ObjectPool<MarkdownSyntaxVisitor> MarkdownSyntaxVisitorPool = CreateResettablePool<MarkdownSyntaxVisitor>(ParsersRetained * VisitorPerParserRetained);
+    
+    // Generic Pools
+    public static readonly ObjectPool<Stack<Range>> RangeStackPool = CreateStackPool<Range>(16);
+    public static readonly ObjectPool<StringBuilder> StringBuilderPool = CreateStringBuilderPool(16);
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

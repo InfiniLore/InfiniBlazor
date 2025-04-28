@@ -21,8 +21,15 @@ public abstract class ListHandlerBase : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
-        if (!entireMatch.TryGetValue(out string? listBody)) return;
+    public ValueTask HandleMatchAsync(
+        IMarkdownParserEngine engine,
+        IMarkdownSyntaxNode currentNode,
+        Match entireMatch,
+        Group group,
+        HandlerOrigin origin,
+        CancellationToken ct = default
+    ) {
+        if (!entireMatch.TryGetValue(out string? listBody)) return ValueTask.CompletedTask;
 
         MatchCollection matchCollection = MarkdownRegexLib.ListItemBodyRegex.Matches(listBody);
         int matchCount = matchCollection.Count;
@@ -53,6 +60,7 @@ public abstract class ListHandlerBase : IMarkdownElementHandler {
                     engine.PushElementToStack(null, listItemNode, origin, element);
                 }
             }
+            return ValueTask.CompletedTask;
         }
         finally {
             ArrayPool<Match>.Shared.Return(matchArray);

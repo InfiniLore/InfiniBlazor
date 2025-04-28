@@ -16,7 +16,6 @@ public static class IInfiniBlazorConfigExtensions {
         config.Services.RegisterServicesFromInfiniLoreInfiniBlazorMarkdown();
         config.Services.AddSingleton(typeof(IMarkdownParser<,>), typeof(MarkdownParser<,>));
         config.Services.AddSingleton<IMarkdownSyntaxTreeConverter<string>, ToStringConverter>();
-        config.Services.AddSingleton(typeof(IMarkdownSyntaxTreeToWriterConverter<>), typeof(ToTextWriterConverter<>));
         
         var markdownConfig = new MarkdownConfig(config);
         markdownConfig.TextEditor.AddDefaultModifiers();

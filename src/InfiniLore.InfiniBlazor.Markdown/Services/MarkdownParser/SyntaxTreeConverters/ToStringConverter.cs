@@ -8,10 +8,10 @@ namespace InfiniLore.InfiniBlazor.Markdown.SyntaxTreeConverters;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class ToStringConverter : SimpleSyntaxTreeConverter, IMarkdownSyntaxTreeConverter<string> {
-    public string Convert(IMarkdownSyntaxTree tree) {
+    public async ValueTask<string> ConvertAsync(IMarkdownSyntaxTree tree, CancellationToken ct = default) {
         StringBuilder builder = PoolCache.StringBuilderPool.Get();
         try {
-            ProcessNodeTree(tree, builder, static (sb, content) => sb.Append(content));
+            await ProcessNodeTree(tree, builder, static (sb, content) => sb.Append(content), ct);
             return builder.ToString();
         }
         finally {

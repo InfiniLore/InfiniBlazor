@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions;
 using System.Buffers;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -12,21 +13,24 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 public static class LineNormalizationHelper {
     private const int StackAllocThreshold = 256;
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
     public static string NormalizeLineIndentation(ReadOnlySpan<char> input) {
         int matchCount = input.Count('\n');
         int splitCount = matchCount + 1;
 
         // Estimate initial capacity to avoid reallocations
-        int estimatedCapacity = input.Length;
         StringBuilder stringBuilder = PoolCache.StringBuilderPool.Get();
-        stringBuilder.EnsureCapacity(estimatedCapacity);
-
         Range[]? rentedArray = null;
         Span<Range> rangeSpan = splitCount <= StackAllocThreshold
             ? stackalloc Range[splitCount]
             : rentedArray = ArrayPool<Range>.Shared.Rent(splitCount);
 
         try {
+            int estimatedCapacity = input.Length;
+            stringBuilder.EnsureCapacity(estimatedCapacity);
+
             int minIndent = int.MaxValue;
             int index = 0;
 
@@ -35,11 +39,10 @@ public static class LineNormalizationHelper {
                 ReadOnlySpan<char> line = input[split];
                 rangeSpan[index++] = split;
 
+                // Only consider non-empty lines for minIndent
                 if (line.IsEmpty) continue;
 
                 int currentIndent = CountLeadingWhitespace(line);
-                
-                // Only consider non-empty lines for minIndent
                 if (line.Length > currentIndent) {
                     minIndent = Math.Min(minIndent, currentIndent);
                 }
@@ -73,8 +76,11 @@ public static class LineNormalizationHelper {
 
     private static int CountLeadingWhitespace(ReadOnlySpan<char> line) {
         int count = 0;
-        while (count < line.Length && char.IsWhiteSpace(line[count]) && line[count] != '\n')
+        while (count < line.Length) {
+            char c = line[count];
+            if (!c.IsWhiteSpace() || c == '\n') return count;
             count++;
+        }
 
         return count;
     }

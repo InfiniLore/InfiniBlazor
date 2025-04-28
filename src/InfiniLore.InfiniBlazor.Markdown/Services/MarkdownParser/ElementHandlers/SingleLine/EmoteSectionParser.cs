@@ -31,15 +31,23 @@ public class EmoteHandler(ILogger<EmoteHandler> logger) : IMarkdownElementHandle
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
-        if (!entireMatch.Groups[EId].TryGetValue(out string? lookupValue)) return;
+    public ValueTask HandleMatchAsync(
+        IMarkdownParserEngine engine,
+        IMarkdownSyntaxNode currentNode,
+        Match entireMatch,
+        Group group,
+        HandlerOrigin origin,
+        CancellationToken ct = default
+    ) {
+        if (!entireMatch.Groups[EId].TryGetValue(out string? lookupValue)) return ValueTask.CompletedTask;
 
         if (!EmoteLookup.TryGetValue(lookupValue, out string? value)) {
             logger.LogWarning("Lookup emote not found: {LookupValue}", lookupValue);
             currentNode.WithContent(group.Value);
-            return;
+            return ValueTask.CompletedTask;
         }
 
         currentNode.WithContent(value);
+        return ValueTask.CompletedTask;
     }
 }

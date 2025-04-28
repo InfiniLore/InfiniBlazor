@@ -11,6 +11,8 @@
         <PackageReference Include="BenchmarkDotNet" Version="0.14.0"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.4" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
+        
+        <None Include="MarkdownBenchmark.md" CopyToOutputDirectory="Always"/>
     </ItemGroup>
 
     <ItemGroup>

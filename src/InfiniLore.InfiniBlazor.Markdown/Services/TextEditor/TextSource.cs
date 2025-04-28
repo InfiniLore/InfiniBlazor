@@ -9,29 +9,24 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 public class TextSource : ITextSource {
     private string _text = string.Empty;
-
-    private List<Range> LinesCache { get; } = [];
     public string Text {
         get => _text;
         set {
             _text = TextEditorRegexLib.LineEndingRegex.Replace(value, "\n");
-            UpdateTextMetaData();
+            Length = Math.Max(0, _text.Length);
+            CacheLineRanges();
         }
     }
 
     public ReadOnlySpan<char> TextSpan => Text.AsSpan();
     public int Length { get; private set; }
+
+    private List<Range> LinesCache { get; } = new(16);
     public IReadOnlyList<Range> Lines => LinesCache.AsReadOnly();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private void UpdateTextMetaData() {
-        CacheLineRanges();
-
-        Length = Math.Max(0, Text.Length);
-    }
-
     private void CacheLineRanges() {
         Regex.ValueMatchEnumerator lineMatches = TextEditorRegexLib.NewlinesRegex.EnumerateMatches(Text);
         LinesCache.Clear();

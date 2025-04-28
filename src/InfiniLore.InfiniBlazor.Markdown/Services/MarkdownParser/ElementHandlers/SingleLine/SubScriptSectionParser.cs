@@ -16,10 +16,18 @@ public class SubScriptHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
-        if (!entireMatch.Groups[SbId].TryGetValue(out string? subValue)) return;
+    public ValueTask HandleMatchAsync(
+        IMarkdownParserEngine engine,
+        IMarkdownSyntaxNode currentNode,
+        Match entireMatch,
+        Group group,
+        HandlerOrigin origin,
+        CancellationToken ct = default
+    ) {
+        if (!entireMatch.Groups[SbId].TryGetValue(out string? subValue)) return ValueTask.CompletedTask;
 
         IMarkdownSyntaxNode node = currentNode.AddChildNode(MarkdownElement.Subscript);
         engine.AddSingleLineMatchesToStack(subValue, node, origin | SkipOnOrigin);
+        return ValueTask.CompletedTask;
     }
 }

@@ -20,25 +20,34 @@ public class LinkRegularHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
-        if (!entireMatch.Groups[LrTextId].TryGetValue(out string? linkText)) return;
-        if (!entireMatch.Groups[LrHrefId].TryGetValue(out string? linkHref)) return;
+    public ValueTask HandleMatchAsync(
+        IMarkdownParserEngine engine,
+        IMarkdownSyntaxNode currentNode,
+        Match entireMatch,
+        Group group,
+        HandlerOrigin origin,
+        CancellationToken ct = default
+    ) {
+        // ReSharper disable once DuplicatedSequentialIfBodies
+        if (!entireMatch.Groups[LrTextId].TryGetValue(out string? linkText)) return ValueTask.CompletedTask;
+        if (!entireMatch.Groups[LrHrefId].TryGetValue(out string? linkHref)) return ValueTask.CompletedTask;
 
         if (entireMatch.Groups[LrBangId].Success) {
             IMarkdownSyntaxNode imgNode = currentNode.AddChildNode(MarkdownElement.Image);
-            imgNode.WithAttribute("src", linkHref);
-            imgNode.WithAttribute("alt", linkText);
+            imgNode.WithAttribute(MarkdownAttribute.ImageSource, linkHref);
+            imgNode.WithAttribute(MarkdownAttribute.ImageAlt, linkText);
 
             if (entireMatch.Groups[LrTitleId].TryGetValue(out string? altTextValue)) {
-                imgNode.WithAttribute("title", altTextValue);
+                imgNode.WithAttribute(MarkdownAttribute.ImageTitle, altTextValue);
             }
 
-            return;
+            return ValueTask.CompletedTask;
         }
 
         IMarkdownSyntaxNode linkNode = currentNode.AddChildNode(MarkdownElement.Link);
-        linkNode.WithAttribute("href", linkHref);
+        linkNode.WithAttribute(MarkdownAttribute.LinkHref, linkHref);
 
         engine.AddSingleLineMatchesToStack(linkText, linkNode, origin | SkipOnOrigin);
+        return ValueTask.CompletedTask;
     }
 }

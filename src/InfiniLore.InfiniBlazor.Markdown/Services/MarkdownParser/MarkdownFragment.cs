@@ -38,7 +38,7 @@ public class MarkdownFragment : IMarkdownFragment, IResettable {
     
     public bool TryReset() {
         Node = null!;
-        Origin = HandlerOrigin.NotSkipped;
+        Origin = HandlerOrigin.Undefined;
         Match = null;
         Content = null;
         IsMatch = false;

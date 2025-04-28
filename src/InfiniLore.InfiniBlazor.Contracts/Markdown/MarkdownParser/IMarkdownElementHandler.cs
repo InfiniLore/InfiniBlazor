@@ -10,5 +10,5 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 internal interface IMarkdownElementHandler{
     HandlerOrigin SkipOnOrigin { get; }
 
-    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin);
+    public ValueTask HandleMatchAsync(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin, CancellationToken ct = default);
 }

@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using Microsoft.Extensions.ObjectPool;
-using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
@@ -13,10 +12,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
     private readonly Stack<MarkdownFragment> _stack = new();
     public IMarkdownSyntaxTree NodeTree { get; set; } = null!;
-
-    public bool TryPopDto([NotNullWhen(true)] out MarkdownFragment? dto)
-        => _stack.TryPop(out dto);
-
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -25,31 +21,27 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
         MatchCollection matches = MarkdownRegexLib.MultilineStructuresRegex.Matches(input);
         int count = matches.Count;
 
-        Match[] matchArray = ArrayPool<Match>.Shared.Rent(count);
-        matches.CopyTo(matchArray, 0);
+        // ArrayPooling this is not needed, ensuring capacity should do it
         _stack.EnsureCapacity(_stack.Count + count);
 
         // Process matches in reverse order for _stack
         for (int i = count - 1; i >= 0; i--) {
-            PushMatchToStack(matchArray[i], node, origin);
+            PushMatchToStack(matches[i], node, origin);
         }
-
-        ArrayPool<Match>.Shared.Return(matchArray);
     }
 
     public void AddSingleLineMatchesToStack(string input, IMarkdownSyntaxNode node, HandlerOrigin origin) {
         MatchCollection matches = MarkdownRegexLib.SinglelineStructuresRegex.Matches(input);
         int count = matches.Count;
 
-        Match[] matchArray = ArrayPool<Match>.Shared.Rent(count);
-        matches.CopyTo(matchArray, 0);
+        // ArrayPooling this is not needed, ensuring capacity should do it
         _stack.EnsureCapacity(_stack.Count + count);
 
         int currentIndex = input.Length;
 
         // Process matches in reverse order for _stack
         for (int i = count - 1; i >= 0; i--) {
-            Match match = matchArray[i];
+            Match match = matches[i];
             int matchEnd = match.Index + match.Length;
 
             // If there's an uncaught text between this match's end and the last position, add it as raw input
@@ -66,8 +58,6 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
             // Handle any remaining text before the first match
             PushContentToStack(input[..currentIndex], node, origin);
         }
-
-        ArrayPool<Match>.Shared.Return(matchArray);
     }
 
     public void PushContentToStack(string content, IMarkdownSyntaxNode currentNode, HandlerOrigin origin)
@@ -86,6 +76,9 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
     }
     #endregion
 
+    public bool TryPopDto([NotNullWhen(true)] out MarkdownFragment? dto)
+        => _stack.TryPop(out dto);
+    
     public bool TryReset() {
         while (_stack.TryPop(out MarkdownFragment? fragment)) {
             PoolCache.MarkdownFragmentPool.Return(fragment);// Makes sure we clean everything

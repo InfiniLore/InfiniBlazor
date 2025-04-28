@@ -17,9 +17,9 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
     private string Text {
         get => Source.Text;
         set {
-            // needed to fix a but that places the caret at the end of the text, see https://github.com/dotnet/aspnetcore/issues/20072
+            // needed to fix a bit that places the caret at the end of the text, see https://github.com/dotnet/aspnetcore/issues/20072
             Source.Text = value;
-            UpdateMarkdown();
+            InvokeAsync(UpdateMarkdownAsync);
         }
     }
     
@@ -36,7 +36,7 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
             return;
         }
 
-        // place the caret in newly requested location
+        // place the caret in a newly requested location
         if (textEditor.TryGetCaretUpdate(out int index)) {
             await jsRuntimeHelper.SetSelectionRangeAsync(_textareaRef, index, index);
         }
@@ -47,8 +47,9 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
         GC.SuppressFinalize(this);
     }
     
-    private void UpdateMarkdown() {
-        if (!markdownParser.TryParse(Source.Text, out string? output)) return; // TODO create some form of error popup
+    private async Task UpdateMarkdownAsync() {
+        string? output = await markdownParser.TryParseAsync(Source.Text);
+        if (output is null) return; // TODO create some form of error popup
         string sanitizedOutput = sanitizer.Sanitize(output);
         MarkdownOutput = new MarkupString(sanitizedOutput);
     }
@@ -56,7 +57,7 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
     private async Task OnModifierClickAsync(string modifierName) {
         textEditor.Modify(Source, modifierName, await GetSelectionRangeAsync());
 
-        UpdateMarkdown();
+        await UpdateMarkdownAsync();
     }
     
     private async Task<Range> GetSelectionRangeAsync() {
@@ -92,21 +93,21 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
             case ({ CtrlKey: true, Key: "b" }, _): {
                 Range selection = await GetSelectionRangeAsync();
                 textEditor.Modify(Source, "bold", selection);
-                UpdateMarkdown();
+                await UpdateMarkdownAsync();
                 break;
             }
 
             case ({ CtrlKey: true, Key: "i" }, _): {
                 Range selection = await GetSelectionRangeAsync();
                 textEditor.Modify(Source, "italic", selection);
-                UpdateMarkdown();
+                await UpdateMarkdownAsync();
                 break;
             }
 
             case ({ CtrlKey: true, Key: "u" }, _): {
                 Range selection = await GetSelectionRangeAsync();
                 textEditor.Modify(Source, "underline", selection);
-                UpdateMarkdown();
+                await UpdateMarkdownAsync();
                 break;
             }
         }
@@ -141,7 +142,7 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
             """;
 
         textEditor.Insert(Source, loremText, await GetSelectionRangeAsync());
-        UpdateMarkdown();
+        await UpdateMarkdownAsync();
     }
     
     private async Task DebugTableAsync() {
@@ -152,6 +153,6 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
             """;
         
         textEditor.Insert(Source, tableText, await GetSelectionRangeAsync());
-        UpdateMarkdown();
+        await UpdateMarkdownAsync();
     }
 }

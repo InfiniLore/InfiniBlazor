@@ -15,7 +15,6 @@ public class MarkdownSyntaxVisitorStackPoolPolicy(ObjectPool<MarkdownSyntaxVisit
         while (obj.TryPop(out MarkdownSyntaxVisitor? visitor)) {
             visitorPool.Return(visitor);
         }
-        obj.Clear();
         return true;
     }
 }

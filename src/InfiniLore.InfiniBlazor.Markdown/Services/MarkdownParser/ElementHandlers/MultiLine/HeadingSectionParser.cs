@@ -17,9 +17,17 @@ public class HeadingHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
-        if (!entireMatch.Groups[HLevelId].TryGetLength(out int headingLevel)) return;
-        if (!entireMatch.Groups[HTextId].TryGetValue(out string? headerText)) return;
+    public ValueTask HandleMatchAsync(
+        IMarkdownParserEngine engine,
+        IMarkdownSyntaxNode currentNode,
+        Match entireMatch,
+        Group group,
+        HandlerOrigin origin,
+        CancellationToken ct = default
+    ) {
+        // ReSharper disable once DuplicatedSequentialIfBodies
+        if (!entireMatch.Groups[HLevelId].TryGetLength(out int headingLevel)) return ValueTask.CompletedTask;
+        if (!entireMatch.Groups[HTextId].TryGetValue(out string? headerText)) return ValueTask.CompletedTask;
 
         MarkdownElement mdElement = headingLevel switch {
             1 => MarkdownElement.H1,
@@ -33,5 +41,6 @@ public class HeadingHandler : IMarkdownElementHandler {
 
         IMarkdownSyntaxNode headingElement = currentNode.AddChildNode(mdElement);
         engine.AddSingleLineMatchesToStack(headerText, headingElement, origin);
+        return ValueTask.CompletedTask;
     }
 }

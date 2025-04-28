@@ -49,7 +49,7 @@ public abstract class SimpleSyntaxTreeConverter {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected static void ProcessNodeTree<T>(IMarkdownSyntaxTree tree, T writer, WriteDelegate<T> writeContent) {
+    protected static ValueTask ProcessNodeTree<T>(IMarkdownSyntaxTree tree, T writer, WriteDelegate<T> writeContent, CancellationToken ct = default) {
         Dictionary<int, MarkdownElement> depthCache = PoolCache.DepthCachePool.Get();
         try {
             int lastKnownDepth = -1;
@@ -75,24 +75,7 @@ public abstract class SimpleSyntaxTreeConverter {
                 HtmlTag htmlTag = MdElementLookup[element];
                 writeContent(writer, htmlTag.OpenTagSpan);
 
-                if (!node.Classes.IsEmpty()) {
-                    writeContent(writer, " class=\"");
-                    foreach (ReadOnlySpan<char> cssClass in node.Classes) {
-                        writeContent(writer, " ");
-                        writeContent(writer, cssClass);
-                    }
-                    writeContent(writer, "\"");
-                }
-
-                if (!node.Attributes.IsEmpty()) {
-                    writeContent(writer, " ");
-                    foreach (KeyValuePair<string, string> attribute in node.Attributes) {
-                        writeContent(writer, attribute.Key);
-                        writeContent(writer, "=\"");
-                        writeContent(writer, attribute.Value);
-                        writeContent(writer, "\"");
-                    }
-                }
+                WriteAttributes(writer, writeContent, node);
 
                 writeContent(writer, ">");
 
@@ -101,9 +84,25 @@ public abstract class SimpleSyntaxTreeConverter {
             }
 
             CloseOpenTags(writer, depthCache, -1, writeContent);
+            return ValueTask.CompletedTask;
         }
         finally {
             PoolCache.DepthCachePool.Return(depthCache);
+        }
+    }
+    private static void WriteAttributes<T>(T writer, WriteDelegate<T> writeContent, IMarkdownSyntaxNode node) {
+        if (!node.TryGetAttributesSpan(out int count, out ReadOnlySpan<MarkdownAttribute> attributes, out ReadOnlySpan<string> source)) return;
+        for (int i = 0; i < count; i++) {
+            writeContent(writer, attributes[i] switch {
+                MarkdownAttribute.CodeLanguage => " class=\"language-",
+                MarkdownAttribute.LinkHref => " href=\"",
+                MarkdownAttribute.ImageTitle => " title=\"",
+                MarkdownAttribute.ImageSource => " src=\"",
+                MarkdownAttribute.ImageAlt => " alt=\"",
+                _ =>  throw new NotImplementedException()
+            });
+            writeContent(writer, source[i]);
+            writeContent(writer, "\"");
         }
     }
 
