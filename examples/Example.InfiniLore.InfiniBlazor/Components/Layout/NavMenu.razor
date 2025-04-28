@@ -2,14 +2,16 @@
 @* Imports *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Components.CollapsibleMenu
+@using InfiniLore.InfiniBlazor.Themes
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InteractiveServer
+@inject IThemeSelector ThemeSelector
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<CollapsibleMenu @bind-IsMenuCollapsed="@IsMenuCollapsed">
+<CollapsibleMenu @bind-IsMenuCollapsed="@IsMenuCollapsed" Width="w-64">
     <Header>
         <a href="/"
            class="@(!IsMenuCollapsed ? "text-1xl font-bold text-white hover:text-gray-300 no-underline" : "hidden")">
@@ -29,16 +31,33 @@
     </NavigationMenu>
 
     <Footer>
+        <CollapsibleMenuButton Href="https://github.com/InfiniLore/infinilore.infiniblazor">
+            <Icon><LiPackage/></Icon>
+            <Text>Github</Text>
+        </CollapsibleMenuButton>
+        <div>
+            <button @onclick="SwitchTheme" class="bg-red-600" >THEME</button>
+            <button @onclick="ThemeSelector.ToggleMode" class="bg-green-600"> MODE </button>
+            
+        </div>
     </Footer>
 </CollapsibleMenu>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
-    // State for user details
-    private string UserName { get; set; } = "Guest";
-    private string ProfileImage { get; set; } = "";// Fallback image
-    private bool IsMenuCollapsed { get; set; } = false;// Tracks whether the menu is collapsed
+    private string Theme { get; set; } = "default";
+    private bool IsMenuCollapsed { get; set; } = false; // Tracks whether the menu is collapsed
+    private void SwitchTheme() {
+        Theme = Theme switch {
+            "default" => "anna",
+            "anna" => "default",
+            _ => Theme
+        };
+        ThemeSelector.TrySelectTheme(Theme);
+    }
+    private void switchMode() {
+        throw new NotImplementedException();
+    }
 }

@@ -7,5 +7,6 @@ namespace InfiniLore.InfiniBlazor.Themes;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IInfiniLoreTheme {
-    
+    Dictionary<string, string> LightMode { get; }
+    Dictionary<string, string> DarkMode { get; }
 }

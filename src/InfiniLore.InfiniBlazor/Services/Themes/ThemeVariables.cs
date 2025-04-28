@@ -6,16 +6,7 @@ namespace InfiniLore.InfiniBlazor.Themes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IThemeSelector {
-    event Action? ThemeChanged;
-    IInfiniLoreTheme? CurrentTheme { get; }
-    bool IsDarkMode { get; }
-     
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
-    bool TrySelectTheme(string themeName);
-    void ToggleMode();
-    
-    string GetCurrentThemeCss();
+public static class ThemeVariables {
+    public const string NavMenuItemIcon = "--nav-menu-item-icon";
+    public const string NavMenuItemText = "--nav-menu-item-text";
 }
