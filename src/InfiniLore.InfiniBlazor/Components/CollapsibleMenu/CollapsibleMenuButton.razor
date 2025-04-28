@@ -12,16 +12,20 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <NavLink
     href="@Href"
-    class="@($"flex items-center rounded hover:bg-gray-700 transition-colors duration-300 p-2 {(IsMenuCollapsed ? "justify-center" : "justify-start")}")"
+    class="@($"flex flex-nowrap p-2 items-center rounded hover:bg-gray-700 {(IsMenuCollapsed ? "justify-center" : "justify-start")}")"
 >
-    <!-- Icon -->
-    <span class="w-6 h-6 text-gray-400 transition-colors duration-300 group-hover:text-white flex-shrink-0">
-        @Icon
-    </span>
+    <span class="flex flex-nowrap items-center justify-center">
+        <!-- Icon -->
+        <span class="w-6 h-6 text-white group-hover:text-white flex-shrink-0 ">
+            @Icon
+        </span>
 
-    <!-- Text (hidden in collapsed mode) -->
-    <span class="@(!IsMenuCollapsed ? "ml-2 text-white" : "hidden")">
-        @Text
+        <!-- Text with fade effect -->
+        <span class="@($"transition-all duration-300 overflow-hidden {(IsMenuCollapsed ? "w-0 opacity-0 whitespace-nowrap" : "ml-2 opacity-100")}")">
+            <span class="@($"text-white transition-[word-break] duration-300 delay-300 {(IsMenuCollapsed ? "break-normal" : "break-words")}")">
+                @Text
+            </span>
+        </span>
     </span>
 </NavLink>
 

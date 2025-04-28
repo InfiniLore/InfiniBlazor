@@ -9,7 +9,6 @@
 @page "/markdown-rolling"
 @rendermode InteractiveServer
 @inject IMarkdownParser<string, string> Parser
-@inject ILogger<ExampleMarkdownEditor> Logger
 @inject IJSRuntime JsRuntime
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
@@ -18,7 +17,7 @@
     @for (int i = 0; i < Paragraphs.Count; i++) {
         int index = i;
         if (index == _activeParagraphIndex) {
-            <div class="paragraph-editor"
+            <div class="paragraph-editor w"
                  contenteditable="true"
                  spellcheck="true"
                  @ref="_editableDiv"

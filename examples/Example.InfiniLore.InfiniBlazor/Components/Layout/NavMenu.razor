@@ -9,7 +9,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<CollapsibleMenu @bind-IsMenuCollapsed="@IsMenuCollapsed">
+<CollapsibleMenu @bind-IsMenuCollapsed="@IsMenuCollapsed" Width="w-64">
     <Header>
         <a href="/"
            class="@(!IsMenuCollapsed ? "text-1xl font-bold text-white hover:text-gray-300 no-underline" : "hidden")">
@@ -29,16 +29,16 @@
     </NavigationMenu>
 
     <Footer>
+        <CollapsibleMenuButton Href="https://github.com/InfiniLore/infinilore.infiniblazor">
+            <Icon><LiPackage/></Icon>
+            <Text>Github</Text>
+        </CollapsibleMenuButton>
     </Footer>
 </CollapsibleMenu>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
-    // State for user details
-    private string UserName { get; set; } = "Guest";
-    private string ProfileImage { get; set; } = "";// Fallback image
-    private bool IsMenuCollapsed { get; set; } = false;// Tracks whether the menu is collapsed
+    private bool IsMenuCollapsed { get; set; } = false; // Tracks whether the menu is collapsed
 }
