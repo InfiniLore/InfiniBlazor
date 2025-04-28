@@ -2,19 +2,72 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Markdown
-@using InfiniLore.InfiniBlazor.Markdown.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @page "/markdown-test"
 @rendermode InteractiveServer
+@inject IMarkdownParser<string, string> Parser
+@inject ILogger<ExampleMarkdownEditor> Logger
+@inject IJSRuntime JsRuntime
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<MarkdownEditor Source="@TextSource" ></MarkdownEditor>
+@* <MarkdownEditor Source="@TextSource" ></MarkdownEditor> *@
+
+<style>
+    .editor {
+        min-height: 200px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        white-space: pre-wrap;
+    }
+
+    .editor ::spelling-error {
+        text-decoration: wavy red;
+        text-decoration-thickness: 2px;
+    }
+
+    .preview {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #eee;
+    }
+</style>
+
+<div class="editor"
+     contenteditable="true"
+     spellcheck="true"
+     @ref="_editableDiv"
+     @oninput="OnInput">
+</div>
+
+<div class="preview">
+    @((MarkupString)ParsedMarkdown)
+</div>
+
+<script>
+    window.getInnerText = (element) => element.innerText;
+</script>
+
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     private ITextSource TextSource { get; } = new TextSource();
+    private ElementReference _editableDiv;
+    private string ParsedMarkdown { get; set; } = string.Empty;
+
+    private async Task OnInput(ChangeEventArgs args) {
+        // Get the text content
+        string text = await JsRuntime.InvokeAsync<string>("getInnerText", _editableDiv);
+        TextSource.Text = text;
+
+        string? parsed = await Parser.TryParseAsync(TextSource.Text);
+        ParsedMarkdown = parsed ?? string.Empty;
+        StateHasChanged();
+    }
 }
+
