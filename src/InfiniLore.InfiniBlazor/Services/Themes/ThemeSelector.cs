@@ -13,15 +13,13 @@ namespace InfiniLore.InfiniBlazor.Themes;
 [InjectableSingleton<IThemeSelector>]
 public class ThemeSelector(ILogger<ThemeSelector> logger) : IThemeSelector {
     public event Action? ThemeChanged;
-
-    private Dictionary<string, IInfiniLoreTheme> Themes { get; set; } = new() {
-        { "default", new ThemeDefault() },
-        { "anna", new ThemeAnna() },
-    };
-    
     public IInfiniLoreTheme? CurrentTheme { get; private set; }
     public bool IsDarkMode { get; private set; }
     
+    private Dictionary<string, IInfiniLoreTheme> Themes { get; } = new() {
+        { "default", new ThemeDefault() },
+        { "anna", new ThemeAnna() },
+    };
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
