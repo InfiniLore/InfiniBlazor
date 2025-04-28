@@ -19,4 +19,13 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.4" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Update="Components\Pages\ExampleRollingMarkdownEditor.razor.css">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </Content>
+      <Content Update="Components\Pages\ExampleRollingMarkdownEditor.razor.js">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </Content>
+    </ItemGroup>
+
 </Project>
