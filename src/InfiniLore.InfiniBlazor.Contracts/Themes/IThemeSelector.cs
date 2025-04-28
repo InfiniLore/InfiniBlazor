@@ -9,10 +9,13 @@ namespace InfiniLore.InfiniBlazor.Themes;
 public interface IThemeSelector {
     event Action? ThemeChanged;
     IInfiniLoreTheme? CurrentTheme { get; }
+    bool IsDarkMode { get; }
      
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     bool TrySelectTheme(string themeName);
+    void ToggleMode();
+    
     string GetCurrentThemeCss();
 }
