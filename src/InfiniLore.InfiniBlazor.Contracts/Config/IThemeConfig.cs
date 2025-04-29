@@ -1,19 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Themes;
+namespace InfiniLore.InfiniBlazor.Config;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class ThemeDefault : IInfiniLoreTheme {
-    public Dictionary<string, string> LightMode { get; } = new() {
-        { ThemeVariables.NavMenuItemIcon, "#FFFFFF" },
-        { ThemeVariables.NavMenuItemText, "#FFFFFF" }
-    };
-
-    public Dictionary<string, string> DarkMode { get; } = new() {
-        { ThemeVariables.NavMenuItemIcon, "#000000" },
-        { ThemeVariables.NavMenuItemText, "#000000" }
-    };
+public interface IThemeConfig {
+    public IReadOnlyCollection<string> RegisteredThemes { get; }
 }

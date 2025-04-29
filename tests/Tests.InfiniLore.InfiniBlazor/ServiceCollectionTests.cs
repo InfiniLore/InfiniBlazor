@@ -1,19 +1,25 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Themes;
+using CodeOfChaos.Testing.TUnit;
+using InfiniLore.InfiniBlazor.JsRuntime;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Tests.InfiniLore.InfiniBlazor;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class ThemeAnna : IInfiniLoreTheme {
-    public Dictionary<string, string> LightMode { get; } = new() {
-        { ThemeVariables.NavMenuItemIcon, "#5BCEFA" },
-        { ThemeVariables.NavMenuItemText, "#F5A9B8" }
-    };
+public class ServiceCollectionTests {
+    [Test]
+    public async Task ShouldAddServices() {
+        // Arrange
+        var services = new ServiceCollection();
 
-    public Dictionary<string, string> DarkMode { get; } = new() {
-        { ThemeVariables.NavMenuItemIcon, "#F5A9B8" },
-        { ThemeVariables.NavMenuItemText, "#5BCEFA" }
-    };
+        // Act
+        services.AddInfiniBlazor();
+
+        // Assert
+        await Assert.That(services).ContainsServiceType<IJsRuntimeHelper>();
+    }
 }

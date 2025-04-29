@@ -1,12 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Themes;
+using System.Collections.Frozen;
+
+namespace InfiniLore.InfiniBlazor.Theming;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class ThemeVariables {
-    public const string NavMenuItemIcon = "--nav-menu-item-icon";
-    public const string NavMenuItemText = "--nav-menu-item-text";
+public interface IInfiniLoreTheme {
+    FrozenDictionary<string, string> LightMode { get; }
+    FrozenDictionary<string, string> DarkMode { get; }
 }

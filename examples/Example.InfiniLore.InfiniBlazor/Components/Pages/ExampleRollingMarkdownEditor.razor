@@ -13,21 +13,23 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="editor-container">
+<div class="editor-container" @onclick="OnContainerClick">
     @for (int i = 0; i < Paragraphs.Count; i++) {
         int index = i;
-        if (index == _activeParagraphIndex) {
-            <div class="paragraph-editor w"
+        if (_activeParagraphIndex is not -1 && index == _activeParagraphIndex) {
+            <div class="paragraph-editor"
                  contenteditable="true"
                  spellcheck="true"
                  @ref="_editableDiv"
                  @oninput="@(e => OnParagraphInput(e, index))"
                  @onkeydown="@(e => OnKeyDown(e, index))"
-                 @onblur="@(() => OnParagraphBlur(index))"></div>
+                 @onblur="@(() => OnParagraphBlur(index))"
+            >
+            </div>
 
         } else {
             <div class="markdown-content" @onclick="@(() => ActivateParagraph(index))">
-                @((MarkupString)GetParsedParagraph(index))
+                @GetParsedParagraph(index)
             </div>
         }
     }
@@ -53,42 +55,31 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private readonly List<string> Paragraphs = new() { "" };
-    private int _activeParagraphIndex;
+    private readonly List<string> Paragraphs = [""];
+    private int _activeParagraphIndex = -1;
     private ElementReference _editableDiv;
-    private bool _isActivating;
     private bool _pendingActivation;
     private int _pendingIndex;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private Task ActivateParagraph(int index) {
-        if (_isActivating) return Task.CompletedTask;
-
-        try {
-            _isActivating = true;
-            _activeParagraphIndex = index;
-            _pendingActivation = true;
-            _pendingIndex = index;
-            StateHasChanged();
-        }
-        finally {
-            _isActivating = false;
-        }
-
-        return Task.CompletedTask;
+    private async Task ActivateParagraph(int index) {
+        _activeParagraphIndex = index;
+        _pendingActivation = true;
+        _pendingIndex = index;
+        await InvokeAsync(StateHasChanged);
     }
     
     protected override async Task OnAfterRenderAsync(bool firstRender) {
         if (_pendingActivation) {
             _pendingActivation = false;
-            await Task.Delay(10);// Small delay to ensure DOM is ready
             await JsRuntime.InvokeVoidAsync("setElementText", _editableDiv, Paragraphs[_pendingIndex]);
+            _pendingIndex = -1;
         }
     }
-
-    private Task OnParagraphBlur(int index) {
+    
+    private async Task OnParagraphBlur(int index) {
         // If the paragraph is empty, and it's not the last one, remove it
         if (string.IsNullOrWhiteSpace(Paragraphs[index]) && Paragraphs.Count > 1) {
             Paragraphs.RemoveAt(index);
@@ -96,28 +87,20 @@
         }
         // If we're at the end of the last paragraph, add a new one
         else if (index == Paragraphs.Count - 1) {
-            Paragraphs.Add("");
+            Paragraphs.Add(string.Empty);
             _activeParagraphIndex = Paragraphs.Count - 1;
         }
 
-        StateHasChanged();
-        return Task.CompletedTask;
+        await InvokeAsync(StateHasChanged);
     }
 
     private async Task OnParagraphInput(ChangeEventArgs _, int index) {
         string text = await JsRuntime.InvokeAsync<string>("getInnerText", _editableDiv);
 
         // Don't split if the text starts with list markers, table markers, or is part of a code block
-        bool shouldSplit = !text.StartsWith("```")
-            && !text.StartsWith("|")
-            && !text.StartsWith("-")
-            && !text.StartsWith("*")
-            && !text.StartsWith("+")
-            && !text.StartsWith(">")
-            && !Regex.IsMatch(text, @"^\d+\.");
-
-        if (shouldSplit && text.Contains("\n\n")) {
-            string[] parts = text.Split(new[] { "\n" }, StringSplitOptions.None);
+        bool shouldSplit = !Regex.IsMatch(text, @"(?:^\d+\.)|(?:^ *[|.\-*])");
+        if (shouldSplit) {
+            string[] parts = text.Split(["\n"], StringSplitOptions.None);
 
             // Update current paragraph
             Paragraphs[index] = parts[0];
@@ -126,13 +109,12 @@
             Paragraphs.InsertRange(index + 1, parts.Skip(1));
 
             // Set the active paragraph to the last inserted one
-            _activeParagraphIndex = index + parts.Length - 1;
-            await ActivateParagraph(_activeParagraphIndex);
+            await ActivateParagraph(index + 1);
         } else {
             Paragraphs[index] = text;
         }
 
-        StateHasChanged();
+        await InvokeAsync(StateHasChanged);
     }
 
     private async Task OnKeyDown(KeyboardEventArgs e, int index) {
@@ -160,16 +142,17 @@
     }
 
 
-    private string GetParsedParagraph(int index) {
-        string paragraph = Paragraphs[index];
-        return Parser.TryParseAsync(paragraph).Result ?? string.Empty;
+    private MarkupString GetParsedParagraph(int index) {
+        string? paragraph = Paragraphs.ElementAtOrDefault(index);
+        return new MarkupString(Parser.TryParseAsync(paragraph).Result ?? string.Empty);
     }
-
-    protected override void OnInitialized() {
-        // Initialize with an empty paragraph
-        if (!Paragraphs.Any()) {
-            Paragraphs.Add("");
+    private async Task OnContainerClick() {
+        if (_activeParagraphIndex is -1) {
+            await ActivateParagraph(Paragraphs.Count - 1);
+            return;
         }
+
+        await InvokeAsync(StateHasChanged);
     }
 }
 

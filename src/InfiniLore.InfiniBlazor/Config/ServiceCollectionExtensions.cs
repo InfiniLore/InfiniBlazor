@@ -14,9 +14,9 @@ public static class ServiceCollectionExtensions {
         var config = new InfiniBlazorConfig(services);
         services.RegisterServicesFromInfiniLoreInfiniBlazor();
         services.AddLucideIcons();
-        
+
         configure?.Invoke(config);
-        
+
         return services;
     }
 }

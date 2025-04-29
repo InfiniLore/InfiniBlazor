@@ -8,8 +8,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{197E72AD-DEA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8DD280D4-1E14-4D5E-AFE6-58DD8F079DCC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{AF1A203C-6EF1-440E-BB3C-55B1DBFE9C19}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.InfiniLore.InfiniBlazor", "src\Tools.InfiniLore.InfiniBlazor\Tools.InfiniLore.InfiniBlazor.csproj", "{ADEADD97-0AFA-4D9E-970B-9FFB932949B3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "example", "example", "{85D9748B-B4DD-428D-850A-DCF23F8DBA39}"
@@ -25,22 +23,23 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmarks.InfiniLore.InfiniBlazor.Markdown", "tests\Benchmarks.InfiniLore.InfiniBlazor.Markdown\Benchmarks.InfiniLore.InfiniBlazor.Markdown.csproj", "{E5C1D953-B6DB-4CC0-8490-BF2F43994D92}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".dev-tools", ".dev-tools", "{25ED7F52-E54D-45E9-8CC9-37E2FB0F08F2}"
-	ProjectSection(SolutionItems) = preProject
-		package.json = package.json
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tailwind", "tailwind", "{42FE03BE-7358-4D1E-9A9C-D9FAAC1564D3}"
-	ProjectSection(SolutionItems) = preProject
-		tailwind.config.js = tailwind.config.js
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "typescript", "typescript", "{401208E4-BA9D-4FD0-80F0-466634E00E90}"
-	ProjectSection(SolutionItems) = preProject
-		tsconfig.json = tsconfig.json
-		webpack.config.js = webpack.config.js
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workfloor.InfiniLore.InfiniBlazor", "examples\Workfloor.InfiniLore.InfiniBlazor\Workfloor.InfiniLore.InfiniBlazor.csproj", "{74F08627-07BE-432B-8893-E1DFA7045731}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfiniLore.InfiniBlazor.Theming", "src\InfiniLore.InfiniBlazor.Theming\InfiniLore.InfiniBlazor.Theming.csproj", "{FFA584A8-9F7E-47BF-926B-E6CDE1461C10}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{5617CC84-C589-46E6-9E36-7F891590BE0F}"
+	ProjectSection(SolutionItems) = preProject
+		tsconfig.json = tsconfig.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.InfiniLore.InfiniBlazor.Themes", "tests\Tests.InfiniLore.InfiniBlazor.Themes\Tests.InfiniLore.InfiniBlazor.Themes.csproj", "{EE5CD42F-C866-4B30-8C55-AA789F8272A5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{2DDCBB0C-9075-4F2B-8987-0D9B0BADB9FD}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\release.yml = .github\workflows\release.yml
+		.github\workflows\workflow-todo.yml = .github\workflows\workflow-todo.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -84,18 +83,28 @@ Global
 		{74F08627-07BE-432B-8893-E1DFA7045731}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74F08627-07BE-432B-8893-E1DFA7045731}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74F08627-07BE-432B-8893-E1DFA7045731}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFA584A8-9F7E-47BF-926B-E6CDE1461C10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFA584A8-9F7E-47BF-926B-E6CDE1461C10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFA584A8-9F7E-47BF-926B-E6CDE1461C10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFA584A8-9F7E-47BF-926B-E6CDE1461C10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE5CD42F-C866-4B30-8C55-AA789F8272A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE5CD42F-C866-4B30-8C55-AA789F8272A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE5CD42F-C866-4B30-8C55-AA789F8272A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE5CD42F-C866-4B30-8C55-AA789F8272A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{26284571-0E09-4BAF-8C2B-DF87DCC1BA0B} = {8DD280D4-1E14-4D5E-AFE6-58DD8F079DCC}
 		{64B26DED-68C3-47FF-B409-1C8FAD4F9176} = {197E72AD-DEAB-4350-AFC3-A3BB38720BF5}
-		{ADEADD97-0AFA-4D9E-970B-9FFB932949B3} = {AF1A203C-6EF1-440E-BB3C-55B1DBFE9C19}
 		{78F61C2B-D604-4A86-AE33-D79EA2FA2E45} = {85D9748B-B4DD-428D-850A-DCF23F8DBA39}
 		{74319491-2796-4763-9365-5215E4C4D5DC} = {197E72AD-DEAB-4350-AFC3-A3BB38720BF5}
 		{C03EF489-833D-404F-B3AE-A5A266499F23} = {197E72AD-DEAB-4350-AFC3-A3BB38720BF5}
 		{1210F705-ABBA-4EC0-943A-E9CC35B1642A} = {8DD280D4-1E14-4D5E-AFE6-58DD8F079DCC}
 		{E5C1D953-B6DB-4CC0-8490-BF2F43994D92} = {8DD280D4-1E14-4D5E-AFE6-58DD8F079DCC}
-		{42FE03BE-7358-4D1E-9A9C-D9FAAC1564D3} = {25ED7F52-E54D-45E9-8CC9-37E2FB0F08F2}
-		{401208E4-BA9D-4FD0-80F0-466634E00E90} = {25ED7F52-E54D-45E9-8CC9-37E2FB0F08F2}
 		{74F08627-07BE-432B-8893-E1DFA7045731} = {85D9748B-B4DD-428D-850A-DCF23F8DBA39}
+		{FFA584A8-9F7E-47BF-926B-E6CDE1461C10} = {197E72AD-DEAB-4350-AFC3-A3BB38720BF5}
+		{ADEADD97-0AFA-4D9E-970B-9FFB932949B3} = {25ED7F52-E54D-45E9-8CC9-37E2FB0F08F2}
+		{5617CC84-C589-46E6-9E36-7F891590BE0F} = {25ED7F52-E54D-45E9-8CC9-37E2FB0F08F2}
+		{EE5CD42F-C866-4B30-8C55-AA789F8272A5} = {8DD280D4-1E14-4D5E-AFE6-58DD8F079DCC}
+		{2DDCBB0C-9075-4F2B-8987-0D9B0BADB9FD} = {25ED7F52-E54D-45E9-8CC9-37E2FB0F08F2}
 	EndGlobalSection
 EndGlobal
