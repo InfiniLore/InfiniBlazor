@@ -3,14 +3,16 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
 
 namespace InfiniLore.InfiniBlazor.Markdown.TextModifiers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ITextModifier>("underline")]
+[SuppressMessage("ReSharper", "ReplaceAutoPropertyWithComputedProperty")]
 public class UnderlineModifier(ILogger<UnderlineModifier> logger) : SingleInstructionModifiers(logger) {
-    public override string IconName => "underline";
-    public override string ModifierName => "underline";
-    protected override string Instruction => "_";
+    public override string IconName { get; } = "underline";
+    public override string ModifierName { get; } = "underline";
+    protected override string Instruction { get; } = "_";
 }

@@ -5,7 +5,6 @@ using Example.Components;
 using InfiniLore.InfiniBlazor.Markdown.Config;
 using InfiniLore.InfiniBlazor.Markdown.Processors.InputProcessors;
 using InfiniLore.InfiniBlazor.Markdown.Processors.OutputProcessors;
-using InfiniLore.InfiniBlazor.Themes;
 
 namespace Example;
 // ---------------------------------------------------------------------------------------------------------------------

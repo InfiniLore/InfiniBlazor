@@ -3,14 +3,16 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
 
 namespace InfiniLore.InfiniBlazor.Markdown.TextModifiers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ITextModifier>("code-inline")]
+[SuppressMessage("ReSharper", "ReplaceAutoPropertyWithComputedProperty")]
 public class CodeInlineModifier(ILogger<CodeInlineModifier> logger) : SingleInstructionModifiers(logger) {
-    public override string IconName => "code";
-    public override string ModifierName => "code-inline";
-    protected override string Instruction => "`";
+    public override string IconName { get; } = "code";
+    public override string ModifierName { get; } = "code-inline";
+    protected override string Instruction { get; } = "`";
 }

@@ -12,15 +12,12 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<!--suppress HtmlDeprecatedAttribute -->
-<style type="text/css">
-    @_css
-</style>
+<style>@_css</style>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private string _css = string.Empty;
+    private string _css = string.Empty;       
     protected override void OnInitialized() {
         ThemeSelector.ThemeChanged += OnThemeChanged;
         _css = ThemeSelector.GetCurrentThemeCss();

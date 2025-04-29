@@ -3,14 +3,16 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
 
 namespace InfiniLore.InfiniBlazor.Markdown.TextModifiers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ITextModifier>("superscript")]
+[SuppressMessage("ReSharper", "ReplaceAutoPropertyWithComputedProperty")]
 public class SuperscriptModifier(ILogger<SuperscriptModifier> logger) : SingleInstructionModifiers(logger) {
-    public override string IconName => "superscript";
-    public override string ModifierName => "superscript";
-    protected override string Instruction => "^^";
+    public override string IconName { get; } = "superscript";
+    public override string ModifierName { get; } = "superscript";
+    protected override string Instruction { get; } = "^^";
 }
