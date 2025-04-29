@@ -2,7 +2,7 @@
 
 on:
     pull_request:
-        branches: [ core ]  # or 'master' depending on your default branch name
+        branches: [ core ] 
 
 jobs:
     build:
