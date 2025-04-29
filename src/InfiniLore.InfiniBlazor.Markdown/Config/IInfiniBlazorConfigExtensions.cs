@@ -23,9 +23,5 @@ public static class IInfiniBlazorConfigExtensions {
         config.Services.AddSingleton<IHtmlSanitizer, HtmlSanitizer>();
         
         configure?.Invoke(markdownConfig);
-        config.Services.AddSingleton<IMarkdownConfig>(markdownConfig);
-
-        foreach (ITextEditorConfig textEditor in markdownConfig.TextEditors) {
-        }
     }
 }

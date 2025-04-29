@@ -8,16 +8,16 @@ namespace InfiniLore.InfiniBlazor.Markdown.Config;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MarkdownConfig(IInfiniBlazorConfig infiniBlazorConfig) : IMarkdownConfig {
-    public readonly List<ITextEditorConfig> TextEditors = [];
+public class MarkdownConfig(IInfiniBlazorConfig infiniBlazorConfig) {
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public TextEditorConfig AddTextEditor(object? key = null) {
         var config = new TextEditorConfig(infiniBlazorConfig, key);
-        TextEditors.Add(config);
-        infiniBlazorConfig.Services.AddKeyedSingleton(key, TextEditorFactory.CreateTextEditor);
+        
+        if (key is null) infiniBlazorConfig.Services.AddSingleton(TextEditorFactory.CreateTextEditor);
+        else infiniBlazorConfig.Services.AddKeyedSingleton(key, TextEditorFactory.CreateTextEditor);
         return config;
     }
     
@@ -27,7 +27,8 @@ public class MarkdownConfig(IInfiniBlazorConfig infiniBlazorConfig) : IMarkdownC
     {
         var config = new MarkdownParserConfig<TInput, TOutput>(infiniBlazorConfig, key);
 
-        infiniBlazorConfig.Services.AddKeyedSingleton(key, MarkdownParserFactory.CreateParser<TInput, TOutput>);
+        if (key is null) infiniBlazorConfig.Services.AddSingleton(MarkdownParserFactory.CreateParser<TInput, TOutput>);
+        else infiniBlazorConfig.Services.AddKeyedSingleton(key, MarkdownParserFactory.CreateParser<TInput, TOutput>);
         return config;
     }
 }

@@ -10,6 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public static class TextEditorFactory {
+    public static ITextEditor CreateTextEditor(IServiceProvider provider) => CreateTextEditor(provider, null);
     public static ITextEditor CreateTextEditor(IServiceProvider provider, object? key) {
         IEnumerable<ITextModifier> modifiers = provider.GetKeyedServices<ITextModifier>(key);
         

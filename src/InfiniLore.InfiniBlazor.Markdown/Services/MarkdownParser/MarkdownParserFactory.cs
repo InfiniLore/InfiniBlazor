@@ -11,6 +11,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public static class MarkdownParserFactory {
+    public static IMarkdownParser<TInput, TOutput> CreateParser<TInput, TOutput>(IServiceProvider provider) => CreateParser<TInput, TOutput>(provider, null);
     public static IMarkdownParser<TInput, TOutput> CreateParser<TInput, TOutput>(IServiceProvider provider, object? key) {
         ImmutableArray<IMarkdownInputProcessor<TInput>> inputProcessors = provider.GetRequiredKeyedService<IEnumerable<IMarkdownInputProcessor<TInput>>>(key)
             .ToImmutableArray();
