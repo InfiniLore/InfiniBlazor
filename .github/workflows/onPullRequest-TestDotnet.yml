@@ -1,4 +1,4 @@
-﻿name: Pull Request Check
+﻿name: Dotnet Testing
 
 on:
     pull_request:
