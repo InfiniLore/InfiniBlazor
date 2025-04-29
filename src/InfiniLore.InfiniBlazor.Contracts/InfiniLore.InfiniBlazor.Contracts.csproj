@@ -28,7 +28,7 @@
         <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
         <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
         <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Markdown" />
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Themes" />
+        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Theming" />
         <InternalsVisibleTo Include="InfiniLore.InfiniBlazor" />
     </ItemGroup>
 

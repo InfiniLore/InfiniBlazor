@@ -6,7 +6,7 @@ using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.Config;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Tests.InfiniLore.InfiniBlazor.Themes;
+namespace Tests.InfiniLore.InfiniBlazor.Markdown;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

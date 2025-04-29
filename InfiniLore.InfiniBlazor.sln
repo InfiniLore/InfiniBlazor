@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".dev-tools", ".dev-tools", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workfloor.InfiniLore.InfiniBlazor", "examples\Workfloor.InfiniLore.InfiniBlazor\Workfloor.InfiniLore.InfiniBlazor.csproj", "{74F08627-07BE-432B-8893-E1DFA7045731}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfiniLore.InfiniBlazor.Themes", "src\InfiniLore.InfiniBlazor.Themes\InfiniLore.InfiniBlazor.Themes.csproj", "{FFA584A8-9F7E-47BF-926B-E6CDE1461C10}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfiniLore.InfiniBlazor.Theming", "src\InfiniLore.InfiniBlazor.Theming\InfiniLore.InfiniBlazor.Theming.csproj", "{FFA584A8-9F7E-47BF-926B-E6CDE1461C10}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{5617CC84-C589-46E6-9E36-7F891590BE0F}"
 	ProjectSection(SolutionItems) = preProject

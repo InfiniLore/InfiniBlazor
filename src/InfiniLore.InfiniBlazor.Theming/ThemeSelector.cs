@@ -3,13 +3,13 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Config;
-using InfiniLore.InfiniBlazor.Themes.Library;
+using InfiniLore.InfiniBlazor.Theming.Library;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
 using System.Text;
 
-namespace InfiniLore.InfiniBlazor.Themes;
+namespace InfiniLore.InfiniBlazor.Theming;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
