@@ -3,15 +3,21 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using Ganss.Xss;
 using InfiniLore.InfiniBlazor.Markdown;
+using Microsoft.Extensions.DependencyInjection;
 using Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[DiSanitizedDataSource]
-public class SanitizedMarkdownParserTests(IHtmlSanitizer sanitizer, IMarkdownParser<string, string> parser, IMarkdownParser<ITextSource, string> textSourceParser) {
+[DiDataSource]
+public class SanitizedMarkdownParserTests(IHtmlSanitizer sanitizer, IServiceProvider provider) {
+    private readonly IMarkdownParser<string, string> parser = provider.GetRequiredKeyedService<IMarkdownParser<string, string>>("sanitized");
+    private readonly IMarkdownParser<ITextSource, string> textSourceParser = provider.GetRequiredKeyedService<IMarkdownParser<ITextSource, string>>("sanitized");
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
     [Test]
     [MethodDataSource(typeof(MarkdownDataSources), nameof(MarkdownDataSources.DataSources))]
     public async Task TryParse_String_ValidInputs(MarkdownTestDto dto) {

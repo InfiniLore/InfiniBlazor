@@ -3,8 +3,8 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using Example.Components;
 using InfiniLore.InfiniBlazor.Markdown.Config;
-using InfiniLore.InfiniBlazor.Markdown.Processors.InputProcessors;
-using InfiniLore.InfiniBlazor.Markdown.Processors.OutputProcessors;
+using InfiniLore.InfiniBlazor.Theming.Config;
+using InfiniLore.InfiniBlazor.Theming.Library;
 
 namespace Example;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -15,13 +15,8 @@ public class Program {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddInfiniBlazor(config => {
-            config.AddMarkdown(static config => {
-                config.AddMarkdownParser<string, string>()
-                    .AddInputProcessor<StringInputProcessor>()
-                    .AddOutputProcessor<StringOutputSanitizerProcessor>();
-            });
-
-            // config.Themes.AddTheme<IInfiniLoreTheme, LotusTheme>("lotus");
+            config.AddMarkdownLogic();
+            config.AddThemingLogic(themeConfig => themeConfig.RegisterTheme<AnnaSasDevTheme>("anna"));
         });
         
         builder.Services.AddRazorComponents()

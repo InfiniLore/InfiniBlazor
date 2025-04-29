@@ -2,13 +2,12 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Testing.TUnit;
-using InfiniLore.InfiniBlazor.Markdown.Config;
 using InfiniLore.InfiniBlazor.Theming;
 using InfiniLore.InfiniBlazor.Theming.Config;
 using InfiniLore.InfiniBlazor.Theming.Library;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Tests.InfiniLore.InfiniBlazor.Themes;
+namespace Tests.InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -19,7 +18,7 @@ public class ServiceCollectionTests {
         var services = new ServiceCollection();
 
         // Act
-        services.AddInfiniBlazor(config => config.AddTheming());
+        services.AddInfiniBlazor(config => config.AddThemingLogic());
 
         // Assert
         await Assert.That(services).ContainsServiceType<IThemeSelector>();
@@ -32,7 +31,7 @@ public class ServiceCollectionTests {
 
         // Act
         services.AddInfiniBlazor(config => {
-            config.AddTheming(cfg =>
+            config.AddThemingLogic(cfg =>
                 cfg.RegisterTheme<AnnaSasDevTheme>("anna")
             );
         });

@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 public interface ITextEditor {
     IEnumerable<ITextModifier> Modifiers { get; }
 
-    void Modify(ITextSource source, ReadOnlySpan<char> section, Range range);
+    void Modify(ITextSource source, ReadOnlySpan<char> modifierName, Range range);
     void Insert(ITextSource source, ReadOnlySpan<char> input, Range range);
 
     bool TryGetCaretLine(ITextSource source, int caretIndex, out Range lineRange);

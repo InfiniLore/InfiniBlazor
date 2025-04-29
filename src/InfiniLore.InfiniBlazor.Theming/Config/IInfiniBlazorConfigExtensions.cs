@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.Theming.Config;
 // ---------------------------------------------------------------------------------------------------------------------
 // ReSharper disable once InconsistentNaming
 public static class IInfiniBlazorConfigExtensions {
-    public static void AddTheming(this IInfiniBlazorConfig config, Action<ThemeConfig>? configure = null) {
+    public static void AddThemingLogic(this IInfiniBlazorConfig config, Action<ThemeConfig>? configure = null) {
         config.Services.RegisterServicesFromInfiniLoreInfiniBlazorTheming();
         
         var themeConfig = new ThemeConfig(config);

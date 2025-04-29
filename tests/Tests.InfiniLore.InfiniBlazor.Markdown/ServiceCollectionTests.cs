@@ -18,7 +18,7 @@ public class ServiceCollectionTests {
         var services = new ServiceCollection();
 
         // Act
-        services.AddInfiniBlazor(config => config.AddMarkdown());
+        services.AddInfiniBlazor(config => config.AddMarkdownLogic());
 
         // Assert
         await Assert.That(services).ContainsServiceImplementation(typeof(IMarkdownParser<,>), typeof(MarkdownParser<,>));
