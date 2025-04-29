@@ -27,9 +27,8 @@ jobs:
             
             # Ensure that the tests must pass 
             # The job will fail automatically if any test fails because `dotnet test` exits with a non-zero code
-            - name: Run tests - InfiniLore.InfiniBlazor
-              run: dotnet run -c Release --no-restore --no-build
-              working-directory: "tests/Tests.InfiniLore.InfiniBlazor.Markdown"
+            - name: Run tests     
+              run: dotnet test InfiniLore.InfiniBlazor.sln --configuration Release --no-restore --no-build
 
             - name: Publish to NuGet
               env:
@@ -38,3 +37,4 @@ jobs:
                   dotnet nuget push src/InfiniLore.InfiniBlazor/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
                   dotnet nuget push src/InfiniLore.InfiniBlazor.Contracts/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
                   dotnet nuget push src/InfiniLore.InfiniBlazor.Markdown/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                  dotnet nuget push src/InfiniLore.InfiniBlazor.Themes/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate

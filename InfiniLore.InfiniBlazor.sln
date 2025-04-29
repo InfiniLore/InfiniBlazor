@@ -33,6 +33,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{5617CC84-C58
 		tsconfig.json = tsconfig.json
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.InfiniLore.InfiniBlazor.Themes", "tests\Tests.InfiniLore.InfiniBlazor.Themes\Tests.InfiniLore.InfiniBlazor.Themes.csproj", "{EE5CD42F-C866-4B30-8C55-AA789F8272A5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{2DDCBB0C-9075-4F2B-8987-0D9B0BADB9FD}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\release.yml = .github\workflows\release.yml
+		.github\workflows\workflow-todo.yml = .github\workflows\workflow-todo.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +87,10 @@ Global
 		{FFA584A8-9F7E-47BF-926B-E6CDE1461C10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFA584A8-9F7E-47BF-926B-E6CDE1461C10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFA584A8-9F7E-47BF-926B-E6CDE1461C10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE5CD42F-C866-4B30-8C55-AA789F8272A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE5CD42F-C866-4B30-8C55-AA789F8272A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE5CD42F-C866-4B30-8C55-AA789F8272A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE5CD42F-C866-4B30-8C55-AA789F8272A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{26284571-0E09-4BAF-8C2B-DF87DCC1BA0B} = {8DD280D4-1E14-4D5E-AFE6-58DD8F079DCC}
@@ -92,5 +104,7 @@ Global
 		{FFA584A8-9F7E-47BF-926B-E6CDE1461C10} = {197E72AD-DEAB-4350-AFC3-A3BB38720BF5}
 		{ADEADD97-0AFA-4D9E-970B-9FFB932949B3} = {25ED7F52-E54D-45E9-8CC9-37E2FB0F08F2}
 		{5617CC84-C589-46E6-9E36-7F891590BE0F} = {25ED7F52-E54D-45E9-8CC9-37E2FB0F08F2}
+		{EE5CD42F-C866-4B30-8C55-AA789F8272A5} = {8DD280D4-1E14-4D5E-AFE6-58DD8F079DCC}
+		{2DDCBB0C-9075-4F2B-8987-0D9B0BADB9FD} = {25ED7F52-E54D-45E9-8CC9-37E2FB0F08F2}
 	EndGlobalSection
 EndGlobal

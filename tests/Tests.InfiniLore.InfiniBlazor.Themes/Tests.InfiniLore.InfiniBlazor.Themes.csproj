@@ -18,9 +18,4 @@
         <PackageReference Include="TUnit" Version="0.19.86"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Markdown\InfiniLore.InfiniBlazor.Markdown.csproj"/>
-        <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj"/>
-    </ItemGroup>
-
 </Project>
