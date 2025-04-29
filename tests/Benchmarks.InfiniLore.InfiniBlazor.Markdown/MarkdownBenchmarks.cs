@@ -44,7 +44,7 @@ public class MarkdownBenchmarks {
     
     private static IMarkdownParser<string, string> CreateParser(Action<MarkdownConfig>? configure = null) {
         var serviceCollection = new ServiceCollection();
-        serviceCollection.AddInfiniBlazor(config => config.AddMarkdown(configure));
+        serviceCollection.AddInfiniBlazor(config => config.AddMarkdownLogic(configure));
         serviceCollection.AddLogging();
         ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
         return serviceProvider.GetRequiredService<IMarkdownParser<string, string>>();

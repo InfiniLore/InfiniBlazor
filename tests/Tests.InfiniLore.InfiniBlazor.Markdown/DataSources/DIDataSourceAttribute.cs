@@ -27,7 +27,7 @@ public class DiDataSourceAttribute : DependencyInjectionDataSourceAttribute<ISer
 
         services.AddLogging();
         services.AddLucideIcons();
-        services.AddInfiniBlazor(static config => config.AddMarkdown(
+        services.AddInfiniBlazor(static config => config.AddMarkdownLogic(
             static config => {
                 config.AddTextEditor().AddDefaultModifiers();
                 config.AddTextEditor("boldOnly").AddModifier<BoldModifier>();
