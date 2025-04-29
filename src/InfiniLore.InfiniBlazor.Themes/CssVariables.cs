@@ -6,7 +6,7 @@ namespace InfiniLore.InfiniBlazor.Themes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class ThemeVariables {
+public static class CssVariables {
     public const string NavMenuItemIcon = "--nav-menu-item-icon";
     public const string NavMenuItemText = "--nav-menu-item-text";
 }

@@ -1,16 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>InfiniLore.InfiniBlazor</RootNamespace>
 
         <!-- Package metadata -->
-        <PackageId>InfiniLore.InfiniBlazor.Contracts</PackageId>
+        <PackageId>InfiniLore.InfiniBlazor.Themes</PackageId>
         <Version>0.1.0-preview.8</Version>
         <Authors>Anna Sas</Authors>
-        <Description>Contract library for InfiniLore's Component Library</Description>
+        <Description>CSS Theme library for InfiniLore's Component Library</Description>
         <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
         <PackageTags>Blazor;Ui;Design;Components;Library;Contracts</PackageTags>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -27,18 +26,19 @@
         <None Include="../../LICENSE" Pack="true" PackagePath="" Visible="false" />
         <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
         <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Markdown" />
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Themes" />
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.4" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
+      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Markdown\" />
+      <PackageReference Include="CodeOfChaos.Extensions" Version="0.64.0" />
+      <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" Version="0.64.0" />
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators" Version="0.64.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
 
 </Project>
