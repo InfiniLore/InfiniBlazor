@@ -3,8 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor;
 using InfiniLore.InfiniBlazor.Config;
-using InfiniLore.InfiniBlazor.Markdown.Config;
-using InfiniLore.InfiniBlazor.Theming.Config;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
@@ -20,17 +18,5 @@ public static class ServiceCollectionExtensions {
         configure?.Invoke(config);
 
         return services;
-    }
-
-    public static IServiceCollection AddInfiniBlazor(
-        this IServiceCollection services,
-        Action<MarkdownConfig> configureMarkdown,
-        Action<ThemeConfig> configureTheming
-    ) {
-        return services.AddInfiniBlazor(config => {
-                config.AddMarkdown(configureMarkdown);
-                config.AddTheming(configureTheming);
-            }
-        );
     }
 }
