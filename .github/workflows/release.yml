@@ -2,13 +2,12 @@ name: Publish Packages
 
 on:
     push:
-        branches:
-            - 'core'
         tags:
             - 'v*.*.*' # Match version tags like v1.0.0
 
 jobs:
     publish:
+        if: github.ref_name == 'core'  # Only run if we're on the core branch
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
@@ -37,4 +36,4 @@ jobs:
                   dotnet nuget push src/InfiniLore.InfiniBlazor/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
                   dotnet nuget push src/InfiniLore.InfiniBlazor.Contracts/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
                   dotnet nuget push src/InfiniLore.InfiniBlazor.Markdown/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                  dotnet nuget push src/InfiniLore.InfiniBlazor.Themes/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                  dotnet nuget push src/InfiniLore.InfiniBlazor.Theming/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
