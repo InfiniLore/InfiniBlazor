@@ -8,21 +8,26 @@ namespace InfiniLore.InfiniBlazor.Markdown.Config;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MarkdownConfig(IInfiniBlazorConfig infiniBlazorConfig) {
-    public MarkdownTextEditorConfig TextEditor { get; } = new(infiniBlazorConfig);
-
+public class MarkdownConfig(IInfiniBlazorConfig infiniBlazorConfig) : IMarkdownConfig {
+    public readonly List<ITextEditorConfig> TextEditors = [];
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public TextEditorConfig AddTextEditor(object? key = null) {
+        var config = new TextEditorConfig(infiniBlazorConfig, key);
+        TextEditors.Add(config);
+        infiniBlazorConfig.Services.AddKeyedSingleton(key, TextEditorFactory.CreateTextEditor);
+        return config;
+    }
+    
     public MarkdownParserConfig<TInput, TOutput> AddMarkdownParser<TInput, TOutput>(object? key = null)
         where TInput : class 
         where TOutput : class
     {
-        var markdownParserConfig = new MarkdownParserConfig<TInput, TOutput>(infiniBlazorConfig);
+        var config = new MarkdownParserConfig<TInput, TOutput>(infiniBlazorConfig, key);
 
-        if (key is null) infiniBlazorConfig.Services.AddSingleton<IMarkdownParser<TInput, TOutput>, MarkdownParser<TInput, TOutput>>();
-        else infiniBlazorConfig.Services.AddKeyedSingleton<IMarkdownParser<TInput, TOutput>, MarkdownParser<TInput, TOutput>>(key);
-
-        return markdownParserConfig;
+        infiniBlazorConfig.Services.AddKeyedSingleton(key, MarkdownParserFactory.CreateParser<TInput, TOutput>);
+        return config;
     }
 }

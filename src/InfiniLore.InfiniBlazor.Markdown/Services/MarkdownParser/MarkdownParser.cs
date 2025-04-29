@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Markdown.Processors;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Microsoft.Extensions.Logging;
@@ -11,38 +12,15 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MarkdownParser<TInput, TOutput> : IMarkdownParser<TInput, TOutput> {
-    private readonly ImmutableArray<IMarkdownInputProcessor<TInput>> _inputProcessors;
-    private readonly ImmutableArray<IMarkdownPostProcessor<TInput>> _postProcessors;
-    private readonly ImmutableArray<IMarkdownOutputProcessor<TOutput>> _outputProcessors;
-    private readonly ILogger<MarkdownParser<TInput, TOutput>> _logger;
-    private readonly IMarkdownSyntaxTreeParser<TInput> _nodeTreeParser;
-    private readonly IMarkdownSyntaxTreeConverter<TOutput> _converter;
-    private readonly bool _hasInputProcessors;
-    private readonly bool _hasPostProcessors;
-    private readonly bool _hasOutputProcessors;
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // Constructors
-    // -----------------------------------------------------------------------------------------------------------------
-    public MarkdownParser(
-        ILogger<MarkdownParser<TInput, TOutput>> logger,
-        IMarkdownSyntaxTreeParser<TInput> nodeTreeParser,
-        IMarkdownSyntaxTreeConverter<TOutput> converter,
-        IEnumerable<IMarkdownInputProcessor<TInput>> inputProcessors,
-        IEnumerable<IMarkdownPostProcessor<TInput>> postProcessors,
-        IEnumerable<IMarkdownOutputProcessor<TOutput>> outputProcessors
-    ) {
-        _logger = logger;
-        _nodeTreeParser = nodeTreeParser;
-        _converter = converter;
-        _inputProcessors = inputProcessors.ToImmutableArray();
-        _postProcessors = postProcessors.ToImmutableArray();
-        _outputProcessors = outputProcessors.ToImmutableArray();
-        _hasPostProcessors = _postProcessors.Length > 0;
-        _hasInputProcessors = _inputProcessors.Length > 0;
-        _hasOutputProcessors = _outputProcessors.Length > 0;
-        
-    }
+    public required ImmutableArray<IMarkdownInputProcessor<TInput>> InputProcessors { private get; init; }
+    public required ImmutableArray<IMarkdownPostProcessor<TInput>> PostProcessors { private get; init; }
+    public required ImmutableArray<IMarkdownOutputProcessor<TOutput>> OutputProcessors { private get; init; }
+    public required ILogger<MarkdownParser<TInput, TOutput>> Logger { private get; init; }
+    public required IMarkdownSyntaxTreeParser<TInput> NodeTreeParser { private get; init; }
+    public required IMarkdownSyntaxTreeConverter<TOutput> Converter { private get; init; }
+    public required bool HasInputProcessors { private get; init; }
+    public required bool HasPostProcessors { private get; init; }
+    public required bool HasOutputProcessors { private get; init; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -52,21 +30,21 @@ public class MarkdownParser<TInput, TOutput> : IMarkdownParser<TInput, TOutput> 
 
         try {
             TInput? processedInput = input;
-            if (_hasInputProcessors) {
+            if (HasInputProcessors) {
                 processedInput = await ExecuteInputProcessorsAsync(processedInput, ct);
                 if (processedInput is null) return default;
                 ct.ThrowIfCancellationRequested();
             }
 
-            await _nodeTreeParser.ParseToNodeTreeAsync(processedInput, nodeTree, ct);
-            if (_hasPostProcessors && !await ExecutePostProcessorsAsync(input, nodeTree, ct)) return default;
+            await NodeTreeParser.ParseToNodeTreeAsync(processedInput, nodeTree, ct);
+            if (HasPostProcessors && !await ExecutePostProcessorsAsync(input, nodeTree, ct)) return default;
             ct.ThrowIfCancellationRequested();
 
-            TOutput output = await _converter.ConvertAsync(nodeTree, ct);
+            TOutput output = await Converter.ConvertAsync(nodeTree, ct);
             TOutput? processedOutput = output;
 
             // ReSharper disable once InvertIf
-            if (_hasOutputProcessors) {
+            if (HasOutputProcessors) {
                 processedOutput = await ExecuteOutputProcessors(processedOutput, ct);
                 if (processedOutput is null) return default;
                 ct.ThrowIfCancellationRequested();
@@ -75,12 +53,12 @@ public class MarkdownParser<TInput, TOutput> : IMarkdownParser<TInput, TOutput> 
             return processedOutput;
         }
         catch (OperationCanceledException e) {
-            _logger.LogError(e, "Operation cancelled");
+            Logger.LogError(e, "Operation cancelled");
             return default;
         }
         
         catch (Exception e) {
-            _logger.LogError(e, "Error parsing markdown.");
+            Logger.LogError(e, "Error parsing markdown.");
             return default;
         }
         finally {
@@ -89,15 +67,15 @@ public class MarkdownParser<TInput, TOutput> : IMarkdownParser<TInput, TOutput> 
     }
     
     private async ValueTask<TInput?> ExecuteInputProcessorsAsync(TInput processedInput, CancellationToken ct) {
-        int count = _inputProcessors.Length;
+        int count = InputProcessors.Length;
         TInput? inputProcessed = processedInput;
         for (int i = 0; i < count; i++) {
-            IMarkdownInputProcessor<TInput> processor = _inputProcessors[i];
+            IMarkdownInputProcessor<TInput> processor = InputProcessors[i];
             inputProcessed = await processor.TryProcessInput(inputProcessed, ct);
             
             // ReSharper disable once InvertIf
             if (inputProcessed is null) {
-                _logger.LogWarning("Input Processor {processor} failed.", processor.GetType());
+                Logger.LogWarning("Input Processor {processor} failed.", processor.GetType());
                 return default;
             }
         }
@@ -106,13 +84,13 @@ public class MarkdownParser<TInput, TOutput> : IMarkdownParser<TInput, TOutput> 
     }
     
     private async ValueTask<bool> ExecutePostProcessorsAsync(TInput input, IMarkdownSyntaxTree syntaxTree, CancellationToken ct) {
-        int count = _postProcessors.Length;
+        int count = PostProcessors.Length;
         for (int i = 0; i < count; i++) {
-            IMarkdownPostProcessor<TInput> processor = _postProcessors[i];
+            IMarkdownPostProcessor<TInput> processor = PostProcessors[i];
             
             // ReSharper disable once InvertIf 
             if (!await processor.TryProcessAsync(input, syntaxTree, ct)) {
-                _logger.LogWarning("PostProcessor {processor} failed.", processor.GetType());
+                Logger.LogWarning("PostProcessor {processor} failed.", processor.GetType());
                 return false;
             }
         }
@@ -121,15 +99,15 @@ public class MarkdownParser<TInput, TOutput> : IMarkdownParser<TInput, TOutput> 
     }
     
     private async ValueTask<TOutput?> ExecuteOutputProcessors(TOutput output, CancellationToken ct) {
-        int count = _outputProcessors.Length;
+        int count = OutputProcessors.Length;
         TOutput? outputProcessed = output;
         for (int i = 0; i < count; i++) {
-            IMarkdownOutputProcessor<TOutput> processor = _outputProcessors[i];
+            IMarkdownOutputProcessor<TOutput> processor = OutputProcessors[i];
             outputProcessed = await processor.TryProcessOutputAsync(output, ct);
             
             // ReSharper disable once InvertIf
             if (outputProcessed is null) {
-                _logger.LogWarning("OutputProcessor {processor} failed.", processor.GetType());
+                Logger.LogWarning("OutputProcessor {processor} failed.", processor.GetType());
                 return default;
             }
         }

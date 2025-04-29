@@ -18,11 +18,14 @@ public static class IInfiniBlazorConfigExtensions {
         config.Services.AddSingleton<IMarkdownSyntaxTreeConverter<string>, ToStringConverter>();
         
         var markdownConfig = new MarkdownConfig(config);
-        markdownConfig.TextEditor.AddDefaultModifiers();
+        markdownConfig.AddTextEditor().AddDefaultModifiers();
+        
         config.Services.AddSingleton<IHtmlSanitizer, HtmlSanitizer>();
         
         configure?.Invoke(markdownConfig);
-        config.Services.AddSingleton(markdownConfig);
-        config.Services.AddSingleton<IMarkdownConfig>(FrozenMarkdownConfigFactory.FromServiceProvider);
+        config.Services.AddSingleton<IMarkdownConfig>(markdownConfig);
+
+        foreach (ITextEditorConfig textEditor in markdownConfig.TextEditors) {
+        }
     }
 }

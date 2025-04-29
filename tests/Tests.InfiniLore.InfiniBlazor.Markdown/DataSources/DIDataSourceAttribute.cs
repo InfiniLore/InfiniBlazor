@@ -27,6 +27,8 @@ public class DiDataSourceAttribute : DependencyInjectionDataSourceAttribute<ISer
         services.AddLucideIcons();
         services.AddInfiniBlazor(static config => config.AddMarkdown(
             static config => {
+                config.AddTextEditor().AddDefaultModifiers();
+                
                 config.AddMarkdownParser<string,string>()
                     .AddInputProcessor<StringInputProcessor>();
 

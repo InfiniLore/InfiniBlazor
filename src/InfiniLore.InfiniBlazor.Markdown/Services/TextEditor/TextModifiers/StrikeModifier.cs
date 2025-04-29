@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.TextModifiers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ITextModifier>("strike")]
+[InjectableSingleton<ITextModifier>()]
 [SuppressMessage("ReSharper", "ReplaceAutoPropertyWithComputedProperty")]
 public class StrikeModifier(ILogger<StrikeModifier> logger) : SingleInstructionModifiers(logger) {
     public override string IconName { get; } = "strikethrough";

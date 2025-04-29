@@ -1,9 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.DependencyInjection;
-using InfiniLore.InfiniBlazor.Config;
-using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Frozen;
 using System.Text.RegularExpressions;
 
@@ -11,24 +8,19 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableTransient<ITextEditor>]
-public class TextEditor(IMarkdownConfig markdownConfig, IServiceProvider provider) : ITextEditor {
+public class TextEditor : ITextEditor {
     private int _caretIndexToUpdate = -1;
+    public required FrozenDictionary<string, ITextModifier> ModifierLookup { private get; init; }  
+    
     private FrozenDictionary<string, ITextModifier>.AlternateLookup<ReadOnlySpan<char>>? _lookupCache;
-
-    private FrozenDictionary<string, ITextModifier> ModifierLookup { get; } = markdownConfig.TextEditorModifierNames.ToFrozenDictionary(
-        keySelector: name => name,
-        provider.GetRequiredKeyedService<ITextModifier>
-    );
     private FrozenDictionary<string, ITextModifier>.AlternateLookup<ReadOnlySpan<char>> AlternateLookup => _lookupCache ??= ModifierLookup.GetAlternateLookup<ReadOnlySpan<char>>();
 
     public IEnumerable<ITextModifier> Modifiers => ModifierLookup.Values;
-
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void Modify(ITextSource source, ReadOnlySpan<char> section, Range range) {
-        if (!AlternateLookup.TryGetValue(section, out ITextModifier? modifier)) return;
+    public void Modify(ITextSource source, ReadOnlySpan<char> modifierName, Range range) {
+        if (!AlternateLookup.TryGetValue(modifierName, out ITextModifier? modifier)) return;
 
         if (!modifier.IsSingleLineStructure || range.Start.Value == range.End.Value) {
             modifier.Modify(source, range, this);
