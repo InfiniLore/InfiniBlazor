@@ -2,13 +2,12 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Testing.TUnit;
-using InfiniLore.InfiniBlazor.Markdown.Config;
 using InfiniLore.InfiniBlazor.Theming;
 using InfiniLore.InfiniBlazor.Theming.Config;
 using InfiniLore.InfiniBlazor.Theming.Library;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Tests.InfiniLore.InfiniBlazor.Themes;
+namespace Tests.InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

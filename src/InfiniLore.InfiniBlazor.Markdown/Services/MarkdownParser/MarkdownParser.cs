@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Markdown.Processors;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Microsoft.Extensions.Logging;
