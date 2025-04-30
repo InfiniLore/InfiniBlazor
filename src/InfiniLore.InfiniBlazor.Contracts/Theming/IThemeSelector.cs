@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.Theming;
 public interface IThemeSelector {
     event Action? ThemeChanged;
     IThemeCollection? CurrentTheme { get; }
-    IThemeData CurrentThemeData { get; }
+    IThemeMode CurrentThemeMode { get; }
      
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

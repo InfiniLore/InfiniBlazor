@@ -10,18 +10,18 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class ThemeCollection : IThemeCollection {
-    protected abstract Dictionary<IThemeData, ITheme> Themes { get; }
+    protected abstract Dictionary<IThemeMode, ITheme> Modes { get; }
 
-    private FrozenDictionary<IThemeData, ITheme>? _storage;
-    private FrozenDictionary<IThemeData, ITheme> ContainedThemesStorage => _storage ??= Themes.ToFrozenDictionary();
+    private FrozenDictionary<IThemeMode, ITheme>? _storage;
+    private FrozenDictionary<IThemeMode, ITheme> ContainedThemesStorage => _storage ??= Modes.ToFrozenDictionary();
 
-    public IReadOnlyDictionary<IThemeData, ITheme> ContainedThemes => ContainedThemesStorage.AsReadOnly();
+    public IReadOnlyDictionary<IThemeMode, ITheme> ContainedThemes => ContainedThemesStorage.AsReadOnly();
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public bool TryGetLightModeVariant([NotNullWhen(true)] out ITheme? theme) 
-        => ContainedThemesStorage.TryGetValue(ThemeData.LightMode, out theme);
+        => ContainedThemesStorage.TryGetValue(ThemeMode.LightMode, out theme);
     
     public bool TryGetDarkModeVariant([NotNullWhen(true)] out ITheme? theme)
-        => ContainedThemesStorage.TryGetValue(ThemeData.DarkMode, out theme);
+        => ContainedThemesStorage.TryGetValue(ThemeMode.DarkMode, out theme);
 }

@@ -19,7 +19,7 @@ namespace InfiniLore.InfiniBlazor.Theming;
 public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogger<ThemeSelector> logger) : IThemeSelector {
     public event Action? ThemeChanged;
     public IThemeCollection? CurrentTheme { get; private set; }
-    public IThemeData CurrentThemeData { get; private set; } = config.DefaultThemeData;
+    public IThemeMode CurrentThemeMode { get; private set; } = config.DefaultThemeMode;
     
     private FrozenDictionary<string, IThemeCollection> Themes { get; } = CollectThemes(config, provider, logger);
     // -----------------------------------------------------------------------------------------------------------------
@@ -61,14 +61,14 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
     }
     
     public bool TryToggleDarkAndLightMode() {
-        if (CurrentThemeData == ThemeData.DarkMode) CurrentThemeData = ThemeData.LightMode;
-        else if (CurrentThemeData == ThemeData.LightMode) CurrentThemeData = ThemeData.DarkMode;
+        if (CurrentThemeMode == ThemeMode.DarkMode) CurrentThemeMode = ThemeMode.LightMode;
+        else if (CurrentThemeMode == ThemeMode.LightMode) CurrentThemeMode = ThemeMode.DarkMode;
         else {
-            logger.LogWarning("No opposite theme variant found for current mode '{Mode}'.", CurrentThemeData.Name);
+            logger.LogWarning("No opposite theme variant found for current mode '{Mode}'.", CurrentThemeMode.Name);
             return false;
         }
         ThemeChanged?.Invoke();
-        logger.LogInformation("Theme mode toggled to {Mode}.", CurrentThemeData.Name);
+        logger.LogInformation("Theme mode toggled to {Mode}.", CurrentThemeMode.Name);
         return true;
     }
 
@@ -76,11 +76,11 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
         CurrentTheme ??= Themes["default"];
         
         ITheme? theme = null;
-        if (CurrentThemeData == ThemeData.DarkMode) CurrentTheme.TryGetDarkModeVariant(out theme);
-        else if (CurrentThemeData == ThemeData.LightMode) CurrentTheme.TryGetLightModeVariant(out theme);
+        if (CurrentThemeMode == ThemeMode.DarkMode) CurrentTheme.TryGetDarkModeVariant(out theme);
+        else if (CurrentThemeMode == ThemeMode.LightMode) CurrentTheme.TryGetLightModeVariant(out theme);
         
         if (theme is null) {
-            logger.LogWarning("No theme variant found for current mode '{Mode}'.", CurrentThemeData.Name);
+            logger.LogWarning("No theme variant found for current mode '{Mode}'.", CurrentThemeMode.Name);
             css = null;
             return false;
         }

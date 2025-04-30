@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IThemeCollection {
-    IReadOnlyDictionary<IThemeData, ITheme> ContainedThemes { get; }
+    IReadOnlyDictionary<IThemeMode, ITheme> ContainedThemes { get; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

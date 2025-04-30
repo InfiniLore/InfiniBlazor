@@ -10,5 +10,5 @@ namespace InfiniLore.InfiniBlazor.Config;
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IThemeConfig {
     public IReadOnlyCollection<string> RegisteredThemes { get; }
-    public IThemeData DefaultThemeData { get; } 
+    public IThemeMode DefaultThemeMode { get; } 
 }

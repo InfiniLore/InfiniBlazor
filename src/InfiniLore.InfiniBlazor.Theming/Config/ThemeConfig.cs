@@ -13,7 +13,7 @@ public class ThemeConfig(IInfiniBlazorConfig config) : IThemeConfig{
 
     private readonly HashSet<string> _registeredThemes = [];
     public IReadOnlyCollection<string> RegisteredThemes  => _registeredThemes;
-    public IThemeData DefaultThemeData { get; } = ThemeData.DarkMode;
+    public IThemeMode DefaultThemeMode { get; set; } = ThemeMode.DarkMode;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

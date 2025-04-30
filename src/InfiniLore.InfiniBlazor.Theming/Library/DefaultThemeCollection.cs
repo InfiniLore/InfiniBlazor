@@ -9,11 +9,11 @@ namespace InfiniLore.InfiniBlazor.Theming.Library;
 // ---------------------------------------------------------------------------------------------------------------------
 [UsedImplicitly]
 public class DefaultThemeCollection : ThemeCollection {
-    protected override Dictionary<IThemeData, ITheme> Themes => new() {
+    protected override Dictionary<IThemeMode, ITheme> Modes => new() {
         {
-            ThemeData.DarkMode, InfiniBlazorTheme.DarkModeInstance
+            ThemeMode.DarkMode, InfiniBlazorTheme.DarkModeInstance
         }, {
-            ThemeData.LightMode, InfiniBlazorTheme.LightModeInstance
+            ThemeMode.LightMode, InfiniBlazorTheme.LightModeInstance
         }
     };
 }
