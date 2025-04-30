@@ -13,28 +13,36 @@ public partial class InfiniBlazorThemeTests {
     
     [GeneratedRegex("^#[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?$")]
     public static partial Regex IsHexColorRegex { get; }
-    
+
+    [GeneratedRegex("^[0-9]{1,3}, [0-9]{1,3}, [0-9]{1,3}")]
+    public static partial Regex IsRgbColorRegex { get; }
+
     [Test]
     public async Task AsCssVariables_ShouldHoldData() {
         // Arrange
         ITheme theme = InfiniBlazorTheme.Instance;
+        int executionCount = 0;
         
         // Act 
         List<(string, string)> variables = theme.AsCssVariables().ToList();
 
         // Assert
         await Parallel.ForEachAsync(variables, async (tuple, token) => {
+            Interlocked.Increment(ref executionCount);
+
             (string cssVariable, string data) = tuple;
             await Assert.That(cssVariable).IsNotNullOrWhitespace()
                 .And.StartsWith("--");
 
             if (data.StartsWith('#')) {
                 await Assert.That(data).Matches(IsHexColorRegex);
+                // And.DoesNotMatch(IsRgbColorRegex); //TODO Uncomment if https://github.com/thomhurst/TUnit/pull/2305 is implemented
                 await Assert.That(cssVariable).DoesNotEndWith("-rgb");
             }
             
             if (!data.StartsWith('#')) {
-                // await Assert.That(data).DoesNotMatch(IsHexColorRegex); //TODO Uncomment if https://github.com/thomhurst/TUnit/pull/2305 is implemented
+                await Assert.That(data).Matches(IsRgbColorRegex);
+                // And.DoesNotMatch(IsHexColorRegex); //TODO Uncomment if https://github.com/thomhurst/TUnit/pull/2305 is implemented
                 await Assert.That(cssVariable).EndsWith("-rgb");
             }
             
@@ -42,5 +50,7 @@ public partial class InfiniBlazorThemeTests {
         });
         
         await Assert.That(variables).HasCount().GreaterThanOrEqualTo(40);
+        await Assert.That(executionCount).IsEqualTo(variables.Count);
+
     }
 }
