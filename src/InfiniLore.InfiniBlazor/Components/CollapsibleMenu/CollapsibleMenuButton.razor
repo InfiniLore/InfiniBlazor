@@ -37,7 +37,7 @@ else
     [Parameter] public RenderFragment? Text { get; set; }
     [Parameter] public RenderFragment? Icon { get; set; }
 
-    private RenderFragment MenuContent => __builder => {
+    private RenderFragment MenuContent => _ => {
         <span class="flex flex-nowrap items-center justify-center">
             <span class="w-6 h-6 text-(--color-base-10) flex-shrink-0 group-hover:text-(--color-accent)">
                 @Icon
