@@ -143,9 +143,10 @@
 
 
     private MarkupString GetParsedParagraph(int index) {
-        string? paragraph = Paragraphs.ElementAtOrDefault(index);
+        string paragraph = Paragraphs.ElementAtOrDefault(index) ?? string.Empty;
         return new MarkupString(Parser.TryParseAsync(paragraph).Result ?? string.Empty);
     }
+    
     private async Task OnContainerClick() {
         if (_activeParagraphIndex is -1) {
             await ActivateParagraph(Paragraphs.Count - 1);

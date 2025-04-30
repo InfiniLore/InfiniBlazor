@@ -50,19 +50,12 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private string ClassOpen => $"{_width} px-4 pt-1";
+    private string ClassOpen => $"{EffectiveWidth} px-4 pt-1";
     private const string ClassClosed = "w-14 p-1";
-    private string _width = "w-48";
 
-    [Parameter] public string Width {
-        get => _width;
-        set {
-            if (!value.StartsWith("w-")) {
-                _width = $"w-{value}";
-            }
-            _width = value;
-        }
-    }
+    [Parameter] public string Width { get; set; } = "w-48";
+    private string EffectiveWidth => !Width.StartsWith("w-") ? $"w-{Width}" : Width;
+
     [Parameter] public bool IsMenuCollapsed { get; set; }
 
     [Parameter] public RenderFragment? Header { get; set; }
