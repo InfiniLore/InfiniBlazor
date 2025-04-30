@@ -14,7 +14,7 @@
     <Header>
         <a href="/"
            class="@(!IsMenuCollapsed ? "text-1xl font-bold text-(--color-base-00) hover:text-(--color-accent) no-underline" : "hidden")">
-            InfiniLore.InfiniBlazor
+            InfiniBlazor
         </a>
     </Header>
 
@@ -34,13 +34,20 @@
             <Icon><LiPackage/></Icon>
             <Text>Github</Text>
         </CollapsibleMenuButton>
-        
+
         @* DEBUG *@
-        <div class="flex space-x-2">
-            <button @onclick="SwitchTheme" class="bg-red-600 px-4 py-2 rounded">THEME</button>
-            <button @onclick="() => ThemeSelector.TryToggleDarkAndLightMode()" class="bg-green-600 px-4 py-2 rounded">MODE</button>
-        </div>
+        <CollapsibleMenuButton OnClickCallback="@(() => SwitchTheme())">
+            <Icon><LiPalette/></Icon>
+            <Text>Switch Theme</Text>
+        </CollapsibleMenuButton>
+
+        <CollapsibleMenuButton OnClickCallback="@(() => ThemeSelector.TryToggleDarkAndLightMode())">
+            <Icon><LiSun/></Icon>
+            <Text>Switch Mode</Text>
+        </CollapsibleMenuButton>
     </Footer>
+
+
 </CollapsibleMenu>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
