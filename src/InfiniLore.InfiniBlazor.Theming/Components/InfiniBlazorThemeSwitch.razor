@@ -2,11 +2,13 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Theming
+@using Microsoft.Extensions.Logging
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@rendermode InteractiveServer
+@rendermode InteractiveAuto
 @inject IThemeSelector ThemeSelector
+@inject ILogger<InfiniBlazorThemeSwitch> Logger
 @implements IDisposable
 @inherits ComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -32,18 +34,15 @@
         InvokeAsync(StateHasChanged);
     }
     
-    protected override void OnParametersSet() {
-        UpdateCss();
-        base.OnParametersSet();
-    }
-
     public void Dispose() {
         ThemeSelector.ThemeChanged -= OnThemeChanged;
     }
     
     private void UpdateCss() {
-        _css = ThemeSelector.TryGetCurrentThemeCss(out string? css)
-            ? css
-            : string.Empty;
+        if (!ThemeSelector.TryGetCurrentThemeCss(out string? css)) {
+            Logger.LogWarning("Could not live update the current css styling");
+            return;
+        }
+        _css = css;
     }
 }
