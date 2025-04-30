@@ -6,57 +6,57 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface ITheme {
-    IDictionary<string, string> ToDictionary();
+    IEnumerable<(string, string)> AsCssVariables();
 
     #region CssData
     
     #region Colors
-    string ColorRedRgb { get; }
-    string ColorRed { get; }
-    string ColorOrangeRgb { get; }
-    string ColorOrange { get; }
-    string ColorYellowRgb { get; }
-    string ColorYellow { get; }
-    string ColorGreenRgb { get; }
-    string ColorGreen { get; }
-    string ColorCyanRgb { get; }
-    string ColorCyan { get; }
-    string ColorBlueRgb { get; }
-    string ColorBlue { get; }
-    string ColorPurpleRgb { get; }
-    string ColorPurple { get; }
-    string ColorPinkRgb { get; }
-    string ColorPink { get; }
+    [IncludeAsCssVariable] string ColorRedRgb { get; }
+    [IncludeAsCssVariable] string ColorRed { get; }
+    [IncludeAsCssVariable] string ColorOrangeRgb { get; }
+    [IncludeAsCssVariable] string ColorOrange { get; }
+    [IncludeAsCssVariable] string ColorYellowRgb { get; }
+    [IncludeAsCssVariable] string ColorYellow { get; }
+    [IncludeAsCssVariable] string ColorGreenRgb { get; }
+    [IncludeAsCssVariable] string ColorGreen { get; }
+    [IncludeAsCssVariable] string ColorCyanRgb { get; }
+    [IncludeAsCssVariable] string ColorCyan { get; }
+    [IncludeAsCssVariable] string ColorBlueRgb { get; }
+    [IncludeAsCssVariable] string ColorBlue { get; }
+    [IncludeAsCssVariable] string ColorPurpleRgb { get; }
+    [IncludeAsCssVariable] string ColorPurple { get; }
+    [IncludeAsCssVariable] string ColorPinkRgb { get; }
+    [IncludeAsCssVariable] string ColorPink { get; }
     
-    string ColorAccentRgb { get; }
-    string ColorAccent { get; }
+    [IncludeAsCssVariable] string ColorAccentRgb { get; }
+    [IncludeAsCssVariable] string ColorAccent { get; }
 
-    string ColorBase00Rgb { get; }
-    string ColorBase00 { get; }
-    string ColorBase05Rgb { get; }
-    string ColorBase05 { get; }
-    string ColorBase10Rgb { get; }
-    string ColorBase10 { get; }
-    string ColorBase20Rgb { get; }
-    string ColorBase20 { get; }
-    string ColorBase30Rgb { get; }
-    string ColorBase30 { get; }
-    string ColorBase40Rgb { get; }
-    string ColorBase40 { get; }
-    string ColorBase50Rgb { get; }
-    string ColorBase50 { get; }
-    string ColorBase60Rgb { get; }
-    string ColorBase60 { get; }
-    string ColorBase70Rgb { get; }
-    string ColorBase70 { get; }
-    string ColorBase80Rgb { get; }
-    string ColorBase80 { get; }
-    string ColorBase90Rgb { get; }
-    string ColorBase90 { get; }
-    string ColorBase95Rgb { get; }
-    string ColorBase95 { get; }
-    string ColorBase100Rgb { get; }
-    string ColorBase100 { get; }
+    [IncludeAsCssVariable] string ColorBase00Rgb { get; }
+    [IncludeAsCssVariable] string ColorBase00 { get; }
+    [IncludeAsCssVariable] string ColorBase05Rgb { get; }
+    [IncludeAsCssVariable] string ColorBase05 { get; }
+    [IncludeAsCssVariable] string ColorBase10Rgb { get; }
+    [IncludeAsCssVariable] string ColorBase10 { get; }
+    [IncludeAsCssVariable] string ColorBase20Rgb { get; }
+    [IncludeAsCssVariable] string ColorBase20 { get; }
+    [IncludeAsCssVariable] string ColorBase30Rgb { get; }
+    [IncludeAsCssVariable] string ColorBase30 { get; }
+    [IncludeAsCssVariable] string ColorBase40Rgb { get; }
+    [IncludeAsCssVariable] string ColorBase40 { get; }
+    [IncludeAsCssVariable] string ColorBase50Rgb { get; }
+    [IncludeAsCssVariable] string ColorBase50 { get; }
+    [IncludeAsCssVariable] string ColorBase60Rgb { get; }
+    [IncludeAsCssVariable] string ColorBase60 { get; }
+    [IncludeAsCssVariable] string ColorBase70Rgb { get; }
+    [IncludeAsCssVariable] string ColorBase70 { get; }
+    [IncludeAsCssVariable] string ColorBase80Rgb { get; }
+    [IncludeAsCssVariable] string ColorBase80 { get; }
+    [IncludeAsCssVariable] string ColorBase90Rgb { get; }
+    [IncludeAsCssVariable] string ColorBase90 { get; }
+    [IncludeAsCssVariable] string ColorBase95Rgb { get; }
+    [IncludeAsCssVariable] string ColorBase95 { get; }
+    [IncludeAsCssVariable] string ColorBase100Rgb { get; }
+    [IncludeAsCssVariable] string ColorBase100 { get; }
     #endregion
     #endregion
 }

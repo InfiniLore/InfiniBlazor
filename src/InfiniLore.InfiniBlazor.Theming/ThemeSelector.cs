@@ -74,10 +74,7 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
 
     public bool TryGetCurrentThemeCss([NotNullWhen(true)] out string? css) {
         CurrentTheme ??= Themes["default"];
-
-        var sb = new StringBuilder();
-        sb.Append("body {");
-
+        
         ITheme? theme = null;
         if (CurrentThemeData == ThemeData.DarkMode) CurrentTheme.TryGetDarkModeVariant(out theme);
         else if (CurrentThemeData == ThemeData.LightMode) CurrentTheme.TryGetLightModeVariant(out theme);
@@ -88,8 +85,9 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
             return false;
         }
         
-        IDictionary<string, string> data = theme.ToDictionary();
-        foreach ((string key, string value) in data) {
+        var sb = new StringBuilder();
+        sb.Append(":root {");
+        foreach ((string key, string value) in theme.AsCssVariables()) {
             sb.Append($"{key}: {value};");
         }
         sb.Append('}');
