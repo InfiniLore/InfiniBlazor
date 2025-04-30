@@ -11,6 +11,7 @@ namespace Tests.InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
+// ReSharper disable MemberCanBeMadeStatic.Global
 public class ServiceCollectionTests {
     [Test]
     public async Task ShouldAddServices_AddThemes() {

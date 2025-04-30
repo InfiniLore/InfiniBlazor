@@ -29,7 +29,7 @@ public interface ITheme {
     [IncludeAsCssVariable] string ColorPink { get; }
     
     [IncludeAsCssVariable] string ColorAccentRgb { get; }
-    [IncludeAsCssVariable] string ColorAccent { get; }
+    [IncludeAsCssVariable] string ColorAccent { get; init; }
 
     [IncludeAsCssVariable] string ColorBase00Rgb { get; }
     [IncludeAsCssVariable] string ColorBase00 { get; }

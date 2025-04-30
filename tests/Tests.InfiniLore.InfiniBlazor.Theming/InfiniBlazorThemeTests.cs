@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Theming;
+using InfiniLore.InfiniBlazor.Theming.Library;
 using System.Text.RegularExpressions;
 
 namespace Tests.InfiniLore.InfiniBlazor.Theming;
@@ -9,6 +10,7 @@ namespace Tests.InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
+// ReSharper disable MemberCanBeMadeStatic.Global
 public partial class InfiniBlazorThemeTests {
     [GeneratedRegex("^#[0-9A-Fa-f]{3}$|^#[0-9A-Fa-f]{6}$")]
     private static partial Regex IsHexColorRegex { get; }
@@ -19,13 +21,18 @@ public partial class InfiniBlazorThemeTests {
     [GeneratedRegex(@"^--[a-z0-9]+(-[a-z]+|-[0-9]+)*$")]
     private static partial Regex IsCssVariableNameRegex { get; }
 
+    public static IEnumerable<Func<ITheme>> ThemeDataSources() {
+        yield return () => InfiniBlazorTheme.DarkModeInstance; 
+        yield return () => InfiniBlazorTheme.LightModeInstance; 
+    }
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     [Test]
-    public async Task AsCssVariables_ShouldDeliverCorrectData() {
+    [MethodDataSource<InfiniBlazorThemeTests>(nameof(ThemeDataSources))]
+    public async Task AsCssVariables_ShouldDeliverCorrectData(ITheme theme) {
         // Arrange
-        ITheme theme = InfiniBlazorTheme.Instance;
         int executionCount = 0;
         
         // Act 

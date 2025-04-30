@@ -34,32 +34,35 @@ public class ThemeSymbolsGenerator : IIncrementalGenerator {
     }
 
     private static bool Predicate(SyntaxNode node, CancellationToken ct) {
-        // Check if it's a class declaration
-        if (node is not ClassDeclarationSyntax classDeclaration)
-            return false;
+        return node switch {
+            ClassDeclarationSyntax classDeclaration => classDeclaration.AttributeLists.Count > 0,
+            RecordDeclarationSyntax recordDeclaration => recordDeclaration.AttributeLists.Count > 0,
+            _ => false
+        };
 
-        // Check if it has any attributes
-        return classDeclaration.AttributeLists.Count > 0;
     }
 
     private static ThemeSymbolsDto? Transform(GeneratorSyntaxContext context, CancellationToken ct) {
-        var classDeclaration = (ClassDeclarationSyntax)context.Node;
         SemanticModel semanticModel = context.SemanticModel;
 
-        // Get the symbol for the class
-        if (semanticModel.GetDeclaredSymbol(classDeclaration) is not INamedTypeSymbol classSymbol) return null;
+        INamedTypeSymbol? symbol = context.Node switch {
+            ClassDeclarationSyntax classDeclaration => semanticModel.GetDeclaredSymbol(classDeclaration) as INamedTypeSymbol,
+            RecordDeclarationSyntax recordDeclaration => semanticModel.GetDeclaredSymbol(recordDeclaration) as INamedTypeSymbol,
+            _ => null
+        };
+        if (symbol is null) return null;
 
         // Check if it has the GenerateThemeSymbols attribute
-        bool hasGenerateThemeSymbolsAttribute = classSymbol.GetAttributes()
+        bool hasGenerateThemeSymbolsAttribute = symbol.GetAttributes()
             .Any(static attr => attr.AttributeClass?.ToDisplayString() == GenerateThemeSymbolsAttributeFullName);
         if (!hasGenerateThemeSymbolsAttribute) return null;
 
         // Check if it implements ITheme
-        bool implementsITheme = classSymbol.AllInterfaces
+        bool implementsITheme = symbol.AllInterfaces
             .Any(static i => i.ToDisplayString() == IThemeInterfaceFullName);
 
         return implementsITheme
-            ? new ThemeSymbolsDto(classSymbol)
+            ? new ThemeSymbolsDto(symbol)
             : null;
     }
 
@@ -74,7 +77,7 @@ public class ThemeSymbolsGenerator : IIncrementalGenerator {
                 .AppendUsings("System.Collections.Frozen")
                 .AppendNamespace(dto.NameSpace)
                 .AppendLine()
-                .AppendLine($"{dto.Accessibility} partial class {dto.ClassName} {{")
+                .AppendLine($"{dto.Accessibility} partial {dto.TypeKeyword} {dto.ClassName} {{")
                 .Indent(
                     static (b, args) => {
                         b.AppendLine("#region RgbValues");

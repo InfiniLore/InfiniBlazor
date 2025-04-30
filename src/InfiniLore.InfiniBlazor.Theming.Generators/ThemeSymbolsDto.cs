@@ -25,7 +25,14 @@ public record ThemeSymbolsDto(
         Microsoft.CodeAnalysis.Accessibility.Public => "public",
         _ => "UNKNOWN"
     };
-
+    
+    public string TypeKeyword => Symbol switch {
+        {IsRecord: true} => "record",
+        {TypeKind : TypeKind.Class} => "class",
+        {TypeKind : TypeKind.Struct} => "struct",
+        {TypeKind : TypeKind.Interface} => "interface",
+        _ => Symbol.TypeKind.ToString().ToLowerInvariant()
+    };
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
