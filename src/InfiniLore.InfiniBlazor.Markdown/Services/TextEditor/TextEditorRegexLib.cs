@@ -8,9 +8,6 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public static partial class TextEditorRegexLib {
-    [GeneratedRegex(".*\r?\n", RegexOptions.Compiled | RegexOptions.ExplicitCapture)]
-    public static partial Regex NewlinesRegex { get; }
-
     [GeneratedRegex("\r?\n", RegexOptions.Compiled | RegexOptions.ExplicitCapture)]
     public static partial Regex LineEndingRegex { get; }
 
