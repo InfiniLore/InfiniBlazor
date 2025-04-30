@@ -6,5 +6,5 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[AttributeUsage(AttributeTargets.Property, Inherited = false)]
+[AttributeUsage(AttributeTargets.Property)]
 public sealed class IncludeAsCssVariable : Attribute;

@@ -6,5 +6,5 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = true)]
+[AttributeUsage(AttributeTargets.All, Inherited = false)]
 public sealed class GenerateThemeSymbols : Attribute;
