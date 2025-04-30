@@ -28,20 +28,11 @@ public class TextSource : ITextSource {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private void CacheLineRanges() {
-        Regex.ValueMatchEnumerator lineMatches = TextEditorRegexLib.NewlinesRegex.EnumerateMatches(Text);
+        Regex.ValueSplitEnumerator lineMatches = TextEditorRegexLib.LineEndingRegex.EnumerateSplits(Text);
         LinesCache.Clear();
 
-        int lastIndex = 0;
-        int textLength = Text.Length;
-
-        foreach (ValueMatch valueMatch in lineMatches) {
-            lastIndex = valueMatch.Index + valueMatch.Length;
-            LinesCache.Add(new Range(valueMatch.Index, lastIndex - 1));// -1 to exclude the newline character
-        }
-
-        // add the last line which didn't end with a newline
-        if (lastIndex < textLength) {
-            LinesCache.Add(new Range(lastIndex, textLength));
+        foreach (Range valueMatch in lineMatches) {
+            LinesCache.Add(valueMatch);// -1 to exclude the newline character
         }
     }
 }

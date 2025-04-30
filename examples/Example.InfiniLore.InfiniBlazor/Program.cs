@@ -16,7 +16,7 @@ public class Program {
 
         builder.Services.AddInfiniBlazor(config => {
             config.AddMarkdownLogic();
-            config.AddThemingLogic(themeConfig => themeConfig.RegisterTheme<AnnaSasDevTheme>("anna"));
+            config.AddThemingLogic(themeConfig => themeConfig.RegisterTheme<AnnaSasDevThemeCollection>("anna"));
         });
         
         builder.Services.AddRazorComponents()

@@ -13,13 +13,14 @@ public class ThemeConfig(IInfiniBlazorConfig config) : IThemeConfig{
 
     private readonly HashSet<string> _registeredThemes = [];
     public IReadOnlyCollection<string> RegisteredThemes  => _registeredThemes;
+    public IThemeMode DefaultThemeMode { get; set; } = ThemeMode.DarkMode;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public ThemeConfig RegisterTheme<TTheme>(string themeName) where TTheme : class, IInfiniLoreTheme {
+    public ThemeConfig RegisterTheme<TTheme>(string themeName) where TTheme : class, IThemeCollection {
         _registeredThemes.Add(themeName);
-        config.Services.AddKeyedSingleton<IInfiniLoreTheme, TTheme>(themeName);
+        config.Services.AddKeyedSingleton<IThemeCollection, TTheme>(themeName);
         return this;
     }
 }

@@ -17,7 +17,7 @@ public class MarkdownConfig(IInfiniBlazorConfig infiniBlazorConfig) {
         var config = new TextEditorConfig(infiniBlazorConfig, key);
         
         if (key is null) infiniBlazorConfig.Services.AddSingleton(TextEditorFactory.CreateTextEditor);
-        else infiniBlazorConfig.Services.AddKeyedSingleton(key, TextEditorFactory.CreateTextEditor);
+        else infiniBlazorConfig.Services.AddKeyedSingleton(key, TextEditorFactory.CreateKeyedTextEditor);
         return config;
     }
     
@@ -28,7 +28,7 @@ public class MarkdownConfig(IInfiniBlazorConfig infiniBlazorConfig) {
         var config = new MarkdownParserConfig<TInput, TOutput>(infiniBlazorConfig, key);
 
         if (key is null) infiniBlazorConfig.Services.AddSingleton(MarkdownParserFactory.CreateParser<TInput, TOutput>);
-        else infiniBlazorConfig.Services.AddKeyedSingleton(key, MarkdownParserFactory.CreateParser<TInput, TOutput>);
+        else infiniBlazorConfig.Services.AddKeyedSingleton(key, MarkdownParserFactory.CreateKeyedParser<TInput, TOutput>);
         return config;
     }
 }

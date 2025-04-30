@@ -11,6 +11,7 @@ namespace Tests.InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
+// ReSharper disable MemberCanBeMadeStatic.Global
 public class ServiceCollectionTests {
     [Test]
     public async Task ShouldAddServices_AddThemes() {
@@ -32,11 +33,11 @@ public class ServiceCollectionTests {
         // Act
         services.AddInfiniBlazor(config => {
             config.AddThemingLogic(cfg =>
-                cfg.RegisterTheme<AnnaSasDevTheme>("anna")
+                cfg.RegisterTheme<AnnaSasDevThemeCollection>("anna")
             );
         });
 
         // Assert
-        await Assert.That(services).ContainsKeyedServiceImplementation<IInfiniLoreTheme, AnnaSasDevTheme>("anna");
+        await Assert.That(services).ContainsKeyedServiceImplementation<IThemeCollection, AnnaSasDevThemeCollection>("anna");
     }
 }

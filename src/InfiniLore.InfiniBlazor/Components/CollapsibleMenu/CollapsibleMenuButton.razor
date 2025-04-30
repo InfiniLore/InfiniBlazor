@@ -12,17 +12,17 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <NavLink
     href="@Href"
-    class="@($"flex flex-nowrap p-2 items-center rounded hover:bg-gray-700 {(IsMenuCollapsed ? "justify-center" : "justify-start")}")"
+    class="@($"flex flex-nowrap p-2 items-center rounded hover:bg-(--color-base-70) group {(IsMenuCollapsed ? "justify-center" : "justify-start")}")"
 >
     <span class="flex flex-nowrap items-center justify-center">
         <!-- Icon -->
-        <span class="w-6 h-6 text-(--nav-menu-item-text) group-hover:text-white flex-shrink-0">
+        <span class="w-6 h-6 text-(--color-base-10) flex-shrink-0 group-hover:text-(--color-accent)">
             @Icon
         </span>
 
         <!-- Text with fade effect -->
-        <span class="@($"transition-all duration-300 overflow-hidden {(IsMenuCollapsed ? "w-0 opacity-0 whitespace-nowrap" : "ml-2 opacity-100")}")">
-            <span class="@($"text-(--nav-menu-item-icon) transition-[word-break] duration-300 delay-300 {(IsMenuCollapsed ? "break-normal" : "break-words")}")">
+        <span class="@($"transition-all duration-300 h-6 {(IsMenuCollapsed ? "w-0 opacity-0 delay-0" : "delay-300 w-auto ml-2 opacity-100")}")">
+            <span class="text-(--color-base-10) truncate inline-block max-w-[150px] group-hover:text-(--color-accent)">
                 @Text
             </span>
         </span>

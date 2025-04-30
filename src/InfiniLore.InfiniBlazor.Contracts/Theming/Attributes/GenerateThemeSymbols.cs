@@ -1,14 +1,10 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Theming;
-
-namespace InfiniLore.InfiniBlazor.Config;
+namespace InfiniLore.InfiniBlazor.Theming;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IThemeConfig {
-    public IReadOnlyCollection<string> RegisteredThemes { get; }
-    public IThemeMode DefaultThemeMode { get; } 
-}
+[AttributeUsage(AttributeTargets.Class, Inherited = false)]
+public sealed class GenerateThemeSymbols : Attribute;

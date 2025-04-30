@@ -1,20 +1,23 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Collections.Frozen;
+using JetBrains.Annotations;
 
 namespace InfiniLore.InfiniBlazor.Theming.Library;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class DefaultTheme : IInfiniLoreTheme {
-    public FrozenDictionary<string, string> LightMode { get; } = new Dictionary<string, string> {
-        { CssVariables.NavMenuItemIcon, "#FFFFFF" },
-        { CssVariables.NavMenuItemText, "#FFFFFF" }
-    }.ToFrozenDictionary();
-
-    public FrozenDictionary<string, string> DarkMode { get; } = new Dictionary<string, string> {
-        { CssVariables.NavMenuItemIcon, "#000000" },
-        { CssVariables.NavMenuItemText, "#000000" }
-    }.ToFrozenDictionary();
+[UsedImplicitly]
+public class AnnaSasDevThemeCollection : ThemeCollection {
+    protected override Dictionary<IThemeMode, ITheme> Modes => new() {
+        {
+            ThemeMode.DarkMode, InfiniBlazorTheme.DarkModeInstance with {
+                ColorAccent = "#F5A9B8"
+            }
+        }, {
+            ThemeMode.LightMode, InfiniBlazorTheme.LightModeInstance with {
+                ColorAccent = "#5BCEFA"
+            }
+        }
+    };
 }

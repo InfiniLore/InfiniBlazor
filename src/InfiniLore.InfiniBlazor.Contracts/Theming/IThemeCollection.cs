@@ -1,14 +1,19 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Collections.Frozen;
+using System.Diagnostics.CodeAnalysis;
 
 namespace InfiniLore.InfiniBlazor.Theming;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IInfiniLoreTheme {
-    FrozenDictionary<string, string> LightMode { get; }
-    FrozenDictionary<string, string> DarkMode { get; }
+public interface IThemeCollection {
+    IReadOnlyDictionary<IThemeMode, ITheme> ContainedThemes { get; }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    bool TryGetLightModeVariant([NotNullWhen(true)] out ITheme? theme);
+    bool TryGetDarkModeVariant([NotNullWhen(true)] out ITheme? theme);
 }
