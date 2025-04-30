@@ -1,6 +1,8 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Theming;
+
 namespace InfiniLore.InfiniBlazor.Config;
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -8,4 +10,5 @@ namespace InfiniLore.InfiniBlazor.Config;
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IThemeConfig {
     public IReadOnlyCollection<string> RegisteredThemes { get; }
+    public IThemeData DefaultThemeData { get; } 
 }

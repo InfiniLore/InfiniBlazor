@@ -1,26 +1,19 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Config;
-using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 
-namespace InfiniLore.InfiniBlazor.Theming.Config;
+namespace InfiniLore.InfiniBlazor.Theming;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class ThemeConfig(IInfiniBlazorConfig config) : IThemeConfig{
-
-    private readonly HashSet<string> _registeredThemes = [];
-    public IReadOnlyCollection<string> RegisteredThemes  => _registeredThemes;
-    public IThemeData DefaultThemeData { get; } = ThemeData.DarkMode;
+public interface IThemeCollection {
+    IReadOnlyDictionary<IThemeData, ITheme> ContainedThemes { get; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public ThemeConfig RegisterTheme<TTheme>(string themeName) where TTheme : class, IThemeCollection {
-        _registeredThemes.Add(themeName);
-        config.Services.AddKeyedSingleton<IThemeCollection, TTheme>(themeName);
-        return this;
-    }
+    bool TryGetLightModeVariant([NotNullWhen(true)] out ITheme? theme);
+    bool TryGetDarkModeVariant([NotNullWhen(true)] out ITheme? theme);
 }

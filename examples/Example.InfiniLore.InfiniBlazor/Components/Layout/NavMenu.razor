@@ -37,7 +37,7 @@
         </CollapsibleMenuButton>
         <div>
             <button @onclick="SwitchTheme" class="bg-red-600" >THEME</button>
-            <button @onclick="ThemeSelector.ToggleMode" class="bg-green-600"> MODE </button>
+            <button @onclick="() => ThemeSelector.TryToggleDarkAndLightMode()" class="bg-green-600"> MODE </button>
             
         </div>
     </Footer>

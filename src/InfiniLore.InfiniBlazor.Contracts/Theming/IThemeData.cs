@@ -1,16 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Theming.Library;
+namespace InfiniLore.InfiniBlazor.Theming;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class AnnaSasDevTheme : ThemeCollection {
-    protected override Dictionary<IThemeData, ITheme> Themes => new() {
-        {
-            ThemeData.DarkMode, new InfiniBlazorTheme(colorAccent: "#5BCEFA")
-        }, {
-            ThemeData.LightMode, new InfiniBlazorTheme(colorAccent: "#F5A9B8")
-        }
-    };
+public interface IThemeData {
+    public string Name { get; }
+    public bool IsDark { get; }
+    public bool IsLight { get; }
 }

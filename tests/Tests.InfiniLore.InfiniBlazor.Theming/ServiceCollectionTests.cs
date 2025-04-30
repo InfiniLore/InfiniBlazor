@@ -37,6 +37,6 @@ public class ServiceCollectionTests {
         });
 
         // Assert
-        await Assert.That(services).ContainsKeyedServiceImplementation<IInfiniLoreTheme, AnnaSasDevTheme>("anna");
+        await Assert.That(services).ContainsKeyedServiceImplementation<IThemeCollection, AnnaSasDevTheme>("anna");
     }
 }

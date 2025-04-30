@@ -7,6 +7,7 @@ using InfiniLore.InfiniBlazor.Theming.Library;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace InfiniLore.InfiniBlazor.Theming;
@@ -17,18 +18,18 @@ namespace InfiniLore.InfiniBlazor.Theming;
 [InjectableSingleton<IThemeSelector>]
 public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogger<ThemeSelector> logger) : IThemeSelector {
     public event Action? ThemeChanged;
-    public IInfiniLoreTheme? CurrentTheme { get; private set; }
-    public bool IsDarkMode { get; private set; }
+    public IThemeCollection? CurrentTheme { get; private set; }
+    public IThemeData CurrentThemeData { get; private set; } = config.DefaultThemeData;
     
-    private FrozenDictionary<string, IInfiniLoreTheme> Themes { get; } = CollectThemes(config, provider, logger);
+    private FrozenDictionary<string, IThemeCollection> Themes { get; } = CollectThemes(config, provider, logger);
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
-    private static FrozenDictionary<string, IInfiniLoreTheme> CollectThemes(IThemeConfig config, IServiceProvider provider, ILogger<ThemeSelector> logger) {
+    private static FrozenDictionary<string, IThemeCollection> CollectThemes(IThemeConfig config, IServiceProvider provider, ILogger<ThemeSelector> logger) {
         IReadOnlyCollection<string> names = config.RegisteredThemes;
-        var themes = new Dictionary<string, IInfiniLoreTheme>(names.Count);
+        var themes = new Dictionary<string, IThemeCollection>(names.Count);
         foreach (string name in names) {
-            if (provider.GetKeyedService<IInfiniLoreTheme>(name) is not {} theme) {
+            if (provider.GetKeyedService<IThemeCollection>(name) is not {} theme) {
                 logger.LogWarning("Theme '{ThemeName}' not found.", name);
                 continue;
             }
@@ -48,7 +49,7 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public bool TrySelectTheme(string themeName) {
-        if (!Themes.TryGetValue(themeName, out IInfiniLoreTheme? theme)) {
+        if (!Themes.TryGetValue(themeName, out IThemeCollection? theme)) {
             logger.LogWarning("Theme '{ThemeName}' not found.", themeName);
             return false;
         }
@@ -59,24 +60,41 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
         return true;
     }
     
-    public void ToggleMode() {
-        IsDarkMode = !IsDarkMode;
+    public bool TryToggleDarkAndLightMode() {
+        if (CurrentThemeData == ThemeData.DarkMode) CurrentThemeData = ThemeData.LightMode;
+        else if (CurrentThemeData == ThemeData.LightMode) CurrentThemeData = ThemeData.DarkMode;
+        else {
+            logger.LogWarning("No opposite theme variant found for current mode '{Mode}'.", CurrentThemeData.Name);
+            return false;
+        }
         ThemeChanged?.Invoke();
-        logger.LogInformation("Theme mode toggled to {Mode}.", IsDarkMode ? "dark" : "light");
+        logger.LogInformation("Theme mode toggled to {Mode}.", CurrentThemeData.Name);
+        return true;
     }
 
-    public string GetCurrentThemeCss() {
+    public bool TryGetCurrentThemeCss([NotNullWhen(true)] out string? css) {
         CurrentTheme ??= Themes["default"];
 
         var sb = new StringBuilder();
         sb.Append("body {");
+
+        ITheme? theme = null;
+        if (CurrentThemeData == ThemeData.DarkMode) CurrentTheme.TryGetDarkModeVariant(out theme);
+        else if (CurrentThemeData == ThemeData.LightMode) CurrentTheme.TryGetLightModeVariant(out theme);
         
-        FrozenDictionary<string, string> data = IsDarkMode ? CurrentTheme.DarkMode : CurrentTheme.LightMode;
+        if (theme is null) {
+            logger.LogWarning("No theme variant found for current mode '{Mode}'.", CurrentThemeData.Name);
+            css = null;
+            return false;
+        }
+        
+        IDictionary<string, string> data = theme.ToDictionary();
         foreach ((string key, string value) in data) {
             sb.Append($"{key}: {value};");
         }
         sb.Append('}');
         
-        return sb.ToString();
+        css = sb.ToString();
+        return true;
     }
 }

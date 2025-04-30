@@ -20,10 +20,16 @@
     private string _css = string.Empty;       
     protected override void OnInitialized() {
         ThemeSelector.ThemeChanged += OnThemeChanged;
-        _css = ThemeSelector.GetCurrentThemeCss();
+        
+        _css = ThemeSelector.TryGetCurrentThemeCss(out string? css) 
+            ? css 
+            : string.Empty;
     }
     private void OnThemeChanged() {
-        _css = ThemeSelector.GetCurrentThemeCss();
+        _css = ThemeSelector.TryGetCurrentThemeCss(out string? css) 
+            ? css 
+            : string.Empty;
+        
         InvokeAsync(StateHasChanged);
     }
     public void Dispose() {
