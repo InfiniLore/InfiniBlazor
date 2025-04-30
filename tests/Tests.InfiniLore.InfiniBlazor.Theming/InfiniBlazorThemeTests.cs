@@ -10,19 +10,20 @@ namespace Tests.InfiniLore.InfiniBlazor.Theming;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class InfiniBlazorThemeTests {
-    
-    [GeneratedRegex("^#[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?$")]
-    public static partial Regex IsHexColorRegex { get; }
+    [GeneratedRegex("^#[0-9A-Fa-f]{3}$|^#[0-9A-Fa-f]{6}$")]
+    private static partial Regex IsHexColorRegex { get; }
 
-    [GeneratedRegex("^[0-9]{1,3}, [0-9]{1,3}, [0-9]{1,3}")]
-    public static partial Regex IsRgbColorRegex { get; }
+    [GeneratedRegex("^[0-9]{1,3}, [0-9]{1,3}, [0-9]{1,3}$")]
+    private static partial Regex IsRgbColorRegex { get; }
     
     [GeneratedRegex(@"^--[a-z0-9]+(-[a-z0-9]+)*$")]
-    public static partial Regex IsCssVariableNameRegex { get; }
+    private static partial Regex IsCssVariableNameRegex { get; }
 
-
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
     [Test]
-    public async Task AsCssVariables_ShouldHoldData() {
+    public async Task AsCssVariables_ShouldDeliverCorrectData() {
         // Arrange
         ITheme theme = InfiniBlazorTheme.Instance;
         int executionCount = 0;
