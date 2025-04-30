@@ -7,7 +7,7 @@
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.InfiniBlazor.Theming</PackageId>
-        <Version>0.1.0-preview.10</Version>
+        <Version>0.1.0-preview.11</Version>
         <Authors>Anna Sas</Authors>
         <Description>CSS Theme library for InfiniLore's Component Library</Description>
         <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
@@ -31,11 +31,11 @@
     <ItemGroup>
       <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
       <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Theming.Generators\InfiniLore.InfiniBlazor.Theming.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Theming.Generators\InfiniLore.InfiniBlazor.Theming.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
 
         <!-- Ugly, but this is because of some weirdness with how analyzers are imported through a project reference -->
         <PackageReference Include="CodeOfChaos.GeneratorTools" Version="1.7.1" GeneratePathProperty="true" PrivateAssets="all" />
-        <Analyzer Include="$(PkgCodeOfChaos_GeneratorTools)\lib\netstandard2.0\*.dll"/>
+        <Analyzer Include="$(PkgCodeOfChaos_GeneratorTools)\lib\netstandard2.0\*.dll" />
     </ItemGroup>
 
     <ItemGroup>
