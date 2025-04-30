@@ -1,14 +1,17 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using JetBrains.Annotations;
+
 namespace InfiniLore.InfiniBlazor.Theming.Library;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class DefaultTheme : ThemeCollection {
+[UsedImplicitly]
+public class DefaultThemeCollection : ThemeCollection {
     protected override Dictionary<IThemeData, ITheme> Themes => new() {
         {
-            ThemeData.DarkMode, new InfiniBlazorTheme()
+            ThemeData.DarkMode, InfiniBlazorTheme.Instance
         }, {
             ThemeData.LightMode, new InfiniBlazorTheme {
                 ColorBase00 = InfiniBlazorTheme.Instance.ColorBase100,

@@ -29,6 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
       <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.Theming.Generators\InfiniLore.InfiniBlazor.Theming.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
 

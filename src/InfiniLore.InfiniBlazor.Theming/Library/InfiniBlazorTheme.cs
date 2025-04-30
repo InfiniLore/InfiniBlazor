@@ -18,7 +18,7 @@ public partial class InfiniBlazorTheme : ITheme {
     public virtual string ColorBlue { get; init; } = "#3b82f6";
     public virtual string ColorPurple { get; init; } = "#a855f7";
     public virtual string ColorPink { get; init; } = "#ec4899";
-    public virtual string ColorAccent { get; init; } = "#3b82f6";
+    public virtual string ColorAccent { get; init; } = "#fa9f3e";
 
     public virtual string ColorBase00 { get; init; } = "#ffffff";
     public virtual string ColorBase05 { get; init; } = "#f6f7f7";

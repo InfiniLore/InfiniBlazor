@@ -7,7 +7,6 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --color-red-500: oklch(63.7% 0.237 25.331);
     --color-red-600: oklch(57.7% 0.245 27.325);
     --color-yellow-100: oklch(97.3% 0.071 103.193);
     --color-green-600: oklch(62.7% 0.194 149.214);
@@ -234,32 +233,20 @@
   .table {
     display: table;
   }
-  .h-4 {
-    height: calc(var(--spacing) * 4);
-  }
   .h-5 {
     height: calc(var(--spacing) * 5);
   }
   .h-6 {
     height: calc(var(--spacing) * 6);
   }
-  .h-8 {
-    height: calc(var(--spacing) * 8);
-  }
   .h-12 {
     height: calc(var(--spacing) * 12);
-  }
-  .h-16 {
-    height: calc(var(--spacing) * 16);
   }
   .h-full {
     height: 100%;
   }
   .h-screen {
     height: 100vh;
-  }
-  .min-h-16 {
-    min-height: calc(var(--spacing) * 16);
   }
   .w-0 {
     width: calc(var(--spacing) * 0);
@@ -269,9 +256,6 @@
   }
   .w-1\/2 {
     width: calc(1/2 * 100%);
-  }
-  .w-4 {
-    width: calc(var(--spacing) * 4);
   }
   .w-5 {
     width: calc(var(--spacing) * 5);
@@ -296,9 +280,6 @@
   }
   .max-w-\[150px\] {
     max-width: 150px;
-  }
-  .max-w-\[200px\] {
-    max-width: 200px;
   }
   .max-w-full {
     max-width: 100%;
@@ -393,9 +374,6 @@
   .overflow-auto {
     overflow: auto;
   }
-  .overflow-hidden {
-    overflow: hidden;
-  }
   .rounded {
     border-radius: 0.25rem;
   }
@@ -425,6 +403,9 @@
     --tw-border-style: none;
     border-style: none;
   }
+  .border-\(--color-base-60\) {
+    border-color: var(--color-base-60);
+  }
   .border-gray-200 {
     border-color: var(--color-gray-200);
   }
@@ -433,6 +414,12 @@
   }
   .border-gray-600 {
     border-color: var(--color-gray-600);
+  }
+  .bg-\(--color-base-90\) {
+    background-color: var(--color-base-90);
+  }
+  .bg-\(--color-base90\) {
+    background-color: var(--color-base90);
   }
   .bg-gray-50 {
     background-color: var(--color-gray-50);
@@ -470,15 +457,6 @@
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
   }
-  .px-8 {
-    padding-inline: calc(var(--spacing) * 8);
-  }
-  .px-12 {
-    padding-inline: calc(var(--spacing) * 12);
-  }
-  .px-16 {
-    padding-inline: calc(var(--spacing) * 16);
-  }
   .py-1 {
     padding-block: calc(var(--spacing) * 1);
   }
@@ -487,9 +465,6 @@
   }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
-  }
-  .py-4 {
-    padding-block: calc(var(--spacing) * 4);
   }
   .pt-1 {
     padding-top: calc(var(--spacing) * 1);
@@ -504,10 +479,6 @@
     font-size: var(--text-sm);
     line-height: var(--tw-leading, var(--text-sm--line-height));
   }
-  .leading-5 {
-    --tw-leading: calc(var(--spacing) * 5);
-    line-height: calc(var(--spacing) * 5);
-  }
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
@@ -516,18 +487,17 @@
     --tw-font-weight: var(--font-weight-medium);
     font-weight: var(--font-weight-medium);
   }
-  .break-normal {
-    overflow-wrap: normal;
-    word-break: normal;
+  .text-\(--color-base-00\) {
+    color: var(--color-base-00);
   }
-  .break-words {
-    overflow-wrap: break-word;
+  .text-\(--color-base-10\) {
+    color: var(--color-base-10);
   }
-  .text-ellipsis {
-    text-overflow: ellipsis;
+  .text-\(--color-base-20\) {
+    color: var(--color-base-20);
   }
-  .whitespace-nowrap {
-    white-space: nowrap;
+  .text-\(--color-base-70\) {
+    color: var(--color-base-70);
   }
   .text-\(--nav-menu-item-icon\) {
     color: var(--nav-menu-item-icon);
@@ -560,18 +530,9 @@
     --tw-shadow: 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
-  .shadow-sm {
-    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
-    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  }
   .outline {
     outline-style: var(--tw-outline-style);
     outline-width: 1px;
-  }
-  .transition-\[word-break\] {
-    transition-property: word-break;
-    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-    transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
   .transition-all {
     transition-property: all;
@@ -585,15 +546,6 @@
   }
   .delay-0 {
     transition-delay: 0ms;
-  }
-  .delay-100 {
-    transition-delay: 100ms;
-  }
-  .delay-150 {
-    transition-delay: 150ms;
-  }
-  .delay-250 {
-    transition-delay: 250ms;
   }
   .delay-300 {
     transition-delay: 300ms;
@@ -610,10 +562,31 @@
     --tw-ease: var(--ease-in-out);
     transition-timing-function: var(--ease-in-out);
   }
+  .group-hover\:text-\(--color-accent\) {
+    &:is(:where(.group):hover *) {
+      @media (hover: hover) {
+        color: var(--color-accent);
+      }
+    }
+  }
   .group-hover\:text-white {
     &:is(:where(.group):hover *) {
       @media (hover: hover) {
         color: var(--color-white);
+      }
+    }
+  }
+  .hover\:bg-\(--color-base-70\) {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-base-70);
+      }
+    }
+  }
+  .hover\:bg-\(--color-base70\) {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-base70);
       }
     }
   }
@@ -628,6 +601,13 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-gray-700);
+      }
+    }
+  }
+  .hover\:text-\(--color-accent\) {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-accent);
       }
     }
   }
@@ -701,10 +681,6 @@
   syntax: "*";
   inherits: false;
   initial-value: solid;
-}
-@property --tw-leading {
-  syntax: "*";
-  inherits: false;
 }
 @property --tw-font-weight {
   syntax: "*";
@@ -799,7 +775,6 @@
       --tw-space-y-reverse: 0;
       --tw-space-x-reverse: 0;
       --tw-border-style: solid;
-      --tw-leading: initial;
       --tw-font-weight: initial;
       --tw-shadow: 0 0 #0000;
       --tw-shadow-color: initial;

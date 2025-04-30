@@ -11,7 +11,7 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="IsMenuCollapsed">
-    <aside class="flex-shrink-0 bg-gray-800 h-full flex flex-col space-y-4">
+    <aside class="flex-shrink-0 bg-(--color-base-90) h-full flex flex-col space-y-4">
         <div class="@(IsMenuCollapsed ? ClassClosed : ClassOpen) h-full flex flex-col transition-all duration-300">
             <!-- Top Logo and Hamburger -->
             <div class="flex items-center justify-center h-12 gap-x-4">
@@ -19,7 +19,7 @@
 
                 <!-- Hamburger Menu -->
                 <button
-                    class="text-white p-2 rounded hover:bg-gray-700 focus:outline-none justify-center"
+                    class="text-(--color-base-00) p-2 rounded hover:bg-(--color-base-70) hover:text-(--color-accent) focus:outline-none justify-center"
                     @onclick="ToggleMenu">
                     <LiMenu/>
                 </button>
@@ -27,7 +27,7 @@
 
             <!-- Navigation -->
             @if (NavigationMenu is not null) {
-                <div class="border-t border-gray-600 flex pb-1">
+                <div class="border-t border-(--color-base-60) flex pb-1">
                     <nav class="flex flex-col grow space-y-2 mt-4">
                         @NavigationMenu
                     </nav>
@@ -36,7 +36,7 @@
             
             <!-- Profile Section -->
             @if (Footer is not null) {
-                <div class="mt-auto border-t border-gray-600 flex pb-1">
+                <div class="mt-auto border-t border-(--color-base-60) flex pb-1">
                     <div class="flex flex-col grow space-y-2 mt-4">
                         @Footer
                     </div>

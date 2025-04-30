@@ -32,11 +32,11 @@ public class ServiceCollectionTests {
         // Act
         services.AddInfiniBlazor(config => {
             config.AddThemingLogic(cfg =>
-                cfg.RegisterTheme<AnnaSasDevTheme>("anna")
+                cfg.RegisterTheme<AnnaSasDevThemeCollection>("anna")
             );
         });
 
         // Assert
-        await Assert.That(services).ContainsKeyedServiceImplementation<IThemeCollection, AnnaSasDevTheme>("anna");
+        await Assert.That(services).ContainsKeyedServiceImplementation<IThemeCollection, AnnaSasDevThemeCollection>("anna");
     }
 }

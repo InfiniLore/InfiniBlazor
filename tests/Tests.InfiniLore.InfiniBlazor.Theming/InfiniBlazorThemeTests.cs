@@ -16,7 +16,7 @@ public partial class InfiniBlazorThemeTests {
     [GeneratedRegex("^[0-9]{1,3}, [0-9]{1,3}, [0-9]{1,3}$")]
     private static partial Regex IsRgbColorRegex { get; }
     
-    [GeneratedRegex(@"^--[a-z0-9]+(-[a-z0-9]+)*$")]
+    [GeneratedRegex(@"^--[a-z0-9]+(-[a-z]+|-[0-9]+)*$")]
     private static partial Regex IsCssVariableNameRegex { get; }
 
     // -----------------------------------------------------------------------------------------------------------------

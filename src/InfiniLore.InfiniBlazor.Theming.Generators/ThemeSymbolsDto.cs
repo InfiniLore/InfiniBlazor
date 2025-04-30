@@ -58,25 +58,28 @@ public record ThemeSymbolsDto(
     }
 
     private static string ToCssVariable(ReadOnlySpan<char> input) {
-        char[] tempArray = ArrayPool<char>.Shared.Rent(input.Length);
+        int[] tempArray = ArrayPool<int>.Shared.Rent(input.Length);
         char[] result = ArrayPool<char>.Shared.Rent(input.Length + input.Length + 1); 
-        
+    
         try {
             int index = 0;
             int count = 0;
 
             for (int i = 1; i < input.Length; i++) {
-                if (!char.IsUpper(input[i])) continue;
+                bool currentIsDigit = char.IsDigit(input[i]);
+                bool previousIsDigit = char.IsDigit(input[i - 1]);
+            
+                if (!(char.IsUpper(input[i]) || currentIsDigit && !previousIsDigit)) continue;
 
-                tempArray[count * 2] = (char)index;
-                tempArray[count * 2 + 1] = (char)(i - index);
+                tempArray[count * 2] = index;
+                tempArray[count * 2 + 1] = i - index;
                 count++;
                 index = i;
             }
 
             if (index < input.Length) {
-                tempArray[count * 2] = (char)index;
-                tempArray[count * 2 + 1] = (char)(input.Length - index);
+                tempArray[count * 2] = index;
+                tempArray[count * 2 + 1] = input.Length - index;
                 count++;
             }
 
@@ -99,7 +102,7 @@ public record ThemeSymbolsDto(
             return new string(result, 0, writePos);
         }
         finally {
-            ArrayPool<char>.Shared.Return(tempArray);
+            ArrayPool<int>.Shared.Return(tempArray);
             ArrayPool<char>.Shared.Return(result);
         }
     }
