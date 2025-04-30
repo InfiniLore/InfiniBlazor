@@ -2,10 +2,11 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.Lucide
+
+@namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@namespace InfiniLore.InfiniBlazor.Components.CollapsibleMenu
 @inherits ComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
@@ -14,12 +15,14 @@
     <aside class="flex-shrink-0 bg-(--color-base-90) h-full flex flex-col space-y-4">
         <div class="@(IsMenuCollapsed ? ClassClosed : ClassOpen) h-full flex flex-col transition-all duration-300">
             <!-- Top Logo and Hamburger -->
-            <div class="flex items-center justify-center h-12 gap-x-4">
-                @Header
+            <div class="@($"flex items-center {(IsMenuCollapsed ? "justify-center" : "justify-between")} h-12 w-full")">
+                <div class="@(IsMenuCollapsed ? "hidden" : "flex-grow")">
+                    @Header
+                </div>
 
                 <!-- Hamburger Menu -->
                 <button
-                    class="text-(--color-base-00) p-2 rounded hover:bg-(--color-base-70) hover:text-(--color-accent) focus:outline-none justify-center"
+                    class="text-(--color-base-00) p-2 rounded hover:bg-(--color-base-70) hover:text-(--color-accent) focus:outline-none"
                     @onclick="ToggleMenu">
                     <LiMenu/>
                 </button>

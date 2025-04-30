@@ -9,15 +9,16 @@ namespace InfiniLore.InfiniBlazor.Theming.Library;
 // ---------------------------------------------------------------------------------------------------------------------
 [UsedImplicitly]
 public class AnnaSasDevThemeCollection : ThemeCollection {
-    protected override Dictionary<IThemeMode, ITheme> Modes => new() {
-        {
-            ThemeMode.DarkMode, InfiniBlazorTheme.DarkModeInstance with {
+    protected override Dictionary<IThemeMode, ITheme> Modes {
+        get {
+            Dictionary<IThemeMode, ITheme> modes = [];
+            modes.Add(ThemeMode.DarkMode, InfiniBlazorTheme.DarkModeInstance with {
                 ColorAccent = "#F5A9B8"
-            }
-        }, {
-            ThemeMode.LightMode, InfiniBlazorTheme.LightModeInstance with {
+            });
+            modes.Add(ThemeMode.LightMode, InfiniBlazorTheme.LightModeInstance with {
                 ColorAccent = "#5BCEFA"
-            }
+            });
+            return modes;
         }
-    };
+    }
 }

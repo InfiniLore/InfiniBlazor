@@ -3,10 +3,12 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using Ganss.Xss;
 using InfiniLore.InfiniBlazor.JsRuntime;
+using InfiniLore.InfiniBlazor.Markdown;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Components;
+// ReSharper disable once CheckNamespace
+namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
