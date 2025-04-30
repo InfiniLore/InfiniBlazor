@@ -16,6 +16,10 @@ public partial class InfiniBlazorThemeTests {
 
     [GeneratedRegex("^[0-9]{1,3}, [0-9]{1,3}, [0-9]{1,3}")]
     public static partial Regex IsRgbColorRegex { get; }
+    
+    [GeneratedRegex(@"^--[a-z0-9]+(-[a-z0-9]+)*$")]
+    public static partial Regex IsCssVariableNameRegex { get; }
+
 
     [Test]
     public async Task AsCssVariables_ShouldHoldData() {
@@ -32,7 +36,8 @@ public partial class InfiniBlazorThemeTests {
 
             (string cssVariable, string data) = tuple;
             await Assert.That(cssVariable).IsNotNullOrWhitespace()
-                .And.StartsWith("--");
+                .And.StartsWith("--")
+                .And.Matches(IsCssVariableNameRegex);
 
             if (data.StartsWith('#')) {
                 await Assert.That(data).Matches(IsHexColorRegex);
