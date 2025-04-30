@@ -17,22 +17,33 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private string _css = string.Empty;       
+    private string _css = string.Empty;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
     protected override void OnInitialized() {
         ThemeSelector.ThemeChanged += OnThemeChanged;
-        
-        _css = ThemeSelector.TryGetCurrentThemeCss(out string? css) 
-            ? css 
-            : string.Empty;
+        UpdateCss();
     }
+    
     private void OnThemeChanged() {
-        _css = ThemeSelector.TryGetCurrentThemeCss(out string? css) 
-            ? css 
-            : string.Empty;
-        
+        UpdateCss();
         InvokeAsync(StateHasChanged);
     }
+    
+    protected override void OnParametersSet() {
+        UpdateCss();
+        base.OnParametersSet();
+    }
+
     public void Dispose() {
         ThemeSelector.ThemeChanged -= OnThemeChanged;
+    }
+    
+    private void UpdateCss() {
+        _css = ThemeSelector.TryGetCurrentThemeCss(out string? css)
+            ? css
+            : string.Empty;
     }
 }
