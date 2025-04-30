@@ -1,7 +1,6 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.Components.CollapsibleMenu
 @using InfiniLore.InfiniBlazor.Theming
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
@@ -35,10 +34,11 @@
             <Icon><LiPackage/></Icon>
             <Text>Github</Text>
         </CollapsibleMenuButton>
-        <div>
-            <button @onclick="SwitchTheme" class="bg-red-600" >THEME</button>
-            <button @onclick="() => ThemeSelector.TryToggleDarkAndLightMode()" class="bg-green-600"> MODE </button>
-            
+        
+        @* DEBUG *@
+        <div class="flex space-x-2">
+            <button @onclick="SwitchTheme" class="bg-red-600 px-4 py-2 rounded">THEME</button>
+            <button @onclick="() => ThemeSelector.TryToggleDarkAndLightMode()" class="bg-green-600 px-4 py-2 rounded">MODE</button>
         </div>
     </Footer>
 </CollapsibleMenu>
@@ -48,7 +48,11 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     private string Theme { get; set; } = "default";
-    private bool IsMenuCollapsed { get; set; } = false; // Tracks whether the menu is collapsed
+    private bool IsMenuCollapsed { get; set; }// Tracks whether the menu is collapsed
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
     private void SwitchTheme() {
         Theme = Theme switch {
             "default" => "anna",
@@ -56,8 +60,5 @@
             _ => Theme
         };
         ThemeSelector.TrySelectTheme(Theme);
-    }
-    private void switchMode() {
-        throw new NotImplementedException();
     }
 }
