@@ -1,13 +1,13 @@
 name: Publish Packages
 
 on:
+    workflow_dispatch:
     push:
         tags:
             - 'v*.*.*' # Match version tags like v1.0.0
 
 jobs:
     publish:
-        if: github.ref_name == 'core'  # Only run if we're on the core branch
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
