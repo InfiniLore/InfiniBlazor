@@ -6,10 +6,6 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class InfiniBlazorTheme : ITheme {
-    public InfiniBlazorTheme() {}
-    public InfiniBlazorTheme(string colorAccent) {
-        ColorAccent = colorAccent;
-    }
     public IDictionary<string, string> ToDictionary() => throw new NotImplementedException();
     public static ITheme Instance { get; } = new InfiniBlazorTheme();
 
