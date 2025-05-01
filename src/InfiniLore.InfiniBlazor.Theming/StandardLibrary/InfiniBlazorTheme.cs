@@ -7,8 +7,8 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 [GenerateThemeSymbols]
 public partial record InfiniBlazorTheme : ITheme {
-    public static InfiniBlazorTheme DarkModeInstance { get; } = new();
-    public static InfiniBlazorTheme LightModeInstance { get; } = new() {
+    public static readonly InfiniBlazorTheme DarkModeInstance = new();
+    public static readonly InfiniBlazorTheme LightModeInstance = new() {
         ColorBase00 = DarkModeInstance.ColorBase100,
         ColorBase05 = DarkModeInstance.ColorBase95,
         ColorBase10 = DarkModeInstance.ColorBase90,

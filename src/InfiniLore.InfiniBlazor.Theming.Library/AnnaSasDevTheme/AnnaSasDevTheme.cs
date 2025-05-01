@@ -1,20 +1,16 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using JetBrains.Annotations;
+namespace InfiniLore.InfiniBlazor.Theming.Library;
 
-namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[UsedImplicitly]
-public class DefaultThemeCollection : ThemeCollection {
-    protected override Dictionary<IThemeMode, ITheme> Modes {
-        get {
-            Dictionary<IThemeMode, ITheme> modes = [];
-            modes.Add(ThemeMode.LightMode, InfiniBlazorTheme.LightModeInstance);
-            modes.Add(ThemeMode.DarkMode, InfiniBlazorTheme.DarkModeInstance);
-            return modes;
-        }
-    }
+public static class AnnaSasDevTheme {
+    public static readonly ITheme DarkModeInstance = InfiniBlazorTheme.DarkModeInstance with {
+        ColorAccent = "#F5A9B8"
+    };
+    public static readonly ITheme LightModeInstance = InfiniBlazorTheme.LightModeInstance with {
+        ColorAccent = "#5BCEFA"
+    };
 }

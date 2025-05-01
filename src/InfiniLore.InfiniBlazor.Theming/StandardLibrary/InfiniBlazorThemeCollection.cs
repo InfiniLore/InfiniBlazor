@@ -3,21 +3,17 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using JetBrains.Annotations;
 
-namespace InfiniLore.InfiniBlazor.Theming.Library;
+namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [UsedImplicitly]
-public class AnnaSasDevThemeCollection : ThemeCollection {
+public class InfiniBlazorThemeCollection : ThemeCollection {
     protected override Dictionary<IThemeMode, ITheme> Modes {
         get {
             Dictionary<IThemeMode, ITheme> modes = [];
-            modes.Add(ThemeMode.DarkMode, Theming.InfiniBlazorTheme.DarkModeInstance with {
-                ColorAccent = "#F5A9B8"
-            });
-            modes.Add(ThemeMode.LightMode, Theming.InfiniBlazorTheme.LightModeInstance with {
-                ColorAccent = "#5BCEFA"
-            });
+            modes.Add(ThemeMode.LightMode, InfiniBlazorTheme.LightModeInstance);
+            modes.Add(ThemeMode.DarkMode, InfiniBlazorTheme.DarkModeInstance);
             return modes;
         }
     }

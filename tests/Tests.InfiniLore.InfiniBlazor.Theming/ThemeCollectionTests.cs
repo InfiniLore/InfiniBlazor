@@ -15,7 +15,7 @@ namespace Tests.InfiniLore.InfiniBlazor.Theming;
 public class ThemeCollectionTests(IServiceProvider provider) {
     
     [Test]
-    [Arguments(typeof(DefaultThemeCollection), null)] // default
+    [Arguments(typeof(InfiniBlazorThemeCollection), null)] // default
     [Arguments(typeof(AnnaSasDevThemeCollection), "anna")]
     public async Task RegisteredThemes_ShouldExist(Type themeType, object? themeName){
         // Arrange
@@ -28,7 +28,7 @@ public class ThemeCollectionTests(IServiceProvider provider) {
     }
     
     [Test]
-    [Arguments(typeof(DefaultThemeCollection), null)] // default
+    [Arguments(typeof(InfiniBlazorThemeCollection), null)] // default
     [Arguments(typeof(AnnaSasDevThemeCollection), "anna")]
     public async Task Theme_ShouldHaveDefaultModes_ByThemeMode(Type themeType, object? themeName){
         // Arrange
@@ -49,7 +49,7 @@ public class ThemeCollectionTests(IServiceProvider provider) {
     }
     
     [Test]
-    [Arguments(typeof(DefaultThemeCollection), null)] // default
+    [Arguments(typeof(InfiniBlazorThemeCollection), null)] // default
     [Arguments(typeof(AnnaSasDevThemeCollection), "anna")]
     public async Task Theme_ShouldHaveDefaultModes_ByString(Type themeType, object? themeName){
         // Arrange
@@ -70,7 +70,7 @@ public class ThemeCollectionTests(IServiceProvider provider) {
     }
     
     [Test]
-    [Arguments(typeof(DefaultThemeCollection), null)] // default
+    [Arguments(typeof(InfiniBlazorThemeCollection), null)] // default
     [Arguments(typeof(AnnaSasDevThemeCollection), "anna")]
     public async Task Theme_ShouldHaveDefaultModes_ByReadonlySpan(Type themeType, object? themeName){
         // Arrange
