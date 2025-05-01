@@ -205,6 +205,9 @@
   .z-\[1000\] {
     z-index: 1000;
   }
+  .m-0 {
+    margin: calc(var(--spacing) * 0);
+  }
   .mx-1 {
     margin-inline: calc(var(--spacing) * 1);
   }
@@ -216,6 +219,9 @@
   }
   .mt-auto {
     margin-top: auto;
+  }
+  .ml-0 {
+    margin-left: calc(var(--spacing) * 0);
   }
   .ml-1 {
     margin-left: calc(var(--spacing) * 1);
