@@ -9,18 +9,30 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<button @onclick="@OnClickCallback" class="@(SideNavMenuItem.ContainerClasses(IsMenuCollapsed))">
-    <SideNavMenuItem Text="@Text" Icon="@Icon"/>
-</button>
+<span class="flex flex-nowrap items-center justify-center">
+        <span class="w-6 h-6 text-(--color-base-10) flex-shrink-0 group-hover:text-(--color-accent)">
+            @Icon
+        </span>
+    @if (Text is not null) {
+        <span class="@($"transition-all duration-300 h-6 {(IsMenuCollapsed ? "w-0 opacity-0 delay-0" : "delay-300 w-auto ml-2 opacity-100")}")">
+                <span class="text-(--color-base-10) truncate inline-block max-w-[150px] group-hover:text-(--color-accent)">
+                    @Text
+                </span>
+            </span>
+    }
+</span>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter, EditorRequired] public required Action OnClickCallback { get; set; } = () => { };
-    
     [CascadingParameter] public bool IsMenuCollapsed { get; set; }
-    [Parameter] public RenderFragment? Text { get; set; }
-    [Parameter] public RenderFragment? Icon { get; set; }
+    [Parameter, EditorRequired] public required RenderFragment? Text { get; set; }
+    [Parameter, EditorRequired] public required RenderFragment? Icon { get; set; }
+    
+    public static string ContainerClasses(bool isMenuCollapsed) {
+        return $"w-full flex flex-nowrap p-2 items-center rounded hover:bg-(--color-base-70) group {(isMenuCollapsed ? "justify-center" : "justify-start")}";
+    }
+
 }
 
