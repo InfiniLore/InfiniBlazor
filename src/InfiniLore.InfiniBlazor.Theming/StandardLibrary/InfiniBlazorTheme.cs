@@ -1,14 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Theming.Library;
+namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [GenerateThemeSymbols]
 public partial record InfiniBlazorTheme : ITheme {
-    public static InfiniBlazorTheme DarkModeInstance { get; } = new();
-    public static InfiniBlazorTheme LightModeInstance { get; } = new() {
+    public static readonly InfiniBlazorTheme DarkModeInstance = new();
+    public static readonly InfiniBlazorTheme LightModeInstance = new() {
         ColorBase00 = DarkModeInstance.ColorBase100,
         ColorBase05 = DarkModeInstance.ColorBase95,
         ColorBase10 = DarkModeInstance.ColorBase90,
@@ -23,6 +23,9 @@ public partial record InfiniBlazorTheme : ITheme {
         ColorBase95 = DarkModeInstance.ColorBase05,
         ColorBase100 = DarkModeInstance.ColorBase00,
     };
+    // -----------------------------------------------------------------------------------------------------------------
+    // Colors
+    // -----------------------------------------------------------------------------------------------------------------
     
     #region Colors
     public string ColorRed { get; init; } = "#ef4444";

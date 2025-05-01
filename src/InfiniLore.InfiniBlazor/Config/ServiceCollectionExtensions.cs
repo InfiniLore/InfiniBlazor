@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor;
 using InfiniLore.InfiniBlazor.Config;
+using InfiniLore.InfiniBlazor.Theming.Config;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,7 @@ public static class ServiceCollectionExtensions {
         var config = new InfiniBlazorConfig(services);
         services.RegisterServicesFromInfiniLoreInfiniBlazor();
         services.AddLucideIcons();
+        config.AddThemingLogic(); // Adds the basics for Theming
 
         configure?.Invoke(config);
 

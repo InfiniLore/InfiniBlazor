@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Config;
-using InfiniLore.InfiniBlazor.Theming.Library;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
@@ -18,7 +17,7 @@ namespace InfiniLore.InfiniBlazor.Theming;
 [InjectableSingleton<IThemeSelector>]
 public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogger<ThemeSelector> logger) : IThemeSelector {
     public event Action? ThemeChanged;
-    public IThemeCollection? CurrentTheme { get; private set; }
+    public IThemeCollection CurrentTheme { get; private set; } = provider.GetRequiredKeyedService<IThemeCollection>(null);
     public IThemeMode CurrentThemeMode { get; private set; } = config.DefaultThemeMode;
     
     private FrozenDictionary<string, IThemeCollection> Themes { get; } = CollectThemes(config, provider, logger);
@@ -38,7 +37,7 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
         
         if (!themes.ContainsKey("default")) {
             logger.LogWarning("No default theme found. Using first theme.");
-            themes.Add("default", new DefaultThemeCollection()); // this way there is always a default theme
+            themes.Add("default", new InfiniBlazorThemeCollection()); // this way there is always a default theme
         }
         
         logger.LogInformation("Found {Count} registered themes.", themes.Count);
@@ -73,11 +72,9 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
     }
 
     public bool TryGetCurrentThemeCss([NotNullWhen(true)] out string? css) {
-        CurrentTheme ??= Themes["default"];
-        
         ITheme? theme = null;
-        if (CurrentThemeMode == ThemeMode.DarkMode) CurrentTheme.TryGetDarkModeVariant(out theme);
-        else if (CurrentThemeMode == ThemeMode.LightMode) CurrentTheme.TryGetLightModeVariant(out theme);
+        if (CurrentThemeMode == ThemeMode.DarkMode) CurrentTheme.TryGetDarkMode(out theme);
+        else if (CurrentThemeMode == ThemeMode.LightMode) CurrentTheme.TryGetLightMode(out theme);
         
         if (theme is null) {
             logger.LogWarning("No theme variant found for current mode '{Mode}'.", CurrentThemeMode.Name);

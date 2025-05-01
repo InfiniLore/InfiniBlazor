@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Config;
-using InfiniLore.InfiniBlazor.Theming.Library;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InfiniLore.InfiniBlazor.Theming.Config;
@@ -15,7 +14,7 @@ public static class IInfiniBlazorConfigExtensions {
         config.Services.RegisterServicesFromInfiniLoreInfiniBlazorTheming();
         
         var themeConfig = new ThemeConfig(config);
-        themeConfig.RegisterTheme<DefaultThemeCollection>("default");
+        config.Services.AddKeyedSingleton<IThemeCollection, InfiniBlazorThemeCollection>(null); // Add Default theme
         
         configure?.Invoke(themeConfig);
         

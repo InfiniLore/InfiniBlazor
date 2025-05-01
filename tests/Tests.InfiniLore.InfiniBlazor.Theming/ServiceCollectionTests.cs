@@ -26,7 +26,7 @@ public class ServiceCollectionTests {
     }
 
     [Test]
-    public async Task ShouldAddServices_RegisterTheme() {
+    public async Task ShouldAddServices_RegisterTheme_ByGenericType() {
         // Arrange
         var services = new ServiceCollection();
 
@@ -39,5 +39,22 @@ public class ServiceCollectionTests {
 
         // Assert
         await Assert.That(services).ContainsKeyedServiceImplementation<IThemeCollection, AnnaSasDevThemeCollection>("anna");
+    }
+    
+    [Test]
+    [Arguments(typeof(AnnaSasDevThemeCollection), "anna")]
+    public async Task ShouldAddServices_RegisterTheme_ByTypeArgument(Type themeType, string themeName) {
+        // Arrange
+        var services = new ServiceCollection();
+
+        // Act
+        services.AddInfiniBlazor(config => {
+            config.AddThemingLogic(cfg =>
+                cfg.RegisterTheme(themeType, themeName)
+            );
+        });
+
+        // Assert
+        await Assert.That(services).ContainsKeyedServiceImplementation(typeof(IThemeCollection), themeType, themeName);
     }
 }

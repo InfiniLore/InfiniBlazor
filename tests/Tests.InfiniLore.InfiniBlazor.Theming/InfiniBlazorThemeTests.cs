@@ -4,6 +4,7 @@
 using InfiniLore.InfiniBlazor.Theming;
 using InfiniLore.InfiniBlazor.Theming.Library;
 using System.Text.RegularExpressions;
+using InfiniBlazorTheme = InfiniLore.InfiniBlazor.Theming.InfiniBlazorTheme;
 
 namespace Tests.InfiniLore.InfiniBlazor.Theming;
 
@@ -48,14 +49,14 @@ public partial class InfiniBlazorThemeTests {
                 .And.Matches(IsCssVariableNameRegex);
 
             if (data.StartsWith('#')) {
-                await Assert.That(data).Matches(IsHexColorRegex);
-                // And.DoesNotMatch(IsRgbColorRegex); //TODO Uncomment if https://github.com/thomhurst/TUnit/pull/2305 is implemented
+                await Assert.That(data).Matches(IsHexColorRegex)
+                    .And.DoesNotMatch(IsRgbColorRegex);
                 await Assert.That(cssVariable).DoesNotEndWith("-rgb");
             }
             
             if (!data.StartsWith('#')) {
-                await Assert.That(data).Matches(IsRgbColorRegex);
-                // And.DoesNotMatch(IsHexColorRegex); //TODO Uncomment if https://github.com/thomhurst/TUnit/pull/2305 is implemented
+                await Assert.That(data).Matches(IsRgbColorRegex)
+                    .And.DoesNotMatch(IsHexColorRegex);
                 await Assert.That(cssVariable).EndsWith("-rgb");
             }
             

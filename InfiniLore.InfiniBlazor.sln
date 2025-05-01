@@ -23,6 +23,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmarks.InfiniLore.InfiniBlazor.Markdown", "tests\Benchmarks.InfiniLore.InfiniBlazor.Markdown\Benchmarks.InfiniLore.InfiniBlazor.Markdown.csproj", "{E5C1D953-B6DB-4CC0-8490-BF2F43994D92}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".dev-tools", ".dev-tools", "{25ED7F52-E54D-45E9-8CC9-37E2FB0F08F2}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfiniLore.InfiniBlazor.Theming", "src\InfiniLore.InfiniBlazor.Theming\InfiniLore.InfiniBlazor.Theming.csproj", "{FFA584A8-9F7E-47BF-926B-E6CDE1461C10}"
 EndProject
@@ -41,6 +44,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{2DDCBB
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfiniLore.InfiniBlazor.Theming.Generators", "src\InfiniLore.InfiniBlazor.Theming.Generators\InfiniLore.InfiniBlazor.Theming.Generators.csproj", "{04EF6EB0-62B4-4A01-89B6-2BD0CCF8554C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfiniLore.InfiniBlazor.Theming.Library", "src\InfiniLore.InfiniBlazor.Theming.Library\InfiniLore.InfiniBlazor.Theming.Library.csproj", "{A30AFF91-165D-46BA-994C-E3184431D320}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -92,6 +97,10 @@ Global
 		{04EF6EB0-62B4-4A01-89B6-2BD0CCF8554C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04EF6EB0-62B4-4A01-89B6-2BD0CCF8554C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04EF6EB0-62B4-4A01-89B6-2BD0CCF8554C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A30AFF91-165D-46BA-994C-E3184431D320}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A30AFF91-165D-46BA-994C-E3184431D320}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A30AFF91-165D-46BA-994C-E3184431D320}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A30AFF91-165D-46BA-994C-E3184431D320}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{26284571-0E09-4BAF-8C2B-DF87DCC1BA0B} = {8DD280D4-1E14-4D5E-AFE6-58DD8F079DCC}
@@ -107,5 +116,6 @@ Global
 		{EE5CD42F-C866-4B30-8C55-AA789F8272A5} = {8DD280D4-1E14-4D5E-AFE6-58DD8F079DCC}
 		{2DDCBB0C-9075-4F2B-8987-0D9B0BADB9FD} = {25ED7F52-E54D-45E9-8CC9-37E2FB0F08F2}
 		{04EF6EB0-62B4-4A01-89B6-2BD0CCF8554C} = {197E72AD-DEAB-4350-AFC3-A3BB38720BF5}
+		{A30AFF91-165D-46BA-994C-E3184431D320} = {197E72AD-DEAB-4350-AFC3-A3BB38720BF5}
 	EndGlobalSection
 EndGlobal

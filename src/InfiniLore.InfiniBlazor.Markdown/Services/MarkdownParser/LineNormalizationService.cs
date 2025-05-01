@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions;
+using CodeOfChaos.Extensions.DependencyInjection;
 using System.Buffers;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -10,18 +11,19 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class LineNormalizationHelper {
+[InjectableSingleton<ILineNormalizationService>]
+public class LineNormalizationService(IPoolCache poolCache) : ILineNormalizationService {
     private const int StackAllocThreshold = 256;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static string NormalizeLineIndentation(ReadOnlySpan<char> input) {
+    public string NormalizeLineIndentation(ReadOnlySpan<char> input) {
         int matchCount = input.Count('\n');
         int splitCount = matchCount + 1;
 
         // Estimate initial capacity to avoid reallocations
-        StringBuilder stringBuilder = PoolCache.StringBuilderPool.Get();
+        StringBuilder stringBuilder = poolCache.StringBuilderPool.Get();
         Range[]? rentedArray = null;
         Span<Range> rangeSpan = splitCount <= StackAllocThreshold
             ? stackalloc Range[splitCount]
@@ -69,7 +71,7 @@ public static class LineNormalizationHelper {
             return stringBuilder.ToString();
         }
         finally {
-            PoolCache.StringBuilderPool.Return(stringBuilder);
+            poolCache.StringBuilderPool.Return(stringBuilder);
             if (rentedArray is not null) ArrayPool<Range>.Shared.Return(rentedArray);
         }
     }

@@ -1,23 +1,24 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Diagnostics.CodeAnalysis;
+using CodeOfChaos.Extensions.DependencyInjection;
+using CodeOfChaos.Extensions.ObjectPool;
+using Microsoft.Extensions.ObjectPool;
+using System.Text;
 
-namespace InfiniLore.InfiniBlazor.Theming;
+namespace InfiniLore.InfiniBlazor;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IThemeCollection {
-    IReadOnlyDictionary<IThemeMode, ITheme> ContainedModes { get; }
+[InjectableSingleton<IPoolCache>]
+public class PoolCache : IPoolCache {
+    public ObjectPool<StringBuilder> StringBuilderPool { get; } = new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy());
+    public ObjectPool<Stack<Range>> RangeStackPool { get; } = CreateStackPool<Range>(16);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    bool TryGetLightMode([NotNullWhen(true)] out ITheme? theme);
-    bool TryGetDarkMode([NotNullWhen(true)] out ITheme? theme);
-    
-    bool TryGetMode(IThemeMode mode, [NotNullWhen(true)] out ITheme? theme);
-    bool TryGetModeByName(string variantName, [NotNullWhen(true)] out ITheme? theme);
-    bool TryGetModeByName(ReadOnlySpan<char> variantName, [NotNullWhen(true)] out ITheme? theme);
+    private static ObjectPool<Stack<TItem>> CreateStackPool<TItem>(int maxRetained)  
+        => new DefaultObjectPool<Stack<TItem>>(new StackPoolPolicy<Stack<TItem>,TItem>(), maxRetained);
 }

@@ -50,7 +50,7 @@ public abstract class SimpleSyntaxTreeConverter {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected static ValueTask ProcessNodeTree<T>(IMarkdownSyntaxTree tree, T writer, WriteDelegate<T> writeContent, CancellationToken ct = default) {
-        Dictionary<int, MarkdownElement> depthCache = PoolCache.DepthCachePool.Get();
+        Dictionary<int, MarkdownElement> depthCache = MarkdownPoolCache.DepthCachePool.Get();
         try {
             int lastKnownDepth = -1;
 
@@ -87,7 +87,7 @@ public abstract class SimpleSyntaxTreeConverter {
             return ValueTask.CompletedTask;
         }
         finally {
-            PoolCache.DepthCachePool.Return(depthCache);
+            MarkdownPoolCache.DepthCachePool.Return(depthCache);
         }
     }
     private static void WriteAttributes<T>(T writer, WriteDelegate<T> writeContent, IMarkdownSyntaxNode node) {

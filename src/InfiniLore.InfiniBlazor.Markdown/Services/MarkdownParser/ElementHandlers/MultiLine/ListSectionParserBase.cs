@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.ElementHandlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public abstract class ListHandlerBase : IMarkdownElementHandler {
+public abstract class ListHandlerBase(ILineNormalizationService lineNormalizationHelper) : IMarkdownElementHandler {
     private static readonly int LTaskId = MarkdownRegexLib.GetListGroupId("lTask");
     private static readonly int LHeadId = MarkdownRegexLib.GetListGroupId("lHead");
     private static readonly int LBodyId = MarkdownRegexLib.GetListGroupId("lBody");
@@ -45,7 +45,7 @@ public abstract class ListHandlerBase : IMarkdownElementHandler {
                 IMarkdownSyntaxNode listItemNode = listNode.AddChildNode(MarkdownElement.ListItem);
             
                 if (groups[LBodyId].TryGetValueSpan(out ReadOnlySpan<char> itemBody) && !itemBody.IsEmpty) {
-                    string normalizedBody = LineNormalizationHelper.NormalizeLineIndentation(itemBody);
+                    string normalizedBody = lineNormalizationHelper.NormalizeLineIndentation(itemBody);
                     engine.AddMultiLineMatchesToStack(normalizedBody, listItemNode, origin | HandlerOrigin.PreserveHtml);
                 }
 
@@ -69,11 +69,11 @@ public abstract class ListHandlerBase : IMarkdownElementHandler {
 }
 
 [InjectableSingleton<IMarkdownElementHandler>("listOrdered")]
-public class ListOrderedHandlerBase : ListHandlerBase {
+public class ListOrderedHandlerBase(ILineNormalizationService lineNormalizationHelper) : ListHandlerBase(lineNormalizationHelper) {
     protected override MarkdownElement ListType => MarkdownElement.ListOrdered;
 }
 
 [InjectableSingleton<IMarkdownElementHandler>("listUnordered")]
-public class ListUnorderedHandler : ListHandlerBase {
+public class ListUnorderedHandler(ILineNormalizationService lineNormalizationHelper) : ListHandlerBase(lineNormalizationHelper) {
     protected override MarkdownElement ListType => MarkdownElement.ListUnordered;
 }

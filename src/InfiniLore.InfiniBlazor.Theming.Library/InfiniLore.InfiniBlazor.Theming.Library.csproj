@@ -4,15 +4,14 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>InfiniLore.InfiniBlazor</RootNamespace>
 
         <!-- Package metadata -->
-        <PackageId>InfiniLore.InfiniBlazor.Contracts</PackageId>
+        <PackageId>InfiniLore.InfiniBlazor.Theming.Library</PackageId>
         <Version>0.1.0-preview.16</Version>
         <Authors>Anna Sas</Authors>
-        <Description>Contract library for InfiniLore's Component Library</Description>
+        <Description>Library of premade themes and theme collections for InfiniBlazor</Description>
         <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
-        <PackageTags>Blazor;Ui;Design;Components;Library;Contracts</PackageTags>
+        <PackageTags>Blazor;Ui;Design;Components;Library;Contracts;Generator</PackageTags>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <IncludeSymbols>true</IncludeSymbols>
@@ -22,20 +21,14 @@
         <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
-    <!-- Include external files -->
     <ItemGroup>
         <None Include="../../LICENSE" Pack="true" PackagePath="" Visible="false" />
         <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
         <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Markdown" />
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Theming" />
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor" />
     </ItemGroup>
-
+    
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.4" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
-      <PackageReference Include="Microsoft.Extensions.ObjectPool" Version="9.0.4" />
+      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Theming\InfiniLore.InfiniBlazor.Theming.csproj" />
     </ItemGroup>
 
 </Project>
