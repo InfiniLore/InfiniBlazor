@@ -23,6 +23,9 @@ public partial record InfiniBlazorTheme : ITheme {
         ColorBase95 = DarkModeInstance.ColorBase05,
         ColorBase100 = DarkModeInstance.ColorBase00,
     };
+    // -----------------------------------------------------------------------------------------------------------------
+    // Colors
+    // -----------------------------------------------------------------------------------------------------------------
     
     #region Colors
     public string ColorRed { get; init; } = "#ef4444";

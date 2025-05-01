@@ -15,7 +15,7 @@ public static class IInfiniBlazorConfigExtensions {
         config.Services.RegisterServicesFromInfiniLoreInfiniBlazorTheming();
         
         var themeConfig = new ThemeConfig(config);
-        themeConfig.RegisterTheme<DefaultThemeCollection>("default");
+        config.Services.AddKeyedSingleton<IThemeCollection, DefaultThemeCollection>(null); // Add Default theme
         
         configure?.Invoke(themeConfig);
         

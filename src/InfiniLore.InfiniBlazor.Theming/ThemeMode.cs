@@ -12,5 +12,17 @@ public record ThemeMode(
 ) : IThemeMode {
     public static IThemeMode LightMode { get; } = new ThemeMode("light-mode", false, true);
     public static IThemeMode DarkMode { get; } = new ThemeMode("dark-mode", true, false);
-}
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    public virtual bool Equals(ThemeMode? other) {
+        if (ReferenceEquals(null, other)) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return Name == other.Name;
+    }
+
+    public override int GetHashCode() {
+        return Name.GetHashCode();
+    }
+}

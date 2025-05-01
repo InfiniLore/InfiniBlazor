@@ -14,6 +14,10 @@ public interface IThemeCollection {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    bool TryGetLightModeVariant([NotNullWhen(true)] out ITheme? theme);
-    bool TryGetDarkModeVariant([NotNullWhen(true)] out ITheme? theme);
+    bool TryGetLightMode([NotNullWhen(true)] out ITheme? theme);
+    bool TryGetDarkMode([NotNullWhen(true)] out ITheme? theme);
+    
+    bool TryGetMode(IThemeMode mode, [NotNullWhen(true)] out ITheme? theme);
+    bool TryGetModeByName(string variantName, [NotNullWhen(true)] out ITheme? theme);
+    bool TryGetModeByName(ReadOnlySpan<char> variantName, [NotNullWhen(true)] out ITheme? theme);
 }

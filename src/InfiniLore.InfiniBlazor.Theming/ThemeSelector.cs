@@ -18,7 +18,7 @@ namespace InfiniLore.InfiniBlazor.Theming;
 [InjectableSingleton<IThemeSelector>]
 public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogger<ThemeSelector> logger) : IThemeSelector {
     public event Action? ThemeChanged;
-    public IThemeCollection? CurrentTheme { get; private set; }
+    public IThemeCollection CurrentTheme { get; private set; } = provider.GetRequiredKeyedService<IThemeCollection>(null);
     public IThemeMode CurrentThemeMode { get; private set; } = config.DefaultThemeMode;
     
     private FrozenDictionary<string, IThemeCollection> Themes { get; } = CollectThemes(config, provider, logger);
@@ -73,11 +73,9 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
     }
 
     public bool TryGetCurrentThemeCss([NotNullWhen(true)] out string? css) {
-        CurrentTheme ??= Themes["default"];
-        
         ITheme? theme = null;
-        if (CurrentThemeMode == ThemeMode.DarkMode) CurrentTheme.TryGetDarkModeVariant(out theme);
-        else if (CurrentThemeMode == ThemeMode.LightMode) CurrentTheme.TryGetLightModeVariant(out theme);
+        if (CurrentThemeMode == ThemeMode.DarkMode) CurrentTheme.TryGetDarkMode(out theme);
+        else if (CurrentThemeMode == ThemeMode.LightMode) CurrentTheme.TryGetLightMode(out theme);
         
         if (theme is null) {
             logger.LogWarning("No theme variant found for current mode '{Mode}'.", CurrentThemeMode.Name);
