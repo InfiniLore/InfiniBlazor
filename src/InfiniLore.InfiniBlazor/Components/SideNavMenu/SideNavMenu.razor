@@ -29,10 +29,10 @@
             </div>
 
             <!-- Navigation -->
-            @if (NavigationMenu is not null) {
+            @if (Body is not null) {
                 <div class="border-t border-(--color-base-60) flex pb-1">
                     <nav class="flex flex-col grow space-y-2 mt-4">
-                        @NavigationMenu
+                        @Body
                     </nav>
                 </div>
             }
@@ -62,7 +62,7 @@
     [Parameter] public bool IsMenuCollapsed { get; set; }
 
     [Parameter] public RenderFragment? Header { get; set; }
-    [Parameter] public RenderFragment? NavigationMenu { get; set; }
+    [Parameter] public RenderFragment? Body { get; set; }
     [Parameter] public RenderFragment? Footer { get; set; }
 
     [Parameter] public EventCallback<bool> IsMenuCollapsedChanged { get; set; }

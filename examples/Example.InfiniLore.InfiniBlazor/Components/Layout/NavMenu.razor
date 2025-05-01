@@ -10,7 +10,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<CollapsibleMenu @bind-IsMenuCollapsed="@IsMenuCollapsed" Width="w-64">
+<SideNavMenu @bind-IsMenuCollapsed="@IsMenuCollapsed" Width="w-64">
     <Header>
         <a href="/"
            class="@(!IsMenuCollapsed ? "text-1xl font-bold text-(--color-base-00) hover:text-(--color-accent) no-underline" : "hidden")">
@@ -18,37 +18,37 @@
         </a>
     </Header>
 
-    <NavigationMenu>
-        <CollapsibleMenuButton Href="/markdown-dual">
+    <Body>
+        <SideNavMenuLink Href="/markdown-dual">
             <Icon> <LiSignature/></Icon>
             <Text>Markdown Example</Text>
-        </CollapsibleMenuButton>
-        <CollapsibleMenuButton Href="/markdown-rolling">
+        </SideNavMenuLink>
+        <SideNavMenuLink Href="/markdown-rolling">
             <Icon><LiIndentIncrease/></Icon>
             <Text>Rolling Markdown Example</Text>
-        </CollapsibleMenuButton>
-    </NavigationMenu>
+        </SideNavMenuLink>
+    </Body>
 
     <Footer>
-        <CollapsibleMenuButton Href="https://github.com/InfiniLore/infinilore.infiniblazor">
+        <SideNavMenuLink Href="https://github.com/InfiniLore/infinilore.infiniblazor">
             <Icon><LiPackage/></Icon>
             <Text>Github</Text>
-        </CollapsibleMenuButton>
+        </SideNavMenuLink>
 
         @* DEBUG *@
-        <CollapsibleMenuButton OnClickCallback="@(() => SwitchTheme())">
+        <SideNavMenuButton OnClickCallback="@(SwitchTheme)">
             <Icon><LiPalette/></Icon>
             <Text>Switch Theme</Text>
-        </CollapsibleMenuButton>
+        </SideNavMenuButton>
 
-        <CollapsibleMenuButton OnClickCallback="@(() => ThemeSelector.TryToggleDarkAndLightMode())">
+        <SideNavMenuButton OnClickCallback="@(() => ThemeSelector.TryToggleDarkAndLightMode())">
             <Icon><LiSun/></Icon>
             <Text>Switch Mode</Text>
-        </CollapsibleMenuButton>
+        </SideNavMenuButton>
     </Footer>
 
 
-</CollapsibleMenu>
+</SideNavMenu>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code *@
