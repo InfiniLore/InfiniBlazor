@@ -27,10 +27,20 @@
             <Icon><LiIndentIncrease/></Icon>
             <Text>Rolling Markdown Example</Text>
         </SideNavMenuLink>
-        <SideNavMenuUser 
-            UserName="InfiniLore User"
-            UserImage="/icon.png"
-        />
+    <SideNavMenuUser
+        UserName="InfiniLore"
+        UserImage="/icon.png">
+        <AdditionalLinks>
+            <NavLink href="/"
+                     class="@(SideNavMenuUser.AdditionalLinkClasses)">
+                settings
+            </NavLink>
+            <NavLink href="/"
+                     class="@(SideNavMenuUser.AdditionalLinkClasses)">
+                logout
+            </NavLink>
+        </AdditionalLinks>
+    </SideNavMenuUser>
         
     </Body>
 

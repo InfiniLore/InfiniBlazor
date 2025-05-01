@@ -14,15 +14,15 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div @onclick="OnContainerClick" class="@($"w-full flex py-2 items-center rounded hover:bg-(--color-base-70) group transition-all {(MenuCollapsed ? "px-2 justify-center hover:cursor-pointer" : "px-1 justify-start h-12")}")">
-    <span class="flex items-center justify-center">
+<div @onclick="OnContainerClick" class="@($"flex py-2 items-center rounded group transition-all {(MenuCollapsed ? "px-2 justify-center hover:cursor-pointer w-4/5" : "px-1 justify-start h-12 hover:bg-(--color-base-70) w-full")}")">
+    <span class="@($"flex grow items-center w-full {(MenuCollapsed ? "justify-center" : "justify-between")}")">
         @if (!_imageLoadFailed) {
             <NavLink href="@HrefUserProfile" 
                      @onclick:stopPropagation 
                      class="w-8 h-8 flex-shrink-0">
                 <img src="@UserImage"
                      alt="Profile"
-                     class="w-full h-full rounded-full object-cover hover:ring-2 ring-(--color-accent)"
+                     class="w-full h-full rounded-full object-cover group-hover:ring-2 ring-(--color-accent)"
                      crossorigin="anonymous"
                      @onerror="HandleImageError"/>
             </NavLink>
@@ -35,17 +35,21 @@
             </NavLink>
         }
         <!-- User Info -->
-        <div class="@($"flex flex-col justify-center transition-all duration-300 h-6 {(MenuCollapsed ? "w-0 opacity-0 delay-0" : "delay-300 w-auto ml-2 opacity-100")}")">
-            <a href="@HrefUserProfile"
-               @onclick:stopPropagation
-               class="font-semibold text-(--color-base-10) hover:text-(--color-base-20)">@UserName</a>
-            <div class="w-min">
-                <NavLink @onclick="LogoutCallbackAsync"
-                         href="@HrefLogout"
-                         class="text-sm text-(--color-base-10) whitespace-nowrap hover:text-(--color-accent)">
-                    logout
-                </NavLink>
-            </div>
+        <div class="@($"flex flex-col justify-center items-end transition-all duration-300 {(MenuCollapsed ? "opacity-0 w-0 delay-0 h-0" : "delay-300 w-auto ml-2 opacity-100 min-h-8 max-h-8 ")}")">
+            <span>
+                <a href="@HrefUserProfile"
+                   @onclick:stopPropagation
+                   class="font-semibold text-(--color-base-10) hover:text-(--color-base-20) whitespace-nowrap text-right"
+                   style="font-size: clamp(0.45rem, calc(150px / (@UserName.Length * 0.6)), 1rem);"
+                   title="@UserName"
+                   >
+                    @UserName
+                </a>
+            </span>
+        
+            <span class="flex items-center justify-between flex-row gap-4 h-[1.25rem] ">
+                @AdditionalLinks
+            </span>
         </div>
     </span>
 </div>
@@ -60,6 +64,9 @@
     [Parameter] public string HrefLogout { get; set; } = string.Empty;
     [Parameter] public string HrefUserProfile { get; set; } = string.Empty;
     [Parameter] public EventCallback LogoutCallbackAsync { get; set; }
+    
+    [Parameter] public RenderFragment? AdditionalLinks { get; set; }
+    public static string AdditionalLinkClasses => "text-sm text-(--color-base-10) whitespace-nowrap hover:text-(--color-accent)";
 
     private bool _imageLoadFailed;
 
