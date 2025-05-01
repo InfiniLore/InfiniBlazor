@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+
+        <!-- Package metadata -->
+        <PackageId>InfiniLore.InfiniBlazor.Theming.Library</PackageId>
+        <Version>0.1.0-preview.16</Version>
+        <Authors>Anna Sas</Authors>
+        <Description>Library of premade themes and theme collections for InfiniBlazor</Description>
+        <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
+        <PackageTags>Blazor;Ui;Design;Components;Library;Contracts;Generator</PackageTags>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <DebugType>embedded</DebugType>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageIcon>icon.png</PackageIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="../../LICENSE" Pack="true" PackagePath="" Visible="false" />
+        <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
+        <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Theming\InfiniLore.InfiniBlazor.Theming.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -19,6 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Theming.Library\InfiniLore.InfiniBlazor.Theming.Library.csproj" />
       <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Theming\InfiniLore.InfiniBlazor.Theming.csproj" />
       <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" />
     </ItemGroup>

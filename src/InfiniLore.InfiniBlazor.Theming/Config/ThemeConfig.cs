@@ -23,4 +23,10 @@ public class ThemeConfig(IInfiniBlazorConfig config) : IThemeConfig{
         config.Services.AddKeyedSingleton<IThemeCollection, TTheme>(themeName);
         return this;
     }
+
+    public ThemeConfig RegisterTheme(Type themeType, string themeName) {
+        _registeredThemes.Add(themeName);
+        config.Services.AddKeyedSingleton(typeof(IThemeCollection), themeName, themeType);
+        return this;
+    }
 }
