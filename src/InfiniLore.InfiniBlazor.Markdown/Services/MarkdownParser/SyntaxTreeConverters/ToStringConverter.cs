@@ -1,21 +1,23 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions.DependencyInjection;
 using System.Text;
 
 namespace InfiniLore.InfiniBlazor.Markdown.SyntaxTreeConverters;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class ToStringConverter : SimpleSyntaxTreeConverter, IMarkdownSyntaxTreeConverter<string> {
+[InjectableSingleton<IMarkdownSyntaxTreeConverter<string>>]
+public class ToStringConverter(IPoolCache poolCache) : SimpleSyntaxTreeConverter, IMarkdownSyntaxTreeConverter<string> {
     public async ValueTask<string> ConvertAsync(IMarkdownSyntaxTree tree, CancellationToken ct = default) {
-        StringBuilder builder = PoolCache.StringBuilderPool.Get();
+        StringBuilder builder = poolCache.StringBuilderPool.Get();
         try {
             await ProcessNodeTree(tree, builder, static (sb, content) => sb.Append(content), ct);
             return builder.ToString();
         }
         finally {
-            PoolCache.StringBuilderPool.Return(builder);
+            poolCache.StringBuilderPool.Return(builder);
         }
     }
 }

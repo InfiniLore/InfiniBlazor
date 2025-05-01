@@ -25,7 +25,7 @@ public class MarkdownParser<TInput, TOutput> : IMarkdownParser<TInput, TOutput> 
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public async ValueTask<TOutput?> TryParseAsync(TInput input, CancellationToken ct = default) {
-        MarkdownSyntaxTree nodeTree = PoolCache.MarkdownSyntaxTreePool.Get();
+        MarkdownSyntaxTree nodeTree = MarkdownPoolCache.MarkdownSyntaxTreePool.Get();
 
         try {
             TInput? processedInput = input;
@@ -61,7 +61,7 @@ public class MarkdownParser<TInput, TOutput> : IMarkdownParser<TInput, TOutput> 
             return default;
         }
         finally {
-            PoolCache.MarkdownSyntaxTreePool.Return(nodeTree);
+            MarkdownPoolCache.MarkdownSyntaxTreePool.Return(nodeTree);
         }
     }
     

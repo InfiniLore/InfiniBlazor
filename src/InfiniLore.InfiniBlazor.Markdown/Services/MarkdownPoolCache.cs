@@ -4,14 +4,13 @@
 using CodeOfChaos.Extensions.ObjectPool;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Microsoft.Extensions.ObjectPool;
-using System.Text;
 
 namespace InfiniLore.InfiniBlazor.Markdown;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class PoolCache {
+public static class MarkdownPoolCache {
     private const int ParsersRetained = 8;
     private const int NodesPerParserRetained = 96;
     private const int VisitorPerParserRetained = 16;
@@ -25,10 +24,6 @@ public static class PoolCache {
     public static readonly ObjectPool<MarkdownFragment> MarkdownFragmentPool = CreateResettablePool<MarkdownFragment>(ParsersRetained * VisitorPerParserRetained);
     public static readonly ObjectPool<MarkdownSyntaxVisitor> MarkdownSyntaxVisitorPool = CreateResettablePool<MarkdownSyntaxVisitor>(ParsersRetained * VisitorPerParserRetained);
     
-    // Generic Pools
-    public static readonly ObjectPool<Stack<Range>> RangeStackPool = CreateStackPool<Range>(16);
-    public static readonly ObjectPool<StringBuilder> StringBuilderPool = CreateStringBuilderPool(16);
-
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -43,7 +38,4 @@ public static class PoolCache {
     
     private static ObjectPool<Stack<MarkdownSyntaxVisitor>> CreateMdNodeVisitorStackPool(int maxRetained) 
         => new DefaultObjectPool<Stack<MarkdownSyntaxVisitor>>(new MarkdownSyntaxVisitorStackPoolPolicy(MarkdownSyntaxVisitorPool), maxRetained);
-    
-    private static ObjectPool<StringBuilder> CreateStringBuilderPool(int maxRetained)
-        => new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy {MaximumRetainedCapacity = int.MaxValue}, maxRetained);
 }

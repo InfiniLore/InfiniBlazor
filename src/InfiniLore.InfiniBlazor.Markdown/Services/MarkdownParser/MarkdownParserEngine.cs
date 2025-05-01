@@ -64,13 +64,13 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
         => PushElementToStack(content, currentNode, origin, MarkdownElement.Content);
 
     public void PushElementToStack(string? content, IMarkdownSyntaxNode currentNode, HandlerOrigin origin, MarkdownElement element) {
-        MarkdownFragment fragment = PoolCache.MarkdownFragmentPool.Get();
+        MarkdownFragment fragment = MarkdownPoolCache.MarkdownFragmentPool.Get();
         fragment.AsElement(content, currentNode, origin, element);
         _stack.Push(fragment);
     }
 
     private void PushMatchToStack(Match match, IMarkdownSyntaxNode currentNode, HandlerOrigin origin) {
-        MarkdownFragment fragment = PoolCache.MarkdownFragmentPool.Get();
+        MarkdownFragment fragment = MarkdownPoolCache.MarkdownFragmentPool.Get();
         fragment.AsMatch(match, currentNode, origin);
         _stack.Push(fragment);
     }
@@ -81,7 +81,7 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
     
     public bool TryReset() {
         while (_stack.TryPop(out MarkdownFragment? fragment)) {
-            PoolCache.MarkdownFragmentPool.Return(fragment);// Makes sure we clean everything
+            MarkdownPoolCache.MarkdownFragmentPool.Return(fragment);// Makes sure we clean everything
         }
 
         NodeTree = null!;
