@@ -10,13 +10,16 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits ComponentBase
 @inject HttpClient Http
+@inject NavigationManager NavigationManager
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@($"w-full flex p-2 items-center rounded hover:bg-(--color-base-70) group transition-all {(MenuCollapsed ? "justify-center" : "justify-start h-12")}")">
+<div @onclick="OnContainerClick" class="@($"w-full flex py-2 items-center rounded hover:bg-(--color-base-70) group transition-all {(MenuCollapsed ? "px-2 justify-center hover:cursor-pointer" : "px-1 justify-start h-12")}")">
     <span class="flex items-center justify-center">
         @if (!_imageLoadFailed) {
-            <NavLink href="@HrefUserProfile" class="w-8 h-8 flex-shrink-0">
+            <NavLink href="@HrefUserProfile" 
+                     @onclick:stopPropagation 
+                     class="w-8 h-8 flex-shrink-0">
                 <img src="@UserImage"
                      alt="Profile"
                      class="w-full h-full rounded-full object-cover hover:ring-2 ring-(--color-accent)"
@@ -25,17 +28,24 @@
             </NavLink>
         }
         else {
-            <NavLink href="@HrefUserProfile" class="w-6 h-6 flex-shrink-0">
+            <NavLink href="@HrefUserProfile" 
+                     @onclick:stopPropagation 
+                     class="w-6 h-6 flex-shrink-0">
                 <LiCircleUser class="w-full h-full text-(--color-base-10) group-hover:text-(--color-accent)"/>
             </NavLink>
         }
         <!-- User Info -->
         <div class="@($"flex flex-col justify-center transition-all duration-300 h-6 {(MenuCollapsed ? "w-0 opacity-0 delay-0" : "delay-300 w-auto ml-2 opacity-100")}")">
             <a href="@HrefUserProfile"
+               @onclick:stopPropagation
                class="font-semibold text-(--color-base-10) hover:text-(--color-base-20)">@UserName</a>
-            <NavLink @onclick="LogoutCallbackAsync" href="@HrefLogout"
-                     class="text-sm text-(--color-base-10) hover:text-(--color-accent)">logout
-            </NavLink>
+            <div class="w-min">
+                <NavLink @onclick="LogoutCallbackAsync"
+                         href="@HrefLogout"
+                         class="text-sm text-(--color-base-10) whitespace-nowrap hover:text-(--color-accent)">
+                    logout
+                </NavLink>
+            </div>
         </div>
     </span>
 </div>
@@ -43,7 +53,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
     [CascadingParameter] public bool MenuCollapsed { get; set; }
     [Parameter] public string UserName { get; set; } = "Unknown Username";
@@ -57,7 +66,6 @@
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-
     protected override async Task OnParametersSetAsync() {
         if (UserImage.IsNullOrEmpty()) {
             _imageLoadFailed = true;
@@ -87,6 +95,11 @@
     private async Task HandleImageError(ErrorEventArgs obj) {
         _imageLoadFailed = true;
         await InvokeAsync(StateHasChanged);
+    }
+    
+    private void OnContainerClick() {
+        if (!MenuCollapsed) return;
+        NavigationManager.NavigateTo(HrefUserProfile);
     }
 }
 

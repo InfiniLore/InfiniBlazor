@@ -13,6 +13,8 @@ namespace Example;
 public class Program {
     public static void Main(string[] args) {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+        
+        builder.Services.AddLogging();
 
         builder.Services.AddInfiniBlazor(config => {
             config.AddMarkdownLogic();
