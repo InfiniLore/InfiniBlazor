@@ -10,6 +10,8 @@ public record ThemeMode(
     bool IsDark,
     bool IsLight
 ) : IThemeMode {
+    private readonly int _hashCode = Name.GetHashCode();
+    
     public static IThemeMode LightMode { get; } = new ThemeMode("light-mode", false, true);
     public static IThemeMode DarkMode { get; } = new ThemeMode("dark-mode", true, false);
 
@@ -22,7 +24,5 @@ public record ThemeMode(
         return Name == other.Name;
     }
 
-    public override int GetHashCode() {
-        return Name.GetHashCode();
-    }
+    public override int GetHashCode() => _hashCode;
 }
