@@ -12,10 +12,10 @@ public class AnnaSasDevThemeCollection : ThemeCollection {
     protected override Dictionary<IThemeMode, ITheme> Modes {
         get {
             Dictionary<IThemeMode, ITheme> modes = [];
-            modes.Add(ThemeMode.DarkMode, InfiniBlazorTheme.DarkModeInstance with {
+            modes.Add(ThemeMode.DarkMode, Theming.InfiniBlazorTheme.DarkModeInstance with {
                 ColorAccent = "#F5A9B8"
             });
-            modes.Add(ThemeMode.LightMode, InfiniBlazorTheme.LightModeInstance with {
+            modes.Add(ThemeMode.LightMode, Theming.InfiniBlazorTheme.LightModeInstance with {
                 ColorAccent = "#5BCEFA"
             });
             return modes;

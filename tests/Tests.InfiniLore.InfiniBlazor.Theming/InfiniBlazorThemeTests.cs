@@ -4,6 +4,7 @@
 using InfiniLore.InfiniBlazor.Theming;
 using InfiniLore.InfiniBlazor.Theming.Library;
 using System.Text.RegularExpressions;
+using InfiniBlazorTheme = InfiniLore.InfiniBlazor.Theming.InfiniBlazorTheme;
 
 namespace Tests.InfiniLore.InfiniBlazor.Theming;
 
