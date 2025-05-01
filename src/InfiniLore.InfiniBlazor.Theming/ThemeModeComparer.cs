@@ -5,10 +5,10 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class ContainedThemesStorageComparer : IEqualityComparer<IThemeMode>,
+public class ThemeModeComparer : IEqualityComparer<IThemeMode>,
     IAlternateEqualityComparer<string, IThemeMode>,
     IAlternateEqualityComparer<ReadOnlySpan<char>, IThemeMode> {
-    public static readonly ContainedThemesStorageComparer Instance = new();
+    public static readonly ThemeModeComparer Instance = new();
     
     public bool Equals(IThemeMode? x, IThemeMode? y) 
         => ReferenceEquals(x, y) || x is not null && y is not null && x.Equals(y);
