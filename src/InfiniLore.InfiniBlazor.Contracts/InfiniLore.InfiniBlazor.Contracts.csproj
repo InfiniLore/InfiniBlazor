@@ -38,8 +38,4 @@
       <PackageReference Include="Microsoft.Extensions.ObjectPool" Version="9.0.4" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Markdown\" />
-    </ItemGroup>
-
 </Project>

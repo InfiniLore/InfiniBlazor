@@ -48,8 +48,4 @@
       <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Services\MarkdownParser\Processors\PostProcessors\" />
-    </ItemGroup>
-
 </Project>
