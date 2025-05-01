@@ -1,0 +1,60 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using Microsoft.AspNetCore.Components.Routing
+@using InfiniLore.Lucide
+
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits ComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="@($"w-full flex p-2 items-center rounded hover:bg-(--color-base-70) group transition-all {(MenuCollapsed ? "justify-center" : "justify-start h-12")}")">
+    <span class="flex items-center justify-center">
+        <NavLink href="@HrefUserProfile" class="w-8 h-8 flex-shrink-0">
+            @if (!_imageLoadFailed) {
+                <img src="@UserImage"
+                     alt="Profile"
+                     class="w-full h-full rounded-full object-cover hover:ring-2 ring-(--color-accent)"
+                     crossorigin="anonymous"
+                     @onerror="HandleImageError" />
+            }
+            else {
+                <LiCircleUser class="w-full h-full text-(--color-base-10) group-hover:text-(--color-accent)"/>
+            }
+        </NavLink>
+        <!-- User Info -->
+        <div class="@($"flex flex-col justify-center transition-all duration-300 h-6 {(MenuCollapsed ? "w-0 opacity-0 delay-0" : "delay-300 w-auto ml-2 opacity-100")}")">
+            <a href="@HrefUserProfile" class="font-semibold text-(--color-base-10) hover:text-(--color-base-20)">@UserName</a>
+            <NavLink @onclick="LogoutCallbackAsync" href="@HrefLogout"
+                     class="text-sm text-(--color-base-10) hover:text-(--color-accent)">logout
+            </NavLink>
+        </div>
+    </span>
+</div>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [CascadingParameter] public bool MenuCollapsed { get; set; }
+    [Parameter] public string UserName { get; set; } = string.Empty;
+    [Parameter] public string UserImage { get; set; } = string.Empty;
+    [Parameter] public string HrefLogout { get; set; } = string.Empty;
+    [Parameter] public string HrefUserProfile { get; set; } = string.Empty;
+    [Parameter] public EventCallback LogoutCallbackAsync { get; set; }
+
+    private bool _imageLoadFailed;
+    
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private async Task HandleImageError(ErrorEventArgs obj) {
+        _imageLoadFailed = true;
+        await InvokeAsync(StateHasChanged);
+    }
+}
+
