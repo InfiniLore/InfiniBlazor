@@ -11,12 +11,12 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<CascadingValue Value="IsMenuCollapsed">
+<CascadingValue Value="MenuCollapsed">
     <aside class="flex-shrink-0 bg-(--color-base-90) h-full flex flex-col space-y-4">
-        <div class="@(IsMenuCollapsed ? ClassClosed : ClassOpen) h-full flex flex-col transition-all duration-300">
+        <div class="@(MenuCollapsed ? ClassClosed : ClassOpen) h-full flex flex-col transition-all duration-300">
             <!-- Top Logo and Hamburger -->
-            <div class="@($"flex items-center {(IsMenuCollapsed ? "justify-center" : "justify-between")} h-12 w-full")">
-                <div class="@(IsMenuCollapsed ? "hidden" : "flex-grow")">
+            <div class="@($"flex items-center {(MenuCollapsed ? "justify-center" : "justify-between")} h-12 w-full")">
+                <div class="@(MenuCollapsed ? "hidden" : "flex-grow")">
                     @Header
                 </div>
 
@@ -59,17 +59,20 @@
     [Parameter] public string Width { get; set; } = "w-48";
     private string EffectiveWidth => !Width.StartsWith("w-") ? $"w-{Width}" : Width;
 
-    [Parameter] public bool IsMenuCollapsed { get; set; }
+    [Parameter] public bool MenuCollapsed { get; set; }
 
     [Parameter] public RenderFragment? Header { get; set; }
     [Parameter] public RenderFragment? Body { get; set; }
     [Parameter] public RenderFragment? Footer { get; set; }
 
-    [Parameter] public EventCallback<bool> IsMenuCollapsedChanged { get; set; }
+    [Parameter] public EventCallback<bool> MenuCollapsedChanged { get; set; }
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
     private async Task ToggleMenu() {
-        IsMenuCollapsed = !IsMenuCollapsed;// Toggle the collapsed state
-        await IsMenuCollapsedChanged.InvokeAsync(IsMenuCollapsed);// Notify parent component about the change
+        MenuCollapsed = !MenuCollapsed;// Toggle the collapsed state
+        await MenuCollapsedChanged.InvokeAsync(MenuCollapsed); // Notify parent component about the change
         await InvokeAsync(StateHasChanged);
     }
 }

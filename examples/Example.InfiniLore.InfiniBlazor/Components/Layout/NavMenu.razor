@@ -10,17 +10,17 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<SideNavMenu @bind-IsMenuCollapsed="@IsMenuCollapsed" Width="w-64">
+<SideNavMenu @bind-MenuCollapsed="@MenuCollapsed" Width="w-64">
     <Header>
         <a href="/"
-           class="@(!IsMenuCollapsed ? "text-1xl font-bold text-(--color-base-00) hover:text-(--color-accent) no-underline" : "hidden")">
+           class="@(!MenuCollapsed ? "text-1xl font-bold text-(--color-base-00) hover:text-(--color-accent) no-underline" : "hidden")">
             InfiniBlazor
         </a>
     </Header>
 
     <Body>
         <SideNavMenuLink Href="/markdown-dual">
-            <Icon> <LiSignature/></Icon>
+            <Icon><LiSignature/></Icon>
             <Text>Markdown Example</Text>
         </SideNavMenuLink>
         <SideNavMenuLink Href="/markdown-rolling">
@@ -55,7 +55,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     private string Theme { get; set; } = "default";
-    private bool IsMenuCollapsed { get; set; }// Tracks whether the menu is collapsed
+    private bool MenuCollapsed { get; set; }// Tracks whether the menu is collapsed
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

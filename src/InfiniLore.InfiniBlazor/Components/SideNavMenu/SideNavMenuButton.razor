@@ -9,7 +9,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<button @onclick="@OnClickCallback" class="@(SideNavMenuItem.ContainerClasses(IsMenuCollapsed))">
+<button @onclick="@OnClickCallback" class="@(SideNavMenuItem.ContainerClasses(MenuCollapsed))">
     <SideNavMenuItem Text="@Text" Icon="@Icon"/>
 </button>
 
@@ -19,7 +19,7 @@
 @code {
     [Parameter, EditorRequired] public required Action OnClickCallback { get; set; } = () => { };
     
-    [CascadingParameter] public bool IsMenuCollapsed { get; set; }
+    [CascadingParameter] public bool MenuCollapsed { get; set; }
     [Parameter] public RenderFragment? Text { get; set; }
     [Parameter] public RenderFragment? Icon { get; set; }
 }
