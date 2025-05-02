@@ -19,4 +19,6 @@ public interface IJsRuntimeHelper {
     
     Task SetTextContentAsync(ElementReference element, string text);
     Task<string> GetTextContentAsync(ElementReference element);
+    
+    Task AddOrUpdateStyleElementAtHead(string id, string css);
 }

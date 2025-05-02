@@ -4,6 +4,7 @@
 import {getInputSelectionStart, getInputSelectionEnd, setInputSelectionRange, getInputSelection} from "./InputSelection";
 import {addPreventDefaultListener, removePreventDefaultListener} from "./KeyDownListener";
 import {setTextContent, getTextContent} from "./HtmlElementHelpers";
+import {addOrUpdateStyleElementAtHead} from "./DocumentHelpers";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -17,3 +18,6 @@ window.removePreventDefaultListener = removePreventDefaultListener;
 
 window.setTextContent = setTextContent;
 window.getTextContent = getTextContent;
+
+window.addOrUpdateStyleElementAtHead = addOrUpdateStyleElementAtHead
+;

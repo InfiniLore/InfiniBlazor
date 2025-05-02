@@ -1,15 +1,15 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.JsRuntime
 @using InfiniLore.InfiniBlazor.Theming
-@using Microsoft.Extensions.Logging
 
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inject IThemeSelector ThemeSelector
-@inject ILogger<InfiniThemeManager> Logger
+@inject IJsRuntimeHelper JsRuntimeHelper
 
 @rendermode InteractiveAuto
 
@@ -18,38 +18,39 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<style id="infiniThemeManager-selectedTheme-css">@_css</style>
+<HeadContent>
+    <style id="@StyleId">@CurrentCss</style>
+</HeadContent>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
-    private string _css = string.Empty;
+    private string CurrentCss { get; set; } = string.Empty;
+    private const string StyleId = "infiniThemeManager-selectedTheme-css";
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected override void OnInitialized() {
         ThemeSelector.ThemeChangedAsync += OnThemeChangedAsync;
-        UpdateCss();
+        if (!ThemeSelector.TryGetCurrentThemeCss(out string? css)) return;
+        CurrentCss = css;
     }
-    
+
     private async Task OnThemeChangedAsync() {
-        Logger.LogInformation("Theme change detected");
-        UpdateCss();
+        if (!ThemeSelector.TryGetCurrentThemeCss(out string? css)) return;
+        CurrentCss = css;
+
+        // WTF this works ...
+        //      HeadContent should have handled this, but NO it doesnt want to do it ... why? I dont know!
+        await JsRuntimeHelper.AddOrUpdateStyleElementAtHead(StyleId, CurrentCss);
         await InvokeAsync(StateHasChanged);
     }
 
     public ValueTask DisposeAsync() {
         ThemeSelector.ThemeChangedAsync -= OnThemeChangedAsync;
         return ValueTask.CompletedTask;
-    }
-    
-    private void UpdateCss() {
-        if (!ThemeSelector.TryGetCurrentThemeCss(out string? css)) {
-            Logger.LogWarning("Could not live update the current css styling");
-            return;
-        }
-
-        _css = css;
     }
 }
