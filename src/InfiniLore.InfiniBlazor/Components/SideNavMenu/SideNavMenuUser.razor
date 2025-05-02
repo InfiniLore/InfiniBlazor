@@ -14,7 +14,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div @onclick="OnContainerClick" class="@SideNavMenuItem.ContainerClasses(MenuCollapsed)">
+<div @onclick="OnContainerClick" class="@SideNavMenuItem.ContainerClasses">
     <span class="@($"flex grow items-center w-full transition-all {(MenuCollapsed ? "justify-center" : "justify-between")}")">
         <NavLink href="@HrefUserProfile"
                  @onclick:stopPropagation

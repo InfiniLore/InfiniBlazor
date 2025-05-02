@@ -31,9 +31,6 @@
     [Parameter, EditorRequired] public required RenderFragment? Text { get; set; }
     [Parameter, EditorRequired] public required RenderFragment? Icon { get; set; }
     
-    public static string ContainerClasses(bool isMenuCollapsed) {
-        return $"flex flex-nowrap items-center rounded hover:bg-(--color-base-70) group w-full {(isMenuCollapsed ? "py-2 justify-center" : "p-2 justify-start")}";
-    }
-
+    public static string ContainerClasses => "flex flex-nowrap items-center rounded hover:bg-(--color-base-70) group w-full justify-start p-2";
 }
 
