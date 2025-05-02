@@ -36,17 +36,6 @@ In your `Program.cs`:
 ```csharp
 builder.Services.AddInfiniBlazor();
 ```
-## 🎯 Features
-
-- **Dynamic Theme Management**
-  - Runtime theme switching
-  - Custom theme support
-  - CSS injection optimization
-
-- **Responsive Components**
-  - Navigation menu system
-  - Tailwind CSS integration
-  - Interactive UI elements
 
 ## 🤝 Contributing
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -57,4 +46,4 @@ For issues and feature requests, please use the GitHub Issues section.
 
 ---
 
-Made with ❤️ by InfiniLore
+Made with ❤️ by AnnaSasDev and the contributors to InfiniLore
