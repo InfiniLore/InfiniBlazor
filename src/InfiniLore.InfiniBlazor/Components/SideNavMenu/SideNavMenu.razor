@@ -56,11 +56,8 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
-    private string ClassOpen => $"{EffectiveWidth}";
-    private string ClassClosed => "w-14";
 
-    [Parameter] public string Width { get; set; } = "w-48";
-    private string EffectiveWidth => !Width.StartsWith("w-") ? $"w-{Width}" : Width;
+    [Parameter] public int Width { get; set; } = 48;
 
     [Parameter] public bool MenuCollapsed { get; set; }
 
@@ -69,6 +66,9 @@
     [Parameter] public RenderFragment? Footer { get; set; }
 
     [Parameter] public EventCallback<bool> MenuCollapsedChanged { get; set; }
+    
+    private string ClassOpen => $"w-{Math.Max(14, Width)}";
+    private string ClassClosed => "w-14";
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

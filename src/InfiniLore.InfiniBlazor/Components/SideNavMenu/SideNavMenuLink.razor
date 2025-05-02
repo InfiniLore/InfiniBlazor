@@ -18,9 +18,10 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
-    [Parameter, EditorRequired] public required string Href { get; init; } 
-    
+    [Parameter][EditorRequired] public required string Href { get; init; }
+
     [CascadingParameter] public bool MenuCollapsed { get; set; }
     [Parameter] public RenderFragment? Text { get; set; }
     [Parameter] public RenderFragment? Icon { get; set; }
