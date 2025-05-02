@@ -19,7 +19,8 @@
                 HrefUserProfile="@HrefUserProfile"
                 ShowStatusIndicator="@ShowStatusIndicator"
                 StatusEmoji="@StatusEmoji"
-                StatusColorClass="@StatusColorClass" />
+                Status="@UserStatus" />
+
         </span>
 
         <!-- User Info -->
@@ -57,7 +58,7 @@
     [Parameter] public RenderFragment? AdditionalLinks { get; set; }
     [Parameter] public bool ShowStatusIndicator { get; set; } = true;
     [Parameter] public string? StatusEmoji { get; set; } = "🏳️‍⚧️";
-    [Parameter] public string? StatusColorClass { get; set; }
+    [Parameter] public UserIconStatus UserStatus { get; set; } = UserIconStatus.Undefined;
     
     public static string AdditionalLinkClasses => "text-sm text-(--color-base-10) whitespace-nowrap hover:text-(--color-accent)";
     // -----------------------------------------------------------------------------------------------------------------

@@ -2,7 +2,6 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.Lucide
-@using Microsoft.AspNetCore.Components.Routing
 
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -26,21 +25,31 @@
             </span>
         }
     </a>
+    
+    @switch (Status) {
+        case UserIconStatus.Undefined: break;
+        case UserIconStatus.Online:
+        case UserIconStatus.Offline:
+        case UserIconStatus.Busy:
+        case UserIconStatus.DoNotDisturb: {
+            <div class="absolute -bottom-1 -right-1 flex items-center justify-center">
+                <div class="@GetClassFromStatus() w-3.5 h-3.5 rounded-full border-1 border-(--color-base-70)"></div>
+            </div>
+            break;
+        }
 
-    @if (ShowStatusIndicator) {
-        <div class="absolute -bottom-1 -right-1 flex items-center justify-center">
-            @if (!StatusEmoji.IsNullOrEmpty()) {
-                <div class="w-4 h-4 rounded-full bg-(--color-base-90) flex items-center justify-center text-xs leading-none">
+        case UserIconStatus.Custom when StatusEmoji.IsNotNullOrWhiteSpace(): {
+            <div class="absolute -bottom-2 -right-2 flex items-center justify-center">
+                <div class="w-5 h-5 rounded-full flex items-center justify-center text-xs leading-none ">
                     @StatusEmoji
                 </div>
-            } else {
-                <div class="w-3.5 h-3.5 rounded-full @StatusColorClass border-2 border-(--color-base-90)"></div>
-            }
-        </div>
+            </div>
+
+            break;
+        }
+        default: throw new ArgumentOutOfRangeException();
     }
 </div>
-
-
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -49,7 +58,7 @@
     [Parameter][EditorRequired] public string HrefUserProfile { get; set; } = string.Empty;
     [Parameter] public bool ShowStatusIndicator { get; set; }
     [Parameter] public string? StatusEmoji { get; set; }
-    [Parameter] public string? StatusColorClass { get; set; } = "bg-green-500";
+    [Parameter] public UserIconStatus Status { get; set; } = UserIconStatus.Undefined;
 
     private bool _imageLoadFailed;
 
@@ -75,4 +84,14 @@
     private void HandleImageError(ErrorEventArgs obj) {
         _imageLoadFailed = true;
     }
+
+    private string GetClassFromStatus() 
+        => Status switch {
+            UserIconStatus.Undefined or UserIconStatus.Custom => string.Empty,
+            UserIconStatus.Online => "bg-(--color-green)",
+            UserIconStatus.Offline => "bg-(--color-gray)",
+            UserIconStatus.Busy => "bg-(--color-orange)",
+            UserIconStatus.DoNotDisturb => "bg-(--color-red)",
+            _ => throw new ArgumentOutOfRangeException()
+        };
 }
