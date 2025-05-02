@@ -101,4 +101,13 @@ public class JsRuntimeHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper> logg
             return string.Empty;
         }
     }
+    
+    public async Task AddOrUpdateStyleElementAtHead(string id, string css) {
+        try {
+            await jsRuntime.InvokeVoidAsync("addOrUpdateStyleElementAtHead", id, css);
+        }
+        catch (JSException e) {
+            logger.LogError(e, "Error adding or updating style element at head");
+        }
+    }
 }
