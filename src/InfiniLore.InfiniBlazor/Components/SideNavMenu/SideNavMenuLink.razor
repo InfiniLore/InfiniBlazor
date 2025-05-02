@@ -11,16 +11,17 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<NavLink href="@Href" class="@(SideNavMenuItem.ContainerClasses(MenuCollapsed))">
+<NavLink href="@Href" class="@SideNavMenuItem.ContainerClasses">
     <SideNavMenuItem Text="@Text" Icon="@Icon"/>
 </NavLink>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
-    [Parameter, EditorRequired] public required string Href { get; init; } 
-    
+    [Parameter][EditorRequired] public required string Href { get; init; }
+
     [CascadingParameter] public bool MenuCollapsed { get; set; }
     [Parameter] public RenderFragment? Text { get; set; }
     [Parameter] public RenderFragment? Icon { get; set; }

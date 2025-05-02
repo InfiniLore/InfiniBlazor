@@ -9,18 +9,19 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<button @onclick="@HandleClickAsync" class="@(SideNavMenuItem.ContainerClasses(MenuCollapsed))">
+<button @onclick="@HandleClickAsync" class="@SideNavMenuItem.ContainerClasses">
     <SideNavMenuItem Text="@Text" Icon="@Icon"/>
 </button>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
+    [CascadingParameter] public bool MenuCollapsed { get; set; }
+    
     [Parameter] public Action? OnClick { get; set; }
     [Parameter] public Func<Task>? OnClickAsync { get; set; }
-
-    [CascadingParameter] public bool MenuCollapsed { get; set; }
     [Parameter] public RenderFragment? Text { get; set; }
     [Parameter] public RenderFragment? Icon { get; set; }
 
@@ -35,6 +36,5 @@
 
         OnClick?.Invoke();
     }
-
 }
 

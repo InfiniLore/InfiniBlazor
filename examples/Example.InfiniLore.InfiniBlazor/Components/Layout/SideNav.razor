@@ -10,7 +10,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<SideNavMenu @bind-MenuCollapsed="@MenuCollapsed" Width="w-64">
+<SideNavMenu @bind-MenuCollapsed="@MenuCollapsed" Width="64">
     <Header>
         <a href="/"
            class="@(!MenuCollapsed ? "text-1xl font-bold text-(--color-base-00) hover:text-(--color-accent) no-underline" : "hidden")">
@@ -19,47 +19,58 @@
     </Header>
 
     <Body>
-        <SideNavMenuLink Href="/markdown-dual">
-            <Icon><LiSignature/></Icon>
-            <Text>Markdown Example</Text>
-        </SideNavMenuLink>
-        <SideNavMenuLink Href="/markdown-rolling">
-            <Icon><LiIndentIncrease/></Icon>
-            <Text>Rolling Markdown Example</Text>
-        </SideNavMenuLink>
-    <SideNavMenuUser
-        UserName="InfiniLore"
-        UserImage="/icon.png">
-        <AdditionalLinks>
-            <NavLink href="/"
-                     class="@(SideNavMenuUser.AdditionalLinkClasses)">
-                settings
-            </NavLink>
-            <NavLink href="/"
-                     class="@(SideNavMenuUser.AdditionalLinkClasses)">
-                logout
-            </NavLink>
-        </AdditionalLinks>
-    </SideNavMenuUser>
-        
+    <SideNavMenuLink Href="/markdown-dual">
+        <Icon>
+            <LiSignature/>
+        </Icon>
+        <Text>Markdown Example</Text>
+    </SideNavMenuLink>
+    <SideNavMenuLink Href="/markdown-rolling">
+        <Icon>
+            <LiIndentIncrease/>
+        </Icon>
+        <Text>Rolling Markdown Example</Text>
+    </SideNavMenuLink>
     </Body>
 
     <Footer>
         <SideNavMenuLink Href="https://github.com/InfiniLore/infinilore.infiniblazor">
-            <Icon><LiPackage/></Icon>
+            <Icon>
+                <LiPackage/>
+            </Icon>
             <Text>Github</Text>
         </SideNavMenuLink>
 
         @* DEBUG *@
         <SideNavMenuButton OnClickAsync="@(SwitchTheme)">
-            <Icon><LiPalette/></Icon>
+            <Icon>
+                <LiPalette/>
+            </Icon>
             <Text>Switch Theme</Text>
         </SideNavMenuButton>
 
         <SideNavMenuButton OnClickAsync="@(ThemeSelector.TryToggleDarkAndLightModeAsync)">
-            <Icon><LiSun/></Icon>
+            <Icon>
+                <LiSun/>
+            </Icon>
             <Text>Switch Mode</Text>
         </SideNavMenuButton>
+
+        @* User *@
+        <SideNavMenuUser UserName="InfiniLore"
+                         UserImage="@_currentUserImage">
+            <AdditionalLinks>
+                <button @onclick="SwitchUserImage"
+                        class="@(SideNavMenuUser.AdditionalLinkClasses)">
+                    switch
+                </button>
+                <NavLink href="/"
+                         class="@(SideNavMenuUser.AdditionalLinkClasses)">
+                    logout
+                </NavLink>
+            </AdditionalLinks>
+        </SideNavMenuUser>
+
     </Footer>
 
 
@@ -68,9 +79,11 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     private string Theme { get; set; } = "default";
     private bool MenuCollapsed { get; set; }// Tracks whether the menu is collapsed
+    private string _currentUserImage = "/icon.png";
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -83,4 +96,9 @@
         };
         await ThemeSelector.TrySelectThemeAsync(Theme);
     }
+
+    private void SwitchUserImage() {
+        _currentUserImage = _currentUserImage == "/icon.png" ? "aaa/icon.png" : "/icon.png";
+    }
+
 }
