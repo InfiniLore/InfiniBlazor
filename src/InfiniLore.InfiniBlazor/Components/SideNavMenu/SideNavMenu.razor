@@ -13,12 +13,12 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="MenuCollapsed">
     <aside class="flex-shrink-0 bg-(--color-base-90) h-full flex flex-col">
-        <div class="@(MenuCollapsed ? ClassClosed : ClassOpen) h-full flex flex-col transition-all duration-300">
+        <div class="@(MenuCollapsed ? ClassClosed : ClassOpen) px-2 h-full flex flex-col transition-all duration-300">
             <!-- Top Logo and Hamburger -->
             <div
                 class="@(MenuCollapsed ? "justify-center" : "justify-between") flex items-center h-12 min-h-[3rem] max-h-[3rem] w-full">
                 <div
-                    class="@(MenuCollapsed ? "opacity-0 w-0 overflow-hidden" : "opacity-100 w-full px-2") flex items-center h-8 min-h-[2rem] max-h-[2rem] transition-all duration-300">
+                    class="@(MenuCollapsed ? "opacity-0 w-0 overflow-hidden px-0" : "opacity-100 w-full px-2") flex items-center h-8 min-h-[2rem] max-h-[2rem] transition-all duration-300">
                     @Header
                 </div>
 
@@ -32,7 +32,7 @@
 
             <!-- Navigation -->
             @if (Body is not null) {
-                <div class="border-t border-(--color-base-60) flex pb-1 shrink-0">
+                <div class="border-t border-(--color-base-60) flex shrink-0">
                     <nav class="flex flex-col grow space-y-2 mt-4">
                         @Body
                     </nav>
@@ -56,8 +56,8 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
-    private string ClassOpen => $"{EffectiveWidth} px-2 pt-1";
-    private string ClassClosed => "w-14 px-2";
+    private string ClassOpen => $"{EffectiveWidth}";
+    private string ClassClosed => "w-14";
 
     [Parameter] public string Width { get; set; } = "w-48";
     private string EffectiveWidth => !Width.StartsWith("w-") ? $"w-{Width}" : Width;
