@@ -18,8 +18,8 @@
     <span class="@($"flex grow items-center w-full transition-all {(MenuCollapsed ? "justify-center" : "justify-between")}")">
         <NavLink href="@HrefUserProfile"
                  @onclick:stopPropagation
-                 class="w-8 h-8 flex-shrink-0">
-                
+                 class="@($"w-8 h-8 flex-shrink-0 {(MenuCollapsed ? "" : "-ml-1")}")">
+    
             @if (!_imageLoadFailed) {
                 <img src="@UserImage"
                      alt="Profile"
@@ -31,7 +31,8 @@
                 <LiCircleUser class="@($"w-6 h-6 text-(--color-base-10) group-hover:text-(--color-accent) {(MenuCollapsed ? "ml-1" : "ml-0")}")"/>
             }
         </NavLink>
-        
+
+
         <!-- User Info -->
         <div class="@($"flex flex-col justify-center items-end transition-all duration-300 {(MenuCollapsed ? "opacity-0 w-0 h-6 overflow-hidden " : "opacity-100 w-auto h-8")}")">
             <span>
