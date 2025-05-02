@@ -12,35 +12,37 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="MenuCollapsed">
-    <aside class="flex-shrink-0 bg-(--color-base-90) h-full flex flex-col space-y-4 ">
+    <aside class="flex-shrink-0 bg-(--color-base-90) h-full flex flex-col">
         <div class="@(MenuCollapsed ? ClassClosed : ClassOpen) h-full flex flex-col transition-all duration-300">
             <!-- Top Logo and Hamburger -->
-            <div class="@($"flex items-center {(MenuCollapsed ? "justify-center" : "justify-between")} h-12 w-full")">
-                <div class="@(MenuCollapsed ? "hidden" : "px-2 flex-grow")">
+            <div
+                class="@(MenuCollapsed ? "justify-center" : "justify-between") flex items-center h-12 min-h-[3rem] max-h-[3rem] w-full">
+                <div
+                    class="@(MenuCollapsed ? "opacity-0 w-0 overflow-hidden" : "opacity-100 w-full px-2") flex items-center h-8 min-h-[2rem] max-h-[2rem] transition-all duration-300">
                     @Header
                 </div>
 
                 <!-- Hamburger Menu -->
                 <button
-                    class="text-(--color-base-00) p-2 rounded hover:bg-(--color-base-70) hover:text-(--color-accent) focus:outline-none"
+                    class="text-(--color-base-00) h-8 w-8 min-h-[2rem] min-w-[2rem] flex items-center justify-center rounded hover:bg-(--color-base-70) hover:text-(--color-accent) focus:outline-none"
                     @onclick="ToggleMenu">
-                    <LiMenu/>
+                    <LiMenu class="w-6 h-6"/>
                 </button>
             </div>
 
             <!-- Navigation -->
             @if (Body is not null) {
-                <div class="border-t border-(--color-base-60) flex pb-1">
+                <div class="border-t border-(--color-base-60) flex pb-1 shrink-0">
                     <nav class="flex flex-col grow space-y-2 mt-4">
                         @Body
                     </nav>
                 </div>
             }
-            
+
             <!-- Profile Section -->
             @if (Footer is not null) {
-                <div class="mt-auto border-t border-(--color-base-60) flex pb-1">
-                    <div class="@($"flex flex-col {(MenuCollapsed ? "items-center" : "")} grow space-y-2 mt-4")">
+                <div class="mt-auto border-t border-(--color-base-60) flex pb-1 shrink-0">
+                    <div class="flex flex-col grow space-y-2 mt-4 item ">
                         @Footer
                     </div>
                 </div>
@@ -52,6 +54,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     private string ClassOpen => $"{EffectiveWidth} px-2 pt-1";
     private string ClassClosed => "w-14 px-2";
@@ -72,7 +75,7 @@
     // -----------------------------------------------------------------------------------------------------------------
     private async Task ToggleMenu() {
         MenuCollapsed = !MenuCollapsed;// Toggle the collapsed state
-        await MenuCollapsedChanged.InvokeAsync(MenuCollapsed); // Notify parent component about the change
+        await MenuCollapsedChanged.InvokeAsync(MenuCollapsed);// Notify parent component about the change
         await InvokeAsync(StateHasChanged);
     }
 }

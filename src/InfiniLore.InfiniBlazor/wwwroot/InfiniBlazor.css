@@ -272,6 +272,18 @@
   .h-screen {
     height: 100vh;
   }
+  .max-h-\[2rem\] {
+    max-height: 2rem;
+  }
+  .max-h-\[3rem\] {
+    max-height: 3rem;
+  }
+  .min-h-\[2rem\] {
+    min-height: 2rem;
+  }
+  .min-h-\[3rem\] {
+    min-height: 3rem;
+  }
   .w-0 {
     width: calc(var(--spacing) * 0);
   }
@@ -311,6 +323,9 @@
   .max-w-full {
     max-width: 100%;
   }
+  .min-w-\[2rem\] {
+    min-width: 2rem;
+  }
   .flex-1 {
     flex: 1;
   }
@@ -318,6 +333,9 @@
     flex-shrink: 1;
   }
   .flex-shrink-0 {
+    flex-shrink: 0;
+  }
+  .shrink-0 {
     flex-shrink: 0;
   }
   .flex-grow {
@@ -370,6 +388,9 @@
   }
   .items-end {
     align-items: flex-end;
+  }
+  .items-start {
+    align-items: flex-start;
   }
   .justify-between {
     justify-content: space-between;
