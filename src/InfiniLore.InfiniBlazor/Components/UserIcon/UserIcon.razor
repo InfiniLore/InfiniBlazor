@@ -1,0 +1,97 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.Lucide
+
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inject HttpClient Http
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="relative w-8 h-8">
+    <a href="@HrefUserProfile" @onclick:stopPropagation>
+        @if (!_imageLoadFailed) {
+            <img src="@ImageUrl"
+                 alt="Profile"
+                 class="w-full h-full rounded-full object-cover group-hover:ring-2 ring-(--color-accent)"
+                 crossorigin="anonymous"
+                 @onerror="HandleImageError"/>
+        } else {
+            <span class="w-8 h-8 flex justify-center items-center">
+                <LiCircleUser class="w-8 h-8 text-(--color-base-10) group-hover:text-(--color-accent)"/>
+            </span>
+        }
+    </a>
+    
+    @switch (Status) {
+        case UserIconStatus.Undefined: break;
+        case UserIconStatus.Online:
+        case UserIconStatus.Offline:
+        case UserIconStatus.Busy:
+        case UserIconStatus.DoNotDisturb: {
+            <div class="absolute -bottom-1 -right-1 flex items-center justify-center">
+                <div class="@GetClassFromStatus() w-3.5 h-3.5 rounded-full border-1 border-(--color-base-70)"></div>
+            </div>
+            break;
+        }
+
+        case UserIconStatus.Custom when StatusEmoji.IsNotNullOrWhiteSpace(): {
+            <div class="absolute -bottom-2 -right-2 flex items-center justify-center">
+                <div class="w-5 h-5 rounded-full flex items-center justify-center text-xs leading-none ">
+                    @StatusEmoji
+                </div>
+            </div>
+
+            break;
+        }
+        default: throw new ArgumentOutOfRangeException();
+    }
+</div>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter][EditorRequired] public string ImageUrl { get; set; } = string.Empty;
+    [Parameter][EditorRequired] public string HrefUserProfile { get; set; } = string.Empty;
+    [Parameter] public bool ShowStatusIndicator { get; set; }
+    [Parameter] public string? StatusEmoji { get; set; }
+    [Parameter] public UserIconStatus Status { get; set; } = UserIconStatus.Undefined;
+
+    private bool _imageLoadFailed;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override async Task OnParametersSetAsync() {
+        if (ImageUrl.IsNullOrEmpty()) _imageLoadFailed = true;
+        else if (ImageUrl.StartsWith("/"))  _imageLoadFailed = false;
+        else {
+            try {
+                HttpResponseMessage response = await Http.GetAsync(ImageUrl);
+                _imageLoadFailed = !response.IsSuccessStatusCode;
+            }
+            catch {
+                _imageLoadFailed = true;
+            }
+        }
+        await base.OnParametersSetAsync();
+
+    }
+    
+    private void HandleImageError(ErrorEventArgs obj) {
+        _imageLoadFailed = true;
+    }
+
+    private string GetClassFromStatus() 
+        => Status switch {
+            UserIconStatus.Undefined or UserIconStatus.Custom => string.Empty,
+            UserIconStatus.Online => "bg-(--color-green)",
+            UserIconStatus.Offline => "bg-(--color-gray)",
+            UserIconStatus.Busy => "bg-(--color-orange)",
+            UserIconStatus.DoNotDisturb => "bg-(--color-red)",
+            _ => throw new ArgumentOutOfRangeException()
+        };
+}

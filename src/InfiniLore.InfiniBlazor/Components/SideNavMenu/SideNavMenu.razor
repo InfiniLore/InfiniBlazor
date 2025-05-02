@@ -57,7 +57,7 @@
 
 @code {
 
-    [Parameter] public int Width { get; set; } = 48;
+    [Parameter] public SideNavMenuSize Size { get; set; } = SideNavMenuSize.Medium;
 
     [Parameter] public bool MenuCollapsed { get; set; }
 
@@ -67,7 +67,7 @@
 
     [Parameter] public EventCallback<bool> MenuCollapsedChanged { get; set; }
     
-    private string ClassOpen => $"w-{Math.Max(14, Width)}";
+    private string ClassOpen => Size.ToTailwindWidth();
     private string ClassClosed => "w-14";
 
     // -----------------------------------------------------------------------------------------------------------------
