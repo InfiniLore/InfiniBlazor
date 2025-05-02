@@ -27,6 +27,8 @@ public interface ITheme {
     [IncludeAsCssVariable] string ColorPurple { get; init; }
     [IncludeAsCssVariable] string ColorPinkRgb { get; }
     [IncludeAsCssVariable] string ColorPink { get; init; }
+    [IncludeAsCssVariable] string ColorGrayRgb { get; }
+    [IncludeAsCssVariable] string ColorGray { get; init; }
     
     [IncludeAsCssVariable] string ColorAccentRgb { get; }
     [IncludeAsCssVariable] string ColorAccent { get; init; }
