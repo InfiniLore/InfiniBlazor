@@ -27,6 +27,21 @@
             <Icon><LiIndentIncrease/></Icon>
             <Text>Rolling Markdown Example</Text>
         </SideNavMenuLink>
+    <SideNavMenuUser
+        UserName="InfiniLore"
+        UserImage="/icon.png">
+        <AdditionalLinks>
+            <NavLink href="/"
+                     class="@(SideNavMenuUser.AdditionalLinkClasses)">
+                settings
+            </NavLink>
+            <NavLink href="/"
+                     class="@(SideNavMenuUser.AdditionalLinkClasses)">
+                logout
+            </NavLink>
+        </AdditionalLinks>
+    </SideNavMenuUser>
+        
     </Body>
 
     <Footer>
@@ -36,12 +51,12 @@
         </SideNavMenuLink>
 
         @* DEBUG *@
-        <SideNavMenuButton OnClickCallback="@(SwitchTheme)">
+        <SideNavMenuButton OnClickAsync="@(SwitchTheme)">
             <Icon><LiPalette/></Icon>
             <Text>Switch Theme</Text>
         </SideNavMenuButton>
 
-        <SideNavMenuButton OnClickCallback="@(() => ThemeSelector.TryToggleDarkAndLightMode())">
+        <SideNavMenuButton OnClickAsync="@(ThemeSelector.TryToggleDarkAndLightModeAsync)">
             <Icon><LiSun/></Icon>
             <Text>Switch Mode</Text>
         </SideNavMenuButton>
@@ -60,12 +75,12 @@
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private void SwitchTheme() {
+    private async Task SwitchTheme() {
         Theme = Theme switch {
             "default" => "anna",
             "anna" => "default",
             _ => Theme
         };
-        ThemeSelector.TrySelectTheme(Theme);
+        await ThemeSelector.TrySelectThemeAsync(Theme);
     }
 }

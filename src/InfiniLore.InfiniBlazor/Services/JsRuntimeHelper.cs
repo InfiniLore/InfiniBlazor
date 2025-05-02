@@ -82,4 +82,23 @@ public class JsRuntimeHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper> logg
             logger.LogDebug(e, "Prevent default listener already removed or the server is in static rendering mode, usually during a reconnection.");
         }
     }
+
+    public async Task SetTextContentAsync(ElementReference element, string text) {
+        try {
+            await jsRuntime.InvokeVoidAsync("setTextContent", element, text);
+        }
+        catch (JSException e) {
+            logger.LogError(e, "Error setting text content");
+        }
+    }
+    
+    public async Task<string> GetTextContentAsync(ElementReference element) {
+        try {
+            return await jsRuntime.InvokeAsync<string>("getTextContent", element);
+        }
+        catch (JSException e) {
+            logger.LogError(e, "Error getting text content");
+            return string.Empty;
+        }
+    }
 }

@@ -21,5 +21,8 @@ declare global {
 
         addPreventDefaultListener: () => void;
         removePreventDefaultListener: () => void;
+        
+        setTextContent: (element: HTMLElement, text: string) => void;
+        getTextContent: (element: HTMLElement) => string;
     }
 }

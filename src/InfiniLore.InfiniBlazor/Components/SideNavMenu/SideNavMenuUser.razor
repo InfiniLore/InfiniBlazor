@@ -1,0 +1,112 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using Microsoft.AspNetCore.Components.Routing
+@using InfiniLore.Lucide
+
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits ComponentBase
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div @onclick="OnContainerClick" class="@($"flex py-2 items-center rounded group transition-all duration-300 {(MenuCollapsed ? "px-2 justify-center hover:cursor-pointer w-4/5" : "px-1 justify-start h-12 hover:bg-(--color-base-70) w-full")}")">
+    <span class="@($"flex grow items-center w-full transition-all {(MenuCollapsed ? "justify-center" : "justify-between")}")">
+        @if (!_imageLoadFailed) {
+            <NavLink href="@HrefUserProfile" 
+                     @onclick:stopPropagation 
+                     class="w-8 h-8 flex-shrink-0">
+                <img src="@UserImage"
+                     alt="Profile"
+                     class="w-full h-full rounded-full object-cover group-hover:ring-2 ring-(--color-accent)"
+                     crossorigin="anonymous"
+                     @onerror="HandleImageError"/>
+            </NavLink>
+        }
+        else {
+            <NavLink href="@HrefUserProfile" 
+                     @onclick:stopPropagation 
+                     class="@($"w-6 h-6 transition-all {(MenuCollapsed ? "m-0" : "ml-1")}")">
+                <LiCircleUser class="w-full h-full text-(--color-base-10) group-hover:text-(--color-accent)"/>
+            </NavLink>
+        }
+        <!-- User Info -->
+        <div class="@($"flex flex-col justify-center items-end transition-all duration-300 {(MenuCollapsed ? "opacity-0 w-0 delay-0 h-0" : "delay-300 w-auto opacity-100 h-8")}")">
+            <span>
+                <a href="@HrefUserProfile"
+                   @onclick:stopPropagation
+                   class="font-semibold text-(--color-base-10) hover:text-(--color-base-20) whitespace-nowrap text-right"
+                   style="font-size: clamp(0.45rem, calc(150px / (@UserName.Length * 0.6)), 1rem);"
+                   title="@UserName"
+                   >
+                    @UserName
+                </a>
+            </span>
+        
+            <span class="flex items-center justify-between flex-row gap-4 h-[1.25rem] ">
+                @AdditionalLinks
+            </span>
+        </div>
+    </span>
+</div>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [CascadingParameter] public bool MenuCollapsed { get; set; }
+    [Parameter] public string UserName { get; set; } = "Unknown Username";
+    [Parameter] public string UserImage { get; set; } = string.Empty;
+    [Parameter] public string HrefLogout { get; set; } = string.Empty;
+    [Parameter] public string HrefUserProfile { get; set; } = string.Empty;
+    [Parameter] public EventCallback LogoutCallbackAsync { get; set; }
+    
+    [Parameter] public RenderFragment? AdditionalLinks { get; set; }
+    public static string AdditionalLinkClasses => "text-sm text-(--color-base-10) whitespace-nowrap hover:text-(--color-accent)";
+
+    private bool _imageLoadFailed;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override async Task OnParametersSetAsync() {
+        if (UserImage.IsNullOrEmpty()) {
+            _imageLoadFailed = true;
+            await base.OnParametersSetAsync();
+            return;
+        }
+
+        // Skip validation for local wwwroot assets
+        if (UserImage.StartsWith("/")) {
+            _imageLoadFailed = false;
+            await base.OnParametersSetAsync();
+            return;
+        }
+
+        try {
+            HttpResponseMessage response = await Http.GetAsync(UserImage);
+            _imageLoadFailed = !response.IsSuccessStatusCode;
+        }
+        catch {
+            _imageLoadFailed = true;
+        }
+
+        await base.OnParametersSetAsync();
+
+    }
+
+    private async Task HandleImageError(ErrorEventArgs obj) {
+        _imageLoadFailed = true;
+        await InvokeAsync(StateHasChanged);
+    }
+    
+    private void OnContainerClick() {
+        if (!MenuCollapsed) return;
+        NavigationManager.NavigateTo(HrefUserProfile);
+    }
+}
+

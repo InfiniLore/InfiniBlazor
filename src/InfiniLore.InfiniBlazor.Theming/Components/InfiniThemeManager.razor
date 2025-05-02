@@ -8,18 +8,15 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@rendermode InteractiveAuto
 @inject IThemeSelector ThemeSelector
 @inject ILogger<InfiniThemeManager> Logger
 
-@implements IDisposable
 @inherits ComponentBase
+@implements IAsyncDisposable
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<HeadContent>
-    <style id="infiniThemeManager-selectedTheme-css">@_css</style>
-</HeadContent>
+<style id="infiniThemeManager-selectedTheme-css">@_css</style>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -30,17 +27,19 @@
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected override void OnInitialized() {
-        ThemeSelector.ThemeChanged += OnThemeChanged;
+        ThemeSelector.ThemeChangedAsync += OnThemeChangedAsync;
         UpdateCss();
     }
     
-    private void OnThemeChanged() {
+    private async Task OnThemeChangedAsync() {
+        Logger.LogInformation("Theme change detected");
         UpdateCss();
-        InvokeAsync(StateHasChanged);
+        await InvokeAsync(StateHasChanged);
     }
-    
-    public void Dispose() {
-        ThemeSelector.ThemeChanged -= OnThemeChanged;
+
+    public ValueTask DisposeAsync() {
+        ThemeSelector.ThemeChangedAsync -= OnThemeChangedAsync;
+        return ValueTask.CompletedTask;
     }
     
     private void UpdateCss() {
@@ -48,6 +47,7 @@
             Logger.LogWarning("Could not live update the current css styling");
             return;
         }
+
         _css = css;
     }
 }

@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="InfiniLore.Lucide" Version="0.26.503" />
+        <PackageReference Include="InfiniLore.Lucide" Version="0.26.506" />
         <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.4" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.4"/>
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.4" />
@@ -25,6 +25,15 @@
       <Content Update="Components\Pages\ExampleRollingMarkdownEditor.razor.css">
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\assets\icon.png">
+        <Pack>true</Pack>
+        <PackagePath></PackagePath>
+        <Visible>false</Visible>
+        <Link>Properties\icon.png</Link>
+      </None>
     </ItemGroup>
 
 </Project>

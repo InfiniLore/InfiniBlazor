@@ -16,7 +16,7 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IThemeSelector>]
 public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogger<ThemeSelector> logger) : IThemeSelector {
-    public event Action? ThemeChanged;
+    public event Func<Task>? ThemeChangedAsync;
     public IThemeCollection CurrentTheme { get; private set; } = provider.GetRequiredKeyedService<IThemeCollection>(null);
     public IThemeMode CurrentThemeMode { get; private set; } = config.DefaultThemeMode;
     
@@ -47,26 +47,26 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public bool TrySelectTheme(string themeName) {
+    public async Task<bool> TrySelectThemeAsync(string themeName) {
         if (!Themes.TryGetValue(themeName, out IThemeCollection? theme)) {
             logger.LogWarning("Theme '{ThemeName}' not found.", themeName);
             return false;
         }
 
         CurrentTheme = theme;
-        ThemeChanged?.Invoke();
+        if (ThemeChangedAsync is not null) await ThemeChangedAsync().ConfigureAwait(false);
         logger.LogInformation("Theme '{ThemeName}' selected.", themeName);
         return true;
     }
     
-    public bool TryToggleDarkAndLightMode() {
+    public async Task<bool> TryToggleDarkAndLightModeAsync() {
         if (CurrentThemeMode == ThemeMode.DarkMode) CurrentThemeMode = ThemeMode.LightMode;
         else if (CurrentThemeMode == ThemeMode.LightMode) CurrentThemeMode = ThemeMode.DarkMode;
         else {
             logger.LogWarning("No opposite theme variant found for current mode '{Mode}'.", CurrentThemeMode.Name);
             return false;
         }
-        ThemeChanged?.Invoke();
+        if (ThemeChangedAsync is not null) await ThemeChangedAsync().ConfigureAwait(false);
         logger.LogInformation("Theme mode toggled to {Mode}.", CurrentThemeMode.Name);
         return true;
     }
