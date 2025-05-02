@@ -1,0 +1,78 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.Lucide
+@using Microsoft.AspNetCore.Components.Routing
+
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inject HttpClient Http
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="relative w-8 h-8">
+    <a href="@HrefUserProfile" @onclick:stopPropagation>
+        @if (!_imageLoadFailed) {
+            <img src="@ImageUrl"
+                 alt="Profile"
+                 class="w-full h-full rounded-full object-cover group-hover:ring-2 ring-(--color-accent)"
+                 crossorigin="anonymous"
+                 @onerror="HandleImageError"/>
+        } else {
+            <span class="w-8 h-8 flex justify-center items-center">
+                <LiCircleUser class="w-8 h-8 text-(--color-base-10) group-hover:text-(--color-accent)"/>
+            </span>
+        }
+    </a>
+
+    @if (ShowStatusIndicator) {
+        <div class="absolute -bottom-1 -right-1 flex items-center justify-center">
+            @if (!StatusEmoji.IsNullOrEmpty()) {
+                <div class="w-4 h-4 rounded-full bg-(--color-base-90) flex items-center justify-center text-xs leading-none">
+                    @StatusEmoji
+                </div>
+            } else {
+                <div class="w-3.5 h-3.5 rounded-full @StatusColorClass border-2 border-(--color-base-90)"></div>
+            }
+        </div>
+    }
+</div>
+
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter][EditorRequired] public string ImageUrl { get; set; } = string.Empty;
+    [Parameter][EditorRequired] public string HrefUserProfile { get; set; } = string.Empty;
+    [Parameter] public bool ShowStatusIndicator { get; set; }
+    [Parameter] public string? StatusEmoji { get; set; }
+    [Parameter] public string? StatusColorClass { get; set; } = "bg-green-500";
+
+    private bool _imageLoadFailed;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override async Task OnParametersSetAsync() {
+        if (ImageUrl.IsNullOrEmpty()) _imageLoadFailed = true;
+        else if (ImageUrl.StartsWith("/"))  _imageLoadFailed = false;
+        else {
+            try {
+                HttpResponseMessage response = await Http.GetAsync(ImageUrl);
+                _imageLoadFailed = !response.IsSuccessStatusCode;
+            }
+            catch {
+                _imageLoadFailed = true;
+            }
+        }
+        await base.OnParametersSetAsync();
+
+    }
+    
+    private void HandleImageError(ErrorEventArgs obj) {
+        _imageLoadFailed = true;
+    }
+}

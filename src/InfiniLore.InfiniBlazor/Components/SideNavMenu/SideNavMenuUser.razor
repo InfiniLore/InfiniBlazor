@@ -1,15 +1,11 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using Microsoft.AspNetCore.Components.Routing
-@using InfiniLore.Lucide
-
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits ComponentBase
-@inject HttpClient Http
 @inject NavigationManager NavigationManager
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
@@ -17,20 +13,13 @@
 <div @onclick="OnContainerClick"
      class="@(MenuCollapsed ? "px-0 py-2" : "p-2") flex flex-nowrap items-center rounded hover:bg-(--color-base-70) group w-full transition-all duration-300">
     <span class="flex grow items-center w-full transition-all justify-between">
-        <span class="@(MenuCollapsed ? "ml-1" : "-ml-1") w-8 h-8 flex-shrink-0 transition-all duration-300">
-            <NavLink href="@HrefUserProfile" @onclick:stopPropagation>
-                @if (!_imageLoadFailed) {
-                    <img src="@UserImage"
-                         alt="Profile"
-                         class="w-full h-full rounded-full object-cover group-hover:ring-2 ring-(--color-accent)"
-                         crossorigin="anonymous"
-                         @onerror="HandleImageError"/>
-                } else {
-                    <span class="w-8 h-8 flex justify-center items-center">
-                        <LiCircleUser class="w-6 h-6 text-(--color-base-10) group-hover:text-(--color-accent)"/>
-                    </span>
-                }
-            </NavLink>
+        <span class="@(MenuCollapsed ? "ml-1" : "-ml-1") flex-shrink-0 transition-all duration-300">
+            <UserIcon 
+                ImageUrl="@UserImageUrl"
+                HrefUserProfile="@HrefUserProfile"
+                ShowStatusIndicator="@ShowStatusIndicator"
+                StatusEmoji="@StatusEmoji"
+                StatusColorClass="@StatusColorClass" />
         </span>
 
         <!-- User Info -->
@@ -60,53 +49,22 @@
 @code {
     [CascadingParameter] public bool MenuCollapsed { get; set; }
     [Parameter] public string UserName { get; set; } = "Unknown Username";
-    [Parameter] public string UserImage { get; set; } = string.Empty;
+    [Parameter] public string UserImageUrl { get; set; } = string.Empty;
     [Parameter] public string HrefLogout { get; set; } = string.Empty;
     [Parameter] public string HrefUserProfile { get; set; } = string.Empty;
     [Parameter] public EventCallback LogoutCallbackAsync { get; set; }
 
     [Parameter] public RenderFragment? AdditionalLinks { get; set; }
+    [Parameter] public bool ShowStatusIndicator { get; set; } = true;
+    [Parameter] public string? StatusEmoji { get; set; } = "🏳️‍⚧️";
+    [Parameter] public string? StatusColorClass { get; set; }
+    
     public static string AdditionalLinkClasses => "text-sm text-(--color-base-10) whitespace-nowrap hover:text-(--color-accent)";
-
-    private bool _imageLoadFailed;
-
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override async Task OnParametersSetAsync() {
-        if (UserImage.IsNullOrEmpty()) {
-            _imageLoadFailed = true;
-            await base.OnParametersSetAsync();
-            return;
-        }
-
-        // Skip validation for local wwwroot assets
-        if (UserImage.StartsWith("/")) {
-            _imageLoadFailed = false;
-            await base.OnParametersSetAsync();
-            return;
-        }
-
-        try {
-            HttpResponseMessage response = await Http.GetAsync(UserImage);
-            _imageLoadFailed = !response.IsSuccessStatusCode;
-        }
-        catch {
-            _imageLoadFailed = true;
-        }
-
-        await base.OnParametersSetAsync();
-
-    }
-
-    private async Task HandleImageError(ErrorEventArgs obj) {
-        _imageLoadFailed = true;
-        await InvokeAsync(StateHasChanged);
-    }
-
     private void OnContainerClick() {
         if (!MenuCollapsed) return;
-
         NavigationManager.NavigateTo(HrefUserProfile);
     }
 }
