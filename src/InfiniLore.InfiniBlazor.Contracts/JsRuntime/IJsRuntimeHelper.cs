@@ -16,4 +16,7 @@ public interface IJsRuntimeHelper {
     
     Task AddPreventDefaultListenerAsync();
     Task RemovePreventDefaultListenerAsync();
+    
+    Task SetTextContentAsync(ElementReference element, string text);
+    Task<string> GetTextContentAsync(ElementReference element);
 }
