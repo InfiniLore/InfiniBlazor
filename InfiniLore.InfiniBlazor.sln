@@ -34,6 +34,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{5617CC84-C58
 		tsconfig.json = tsconfig.json
 		package.json = package.json
 		webpack.config.js = webpack.config.js
+		tailwind.config.js = tailwind.config.js
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.InfiniLore.InfiniBlazor.Theming", "tests\Tests.InfiniLore.InfiniBlazor.Theming\Tests.InfiniLore.InfiniBlazor.Theming.csproj", "{EE5CD42F-C866-4B30-8C55-AA789F8272A5}"
