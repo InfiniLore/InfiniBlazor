@@ -404,6 +404,9 @@
   .overflow-auto {
     overflow: auto;
   }
+  .overflow-hidden {
+    overflow: hidden;
+  }
   .rounded {
     border-radius: 0.25rem;
   }
@@ -493,6 +496,9 @@
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
   }
+  .py-4 {
+    padding-block: calc(var(--spacing) * 4);
+  }
   .pt-1 {
     padding-top: calc(var(--spacing) * 1);
   }
@@ -577,6 +583,10 @@
   }
   .delay-300 {
     transition-delay: 300ms;
+  }
+  .duration-100 {
+    --tw-duration: 100ms;
+    transition-duration: 100ms;
   }
   .duration-150 {
     --tw-duration: 150ms;

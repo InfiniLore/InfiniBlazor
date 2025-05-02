@@ -15,7 +15,7 @@
     </span>
     
     @if (Text is not null) {
-        <span class="@($"transition-all duration-300 h-6 {(MenuCollapsed ? "w-0 opacity-0 delay-0" : "delay-300 w-auto ml-2 opacity-100")}")">
+        <span class="@($"transition-all duration-300 h-6 overflow-hidden {(MenuCollapsed ? "w-0 opacity-0 delay-0" : "delay-300 w-auto ml-2 opacity-100")}")">
             <span class="text-(--color-base-10) truncate inline-block max-w-[150px] group-hover:text-(--color-accent)">
                 @Text
             </span>
