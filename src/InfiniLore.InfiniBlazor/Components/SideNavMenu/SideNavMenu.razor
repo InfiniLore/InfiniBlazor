@@ -75,7 +75,7 @@
     // -----------------------------------------------------------------------------------------------------------------
     private async Task ToggleMenu() {
         MenuCollapsed = !MenuCollapsed;// Toggle the collapsed state
-        await MenuCollapsedChanged.InvokeAsync(MenuCollapsed);// Notify parent component about the change
+        await MenuCollapsedChanged.InvokeAsync(MenuCollapsed); // Notify a parent component about the change
         await InvokeAsync(StateHasChanged);
     }
 }
