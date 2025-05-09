@@ -97,16 +97,14 @@ public static class ThemeSymbolsDtoWriter {
                     b.AppendLine("public IEnumerable<(string, string)> AsCssVariables() {");
 
                     // ReSharper disable once HeapView.CanAvoidClosure
-                    b.Indent(b => {
-                        b.ForEachAppendLineIndented(args.themeProperties, symbol => {
-                            string cssVariableName = !args.dto.GenerateVariableStorage 
-                                ? ToCssVariable(symbol.Name.AsSpan()).ToQuotedString()
-                                : $"{args.dto.ClassName}VariableNames.{symbol.Name}";
+                    b.ForEachAppendLineIndented(args.themeProperties, symbol => {
+                        string cssVariableName = !args.dto.GenerateVariableStorage 
+                            ? ToCssVariable(symbol.Name.AsSpan()).ToQuotedString()
+                            : $"{args.dto.ClassName}VariableNames.{symbol.Name}";
                             
-                            string property = symbol.Name;
+                        string property = symbol.Name;
                             
-                            return $"yield return({cssVariableName}, {property});";
-                        });
+                        return $"yield return({cssVariableName}, {property});";
                     });
 
                     b.AppendLine("}");
