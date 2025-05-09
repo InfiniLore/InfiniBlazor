@@ -1,10 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Theming;
+using JetBrains.Annotations;
 
+namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [AttributeUsage(AttributeTargets.Property)]
-public class InterpretAsVarAttribute(string varName) : Attribute;
+public class InterpretAsVarAttribute(string varName) : Attribute {
+    [UsedImplicitly] public string VarName { get; } = varName;
+}
