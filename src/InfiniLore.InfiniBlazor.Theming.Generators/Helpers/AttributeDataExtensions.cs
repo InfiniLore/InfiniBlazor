@@ -1,16 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Theming.Generators;
+// ReSharper disable once CheckNamespace
+namespace Microsoft.CodeAnalysis;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class TypeNames {
-    public const string GenerateThemeSymbolsAttribute = "InfiniLore.InfiniBlazor.Theming.GenerateThemeSymbols";
-    public const string IncludeAsCssVariableAttribute = "InfiniLore.InfiniBlazor.Theming.IncludeAsCssVariable";
-    
-    public const string InterpretAsRgbAttribute = "InfiniLore.InfiniBlazor.Theming.InterpretAsRgb";
-    
-    public const string IThemeInterface = "InfiniLore.InfiniBlazor.Theming.ITheme";
+public static class AttributeDataExtensions {
+    public static bool IsDisplayName(this AttributeData attribute, string expected) {
+        return attribute.AttributeClass?.IsDisplayName(expected) ?? false;
+    }
 }

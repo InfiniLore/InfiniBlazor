@@ -22,7 +22,7 @@ public static class IThemeProperties {
             return true;
         }
 
-        INamedTypeSymbol? iThemeSymbol = compilation.GetTypeByMetadataName(TypeNames.IThemeInterfaceFullName);
+        INamedTypeSymbol? iThemeSymbol = compilation.GetTypeByMetadataName(TypeNames.IThemeInterface);
         if (iThemeSymbol is null) {
             Properties = ImmutableArray<IPropertySymbol>.Empty;
             IsInitialized = true;
@@ -31,7 +31,7 @@ public static class IThemeProperties {
 
         iThemeProperties = iThemeSymbol.GetMembers()
             .OfType<IPropertySymbol>()
-            .Where(symbol => symbol.GetAttributes().Any(static attr => attr.AttributeClass?.ToDisplayString() == TypeNames.IncludeAsCssVariableAttributeFullName))
+            .Where(symbol => symbol.GetAttributes().Any(static attr => attr.IsDisplayName(TypeNames.IncludeAsCssVariableAttribute)))
             .ToImmutableArray();
 
         Properties = iThemeProperties;

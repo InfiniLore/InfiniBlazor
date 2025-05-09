@@ -49,12 +49,12 @@ public class ThemeSymbolsGenerator : IIncrementalGenerator {
 
         // Check if it has the GenerateThemeSymbols attribute
         bool hasGenerateThemeSymbolsAttribute = symbol.GetAttributes()
-            .Any(static attr => attr.AttributeClass?.ToDisplayString() == TypeNames.GenerateThemeSymbolsAttributeFullName);
+            .Any(static attr => attr.IsDisplayName(TypeNames.GenerateThemeSymbolsAttribute));
         if (!hasGenerateThemeSymbolsAttribute) return null;
 
         // Check if it implements ITheme
         bool implementsITheme = symbol.AllInterfaces
-            .Any(static i => i.ToDisplayString() == TypeNames.IThemeInterfaceFullName);
+            .Any(static i => i.ToDisplayString() == TypeNames.IThemeInterface);
 
         return implementsITheme
             ? new ThemeSymbolsDto(symbol)
@@ -94,6 +94,7 @@ public class ThemeSymbolsGenerator : IIncrementalGenerator {
             
             context.AddSource($"{dto.ClassName}.g.cs", builder.ToStringAndClear());
         }
+        
     }
 
     private static ImmutableArray<IPropertySymbol> GetProperties(Compilation compilation, INamedTypeSymbol dtoSymbol) {
@@ -101,7 +102,7 @@ public class ThemeSymbolsGenerator : IIncrementalGenerator {
         
         IEnumerable<IPropertySymbol> currentSymbolProperties = dtoSymbol.GetMembers()
             .OfType<IPropertySymbol>()
-            .Where(symbol => symbol.GetAttributes().Any(static attr => attr.AttributeClass?.ToDisplayString() == TypeNames.IncludeAsCssVariableAttributeFullName));
+            .Where(symbol => symbol.GetAttributes().Any(static attr => attr.IsDisplayName(TypeNames.IncludeAsCssVariableAttribute)));
         
         return iThemeProperties.Concat(currentSymbolProperties)
             .ToImmutableArray();
