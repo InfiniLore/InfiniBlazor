@@ -31,7 +31,7 @@ public static class IThemeProperties {
 
         iThemeProperties = iThemeSymbol.GetMembers()
             .OfType<IPropertySymbol>()
-            .Where(symbol => symbol.GetAttributes().Any(static attr => attr.IsDisplayName(TypeNames.IncludeAsCssVariableAttribute)))
+            .Where(static symbol => symbol.HasAttributeWithDisplayName(TypeNames.IncludeAsCssVariableAttribute))
             .ToImmutableArray();
 
         Properties = iThemeProperties;

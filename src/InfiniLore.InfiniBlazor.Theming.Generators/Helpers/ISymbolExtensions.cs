@@ -20,4 +20,14 @@ public static class ISymbolExtensions {
         
         return attributes.Any(attr => attr.IsDisplayName(expectedName));
     }
+    
+    public static string GetAccessibility(this ISymbol symbol) {
+        return symbol.DeclaredAccessibility switch {
+            Accessibility.Private => "private",
+            Accessibility.Protected => "protected",
+            Accessibility.Internal => "internal",
+            Accessibility.Public => "public",
+            _ => "UNKNOWN"
+        };
+    }
 }

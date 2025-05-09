@@ -5,7 +5,7 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[GenerateThemeSymbols]
+[GenerateThemeSymbols, GenerateVariableNames]
 public partial record InfiniBlazorTheme : ITheme {
     public static readonly InfiniBlazorTheme DarkModeInstance = new();
     public static readonly InfiniBlazorTheme LightModeInstance = new() {
