@@ -47,7 +47,7 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public async Task<bool> TrySelectThemeAsync(string themeName) {
+    public async Task<bool> TrySelectThemeCollectionAsync(string themeName) {
         if (!Themes.TryGetValue(themeName, out IThemeCollection? theme)) {
             logger.LogWarning("Theme '{ThemeName}' not found.", themeName);
             return false;
@@ -59,7 +59,7 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
         return true;
     }
     
-    public async Task<bool> TrySelectNextTheme() {
+    public async Task<bool> TrySelectNextThemeModeAsync() {
         if (!CurrentThemeCollection.TryGetNextThemeMode(CurrentThemeMode, out IThemeMode? themeMode)) {
             logger.LogWarning("No next theme variant found for current mode '{Mode}'.", CurrentThemeMode.Name);
             return false;
@@ -72,7 +72,7 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
         return true;
     }
 
-    public bool TryGetCurrentThemeCss([NotNullWhen(true)] out string? css) {
+    public bool TryGetCurrentThemeModeCss([NotNullWhen(true)] out string? css) {
         if (!CurrentThemeCollection.TryGetTheme(CurrentThemeMode, out ITheme? theme)) {
             logger.LogWarning("No theme variant found for current mode '{Mode}'.", CurrentThemeMode.Name);
             css = null;

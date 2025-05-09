@@ -20,12 +20,6 @@ public abstract class ThemeCollection : IThemeCollection {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public bool TryGetLightMode([NotNullWhen(true)] out ITheme? theme) 
-        => ContainedModesStorage.TryGetValue(ThemeMode.LightMode, out theme);
-    
-    public bool TryGetDarkMode([NotNullWhen(true)] out ITheme? theme)
-        => ContainedModesStorage.TryGetValue(ThemeMode.DarkMode, out theme);
-
     public bool TryGetTheme(IThemeMode mode, [NotNullWhen(true)] out ITheme? theme)
         => ContainedModesStorage.TryGetValue(mode, out theme);
 

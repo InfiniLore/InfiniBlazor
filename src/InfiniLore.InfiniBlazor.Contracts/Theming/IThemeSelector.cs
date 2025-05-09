@@ -16,8 +16,8 @@ public interface IThemeSelector {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    Task<bool> TrySelectThemeAsync(string themeName);
-    Task<bool> TrySelectNextTheme();
+    Task<bool> TrySelectThemeCollectionAsync(string themeName);
+    Task<bool> TrySelectNextThemeModeAsync();
     
-    bool TryGetCurrentThemeCss([NotNullWhen(true)] out string? css);
+    bool TryGetCurrentThemeModeCss([NotNullWhen(true)] out string? css);
 }

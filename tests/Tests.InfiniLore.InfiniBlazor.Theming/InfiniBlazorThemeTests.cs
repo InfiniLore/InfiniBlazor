@@ -63,6 +63,27 @@ public partial class InfiniBlazorThemeTests {
         
         await Assert.That(variables).HasCount().GreaterThanOrEqualTo(40);
         await Assert.That(executionCount).IsEqualTo(variables.Count);
+    }
 
+    [Test]
+    public async Task TryGetNextThemeMode_ShouldLoop() {
+        // Arrange
+        var themeCollection = new InfiniBlazorThemeCollection();
+        
+        // Act
+        bool resultThemeMode0 = themeCollection.TryGetNextThemeMode(null, out IThemeMode? themeMode0);
+        bool resultThemeMode1 = themeCollection.TryGetNextThemeMode(themeMode0, out IThemeMode? themeMode1);
+        bool resultThemeMode2 = themeCollection.TryGetNextThemeMode(themeMode1, out IThemeMode? themeMode2);
+
+        // Assert
+        await Assert.That(resultThemeMode0).IsTrue();
+        await Assert.That(resultThemeMode1).IsTrue();
+        await Assert.That(resultThemeMode2).IsTrue();
+        await Assert.That(themeMode0).IsNotNull()
+            .And.IsEqualTo(ThemeMode.DarkMode);
+        await Assert.That(themeMode1).IsNotNull()
+            .And.IsEqualTo(ThemeMode.LightMode);
+        await Assert.That(themeMode2).IsNotNull()
+            .And.IsEqualTo(themeMode0);
     }
 }
