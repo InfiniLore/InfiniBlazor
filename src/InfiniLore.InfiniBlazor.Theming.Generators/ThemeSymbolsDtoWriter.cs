@@ -14,19 +14,20 @@ namespace InfiniLore.InfiniBlazor.Theming.Generators;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public static class ThemeSymbolsDtoWriter {
-    private static string ToCssVariable(ReadOnlySpan<char> input) {
-        int[] tempArray = ArrayPool<int>.Shared.Rent(input.Length);
-        char[] result = ArrayPool<char>.Shared.Rent(input.Length + input.Length + 1); 
+    private static string ToCssVariable(string input) {
+        ReadOnlySpan<char> inputSpan = input.AsSpan();
+        int[] tempArray = ArrayPool<int>.Shared.Rent(inputSpan.Length);
+        char[] result = ArrayPool<char>.Shared.Rent(inputSpan.Length + inputSpan.Length + 1); 
     
         try {
             int index = 0;
             int count = 0;
 
-            for (int i = 1; i < input.Length; i++) {
-                bool currentIsDigit = char.IsDigit(input[i]);
-                bool previousIsDigit = char.IsDigit(input[i - 1]);
+            for (int i = 1; i < inputSpan.Length; i++) {
+                bool currentIsDigit = char.IsDigit(inputSpan[i]);
+                bool previousIsDigit = char.IsDigit(inputSpan[i - 1]);
             
-                if (!(char.IsUpper(input[i]) || currentIsDigit && !previousIsDigit)) continue;
+                if (!(char.IsUpper(inputSpan[i]) || currentIsDigit && !previousIsDigit)) continue;
 
                 tempArray[count * 2] = index;
                 tempArray[count * 2 + 1] = i - index;
@@ -34,9 +35,9 @@ public static class ThemeSymbolsDtoWriter {
                 index = i;
             }
 
-            if (index < input.Length) {
+            if (index < inputSpan.Length) {
                 tempArray[count * 2] = index;
-                tempArray[count * 2 + 1] = input.Length - index;
+                tempArray[count * 2 + 1] = inputSpan.Length - index;
                 count++;
             }
 
@@ -52,7 +53,7 @@ public static class ThemeSymbolsDtoWriter {
                 int length = tempArray[i * 2 + 1];
 
                 for (int j = 0; j < length; j++) {
-                    result[writePos++] = char.ToLower(input[start + j]);
+                    result[writePos++] = char.ToLower(inputSpan[start + j]);
                 }
             }
 
@@ -99,7 +100,7 @@ public static class ThemeSymbolsDtoWriter {
                     // ReSharper disable once HeapView.CanAvoidClosure
                     b.ForEachAppendLineIndented(args.themeProperties, symbol => {
                         string cssVariableName = !args.dto.GenerateVariableStorage 
-                            ? ToCssVariable(symbol.Name.AsSpan()).ToQuotedString()
+                            ? ToCssVariable(symbol.Name).ToQuotedString()
                             : $"{args.dto.ClassName}VariableNames.{symbol.Name}";
                             
                         string property = symbol.Name;
@@ -126,7 +127,7 @@ public static class ThemeSymbolsDtoWriter {
             .AppendLine($"public static class {dto.ClassName}VariableNames {{");
 
         builder.ForEachAppendLineIndented(themeProperties, symbol => {
-            string cssVariableName = ToCssVariable(symbol.Name.AsSpan());
+            string cssVariableName = ToCssVariable(symbol.Name);
             return $"public const string {symbol.Name} = {cssVariableName.ToQuotedString()};";
         });
         
