@@ -82,7 +82,7 @@ public static class ThemeSymbolsDtoWriter {
                     b.ForEachAppendLine(rgbProperties, symbol => {
                         string propertyName = symbol.Name.Substring(0, symbol.Name.Length - 3);
                         string converterCall = $"StringColorExtensions.ConvertToRgbValues({propertyName})";
-                        return $"private string {symbol.Name} => {converterCall};";
+                        return $"public string {symbol.Name} => {converterCall};";
                     });
                     
                     b.AppendLine("#endregion");
