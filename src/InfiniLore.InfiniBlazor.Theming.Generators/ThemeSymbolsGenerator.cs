@@ -48,9 +48,7 @@ public class ThemeSymbolsGenerator : IIncrementalGenerator {
         if (symbol is null) return null;
 
         // Check if it has the GenerateThemeSymbols attribute
-        bool hasGenerateThemeSymbolsAttribute = symbol.GetAttributes()
-            .Any(static attr => attr.IsDisplayName(TypeNames.GenerateThemeSymbolsAttribute));
-        if (!hasGenerateThemeSymbolsAttribute) return null;
+        if (!symbol.HasAttributeWithDisplayName(TypeNames.GenerateThemeSymbolsAttribute)) return null;
 
         // Check if it implements ITheme
         bool implementsITheme = symbol.AllInterfaces
@@ -102,7 +100,7 @@ public class ThemeSymbolsGenerator : IIncrementalGenerator {
         
         IEnumerable<IPropertySymbol> currentSymbolProperties = dtoSymbol.GetMembers()
             .OfType<IPropertySymbol>()
-            .Where(symbol => symbol.GetAttributes().Any(static attr => attr.IsDisplayName(TypeNames.IncludeAsCssVariableAttribute)));
+            .Where(symbol => symbol.HasAttributeWithDisplayName(TypeNames.IncludeAsCssVariableAttribute));
         
         return iThemeProperties.Concat(currentSymbolProperties)
             .ToImmutableArray();

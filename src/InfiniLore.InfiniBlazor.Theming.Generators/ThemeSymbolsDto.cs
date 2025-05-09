@@ -40,7 +40,7 @@ public record ThemeSymbolsDto(
     // -----------------------------------------------------------------------------------------------------------------
     public static void WriteRgbValues(GeneratorStringBuilder builder, ImmutableArray<IPropertySymbol> themeProperties) {
         IEnumerable<IPropertySymbol> rgbProperties = themeProperties
-            .Where(property => property.GetAttributes().Any(attr => attr.IsDisplayName(TypeNames.InterpretAsRgbAttribute)));
+            .Where(property => property.HasAttributeWithDisplayName(TypeNames.InterpretAsRgbAttribute));
 
         builder.ForEachAppendLine(rgbProperties, symbol => {
             string propertyName = symbol.Name.Substring(0, symbol.Name.Length - 3);
