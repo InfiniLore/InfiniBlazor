@@ -10,7 +10,6 @@ namespace InfiniLore.InfiniBlazor.Theming.Library;
 [UsedImplicitly]
 public class AnnaSasDevThemeCollection : ThemeCollection {
     protected override Dictionary<IThemeMode, ITheme> Themes { get; } = CreateThemes();
-
     protected override IThemeMode[] Modes { get; } = [
         ThemeMode.DarkMode, 
         ThemeMode.LightMode 

@@ -59,20 +59,21 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
         return true;
     }
     
-    public async Task<bool> TryToggleDarkAndLightModeAsync() {
-        if (CurrentThemeMode == ThemeMode.DarkMode) CurrentThemeMode = ThemeMode.LightMode;
-        else if (CurrentThemeMode == ThemeMode.LightMode) CurrentThemeMode = ThemeMode.DarkMode;
-        else {
-            logger.LogWarning("No opposite theme variant found for current mode '{Mode}'.", CurrentThemeMode.Name);
+    public async Task<bool> TrySelectNextTheme() {
+        if (!CurrentThemeCollection.TryGetNextThemeMode(CurrentThemeMode, out IThemeMode? themeMode)) {
+            logger.LogWarning("No next theme variant found for current mode '{Mode}'.", CurrentThemeMode.Name);
             return false;
         }
+
+        CurrentThemeMode = themeMode;
+        
         if (ThemeChangedAsync is not null) await ThemeChangedAsync().ConfigureAwait(false);
         logger.LogInformation("Theme mode toggled to {Mode}.", CurrentThemeMode.Name);
         return true;
     }
 
     public bool TryGetCurrentThemeCss([NotNullWhen(true)] out string? css) {
-        if (!CurrentThemeCollection.TryGetNextTheme(out ITheme? theme)) {
+        if (!CurrentThemeCollection.TryGetTheme(CurrentThemeMode, out ITheme? theme)) {
             logger.LogWarning("No theme variant found for current mode '{Mode}'.", CurrentThemeMode.Name);
             css = null;
             return false;

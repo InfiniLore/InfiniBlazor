@@ -17,7 +17,6 @@ public abstract class ThemeCollection : IThemeCollection {
     public IReadOnlyDictionary<IThemeMode, ITheme> ContainedModes => ContainedModesStorage.AsReadOnly();
     
     protected abstract IThemeMode[] Modes { get; }
-    private int _currentModeIndex;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -48,18 +47,21 @@ public abstract class ThemeCollection : IThemeCollection {
         return lookup.TryGetValue(variantName, out theme);
     }
 
-    public bool TryGetNextTheme([NotNullWhen(true)] out ITheme? theme) {
-        if (TryGetTheme(_currentModeIndex++, out theme)) return true;
-        _currentModeIndex = 0;
-        return TryGetTheme(_currentModeIndex, out theme);
-    }
-    
-    public bool TryGetTheme(int index, [NotNullWhen(true)] out ITheme? theme) {
-        if (index < 0 || index >= Modes.Length) {
-            theme = null;
+    public bool TryGetNextThemeMode(IThemeMode? lastKnownMode, [NotNullWhen(true)] out IThemeMode? themeMode) {
+        if (Modes.Length == 0) {
+            themeMode = null;
             return false;
         }
-        theme = ContainedModesStorage[Modes[index]];
+
+        if (Modes.Length == 1 || lastKnownMode == null) {
+            themeMode = Modes[0];
+            return true;
+        }
+        
+        // Handles unknown modes as well, because we start at -1 if it cant be be found, and -1 + 1 = 0 
+        int currentModeIndex = (Array.IndexOf(Modes, lastKnownMode) + 1) % Modes.Length;
+        themeMode = Modes[currentModeIndex];
         return true;
+
     }
 }
