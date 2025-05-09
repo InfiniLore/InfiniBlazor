@@ -23,7 +23,7 @@ public partial record InfiniBlazorTheme : ITheme {
         ColorBase95 = DarkModeInstance.ColorBase05,
         ColorBase100 = DarkModeInstance.ColorBase00,
     };
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Colors
     // -----------------------------------------------------------------------------------------------------------------
@@ -55,11 +55,22 @@ public partial record InfiniBlazorTheme : ITheme {
     public string ColorBase95 { get; init; } = "#171c1b";
     public string ColorBase100 { get; init; } = "#000000";
     #endregion
-    
+
     #region CascadedValues
+    [CssData, InterpretAsVar(nameof(TextColor))] public partial string SidebarHamburgerColor { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase10))] public partial string SidebarNavTextColor { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorAccent))] public partial string SidebarNavTextColorHover { get; init; }
+    [CssData] public string SidebarNavButtonColor { get; init; } = "transparent";
+    [CssData, InterpretAsVar(nameof(ColorBase70))] public partial string SidebarNavButtonColorHover { get; init; }
     [CssData, InterpretAsVar(nameof(ColorBase60))] public partial string SidebarNavBorderColor { get; init; }
     [CssData, InterpretAsVar(nameof(ColorBase90))] public partial string SidebarNavBackground { get; init; }
     [CssData, InterpretAsVar(nameof(ColorBase70))] public partial string SidebarNavBackgroundHover { get; init; }
+    
+    [CssData, InterpretAsVar(nameof(ColorBase10))] public partial string UsericonAlt { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorAccent))] public partial string UsericonAltHover { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorAccent))] public partial string UsericonRing { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase70))] public partial string UsericonStatusBackground { get; }
+    
     [CssData, InterpretAsVar(nameof(ColorBase00))] public partial string TextColor { get; init; }
     #endregion
 }
