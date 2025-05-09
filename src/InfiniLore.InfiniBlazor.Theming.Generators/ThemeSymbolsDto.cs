@@ -36,9 +36,11 @@ public record ThemeSymbolsDto(
             .OfType<IPropertySymbol>()
             .Where(symbol => symbol.HasAttributeWithDisplayName(TypeNames.CssDataAttribute));
         
-        _properties = currentSymbolProperties
-            .Union(iThemeProperties, PropertyNameComparer.Default )
-            .ToImmutableArray<IPropertySymbol>();
+        _properties = iThemeProperties
+            .Concat(currentSymbolProperties)
+            .GroupBy(p => p.Name)
+            .Select(g => g.Last())  
+            .ToImmutableArray();
 
         _propertiesInitialized = true;
         return _properties;

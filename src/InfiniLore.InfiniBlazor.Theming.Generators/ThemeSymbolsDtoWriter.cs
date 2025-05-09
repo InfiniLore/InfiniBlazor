@@ -95,21 +95,33 @@ public static class ThemeSymbolsDtoWriter {
                     
                     b.AppendLine("#region CssVarValues");
 
-                    IEnumerable<(string Name, string? VarName)> varProperties = args.themeProperties
+                    // ReSharper disable once SuggestVarOrType_Elsewhere
+                    var varProperties = args.themeProperties
                         .Where(property => property.HasAttributeWithDisplayName(TypeNames.InterpretAsVarAttribute))
-                        .Select(property => (property.Name, VarName : property.GetAttributeWithDisplayName(TypeNames.InterpretAsVarAttribute)?.ConstructorArguments[0].Value as string));
+                        .Select(property => (
+                            property.Name,
+                            VarName : property.GetAttributeWithDisplayName(TypeNames.InterpretAsVarAttribute)?.ConstructorArguments[0].Value as string,
+                            HasInit : property.SetMethod is not null
+                        ));
                     
-                    b.ForEachAppendLine(varProperties, symbol => {
-                        string name = symbol.Name;
-                        string? varName = symbol.VarName;
+                    
+                    b.ForEach(varProperties, (builder, box) => {
+                        string name = box.Name;
+                        string? varName = box.VarName;
 
                         string propertyName = varName ?? (name.ToLowerInvariant().EndsWith("var")
                             ? name.Substring(0, name.Length - 3)
                             : name
                         );
-
                         string converterCall = $"$\"var({ToCssVariable(propertyName)})\"";
-                        return $"public partial string {symbol.Name} => {converterCall};";
+
+                        if (box.HasInit) {
+                            builder.AppendLineIndented($"private string _cache{box.Name} = {converterCall};");
+                            builder.AppendLineIndented($"public partial string {name} {{ get => _cache{box.Name}; init => _cache{box.Name} = value; }}");
+                            return;
+                        }
+                        
+                        builder.AppendLineIndented($"public partial string {name} => {converterCall};");
                     });
                     
                     

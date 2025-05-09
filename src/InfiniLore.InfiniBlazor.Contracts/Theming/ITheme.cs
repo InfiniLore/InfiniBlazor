@@ -116,9 +116,14 @@ public interface ITheme {
 
     #region CascadedValues
     [CssData]
+    string SidebarNavBorderColor { get; }
+    [CssData]
     string SidebarNavBackground { get; }
     [CssData]
     string SidebarNavBackgroundHover { get; }
+    
+    [CssData]
+    string TextColor { get; }
     #endregion
     #endregion
 }
