@@ -23,10 +23,10 @@ public partial record InfiniBlazorTheme : ITheme {
         ColorBase95 = DarkModeInstance.ColorBase05,
         ColorBase100 = DarkModeInstance.ColorBase00,
     };
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Colors
     // -----------------------------------------------------------------------------------------------------------------
-    
     #region Colors
     public string ColorRed { get; init; } = "#ef4444";
     public string ColorOrange { get; init; } = "#f97316";
@@ -54,5 +54,10 @@ public partial record InfiniBlazorTheme : ITheme {
     public string ColorBase90 { get; init; } = "#2b312f";
     public string ColorBase95 { get; init; } = "#171c1b";
     public string ColorBase100 { get; init; } = "#000000";
+    #endregion
+    
+    #region CascadedValues
+    [CssData, InterpretAsVar(nameof(ColorBase90Rgb))] public partial string SidebarNavBackground { get; }
+    [CssData, InterpretAsVar(nameof(ColorBase70Rgb))] public partial string SidebarNavBackgroundHover { get; }
     #endregion
 }

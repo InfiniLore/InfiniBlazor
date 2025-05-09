@@ -7,4 +7,4 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-public sealed class GenerateThemeSymbols : Attribute;
+public sealed class GenerateThemeSymbolsAttribute : Attribute;

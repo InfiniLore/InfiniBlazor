@@ -30,4 +30,8 @@ public static class ISymbolExtensions {
             _ => "UNKNOWN"
         };
     }
+
+    public static AttributeData? GetAttributeWithDisplayName(this ISymbol symbol, string expectedName) {
+        return symbol.GetAttributes().FirstOrDefault(attribute => attribute.IsDisplayName(expectedName));
+    }
 }

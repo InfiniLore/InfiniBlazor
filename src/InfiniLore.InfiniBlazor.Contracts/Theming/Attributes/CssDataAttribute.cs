@@ -6,5 +6,5 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[AttributeUsage(AttributeTargets.Class, Inherited = false)]
-public sealed class GenerateVariableNames : Attribute;
+[AttributeUsage(AttributeTargets.Property)]
+public sealed class CssDataAttribute : Attribute;

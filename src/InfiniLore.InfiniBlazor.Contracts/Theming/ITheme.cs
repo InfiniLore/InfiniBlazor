@@ -10,108 +10,115 @@ public interface ITheme {
 
     #region CssData
     #region Colors
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData, InterpretAsRgb]
     string ColorRedRgb { get; }
-    [IncludeAsCssVariable]
-    string ColorRed { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorRed { get; }
+    [CssData, InterpretAsRgb]
     string ColorOrangeRgb { get; }
-    [IncludeAsCssVariable]
-    string ColorOrange { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorOrange { get; }
+    [CssData, InterpretAsRgb]
     string ColorYellowRgb { get; }
-    [IncludeAsCssVariable]
-    string ColorYellow { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorYellow { get; }
+    [CssData, InterpretAsRgb]
     string ColorGreenRgb { get; }
-    [IncludeAsCssVariable]
-    string ColorGreen { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorGreen { get; }
+    [CssData, InterpretAsRgb]
     string ColorCyanRgb { get; }
-    [IncludeAsCssVariable]
-    string ColorCyan { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorCyan { get; }
+    [CssData, InterpretAsRgb]
     string ColorBlueRgb { get; }
-    [IncludeAsCssVariable]
-    string ColorBlue { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorBlue { get; }
+    [CssData, InterpretAsRgb]
     string ColorPurpleRgb { get; }
-    [IncludeAsCssVariable]
-    string ColorPurple { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorPurple { get; }
+    [CssData, InterpretAsRgb]
     string ColorPinkRgb { get; }
-    [IncludeAsCssVariable]
-    string ColorPink { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorPink { get; }
+    [CssData, InterpretAsRgb]
     string ColorGrayRgb { get; }
-    [IncludeAsCssVariable]
-    string ColorGray { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorGray { get; }
+    [CssData, InterpretAsRgb]
     string ColorWhiteRgb { get; }
-    [IncludeAsCssVariable]
-    string ColorWhite { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorWhite { get; }
+    [CssData, InterpretAsRgb]
     string ColorBlackRgb { get; }
-    [IncludeAsCssVariable]
-    string ColorBlack { get; init; }
+    [CssData]
+    string ColorBlack { get; }
 
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData, InterpretAsRgb]
     string ColorAccentRgb { get; }
-    [IncludeAsCssVariable]
-    string ColorAccent { get; init; }
+    [CssData]
+    string ColorAccent { get; }
 
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData, InterpretAsRgb]
     string ColorBase00Rgb { get; }
-    [IncludeAsCssVariable]
-    string ColorBase00 { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorBase00 { get; }
+    [CssData, InterpretAsRgb]
     string ColorBase05Rgb { get; }
-    [IncludeAsCssVariable]
-    string ColorBase05 { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorBase05 { get; }
+    [CssData, InterpretAsRgb]
     string ColorBase10Rgb { get; }
-    [IncludeAsCssVariable]
-    string ColorBase10 { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorBase10 { get; }
+    [CssData, InterpretAsRgb]
     string ColorBase20Rgb { get; }
-    [IncludeAsCssVariable]
-    string ColorBase20 { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorBase20 { get; }
+    [CssData, InterpretAsRgb]
     string ColorBase30Rgb { get; }
-    [IncludeAsCssVariable]
-    string ColorBase30 { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorBase30 { get; }
+    [CssData, InterpretAsRgb]
     string ColorBase40Rgb { get; }
-    [IncludeAsCssVariable]
-    string ColorBase40 { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorBase40 { get; }
+    [CssData, InterpretAsRgb]
     string ColorBase50Rgb { get; }
-    [IncludeAsCssVariable]
-    string ColorBase50 { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorBase50 { get; }
+    [CssData, InterpretAsRgb]
     string ColorBase60Rgb { get; }
-    [IncludeAsCssVariable]
-    string ColorBase60 { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorBase60 { get; }
+    [CssData, InterpretAsRgb]
     string ColorBase70Rgb { get; }
-    [IncludeAsCssVariable]
-    string ColorBase70 { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorBase70 { get; }
+    [CssData, InterpretAsRgb]
     string ColorBase80Rgb { get; }
-    [IncludeAsCssVariable]
-    string ColorBase80 { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorBase80 { get; }
+    [CssData, InterpretAsRgb]
     string ColorBase90Rgb { get; }
-    [IncludeAsCssVariable]
-    string ColorBase90 { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorBase90 { get; }
+    [CssData, InterpretAsRgb]
     string ColorBase95Rgb { get; }
-    [IncludeAsCssVariable]
-    string ColorBase95 { get; init; }
-    [IncludeAsCssVariable] [InterpretAsRgb]
+    [CssData]
+    string ColorBase95 { get; }
+    [CssData, InterpretAsRgb]
     string ColorBase100Rgb { get; }
-    [IncludeAsCssVariable]
-    string ColorBase100 { get; init; }
+    [CssData]
+    string ColorBase100 { get; }
+    #endregion
+
+    #region CascadedValues
+    [CssData]
+    string SidebarNavBackground { get; }
+    [CssData]
+    string SidebarNavBackgroundHover { get; }
     #endregion
     #endregion
 }

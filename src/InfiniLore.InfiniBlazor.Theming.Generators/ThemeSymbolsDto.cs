@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Theming.Generators.Helpers;
 using Microsoft.CodeAnalysis;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -26,17 +27,19 @@ public record ThemeSymbolsDto(
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public ImmutableArray<IPropertySymbol> GetProperties(Compilation compilation) {
+    public ImmutableArray<IPropertySymbol> GetCssDataProperties(Compilation compilation) {
         if (_propertiesInitialized) return _properties;
         
         IThemeProperties.TryExtractProperties(compilation, out ImmutableArray<IPropertySymbol> iThemeProperties); 
         
         IEnumerable<IPropertySymbol> currentSymbolProperties = Symbol.GetMembers()
             .OfType<IPropertySymbol>()
-            .Where(symbol => symbol.HasAttributeWithDisplayName(TypeNames.IncludeAsCssVariableAttribute));
+            .Where(symbol => symbol.HasAttributeWithDisplayName(TypeNames.CssDataAttribute));
         
-        _properties = iThemeProperties.Concat(currentSymbolProperties)
-            .ToImmutableArray();
+        _properties = currentSymbolProperties
+            .Union(iThemeProperties, PropertyNameComparer.Default )
+            .ToImmutableArray<IPropertySymbol>();
+
         _propertiesInitialized = true;
         return _properties;
     }

@@ -6,5 +6,5 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[AttributeUsage(AttributeTargets.Property)]
-public class InterpretAsRgb : Attribute;
+[AttributeUsage(AttributeTargets.Class, Inherited = false)]
+public sealed class GenerateVariableNamesAttribute : Attribute;
