@@ -15,11 +15,6 @@ namespace InfiniLore.InfiniBlazor.Theming.Generators;
 // ---------------------------------------------------------------------------------------------------------------------
 [Generator(LanguageNames.CSharp)]
 public class ThemeSymbolsGenerator : IIncrementalGenerator {
-    private const string GenerateThemeSymbolsAttributeFullName = "InfiniLore.InfiniBlazor.Theming.GenerateThemeSymbols";
-    private const string IncludeAsCssVariableAttributeFullName = "InfiniLore.InfiniBlazor.Theming.IncludeAsCssVariable";
-    private const string IThemeInterfaceFullName = "InfiniLore.InfiniBlazor.Theming.ITheme";
-
-    private static ImmutableArray<IPropertySymbol>? IThemeProperties { get; set; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -54,12 +49,12 @@ public class ThemeSymbolsGenerator : IIncrementalGenerator {
 
         // Check if it has the GenerateThemeSymbols attribute
         bool hasGenerateThemeSymbolsAttribute = symbol.GetAttributes()
-            .Any(static attr => attr.AttributeClass?.ToDisplayString() == GenerateThemeSymbolsAttributeFullName);
+            .Any(static attr => attr.AttributeClass?.ToDisplayString() == TypeNames.GenerateThemeSymbolsAttributeFullName);
         if (!hasGenerateThemeSymbolsAttribute) return null;
 
         // Check if it implements ITheme
         bool implementsITheme = symbol.AllInterfaces
-            .Any(static i => i.ToDisplayString() == IThemeInterfaceFullName);
+            .Any(static i => i.ToDisplayString() == TypeNames.IThemeInterfaceFullName);
 
         return implementsITheme
             ? new ThemeSymbolsDto(symbol)
@@ -102,22 +97,13 @@ public class ThemeSymbolsGenerator : IIncrementalGenerator {
     }
 
     private static ImmutableArray<IPropertySymbol> GetProperties(Compilation compilation, INamedTypeSymbol dtoSymbol) {
-        if (IThemeProperties is null) {
-            INamedTypeSymbol? iThemeSymbol = compilation.GetTypeByMetadataName(IThemeInterfaceFullName);
-            if (iThemeSymbol is null) return ImmutableArray<IPropertySymbol>.Empty;
-
-            IThemeProperties = iThemeSymbol.GetMembers()
-                .OfType<IPropertySymbol>()
-                .Where(symbol => symbol.GetAttributes().Any(static attr => attr.AttributeClass?.ToDisplayString() == IncludeAsCssVariableAttributeFullName))
-                .ToImmutableArray();
-        }
+        IThemeProperties.TryExtractroperties(compilation, out ImmutableArray<IPropertySymbol> iThemeProperties); 
         
         IEnumerable<IPropertySymbol> currentSymbolProperties = dtoSymbol.GetMembers()
             .OfType<IPropertySymbol>()
-            .Where(symbol => symbol.GetAttributes().Any(static attr => attr.AttributeClass?.ToDisplayString() == IncludeAsCssVariableAttributeFullName));
+            .Where(symbol => symbol.GetAttributes().Any(static attr => attr.AttributeClass?.ToDisplayString() == TypeNames.IncludeAsCssVariableAttributeFullName));
         
-        return IThemeProperties.Concat(currentSymbolProperties)
+        return iThemeProperties.Concat(currentSymbolProperties)
             .ToImmutableArray();
     }
-
 }

@@ -33,14 +33,15 @@ public record ThemeSymbolsDto(
         {TypeKind : TypeKind.Interface} => "interface",
         _ => Symbol.TypeKind.ToString().ToLowerInvariant()
     };
+    
+    private const string InterpretAsRgbAttributeFullName = "InfiniLore.InfiniBlazor.Theming.InterpretAsRgb";
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static void WriteRgbValues(GeneratorStringBuilder builder, ImmutableArray<IPropertySymbol> themeProperties) {
         IEnumerable<IPropertySymbol> rgbProperties = themeProperties
-            .Where(property => property.Type.Name.ToLowerInvariant() == "string")
-            .Where(property => property.Name.EndsWith("Rgb"));
+            .Where(property => property.GetAttributes().Any(attr => attr.AttributeClass?.ToDisplayString() == InterpretAsRgbAttributeFullName));
 
         builder.ForEachAppendLine(rgbProperties, symbol => {
             string propertyName = symbol.Name.Substring(0, symbol.Name.Length - 3);
