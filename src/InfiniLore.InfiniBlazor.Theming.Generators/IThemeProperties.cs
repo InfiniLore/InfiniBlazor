@@ -16,7 +16,7 @@ public static class IThemeProperties {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static bool TryExtractroperties(Compilation compilation, out ImmutableArray<IPropertySymbol> iThemeProperties) {
+    public static bool TryExtractProperties(Compilation compilation, out ImmutableArray<IPropertySymbol> iThemeProperties) {
         if (IsInitialized) {
             iThemeProperties = Properties;
             return true;

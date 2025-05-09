@@ -97,7 +97,7 @@ public class ThemeSymbolsGenerator : IIncrementalGenerator {
     }
 
     private static ImmutableArray<IPropertySymbol> GetProperties(Compilation compilation, INamedTypeSymbol dtoSymbol) {
-        IThemeProperties.TryExtractroperties(compilation, out ImmutableArray<IPropertySymbol> iThemeProperties); 
+        IThemeProperties.TryExtractProperties(compilation, out ImmutableArray<IPropertySymbol> iThemeProperties); 
         
         IEnumerable<IPropertySymbol> currentSymbolProperties = dtoSymbol.GetMembers()
             .OfType<IPropertySymbol>()
