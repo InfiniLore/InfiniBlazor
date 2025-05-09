@@ -29,9 +29,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CodeOfChaos.Extensions" Version="0.66.0" />
-        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" Version="0.66.0" />
-        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators" Version="0.66.0">
+        <PackageReference Include="CodeOfChaos.Extensions" Version="0.66.1" />
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" Version="0.66.1" />
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators" Version="0.66.1">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
