@@ -57,9 +57,9 @@ public partial record InfiniBlazorTheme : ITheme {
     #endregion
     
     #region CascadedValues
-    [CssData, InterpretAsVar(nameof(ColorBase60))] public partial string SidebarNavBorderColor { get; }
+    [CssData, InterpretAsVar(nameof(ColorBase60))] public partial string SidebarNavBorderColor { get; init; }
     [CssData, InterpretAsVar(nameof(ColorBase90))] public partial string SidebarNavBackground { get; init; }
-    [CssData, InterpretAsVar(nameof(ColorBase70))] public partial string SidebarNavBackgroundHover { get; }
-    [CssData, InterpretAsVar(nameof(ColorBase00))] public partial string TextColor { get; }
+    [CssData, InterpretAsVar(nameof(ColorBase70))] public partial string SidebarNavBackgroundHover { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase00))] public partial string TextColor { get; init; }
     #endregion
 }

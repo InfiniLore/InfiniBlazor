@@ -477,9 +477,6 @@
   .bg-\(--color-red\) {
     background-color: var(--color-red);
   }
-  .bg-\(--sidebar-nav-background\) {
-    background-color: var(--sidebar-nav-background);
-  }
   .bg-gray-50 {
     background-color: var(--color-gray-50);
   }
@@ -619,6 +616,9 @@
   .ease-in-out {
     --tw-ease: var(--ease-in-out);
     transition-timing-function: var(--ease-in-out);
+  }
+  .bgc-\(--sidebar-nav-background\) {
+    background: var(--sidebar-nav-background);
   }
   .group-hover\:text-\(--color-accent\) {
     &:is(:where(.group):hover *) {
