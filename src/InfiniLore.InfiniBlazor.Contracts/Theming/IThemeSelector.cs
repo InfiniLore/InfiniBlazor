@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IThemeSelector {
     event Func<Task>? ThemeChangedAsync;
-    IThemeCollection CurrentTheme { get; }
+    IThemeCollection CurrentThemeCollection { get; }
     IThemeMode CurrentThemeMode { get; }
      
     // -----------------------------------------------------------------------------------------------------------------

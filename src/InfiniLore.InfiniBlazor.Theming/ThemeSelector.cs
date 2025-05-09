@@ -15,9 +15,9 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IThemeSelector>]
-public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogger<ThemeSelector> logger) : IThemeSelector {
+public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogger<ThemeSelector> logger, IPoolCache pool) : IThemeSelector {
     public event Func<Task>? ThemeChangedAsync;
-    public IThemeCollection CurrentTheme { get; private set; } = provider.GetRequiredKeyedService<IThemeCollection>(null);
+    public IThemeCollection CurrentThemeCollection { get; private set; } = provider.GetRequiredKeyedService<IThemeCollection>(null);
     public IThemeMode CurrentThemeMode { get; private set; } = config.DefaultThemeMode;
     
     private FrozenDictionary<string, IThemeCollection> Themes { get; } = CollectThemes(config, provider, logger);
@@ -53,7 +53,7 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
             return false;
         }
 
-        CurrentTheme = theme;
+        CurrentThemeCollection = theme;
         if (ThemeChangedAsync is not null) await ThemeChangedAsync().ConfigureAwait(false);
         logger.LogInformation("Theme '{ThemeName}' selected.", themeName);
         return true;
@@ -72,24 +72,25 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
     }
 
     public bool TryGetCurrentThemeCss([NotNullWhen(true)] out string? css) {
-        ITheme? theme = null;
-        if (CurrentThemeMode == ThemeMode.DarkMode) CurrentTheme.TryGetDarkMode(out theme);
-        else if (CurrentThemeMode == ThemeMode.LightMode) CurrentTheme.TryGetLightMode(out theme);
-        
-        if (theme is null) {
+        if (!CurrentThemeCollection.TryGetNextTheme(out ITheme? theme)) {
             logger.LogWarning("No theme variant found for current mode '{Mode}'.", CurrentThemeMode.Name);
             css = null;
             return false;
         }
         
-        var sb = new StringBuilder();
-        sb.Append(":root {");
-        foreach ((string key, string value) in theme.AsCssVariables()) {
-            sb.Append($"{key}: {value};");
-        }
-        sb.Append('}');
+        StringBuilder sb = pool.StringBuilderPool.Get() ;
+        try {
+            sb.Append(":root {");
+            foreach ((string key, string value) in theme.AsCssVariables()) {
+                sb.Append($"{key}: {value};");
+            }
+            sb.Append('}');
         
-        css = sb.ToString();
-        return true;
+            css = sb.ToString();
+            return true;
+        }
+        finally {
+            pool.StringBuilderPool.Return(sb);
+        }
     }
 }

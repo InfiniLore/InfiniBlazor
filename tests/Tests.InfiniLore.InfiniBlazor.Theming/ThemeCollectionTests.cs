@@ -37,8 +37,8 @@ public class ThemeCollectionTests(IServiceProvider provider) {
         ITheme? darkModeTheme = null;
         
         // Act
-        bool? lightModeResult = theme?.TryGetMode(ThemeMode.LightMode, out lightModeTheme);
-        bool? darkModeResult = theme?.TryGetMode(ThemeMode.DarkMode, out darkModeTheme);
+        bool? lightModeResult = theme?.TryGetTheme(ThemeMode.LightMode, out lightModeTheme);
+        bool? darkModeResult = theme?.TryGetTheme(ThemeMode.DarkMode, out darkModeTheme);
         
         // Assert
         await Assert.That(theme).IsNotNull().And.IsTypeOf(themeType);
@@ -58,8 +58,8 @@ public class ThemeCollectionTests(IServiceProvider provider) {
         ITheme? darkModeTheme = null;
         
         // Act
-        bool? lightModeResult = theme?.TryGetModeByName(ThemeMode.LightMode.Name, out lightModeTheme);
-        bool? darkModeResult = theme?.TryGetModeByName(ThemeMode.DarkMode.Name, out darkModeTheme);
+        bool? lightModeResult = theme?.TryGetThemeByName(ThemeMode.LightMode.Name, out lightModeTheme);
+        bool? darkModeResult = theme?.TryGetThemeByName(ThemeMode.DarkMode.Name, out darkModeTheme);
         
         // Assert
         await Assert.That(theme).IsNotNull().And.IsTypeOf(themeType);
@@ -81,8 +81,8 @@ public class ThemeCollectionTests(IServiceProvider provider) {
         ReadOnlySpan<char> darkModeName = ThemeMode.DarkMode.Name;
         
         // Act
-        bool? lightModeResult = theme?.TryGetModeByName(lightModeName, out lightModeTheme);
-        bool? darkModeResult = theme?.TryGetModeByName(darkModeName, out darkModeTheme);
+        bool? lightModeResult = theme?.TryGetThemeByName(lightModeName, out lightModeTheme);
+        bool? darkModeResult = theme?.TryGetThemeByName(darkModeName, out darkModeTheme);
         
         // Assert
         await Assert.That(theme).IsNotNull().And.IsTypeOf(themeType);
