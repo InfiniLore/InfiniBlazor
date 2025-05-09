@@ -16,12 +16,12 @@
         @if (!_imageLoadFailed) {
             <img src="@ImageUrl"
                  alt="Profile"
-                 class="w-full h-full rounded-full object-cover group-hover:ring-2 ring-(--color-accent)"
+                 class="w-full h-full rounded-full object-cover group-hover:ring-2 ring-(--usericon-ring)"
                  crossorigin="anonymous"
                  @onerror="HandleImageError"/>
         } else {
             <span class="w-8 h-8 flex justify-center items-center">
-                <LiCircleUser class="w-8 h-8 text-(--color-base-10) group-hover:text-(--color-accent)"/>
+                <LiCircleUser class="w-8 h-8 text-(--usericon-alt) group-hover:text-(--usericon-alt-hover)"/>
             </span>
         }
     </a>
@@ -33,7 +33,7 @@
         case UserIconStatus.Busy:
         case UserIconStatus.DoNotDisturb: {
             <div class="absolute -bottom-1 -right-1 flex items-center justify-center">
-                <div class="@GetClassFromStatus() w-3.5 h-3.5 rounded-full border-1 border-(--color-base-70)"></div>
+                <div class="@GetClassFromStatus() w-3.5 h-3.5 rounded-full border-1 border-(--usericon-status-background)"></div>
             </div>
             break;
         }

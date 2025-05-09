@@ -1,27 +1,23 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using JetBrains.Annotations;
+using Microsoft.CodeAnalysis;
+using System.Collections.Generic;
 
-namespace InfiniLore.InfiniBlazor.Theming;
+namespace InfiniLore.InfiniBlazor.Theming.Generators.Helpers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[UsedImplicitly]
-public class InfiniBlazorThemeCollection : ThemeCollection {
-    protected override Dictionary<IThemeMode, ITheme> Themes { get; } = CreateThemes();
-    protected override IThemeMode[] Modes { get; } = [
-        ThemeMode.DarkMode,
-        ThemeMode.LightMode 
-    ];
-
+public class PropertyNameComparer : IEqualityComparer<IPropertySymbol> {
+    public static PropertyNameComparer Default { get; } = new();
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private static Dictionary<IThemeMode, ITheme> CreateThemes() {
-        Dictionary<IThemeMode, ITheme> modes = [];
-        modes.Add(ThemeMode.LightMode, InfiniBlazorTheme.LightModeInstance);
-        modes.Add(ThemeMode.DarkMode, InfiniBlazorTheme.DarkModeInstance);
-        return modes;
+    public bool Equals(IPropertySymbol? x, IPropertySymbol? y) {
+        if (ReferenceEquals(x, y)) return true;
+        if (x is null || y is null) return false;
+        return x.Name == y.Name;
     }
+
+    public int GetHashCode(IPropertySymbol obj) => obj.Name.GetHashCode();
 }

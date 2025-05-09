@@ -10,14 +10,11 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IThemeCollection {
     IReadOnlyDictionary<IThemeMode, ITheme> ContainedModes { get; }
-
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    bool TryGetLightMode([NotNullWhen(true)] out ITheme? theme);
-    bool TryGetDarkMode([NotNullWhen(true)] out ITheme? theme);
-    
-    bool TryGetMode(IThemeMode mode, [NotNullWhen(true)] out ITheme? theme);
-    bool TryGetModeByName(string variantName, [NotNullWhen(true)] out ITheme? theme);
-    bool TryGetModeByName(ReadOnlySpan<char> variantName, [NotNullWhen(true)] out ITheme? theme);
+    bool TryGetTheme(IThemeMode mode, [NotNullWhen(true)] out ITheme? theme);
+    bool TryGetThemeByName(string variantName, [NotNullWhen(true)] out ITheme? theme);
+    bool TryGetThemeByName(ReadOnlySpan<char> variantName, [NotNullWhen(true)] out ITheme? theme);
+    bool TryGetNextThemeMode(IThemeMode? lastKnownMode, [NotNullWhen(true)] out IThemeMode? themeMode);
 }

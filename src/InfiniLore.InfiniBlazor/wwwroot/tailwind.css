@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+@utility bgc-* {
+    background: --value([*]);
+}

@@ -49,7 +49,7 @@
             <Text>Switch Theme</Text>
         </SideNavMenuButton>
 
-        <SideNavMenuButton OnClickAsync="@(ThemeSelector.TryToggleDarkAndLightModeAsync)">
+        <SideNavMenuButton OnClickAsync="@(ThemeSelector.TrySelectNextThemeModeAsync)">
             <Icon>
                 <LiSun/>
             </Icon>
@@ -94,7 +94,7 @@
             "anna" => "default",
             _ => Theme
         };
-        await ThemeSelector.TrySelectThemeAsync(Theme);
+        await ThemeSelector.TrySelectThemeCollectionAsync(Theme);
     }
 
     private void SwitchUserImage() {

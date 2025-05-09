@@ -7,4 +7,4 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [AttributeUsage(AttributeTargets.Property)]
-public sealed class IncludeAsCssVariable : Attribute;
+public sealed class CssDataAttribute : Attribute;

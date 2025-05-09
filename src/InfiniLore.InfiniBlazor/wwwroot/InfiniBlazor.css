@@ -1,4 +1,4 @@
-/*! tailwindcss v4.1.2 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.1.5 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
@@ -250,6 +250,9 @@
   .table {
     display: table;
   }
+  .h-3 {
+    height: calc(var(--spacing) * 3);
+  }
   .h-3\.5 {
     height: calc(var(--spacing) * 3.5);
   }
@@ -289,8 +292,14 @@
   .w-0 {
     width: calc(var(--spacing) * 0);
   }
+  .w-1 {
+    width: calc(var(--spacing) * 1);
+  }
   .w-1\/2 {
     width: calc(1/2 * 100%);
+  }
+  .w-3 {
+    width: calc(var(--spacing) * 3);
   }
   .w-3\.5 {
     width: calc(var(--spacing) * 3.5);
@@ -334,6 +343,9 @@
   .flex-1 {
     flex: 1;
   }
+  .flex-shrink {
+    flex-shrink: 1;
+  }
   .flex-shrink-0 {
     flex-shrink: 0;
   }
@@ -346,8 +358,11 @@
   .grow {
     flex-grow: 1;
   }
+  .border-collapse {
+    border-collapse: collapse;
+  }
   .transform {
-    transform: var(--tw-rotate-x) var(--tw-rotate-y) var(--tw-rotate-z) var(--tw-skew-x) var(--tw-skew-y);
+    transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
   }
   .cursor-pointer {
     cursor: pointer;
@@ -366,6 +381,9 @@
   }
   .flex-nowrap {
     flex-wrap: nowrap;
+  }
+  .flex-wrap {
+    flex-wrap: wrap;
   }
   .items-center {
     align-items: center;
@@ -453,20 +471,20 @@
     --tw-border-style: none;
     border-style: none;
   }
-  .border-\(--color-base-60\) {
-    border-color: var(--color-base-60);
-  }
   .border-\(--color-base-70\) {
     border-color: var(--color-base-70);
+  }
+  .border-\(--sidebar-nav-border-color\) {
+    border-color: var(--sidebar-nav-border-color);
+  }
+  .border-\(--usericon-status-background\) {
+    border-color: var(--usericon-status-background);
   }
   .border-gray-200 {
     border-color: var(--color-gray-200);
   }
   .border-gray-300 {
     border-color: var(--color-gray-300);
-  }
-  .bg-\(--color-base-90\) {
-    background-color: var(--color-base-90);
   }
   .bg-\(--color-gray\) {
     background-color: var(--color-gray);
@@ -516,6 +534,9 @@
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
   }
+  .py-1 {
+    padding-block: calc(var(--spacing) * 1);
+  }
   .py-1\.5 {
     padding-block: calc(var(--spacing) * 1.5);
   }
@@ -564,6 +585,21 @@
   .text-\(--color-base-10\) {
     color: var(--color-base-10);
   }
+  .text-\(--sidebar-hamburger-color\) {
+    color: var(--sidebar-hamburger-color);
+  }
+  .text-\(--sidebar-nav-text-color\) {
+    color: var(--sidebar-nav-text-color);
+  }
+  .text-\(--text-color\) {
+    color: var(--text-color);
+  }
+  .text-\(--usericon-alt\) {
+    color: var(--usericon-alt);
+  }
+  .text-\(--usericon-alt-color\) {
+    color: var(--usericon-alt-color);
+  }
   .text-gray-700 {
     color: var(--color-gray-700);
   }
@@ -588,6 +624,13 @@
   }
   .ring-\(--color-accent\) {
     --tw-ring-color: var(--color-accent);
+  }
+  .ring-\(--usericon-ring\) {
+    --tw-ring-color: var(--usericon-ring);
+  }
+  .outline {
+    outline-style: var(--tw-outline-style);
+    outline-width: 1px;
   }
   .transition-all {
     transition-property: all;
@@ -617,10 +660,44 @@
     --tw-ease: var(--ease-in-out);
     transition-timing-function: var(--ease-in-out);
   }
+  .bgc-\(--sidebar-nav-background\) {
+    background: var(--sidebar-nav-background);
+  }
+  .bgc-\(--sidebar-nav-button-color\) {
+    background: var(--sidebar-nav-button-color);
+  }
+  .group-hover\:text-\(---sidebar-nav-text-color-hover\) {
+    &:is(:where(.group):hover *) {
+      @media (hover: hover) {
+        color: var(---sidebar-nav-text-color-hover);
+      }
+    }
+  }
   .group-hover\:text-\(--color-accent\) {
     &:is(:where(.group):hover *) {
       @media (hover: hover) {
         color: var(--color-accent);
+      }
+    }
+  }
+  .group-hover\:text-\(--sidebar-nav-text-color-hover\) {
+    &:is(:where(.group):hover *) {
+      @media (hover: hover) {
+        color: var(--sidebar-nav-text-color-hover);
+      }
+    }
+  }
+  .group-hover\:text-\(--usericon-alt-color-hover\) {
+    &:is(:where(.group):hover *) {
+      @media (hover: hover) {
+        color: var(--usericon-alt-color-hover);
+      }
+    }
+  }
+  .group-hover\:text-\(--usericon-alt-hover\) {
+    &:is(:where(.group):hover *) {
+      @media (hover: hover) {
+        color: var(--usericon-alt-hover);
       }
     }
   }
@@ -636,6 +713,20 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-base-70);
+      }
+    }
+  }
+  .hover\:bg-\(--sidebar-nav-background-hover\) {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--sidebar-nav-background-hover);
+      }
+    }
+  }
+  .hover\:bg-\(--sidebar-nav-button-color-hover\) {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--sidebar-nav-button-color-hover);
       }
     }
   }
@@ -657,6 +748,20 @@
     &:hover {
       @media (hover: hover) {
         color: var(--color-base-20);
+      }
+    }
+  }
+  .hover\:text-\(--sidebar-nav-text-color-hover\) {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--sidebar-nav-text-color-hover);
+      }
+    }
+  }
+  .hover\:bgc-\(--sidebar-nav-button-color-hover\) {
+    &:hover {
+      @media (hover: hover) {
+        background: var(--sidebar-nav-button-color-hover);
       }
     }
   }
@@ -687,27 +792,22 @@
 @property --tw-rotate-x {
   syntax: "*";
   inherits: false;
-  initial-value: rotateX(0);
 }
 @property --tw-rotate-y {
   syntax: "*";
   inherits: false;
-  initial-value: rotateY(0);
 }
 @property --tw-rotate-z {
   syntax: "*";
   inherits: false;
-  initial-value: rotateZ(0);
 }
 @property --tw-skew-x {
   syntax: "*";
   inherits: false;
-  initial-value: skewX(0);
 }
 @property --tw-skew-y {
   syntax: "*";
   inherits: false;
-  initial-value: skewY(0);
 }
 @property --tw-space-y-reverse {
   syntax: "*";
@@ -797,6 +897,11 @@
   inherits: false;
   initial-value: 0 0 #0000;
 }
+@property --tw-outline-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
 @property --tw-duration {
   syntax: "*";
   inherits: false;
@@ -808,11 +913,11 @@
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
-      --tw-rotate-x: rotateX(0);
-      --tw-rotate-y: rotateY(0);
-      --tw-rotate-z: rotateZ(0);
-      --tw-skew-x: skewX(0);
-      --tw-skew-y: skewY(0);
+      --tw-rotate-x: initial;
+      --tw-rotate-y: initial;
+      --tw-rotate-z: initial;
+      --tw-skew-x: initial;
+      --tw-skew-y: initial;
       --tw-space-y-reverse: 0;
       --tw-space-x-reverse: 0;
       --tw-border-style: solid;
@@ -832,6 +937,7 @@
       --tw-ring-offset-width: 0px;
       --tw-ring-offset-color: #fff;
       --tw-ring-offset-shadow: 0 0 #0000;
+      --tw-outline-style: solid;
       --tw-duration: initial;
       --tw-ease: initial;
     }

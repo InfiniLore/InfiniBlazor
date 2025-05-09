@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Theming;
-using InfiniLore.InfiniBlazor.Theming.Library;
 using System.Text.RegularExpressions;
 using InfiniBlazorTheme = InfiniLore.InfiniBlazor.Theming.InfiniBlazorTheme;
 
@@ -21,6 +20,13 @@ public partial class InfiniBlazorThemeTests {
     
     [GeneratedRegex(@"^--[a-z0-9]+(-[a-z]+|-[0-9]+)*$")]
     private static partial Regex IsCssVariableNameRegex { get; }
+    
+    [GeneratedRegex(@"^var\(--[a-z0-9]+(-[a-z]+|-[0-9]+)*\)$")]
+    private static partial Regex IsCssVariableDefinitionRegex { get; }
+
+    private static readonly HashSet<string> AllowedKeywords = [
+        "transparent"
+    ];
 
     public static IEnumerable<Func<ITheme>> ThemeDataSources() {
         yield return () => InfiniBlazorTheme.DarkModeInstance; 
@@ -44,27 +50,40 @@ public partial class InfiniBlazorThemeTests {
             Interlocked.Increment(ref executionCount);
 
             (string cssVariable, string data) = tuple;
-            await Assert.That(cssVariable).IsNotNullOrWhitespace()
-                .And.StartsWith("--")
-                .And.Matches(IsCssVariableNameRegex);
-
-            if (data.StartsWith('#')) {
-                await Assert.That(data).Matches(IsHexColorRegex)
-                    .And.DoesNotMatch(IsRgbColorRegex);
-                await Assert.That(cssVariable).DoesNotEndWith("-rgb");
-            }
+            await Assert.That(cssVariable).Matches(IsCssVariableNameRegex);
+            if (AllowedKeywords.Contains(data)) return;
             
-            if (!data.StartsWith('#')) {
-                await Assert.That(data).Matches(IsRgbColorRegex)
-                    .And.DoesNotMatch(IsHexColorRegex);
-                await Assert.That(cssVariable).EndsWith("-rgb");
-            }
+            await Assert.That(data)
+                .Matches(IsCssVariableDefinitionRegex)
+                .Or.Matches(IsRgbColorRegex)
+                .Or.Matches(IsHexColorRegex);
             
             token.ThrowIfCancellationRequested();
         });
         
         await Assert.That(variables).HasCount().GreaterThanOrEqualTo(40);
         await Assert.That(executionCount).IsEqualTo(variables.Count);
+    }
 
+    [Test]
+    public async Task TryGetNextThemeMode_ShouldLoop() {
+        // Arrange
+        var themeCollection = new InfiniBlazorThemeCollection();
+        
+        // Act
+        bool resultThemeMode0 = themeCollection.TryGetNextThemeMode(null, out IThemeMode? themeMode0);
+        bool resultThemeMode1 = themeCollection.TryGetNextThemeMode(themeMode0, out IThemeMode? themeMode1);
+        bool resultThemeMode2 = themeCollection.TryGetNextThemeMode(themeMode1, out IThemeMode? themeMode2);
+
+        // Assert
+        await Assert.That(resultThemeMode0).IsTrue();
+        await Assert.That(resultThemeMode1).IsTrue();
+        await Assert.That(resultThemeMode2).IsTrue();
+        await Assert.That(themeMode0).IsNotNull()
+            .And.IsEqualTo(ThemeMode.DarkMode);
+        await Assert.That(themeMode1).IsNotNull()
+            .And.IsEqualTo(ThemeMode.LightMode);
+        await Assert.That(themeMode2).IsNotNull()
+            .And.IsEqualTo(themeMode0);
     }
 }

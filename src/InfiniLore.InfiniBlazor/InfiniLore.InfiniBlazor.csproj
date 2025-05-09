@@ -41,12 +41,12 @@
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.4" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
         
-        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" Version="0.65.0" />
-        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators" Version="0.65.0">
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" Version="0.66.0" />
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators" Version="0.66.0">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="InfiniLore.Lucide" Version="0.26.507" />
+        <PackageReference Include="InfiniLore.Lucide" Version="0.26.509" />
     </ItemGroup>
 
     <ItemGroup>

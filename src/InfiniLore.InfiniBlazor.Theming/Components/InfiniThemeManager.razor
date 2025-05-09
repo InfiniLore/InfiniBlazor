@@ -35,12 +35,12 @@
     // -----------------------------------------------------------------------------------------------------------------
     protected override void OnInitialized() {
         ThemeSelector.ThemeChangedAsync += OnThemeChangedAsync;
-        if (!ThemeSelector.TryGetCurrentThemeCss(out string? css)) return;
+        if (!ThemeSelector.TryGetCurrentThemeModeCss(out string? css)) return;
         CurrentCss = css;
     }
 
     private async Task OnThemeChangedAsync() {
-        if (!ThemeSelector.TryGetCurrentThemeCss(out string? css)) return;
+        if (!ThemeSelector.TryGetCurrentThemeModeCss(out string? css)) return;
         CurrentCss = css;
 
         // WTF this works ...
