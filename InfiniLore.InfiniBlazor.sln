@@ -25,6 +25,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".dev-tools", ".dev-tools", "{25ED7F52-E54D-45E9-8CC9-37E2FB0F08F2}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		Directory.Packages.Props = Directory.Packages.Props
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfiniLore.InfiniBlazor.Theming", "src\InfiniLore.InfiniBlazor.Theming\InfiniLore.InfiniBlazor.Theming.csproj", "{FFA584A8-9F7E-47BF-926B-E6CDE1461C10}"

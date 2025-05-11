@@ -10,12 +10,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="CodeOfChaos.Extensions" Version="0.66.1" />
-        <PackageReference Include="CodeOfChaos.Extensions.AspNetCore" Version="0.66.1" />
-        <PackageReference Include="Bogus" Version="35.6.3"/>
-        <PackageReference Include="CodeOfChaos.Testing.TUnit" Version="0.12.1" />
-        <PackageReference Include="JetBrains.Annotations" Version="2024.3.0"/>
-        <PackageReference Include="TUnit" Version="0.19.143" />
+        <PackageReference Include="CodeOfChaos.Extensions" />
+        <PackageReference Include="CodeOfChaos.Extensions.AspNetCore" />
+        <PackageReference Include="Bogus"/>
+        <PackageReference Include="CodeOfChaos.Testing.TUnit" />
+        <PackageReference Include="JetBrains.Annotations"/>
+        <PackageReference Include="TUnit" />
     </ItemGroup>
 
     <ItemGroup>

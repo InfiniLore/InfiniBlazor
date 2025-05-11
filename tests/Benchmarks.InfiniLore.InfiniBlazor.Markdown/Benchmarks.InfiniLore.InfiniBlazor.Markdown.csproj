@@ -8,9 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="BenchmarkDotNet" Version="0.14.0"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.4" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
+        <PackageReference Include="BenchmarkDotNet"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions"/>
         
         <None Include="MarkdownBenchmark.md" CopyToOutputDirectory="Always"/>
     </ItemGroup>

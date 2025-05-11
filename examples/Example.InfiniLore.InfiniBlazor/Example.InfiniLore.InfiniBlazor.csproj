@@ -15,10 +15,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="InfiniLore.Lucide" Version="0.26.509" />
-        <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.4" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.4"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.4" />
+        <PackageReference Include="InfiniLore.Lucide"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"/>
     </ItemGroup>
 
     <ItemGroup>

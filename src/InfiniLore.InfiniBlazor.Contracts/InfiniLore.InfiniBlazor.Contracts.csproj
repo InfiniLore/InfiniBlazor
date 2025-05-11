@@ -33,10 +33,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
-      <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.4" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
-      <PackageReference Include="Microsoft.Extensions.ObjectPool" Version="9.0.4" />
+      <PackageReference Include="JetBrains.Annotations"/>
+      <PackageReference Include="Microsoft.AspNetCore.Components"/>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions"/>
+      <PackageReference Include="Microsoft.Extensions.ObjectPool"/>
     </ItemGroup>
 
 </Project>
