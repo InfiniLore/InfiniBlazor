@@ -35,7 +35,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="CodeOfChaos.Extensions.ObjectPool" Version="0.66.0" />
+        <PackageReference Include="CodeOfChaos.Extensions.ObjectPool" Version="0.66.1" />
         <PackageReference Include="HtmlSanitizer" Version="9.0.884" />
         <PackageReference Include="InfiniLore.Lucide" Version="0.26.509" />
 

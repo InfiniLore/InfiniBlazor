@@ -15,7 +15,7 @@
         <PackageReference Include="Bogus" Version="35.6.3"/>
         <PackageReference Include="CodeOfChaos.Testing.TUnit" Version="0.12.1" />
         <PackageReference Include="JetBrains.Annotations" Version="2024.3.0"/>
-        <PackageReference Include="TUnit" Version="0.19.116" />
+        <PackageReference Include="TUnit" Version="0.19.143" />
     </ItemGroup>
 
     <ItemGroup>
