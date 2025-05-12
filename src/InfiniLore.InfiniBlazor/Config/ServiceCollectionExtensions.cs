@@ -4,6 +4,7 @@
 using InfiniLore.InfiniBlazor;
 using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Theming.Config;
+using InfiniLore.InfiniBlazor.Toasting.Config;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,7 @@ public static class ServiceCollectionExtensions {
         services.RegisterServicesFromInfiniLoreInfiniBlazor();
         services.AddLucideIcons();
         config.AddThemingLogic(); // Adds the basics for Theming
+        config.AddToastingLogic(); // Adds the basics for Toasting
 
         configure?.Invoke(config);
 

@@ -2,11 +2,13 @@
 @* Imports *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Theming
+@using InfiniLore.InfiniBlazor.Toasting
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InteractiveServer
 @inject IThemeSelector ThemeSelector
+@inject IToastService ToastService
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -19,18 +21,25 @@
     </Header>
 
     <Body>
-    <SideNavMenuLink Href="/markdown-dual">
-        <Icon>
-            <LiSignature/>
-        </Icon>
-        <Text>Markdown Example</Text>
-    </SideNavMenuLink>
-    <SideNavMenuLink Href="/markdown-rolling">
-        <Icon>
-            <LiIndentIncrease/>
-        </Icon>
-        <Text>Rolling Markdown Example</Text>
-    </SideNavMenuLink>
+        <SideNavMenuLink Href="/markdown-dual">
+            <Icon>
+                <LiSignature/>
+            </Icon>
+            <Text>Markdown Example</Text>
+        </SideNavMenuLink>
+        <SideNavMenuLink Href="/markdown-rolling">
+            <Icon>
+                <LiIndentIncrease/>
+            </Icon>
+            <Text>Rolling Markdown Example</Text>
+        </SideNavMenuLink>
+
+        <SideNavMenuButton OnClickAsync="@(() => ToastService.ShowToastAsync("eh", "message", 10))">
+            <Icon>
+                <LiPopcorn/>
+            </Icon>
+            <Text>Create Toast</Text>
+        </SideNavMenuButton>
     </Body>
 
     <Footer>

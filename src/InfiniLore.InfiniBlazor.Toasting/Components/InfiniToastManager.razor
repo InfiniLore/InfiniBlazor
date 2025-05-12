@@ -1,0 +1,64 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Toasting
+@using InfiniLore.Lucide
+
+@* ReSharper disable once CheckNamespace *@
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inject IToastService ToastService
+@implements IDisposable
+@rendermode InteractiveAuto
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="@ContainerPositionClass fixed z-50 p-4 space-y-2 max-w-sm w-full">
+    @foreach (IToastMessage toast in ToastService.Messages) {
+        <div class="space-y-2 p-4">
+            <div
+                role="alert"
+                class="@toast.TailwindData  p-2 rounded-lg flex items-center transition duration-300 ease-in-out hover:bg-green-200 transform hover:scale-105"
+            >
+                <LucideIcon Name="@toast.IconName"></LucideIcon>
+                <p class="text-xs font-semibold">@toast.Message</p>
+            </div>
+        </div>
+    }
+</div>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter]
+    public ToastPosition Position { get; set; } = ToastPosition.BottomRight;
+
+    // ReSharper disable once PatternIsRedundant
+    private string ContainerPositionClass => Position switch {
+        ToastPosition.TopRight => "top-4 right-4",
+        ToastPosition.TopLeft => "top-4 left-4",
+        ToastPosition.BottomLeft => "bottom-4 left-4",
+        ToastPosition.BottomRight or _ => "bottom-4 right-4"
+    };
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private Action? _handleToastServiceChange;
+
+    protected override void OnInitialized()
+    {
+        _handleToastServiceChange = async () => await InvokeAsync(StateHasChanged);
+        ToastService.OnChange += _handleToastServiceChange;
+    }
+
+    public void Dispose()
+    {
+        ToastService.OnChange -= _handleToastServiceChange;
+    }
+
+
+}
