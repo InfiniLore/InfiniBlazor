@@ -6,7 +6,7 @@ namespace InfiniLore.InfiniBlazor.Toasting;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class ToastService : IToastService{
-    public event Action? OnChange;
+    public event Func<Task>? OnChangeAsync;
 
     private readonly List<ToastMessage> _messages = new();
     public IEnumerable<IToastMessage> Messages => _messages;
@@ -14,7 +14,7 @@ public class ToastService : IToastService{
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public Task ShowToastAsync(string title, string message, int durationSeconds = 5) {
+    public async Task ShowToastAsync(string title, string message, int durationSeconds = 5) {
         var toast = new ToastMessage (
             IconName: "info",
             Title : title,
@@ -23,22 +23,21 @@ public class ToastService : IToastService{
         );
 
         _messages.Add(toast);
-        OnChange?.Invoke();
-
+        if (OnChangeAsync is not null) await OnChangeAsync();
         if (durationSeconds is not -1) _ = AutoRemoveAsync(toast, durationSeconds);
-        return Task.CompletedTask;
     }
 
-    private void RemoveToast(Guid id) {
+    private async Task RemoveToastAsync(Guid id) {
         ToastMessage? toast = _messages.FirstOrDefault(t => t.Id == id);
         if (toast == null) return;
 
         _messages.Remove(toast);
-        OnChange?.Invoke();
+        OnChangeAsync?.Invoke();
     }
 
     private async Task AutoRemoveAsync(ToastMessage toast, int delaySeconds) {
+        if (toast.Id == Guid.Empty) return;
         await Task.Delay(delaySeconds * 1000);
-        RemoveToast(toast.Id);
+        await RemoveToastAsync(toast.Id);
     }
 }

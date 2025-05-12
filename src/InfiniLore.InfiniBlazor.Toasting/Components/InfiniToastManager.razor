@@ -32,6 +32,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     [Parameter]
     public ToastPosition Position { get; set; } = ToastPosition.BottomRight;
@@ -47,18 +48,14 @@
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private Action? _handleToastServiceChange;
-
-    protected override void OnInitialized()
-    {
-        _handleToastServiceChange = async () => await InvokeAsync(StateHasChanged);
-        ToastService.OnChange += _handleToastServiceChange;
+    protected override void OnInitialized() {
+        ToastService.OnChangeAsync += HandleToastServiceChange;
+    }
+    private async Task HandleToastServiceChange() {
+        await InvokeAsync(StateHasChanged);
     }
 
-    public void Dispose()
-    {
-        ToastService.OnChange -= _handleToastServiceChange;
+    public void Dispose() {
+        ToastService.OnChangeAsync -= HandleToastServiceChange;
     }
-
-
 }

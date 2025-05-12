@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Toasting;
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IToastService {
     IEnumerable<IToastMessage> Messages { get; }
-    event Action? OnChange;
+    event Func<Task>? OnChangeAsync;
 
     Task ShowToastAsync(string title, string message, int durationSeconds = 5);
 }
