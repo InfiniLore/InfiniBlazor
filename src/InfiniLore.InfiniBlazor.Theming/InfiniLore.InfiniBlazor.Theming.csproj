@@ -32,7 +32,7 @@
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.Theming.Generators\InfiniLore.InfiniBlazor.Theming.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     </ItemGroup>
-
+    
     <ItemGroup>
         <PackageReference Include="CodeOfChaos.Extensions" />
         <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" />
