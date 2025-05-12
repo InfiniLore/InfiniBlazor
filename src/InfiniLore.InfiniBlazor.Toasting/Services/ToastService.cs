@@ -24,20 +24,18 @@ public class ToastService : IToastService{
 
         _messages.Add(toast);
         if (OnChangeAsync is not null) await OnChangeAsync();
-        if (durationSeconds is not -1) _ = AutoRemoveAsync(toast, durationSeconds);
+        if (durationSeconds is not -1) _ = AutoRemoveAsync(toast.Id, durationSeconds);
     }
-
-    private async Task RemoveToastAsync(Guid id) {
-        ToastMessage? toast = _messages.FirstOrDefault(t => t.Id == id);
-        if (toast == null) return;
-
-        _messages.Remove(toast);
-        OnChangeAsync?.Invoke();
-    }
-
-    private async Task AutoRemoveAsync(ToastMessage toast, int delaySeconds) {
-        if (toast.Id == Guid.Empty) return;
+    
+    private async Task AutoRemoveAsync(Guid toastId, int delaySeconds) {
+        if (toastId == Guid.Empty) return;
         await Task.Delay(delaySeconds * 1000);
-        await RemoveToastAsync(toast.Id);
+        
+        ToastMessage? toast = _messages.FirstOrDefault(x => x.Id == toastId);
+        if (toast is null) return;
+        if (toast.Id == Guid.Empty) return;
+        if (toast.DurationSeconds is -1) return;
+        _messages.Remove(toast);
+        if (OnChangeAsync is not null) await OnChangeAsync();
     }
 }
