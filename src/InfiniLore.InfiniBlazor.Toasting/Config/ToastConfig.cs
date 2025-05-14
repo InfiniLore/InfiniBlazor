@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Config;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace InfiniLore.InfiniBlazor.Toasting.Config;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -16,6 +17,7 @@ public class ToastConfig(IInfiniBlazorConfig config) : IToastConfig {
     // -----------------------------------------------------------------------------------------------------------------
     public IToastConfig AddToastSetupData(object key, IToastAppearance data) {
         _toastSetupData.AddOrUpdate(key, data);
+        config.Services.AddKeyedSingleton(key, data);
         return this;
     }
 }
