@@ -11,13 +11,13 @@ namespace InfiniLore.InfiniBlazor.Toasting;
 public class ToastService() : IToastService {
     public event Func<Task>? OnChangeAsync;
 
-    private readonly List<IToastMessage> _messages = new();
-    public IEnumerable<IToastMessage> Messages => _messages;
+    private readonly List<IToastMessageData> _messages = new();
+    public IEnumerable<IToastMessageData> Messages => _messages;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public async Task ShowToastAsync(IToastMessage toastMessage) {
+    public async Task ShowToastAsync(IToastMessageData toastMessage) {
         _messages.Add(toastMessage);
         if (OnChangeAsync is not null) await OnChangeAsync();
         if (toastMessage.DurationSeconds is not -1) _ = AutoRemoveAsync(toastMessage.Id, toastMessage.DurationSeconds);
@@ -30,7 +30,7 @@ public class ToastService() : IToastService {
     }
     
     public async Task RemoveToastAsync(Guid toastId) {
-        IToastMessage? toast = _messages.FirstOrDefault(x => x.Id == toastId);
+        IToastMessageData? toast = _messages.FirstOrDefault(x => x.Id == toastId);
         if (toast is null) return;
         if (toast.Id == Guid.Empty) return;
         _messages.Remove(toast);

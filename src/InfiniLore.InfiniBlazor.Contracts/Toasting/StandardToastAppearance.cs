@@ -7,7 +7,6 @@ namespace InfiniLore.InfiniBlazor.Toasting;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public enum StandardToastAppearance {
-    Default = 0,
     Info,
     Success,
     Warning,

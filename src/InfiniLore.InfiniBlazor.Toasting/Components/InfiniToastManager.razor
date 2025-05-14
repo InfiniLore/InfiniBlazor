@@ -14,8 +14,8 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@ContainerPositionClass fixed z-50 p-4 space-y-2 max-w-sm w-full">
-    @foreach (IToastMessage toast in ToastService.Messages) {
+<div class="@ContainerPositionClass fixed z-50 p-3 space-y-2 max-w-sm w-full max-h-screen overflow-y-auto hide-scrollbar">
+    @foreach (IToastMessageData toast in ToastService.Messages) {
         <ToastMessage Message="toast"></ToastMessage>
     }
 </div>
@@ -24,8 +24,7 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter]
-    public ToastPosition Position { get; set; } = ToastPosition.BottomRight;
+    [Parameter] public ToastPosition Position { get; set; } = ToastPosition.BottomRight;
 
     // ReSharper disable once PatternIsRedundant
     private string ContainerPositionClass => Position switch {

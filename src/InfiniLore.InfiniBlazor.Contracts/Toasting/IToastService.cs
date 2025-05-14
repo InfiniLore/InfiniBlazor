@@ -7,12 +7,12 @@ namespace InfiniLore.InfiniBlazor.Toasting;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IToastService {
-    IEnumerable<IToastMessage> Messages { get; }
+    IEnumerable<IToastMessageData> Messages { get; }
     event Func<Task>? OnChangeAsync;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    Task ShowToastAsync(IToastMessage toastMessage);
+    Task ShowToastAsync(IToastMessageData toastMessage);
     Task RemoveToastAsync(Guid toastId);
 }

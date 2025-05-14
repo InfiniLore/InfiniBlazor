@@ -3,7 +3,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Theming
 @using InfiniLore.InfiniBlazor.Toasting
-@using ToastMessage = InfiniLore.InfiniBlazor.Toasting.ToastMessage
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -113,23 +112,23 @@
     }
 
     private async Task OnCreateToastAsync() {
-        IToastMessage[] messages = [
-            new ToastMessage(
+        IToastMessageData[] messages = [
+            new ToastMessageData(
                 "info",
                 10,
                 ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Info)
             ),
-            new ToastMessage(
+            new ToastMessageData(
                 "success",
                 10,
                 ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Success)
             ),
-            new ToastMessage(
+            new ToastMessageData(
                 "warning",
                 10,
                 ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Warning)
             ),
-            new ToastMessage(
+            new ToastMessageData(
                 "error",
                 10,
                 ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Error),
