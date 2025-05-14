@@ -2,16 +2,9 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 namespace InfiniLore.InfiniBlazor.Toasting;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IToastService {
-    IEnumerable<IToastMessage> Messages { get; }
-    event Func<Task>? OnChangeAsync;
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
-    Task ShowToastAsync(string title, int durationSeconds = 5, string? appearanceKey = null);
+public interface IToastAppearanceProvider {
+    IToastAppearance GetAppearanceOrDefault(object? key);
 }

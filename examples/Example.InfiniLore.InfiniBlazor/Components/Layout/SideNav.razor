@@ -14,7 +14,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <SideNavMenu @bind-MenuCollapsed="@MenuCollapsed" Size="SideNavMenuSize.Large">
     <Header>
-        <a href="/"
+        <a href="/" 
            class="@(!MenuCollapsed ? "text-1xl font-bold text-(--color-base-00) hover:text-(--color-accent) no-underline" : "hidden")">
             InfiniBlazor
         </a>
@@ -34,7 +34,7 @@
             <Text>Rolling Markdown Example</Text>
         </SideNavMenuLink>
 
-        <SideNavMenuButton OnClickAsync="@(() => ToastService.ShowToastAsync("eh", "message", 10))">
+        <SideNavMenuButton OnClickAsync="@(() => ToastService.ShowToastAsync("test", 10))">
             <Icon>
                 <LiPopcorn/>
             </Icon>

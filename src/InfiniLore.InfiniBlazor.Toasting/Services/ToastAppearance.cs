@@ -6,12 +6,14 @@ namespace InfiniLore.InfiniBlazor.Toasting;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IToastService {
-    IEnumerable<IToastMessage> Messages { get; }
-    event Func<Task>? OnChangeAsync;
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
-    Task ShowToastAsync(string title, int durationSeconds = 5, string? appearanceKey = null);
+public record ToastAppearance(
+    string IconName,
+    string TailwindData,
+    bool CanBeDismissed
+) : IToastAppearance {
+    public static IToastAppearance Default = new ToastAppearance(
+        "info",
+        "bg-green-100 border-green-500 text-green-900 hover:bg-green-200",
+        true
+    );
 }

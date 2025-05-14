@@ -2,12 +2,12 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 namespace InfiniLore.InfiniBlazor.Toasting;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IToastMessage {
-    string IconName { get; }
-    string Message { get; }
-    string TailwindData { get; set; }
+    string Title { get; }
+    int DurationSeconds { get; }
+    IToastAppearance Appearance { get; }
+    Guid Id { get; }
 }

@@ -1,17 +1,27 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.Config;
+using System.Collections.Frozen;
+using System.Diagnostics.CodeAnalysis;
+
 namespace InfiniLore.InfiniBlazor.Toasting;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IToastService {
-    IEnumerable<IToastMessage> Messages { get; }
-    event Func<Task>? OnChangeAsync;
+[InjectableSingleton<IToastAppearanceProvider>]
+public class ToastAppearanceProvider(IToastConfig config) : IToastAppearanceProvider{
+    private FrozenDictionary<string, IToastAppearance> StringLookup { get; set; } = config.ToastSetupData.ToFrozenDictionary();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    Task ShowToastAsync(string title, int durationSeconds = 5, string? appearanceKey = null);
+    public IToastAppearance GetAppearanceOrDefault(object? key) {
+        return key switch {
+            string s => StringLookup.TryGetValue(s, out IToastAppearance? value) ? value : ToastAppearance.Default,
+            _ => ToastAppearance.Default
+        };
+    }
 }

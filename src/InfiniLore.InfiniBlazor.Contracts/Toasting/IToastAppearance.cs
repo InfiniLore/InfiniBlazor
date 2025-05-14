@@ -6,12 +6,8 @@ namespace InfiniLore.InfiniBlazor.Toasting;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IToastService {
-    IEnumerable<IToastMessage> Messages { get; }
-    event Func<Task>? OnChangeAsync;
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
-    Task ShowToastAsync(string title, int durationSeconds = 5, string? appearanceKey = null);
+public interface IToastAppearance {
+    string IconName { get; }
+    string TailwindData { get; }
+    bool CanBeDismissed { get; }
 }

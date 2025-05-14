@@ -1,11 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions.DependencyInjection;
+
 namespace InfiniLore.InfiniBlazor.Toasting;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class ToastService : IToastService{
+[InjectableScoped<IToastService>]
+public class ToastService(IToastAppearanceProvider appearanceProvider) : IToastService {
     public event Func<Task>? OnChangeAsync;
 
     private readonly List<ToastMessage> _messages = new();
@@ -14,14 +17,9 @@ public class ToastService : IToastService{
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public async Task ShowToastAsync(string title, string message, int durationSeconds = 5) {
-        var toast = new ToastMessage (
-            IconName: "info",
-            Title : title,
-            Message : message,
-            DurationSeconds : durationSeconds
-        );
-
+    public async Task ShowToastAsync(string title, int durationSeconds = 5, string? appearanceKey = null) {
+        IToastAppearance appearance = appearanceProvider.GetAppearanceOrDefault(appearanceKey);
+        var toast = new ToastMessage (title, durationSeconds, appearance);
         _messages.Add(toast);
         if (OnChangeAsync is not null) await OnChangeAsync();
         if (durationSeconds is not -1) _ = AutoRemoveAsync(toast.Id, durationSeconds);

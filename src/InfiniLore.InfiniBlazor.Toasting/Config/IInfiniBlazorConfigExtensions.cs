@@ -15,6 +15,7 @@ public static class IInfiniBlazorConfigExtensions {
         config.Services.AddSingleton<IToastService, ToastService>();
         
         var themeConfig = new ToastConfig(config);
+        themeConfig.AddToastSetupData("info", new ToastAppearance("info", "bg-green-100 border-green-500 text-green-900 hover:bg-green-200", false));
         
         configure?.Invoke(themeConfig);
         
