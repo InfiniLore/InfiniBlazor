@@ -1,0 +1,50 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Toasting
+
+@* ReSharper disable once CheckNamespace *@
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inject IToastStorage ToastService
+@implements IDisposable
+@rendermode InteractiveAuto
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="@ContainerPositionClass fixed z-50 p-3 space-y-2 max-w-sm w-full max-h-screen overflow-y-auto hide-scrollbar">
+    @foreach (IToastData toast in ToastService.Messages) {
+        <ToastMessage Message="toast"></ToastMessage>
+    }
+</div>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter] public ToastPosition Position { get; set; } = ToastPosition.BottomRight;
+
+    // ReSharper disable once PatternIsRedundant
+    private string ContainerPositionClass => Position switch {
+        ToastPosition.TopRight => "top-4 right-4",
+        ToastPosition.TopLeft => "top-4 left-4",
+        ToastPosition.BottomLeft => "bottom-4 left-4",
+        ToastPosition.BottomRight or _ => "bottom-4 right-4"
+    };
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override void OnInitialized() {
+        ToastService.OnChangeAsync += HandleToastServiceChange;
+    }
+    private async Task HandleToastServiceChange() {
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose() {
+        ToastService.OnChangeAsync -= HandleToastServiceChange;
+    }
+}

@@ -14,9 +14,7 @@ public static class Program {
         // Register & Build the parser
         //      Don't forget to add the current assembly if you built more tools for the current project
         CliArgsParser parser = CliArgsBuilder.CreateFromConfig(
-            config => {
-                config.AddCommandsFromAssemblyEntrypoint<IAssemblyEntry>();
-            }
+            config => config.AddCommandsFromAssemblyEntrypoint<IAssemblyEntry>()
         ).Build();
 
         // We are doing this here because else the launchSettings.json file becomes a humongous issue to deal with.
@@ -28,7 +26,8 @@ public static class Program {
             "InfiniLore.InfiniBlazor.Markdown",
             "InfiniLore.InfiniBlazor.Theming",
             "InfiniLore.InfiniBlazor.Theming.Generators",
-            "InfiniLore.InfiniBlazor.Theming.Library"
+            "InfiniLore.InfiniBlazor.Theming.Library",
+            "InfiniLore.InfiniBlazor.Toasting"
         );
         string oneLineArgs = InputHelper.ToOneLine(args).Replace("%PROJECTS%", projects);
         

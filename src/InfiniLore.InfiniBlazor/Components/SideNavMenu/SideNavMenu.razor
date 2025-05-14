@@ -15,10 +15,8 @@
     <aside class="flex-shrink-0 h-full flex flex-col bgc-(--sidebar-nav-background)">
         <div class="@(MenuCollapsed ? ClassClosed : ClassOpen) px-2 h-full flex flex-col transition-all duration-300">
             <!-- Top Logo and Hamburger -->
-            <div
-                class="@(MenuCollapsed ? "justify-center" : "justify-between") flex items-center h-12 min-h-[3rem] max-h-[3rem] w-full">
-                <div
-                    class="@(MenuCollapsed ? "opacity-0 w-0 overflow-hidden px-0" : "opacity-100 w-full px-2") flex items-center h-8 min-h-[2rem] max-h-[2rem] transition-all duration-300">
+            <div class="@(MenuCollapsed ? "justify-center" : "justify-between") flex items-center h-12 min-h-[3rem] max-h-[3rem] w-full">
+                <div class="@(MenuCollapsed ? "opacity-0 w-0 overflow-hidden px-0" : "opacity-100 w-full px-2") flex items-center h-8 min-h-[2rem] max-h-[2rem] transition-all duration-300">
                     @Header
                 </div>
 

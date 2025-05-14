@@ -2,35 +2,45 @@
 @* Imports *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Theming
+@using InfiniLore.InfiniBlazor.Toasting
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InteractiveServer
 @inject IThemeSelector ThemeSelector
+@inject IToastStorage ToastService
+@inject IToastAppearanceProvider ToastAppearanceProvider
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <SideNavMenu @bind-MenuCollapsed="@MenuCollapsed" Size="SideNavMenuSize.Large">
     <Header>
-        <a href="/"
+        <a href="/" 
            class="@(!MenuCollapsed ? "text-1xl font-bold text-(--color-base-00) hover:text-(--color-accent) no-underline" : "hidden")">
             InfiniBlazor
         </a>
     </Header>
 
     <Body>
-    <SideNavMenuLink Href="/markdown-dual">
-        <Icon>
-            <LiSignature/>
-        </Icon>
-        <Text>Markdown Example</Text>
-    </SideNavMenuLink>
-    <SideNavMenuLink Href="/markdown-rolling">
-        <Icon>
-            <LiIndentIncrease/>
-        </Icon>
-        <Text>Rolling Markdown Example</Text>
-    </SideNavMenuLink>
+        <SideNavMenuLink Href="/markdown-dual">
+            <Icon>
+                <LiSignature/>
+            </Icon>
+            <Text>Markdown Example</Text>
+        </SideNavMenuLink>
+        <SideNavMenuLink Href="/markdown-rolling">
+            <Icon>
+                <LiIndentIncrease/>
+            </Icon>
+            <Text>Rolling Markdown Example</Text>
+        </SideNavMenuLink>
+
+        <SideNavMenuButton OnClickAsync="@(OnCreateToastAsync)">
+            <Icon>
+                <LiPopcorn/>
+            </Icon>
+            <Text>Create Toast</Text>
+        </SideNavMenuButton>
     </Body>
 
     <Footer>
@@ -101,4 +111,33 @@
         _currentUserImage = _currentUserImage == "/icon.png" ? "aaa/icon.png" : "/icon.png";
     }
 
+    private async Task OnCreateToastAsync() {
+        IToastData[] messages = [
+            new ToastData(
+                "info",
+                10,
+                ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Info)
+            ),
+            new ToastData(
+                "success",
+                10,
+                ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Success)
+            ),
+            new ToastData(
+                "warning",
+                10,
+                ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Warning)
+            ),
+            new ToastData(
+                "error",
+                10,
+                ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Error),
+                "Some Data",
+                "#",
+                "click here"
+            ),
+        ];
+
+        await Task.WhenAll(messages.Select(message => ToastService.AddToastAsync(message).AsTask()));
+    }
 }
