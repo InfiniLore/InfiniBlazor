@@ -6,13 +6,13 @@ namespace InfiniLore.InfiniBlazor.Toasting;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IToastService {
-    IEnumerable<IToastMessageData> Messages { get; }
-    event Func<Task>? OnChangeAsync;
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
-    Task ShowToastAsync(IToastMessageData toastMessage);
-    Task RemoveToastAsync(Guid toastId);
+public record ToastData(
+    string Title,
+    int DurationSeconds,
+    IToastAppearance Appearance,
+    string? Body = null,
+    string? LinkHref = null,
+    string? LinkTitle = null
+) : IToastData {
+    public Guid Id { get; init; } = Guid.NewGuid();
 }

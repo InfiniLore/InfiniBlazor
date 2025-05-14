@@ -2,15 +2,18 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 namespace InfiniLore.InfiniBlazor.Toasting;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IToastMessageData {
-    string Title { get; }
-    int DurationSeconds { get; }
-    IToastAppearance Appearance { get; }
-    string? Body { get; }
-    string? LinkHref { get; }
-    string? LinkTitle { get; }
-    Guid Id { get; }
+public interface IToastStorage {
+    IEnumerable<IToastData> Messages { get; }
+    event Func<Task>? OnChangeAsync;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    ValueTask AddToastAsync(IToastData toastMessage);
+    ValueTask RemoveToastAsync(Guid toastId);
+    void Clear();
 }

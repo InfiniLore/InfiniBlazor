@@ -8,14 +8,14 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inject IToastService ToastService
+@inject IToastStorage ToastService
 @implements IDisposable
 @rendermode InteractiveAuto
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="@ContainerPositionClass fixed z-50 p-3 space-y-2 max-w-sm w-full max-h-screen overflow-y-auto hide-scrollbar">
-    @foreach (IToastMessageData toast in ToastService.Messages) {
+    @foreach (IToastData toast in ToastService.Messages) {
         <ToastMessage Message="toast"></ToastMessage>
     }
 </div>

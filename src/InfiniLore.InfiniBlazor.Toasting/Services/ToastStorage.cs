@@ -7,33 +7,36 @@ namespace InfiniLore.InfiniBlazor.Toasting;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableScoped<IToastService>]
-public class ToastService() : IToastService {
+[InjectableScoped<IToastStorage>]
+public class ToastStorage : IToastStorage {
     public event Func<Task>? OnChangeAsync;
 
-    private readonly List<IToastMessageData> _messages = new();
-    public IEnumerable<IToastMessageData> Messages => _messages;
-
+    private readonly List<IToastData> _messages = new();
+    public IEnumerable<IToastData> Messages => _messages;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public async Task ShowToastAsync(IToastMessageData toastMessage) {
+    public async ValueTask AddToastAsync(IToastData toastMessage) {
         _messages.Add(toastMessage);
         if (OnChangeAsync is not null) await OnChangeAsync();
         if (toastMessage.DurationSeconds is not -1) _ = AutoRemoveAsync(toastMessage.Id, toastMessage.DurationSeconds);
     }
     
     private async Task AutoRemoveAsync(Guid toastId, int delaySeconds) {
-        if (toastId == Guid.Empty) return;
         await Task.Delay(delaySeconds * 1000);
         await RemoveToastAsync(toastId);
     }
     
-    public async Task RemoveToastAsync(Guid toastId) {
-        IToastMessageData? toast = _messages.FirstOrDefault(x => x.Id == toastId);
+    public async ValueTask RemoveToastAsync(Guid toastId) {
+        IToastData? toast = _messages.FirstOrDefault(x => x.Id == toastId);
         if (toast is null) return;
         if (toast.Id == Guid.Empty) return;
-        _messages.Remove(toast);
-        if (OnChangeAsync is not null) await OnChangeAsync();
+        if (!_messages.Remove(toast)) return;
+        
+        if (OnChangeAsync is null) return;
+        await OnChangeAsync();
     }
+    
+    public void Clear()
+        => _messages.Clear();
 }

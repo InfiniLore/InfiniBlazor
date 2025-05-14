@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.Toasting.Config;
 public static class IInfiniBlazorConfigExtensions {
     public static void AddToastingLogic(this IInfiniBlazorConfig config, Action<ToastConfig>? configure = null) {
         config.Services.RegisterServicesFromInfiniLoreInfiniBlazorToasting();
-        config.Services.AddSingleton<IToastService, ToastService>();
+        config.Services.AddSingleton<IToastStorage, ToastStorage>();
         
         var themeConfig = new ToastConfig(config);
         themeConfig.AddToastSetupData(StandardToastAppearance.Info, new ToastAppearance("info", "bg-blue-100 border border-blue-400 text-blue-900 hover:bg-blue-200", false));

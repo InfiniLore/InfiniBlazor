@@ -8,7 +8,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InteractiveServer
 @inject IThemeSelector ThemeSelector
-@inject IToastService ToastService
+@inject IToastStorage ToastService
 @inject IToastAppearanceProvider ToastAppearanceProvider
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html *@
@@ -112,23 +112,23 @@
     }
 
     private async Task OnCreateToastAsync() {
-        IToastMessageData[] messages = [
-            new ToastMessageData(
+        IToastData[] messages = [
+            new ToastData(
                 "info",
                 10,
                 ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Info)
             ),
-            new ToastMessageData(
+            new ToastData(
                 "success",
                 10,
                 ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Success)
             ),
-            new ToastMessageData(
+            new ToastData(
                 "warning",
                 10,
                 ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Warning)
             ),
-            new ToastMessageData(
+            new ToastData(
                 "error",
                 10,
                 ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Error),
@@ -138,6 +138,6 @@
             ),
         ];
 
-        await Task.WhenAll(messages.Select(message => ToastService.ShowToastAsync(message)));
+        await Task.WhenAll(messages.Select(message => ToastService.AddToastAsync(message).AsTask()));
     }
 }
