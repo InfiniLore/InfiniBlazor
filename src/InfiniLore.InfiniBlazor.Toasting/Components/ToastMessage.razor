@@ -9,16 +9,36 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
+@inject IToastService ToastService
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div
-    role="alert"
-    class="@Message.Appearance.TailwindData p-2 rounded-lg flex items-center transition duration-300 ease-in-out transform hover:scale-105 space-x-2"
->
-    <LucideIcon Name="@Message.Appearance.IconName"></LucideIcon>
-    <p class="text-xs font-semibold">@Message.Title</p>
+<div class="transition duration-300 ease-in-out transform hover:scale-105">
+    <div
+        role="alert"
+        class="@Message.Appearance.TailwindData p-2 rounded-lg flex items-start justify-between space-x-2"
+    >
+        <div class="flex items-start space-x-2">
+            @if (Message.Appearance.IconName is {} iconName) {
+                <LucideIcon Name="@iconName" class="flex-shrink-0"/>
+            }
+            <div class="flex flex-col space-y-1">
+                <p class="text-sm font-semibold">@Message.Title</p>
+                @if (Message.Body.IsNotNullOrWhiteSpace()) {
+                    <p class="text-xs ">@Message.Body</p>
+                }
+                @if (Message.LinkHref.IsNotNullOrWhiteSpace()) {
+                    <a href="@Message.LinkHref" target="_blank" class="text-xs underline">@Message.LinkTitle</a>
+                }
+            </div>
+        </div>
+
+        @if (Message.Appearance.CanBeDismissed) {
+            <button class="focus:outline-none hover:font-bold flex-shrink-0" @onclick="@(() => ToastService.RemoveToastAsync(Message.Id))">
+                <LiX/>
+            </button>
+        }
+    </div>
 </div>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code

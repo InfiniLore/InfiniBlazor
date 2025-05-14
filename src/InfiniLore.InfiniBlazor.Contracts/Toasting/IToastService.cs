@@ -13,5 +13,6 @@ public interface IToastService {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    Task ShowToastAsync(string title, int durationSeconds = 5, string? appearanceKey = null);
+    Task ShowToastAsync(IToastMessage toastMessage);
+    Task RemoveToastAsync(Guid toastId);
 }

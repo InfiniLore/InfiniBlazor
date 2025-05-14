@@ -7,7 +7,7 @@ namespace InfiniLore.InfiniBlazor.Toasting;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IToastAppearance {
-    string IconName { get; }
+    string? IconName { get; }
     string TailwindData { get; }
     bool CanBeDismissed { get; }
 }

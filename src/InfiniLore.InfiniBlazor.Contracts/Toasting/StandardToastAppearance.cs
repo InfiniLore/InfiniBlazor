@@ -1,13 +1,15 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Toasting;
-
-namespace InfiniLore.InfiniBlazor.Config;
+namespace InfiniLore.InfiniBlazor.Toasting;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IToastConfig {
-    IReadOnlyDictionary<object, IToastAppearance> ToastSetupData { get; }
+public enum StandardToastAppearance {
+    Default = 0,
+    Info,
+    Success,
+    Warning,
+    Error,
 }

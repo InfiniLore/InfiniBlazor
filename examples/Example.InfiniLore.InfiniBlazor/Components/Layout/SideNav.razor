@@ -3,12 +3,14 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Theming
 @using InfiniLore.InfiniBlazor.Toasting
+@using ToastMessage = InfiniLore.InfiniBlazor.Toasting.ToastMessage
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InteractiveServer
 @inject IThemeSelector ThemeSelector
 @inject IToastService ToastService
+@inject IToastAppearanceProvider ToastAppearanceProvider
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -34,7 +36,7 @@
             <Text>Rolling Markdown Example</Text>
         </SideNavMenuLink>
 
-        <SideNavMenuButton OnClickAsync="@(() => ToastService.ShowToastAsync("test", 10))">
+        <SideNavMenuButton OnClickAsync="@(OnCreateToastAsync)">
             <Icon>
                 <LiPopcorn/>
             </Icon>
@@ -110,4 +112,33 @@
         _currentUserImage = _currentUserImage == "/icon.png" ? "aaa/icon.png" : "/icon.png";
     }
 
+    private async Task OnCreateToastAsync() {
+        IToastMessage[] messages = [
+            new ToastMessage(
+                "info",
+                10,
+                ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Info)
+            ),
+            new ToastMessage(
+                "success",
+                10,
+                ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Success)
+            ),
+            new ToastMessage(
+                "warning",
+                10,
+                ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Warning)
+            ),
+            new ToastMessage(
+                "error",
+                10,
+                ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Error),
+                "Some Data",
+                "#",
+                "click here"
+            ),
+        ];
+
+        await Task.WhenAll(messages.Select(message => ToastService.ShowToastAsync(message)));
+    }
 }

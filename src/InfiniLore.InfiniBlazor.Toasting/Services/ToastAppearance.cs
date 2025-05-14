@@ -7,7 +7,7 @@ namespace InfiniLore.InfiniBlazor.Toasting;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public record ToastAppearance(
-    string IconName,
+    string? IconName,
     string TailwindData,
     bool CanBeDismissed
 ) : IToastAppearance {
