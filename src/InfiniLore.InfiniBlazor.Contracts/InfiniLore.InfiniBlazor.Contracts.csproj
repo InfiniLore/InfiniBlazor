@@ -8,7 +8,7 @@
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.InfiniBlazor.Contracts</PackageId>
-        <Version>0.1.0-preview.22</Version>
+        <Version>0.1.0-preview.23</Version>
         <Authors>Anna Sas</Authors>
         <Description>Contract library for InfiniLore's Component Library</Description>
         <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
@@ -34,10 +34,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="JetBrains.Annotations"/>
-      <PackageReference Include="Microsoft.AspNetCore.Components"/>
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions"/>
-      <PackageReference Include="Microsoft.Extensions.ObjectPool"/>
+      <PackageReference Include="JetBrains.Annotations" />
+      <PackageReference Include="Microsoft.AspNetCore.Components" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+      <PackageReference Include="Microsoft.Extensions.ObjectPool" />
     </ItemGroup>
 
 </Project>
