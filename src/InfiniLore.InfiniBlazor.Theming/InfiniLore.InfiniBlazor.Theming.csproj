@@ -7,7 +7,7 @@
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.InfiniBlazor.Theming</PackageId>
-        <Version>0.1.0-preview.24</Version>
+        <Version>0.1.0-preview.25</Version>
         <Authors>Anna Sas</Authors>
         <Description>CSS Theme library for InfiniLore's Component Library</Description>
         <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
