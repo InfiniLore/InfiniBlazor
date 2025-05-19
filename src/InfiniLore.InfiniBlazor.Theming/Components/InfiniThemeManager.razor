@@ -4,17 +4,15 @@
 @using InfiniLore.InfiniBlazor.JsRuntime
 @using InfiniLore.InfiniBlazor.Theming
 
+@* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inject IThemeSelector ThemeSelector
 @inject IJsRuntimeHelper JsRuntimeHelper
-
-@rendermode InteractiveAuto
-
-@inherits ComponentBase
 @implements IAsyncDisposable
+@rendermode InteractiveAuto
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
