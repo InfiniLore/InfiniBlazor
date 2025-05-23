@@ -1,17 +1,10 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.JsRuntime
-@using InfiniLore.InfiniBlazor.Theming
-
-@* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inject IThemeSelector ThemeSelector
-@inject IJsRuntimeHelper JsRuntimeHelper
-@implements IAsyncDisposable
 @rendermode InteractiveAuto
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
@@ -19,36 +12,3 @@
 <HeadContent>
     <style id="@StyleId">@CurrentCss</style>
 </HeadContent>
-
-@* ------------------------------------------------------------------------------------------------------------------ *@
-@* Code
-@* ------------------------------------------------------------------------------------------------------------------ *@
-
-@code {
-    private string CurrentCss { get; set; } = string.Empty;
-    private const string StyleId = "infiniThemeManager-selectedTheme-css";
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
-    protected override void OnInitialized() {
-        ThemeSelector.ThemeChangedAsync += OnThemeChangedAsync;
-        if (!ThemeSelector.TryGetCurrentThemeModeCss(out string? css)) return;
-        CurrentCss = css;
-    }
-
-    private async Task OnThemeChangedAsync() {
-        if (!ThemeSelector.TryGetCurrentThemeModeCss(out string? css)) return;
-        CurrentCss = css;
-
-        // WTF this works ...
-        //      HeadContent should have handled this, but NO it doesnt want to do it ... why? I dont know!
-        await JsRuntimeHelper.AddOrUpdateStyleElementAtHead(StyleId, CurrentCss);
-        await InvokeAsync(StateHasChanged);
-    }
-
-    public ValueTask DisposeAsync() {
-        ThemeSelector.ThemeChangedAsync -= OnThemeChangedAsync;
-        return ValueTask.CompletedTask;
-    }
-}
