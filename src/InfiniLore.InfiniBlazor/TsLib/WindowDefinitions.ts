@@ -19,5 +19,4 @@ window.removePreventDefaultListener = removePreventDefaultListener;
 window.setTextContent = setTextContent;
 window.getTextContent = getTextContent;
 
-window.addOrUpdateStyleElementAtHead = addOrUpdateStyleElementAtHead
-;
+window.addOrUpdateStyleElementAtHead = addOrUpdateStyleElementAtHead;
