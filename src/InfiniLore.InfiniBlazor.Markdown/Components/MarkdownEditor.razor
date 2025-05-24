@@ -21,7 +21,7 @@
             <div class="flex space-x-1">
                 @foreach (ITextModifier textModifier in textEditor.Modifiers) {
                     <InfiniButton OnClickAsync="() => OnModifierClickAsync(textModifier.ModifierName)"
-                                  Variant="ButtonVariant.TransparentIcon"
+                                  Variant="ButtonVariant.Transparent"
                                   IconName="@textModifier.IconName"/>
                 }
             </div>
