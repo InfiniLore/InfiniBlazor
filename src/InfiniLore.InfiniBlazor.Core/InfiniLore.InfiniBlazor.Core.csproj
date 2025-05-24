@@ -6,10 +6,10 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <DebugType>portable</DebugType>
-<!--        <Optimize>false</Optimize>-->
+        <RootNamespace>Infinilore.InfiniBlazor</RootNamespace>
 
         <!-- Package metadata -->
-        <PackageId>InfiniLore.InfiniBlazor</PackageId>
+        <PackageId>InfiniLore.InfiniBlazor.Core</PackageId>
         <Version>0.1.0-preview.29</Version>
         <Authors>Anna Sas</Authors>
         <Description>InfiniLore's Component Library</Description>
@@ -30,42 +30,28 @@
         <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
         <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
     </ItemGroup>
-    
-    <ItemGroup>
-        <EmbeddedResource Include="wwwroot\InfiniBlazor.js" />
-        <EmbeddedResource Include="wwwroot\InfiniBlazor.css" />
-    </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="CodeOfChaos.Extensions" />
         <PackageReference Include="Microsoft.AspNetCore.Components" />
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
-        
+
         <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" />
         <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="InfiniLore.Lucide" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
-      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core\InfiniLore.InfiniBlazor.Core.csproj" />
-      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Markdown\InfiniLore.InfiniBlazor.Markdown.csproj" />
-      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Theming\InfiniLore.InfiniBlazor.Theming.csproj" />
-      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Toasting\InfiniLore.InfiniBlazor.Toasting.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <UpToDateCheckInput Remove="Components\InfiniButton\InfiniButton.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniSection\InfiniSection.razor" />
-      <UpToDateCheckInput Remove="Components\SideNavMenu\SideNavMenu.razor" />
-      <UpToDateCheckInput Remove="Components\SideNavMenu\SideNavMenuButton.razor" />
-      <UpToDateCheckInput Remove="Components\SideNavMenu\SideNavMenuItem.razor" />
-      <UpToDateCheckInput Remove="Components\SideNavMenu\SideNavMenuLink.razor" />
-      <UpToDateCheckInput Remove="Components\SideNavMenu\SideNavMenuUser.razor" />
-      <UpToDateCheckInput Remove="Components\UserIcon\UserIcon.razor" />
+      <AdditionalFiles Include="Components\SideNavMenu\SideNavMenu.razor" />
+      <AdditionalFiles Include="Components\SideNavMenu\SideNavMenuButton.razor" />
+      <AdditionalFiles Include="Components\SideNavMenu\SideNavMenuItem.razor" />
+      <AdditionalFiles Include="Components\SideNavMenu\SideNavMenuLink.razor" />
+      <AdditionalFiles Include="Components\SideNavMenu\SideNavMenuUser.razor" />
+      <AdditionalFiles Include="Components\UserIcon\UserIcon.razor" />
     </ItemGroup>
 
 </Project>

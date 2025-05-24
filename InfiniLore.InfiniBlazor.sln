@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfiniLore.InfiniBlazor.Toa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.InfiniLore.InfiniBlazor.Toasting", "tests\Tests.InfiniLore.InfiniBlazor.Toasting\Tests.InfiniLore.InfiniBlazor.Toasting.csproj", "{D6AACAFA-1E09-42F6-B790-8A1283C1E1CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfiniLore.InfiniBlazor.Core", "src\InfiniLore.InfiniBlazor.Core\InfiniLore.InfiniBlazor.Core.csproj", "{548CE6AF-871D-4D8F-98CB-E55976C58E1A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{D6AACAFA-1E09-42F6-B790-8A1283C1E1CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6AACAFA-1E09-42F6-B790-8A1283C1E1CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6AACAFA-1E09-42F6-B790-8A1283C1E1CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{548CE6AF-871D-4D8F-98CB-E55976C58E1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{548CE6AF-871D-4D8F-98CB-E55976C58E1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{548CE6AF-871D-4D8F-98CB-E55976C58E1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{548CE6AF-871D-4D8F-98CB-E55976C58E1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{26284571-0E09-4BAF-8C2B-DF87DCC1BA0B} = {8DD280D4-1E14-4D5E-AFE6-58DD8F079DCC}
@@ -135,5 +141,6 @@ Global
 		{A30AFF91-165D-46BA-994C-E3184431D320} = {197E72AD-DEAB-4350-AFC3-A3BB38720BF5}
 		{4AD1DD6F-E20D-4FBA-821D-4CEB5F7727C4} = {197E72AD-DEAB-4350-AFC3-A3BB38720BF5}
 		{D6AACAFA-1E09-42F6-B790-8A1283C1E1CA} = {8DD280D4-1E14-4D5E-AFE6-58DD8F079DCC}
+		{548CE6AF-871D-4D8F-98CB-E55976C58E1A} = {197E72AD-DEAB-4350-AFC3-A3BB38720BF5}
 	EndGlobalSection
 EndGlobal

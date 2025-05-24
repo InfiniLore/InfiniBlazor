@@ -1,23 +1,32 @@
-@* ------------------------------------------------------------------------------------------------------------------ *@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.Markdown
+@namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@page "/markdown-dual"
-@rendermode InteractiveServer
+@inherits ComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniSection class="h-128">
-    <MarkdownEditor Source="@TextSource"></MarkdownEditor>
-</InfiniSection>
+<div @attributes="OtherAttributes" class="bg-(--color-base-00) shadow-sm rounded-2xl p-4 border border-(--color-base-10) @ExtraCss">
+    @ChildContent
+</div>
+
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private ITextSource TextSource { get; }  = new TextSource();
-}
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+    
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
 
+    private string? ExtraCss => AdditionalAttributes?.TryGetValue("class", out object? userClass) ?? false ? userClass as string : "";
+    
+    private Dictionary<string, object>? OtherAttributes => AdditionalAttributes?
+        .Where(kvp => kvp.Key != "class")
+        .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+}

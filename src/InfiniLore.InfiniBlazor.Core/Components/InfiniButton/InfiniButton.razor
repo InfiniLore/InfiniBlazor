@@ -1,0 +1,33 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.Lucide
+
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits ComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="group/button">
+    <button @onclick="OnClickAsync"
+            class="group inline-flex items-center justify-center rounded-md bg-(--color-base-90) group-hover/button:bg-(--color-base-70) hover:ring-2 hover:ring-(--color-accent) p-2 text-sm font-medium shadow-sm transition">
+        @if (IconName.IsNotNullOrWhiteSpace()) {
+            <LucideIcon Name="@IconName" class="w-6 h-6 text-(--color-base-00) group-hover/button:text-(--color-accent)"/>
+        } else {
+            <span class="text-(--color-base-00) group-hover/button:text-(--color-accent)">
+                @ChildContent
+            </span>
+        }
+    </button>
+</div>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter] public string? IconName { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> OnClickAsync { get; set; }
+}

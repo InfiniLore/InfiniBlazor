@@ -23,6 +23,7 @@ public static class Program {
         string projects = string.Join(";", 
             "InfiniLore.InfiniBlazor",
             "InfiniLore.InfiniBlazor.Contracts",
+            "InfiniLore.InfiniBlazor.Core",
             "InfiniLore.InfiniBlazor.Markdown",
             "InfiniLore.InfiniBlazor.Theming",
             "InfiniLore.InfiniBlazor.Theming.Generators",

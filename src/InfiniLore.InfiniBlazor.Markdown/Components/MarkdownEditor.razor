@@ -13,9 +13,9 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="flex flex-col h-screen">
+<div class="flex flex-col grow flex-1 min-h-0 h-full">
     <!-- Header with toolbar -->
-    <div class="flex ">
+    <div class="flex flex-none">
         <!-- Editor toolbar (Left side) -->
         <div class="w-1/2 flex justify-between items-center bg-white px-4 py-2 border-b border-r border-gray-200">
             <!-- Left-Aligned Buttons -->
@@ -46,9 +46,9 @@
     </div>
 
     <!-- Main content area -->
-    <div class="flex flex-grow">
+    <div class="flex flex-1 min-h-0">
         <!-- Editor content -->
-        <div class="w-1/2 border-r border-gray-300">
+        <div class="w-1/2 border-r border-gray-300 min-h-0">
             <textarea
                 class="w-full h-full p-4 border-none focus:outline-none resize-none"
                 @ref="_textareaRef"
@@ -59,7 +59,7 @@
         </div>
 
         <!-- Preview content -->
-        <div class="w-1/2 p-4 overflow-auto">
+        <div class="w-1/2 p-4 overflow-auto min-h-0">
             <div class="prose max-w-full">
                 @MarkdownOutput
             </div>
