@@ -1,7 +1,6 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.Lucide
 @using InfiniLore.InfiniBlazor.Markdown
 
 @namespace InfiniLore.InfiniBlazor.Components
@@ -21,24 +20,16 @@
             <!-- Left-Aligned Buttons -->
             <div class="flex space-x-1">
                 @foreach (ITextModifier textModifier in textEditor.Modifiers) {
-                    <button class="p-1 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                            title="@textModifier.ModifierName"
-                            @onclick="() => OnModifierClickAsync(textModifier.ModifierName)">
-                        <LucideIcon Name="@textModifier.IconName" class="w-5 h-5"/>
-                    </button>
+                    <InfiniButton OnClickAsync="() => OnModifierClickAsync(textModifier.ModifierName)"
+                                  Variant="ButtonVariant.TransparentIcon"
+                                  IconName="@textModifier.IconName"/>
                 }
             </div>
 
             <!-- Right-Aligned Buttons -->
             <div class="flex space-x-2">
-                <button class="px-3 py-1.5 bg-gray-50 text-gray-700 rounded-md border border-gray-200 hover:bg-gray-100 transition-colors duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-sm font-medium"
-                        @onclick="DebugLoremAsync">
-                    Lorem
-                </button>
-                <button class="px-3 py-1.5 bg-gray-50 text-gray-700 rounded-md border border-gray-200 hover:bg-gray-100 transition-colors duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-sm font-medium"
-                        @onclick="DebugTableAsync">
-                    Table
-                </button>
+                <InfiniButton OnClickAsync="DebugLoremAsync">Lorem</InfiniButton>
+                <InfiniButton OnClickAsync="DebugTableAsync">Table</InfiniButton>
             </div>
         </div>
         <!-- Preview header (Right side) - Empty but maintains layout -->

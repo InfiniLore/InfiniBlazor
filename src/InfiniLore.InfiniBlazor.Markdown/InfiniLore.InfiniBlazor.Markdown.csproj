@@ -46,6 +46,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
+      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core\InfiniLore.InfiniBlazor.Core.csproj" />
     </ItemGroup>
 
 </Project>
