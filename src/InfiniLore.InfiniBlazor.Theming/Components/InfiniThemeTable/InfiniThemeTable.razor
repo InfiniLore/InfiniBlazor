@@ -15,39 +15,51 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniTable Items="ThemeItems" >
+<InfiniTable Items="ThemeItems">
     <Header>
-        <InfiniTableHeader>Name</InfiniTableHeader>
-        <InfiniTableHeader>Value</InfiniTableHeader>
-        <InfiniTableHeader>Display (bg - bgc)</InfiniTableHeader>
-        <InfiniTableHeader>Actions</InfiniTableHeader>
+        <InfiniTableHeader Class="w-min-48">Name</InfiniTableHeader>
+        <InfiniTableHeader Class="w-min-48">Value</InfiniTableHeader>
+        <InfiniTableHeader>Display</InfiniTableHeader>
+        <InfiniTableHeader Class="w-min-128">Actions</InfiniTableHeader>
     </Header>
     <Content Context="item">
-        <InfiniTableCell>
+        <InfiniTableCell Class="w-min-48">
             <code>@item.CssVarName</code>
         </InfiniTableCell>
-        <InfiniTableCell>
+        <InfiniTableCell Class="w-min-48">
             <code>@item.CssData</code>
         </InfiniTableCell>
 
-        <InfiniTableCell Alignment="right" Class="flex justify-center gap-2">
-            <div class="@($"bg-({item.CssVarName})") w-12 h-12 shadow-md flex items-center justify-center leading-none rounded-xl"></div>
-            <div class="@($"bgc-({item.CssVarName})") w-12 h-12 shadow-md flex items-center justify-center leading-none rounded-xl"></div>
+        <InfiniTableCell Alignment="" Class="w-full flex justify-center items-center">
+            <div class="w-12 h-12 shadow-md flex items-center justify-center leading-none rounded-xl"
+                 style="background: var(@item.CssVarName)">
+            </div>
         </InfiniTableCell>
 
-        <InfiniTableCell Alignment="right" Class="flex justify-center gap-2">
-            <InfiniButton OnClick="() => JsRuntimeHelper.CopyToClipboardAsync(item.CssVarName)">Copy Var name</InfiniButton>
-            <InfiniButton OnClick="() => JsRuntimeHelper.CopyToClipboardAsync(item.CssData)">Copy Value</InfiniButton>
+        <InfiniTableCell Alignment="right" Class="flex justify-center gap-2 w-min-128">
+            <InfiniButton
+                IconName="copy"
+                OnClick="() => JsRuntimeHelper.CopyToClipboardAsync(item.CssVarName)"
+                Tooltip="Copies the CSS Variable name to the clipboard">
+                Var name
+            </InfiniButton>
+            <InfiniButton
+                IconName="copy"
+                OnClick="() => JsRuntimeHelper.CopyToClipboardAsync(item.CssData)"
+                Tooltip="Copies the CSS Variable value to the clipboard">
+                Css Value
+            </InfiniButton>
         </InfiniTableCell>
     </Content>
 </InfiniTable>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
 
     private ThemeItem[] ThemeItems => GetThemeItems();
-    
+
     private ThemeItem[] GetThemeItems() {
         if (!ThemeSelector.TryGetCurrentTheme(out ITheme? theme)) return [];
 
@@ -58,4 +70,5 @@
     }
 
     private record ThemeItem(string CssVarName, string CssData);
+
 }

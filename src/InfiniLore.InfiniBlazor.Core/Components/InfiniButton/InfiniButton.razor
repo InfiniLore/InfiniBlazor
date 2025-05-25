@@ -18,29 +18,24 @@
             disabled="@Disabled"
             aria-label="@AriaLabel"
             class="@(Class + DisableClasses) inline-flex items-center justify-center rounded-md transition">
-        @if (IconName.IsNotNullOrWhiteSpace()) {
-            <div class="@IconClasses w-8 h-8 flex justify-center items-center rounded-md">
-                <LucideIcon Name="@IconName" class="IconClasses"/>
-            </div>
-        }
-        else if (ChildContent is not null) {
-            <span class="@TextClasses rounded-md">
+        <span class="@TextClasses rounded-md inline-flex items-center gap-2">
+            @if (IconName.IsNotNullOrWhiteSpace()) {
+                <LucideIcon Name="@IconName" class="@IconClasses"/>
+            }
+            @if (ChildContent is not null) {
                 @ChildContent
-            </span>
-        }
-        else {
-            <span class="w-8 h-8"></span>
-        }
+            }
+            @if (IconName.IsNullOrWhiteSpace() && ChildContent is null) {
+                <span class="w-8 h-8"></span>
+            }
+        </span>
     </button>
     @if (!string.IsNullOrEmpty(Tooltip)) {
-        <div
-            class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1 bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md opacity-0 group-hover/button:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
+        <div class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1 bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md opacity-0 group-hover/button:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
             @Tooltip
         </div>
     }
 </div>
-
-
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
