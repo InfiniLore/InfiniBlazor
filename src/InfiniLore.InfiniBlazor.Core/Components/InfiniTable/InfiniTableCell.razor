@@ -1,23 +1,35 @@
-@* ------------------------------------------------------------------------------------------------------------------ *@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.Markdown
+@* ReSharper disable once CheckNamespace *@
+@namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@page "/markdown-dual"
-@rendermode InteractiveServer
+@inherits ComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniSection class="h-128">
-    <MarkdownEditor Source="@TextSource"></MarkdownEditor>
-</InfiniSection>
+<td class="@CssClass">
+    @ChildContent
+</td>
+
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private ITextSource TextSource { get; }  = new TextSource();
-}
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
 
+    [Parameter]
+    public string Alignment { get; set; } = "left";
+
+    [Parameter]
+    public int TextShade { get; set; } = 90;
+
+    [Parameter]
+    public string Class { get; set; } = "";
+
+    private string CssClass => $"p-3 text-sm text-(--color-base-{TextShade}) {(Alignment == "right" ? "text-right" : "")} {Class}";
+}

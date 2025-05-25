@@ -4,7 +4,6 @@
 using Ganss.Xss;
 using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Markdown.Processors.InputProcessors;
-using InfiniLore.InfiniBlazor.Markdown.SyntaxTreeConverters;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Config;

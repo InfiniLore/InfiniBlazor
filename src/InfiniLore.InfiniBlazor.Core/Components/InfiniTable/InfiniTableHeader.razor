@@ -1,8 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using Microsoft.AspNetCore.Components.Routing
-
+@* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
@@ -11,19 +10,17 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<NavLink href="@Href" class="@SideNavMenuItem.ContainerClasses">
-    <SideNavMenuItem Text="@Text" Icon="@Icon"/>
-</NavLink>
+<th class="@($"text-{Alignment} p-3 text-sm font-semibold text-(--color-base-90)")">
+    @ChildContent
+</th>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
-    [Parameter, EditorRequired] public required string Href { get; init; }
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
 
-    [CascadingParameter] public bool MenuCollapsed { get; set; }
-    [Parameter] public RenderFragment? Text { get; set; }
-    [Parameter] public RenderFragment? Icon { get; set; }
+    [Parameter]
+    public string Alignment { get; set; } = "left";
 }
-

@@ -1,23 +1,28 @@
-@* ------------------------------------------------------------------------------------------------------------------ *@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.Markdown
+@using Microsoft.AspNetCore.Components.Routing
+
+@namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@page "/markdown-dual"
-@rendermode InteractiveServer
+@inherits ComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniSection class="h-128">
-    <MarkdownEditor Source="@TextSource"></MarkdownEditor>
-</InfiniSection>
+<NavLink href="@Href" class="@SideNavMenuItem.ContainerClasses">
+    <SideNavMenuItem Text="@Text" Icon="@Icon"/>
+</NavLink>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private ITextSource TextSource { get; }  = new TextSource();
+    [Parameter, EditorRequired] public required string Href { get; init; }
+
+    [CascadingParameter] public bool MenuCollapsed { get; set; }
+    [Parameter] public RenderFragment? Text { get; set; }
+    [Parameter] public RenderFragment? Icon { get; set; }
 }
 

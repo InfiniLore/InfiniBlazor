@@ -1,18 +1,20 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>InfiniLore.InfiniBlazor</RootNamespace>
+        <DebugType>portable</DebugType>
+        <RootNamespace>Infinilore.InfiniBlazor</RootNamespace>
 
         <!-- Package metadata -->
-        <PackageId>InfiniLore.InfiniBlazor.Contracts</PackageId>
+        <PackageId>InfiniLore.InfiniBlazor.Core</PackageId>
         <Version>0.1.0-preview.30</Version>
         <Authors>Anna Sas</Authors>
-        <Description>Contract library for InfiniLore's Component Library</Description>
+        <Description>InfiniLore's Component Library</Description>
         <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
-        <PackageTags>Blazor;Ui;Design;Components;Library;Contracts</PackageTags>
+        <PackageTags>Blazor;Ui;Design;Components;Library</PackageTags>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <IncludeSymbols>true</IncludeSymbols>
@@ -27,17 +29,20 @@
         <None Include="../../LICENSE" Pack="true" PackagePath="" Visible="false" />
         <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
         <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Markdown" />
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Theming" />
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Toasting" />
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="JetBrains.Annotations" />
-      <PackageReference Include="Microsoft.AspNetCore.Components" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
-      <PackageReference Include="Microsoft.Extensions.ObjectPool" />
+        <PackageReference Include="CodeOfChaos.Extensions" />
+        <PackageReference Include="Microsoft.AspNetCore.Components" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" />
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="InfiniLore.Lucide" />
     </ItemGroup>
 
 </Project>
