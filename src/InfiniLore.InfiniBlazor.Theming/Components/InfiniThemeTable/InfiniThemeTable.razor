@@ -19,16 +19,25 @@
     <Header>
         <InfiniTableHeader>Name</InfiniTableHeader>
         <InfiniTableHeader>Value</InfiniTableHeader>
+        <InfiniTableHeader>Display (bg - bgc)</InfiniTableHeader>
         <InfiniTableHeader>Actions</InfiniTableHeader>
     </Header>
     <Content Context="item">
-        <InfiniTableCell>@item.CssVarName</InfiniTableCell>
-        <InfiniTableCell>@item.CssData</InfiniTableCell>
         <InfiniTableCell>
-            <div class="@($"bg-({item.CssVarName}) w-12 h-12 shadow-md flex items-center justify-center leading-none rounded-xl")"></div>
+            <code>@item.CssVarName</code>
         </InfiniTableCell>
-        <InfiniTableCell Alignment="right"  Class="flex justify-end gap-2">
-            <InfiniButton OnClick="() => JsRuntimeHelper.CopyToClipboardAsync(item.CssVarName)">Copy Css Var name</InfiniButton>
+        <InfiniTableCell>
+            <code>@item.CssData</code>
+        </InfiniTableCell>
+
+        <InfiniTableCell Alignment="right" Class="flex justify-center gap-2">
+            <div class="@($"bg-({item.CssVarName})") w-12 h-12 shadow-md flex items-center justify-center leading-none rounded-xl"></div>
+            <div class="@($"bgc-({item.CssVarName})") w-12 h-12 shadow-md flex items-center justify-center leading-none rounded-xl"></div>
+        </InfiniTableCell>
+
+        <InfiniTableCell Alignment="right" Class="flex justify-center gap-2">
+            <InfiniButton OnClick="() => JsRuntimeHelper.CopyToClipboardAsync(item.CssVarName)">Copy Var name</InfiniButton>
+            <InfiniButton OnClick="() => JsRuntimeHelper.CopyToClipboardAsync(item.CssData)">Copy Value</InfiniButton>
         </InfiniTableCell>
     </Content>
 </InfiniTable>
