@@ -15,14 +15,13 @@
     <table class="w-full">
         <thead>
         <tr class="border-b border-(--color-base-10)">
-            @HeaderContent
+            @Header
         </tr>
         </thead>
         <tbody>
-        @foreach (var item in Items)
-        {
+        @foreach (TItem item in Items) {
             <tr class="group hover:bg-(--color-base-10) transition">
-                @RowTemplate(item)
+                @Content(item)
             </tr>
         }
         </tbody>
@@ -34,13 +33,14 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     [Parameter]
     public IEnumerable<TItem> Items { get; set; } = Array.Empty<TItem>();
 
     [Parameter]
-    public RenderFragment HeaderContent { get; set; } = null!;
+    public RenderFragment Header { get; set; } = null!;
 
     [Parameter]
-    public RenderFragment<TItem> RowTemplate { get; set; } = null!;
+    public RenderFragment<TItem> Content { get; set; } = null!;
 }

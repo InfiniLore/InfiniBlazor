@@ -45,13 +45,4 @@
         <PackageReference Include="InfiniLore.Lucide" />
     </ItemGroup>
 
-    <ItemGroup>
-      <AdditionalFiles Include="Components\SideNavMenu\SideNavMenu.razor" />
-      <AdditionalFiles Include="Components\SideNavMenu\SideNavMenuButton.razor" />
-      <AdditionalFiles Include="Components\SideNavMenu\SideNavMenuItem.razor" />
-      <AdditionalFiles Include="Components\SideNavMenu\SideNavMenuLink.razor" />
-      <AdditionalFiles Include="Components\SideNavMenu\SideNavMenuUser.razor" />
-      <AdditionalFiles Include="Components\UserIcon\UserIcon.razor" />
-    </ItemGroup>
-
 </Project>

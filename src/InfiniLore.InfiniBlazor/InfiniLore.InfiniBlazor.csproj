@@ -57,15 +57,4 @@
       <ProjectReference Include="..\InfiniLore.InfiniBlazor.Toasting\InfiniLore.InfiniBlazor.Toasting.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <UpToDateCheckInput Remove="Components\InfiniButton\InfiniButton.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniSection\InfiniSection.razor" />
-      <UpToDateCheckInput Remove="Components\SideNavMenu\SideNavMenu.razor" />
-      <UpToDateCheckInput Remove="Components\SideNavMenu\SideNavMenuButton.razor" />
-      <UpToDateCheckInput Remove="Components\SideNavMenu\SideNavMenuItem.razor" />
-      <UpToDateCheckInput Remove="Components\SideNavMenu\SideNavMenuLink.razor" />
-      <UpToDateCheckInput Remove="Components\SideNavMenu\SideNavMenuUser.razor" />
-      <UpToDateCheckInput Remove="Components\UserIcon\UserIcon.razor" />
-    </ItemGroup>
-
 </Project>
