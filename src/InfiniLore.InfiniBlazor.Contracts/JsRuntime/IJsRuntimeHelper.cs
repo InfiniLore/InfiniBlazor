@@ -21,4 +21,6 @@ public interface IJsRuntimeHelper {
     Task<string> GetTextContentAsync(ElementReference element);
     
     Task AddOrUpdateStyleElementAtHead(string id, string css);
+    
+    Task CopyToClipboardAsync(string text);
 }

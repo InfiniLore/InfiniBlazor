@@ -20,4 +20,5 @@ public interface IThemeSelector {
     Task<bool> TrySelectNextThemeModeAsync();
     
     bool TryGetCurrentThemeModeCss([NotNullWhen(true)] out string? css);
+    bool TryGetCurrentTheme([NotNullWhen(true)] out ITheme? theme);
 }

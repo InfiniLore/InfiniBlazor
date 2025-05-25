@@ -1,19 +1,52 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.JsRuntime
+@using InfiniLore.InfiniBlazor.Theming
+
 @* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits ComponentBase
+@inject IThemeSelector ThemeSelector
+@inject IJsRuntimeHelper JsRuntimeHelper
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
+<InfiniTable Items="ThemeItems" >
+    <Header>
+        <InfiniTableHeader>Name</InfiniTableHeader>
+        <InfiniTableHeader>Value</InfiniTableHeader>
+        <InfiniTableHeader>Actions</InfiniTableHeader>
+    </Header>
+    <Content Context="item">
+        <InfiniTableCell>@item.CssVarName</InfiniTableCell>
+        <InfiniTableCell>@item.CssData</InfiniTableCell>
+        <InfiniTableCell>
+            <div class="@($"bg-({item.CssVarName}) w-12 h-12 shadow-md flex items-center justify-center leading-none rounded-xl")"></div>
+        </InfiniTableCell>
+        <InfiniTableCell Alignment="right"  Class="flex justify-end gap-2">
+            <InfiniButton OnClick="() => JsRuntimeHelper.CopyToClipboardAsync(item.CssVarName)">Copy Css Var name</InfiniButton>
+        </InfiniTableCell>
+    </Content>
+</InfiniTable>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
+
+    private ThemeItem[] ThemeItems => GetThemeItems();
     
+    private ThemeItem[] GetThemeItems() {
+        if (!ThemeSelector.TryGetCurrentTheme(out ITheme? theme)) return [];
+
+        return theme.AsCssVariables()
+            .Select(tuple => new ThemeItem(tuple.Item1, tuple.Item2))
+            .Where(item => !item.CssVarName.EndsWith("-rgb"))
+            .ToArray();
+    }
+
+    private record ThemeItem(string CssVarName, string CssData);
 }
