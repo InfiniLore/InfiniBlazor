@@ -11,16 +11,17 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="bg-(--color-base-00) shadow-sm rounded-2xl border border-(--color-base-10) h-full flex flex-col">
-    <div class="overflow-auto flex-1">
-        <table class="w-full">
-            <thead class="sticky top-0 bg-(--color-base-00) border-b border-(--color-base-10)">
+<div class="@Class bg-(--color-base-00) shadow-sm rounded-2xl border border-(--color-base-10) h-full flex flex-col overflow-hidden">
+    <div class="w-full h-full overflow-auto relative">
+        <table class="w-full h-full">
+            <thead class="sticky top-0 bg-(--color-base-00) border-b border-(--color-base-10) z-10">
             <tr>
                 @Header
             </tr>
             </thead>
             <tbody>
-            @foreach (TItem item in Items) {
+            @foreach (TItem item in Items)
+            {
                 <tr class="group hover:bg-(--color-base-10) transition">
                     @Content(item)
                 </tr>
@@ -43,4 +44,7 @@
 
     [Parameter]
     public RenderFragment<TItem> Content { get; set; } = null!;
+
+    [Parameter]
+    public string Class { get; set; } = string.Empty;
 }
