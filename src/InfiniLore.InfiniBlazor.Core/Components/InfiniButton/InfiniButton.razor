@@ -12,7 +12,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="group/button p-0.5">
+<div class="group/button p-0.5 relative">
     <button @onclick="OnClickAsync"
             type="@Type"
             disabled="@Disabled"
@@ -22,18 +22,28 @@
             <div class="@IconClasses w-8 h-8 flex justify-center items-center rounded-md">
                 <LucideIcon Name="@IconName" class="IconClasses"/>
             </div>
-        } else if (ChildContent is not null) {
+        }
+        else if (ChildContent is not null) {
             <span class="@TextClasses rounded-md">
                 @ChildContent
             </span>
-        } else {
+        }
+        else {
             <span class="w-8 h-8"></span>
         }
     </button>
+    @if (!string.IsNullOrEmpty(Tooltip)) {
+        <div class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1 bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md opacity-0 group-hover/button:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
+            @Tooltip
+        </div>
+    }
 </div>
+
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     [Parameter] public string? IconName { get; set; }
     [Parameter] public RenderFragment? ChildContent { get; set; }
@@ -44,6 +54,7 @@
     [Parameter] public ButtonVariant Variant { get; set; } = ButtonVariant.Default;
     [Parameter] public Size Size { get; set; } = Size.Md;
     [Parameter] public string Class { get; set; } = string.Empty;
+    [Parameter] public string? Tooltip { get; set; }
 
     private string IconClasses => (Variant, Disabled) switch {
         (ButtonVariant.Primary, false) => "bg-(--color-accent) group-hover/button:bg-(--color-base-70)",

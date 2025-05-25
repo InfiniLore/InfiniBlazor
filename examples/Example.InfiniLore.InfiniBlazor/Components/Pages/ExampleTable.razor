@@ -19,13 +19,13 @@
     </Header>
     <Content Context="person">
         <InfiniTableCell>@person.Name</InfiniTableCell>
-        <InfiniTableCell TextShade="60" Class="line-clamp-1">@person.Email</InfiniTableCell>
+        <InfiniTableCell TextShade="60" >@person.Email</InfiniTableCell>
         <InfiniTableCell Alignment="right" TextShade="50">
             @person.Age years
         </InfiniTableCell>
         <InfiniTableCell Alignment="right">
             <div class="flex justify-end gap-2">
-                <InfiniButton Disabled="true">Edit</InfiniButton>
+                <InfiniButton Disabled="true" Tooltip="Edit Not Available">Edit</InfiniButton>
                 <InfiniButton OnClickAsync="() => DeletePerson(person)">Delete</InfiniButton>
             </div>
         </InfiniTableCell>
