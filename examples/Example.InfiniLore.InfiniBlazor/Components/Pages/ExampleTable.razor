@@ -1,0 +1,62 @@
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@page "/table"
+@rendermode InteractiveServer
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniTable TItem="Person" Items="@People">
+    <HeaderContent>
+        <InfiniTableHeader>Name</InfiniTableHeader>
+        <InfiniTableHeader>Email</InfiniTableHeader>
+        <InfiniTableHeader Alignment="right">Age</InfiniTableHeader>
+        <InfiniTableHeader Alignment="right">Actions</InfiniTableHeader>
+    </HeaderContent>
+    <RowTemplate Context="person">
+        <InfiniTableCell>@person.Name</InfiniTableCell>
+        <InfiniTableCell TextShade="60" Class="line-clamp-1">@person.Email</InfiniTableCell>
+        <InfiniTableCell Alignment="right" TextShade="50">
+            @person.Age years
+        </InfiniTableCell>
+        <InfiniTableCell Alignment="right">
+            <div class="flex justify-end gap-2">
+                <button
+                    class="inline-flex items-center w-fit px-4 py-2 rounded-md bg-(--color-base-90) text-(--color-base-00) hover:bg-(--color-base-70) hover:text-(--color-accent) text-sm font-medium transition">
+                    Edit
+                </button>
+                <button
+                    @onclick="() => DeletePerson(person)"
+                    class="inline-flex items-center w-fit px-4 py-2 rounded-md bg-(--color-base-90) text-(--color-base-00) hover:bg-(--color-base-70) hover:text-(--color-accent) text-sm font-medium transition">
+                    Delete
+                </button>
+            </div>
+        </InfiniTableCell>
+    </RowTemplate>
+</InfiniTable>
+
+
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    private Person[] People { get; set; } = {
+        new("John Doe", "john@example.com", 30),
+        new("Jane Smith", "jane@example.com", 25),
+        new("Bob Johnson", "bob@example.com", 35),
+        new("Alice Brown", "alice@example.com", 28)
+    };
+
+    private void DeletePerson(Person person) {
+        People = People.Where(p => p != person).ToArray();
+    }
+
+    private record Person(string Name, string Email, int Age);
+
+}

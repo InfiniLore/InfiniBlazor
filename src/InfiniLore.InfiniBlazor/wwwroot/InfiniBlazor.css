@@ -268,6 +268,18 @@
   .ml-2 {
     margin-left: calc(var(--spacing) * 2);
   }
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
   .hide-scrollbar {
     scrollbar-width: none;
     &::-webkit-scrollbar {
@@ -382,6 +394,9 @@
   .w-auto {
     width: auto;
   }
+  .w-fit {
+    width: fit-content;
+  }
   .w-full {
     width: 100%;
   }
@@ -466,8 +481,14 @@
   .justify-center {
     justify-content: center;
   }
+  .justify-end {
+    justify-content: flex-end;
+  }
   .justify-start {
     justify-content: flex-start;
+  }
+  .gap-2 {
+    gap: calc(var(--spacing) * 2);
   }
   .gap-4 {
     gap: calc(var(--spacing) * 4);
@@ -607,9 +628,6 @@
   .bg-blue-100 {
     background-color: var(--color-blue-100);
   }
-  .bg-gray-50 {
-    background-color: var(--color-gray-50);
-  }
   .bg-green-100 {
     background-color: var(--color-green-100);
   }
@@ -667,6 +685,9 @@
   .pl-5 {
     padding-left: calc(var(--spacing) * 5);
   }
+  .text-left {
+    text-align: left;
+  }
   .text-right {
     text-align: right;
   }
@@ -707,14 +728,17 @@
   .text-\(--color-base-10\) {
     color: var(--color-base-10);
   }
+  .text-\(--color-base-50\) {
+    color: var(--color-base-50);
+  }
+  .text-\(--color-base-60\) {
+    color: var(--color-base-60);
+  }
   .text-\(--color-base-70\) {
     color: var(--color-base-70);
   }
   .text-\(--color-base-90\) {
     color: var(--color-base-90);
-  }
-  .text-\(--color-base-100\) {
-    color: var(--color-base-100);
   }
   .text-\(--sidebar-hamburger-color\) {
     color: var(--sidebar-hamburger-color);
@@ -727,9 +751,6 @@
   }
   .text-blue-900 {
     color: var(--color-blue-900);
-  }
-  .text-gray-700 {
-    color: var(--color-gray-700);
   }
   .text-green-900 {
     color: var(--color-green-900);
@@ -783,20 +804,11 @@
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
-  .transition-colors {
-    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
-    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-    transition-duration: var(--tw-duration, var(--default-transition-duration));
-  }
   .delay-0 {
     transition-delay: 0ms;
   }
   .delay-300 {
     transition-delay: 300ms;
-  }
-  .duration-150 {
-    --tw-duration: 150ms;
-    transition-duration: 150ms;
   }
   .duration-300 {
     --tw-duration: 300ms;
@@ -838,24 +850,10 @@
       }
     }
   }
-  .group-hover\/button\:bg-\(--color-accent\) {
-    &:is(:where(.group\/button):hover *) {
-      @media (hover: hover) {
-        background-color: var(--color-accent);
-      }
-    }
-  }
   .group-hover\/button\:bg-\(--color-base-10\) {
     &:is(:where(.group\/button):hover *) {
       @media (hover: hover) {
         background-color: var(--color-base-10);
-      }
-    }
-  }
-  .group-hover\/button\:bg-\(--color-base-20\) {
-    &:is(:where(.group\/button):hover *) {
-      @media (hover: hover) {
-        background-color: var(--color-base-20);
       }
     }
   }
@@ -873,13 +871,6 @@
       }
     }
   }
-  .group-hover\/button\:text-\(--color-base-20\) {
-    &:is(:where(.group\/button):hover *) {
-      @media (hover: hover) {
-        color: var(--color-base-20);
-      }
-    }
-  }
   .hover\:scale-105 {
     &:hover {
       @media (hover: hover) {
@@ -887,6 +878,20 @@
         --tw-scale-y: 105%;
         --tw-scale-z: 105%;
         scale: var(--tw-scale-x) var(--tw-scale-y);
+      }
+    }
+  }
+  .hover\:bg-\(--color-base-10\) {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-base-10);
+      }
+    }
+  }
+  .hover\:bg-\(--color-base-70\) {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-base-70);
       }
     }
   }
@@ -908,13 +913,6 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-blue-200);
-      }
-    }
-  }
-  .hover\:bg-gray-100 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-gray-100);
       }
     }
   }
@@ -974,23 +972,6 @@
       @media (hover: hover) {
         --tw-ring-color: var(--color-accent);
       }
-    }
-  }
-  .focus\:ring-2 {
-    &:focus {
-      --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
-      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-    }
-  }
-  .focus\:ring-blue-500 {
-    &:focus {
-      --tw-ring-color: var(--color-blue-500);
-    }
-  }
-  .focus\:ring-offset-2 {
-    &:focus {
-      --tw-ring-offset-width: 2px;
-      --tw-ring-offset-shadow: var(--tw-ring-inset,) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
     }
   }
   .focus\:outline-none {
