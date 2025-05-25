@@ -20,7 +20,7 @@
             <!-- Left-Aligned Buttons -->
             <div class="flex space-x-1">
                 @foreach (ITextModifier textModifier in textEditor.Modifiers) {
-                    <InfiniButton OnClickAsync="() => OnModifierClickAsync(textModifier.ModifierName)"
+                    <InfiniButton OnClick="() => OnModifierClickAsync(textModifier.ModifierName)"
                                   Variant="ButtonVariant.Transparent"
                                   IconName="@textModifier.IconName"/>
                 }
@@ -28,8 +28,8 @@
 
             <!-- Right-Aligned Buttons -->
             <div class="flex space-x-2">
-                <InfiniButton OnClickAsync="DebugLoremAsync">Lorem</InfiniButton>
-                <InfiniButton OnClickAsync="DebugTableAsync">Table</InfiniButton>
+                <InfiniButton OnClick="DebugLoremAsync">Lorem</InfiniButton>
+                <InfiniButton OnClick="DebugTableAsync">Table</InfiniButton>
             </div>
         </div>
         <!-- Preview header (Right side) - Empty but maintains layout -->
