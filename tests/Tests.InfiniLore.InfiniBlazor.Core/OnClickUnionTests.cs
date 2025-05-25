@@ -5,7 +5,6 @@ using Infinilore.InfiniBlazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using System.Reflection;
-using System.Runtime.InteropServices;
 
 namespace Tests.InfiniLore.InfiniBlazor.Core;
 // ---------------------------------------------------------------------------------------------------------------------
