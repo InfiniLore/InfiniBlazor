@@ -8,7 +8,7 @@
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.InfiniBlazor.Contracts</PackageId>
-        <Version>0.1.0-preview.32</Version>
+        <Version>0.1.0-preview.33</Version>
         <Authors>Anna Sas</Authors>
         <Description>Contract library for InfiniLore's Component Library</Description>
         <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
