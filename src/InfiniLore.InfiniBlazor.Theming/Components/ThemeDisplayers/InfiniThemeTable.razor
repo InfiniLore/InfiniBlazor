@@ -3,6 +3,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.JsRuntime
 @using InfiniLore.InfiniBlazor.Theming
+@using InfiniLore.InfiniBlazor.Theming.Components
 
 @* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
@@ -62,6 +63,9 @@
     [Parameter]
     public string Class { get; set; } = string.Empty;
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
     private ThemeItem[] ThemeItems => GetThemeItems();
 
     private ThemeItem[] GetThemeItems() {
@@ -72,7 +76,4 @@
             .Where(item => !item.CssVarName.EndsWith("-rgb"))
             .ToArray();
     }
-
-    private record ThemeItem(string CssVarName, string CssData);
-
 }
