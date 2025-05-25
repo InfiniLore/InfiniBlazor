@@ -82,6 +82,7 @@
 
     private string TextClasses => (Variant, Disabled) switch {
         (ButtonVariant.Primary, false) => $"bg-(--color-accent) group-hover/button:bg-(--color-base-70) {GetSizeClasses()}",
+        (ButtonVariant.Transparent, false) => "bg-transparent",
         (_, false) => $"bg-(--color-base-70) text-(--color-base-00) group-hover/button:text-(--color-accent) hover:ring-2 hover:ring-(--color-accent) {GetSizeClasses()}",
         (_, true) => $"bg-(--color-base-70) text-(--color-base-10) {GetSizeClasses()}"
     };

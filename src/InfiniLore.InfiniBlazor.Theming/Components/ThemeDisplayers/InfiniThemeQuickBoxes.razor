@@ -15,49 +15,25 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniTable Items="ThemeItems">
-    <Header>
-        <InfiniTableHeader Class="w-min-48">Name</InfiniTableHeader>
-        <InfiniTableHeader Class="w-min-48">Value</InfiniTableHeader>
-        <InfiniTableHeader>Display</InfiniTableHeader>
-        <InfiniTableHeader Class="w-min-128">Actions</InfiniTableHeader>
-    </Header>
-    <Content Context="item">
-        <InfiniTableCell Class="w-min-48">
-            <code>@item.CssVarName</code>
-        </InfiniTableCell>
-        <InfiniTableCell Class="w-min-48">
-            <code>@item.CssData</code>
-        </InfiniTableCell>
-
-        <InfiniTableCell Alignment="" Class="w-full flex justify-center items-center">
-            <div class="w-12 h-12 shadow-md flex items-center justify-center leading-none rounded-xl"
-                 style="background: var(@item.CssVarName)">
-            </div>
-        </InfiniTableCell>
-
-        <InfiniTableCell Alignment="right" Class="flex justify-center gap-2 w-min-128">
+<div class="w-full flex flex-col items-center justify-center">
+    <div class="flex flex-row flex-wrap gap-2 justify-center">
+        @foreach (ThemeItem item in ThemeItems) {
             <InfiniButton
-                IconName="copy"
+                Variant="ButtonVariant.Transparent"
                 OnClick="() => JsRuntimeHelper.CopyToClipboardAsync(item.CssVarName)"
-                Tooltip="Copies the CSS Variable name to the clipboard">
-                Var name
+                Tooltip="@item.CssVarName">
+                <div class="w-12 h-12 shadow-md flex items-center justify-center leading-none rounded-xl"
+                     style="background: var(@item.CssVarName)">
+                </div>
             </InfiniButton>
-            <InfiniButton
-                IconName="copy"
-                OnClick="() => JsRuntimeHelper.CopyToClipboardAsync(item.CssData)"
-                Tooltip="Copies the CSS Variable value to the clipboard">
-                Css Value
-            </InfiniButton>
-        </InfiniTableCell>
-    </Content>
-</InfiniTable>
+        }
+    </div>
+</div>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
-
     private ThemeItem[] ThemeItems => GetThemeItems();
 
     private ThemeItem[] GetThemeItems() {
