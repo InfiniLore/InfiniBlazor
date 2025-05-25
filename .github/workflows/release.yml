@@ -9,7 +9,7 @@ on:
 jobs:
     publish:
         if: github.event_name == 'workflow_dispatch'
-            || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') && github.ref_base_ref == 'refs/heads/core')
+            || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') && github.ref_type == 'tag' && github.base_ref == 'core')
         
         runs-on: ubuntu-latest
         steps:
