@@ -11,7 +11,8 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@Class bg-(--color-base-00) shadow-sm rounded-2xl border border-(--color-base-10) h-full flex flex-col overflow-hidden">
+<div
+    class="@Class bg-(--color-base-00) shadow-sm rounded-2xl border border-(--color-base-10) h-full flex flex-col overflow-hidden">
     <div class="w-full h-full overflow-auto relative">
         <table class="w-full h-full">
             <thead class="sticky top-0 bg-(--color-base-00) border-b border-(--color-base-10) z-10">
@@ -20,12 +21,21 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (TItem item in Items)
-            {
-                <tr class="group hover:bg-(--color-base-10) transition">
-                    @Content(item)
+            @if (!Items.Any()) {
+                <tr>
+                    <td colspan="100%" class="text-center py-4 text-(--color-base-70)">
+                        @EmptyMessage
+                    </td>
                 </tr>
             }
+            else {
+                @foreach (TItem item in Items) {
+                    <tr class="group hover:bg-(--color-base-10) transition h-4">
+                        @Content(item)
+                    </tr>
+                }
+            }
+
             </tbody>
         </table>
     </div>
@@ -34,17 +44,10 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
-    [Parameter]
-    public IEnumerable<TItem> Items { get; set; } = Array.Empty<TItem>();
-
-    [Parameter]
-    public RenderFragment Header { get; set; } = null!;
-
-    [Parameter]
-    public RenderFragment<TItem> Content { get; set; } = null!;
-
-    [Parameter]
-    public string Class { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public IEnumerable<TItem> Items { get; set; } = Array.Empty<TItem>();
+    [Parameter, EditorRequired] public RenderFragment Header { get; set; } = null!;
+    [Parameter, EditorRequired] public RenderFragment<TItem> Content { get; set; } = null!;
+    [Parameter] public string Class { get; set; } = string.Empty;
+    [Parameter] public string EmptyMessage { get; set; } = "No entries found";
 }
