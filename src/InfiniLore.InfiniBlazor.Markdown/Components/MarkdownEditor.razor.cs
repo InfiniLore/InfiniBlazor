@@ -54,6 +54,7 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
         if (output is null) return; // TODO create some form of error popup
         string sanitizedOutput = sanitizer.Sanitize(output);
         MarkdownOutput = new MarkupString(sanitizedOutput);
+        StateHasChanged();
     }
     
     private async Task OnModifierClickAsync(string modifierName) {
