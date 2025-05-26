@@ -20,10 +20,10 @@
             class="@(Class + DisableClasses) inline-flex items-center justify-center rounded-md transition-all duration-150 transform active:scale-95 hover:scale-105">
         
         <span class="@TextClasses rounded-md inline-flex items-center gap-2">
-            @if (IconName.IsNotNullOrWhiteSpace()) {
+            @if (IconName.IsNotNullOrWhiteSpace()) { 
                 <LucideIcon Name="@IconName" class="@IconClasses"/>
             }
-            @if (ChildContent is not null) {
+            @if (ChildContent is not null) { 
                 @ChildContent
             }
             @if (IconName.IsNullOrWhiteSpace() && ChildContent is null) {
@@ -32,7 +32,7 @@
         </span>
     </button>
     @if (!string.IsNullOrEmpty(Tooltip)) {
-        <div class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1 bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md opacity-0 group-hover/button:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
+        <div class="@TooltipAnchorClasses absolute transform px-3 py-1 bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md opacity-0 group-hover/button:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
             @Tooltip
         </div>
     }
@@ -40,7 +40,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
     [Parameter] public string? IconName { get; set; }
     [Parameter] public RenderFragment? ChildContent { get; set; }
@@ -73,12 +72,27 @@
     [Parameter] public Size Size { get; set; } = Size.Md;
     [Parameter] public string Class { get; set; } = string.Empty;
     [Parameter] public string? Tooltip { get; set; }
+    [Parameter] public Anchor TooltipAnchor { get; set; } = Anchor.Center | Anchor.Bottom;
 
     private string IconClasses => (Variant, Disabled) switch {
         (ButtonVariant.Primary, false) => "bg-(--color-accent) group-hover/button:bg-(--color-base-70)",
         (ButtonVariant.Transparent, false) => "bg-transparent text-(--color-base-70) group-hover/button:bg-(--color-base-10) group-hover/button:text-(--color-accent)",
         (_, false) => "bg-(--color-base-70) text-(--color-base-00) group-hover/button:text-(--color-accent)",
         (_, true) => "bg-(--color-base-70) text-(--color-base-10)"
+    };
+
+    private string TooltipAnchorClasses => TooltipAnchor switch {
+        Anchor.Center | Anchor.Bottom => "top-full left-1/2 -translate-x-1/2 mt-2",
+        Anchor.Left | Anchor.Bottom => "top-full right-1 translate-x-1 mt-2",
+        Anchor.Right | Anchor.Bottom => "top-full left-1 -translate-x-1 mt-2",
+
+        Anchor.Center | Anchor.Top => "bottom-full left-1/2 -translate-x-1/2 mb-2",
+        Anchor.Left | Anchor.Top => "bottom-full right-1 translate-x-1 mb-2",
+        Anchor.Right | Anchor.Top => "bottom-full left-1 -translate-x-1 mb-2",
+
+        Anchor.Left => "top-1/2 right-1 translate-y--1/2 translate-x-1",
+        Anchor.Right => "top-1/2 left-1 -translate-y-1/2 -translate-x-1",
+        _ => "top-full left-1/2 -translate-x-1/2 mt-2"
     };
 
     private string TextClasses => (Variant, Disabled) switch {

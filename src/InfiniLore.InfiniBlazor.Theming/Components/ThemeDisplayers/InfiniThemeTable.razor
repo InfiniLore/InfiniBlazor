@@ -1,6 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using Infinilore.InfiniBlazor
 @using InfiniLore.InfiniBlazor.JsRuntime
 @using InfiniLore.InfiniBlazor.Theming
 @using InfiniLore.InfiniBlazor.Theming.Components
@@ -23,11 +24,12 @@
             <InfiniTableHeader Class="w-min-48">Value</InfiniTableHeader>
             <InfiniTableHeader>Display</InfiniTableHeader>
             <InfiniTableHeader Class="w-min-128">Actions</InfiniTableHeader>
-        </Header>
+        </Header>0
         <Content Context="item">
             <InfiniTableCell Class="w-min-48">
                 <code>@item.CssVarName</code>
             </InfiniTableCell>
+            
             <InfiniTableCell Class="w-min-48">
                 <code>@item.CssData</code>
             </InfiniTableCell>
@@ -48,6 +50,7 @@
                 <InfiniButton
                     IconName="copy"
                     OnClick="() => JsRuntimeHelper.CopyToClipboardAsync(item.CssData)"
+                    TooltipAnchor="Anchor.Bottom | Anchor.Left"
                     Tooltip="Copies the CSS Variable value to the clipboard">
                     Css Value
                 </InfiniButton>
