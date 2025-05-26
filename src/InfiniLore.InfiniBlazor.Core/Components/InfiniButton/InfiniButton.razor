@@ -17,7 +17,7 @@
             type="@Type"
             disabled="@Disabled"
             aria-label="@AriaLabel"
-            class="@(Class + DisableClasses) inline-flex items-center justify-center rounded-md transition-all duration-150 transform active:scale-95 hover:scale-105">
+            class="@(Class + DisableClasses) inline-flex items-center justify-center rounded-md transition-all duration-150 transform">
         
         <span class="@TextClasses rounded-md inline-flex items-center gap-2">
             @if (IconName.IsNotNullOrWhiteSpace()) { 
@@ -102,7 +102,7 @@
         (_, true) => $"bg-(--color-base-70) text-(--color-base-10) {GetSizeClasses()}"
     };
 
-    private string DisableClasses => Disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer";
+    private string DisableClasses => Disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer active:scale-95 hover:scale-105";
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
