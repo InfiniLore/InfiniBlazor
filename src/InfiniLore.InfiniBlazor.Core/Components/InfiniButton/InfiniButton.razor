@@ -96,22 +96,21 @@
     };
 
     private string TextClasses => (Variant, Disabled) switch {
-        (ButtonVariant.Primary, false) => $"bg-(--color-accent) group-hover/button:bg-(--color-base-70) {GetSizeClasses()}",
+        (ButtonVariant.Primary, false) => $"bg-(--color-accent) group-hover/button:bg-(--color-base-70) {SizeClasses}",
         (ButtonVariant.Transparent, false) => "bg-transparent",
-        (_, false) => $"bg-(--color-base-70) text-(--color-base-00) group-hover/button:text-(--color-accent) hover:ring-2 hover:ring-(--color-accent) {GetSizeClasses()}",
-        (_, true) => $"bg-(--color-base-70) text-(--color-base-10) {GetSizeClasses()}"
+        (_, false) => $"bg-(--color-base-70) text-(--color-base-00) group-hover/button:text-(--color-accent) hover:ring-2 hover:ring-(--color-accent) {SizeClasses}",
+        (_, true) => $"bg-(--color-base-70) text-(--color-base-10) {SizeClasses}"
     };
 
     private string DisableClasses => Disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer active:scale-95 hover:scale-105";
 
+    private string SizeClasses => Size switch {
+        _ => "px-2 py-1 text-base"
+    };
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private string GetSizeClasses()
-        => Size switch {
-            _ => "px-2 py-1 text-base"
-        };
-    
     private async Task OnClickAsync(MouseEventArgs args) {
         if (Disabled) return;
         await OnClickUnion.InvokeAsync(args);
