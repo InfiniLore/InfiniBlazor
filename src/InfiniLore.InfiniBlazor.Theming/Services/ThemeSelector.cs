@@ -73,8 +73,7 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
     }
 
     public bool TryGetCurrentThemeModeCss([NotNullWhen(true)] out string? css) {
-        if (!CurrentThemeCollection.TryGetTheme(CurrentThemeMode, out ITheme? theme)) {
-            logger.LogWarning("No theme variant found for current mode '{Mode}'.", CurrentThemeMode.Name);
+        if (!TryGetCurrentTheme(out ITheme? theme)) {
             css = null;
             return false;
         }
@@ -93,5 +92,13 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
         finally {
             pool.StringBuilderPool.Return(sb);
         }
+    }
+
+    public bool TryGetCurrentTheme([NotNullWhen(true)] out ITheme? theme) {
+        if (CurrentThemeCollection.TryGetTheme(CurrentThemeMode, out theme)) return true;
+
+        logger.LogWarning("No theme variant found for current mode '{Mode}'.", CurrentThemeMode.Name);
+        return false;
+
     }
 }

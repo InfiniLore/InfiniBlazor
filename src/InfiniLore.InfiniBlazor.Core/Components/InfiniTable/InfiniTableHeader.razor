@@ -10,7 +10,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<th class="@($"text-{Alignment} p-3 text-sm font-semibold text-(--color-base-90)")">
+<th class="@($"text-{Alignment} p-3 text-sm font-semibold text-(--color-base-90) {Class}")">
     @ChildContent
 </th>
 
@@ -23,4 +23,7 @@
 
     [Parameter]
     public string Alignment { get; set; } = "left";
+
+    [Parameter]
+    public string Class { get; set; } = string.Empty;
 }

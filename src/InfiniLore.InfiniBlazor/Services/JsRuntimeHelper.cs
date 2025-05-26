@@ -55,7 +55,7 @@ public class JsRuntimeHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper> logg
             logger.LogWarning(e, "Error setting selection range");
         }
     }
-    
+
     public async Task AddPreventDefaultListenerAsync() {
         try {
             await jsRuntime.InvokeVoidAsync("addPreventDefaultListener");
@@ -67,7 +67,7 @@ public class JsRuntimeHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper> logg
             logger.LogDebug(e, "Prevent default listener already added or the server is in static rendering mode, usually during a reconnection.");
         }
     }
-    
+
     public async Task RemovePreventDefaultListenerAsync() {
         try {
             await jsRuntime.InvokeVoidAsync("removePreventDefaultListener");
@@ -91,7 +91,7 @@ public class JsRuntimeHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper> logg
             logger.LogError(e, "Error setting text content");
         }
     }
-    
+
     public async Task<string> GetTextContentAsync(ElementReference element) {
         try {
             return await jsRuntime.InvokeAsync<string>("getTextContent", element);
@@ -101,13 +101,22 @@ public class JsRuntimeHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper> logg
             return string.Empty;
         }
     }
-    
+
     public async Task AddOrUpdateStyleElementAtHead(string id, string css) {
         try {
             await jsRuntime.InvokeVoidAsync("addOrUpdateStyleElementAtHead", id, css);
         }
         catch (JSException e) {
             logger.LogError(e, "Error adding or updating style element at head");
+        }
+    }
+
+    public async Task CopyToClipboardAsync(string text) {
+        try {
+            await jsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", text);
+        }
+        catch (JSException e) {
+            logger.LogError(e, "Error writing text to clipboard");
         }
     }
 }

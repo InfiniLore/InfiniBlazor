@@ -1,0 +1,86 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using Infinilore.InfiniBlazor
+@using InfiniLore.InfiniBlazor.JsRuntime
+@using InfiniLore.InfiniBlazor.Theming
+@using InfiniLore.InfiniBlazor.Theming.Components
+
+@* ReSharper disable once CheckNamespace *@
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits ComponentBase
+@inject IThemeSelector ThemeSelector
+@inject IJsRuntimeHelper JsRuntimeHelper
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="@Class">
+    <InfiniTable Items="ThemeItems">
+        <Header>
+            <InfiniTableHeader Class="w-min-48">Name</InfiniTableHeader>
+            <InfiniTableHeader Class="w-min-48">Value</InfiniTableHeader>
+            <InfiniTableHeader>Display</InfiniTableHeader>
+            <InfiniTableHeader Class="w-min-128 flex flex-col items-center">
+                <span>Actions</span>
+                <div class="flex flex-row gap-3.5 text-(--color-base-40)">
+                    <span>Var Name</span>
+                    <span>Css Value</span>
+                </div>
+            </InfiniTableHeader>
+        </Header>
+        <Content Context="item">
+            <InfiniTableCell Class="w-min-48">
+                <code>@item.CssVarName</code>
+            </InfiniTableCell>
+
+            <InfiniTableCell Class="w-min-48">
+                <code>@item.CssData</code>
+            </InfiniTableCell>
+
+            <InfiniTableCell Alignment="" Class="w-full flex justify-center items-center">
+                <div class="w-12 h-12 shadow-md flex items-center justify-center leading-none rounded-xl"
+                     style="background: var(@item.CssVarName)">
+                </div>
+            </InfiniTableCell>
+
+            <InfiniTableCell Alignment="right" Class="flex justify-center gap-6 w-min-128">
+                <InfiniButton
+                    IconName="copy"
+                    OnClick="() => JsRuntimeHelper.CopyToClipboardAsync(item.CssVarName)"
+                    TooltipAnchor="Anchor.Bottom | Anchor.Left"
+                    Tooltip="@item.CssVarName"
+                />
+                <InfiniButton
+                    IconName="copy"
+                    OnClick="() => JsRuntimeHelper.CopyToClipboardAsync(item.CssData)"
+                    TooltipAnchor="Anchor.Bottom | Anchor.Left"
+                    Tooltip="@item.CssData"
+                />
+            </InfiniTableCell>
+        </Content>
+    </InfiniTable>
+</div>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [Parameter] public string Class { get; set; } = string.Empty;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private ThemeItem[] ThemeItems => GetThemeItems();
+
+    private ThemeItem[] GetThemeItems() {
+        if (!ThemeSelector.TryGetCurrentTheme(out ITheme? theme)) return [];
+
+        return theme.AsCssVariables()
+            .Select(tuple => new ThemeItem(tuple.Item1, tuple.Item2))
+            .Where(item => !item.CssVarName.EndsWith("-rgb"))
+            .ToArray();
+    }
+}
