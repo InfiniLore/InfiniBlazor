@@ -13,7 +13,7 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="group/button p-0.5 relative">
-    <button @onclick="OnClickUnion.InvokeAsync"
+    <button @onclick="OnClickAsync"
             type="@Type"
             disabled="@Disabled"
             aria-label="@AriaLabel"
@@ -111,4 +111,9 @@
         => Size switch {
             _ => "px-2 py-1 text-base"
         };
+    
+    private async Task OnClickAsync(MouseEventArgs args) {
+        if (Disabled) return;
+        await OnClickUnion.InvokeAsync(args);
+    }
 }
