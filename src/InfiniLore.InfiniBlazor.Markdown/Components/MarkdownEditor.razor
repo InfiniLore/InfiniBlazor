@@ -16,7 +16,7 @@
     <!-- Header with toolbar -->
     <div class="flex flex-none">
         <!-- Editor toolbar (Left side) -->
-        <div class="w-1/2 flex justify-between items-center bg-white px-4 py-2 border-b border-r border-gray-200">
+        <div class="w-1/2 flex justify-between items-center bg-white px-4 py-2 border-b border-r border-gray-200 overflow-auto gap-2">
             <!-- Left-Aligned Buttons -->
             <div class="flex space-x-1">
                 @foreach (ITextModifier textModifier in textEditor.Modifiers) {
@@ -27,7 +27,7 @@
             </div>
 
             <!-- Right-Aligned Buttons -->
-            <div class="flex space-x-2">
+            <div class="flex space-x-2 mb-2">
                 <InfiniButton OnClick="DebugLoremAsync">Lorem</InfiniButton>
                 <InfiniButton OnClick="DebugTableAsync">Table</InfiniButton>
             </div>

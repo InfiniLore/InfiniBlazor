@@ -79,7 +79,7 @@
         (ButtonVariant.Transparent, false) => "bg-transparent text-(--color-base-70) group-hover/button:bg-(--color-base-10) group-hover/button:text-(--color-accent)",
         (_, false) => "bg-(--color-base-70) text-(--color-base-00) group-hover/button:text-(--color-accent)",
         (_, true) => "bg-(--color-base-70) text-(--color-base-10)"
-    };
+    } + " rounded-md";
 
     private string TooltipAnchorClasses => TooltipAnchor switch {
         Anchor.Center | Anchor.Bottom => "top-full left-1/2 -translate-x-1/2 mt-2",
