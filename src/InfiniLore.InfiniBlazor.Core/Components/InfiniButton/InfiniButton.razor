@@ -31,7 +31,7 @@
             }
         </span>
     </button>
-    @if (!string.IsNullOrEmpty(Tooltip)) {
+    @if (Tooltip.IsNotNullOrEmpty()) {
         <div class="@TooltipAnchorClasses absolute transform px-3 py-1 bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md opacity-0 group-hover/button:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
             @Tooltip
         </div>
