@@ -7,7 +7,7 @@
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.InfiniBlazor.Toasting</PackageId>
-        <Version>0.1.0-preview.38</Version>
+        <Version>0.1.0-preview.39</Version>
         <Authors>Anna Sas</Authors>
         <Description>Toast popups for InfiniLore's Component Library</Description>
         <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
