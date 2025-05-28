@@ -13,7 +13,8 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="group/button p-0.5 relative">
-    <button @onclick="OnClickAsync"
+    <button @onclick="OnClickAsync" 
+            @onclick:stopPropagation="@StopPropagation"
             type="@Type"
             disabled="@Disabled"
             aria-label="@AriaLabel"
@@ -43,6 +44,7 @@
 @code {
     [Parameter] public string? IconName { get; set; }
     [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public bool StopPropagation { get; set; } = true;
     
     /// <summary>
     /// Event handler for the button's click event. Supports the following delegate types:
