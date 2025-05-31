@@ -75,8 +75,12 @@
         </SideNavMenuButton>
 
         @* User *@
-        <SideNavMenuUser UserName="InfiniLore"
-                         UserImageUrl="@_currentUserImage">
+        <SideNavMenuUser UserName="InfiniLore">
+            <Icon>
+                <UserIcon
+                    ImageUrl="@_currentUserImage"
+                    HrefUserProfile="/"/>
+            </Icon>
             <AdditionalLinks>
                 <button @onclick="SwitchUserImage"
                         class="@(SideNavMenuUser.AdditionalLinkClasses)">
