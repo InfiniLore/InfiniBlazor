@@ -54,8 +54,8 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter][EditorRequired] public string ImageUrl { get; set; } = string.Empty;
     [Parameter][EditorRequired] public string HrefUserProfile { get; set; } = string.Empty;
+    [Parameter] public string? ImageUrl { get; set; }
     [Parameter] public bool ShowStatusIndicator { get; set; }
     [Parameter] public string? StatusEmoji { get; set; }
     [Parameter] public UserIconStatus Status { get; set; } = UserIconStatus.Undefined;

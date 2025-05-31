@@ -14,13 +14,7 @@
      class="@(MenuCollapsed ? "px-0 py-2" : "p-2") flex flex-nowrap items-center rounded hover:bg-(--sidebar-nav-button-color-hover) group w-full transition-all duration-300">
     <span class="flex grow items-center w-full transition-all justify-between">
         <span class="@(MenuCollapsed ? "ml-1" : "-ml-1") flex-shrink-0 transition-all duration-300">
-            <UserIcon 
-                ImageUrl="@UserImageUrl"
-                HrefUserProfile="@HrefUserProfile"
-                ShowStatusIndicator="@ShowStatusIndicator"
-                StatusEmoji="@StatusEmoji"
-                Status="@UserStatus" />
-
+            @Icon
         </span>
 
         <!-- User Info -->
@@ -50,14 +44,10 @@
 @code {
     [CascadingParameter] public bool MenuCollapsed { get; set; }
     [Parameter] public string UserName { get; set; } = "Unknown Username";
-    [Parameter] public string UserImageUrl { get; set; } = string.Empty;
     [Parameter] public string HrefUserProfile { get; set; } = string.Empty;
-    [Parameter] public EventCallback LogoutCallbackAsync { get; set; }
-
+    [Parameter, EditorRequired] public RenderFragment Icon { get; set; } = null!;
+    
     [Parameter] public RenderFragment? AdditionalLinks { get; set; }
-    [Parameter] public bool ShowStatusIndicator { get; set; } = true;
-    [Parameter] public string? StatusEmoji { get; set; } = "🏳️‍⚧️";
-    [Parameter] public UserIconStatus UserStatus { get; set; } = UserIconStatus.Undefined;
     
     public static string AdditionalLinkClasses => "text-sm text-(--color-base-10) whitespace-nowrap hover:text-(--color-accent)";
     // -----------------------------------------------------------------------------------------------------------------
