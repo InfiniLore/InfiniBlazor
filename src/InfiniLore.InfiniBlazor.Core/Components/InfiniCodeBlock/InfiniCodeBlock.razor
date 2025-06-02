@@ -1,20 +1,54 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using Infinilore.InfiniBlazor
+@using InfiniLore.InfiniBlazor.JsRuntime
 
-@* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits ComponentBase
+@inject IJsRuntimeHelper JsRuntimeHelper
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="@Class flex overflow-none">
+    <div
+        class="relative bg-(--color-base-70) text-(--color-base-20) text-sm border border-(--border-color) rounded p-4 overflow-auto w-full infini-scrollbar">
+        @if (!Language.IsNullOrWhiteSpace()) {
+            <div class="mb-2"></div>
+            <div class="absolute top-2 left-4 text-xs text-(--color-base-40)">@Language</div>
+        }
+
+        @if (EnableCopy) {
+            <div class="absolute top-2 right-2">
+                <InfiniButton
+                    IconName="copy"
+                    Variant="ButtonVariant.Transparent"
+                    OnClick="CopyToClipboardAsync"
+                    Tooltip="Copy to clipboard"
+                    TooltipAnchor="@Anchor.Left"/>
+            </div>
+        }
+        <pre class="whitespace-pre m-0 font-mono"><code>@Content</code></pre>
+    </div>
+</div>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-   
+    [Parameter] public string? Content { get; set; }
+    [Parameter] public string? Language { get; set; }
+    [Parameter] public bool EnableCopy { get; set; } = true;
+    [Parameter] public string? Class { get; set; }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private async Task CopyToClipboardAsync() {
+        if (Content.IsNullOrWhiteSpace()) return;
+        await JsRuntimeHelper.CopyToClipboardAsync(Content);
+    }
 }

@@ -45,4 +45,8 @@
         <PackageReference Include="InfiniLore.Lucide" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
+    </ItemGroup>
+
 </Project>
