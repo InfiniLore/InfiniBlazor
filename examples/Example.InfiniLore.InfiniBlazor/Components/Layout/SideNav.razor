@@ -13,7 +13,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<SideNavMenu @bind-MenuCollapsed="@MenuCollapsed" Size="SideNavMenuSize.Large">
+<InfiniSideNav @bind-MenuCollapsed="@MenuCollapsed" Size="SideNavSize.Large">
     <Header>
         <a href="/" 
            class="@(!MenuCollapsed ? "text-1xl font-bold text-(--color-base-00) hover:text-(--color-accent) no-underline" : "hidden")">
@@ -22,83 +22,81 @@
     </Header>
 
     <Body>
-        <SideNavMenuLink Href="/markdown-dual">
+        <InfiniSideNavLink Href="/markdown-dual">
             <Icon>
                 <LiSignature/>
             </Icon>
             <Text>Markdown Example</Text>
-        </SideNavMenuLink>
-        @* <SideNavMenuLink Href="/markdown-rolling"> *@
+        </InfiniSideNavLink>
+        @* <InfiniSideNavLink Href="/markdown-rolling"> *@
         @*     <Icon> *@
         @*         <LiIndentIncrease/> *@
         @*     </Icon> *@
         @*     <Text>Rolling Markdown Example</Text> *@
-        @* </SideNavMenuLink> *@
-        <SideNavMenuLink Href="/table">
+        @* </InfiniSideNavLink> *@
+        <InfiniSideNavLink Href="/table">
             <Icon><LiTable/></Icon>
             <Text>Table</Text>
-        </SideNavMenuLink>
-        <SideNavMenuLink Href="/html">
+        </InfiniSideNavLink>
+        <InfiniSideNavLink Href="/html">
             <Icon><LiCodeXml/></Icon>
             <Text>Html</Text>
-        </SideNavMenuLink>
-        <SideNavMenuLink Href="/theming/table">
+        </InfiniSideNavLink>
+        <InfiniSideNavLink Href="/theming/table">
             <Icon><LiTable2/></Icon>
             <Text>theming table</Text>
-        </SideNavMenuLink>
+        </InfiniSideNavLink>
 
-        <SideNavMenuButton OnClickAsync="@(OnCreateToastAsync)">
+        <InfiniSideNavButton OnClickAsync="@(OnCreateToastAsync)">
             <Icon><LiPopcorn/></Icon>
             <Text>Create Toast</Text>
-        </SideNavMenuButton>
+        </InfiniSideNavButton>
     </Body>
 
     <Footer>
-        <SideNavMenuLink Href="https://github.com/InfiniLore/infinilore.infiniblazor">
+        <InfiniSideNavLink Href="https://github.com/InfiniLore/infinilore.infiniblazor">
             <Icon>
                 <LiPackage/>
             </Icon>
             <Text>Github</Text>
-        </SideNavMenuLink>
+        </InfiniSideNavLink>
 
         @* DEBUG *@
-        <SideNavMenuButton OnClickAsync="@(SwitchTheme)">
+        <InfiniSideNavButton OnClickAsync="@(SwitchTheme)">
             <Icon>
                 <LiPalette/>
             </Icon>
             <Text>Switch Theme</Text>
-        </SideNavMenuButton>
+        </InfiniSideNavButton>
 
-        <SideNavMenuButton OnClickAsync="@(ThemeSelector.TrySelectNextThemeModeAsync)">
+        <InfiniSideNavButton OnClickAsync="@(ThemeSelector.TrySelectNextThemeModeAsync)">
             <Icon>
                 <LiSun/>
             </Icon>
             <Text>Switch Mode</Text>
-        </SideNavMenuButton>
+        </InfiniSideNavButton>
 
         @* User *@
-        <SideNavMenuUser UserName="InfiniLore">
+        <InfiniSideNavUser UserName="InfiniLore">
             <Icon>
-                <UserIcon
+                <InfiniUserIcon
                     ImageUrl="@_currentUserImage"
                     HrefUserProfile="/"/>
             </Icon>
             <AdditionalLinks>
                 <button @onclick="SwitchUserImage"
-                        class="@(SideNavMenuUser.AdditionalLinkClasses)">
+                        class="@(InfiniSideNavUser.AdditionalLinkClasses)">
                     switch
                 </button>
                 <NavLink href="/"
-                         class="@(SideNavMenuUser.AdditionalLinkClasses)">
+                         class="@(InfiniSideNavUser.AdditionalLinkClasses)">
                     logout
                 </NavLink>
             </AdditionalLinks>
-        </SideNavMenuUser>
+        </InfiniSideNavUser>
 
     </Footer>
-
-
-</SideNavMenu>
+</InfiniSideNav>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code *@

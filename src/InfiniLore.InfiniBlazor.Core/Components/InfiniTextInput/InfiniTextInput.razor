@@ -1,0 +1,59 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@* ReSharper disable once CheckNamespace *@
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits ComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="flex flex-col w-full">
+    <div class="flex items-center gap-x-2 ">
+        <input type="@Type"
+               value="@Value"
+               @oninput="OnInputHandler"
+               @onchange="OnChange"
+               placeholder="@Placeholder"
+               disabled="@Disabled"
+               @attributes="@(AutoFocus ? new Dictionary<string, object> { { "autofocus", "autofocus" } } : null)"
+               maxlength="@MaxLength"
+               class="@Class @(Disabled ? "opacity-50 cursor-not-allowed" : "hover:ring-2") w-full placeholder-(--color-base-40) bg-(--color-base-70) rounded-md border border-(--border-color) focus:ring-2 outline-none ring-(--color-accent) text-sm p-2 shadow-sm transition" />
+        @if (ChildContent is not null) {
+            @ChildContent
+        }
+    </div>
+    
+    @if (!string.IsNullOrEmpty(ValidationMessage)) {
+        <div class="text-(--color-red) text-sm mt-1">@ValidationMessage</div>
+    }
+</div>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter,EditorRequired] public string? Value { get; set; }
+    [Parameter] public EventCallback<string?> ValueChanged { get; set; }
+    [Parameter] public EventCallback<ChangeEventArgs> OnChange { get; set; }
+    [Parameter] public string Placeholder { get; set; } = string.Empty;
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string Type { get; set; } = "text";
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool AutoFocus { get; set; }
+    [Parameter] public int? MaxLength { get; set; }
+    [Parameter] public string? ValidationMessage { get; set; }
+    
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private async Task OnInputHandler(ChangeEventArgs args) {
+        if (args.Value is string value) {
+            await ValueChanged.InvokeAsync(value);
+        }
+    }
+}

@@ -8,7 +8,6 @@ namespace Infinilore.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
 [Flags]
 public enum Anchor {
-    Undefined = 0,
     Bottom = 1<<0,
     Top = 1<<1,
     Left = 1<<2,
