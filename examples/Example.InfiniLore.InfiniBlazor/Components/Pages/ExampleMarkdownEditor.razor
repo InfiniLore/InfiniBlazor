@@ -11,9 +11,14 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniPage>
-    <InfiniSection Class="flex flex-col grow">
+    <InfiniSection Class="flex flex-col h-screen">
         <InfiniHeading1>Markdown Editor Example</InfiniHeading1>
-        <InfiniMarkdownEditor Source="@TextSource"></InfiniMarkdownEditor>
+        <InfiniMarkdownEditor Source="@TextSource"/>
+    </InfiniSection>
+    
+    <InfiniSection Class="flex flex-col h-screen">
+        <InfiniHeading1>Markdown Editor Example</InfiniHeading1>
+        <InfiniMarkdownEditor Source="@TextSource" ShowPreview="false"/>
     </InfiniSection>
 </InfiniPage>
 

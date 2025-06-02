@@ -389,6 +389,12 @@
   .h-128 {
     height: calc(var(--spacing) * 128);
   }
+  .h-256 {
+    height: calc(var(--spacing) * 256);
+  }
+  .h-258 {
+    height: calc(var(--spacing) * 258);
+  }
   .h-\[1\.25rem\] {
     height: 1.25rem;
   }
@@ -478,6 +484,9 @@
   }
   .max-w-full {
     max-width: 100%;
+  }
+  .max-w-none {
+    max-width: none;
   }
   .max-w-sm {
     max-width: var(--container-sm);
@@ -648,6 +657,9 @@
   }
   .overflow-hidden {
     overflow: hidden;
+  }
+  .overflow-scroll {
+    overflow: scroll;
   }
   .overflow-y-auto {
     overflow-y: auto;

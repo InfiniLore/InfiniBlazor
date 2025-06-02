@@ -14,7 +14,7 @@
 <div class="@Class border-r border-(--border-color) min-h-0 flex">
     <textarea
         @ref="@TextareaRef"
-        class="grow p-4 border-none focus:outline-none resize-none infini-scrollbar"
+        class="grow p-4 border-none focus:outline-none resize-none overflow-scroll infini-scrollbar"
         value="@Source.Text"
         @oninput="OnInputAsync"
         @onkeydown="OnKeyDown">

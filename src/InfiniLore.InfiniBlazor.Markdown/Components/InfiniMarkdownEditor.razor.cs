@@ -18,14 +18,6 @@ public partial class InfiniMarkdownEditor(
     IMarkdownParser<string, string> markdownParser,
     IHtmlSanitizer sanitizer
 ) : ComponentBase {
-    private InfiniMarkdownInput? _markdownInput;
-    private ElementReference TextareaRef => _markdownInput?.TextareaRef ?? default;
-
-    private string? MarkdownOutput { get; set; }
-
-    private string _lastPressedKey = string.Empty;
-
-    [Parameter] public string? Class { get; init; }
 
     #pragma warning disable BL0007
     private ITextSource _source = null!;
@@ -34,6 +26,13 @@ public partial class InfiniMarkdownEditor(
         InvokeAsync(UpdateMarkdownAsync);
     }} 
     #pragma warning restore BL0007
+    [Parameter] public string? Class { get; init; }
+    [Parameter] public bool ShowPreview { get; init; } = true;
+    
+    private InfiniMarkdownInput? _markdownInput;
+    private ElementReference TextareaRef => _markdownInput?.TextareaRef ?? default;
+    private string? MarkdownOutput { get; set; }
+    private string _lastPressedKey = string.Empty;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

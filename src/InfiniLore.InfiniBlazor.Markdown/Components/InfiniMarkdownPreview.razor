@@ -11,12 +11,13 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="@Class flex min-h-0">
-    <div class="grow p-4 overflow-auto infini-scrollbar">
-        <div class="prose max-w-full">
+    <div class="flex-1 overflow-y-auto infini-scrollbar">
+        <div class="p-4 prose max-w-none">
             @((MarkupString)(Content ?? string.Empty))
         </div>
     </div>
 </div>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@

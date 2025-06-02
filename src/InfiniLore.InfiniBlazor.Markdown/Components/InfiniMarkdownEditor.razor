@@ -12,7 +12,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="@Class flex flex-col flex-1 min-h-0">
     <div class="flex flex-none w-full">
-        <InfiniMarkdownEditorToolbar Class="w-1/2">
+        <InfiniMarkdownEditorToolbar Class="@(ShowPreview ? "w-1/2" : "w-full")">
             <ToolbarButtons>
                 <InfiniButton OnClick="@(async () => await OnModifierClickAsync("bold"))"
                               Variant="ButtonVariant.Transparent"
@@ -40,19 +40,23 @@
             </ToolbarButtons>
         </InfiniMarkdownEditorToolbar>
 
-        <!-- Preview header (Right side) - Empty but maintains layout -->
-        <div class="w-1/2"></div>
+        @if (ShowPreview) {
+            <!-- Preview header (Right side) - Empty but maintains layout -->
+            <div class="w-1/2"></div>
+        }
     </div>
 
-    <div class="flex flex-1 border border-(--border-color) rounded-tr-lg rounded-b-lg">
+    <div class="flex flex-1 min-h-0 border border-(--border-color) rounded-tr-lg rounded-b-lg">
         <InfiniMarkdownInput
-            Class="w-1/2"
+            Class="@(ShowPreview ? "w-1/2" : "w-full")"
             @ref="_markdownInput"
             @bind-Source="Source"
             OnKeyDown="OnKeyDownAsync"/>
-        <InfiniMarkdownPreview
-            Class="w-1/2"
-            Content="@MarkdownOutput"/>
+        @if (ShowPreview) {
+            <InfiniMarkdownPreview
+                Class="w-1/2"
+                Content="@MarkdownOutput"/>
+        }
     </div>
 </div>
 
