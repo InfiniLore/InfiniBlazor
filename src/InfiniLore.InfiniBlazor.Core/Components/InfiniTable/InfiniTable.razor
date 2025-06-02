@@ -13,7 +13,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="@Class shadow-sm rounded-2xl border border-(--border-color) flex flex-col overflow-hidden">
     <div class="w-full h-full overflow-auto relative infini-scrollbar">
-        <table class="w-full h-full">
+        <table class="w-full h-full table-auto">
             <thead class="sticky top-0 bgc-(--table-header-background) border-(--border-color) z-10 border-b p-4">
                 <tr>
                     @Header
@@ -26,19 +26,15 @@
                             @EmptyMessage
                         </td>
                     </tr>
-                }
-                else if (Content is not null) {
-                    foreach (TItem item in Items) {
-                        <tr class="group hover:bgc-(--table-row-background-hover) transition h-4">
-                            @Content(item)
-                        </tr>
-                    }
-                }
-                else if (ContentWithIndex is not null) {
+                } else {
                     int i = 0;
                     foreach (TItem item in Items) {
                         <tr class="group hover:bgc-(--table-row-background-hover) transition h-4">
-                            @ContentWithIndex((item, i++))
+                            @if (Content is not null) {
+                                @Content(item)
+                            } else if (ContentWithIndex is not null) {
+                                @ContentWithIndex((item, i++))
+                            }
                         </tr>
                     }
                 }

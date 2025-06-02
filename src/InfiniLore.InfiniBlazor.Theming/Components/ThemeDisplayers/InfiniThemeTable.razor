@@ -19,8 +19,8 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniTable Class="@Class" Items="ThemeItems">
     <Header>
-        <InfiniTableHeader Class="w-min-48">Name</InfiniTableHeader>
-        <InfiniTableHeader Class="w-min-48">Value</InfiniTableHeader>
+        <InfiniTableHeader>Name</InfiniTableHeader>
+        <InfiniTableHeader>Value</InfiniTableHeader>
         <InfiniTableHeader>Display</InfiniTableHeader>
         <InfiniTableHeader Class="w-min-128 flex flex-col items-center">
             <span>Actions</span>
@@ -31,21 +31,21 @@
         </InfiniTableHeader>
     </Header>
     <Content Context="item">
-        <InfiniTableCell Class="w-min-48">
+        <InfiniTableCell>
             <code>@item.CssVarName</code>
         </InfiniTableCell>
 
-        <InfiniTableCell Class="w-min-48">
+        <InfiniTableCell>
             <code>@item.CssData</code>
         </InfiniTableCell>
 
-        <InfiniTableCell Alignment="" Class="w-full flex justify-center items-center">
+        <InfiniTableCell Alignment="" Class="flex justify-center items-center">
             <div class="w-12 h-12 shadow-md flex items-center justify-center leading-none rounded-xl"
                  style="background: var(@item.CssVarName)">
             </div>
         </InfiniTableCell>
 
-        <InfiniTableCell Alignment="right" Class="flex justify-center gap-6 w-min-128">
+        <InfiniTableCell Alignment="right" Class="flex justify-center gap-6">
             <InfiniButton
                 IconName="copy"
                 OnClick="() => JsRuntimeHelper.CopyToClipboardAsync(item.CssVarName)"

@@ -22,10 +22,9 @@
                 <InfiniTableHeader Alignment="right">Actions</InfiniTableHeader>
             </Header>
             <ContentWithIndex Context="box">
-                @{
-                    Person person = box.Item1;
-                    int index = box.Item2;
-                }
+                @{ Person person = box.Item1; }
+                @{ int index = box.Item2; }
+                
                 <InfiniTableCell>@person.Name</InfiniTableCell>
                 <InfiniTableCell>@person.Email</InfiniTableCell>
                 <InfiniTableCell Alignment="right">

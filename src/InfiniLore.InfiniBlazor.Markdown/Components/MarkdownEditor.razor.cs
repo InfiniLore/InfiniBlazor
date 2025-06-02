@@ -50,6 +50,10 @@ public partial class MarkdownEditor(
         }
     }
     
+    protected override async Task OnInitializedAsync() {
+        await UpdateMarkdownAsync();
+    }
+    
     public async ValueTask DisposeAsync() {
         await jsRuntimeHelper.RemovePreventDefaultListenerAsync();
         GC.SuppressFinalize(this);
