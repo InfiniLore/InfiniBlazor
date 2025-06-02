@@ -9,50 +9,105 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
+<!-- Basic Text Input Example -->
 <InfiniSection>
-    <InfiniHeading3>Text Input</InfiniHeading3>
-    <InfiniTextInput @bind-Value="@BoundValue0" OnChange="OnChanged" Placeholder="Type something..."/>
-    
-    <p>
-        BoundValue: @BoundValue0
-        <br />
-        OnChangedValue: @OnChangedValue0
-    </p>
+    <InfiniHeading3>Basic Text Input</InfiniHeading3>
+    <div class="space-y-4">
+        <InfiniTextInput
+            @bind-Value="@BasicExample.Value"
+            OnChange="BasicExample.OnChanged"
+            Placeholder="Type something..."/>
+
+        <div class="text-sm space-y-1">
+            <p>Bound Value: @BasicExample.Value</p>
+            <p>OnChanged Value: @BasicExample.OnChangedValue</p>
+        </div>
+    </div>
 </InfiniSection>
 
+<!-- Text Input with Submit Button -->
 <InfiniSection>
-    <InfiniHeading3>Text Input With Submit</InfiniHeading3>
-    <InfiniTextInput @bind-Value="@BoundValue1" Placeholder="Type something else and submit...">
-        <Submit>
-            <InfiniButton OnClick="OnSubmit">Submit</InfiniButton>
-        </Submit>
-    </InfiniTextInput>
-    
-    <p>
-        BoundValue: @BoundValue1
-        <br />
-        OnSubmittedValue: @OnSubmittedValue1
-    </p>
+    <InfiniHeading3>Text Input with Submit</InfiniHeading3>
+    <div class="space-y-4">
+        <InfiniTextInput @bind-Value="@SubmitExample.Value"
+                         Placeholder="Type something else and submit..." Disabled="true">
+            <InfiniButton OnClick="SubmitExample.OnSubmit">Submit</InfiniButton>
+        </InfiniTextInput>
+
+        <div class="text-sm space-y-1">
+            <p>Bound Value: @SubmitExample.Value</p>
+            <p>Submitted Value: @SubmitExample.SubmittedValue</p>
+        </div>
+    </div>
 </InfiniSection>
+
+<!-- Form Inputs Example -->
+<InfiniSection>
+    <InfiniHeading3>Form Inputs</InfiniHeading3>
+    <div class="space-y-4">
+        <InfiniTextInput
+            Type="email"
+            Value="@FormExample.Email"
+            ValueChanged="FormExample.HandleEmailChange"
+            ValidationMessage="@FormExample.ValidationMessage"
+            Placeholder="Enter email"/>
+        
+        <InfiniTextInput
+            Type="password"
+            Value="@FormExample.Password"
+            ValueChanged="@(value => FormExample.Password = value)"
+            Placeholder="Enter password"/>
+    </div>
+</InfiniSection>
+
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
-    private string? BoundValue0 { get; set; }
-    private string? OnChangedValue0 { get; set; }
-    private string? BoundValue1 { get; set; }
-    private string? OnSubmittedValue1 { get; set; }
+    private BasicInputExample BasicExample { get; } = new();
+    private SubmitInputExample SubmitExample { get; } = new();
+    private FormInputExample FormExample { get; } = new();
 
     // -----------------------------------------------------------------------------------------------------------------
-    // Methods
+    // Models
     // -----------------------------------------------------------------------------------------------------------------
-    private void OnChanged(ChangeEventArgs obj) {
-        if (obj.Value is not string onChangedValue) return;
-        OnChangedValue0 = onChangedValue;
+    private sealed class BasicInputExample {
+        public string? Value { get; set; }
+        public string? OnChangedValue { get; private set; }
+
+        public void OnChanged(ChangeEventArgs args) {
+            if (args.Value is string value) {
+                OnChangedValue = value;
+            }
+        }
     }
 
-    private void OnSubmit(MouseEventArgs args) {
-        OnSubmittedValue1 = BoundValue1;
+    private sealed class SubmitInputExample {
+        public string? Value { get; set; }
+        public string? SubmittedValue { get; private set; }
+
+        public void OnSubmit(MouseEventArgs _) {
+            SubmittedValue = Value;
+        }
+    }
+
+    private sealed class FormInputExample {
+        public string? Password { get; set; }
+        public string? Email { get; private set; }
+        public string? ValidationMessage { get; private set; }
+
+        public void HandleEmailChange(string? value) {
+            Email = value;
+            ValidationMessage = ValidateEmail(value);
+        }
+
+        private static string? ValidateEmail(string? value) => value switch {
+            null or "" => "Email is required",
+            not null when !value.Contains("@") => "Please enter a valid email address",
+            _ => null
+        };
     }
 }
+
