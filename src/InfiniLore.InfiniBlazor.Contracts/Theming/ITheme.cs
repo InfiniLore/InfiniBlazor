@@ -65,6 +65,8 @@ public interface ITheme {
     #endregion
 
     #region CascadedValues
+    [CssData] string TextColor { get; }
+    
     [CssData] string SidebarHamburgerColor { get; }
     [CssData] string SidebarNavTextColor { get; }
     [CssData] string SidebarNavTextColorHover { get; }
@@ -79,7 +81,11 @@ public interface ITheme {
     [CssData] string UsericonRing { get; }
     [CssData] string UsericonStatusBackground { get; }
     
-    [CssData] string TextColor { get; }
+    [CssData] string PageBackground { get; }
+    [CssData] string PageTextColor { get; }
+    
+    [CssData] string SectionBackground { get; }
+    [CssData] string SectionBorderColor { get; }
     #endregion
     #endregion
 }

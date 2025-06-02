@@ -57,6 +57,8 @@ public partial record InfiniBlazorTheme : ITheme {
     #endregion
 
     #region CascadedValues
+    [CssData, InterpretAsVar(nameof(ColorBase00))] public partial string TextColor { get; init; }
+    
     [CssData, InterpretAsVar(nameof(TextColor))] public partial string SidebarHamburgerColor { get; init; }
     [CssData, InterpretAsVar(nameof(ColorBase10))] public partial string SidebarNavTextColor { get; init; }
     [CssData, InterpretAsVar(nameof(ColorAccent))] public partial string SidebarNavTextColorHover { get; init; }
@@ -71,6 +73,10 @@ public partial record InfiniBlazorTheme : ITheme {
     [CssData, InterpretAsVar(nameof(ColorAccent))] public partial string UsericonRing { get; init; }
     [CssData, InterpretAsVar(nameof(ColorBase70))] public partial string UsericonStatusBackground { get; }
     
-    [CssData, InterpretAsVar(nameof(ColorBase00))] public partial string TextColor { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase90))] public partial string PageBackground { get; init; }
+    [CssData, InterpretAsVar(nameof(TextColor))] public partial string PageTextColor { get; init; }
+    
+    [CssData, InterpretAsVar(nameof(ColorBase90))] public partial string SectionBackground { get; init; }
+    [CssData, InterpretAsVar(nameof(SidebarNavBorderColor))] public partial string SectionBorderColor { get; init; }
     #endregion
 }
