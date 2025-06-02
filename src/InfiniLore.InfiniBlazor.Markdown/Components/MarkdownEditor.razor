@@ -12,11 +12,11 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="flex flex-col grow flex-1 min-h-0 h-full">
+<div class="flex flex-col flex-1 min-h-0">
     <!-- Header with toolbar -->
     <div class="flex flex-none">
         <!-- Editor toolbar (Left side) -->
-        <div class="w-1/2 flex justify-between items-center bg-white px-4 py-2 border-b border-r border-gray-200 overflow-auto gap-2">
+        <div class="w-1/2 flex justify-between items-center bg-(--editor-header-background) px-4 py-2 border-b border-r border-(--border-color) overflow-auto gap-2 rounded-tl-lg rounded-bl-lg">
             <!-- Left-Aligned Buttons -->
             <div class="flex space-x-1">
                 @foreach (ITextModifier textModifier in textEditor.Modifiers) {
@@ -39,9 +39,9 @@
     <!-- Main content area -->
     <div class="flex flex-1 min-h-0">
         <!-- Editor content -->
-        <div class="w-1/2 border-r border-gray-300 min-h-0">
+        <div class="w-1/2 border-r border-(--border-color) min-h-0 ">
             <textarea
-                class="w-full h-full p-4 border-none focus:outline-none resize-none"
+                class="w-full h-full p-4 border-none focus:outline-none resize-none infini-scrollbar"
                 @ref="_textareaRef"
                 @bind-value="Text" @bind-value:event="oninput"
                 @onkeydown="OnKeyDownAsync"
@@ -50,7 +50,7 @@
         </div>
 
         <!-- Preview content -->
-        <div class="w-1/2 p-4 overflow-auto min-h-0">
+        <div class="w-1/2 p-4 overflow-auto min-h-0 infini-scrollbar">
             <div class="prose max-w-full">
                 @MarkdownOutput
             </div>

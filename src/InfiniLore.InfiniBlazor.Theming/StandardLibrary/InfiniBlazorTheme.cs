@@ -58,13 +58,14 @@ public partial record InfiniBlazorTheme : ITheme {
 
     #region CascadedValues
     [CssData, InterpretAsVar(nameof(ColorBase00))] public partial string TextColor { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase60))] public partial string BorderColor { get; init; }
     
     [CssData, InterpretAsVar(nameof(TextColor))] public partial string SidebarHamburgerColor { get; init; }
     [CssData, InterpretAsVar(nameof(ColorBase10))] public partial string SidebarNavTextColor { get; init; }
     [CssData, InterpretAsVar(nameof(ColorAccent))] public partial string SidebarNavTextColorHover { get; init; }
     [CssData] public string SidebarNavButtonColor { get; init; } = "transparent";
     [CssData, InterpretAsVar(nameof(ColorBase70))] public partial string SidebarNavButtonColorHover { get; init; }
-    [CssData, InterpretAsVar(nameof(ColorBase60))] public partial string SidebarNavBorderColor { get; init; }
+    [CssData, InterpretAsVar(nameof(BorderColor))] public partial string SidebarNavBorderColor { get; init; }
     [CssData, InterpretAsVar(nameof(ColorBase90))] public partial string SidebarNavBackground { get; init; }
     [CssData, InterpretAsVar(nameof(ColorBase70))] public partial string SidebarNavBackgroundHover { get; init; }
     
@@ -77,9 +78,11 @@ public partial record InfiniBlazorTheme : ITheme {
     [CssData, InterpretAsVar(nameof(TextColor))] public partial string PageTextColor { get; init; }
     
     [CssData, InterpretAsVar(nameof(ColorBase90))] public partial string SectionBackground { get; init; }
-    [CssData, InterpretAsVar(nameof(SidebarNavBorderColor))] public partial string SectionBorderColor { get; init; }
+    [CssData, InterpretAsVar(nameof(BorderColor))] public partial string SectionBorderColor { get; init; }
     [CssData, InterpretAsVar(nameof(ColorBase80))] public partial string TableHeaderBackground { get; init; }
     [CssData, InterpretAsVar(nameof(ColorBase90))] public partial string TableRowBackground { get; init; }
     [CssData, InterpretAsVar(nameof(ColorBase70))] public partial string TableRowBackgroundHover { get; init; }
+    
+    [CssData, InterpretAsVar(nameof(ColorBase80))] public partial string EditorHeaderBackground { get; init; }
     #endregion
 }

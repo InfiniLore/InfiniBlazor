@@ -78,7 +78,7 @@
 
     private string IconClasses => (Variant, Disabled) switch {
         (ButtonVariant.Primary, false) => "bg-(--color-accent) group-hover/button:bg-(--color-base-70)",
-        (ButtonVariant.Transparent, false) => "bg-transparent text-(--color-base-70) group-hover/button:bg-(--color-base-10) group-hover/button:text-(--color-accent)",
+        (ButtonVariant.Transparent, false) => "bg-transparent text-(--color-base-30) group-hover/button:bg-(--color-base-10) group-hover/button:text-(--color-accent)",
         (_, false) => "bg-(--color-base-70) text-(--color-base-00) group-hover/button:bg-(--color-base-80) group-hover/button:text-(--color-accent)",
         (_, true) => "bg-(--color-base-70) text-(--color-base-10)"
     } + " rounded-md";

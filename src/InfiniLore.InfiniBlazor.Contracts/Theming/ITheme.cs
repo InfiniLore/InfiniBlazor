@@ -66,6 +66,7 @@ public interface ITheme {
 
     #region CascadedValues
     [CssData] string TextColor { get; }
+    [CssData] string BorderColor { get; }
     
     [CssData] string SidebarHamburgerColor { get; }
     [CssData] string SidebarNavTextColor { get; }
@@ -90,6 +91,8 @@ public interface ITheme {
     [CssData] string TableHeaderBackground { get; }
     [CssData] string TableRowBackground { get; }
     [CssData] string TableRowBackgroundHover { get; }
+    
+    [CssData] string EditorHeaderBackground { get; }
     #endregion
     #endregion
 }
