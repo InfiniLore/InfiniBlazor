@@ -10,6 +10,7 @@
   "license": "GNUv3",
   "description": "",
   "devDependencies": {
+    "tailwind-scrollbar": "^4.0.2",
     "tailwindcss": "^4.1.8",
     "ts-loader": "^9.5.2",
     "typescript": "^5.8.3",

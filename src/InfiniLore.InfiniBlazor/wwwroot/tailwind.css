@@ -19,9 +19,34 @@
     background: --value([*]);
 }
 
-@utility hide-scrollbar {
-    scrollbar-width: none;
-    &::-webkit-scrollbar {
-        display: none;
-    }
+@utility infini-scrollbar-* {
+    background: --value([*]);
+}
+
+
+.infini-scrollbar::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+.infini-scrollbar::-webkit-scrollbar-track{
+    background: transparent;
+}
+
+.infini-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-base-60);
+    border-radius: 8px;
+    border: 2px solid var(--color-base-90);
+}
+
+.infini-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--color-base-50);
+}
+
+.infini-scrollbar::-webkit-scrollbar-corner {
+    background: var(--color-base-90);
+}
+
+.infini-scrollbar::-webkit-scrollbar-thumb:active {
+    background: var(--color-base-40);
 }
