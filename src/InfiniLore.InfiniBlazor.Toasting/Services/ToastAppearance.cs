@@ -11,9 +11,9 @@ public record ToastAppearance(
     string TailwindData,
     bool CanBeDismissed
 ) : IToastAppearance {
-    public static IToastAppearance Default = new ToastAppearance(
+    public static readonly IToastAppearance Default = new ToastAppearance(
         "info",
-        "bg-green-100 border-green-500 text-green-900 hover:bg-green-200",
+        "bg-green-950 border-green-600 text-green-500 hover:bg-green-900",
         true
     );
 }

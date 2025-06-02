@@ -15,10 +15,10 @@ public static class IInfiniBlazorConfigExtensions {
         config.Services.AddSingleton<IToastStorage, ToastStorage>();
         
         var themeConfig = new ToastConfig(config);
-        themeConfig.AddToastSetupData(StandardToastAppearance.Info, new ToastAppearance("info", "bg-blue-100 border border-blue-400 text-blue-900 hover:bg-blue-200", false));
-        themeConfig.AddToastSetupData(StandardToastAppearance.Success, new ToastAppearance("circle-check", "bg-green-100 border border-green-500 text-green-900 hover:bg-green-200", false));
-        themeConfig.AddToastSetupData(StandardToastAppearance.Warning, new ToastAppearance("circle-help", "bg-yellow-100 border border-yellow-400 text-yellow-900 hover:bg-yellow-200", false));
-        themeConfig.AddToastSetupData(StandardToastAppearance.Error, new ToastAppearance("circle-alert", "bg-red-100 border border-red-400 text-red-900 hover:bg-red-200", true));
+        themeConfig.AddToastSetupData(StandardToastAppearance.Info, new ToastAppearance("info", "bg-blue-950 border border-blue-600 text-blue-500 hover:bg-blue-900", false));
+        themeConfig.AddToastSetupData(StandardToastAppearance.Success, new ToastAppearance("circle-check", "bg-green-950 border border-green-600 text-green-500 hover:bg-green-900", false));
+        themeConfig.AddToastSetupData(StandardToastAppearance.Warning, new ToastAppearance("circle-help", "bg-yellow-800 border border-yellow-400 text-yellow-500 hover:bg-yellow-700", false));
+        themeConfig.AddToastSetupData(StandardToastAppearance.Error, new ToastAppearance("circle-alert", "bg-rose-950 border border-red-600 text-red-500 hover:bg-rose-900", true));
         
         configure?.Invoke(themeConfig);
         
