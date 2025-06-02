@@ -1,7 +1,6 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using Microsoft.AspNetCore.Components.Forms
 
 @* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
@@ -18,7 +17,7 @@
            @oninput="OnInputHandler"
            @onchange="OnChange"
            placeholder="@Placeholder"
-           class="@Class w-full placeholder-(--color-base-50) bg-(--color-base-70) rounded-md border border-(--border-color) focus:ring-2 outline-none hover:ring-2 ring-(--color-accent) text-sm p-2 shadow-sm transition"/>
+           class="@Class w-full placeholder-(--color-base-60) bg-(--color-base-70) rounded-md border border-(--border-color) focus:ring-2 outline-none hover:ring-2 ring-(--color-accent) text-sm p-2 shadow-sm transition"/>
 
     @if (Submit is not null) {
         @Submit

@@ -11,7 +11,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniSection>
     <InfiniHeading3>Text Input</InfiniHeading3>
-    <InfiniTextInput @bind-Value="@BoundValue0" OnChange="OnChanged" />
+    <InfiniTextInput @bind-Value="@BoundValue0" OnChange="OnChanged" Placeholder="Type something..."/>
     
     <p>
         BoundValue: @BoundValue0
@@ -22,7 +22,7 @@
 
 <InfiniSection>
     <InfiniHeading3>Text Input With Submit</InfiniHeading3>
-    <InfiniTextInput @bind-Value="@BoundValue1" OnChange="OnChanged">
+    <InfiniTextInput @bind-Value="@BoundValue1" Placeholder="Type something else and submit...">
         <Submit>
             <InfiniButton OnClick="OnSubmit">Submit</InfiniButton>
         </Submit>
