@@ -1,8 +1,6 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.Markdown
-
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
@@ -12,48 +10,49 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="flex flex-col flex-1 min-h-0">
-    <!-- Header with toolbar -->
-    <div class="flex flex-none">
-        <!-- Editor toolbar (Left side) -->
-        <div class="w-1/2 flex justify-between items-center bg-(--editor-header-background) px-4 py-2 overflow-auto gap-2 rounded-tl-lg rounded-tr-lg">
-            <!-- Left-Aligned Buttons -->
-            <div class="flex space-x-1">
-                @foreach (ITextModifier textModifier in textEditor.Modifiers) {
-                    <InfiniButton OnClick="() => OnModifierClickAsync(textModifier.ModifierName)"
-                                  Variant="ButtonVariant.Transparent"
-                                  IconName="@textModifier.IconName"/>
-                }
-            </div>
+<div class="@Class flex flex-col flex-1 min-h-0">
+    <div class="flex flex-none w-full">
+        <InfiniMarkdownEditorToolbar Class="w-1/2">
+            <ToolbarButtons>
+                <InfiniButton OnClick="@(async () => await OnModifierClickAsync("bold"))"
+                              Variant="ButtonVariant.Transparent"
+                              IconName="bold"/>
+                <InfiniButton OnClick="@(async () => await OnModifierClickAsync("italic"))"
+                              Variant="ButtonVariant.Transparent"
+                              IconName="italic"/>
+                <InfiniButton OnClick="@(async () => await OnModifierClickAsync("underline"))"
+                              Variant="ButtonVariant.Transparent"
+                              IconName="underline"/>
+                <InfiniButton OnClick="@(async () => await OnModifierClickAsync("strike"))"
+                              Variant="ButtonVariant.Transparent"
+                              IconName="strikethrough"/>
+                <InfiniButton OnClick="@(async () => await OnModifierClickAsync("superscript"))"
+                              Variant="ButtonVariant.Transparent"
+                              IconName="superscript"/>
+                <InfiniButton OnClick="@(async () => await OnModifierClickAsync("subscript"))"
+                              Variant="ButtonVariant.Transparent"
+                              IconName="subscript"/>
 
-            <!-- Right-Aligned Buttons -->
-            <div class="flex space-x-2 mb-2">
+                <div class="grow"></div>
+
                 <InfiniButton OnClick="DebugLoremAsync">Lorem</InfiniButton>
                 <InfiniButton OnClick="DebugTableAsync">Table</InfiniButton>
-            </div>
-        </div>
+            </ToolbarButtons>
+        </InfiniMarkdownEditorToolbar>
+
         <!-- Preview header (Right side) - Empty but maintains layout -->
-        <div class="w-1/2 "></div>
+        <div class="w-1/2"></div>
     </div>
 
-    <!-- Main content area -->
-    <div class="flex flex-1 min-h-0 border border-(--border-color) rounded-tr-lg rounded-b-lg">
-        <!-- Editor content -->
-        <div class="w-1/2 border-r border-(--border-color) min-h-0 ">
-            <textarea
-                class="w-full h-full p-4 border-none focus:outline-none resize-none infini-scrollbar"
-                @ref="_textareaRef"
-                @bind-value="Text" @bind-value:event="oninput"
-                @onkeydown="OnKeyDownAsync"
-            >
-            </textarea>
-        </div>
-
-        <!-- Preview content -->
-        <div class="w-1/2 p-4 overflow-auto min-h-0 infini-scrollbar">
-            <div class="prose max-w-full">
-                @MarkdownOutput
-            </div>
-        </div>
+    <div class="flex flex-1 border border-(--border-color) rounded-tr-lg rounded-b-lg">
+        <InfiniMarkdownInput
+            Class="w-1/2"
+            @ref="_markdownInput"
+            @bind-Source="Source"
+            OnKeyDown="OnKeyDownAsync"/>
+        <InfiniMarkdownPreview
+            Class="w-1/2"
+            Content="@MarkdownOutput"/>
     </div>
 </div>
+

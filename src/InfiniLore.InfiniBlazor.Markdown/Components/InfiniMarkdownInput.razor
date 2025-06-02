@@ -1,0 +1,43 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* ReSharper disable once CheckNamespace *@
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Markdown
+@inherits ComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="@Class border-r border-(--border-color) min-h-0 flex">
+    <textarea
+        @ref="@TextareaRef"
+        class="grow p-4 border-none focus:outline-none resize-none infini-scrollbar"
+        value="@Source.Text"
+        @oninput="OnInputAsync"
+        @onkeydown="OnKeyDown">
+    </textarea>
+</div>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter, EditorRequired] public ITextSource Source { get; set; } = null!;
+    [Parameter] public EventCallback<ITextSource> SourceChanged { get; set; }
+    [Parameter] public EventCallback<KeyboardEventArgs> OnKeyDown { get; set; }
+    [Parameter] public string? Class { get; set; }
+    
+    public ElementReference TextareaRef { get; private set; }
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private async Task OnInputAsync(ChangeEventArgs e) {
+        if (e.Value is string value) {
+            Source.Text = value;
+            await SourceChanged.InvokeAsync(Source);
+        }
+    }
+}
+

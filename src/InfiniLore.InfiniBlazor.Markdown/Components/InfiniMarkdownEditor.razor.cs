@@ -18,20 +18,22 @@ public partial class InfiniMarkdownEditor(
     IMarkdownParser<string, string> markdownParser,
     IHtmlSanitizer sanitizer
 ) : ComponentBase {
-    private MarkupString MarkdownOutput { get; set; }
-    private ElementReference _textareaRef;
+    private InfiniMarkdownInput? _markdownInput;
+    private ElementReference TextareaRef => _markdownInput?.TextareaRef ?? default;
+
+    private string? MarkdownOutput { get; set; }
+
     private string _lastPressedKey = string.Empty;
-    private string Text {
-        get => Source.Text;
-        set {
-            // needed to fix a bit that places the caret at the end of the text, see https://github.com/dotnet/aspnetcore/issues/20072
-            Source.Text = value;
-            InvokeAsync(UpdateMarkdownAsync);
-        }
-    }
-    
+
     [Parameter] public string? Class { get; init; }
-    [Parameter, EditorRequired] public required ITextSource Source { get; init; } = null!;
+
+    #pragma warning disable BL0007
+    private ITextSource _source = null!;
+    [Parameter] [EditorRequired] public ITextSource Source { get => _source;  set {
+        _source = value;
+        InvokeAsync(UpdateMarkdownAsync);
+    }} 
+    #pragma warning restore BL0007
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -46,49 +48,56 @@ public partial class InfiniMarkdownEditor(
 
         // place the caret in a newly requested location
         if (textEditor.TryGetCaretUpdate(out int index)) {
-            await jsRuntimeHelper.SetSelectionRangeAsync(_textareaRef, index, index);
+            await jsRuntimeHelper.SetSelectionRangeAsync(TextareaRef, index, index);
         }
     }
-    
+
     protected override async Task OnInitializedAsync() {
         await UpdateMarkdownAsync();
     }
-    
+
+    protected override async Task OnParametersSetAsync() {
+        await UpdateMarkdownAsync();
+        await base.OnParametersSetAsync();
+    }
+
     public async ValueTask DisposeAsync() {
         await jsRuntimeHelper.RemovePreventDefaultListenerAsync();
         GC.SuppressFinalize(this);
     }
-    
+
     private async Task UpdateMarkdownAsync() {
         string? output = await markdownParser.TryParseAsync(Source.Text);
-        if (output is null) return; // TODO create some form of error popup
-        string sanitizedOutput = sanitizer.Sanitize(output);
-        MarkdownOutput = new MarkupString(sanitizedOutput);
+        if (output is null) return;// TODO create some form of error popup
+
+        MarkdownOutput = sanitizer.Sanitize(output);
         StateHasChanged();
     }
-    
+
+
     private async Task OnModifierClickAsync(string modifierName) {
         textEditor.Modify(Source, modifierName, await GetSelectionRangeAsync());
 
         await UpdateMarkdownAsync();
     }
-    
+
     private async Task<Range> GetSelectionRangeAsync() {
-        (int, int) tuple = await jsRuntimeHelper.GetSelectionAsync(_textareaRef);
+        (int, int) tuple = await jsRuntimeHelper.GetSelectionAsync(TextareaRef);
         return new Range(tuple.Item1, tuple.Item2);
     }
-    
+
     private async Task OnKeyDownAsync(KeyboardEventArgs obj) {
         if (!obj.CtrlKey) return;
+
         string lastPressedKey = _lastPressedKey;
         _lastPressedKey = obj.Key;
-        
+
         // Todo make this come form a dictionary or something which has the option for user configuration
         switch (obj, lastPressedKey) {
             case ({ CtrlKey: true, Key: "a" or "A" }, "a"): {
                 if (Source.Text.IsNullOrWhiteSpace()) break;
 
-                await jsRuntimeHelper.SetSelectionRangeAsync(_textareaRef, 0, Source.Length);
+                await jsRuntimeHelper.SetSelectionRangeAsync(TextareaRef, 0, Source.Length);
                 break;
             }
 
@@ -96,10 +105,10 @@ public partial class InfiniMarkdownEditor(
                 if (Source.Text.IsNullOrWhiteSpace()) break;
 
                 // when we select a only once we should get the current line
-                int caretIndex = await jsRuntimeHelper.GetSelectionStartAsync(_textareaRef);
+                int caretIndex = await jsRuntimeHelper.GetSelectionStartAsync(TextareaRef);
                 if (!textEditor.TryGetCaretLine(Source, caretIndex, out Range lineRange)) break;
 
-                await jsRuntimeHelper.SetSelectionRangeAsync(_textareaRef, lineRange.Start.Value, lineRange.End.Value);
+                await jsRuntimeHelper.SetSelectionRangeAsync(TextareaRef, lineRange.Start.Value, lineRange.End.Value);
                 break;
             }
 
@@ -125,7 +134,7 @@ public partial class InfiniMarkdownEditor(
             }
         }
     }
-    
+
     private async Task DebugLoremAsync() {
         const string loremText = """
             Lorem ipsum dolor
@@ -157,14 +166,14 @@ public partial class InfiniMarkdownEditor(
         textEditor.Insert(Source, loremText, await GetSelectionRangeAsync());
         await UpdateMarkdownAsync();
     }
-    
+
     private async Task DebugTableAsync() {
         const string tableText = """
             | test  | something |
             |  ---- | --------- |
             | alpha | beta      |
             """;
-        
+
         textEditor.Insert(Source, tableText, await GetSelectionRangeAsync());
         await UpdateMarkdownAsync();
     }
