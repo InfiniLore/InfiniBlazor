@@ -12,7 +12,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@Class group/button p-0.5">
+<div class="@Class group/button p-0.5 relative">
     <button @onclick="OnClickAsync" 
             @onclick:stopPropagation="@StopPropagation"
             type="@Type"
@@ -45,27 +45,7 @@
     [Parameter] public string? IconName { get; set; }
     [Parameter] public RenderFragment? ChildContent { get; set; }
     [Parameter] public bool StopPropagation { get; set; } = true;
-    
-    /// <summary>
-    /// Event handler for the button's click event. Supports the following delegate types:
-    /// <list type="bullet">
-    ///   <item><description>System.Action - Synchronous action without parameters</description></item>
-    ///   <item><description>System.Action&lt;Microsoft.AspNetCore.Components.Web.MouseEventArgs&gt; - Synchronous action with mouse event data</description></item>
-    ///   <item><description>System.Func&lt;System.Threading.Tasks.Task&gt; - Async action without parameters</description></item>
-    ///   <item><description>System.Func&lt;Microsoft.AspNetCore.Components.Web.MouseEventArgs, System.Threading.Tasks.Task&gt; - Async action with mouse event data</description></item>
-    ///   <item><description>Microsoft.AspNetCore.Components.EventCallback&lt;Microsoft.AspNetCore.Components.Web.MouseEventArgs&gt; - Blazor event callback</description></item>
-    /// </list>
-    /// </summary>
-    /// <example>
-    /// <code>
-    /// &lt;InfiniButton OnClick="() => Console.WriteLine('Clicked')"&gt;Click Me&lt;/InfiniButton&gt;
-    /// &lt;InfiniButton OnClick="(MouseEventArgs e) => HandleClick(e.Button)"&gt;Click Me&lt;/InfiniButton&gt;
-    /// &lt;InfiniButton OnClick="async () => await DoSomethingAsync()"&gt;Click Me&lt;/InfiniButton&gt;
-    /// &lt;InfiniButton OnClick="async (MouseEventArgs e) => await HandleClickAsync(e.Button)"&gt;Click Me&lt;/InfiniButton&gt;
-    /// </code>
-    /// </example>
     [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
-
     [Parameter] public bool Disabled { get; set; }
     [Parameter] public string Type { get; set; } = "button";
     [Parameter] public string? AriaLabel { get; set; }
@@ -91,8 +71,9 @@
         Anchor.Left | Anchor.Top => "bottom-full right-1 translate-x-1 mb-2",
         Anchor.Right | Anchor.Top => "bottom-full left-1 -translate-x-1 mb-2",
 
-        Anchor.Left => "top-0 translate-y-1/2 right-full mr-2",
-        Anchor.Right => "top-0 translate-y-1/2 left-full ml-2",
+        Anchor.Left => "top-0 translate-y-1 right-full mr-2",
+        Anchor.Right => "top-0 translate-y-1 left-full ml-2",
+
         _ => "top-full left-1/2 -translate-x-1/2 mt-2"
     };
 
