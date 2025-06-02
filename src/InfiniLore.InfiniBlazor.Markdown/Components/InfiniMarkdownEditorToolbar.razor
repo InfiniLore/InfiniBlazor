@@ -1,31 +1,22 @@
-@* ------------------------------------------------------------------------------------------------------------------ *@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.Markdown
+@* ReSharper disable once CheckNamespace *@
+@namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@page "/markdown-dual"
-@rendermode InteractiveServer
+@inherits ComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniPage>
-    <InfiniSection Class="flex flex-col h-screen">
-        <InfiniHeading1>Markdown Editor Example</InfiniHeading1>
-        <InfiniMarkdownEditor Source="@TextSource"/>
-    </InfiniSection>
-    
-    <InfiniSection Class="flex flex-col h-screen">
-        <InfiniHeading1>Markdown Editor Example</InfiniHeading1>
-        <InfiniMarkdownEditor Source="@TextSource" ShowPreview="false"/>
-    </InfiniSection>
-</InfiniPage>
-
+<div class="@Class flex justify-between items-center bg-(--editor-header-background) px-4 py-2 overflow-auto gap-2 rounded-tl-lg rounded-tr-lg infini-scrollbar">
+    @ToolbarButtons
+</div>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private ITextSource TextSource { get; } = new TextSource();
+    [Parameter] public RenderFragment? ToolbarButtons { get; set; }
+    [Parameter] public string? Class { get; set; }
 }
-

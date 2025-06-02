@@ -1,31 +1,29 @@
-@* ------------------------------------------------------------------------------------------------------------------ *@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.Markdown
+@* ReSharper disable once CheckNamespace *@
+@namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@page "/markdown-dual"
-@rendermode InteractiveServer
+@inherits ComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniPage>
-    <InfiniSection Class="flex flex-col h-screen">
-        <InfiniHeading1>Markdown Editor Example</InfiniHeading1>
-        <InfiniMarkdownEditor Source="@TextSource"/>
-    </InfiniSection>
-    
-    <InfiniSection Class="flex flex-col h-screen">
-        <InfiniHeading1>Markdown Editor Example</InfiniHeading1>
-        <InfiniMarkdownEditor Source="@TextSource" ShowPreview="false"/>
-    </InfiniSection>
-</InfiniPage>
+<div class="@Class flex min-h-0">
+    <div class="flex-1 overflow-y-auto infini-scrollbar">
+        <div class="p-4 prose max-w-none">
+            @((MarkupString)(Content ?? string.Empty))
+        </div>
+    </div>
+</div>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private ITextSource TextSource { get; } = new TextSource();
+    [Parameter] public string? Content { get; set; } = string.Empty;
+    [Parameter] public string? Class { get; set; }
 }
+
 

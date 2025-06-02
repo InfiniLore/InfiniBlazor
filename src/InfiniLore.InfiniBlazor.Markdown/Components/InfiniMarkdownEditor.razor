@@ -1,0 +1,62 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits ComponentBase
+@implements IAsyncDisposable
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="@Class flex flex-col flex-1 min-h-0">
+    <div class="flex flex-none w-full">
+        <InfiniMarkdownEditorToolbar Class="@(ShowPreview ? "w-1/2" : "w-full")">
+            <ToolbarButtons>
+                <InfiniButton OnClick="@(async () => await OnModifierClickAsync("bold"))"
+                              Variant="ButtonVariant.Transparent"
+                              IconName="bold"/>
+                <InfiniButton OnClick="@(async () => await OnModifierClickAsync("italic"))"
+                              Variant="ButtonVariant.Transparent"
+                              IconName="italic"/>
+                <InfiniButton OnClick="@(async () => await OnModifierClickAsync("underline"))"
+                              Variant="ButtonVariant.Transparent"
+                              IconName="underline"/>
+                <InfiniButton OnClick="@(async () => await OnModifierClickAsync("strike"))"
+                              Variant="ButtonVariant.Transparent"
+                              IconName="strikethrough"/>
+                <InfiniButton OnClick="@(async () => await OnModifierClickAsync("superscript"))"
+                              Variant="ButtonVariant.Transparent"
+                              IconName="superscript"/>
+                <InfiniButton OnClick="@(async () => await OnModifierClickAsync("subscript"))"
+                              Variant="ButtonVariant.Transparent"
+                              IconName="subscript"/>
+
+                <div class="grow"></div>
+
+                <InfiniButton OnClick="DebugLoremAsync">Lorem</InfiniButton>
+                <InfiniButton OnClick="DebugTableAsync">Table</InfiniButton>
+            </ToolbarButtons>
+        </InfiniMarkdownEditorToolbar>
+
+        @if (ShowPreview) {
+            <!-- Preview header (Right side) - Empty but maintains layout -->
+            <div class="w-1/2"></div>
+        }
+    </div>
+
+    <div class="flex flex-1 min-h-0 border border-(--border-color) rounded-tr-lg rounded-b-lg">
+        <InfiniMarkdownInput
+            Class="@(ShowPreview ? "w-1/2" : "w-full")"
+            @ref="_markdownInput"
+            @bind-Source="Source"
+            OnKeyDown="OnKeyDownAsync"/>
+        @if (ShowPreview) {
+            <InfiniMarkdownPreview
+                Class="w-1/2"
+                Content="@MarkdownOutput"/>
+        }
+    </div>
+</div>
+
