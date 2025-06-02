@@ -12,7 +12,12 @@ namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsRuntimeHelper, IMarkdownParser<string,string> markdownParser, IHtmlSanitizer sanitizer) : ComponentBase {
+public partial class MarkdownEditor(
+    ITextEditor textEditor,
+    IJsRuntimeHelper jsRuntimeHelper,
+    IMarkdownParser<string, string> markdownParser,
+    IHtmlSanitizer sanitizer
+) : ComponentBase {
     private MarkupString MarkdownOutput { get; set; }
     private ElementReference _textareaRef;
     private string _lastPressedKey = string.Empty;
@@ -25,6 +30,7 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
         }
     }
     
+    [Parameter] public string? Class { get; init; }
     [Parameter, EditorRequired] public required ITextSource Source { get; init; } = null!;
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -42,6 +48,10 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
         if (textEditor.TryGetCaretUpdate(out int index)) {
             await jsRuntimeHelper.SetSelectionRangeAsync(_textareaRef, index, index);
         }
+    }
+    
+    protected override async Task OnInitializedAsync() {
+        await UpdateMarkdownAsync();
     }
     
     public async ValueTask DisposeAsync() {
@@ -150,9 +160,9 @@ public partial class MarkdownEditor(ITextEditor textEditor, IJsRuntimeHelper jsR
     
     private async Task DebugTableAsync() {
         const string tableText = """
-            | test | something |
+            | test  | something |
             |  ---- | --------- |
-            | alpha | beta |
+            | alpha | beta      |
             """;
         
         textEditor.Insert(Source, tableText, await GetSelectionRangeAsync());

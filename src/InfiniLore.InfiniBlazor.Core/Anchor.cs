@@ -14,4 +14,11 @@ public enum Anchor {
     Left = 1<<2,
     Right = 1<<3,
     Center = 1<<4,
+    
+    CenterBottom = Bottom | Center,
+    CenterTop = Top | Center,
+    LeftBottom = Bottom | Left,
+    LeftTop = Top | Left,
+    RightBottom = Bottom | Right,
+    RightTop = Top | Right,
 }

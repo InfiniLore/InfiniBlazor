@@ -10,14 +10,17 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniSection class="h-128">
-    <MarkdownEditor Source="@TextSource"></MarkdownEditor>
-</InfiniSection>
+<InfiniPage>
+    <InfiniSection Class="flex flex-col grow">
+        <InfiniHeading1>Markdown Editor Example</InfiniHeading1>
+        <MarkdownEditor Source="@TextSource"></MarkdownEditor>
+    </InfiniSection>
+</InfiniPage>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private ITextSource TextSource { get; }  = new TextSource();
+    private ITextSource TextSource { get; } = new TextSource();
 }
 
