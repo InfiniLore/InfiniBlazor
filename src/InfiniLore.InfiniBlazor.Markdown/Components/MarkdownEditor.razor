@@ -16,7 +16,7 @@
     <!-- Header with toolbar -->
     <div class="flex flex-none">
         <!-- Editor toolbar (Left side) -->
-        <div class="w-1/2 flex justify-between items-center bg-(--editor-header-background) px-4 py-2 border-b border-r border-(--border-color) overflow-auto gap-2 rounded-tl-lg rounded-bl-lg">
+        <div class="w-1/2 flex justify-between items-center bg-(--editor-header-background) px-4 py-2 overflow-auto gap-2 rounded-tl-lg rounded-tr-lg">
             <!-- Left-Aligned Buttons -->
             <div class="flex space-x-1">
                 @foreach (ITextModifier textModifier in textEditor.Modifiers) {
@@ -37,7 +37,7 @@
     </div>
 
     <!-- Main content area -->
-    <div class="flex flex-1 min-h-0">
+    <div class="flex flex-1 min-h-0 border border-(--border-color) rounded-tr-lg rounded-b-lg">
         <!-- Editor content -->
         <div class="w-1/2 border-r border-(--border-color) min-h-0 ">
             <textarea

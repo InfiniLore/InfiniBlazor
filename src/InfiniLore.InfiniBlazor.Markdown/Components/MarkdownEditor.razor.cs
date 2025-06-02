@@ -156,9 +156,9 @@ public partial class MarkdownEditor(
     
     private async Task DebugTableAsync() {
         const string tableText = """
-            | test | something |
+            | test  | something |
             |  ---- | --------- |
-            | alpha | beta |
+            | alpha | beta      |
             """;
         
         textEditor.Insert(Source, tableText, await GetSelectionRangeAsync());
