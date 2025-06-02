@@ -64,8 +64,7 @@
     /// &lt;InfiniButton OnClick="async (MouseEventArgs e) => await HandleClickAsync(e.Button)"&gt;Click Me&lt;/InfiniButton&gt;
     /// </code>
     /// </example>
-    [Parameter] public Delegate? OnClick { get; set; }
-    private OnClickUnion OnClickUnion => OnClick ?? default(OnClickUnion);
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
 
     [Parameter] public bool Disabled { get; set; }
     [Parameter] public string Type { get; set; } = "button";
@@ -115,6 +114,6 @@
     // -----------------------------------------------------------------------------------------------------------------
     private async Task OnClickAsync(MouseEventArgs args) {
         if (Disabled) return;
-        await OnClickUnion.InvokeAsync(args);
+        await OnClick.InvokeAsync(args);
     }
 }

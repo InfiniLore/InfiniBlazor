@@ -1,0 +1,58 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@rendermode InteractiveServer
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniSection>
+    <InfiniHeading3>Text Input</InfiniHeading3>
+    <InfiniTextInput @bind-Value="@BoundValue0" OnChange="OnChanged" />
+    
+    <p>
+        BoundValue: @BoundValue0
+        <br />
+        OnChangedValue: @OnChangedValue0
+    </p>
+</InfiniSection>
+
+<InfiniSection>
+    <InfiniHeading3>Text Input With Submit</InfiniHeading3>
+    <InfiniTextInput @bind-Value="@BoundValue1" OnChange="OnChanged">
+        <Submit>
+            <InfiniButton OnClick="OnSubmit">Submit</InfiniButton>
+        </Submit>
+    </InfiniTextInput>
+    
+    <p>
+        BoundValue: @BoundValue1
+        <br />
+        OnSubmittedValue: @OnSubmittedValue1
+    </p>
+</InfiniSection>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    private string? BoundValue0 { get; set; }
+    private string? OnChangedValue0 { get; set; }
+    private string? BoundValue1 { get; set; }
+    private string? OnSubmittedValue1 { get; set; }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private void OnChanged(ChangeEventArgs obj) {
+        if (obj.Value is not string onChangedValue) return;
+        OnChangedValue0 = onChangedValue;
+    }
+
+    private void OnSubmit(MouseEventArgs args) {
+        OnSubmittedValue1 = BoundValue1;
+    }
+}
