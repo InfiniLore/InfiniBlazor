@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class MarkdownEditor(
+public partial class InfiniMarkdownEditor(
     ITextEditor textEditor,
     IJsRuntimeHelper jsRuntimeHelper,
     IMarkdownParser<string, string> markdownParser,
