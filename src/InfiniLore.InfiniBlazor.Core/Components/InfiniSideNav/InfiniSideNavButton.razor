@@ -9,14 +9,12 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<button @onclick="@HandleClickAsync" class="@SideNavMenuItem.ContainerClasses">
-    <SideNavMenuItem Text="@Text" Icon="@Icon"/>
+<button @onclick="@HandleClickAsync" class="@InfiniSideNavItem.ContainerClasses">
+    <InfiniSideNavItem Text="@Text" Icon="@Icon"/>
 </button>
-
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
     [CascadingParameter] public bool MenuCollapsed { get; set; }
     

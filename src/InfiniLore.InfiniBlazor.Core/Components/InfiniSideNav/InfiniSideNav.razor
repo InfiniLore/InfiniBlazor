@@ -48,14 +48,11 @@
         </div>
     </aside>
 </CascadingValue>
-
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
-    [Parameter] public SideNavMenuSize Size { get; set; } = SideNavMenuSize.Medium;
-
+    [Parameter] public SideNavSize Size { get; set; } = SideNavSize.Medium;
     [Parameter] public bool MenuCollapsed { get; set; }
 
     [Parameter] public RenderFragment? Header { get; set; }
