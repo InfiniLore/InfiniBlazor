@@ -78,5 +78,8 @@ public partial record InfiniBlazorTheme : ITheme {
     
     [CssData, InterpretAsVar(nameof(ColorBase90))] public partial string SectionBackground { get; init; }
     [CssData, InterpretAsVar(nameof(SidebarNavBorderColor))] public partial string SectionBorderColor { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase80))] public partial string TableHeaderBackground { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase90))] public partial string TableRowBackground { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase70))] public partial string TableRowBackgroundHover { get; init; }
     #endregion
 }

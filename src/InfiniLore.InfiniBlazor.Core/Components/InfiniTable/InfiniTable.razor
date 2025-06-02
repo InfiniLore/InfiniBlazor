@@ -11,31 +11,37 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div
-    class="@Class bg-(--color-base-00) shadow-sm rounded-2xl border border-(--color-base-10) h-full flex flex-col overflow-hidden">
+<div class="@Class shadow-sm rounded-2xl border border-(--color-base-60) flex flex-col overflow-hidden">
     <div class="w-full h-full overflow-auto relative">
         <table class="w-full h-full">
-            <thead class="sticky top-0 bg-(--color-base-00) border-b border-(--color-base-10) z-10">
-            <tr>
-                @Header
-            </tr>
+            <thead class="sticky top-0 bgc-(--table-header-background) border-(--color-base-50) border-b p-4">
+                <tr>
+                    @Header
+                </tr>
             </thead>
             <tbody>
-            @if (!Items.Any()) {
-                <tr>
-                    <td colspan="100%" class="text-center py-4 text-(--color-base-70)">
-                        @EmptyMessage
-                    </td>
-                </tr>
-            }
-            else {
-                @foreach (TItem item in Items) {
-                    <tr class="group hover:bg-(--color-base-10) transition h-4">
-                        @Content(item)
+                @if (!Items.Any()) {
+                    <tr>
+                        <td colspan="100%" class="text-center py-4">
+                            @EmptyMessage
+                        </td>
                     </tr>
                 }
-            }
-
+                else if (Content is not null) {
+                    foreach (TItem item in Items) {
+                        <tr class="group hover:bgc-(--table-row-background-hover) transition h-4">
+                            @Content(item)
+                        </tr>
+                    }
+                }
+                else if (ContentWithIndex is not null) {
+                    int i = 0;
+                    foreach (TItem item in Items) {
+                        <tr class="group hover:bgc-(--table-row-background-hover) transition h-4">
+                            @ContentWithIndex((item, i++))
+                        </tr>
+                    }
+                }
             </tbody>
         </table>
     </div>
@@ -47,7 +53,8 @@
 @code {
     [Parameter, EditorRequired] public IEnumerable<TItem> Items { get; set; } = Array.Empty<TItem>();
     [Parameter, EditorRequired] public RenderFragment Header { get; set; } = null!;
-    [Parameter, EditorRequired] public RenderFragment<TItem> Content { get; set; } = null!;
+    [Parameter] public RenderFragment<TItem>? Content { get; set; }
+    [Parameter] public RenderFragment<(TItem, int)>? ContentWithIndex { get; set; }
     [Parameter] public string Class { get; set; } = string.Empty;
     [Parameter] public string EmptyMessage { get; set; } = "No entries found";
 }

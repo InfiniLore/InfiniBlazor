@@ -86,6 +86,10 @@ public interface ITheme {
     
     [CssData] string SectionBackground { get; }
     [CssData] string SectionBorderColor { get; }
+    
+    [CssData] string TableHeaderBackground { get; }
+    [CssData] string TableRowBackground { get; }
+    [CssData] string TableRowBackgroundHover { get; }
     #endregion
     #endregion
 }
