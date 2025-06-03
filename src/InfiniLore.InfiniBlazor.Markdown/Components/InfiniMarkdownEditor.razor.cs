@@ -18,18 +18,17 @@ public partial class InfiniMarkdownEditor(
     IMarkdownParser<string, string> markdownParser,
     IHtmlSanitizer sanitizer
 ) : ComponentBase {
-
     [Parameter] [EditorRequired] public ITextSource Source { get;  set; } = null!;
     [Parameter] public EventCallback<ITextSource> SourceChanged { get; set; }
-
     [Parameter] public string? Class { get; init; }
     [Parameter] public bool ShowPreview { get; init; } = true;
-    
-    private InfiniMarkdownInput? _markdownInput;
-    private ElementReference TextareaRef => _markdownInput?.TextareaRef ?? default;
-    private string MarkdownOutput { get; set; } = string.Empty;
-    private string _lastPressedKey = string.Empty;
 
+    public ElementReference InputRef { get; set; } 
+    private string _lastPressedKey = string.Empty;
+    
+    public event Action? SourceHasChanged;
+    public string MarkdownOutput { get; private set; } = string.Empty;
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -43,17 +42,17 @@ public partial class InfiniMarkdownEditor(
 
         // place the caret in a newly requested location
         if (textEditor.TryGetCaretUpdate(out int index)) {
-            await jsRuntimeHelper.SetSelectionRangeAsync(TextareaRef, index, index);
+            await jsRuntimeHelper.SetSelectionRangeAsync(InputRef, index, index);
         }
     }
 
     protected override async Task OnInitializedAsync() {
-        await UpdateMarkdownAsync();
+        await InvokeSourceHasChanged();
     }
 
     protected override async Task OnParametersSetAsync() {
-        await UpdateMarkdownAsync();
         await base.OnParametersSetAsync();
+        await InvokeSourceHasChanged();
     }
 
     public async ValueTask DisposeAsync() {
@@ -65,30 +64,30 @@ public partial class InfiniMarkdownEditor(
         if (e.Value is string value) {
             Source.Text = value;
             await SourceChanged.InvokeAsync(Source);
-            await UpdateMarkdownAsync();
+            await InvokeSourceHasChanged();
         }
     }
 
-    private async Task UpdateMarkdownAsync() {
+    private async Task InvokeSourceHasChanged() {
         string? output = await markdownParser.TryParseAsync(Source.Text);
-        if (output is null) return; // TODO create some form of error popup
-
-        MarkdownOutput = sanitizer.Sanitize(output);
+        if (output is not null) MarkdownOutput = sanitizer.Sanitize(output);
+    
+        SourceHasChanged?.Invoke();
         StateHasChanged();
     }
 
-    private async Task OnModifierClickAsync(string modifierName) {
+    public async Task OnModifierClickAsync(string modifierName) {
         textEditor.Modify(Source, modifierName, await GetSelectionRangeAsync());
-
-        await UpdateMarkdownAsync();
+        await InvokeSourceHasChanged();
+        await SourceChanged.InvokeAsync(Source);
     }
 
     private async Task<Range> GetSelectionRangeAsync() {
-        (int, int) tuple = await jsRuntimeHelper.GetSelectionAsync(TextareaRef);
+        (int, int) tuple = await jsRuntimeHelper.GetSelectionAsync(InputRef);
         return new Range(tuple.Item1, tuple.Item2);
     }
 
-    private async Task OnKeyDownAsync(KeyboardEventArgs obj) {
+    public async Task OnKeyDownAsync(KeyboardEventArgs obj) {
         if (!obj.CtrlKey) return;
 
         string lastPressedKey = _lastPressedKey;
@@ -99,7 +98,7 @@ public partial class InfiniMarkdownEditor(
             case ({ CtrlKey: true, Key: "a" or "A" }, "a"): {
                 if (Source.Text.IsNullOrWhiteSpace()) break;
 
-                await jsRuntimeHelper.SetSelectionRangeAsync(TextareaRef, 0, Source.Length);
+                await jsRuntimeHelper.SetSelectionRangeAsync(InputRef, 0, Source.Length);
                 break;
             }
 
@@ -107,31 +106,31 @@ public partial class InfiniMarkdownEditor(
                 if (Source.Text.IsNullOrWhiteSpace()) break;
 
                 // when we select a only once we should get the current line
-                int caretIndex = await jsRuntimeHelper.GetSelectionStartAsync(TextareaRef);
+                int caretIndex = await jsRuntimeHelper.GetSelectionStartAsync(InputRef);
                 if (!textEditor.TryGetCaretLine(Source, caretIndex, out Range lineRange)) break;
 
-                await jsRuntimeHelper.SetSelectionRangeAsync(TextareaRef, lineRange.Start.Value, lineRange.End.Value);
+                await jsRuntimeHelper.SetSelectionRangeAsync(InputRef, lineRange.Start.Value, lineRange.End.Value);
                 break;
             }
 
             case ({ CtrlKey: true, Key: "b" }, _): {
                 Range selection = await GetSelectionRangeAsync();
                 textEditor.Modify(Source, "bold", selection);
-                await UpdateMarkdownAsync();
+                await InvokeSourceHasChanged();
                 break;
             }
 
             case ({ CtrlKey: true, Key: "i" }, _): {
                 Range selection = await GetSelectionRangeAsync();
                 textEditor.Modify(Source, "italic", selection);
-                await UpdateMarkdownAsync();
+                await InvokeSourceHasChanged();
                 break;
             }
 
             case ({ CtrlKey: true, Key: "u" }, _): {
                 Range selection = await GetSelectionRangeAsync();
                 textEditor.Modify(Source, "underline", selection);
-                await UpdateMarkdownAsync();
+                await InvokeSourceHasChanged();
                 break;
             }
         }
@@ -166,7 +165,8 @@ public partial class InfiniMarkdownEditor(
             """;
 
         textEditor.Insert(Source, loremText, await GetSelectionRangeAsync());
-        await UpdateMarkdownAsync();
+        await InvokeSourceHasChanged();
+        await SourceChanged.InvokeAsync(Source);
     }
 
     private async Task DebugTableAsync() {
@@ -177,6 +177,7 @@ public partial class InfiniMarkdownEditor(
             """;
 
         textEditor.Insert(Source, tableText, await GetSelectionRangeAsync());
-        await UpdateMarkdownAsync();
+        await InvokeSourceHasChanged();
+        await SourceChanged.InvokeAsync(Source);
     }
 }

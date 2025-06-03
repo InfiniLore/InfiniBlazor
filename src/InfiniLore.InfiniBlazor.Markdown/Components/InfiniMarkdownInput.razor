@@ -6,30 +6,36 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.Markdown
 @inherits ComponentBase
+@implements IDisposable
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="@Class border-r border-(--border-color) min-h-0 flex">
     <textarea
-        @ref="@TextareaRef"
         class="grow p-4 border-none focus:outline-none resize-none overflow-scroll infini-scrollbar"
-        value="@Source.Text"
-        @oninput="OnInput"
-        @onkeydown="OnKeyDown">
+        value="@ParentEditor.Source.Text"
+        @ref="@ParentEditor.InputRef"
+        @oninput="@ParentEditor.OnInputAsync"
+        @onkeydown="@ParentEditor.OnKeyDownAsync">
     </textarea>
 </div>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter, EditorRequired] public ITextSource Source { get; set; } = null!;
-    [Parameter] public EventCallback<ITextSource> SourceChanged { get; set; }
-    [Parameter] public EventCallback<KeyboardEventArgs> OnKeyDown { get; set; }
-    [Parameter] public EventCallback<ChangeEventArgs> OnInput { get; set; }
+    [CascadingParameter] public InfiniMarkdownEditor ParentEditor { get; set; } = null!;
     [Parameter] public string? Class { get; set; }
-    
-    public ElementReference TextareaRef { get; private set; }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override void OnInitialized() {
+        ParentEditor.SourceHasChanged += StateHasChanged;
+    }
+
+    public void Dispose() {
+        ParentEditor.SourceHasChanged -= StateHasChanged;
+    }
 }
 

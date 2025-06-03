@@ -7,23 +7,34 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits ComponentBase
+@implements IDisposable
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="@Class flex min-h-0">
     <div class="flex-1 overflow-y-auto infini-scrollbar">
-        <div class="p-4 prose max-w-none">
-            @((MarkupString)Content)
+        <div class="p-4 max-w-none">
+            @((MarkupString)ParentEditor.MarkdownOutput)
         </div>
     </div>
 </div>
-
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public string Content { get; set; } = string.Empty;
+    [CascadingParameter] public InfiniMarkdownEditor ParentEditor { get; set; } = null!;
     [Parameter] public string? Class { get; set; }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override void OnInitialized() {
+        ParentEditor.SourceHasChanged += StateHasChanged;
+    }
+
+    public void Dispose() {
+        ParentEditor.SourceHasChanged -= StateHasChanged;
+    }
 }
 
 

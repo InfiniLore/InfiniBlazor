@@ -1,6 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
@@ -9,13 +10,14 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<section class="@Class bg-(--section-background) shadow-sm rounded-2xl p-4 border border-(--section-border-color)">
-    @ChildContent
-</section>
+<InfiniButton OnClick="@(async () => await Editor.OnModifierClickAsync(ModifierName))"
+              Variant="ButtonVariant.Transparent"
+              IconName="@IconName"/>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public RenderFragment? ChildContent { get; set; }
-    [Parameter] public string? Class { get; set; }
+    [CascadingParameter] public InfiniMarkdownEditor Editor { get; set; } = null!;
+    [Parameter, EditorRequired] public string ModifierName { get; set; } = null!;
+    [Parameter, EditorRequired] public string IconName { get; set; } = null!;
 }
