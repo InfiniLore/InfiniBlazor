@@ -1,6 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.JsRuntime
 @using InfiniLore.Lucide
 
 @namespace InfiniLore.InfiniBlazor.Components
@@ -8,15 +9,20 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits ComponentBase
+@inject IJsRuntimeHelper JsRuntimeHelper
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="MenuCollapsed">
-    <aside class="flex-shrink-0 h-full flex flex-col bgc-(--sidebar-nav-background) border-r border-(--sidebar-nav-border-color)">
+    <aside
+        class="flex-shrink-0 h-full flex flex-col bgc-(--sidebar-nav-background) border-r border-(--sidebar-nav-border-color)">
         <div class="@(MenuCollapsed ? ClassClosed : ClassOpen) px-2 h-full flex flex-col transition-all duration-300">
             <!-- Top Logo and Hamburger -->
-            <div class="@(MenuCollapsed ? "justify-center" : "justify-between") flex items-center h-12 min-h-[3rem] max-h-[3rem] w-full">
-                <div class="@(MenuCollapsed ? "opacity-0 w-0 overflow-hidden px-0" : "opacity-100 w-full px-2") flex items-center h-8 min-h-[2rem] max-h-[2rem] transition-all duration-300">
+            <div
+                class="@(MenuCollapsed ? "justify-center" : "justify-between") flex items-center h-12 min-h-[3rem] max-h-[3rem] w-full">
+                <div
+                    class="@(MenuCollapsed ? "opacity-0 w-0 overflow-hidden px-0" : "opacity-100 w-full px-2") flex items-center h-8 min-h-[2rem] max-h-[2rem] transition-all duration-300">
                     @Header
                 </div>
 
@@ -30,18 +36,32 @@
 
             <!-- Navigation -->
             @if (Body is not null) {
-                <div class="border-t border-(--sidebar-nav-border-color) flex shrink-0">
-                    <nav class="flex flex-col grow space-y-2 mt-4">
-                        @Body
-                    </nav>
+                <div class="border-t border-(--sidebar-nav-border-color) flex flex-col flex-grow overflow-x-hidden">
+                    <div
+                        class="@(MenuCollapsed ? "infini-scrollbar-hidden" : "infini-scrollbar") relative flex grow overflow-y-auto mt-2 mb-2">
+                        <div
+                            class="sticky top-0 left-0 right-0 h-3 bg-gradient-to-b from-black/10 to-transparent pointer-events-none z-10"></div>
+                        <nav class="grow flex flex-col space-y-2">
+                            @Body
+                        </nav>
+                        <div
+                            class="sticky bottom-0 left-0 right-0 h-3 bg-gradient-to-t from-black/10 to-transparent pointer-events-none z-10"></div>
+                    </div>
                 </div>
             }
 
             <!-- Profile Section -->
             @if (Footer is not null) {
-                <div class="mt-auto border-t border-(--sidebar-nav-border-color) flex pb-1 shrink-0">
-                    <div class="flex flex-col grow space-y-2 mt-4 item ">
-                        @Footer
+                <div class="border-t border-(--sidebar-nav-border-color) flex overflow-x-hidden shrink-0">
+                    <div
+                        class="@(MenuCollapsed ? "infini-scrollbar-hidden" : "infini-scrollbar") relative flex grow overflow-y-auto mt-2 mb-2">
+                        <div
+                            class="sticky top-0 left-0 right-0 h-3 bg-gradient-to-b from-black/10 to-transparent pointer-events-none z-10"></div>
+                        <nav class="grow flex flex-col space-y-2">
+                            @Footer
+                        </nav>
+                        <div
+                            class="sticky bottom-0 left-0 right-0 h-3 bg-gradient-to-t from-black/10 to-transparent pointer-events-none z-10"></div>
                     </div>
                 </div>
             }
@@ -51,6 +71,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     [Parameter] public SideNavSize Size { get; set; } = SideNavSize.Medium;
     [Parameter] public bool MenuCollapsed { get; set; }
@@ -60,16 +81,33 @@
     [Parameter] public RenderFragment? Footer { get; set; }
 
     [Parameter] public EventCallback<bool> MenuCollapsedChanged { get; set; }
-    
+
     private string ClassOpen => Size.ToTailwindWidth();
     private string ClassClosed => "w-14";
+
+    private const string LocalStorageKey = "SideNavCollapsedState";
+
+    private bool _initialized;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    protected override async Task OnInitializedAsync() {
+        if (!RendererInfo.IsInteractive) return; // Only try to load state from localStorage in interactive mode
+        bool savedState = await JsRuntimeHelper.GetFromLocalStorageAsync<bool>(LocalStorageKey);
+        if (!savedState || _initialized) return;
+
+        _initialized = true;
+        MenuCollapsed = savedState;
+        await MenuCollapsedChanged.InvokeAsync(MenuCollapsed);
+        StateHasChanged();
+    }
+
     private async Task ToggleMenu() {
-        MenuCollapsed = !MenuCollapsed;// Toggle the collapsed state
-        await MenuCollapsedChanged.InvokeAsync(MenuCollapsed); // Notify a parent component about the change
+        MenuCollapsed = !MenuCollapsed;
+        if (RendererInfo.IsInteractive) await JsRuntimeHelper.SetToLocalStorageAsync(LocalStorageKey, MenuCollapsed);
+
+        await MenuCollapsedChanged.InvokeAsync(MenuCollapsed);
         await InvokeAsync(StateHasChanged);
     }
 }

@@ -1,21 +1,40 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits ComponentBase
+@implements IDisposable
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<section class="@Class bg-(--section-background) shadow-sm rounded-2xl p-4 border border-(--section-border-color)">
-    @ChildContent
-</section>
+<div class="@Class flex min-h-0">
+    <div class="flex-1 overflow-y-auto infini-scrollbar">
+        <div class="p-4 max-w-none">
+            @((MarkupString)ParentEditor.MarkdownOutput)
+        </div>
+    </div>
+</div>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [CascadingParameter] public InfiniMarkdownEditor ParentEditor { get; set; } = null!;
     [Parameter] public string? Class { get; set; }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override void OnInitialized() {
+        ParentEditor.SourceHasChanged += StateHasChanged;
+    }
+
+    public void Dispose() {
+        ParentEditor.SourceHasChanged -= StateHasChanged;
+    }
 }
+
+

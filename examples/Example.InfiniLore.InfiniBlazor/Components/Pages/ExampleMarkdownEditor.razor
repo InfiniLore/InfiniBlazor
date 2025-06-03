@@ -2,6 +2,7 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Markdown
+@using System.Text.Encodings.Web
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -11,14 +12,18 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniPage>
-    <InfiniSection Class="flex flex-col h-screen">
+    <InfiniSection Class="flex flex-col h-screen gap-2">
         <InfiniHeading1>Markdown Editor Example</InfiniHeading1>
-        <InfiniMarkdownEditor Source="@TextSource"/>
+        <InfiniMarkdownEditor @bind-Source="@TextSource0"/>
+        
+        <InfiniCodeBlock Content="@TextSource0.Text"/>
     </InfiniSection>
     
-    <InfiniSection Class="flex flex-col h-screen">
+    <InfiniSection Class="flex flex-col h-screen gap-2">
         <InfiniHeading1>Markdown Editor Example</InfiniHeading1>
-        <InfiniMarkdownEditor Source="@TextSource" ShowPreview="false"/>
+        <InfiniMarkdownEditor @bind-Source="@TextSource1" ShowPreview="false"/>
+        
+        <InfiniCodeBlock @bind-Content="@TextSource1.Text"/>
     </InfiniSection>
 </InfiniPage>
 
@@ -26,6 +31,9 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private ITextSource TextSource { get; } = new TextSource();
+    private ITextSource TextSource0 { get; set; } = new TextSource();
+    private ITextSource TextSource1 { get; set; } = new TextSource() {
+        Text = "Some Initial text..."
+    };
 }
 
