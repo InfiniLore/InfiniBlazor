@@ -13,12 +13,19 @@
 <InfiniPage>
     <InfiniSection Class="flex flex-col h-screen">
         <InfiniHeading1>Markdown Editor Example</InfiniHeading1>
-        <InfiniMarkdownEditor Source="@TextSource"/>
+        <InfiniMarkdownEditor @bind-Source="@TextSource0"/>
+        <p>
+            @TextSource0.Text
+        </p>
     </InfiniSection>
     
     <InfiniSection Class="flex flex-col h-screen">
         <InfiniHeading1>Markdown Editor Example</InfiniHeading1>
-        <InfiniMarkdownEditor Source="@TextSource" ShowPreview="false"/>
+        <InfiniMarkdownEditor @bind-Source="@TextSource1" ShowPreview="false"/>
+        
+        <p>
+            @TextSource1.Text
+        </p>
     </InfiniSection>
 </InfiniPage>
 
@@ -26,6 +33,7 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private ITextSource TextSource { get; } = new TextSource();
+    private ITextSource TextSource0 { get; set; } = new TextSource();
+    private ITextSource TextSource1 { get; set; } = new TextSource();
 }
 

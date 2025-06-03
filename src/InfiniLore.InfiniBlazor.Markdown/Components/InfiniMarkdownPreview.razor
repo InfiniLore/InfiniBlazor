@@ -13,7 +13,7 @@
 <div class="@Class flex min-h-0">
     <div class="flex-1 overflow-y-auto infini-scrollbar">
         <div class="p-4 prose max-w-none">
-            @((MarkupString)(Content ?? string.Empty))
+            @((MarkupString)Content)
         </div>
     </div>
 </div>
@@ -22,7 +22,7 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public string? Content { get; set; } = string.Empty;
+    [Parameter] public string Content { get; set; } = string.Empty;
     [Parameter] public string? Class { get; set; }
 }
 

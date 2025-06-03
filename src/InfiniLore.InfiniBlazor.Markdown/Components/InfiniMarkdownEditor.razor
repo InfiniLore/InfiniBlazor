@@ -51,6 +51,7 @@
             Class="@(ShowPreview ? "w-1/2" : "w-full")"
             @ref="_markdownInput"
             @bind-Source="Source"
+            OnInput="OnInputAsync"
             OnKeyDown="OnKeyDownAsync"/>
         @if (ShowPreview) {
             <InfiniMarkdownPreview

@@ -16,7 +16,7 @@
         @ref="@TextareaRef"
         class="grow p-4 border-none focus:outline-none resize-none overflow-scroll infini-scrollbar"
         value="@Source.Text"
-        @oninput="OnInputAsync"
+        @oninput="OnInput"
         @onkeydown="OnKeyDown">
     </textarea>
 </div>
@@ -27,17 +27,9 @@
     [Parameter, EditorRequired] public ITextSource Source { get; set; } = null!;
     [Parameter] public EventCallback<ITextSource> SourceChanged { get; set; }
     [Parameter] public EventCallback<KeyboardEventArgs> OnKeyDown { get; set; }
+    [Parameter] public EventCallback<ChangeEventArgs> OnInput { get; set; }
     [Parameter] public string? Class { get; set; }
     
     public ElementReference TextareaRef { get; private set; }
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
-    private async Task OnInputAsync(ChangeEventArgs e) {
-        if (e.Value is string value) {
-            Source.Text = value;
-            await SourceChanged.InvokeAsync(Source);
-        }
-    }
 }
 

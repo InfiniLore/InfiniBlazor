@@ -19,19 +19,15 @@ public partial class InfiniMarkdownEditor(
     IHtmlSanitizer sanitizer
 ) : ComponentBase {
 
-    #pragma warning disable BL0007
-    private ITextSource _source = null!;
-    [Parameter] [EditorRequired] public ITextSource Source { get => _source;  set {
-        _source = value;
-        InvokeAsync(UpdateMarkdownAsync);
-    }} 
-    #pragma warning restore BL0007
+    [Parameter] [EditorRequired] public ITextSource Source { get;  set; } = null!;
+    [Parameter] public EventCallback<ITextSource> SourceChanged { get; set; }
+
     [Parameter] public string? Class { get; init; }
     [Parameter] public bool ShowPreview { get; init; } = true;
     
     private InfiniMarkdownInput? _markdownInput;
     private ElementReference TextareaRef => _markdownInput?.TextareaRef ?? default;
-    private string? MarkdownOutput { get; set; }
+    private string MarkdownOutput { get; set; } = string.Empty;
     private string _lastPressedKey = string.Empty;
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -64,15 +60,22 @@ public partial class InfiniMarkdownEditor(
         await jsRuntimeHelper.RemovePreventDefaultListenerAsync();
         GC.SuppressFinalize(this);
     }
+    
+    public async Task OnInputAsync(ChangeEventArgs e) {
+        if (e.Value is string value) {
+            Source.Text = value;
+            await SourceChanged.InvokeAsync(Source);
+            await UpdateMarkdownAsync();
+        }
+    }
 
     private async Task UpdateMarkdownAsync() {
         string? output = await markdownParser.TryParseAsync(Source.Text);
-        if (output is null) return;// TODO create some form of error popup
+        if (output is null) return; // TODO create some form of error popup
 
         MarkdownOutput = sanitizer.Sanitize(output);
         StateHasChanged();
     }
-
 
     private async Task OnModifierClickAsync(string modifierName) {
         textEditor.Modify(Source, modifierName, await GetSelectionRangeAsync());
