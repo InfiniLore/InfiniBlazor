@@ -40,13 +40,11 @@
     }
 }
 
-
+/*noinspection CssUnresolvedCustomProperty*/
 @utility infini-scrollbar {
     --infini-scrollbar-background: transparent;
-    --infini-scrollbar-direction: right;
     
     &::-webkit-scrollbar {
-        direction: var(--infini-scrollbar-direction);
         width: 12px;
         height: 12px;
     }
