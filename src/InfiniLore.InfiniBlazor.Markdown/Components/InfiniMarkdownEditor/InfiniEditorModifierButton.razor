@@ -10,14 +10,21 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniButton OnClick="@(async () => await Editor.OnModifierClickAsync(ModifierName))"
-              Variant="ButtonVariant.Transparent"
-              IconName="@IconName"/>
+<InfiniButton
+    OnClick="@(async () => await Editor.OnModifierClickAsync(Modifier))"
+    Variant="@Variant"
+    IconName="@IconName"
+>
+    @ChildContent
+</InfiniButton>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     [CascadingParameter] public InfiniMarkdownEditor Editor { get; set; } = null!;
-    [Parameter, EditorRequired] public string ModifierName { get; set; } = null!;
-    [Parameter, EditorRequired] public string IconName { get; set; } = null!;
+    [Parameter] [EditorRequired] public string Modifier { get; set; } = null!;
+    [Parameter] public string? IconName { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public ButtonVariant Variant { get; set; } = ButtonVariant.Transparent;
 }

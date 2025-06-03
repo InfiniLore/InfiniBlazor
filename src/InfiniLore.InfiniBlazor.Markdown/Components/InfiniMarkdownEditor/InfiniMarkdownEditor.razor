@@ -6,26 +6,33 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits ComponentBase
+@using InfiniLore.InfiniBlazor.Markdown.Components
 @implements IAsyncDisposable
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<CascadingValue Value="@this" IsFixed="true">
+<CascadingValue Value="@(this)" IsFixed="true">
     <div class="@Class flex flex-col flex-1 min-h-0">
         <div class="flex flex-none w-full">
             <InfiniMarkdownEditorToolbar Class="@(ShowPreview ? "w-1/2" : "w-full")">
                 <ToolbarButtons>
-                    <InfiniEditorButton ModifierName="bold" IconName="bold"/>
-                    <InfiniEditorButton ModifierName="italic" IconName="italic"/>
-                    <InfiniEditorButton ModifierName="underline" IconName="underline"/>
-                    <InfiniEditorButton ModifierName="strike" IconName="strikethrough"/>
-                    <InfiniEditorButton ModifierName="superscript" IconName="superscript"/>
-                    <InfiniEditorButton ModifierName="subscript" IconName="subscript"/>
+                    <InfiniEditorModifierButton Modifier="bold" IconName="bold"/>
+                    <InfiniEditorModifierButton Modifier="italic" IconName="italic"/>
+                    <InfiniEditorModifierButton Modifier="underline" IconName="underline"/>
+                    <InfiniEditorModifierButton Modifier="strike" IconName="strikethrough"/>
+                    <InfiniEditorModifierButton Modifier="superscript" IconName="superscript"/>
+                    <InfiniEditorModifierButton Modifier="subscript" IconName="subscript"/>
 
-                    <div class="grow"></div>
+                    <InfiniSpacer/>
 
-                    <InfiniButton OnClick="DebugLoremAsync">Lorem</InfiniButton>
-                    <InfiniButton OnClick="DebugTableAsync">Table</InfiniButton>
+                    <InfiniEditorInsertButton
+                        Content="@InfiniMarkdownEditorDebugInserts.LoremText"
+                        Variant="ButtonVariant.Default">Lorem
+                    </InfiniEditorInsertButton>
+                    <InfiniEditorInsertButton
+                        Content="@InfiniMarkdownEditorDebugInserts.TableText"
+                        Variant="ButtonVariant.Default">Table
+                    </InfiniEditorInsertButton>
                 </ToolbarButtons>
             </InfiniMarkdownEditorToolbar>
 
@@ -37,7 +44,9 @@
 
         <div class="flex flex-1 min-h-0 border border-(--border-color) rounded-tr-lg rounded-b-lg">
             <InfiniMarkdownInput Class="@(ShowPreview ? "w-1/2" : "w-full")"/>
-            @if (ShowPreview) { <InfiniMarkdownPreview Class="w-1/2"/> }
+            @if (ShowPreview) {
+                <InfiniMarkdownPreview Class="w-1/2"/>
+            }
         </div>
     </div>
 </CascadingValue>

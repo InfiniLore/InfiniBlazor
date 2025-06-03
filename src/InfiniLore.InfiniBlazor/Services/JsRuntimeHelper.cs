@@ -46,6 +46,11 @@ public class JsRuntimeHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper> logg
             return (-1, -1);
         }
     }
+    
+    public async Task<Range> GetSelectionRangeAsync(ElementReference element) {
+        (int, int) tuple = await GetSelectionAsync(element);
+        return new Range(tuple.Item1, tuple.Item2);
+    }
 
     public async Task SetSelectionRangeAsync(ElementReference element, int start, int end) {
         try {
@@ -55,6 +60,12 @@ public class JsRuntimeHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper> logg
             logger.LogWarning(e, "Error setting selection range");
         }
     }
+    
+    public async Task SetSelectionRangeAsync(ElementReference element, Range range) 
+        => await SetSelectionRangeAsync(element, range.Start.Value, range.End.Value);
+    
+    public async Task SetSelectionIndexAsync(ElementReference element, int index) 
+        => await SetSelectionRangeAsync(element, index, index);
 
     public async Task AddPreventDefaultListenerAsync() {
         try {
