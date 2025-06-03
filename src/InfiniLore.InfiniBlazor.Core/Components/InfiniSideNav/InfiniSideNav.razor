@@ -30,18 +30,26 @@
 
             <!-- Navigation -->
             @if (Body is not null) {
-                <div class="border-t border-(--sidebar-nav-border-color) flex shrink-0">
-                    <nav class="flex flex-col grow space-y-2 mt-4">
-                        @Body
-                    </nav>
+                <div class="border-t border-(--sidebar-nav-border-color) flex flex-col flex-grow overflow-x-hidden">
+                    <div class="@(MenuCollapsed ? "infini-scrollbar-hidden" : "infini-scrollbar") relative flex grow overflow-y-auto mt-2 mb-2">
+                        <div class="sticky top-0 left-0 right-0 h-3 bg-gradient-to-b from-black/10 to-transparent pointer-events-none z-10"></div>
+                        <nav class="grow flex flex-col space-y-2">
+                            @Body
+                        </nav>
+                        <div class="sticky bottom-0 left-0 right-0 h-3 bg-gradient-to-t from-black/10 to-transparent pointer-events-none z-10"></div>
+                    </div>
                 </div>
             }
 
             <!-- Profile Section -->
             @if (Footer is not null) {
-                <div class="mt-auto border-t border-(--sidebar-nav-border-color) flex pb-1 shrink-0">
-                    <div class="flex flex-col grow space-y-2 mt-4 item ">
-                        @Footer
+                <div class="border-t border-(--sidebar-nav-border-color) flex overflow-x-hidden shrink-0">
+                    <div class="@(MenuCollapsed ? "infini-scrollbar-hidden" : "infini-scrollbar") relative flex grow overflow-y-auto mt-2 mb-2">
+                        <div class="sticky top-0 left-0 right-0 h-3 bg-gradient-to-b from-black/10 to-transparent pointer-events-none z-10"></div>
+                        <nav class="grow flex flex-col space-y-2">
+                            @Footer
+                        </nav>
+                        <div class="sticky bottom-0 left-0 right-0 h-3 bg-gradient-to-t from-black/10 to-transparent pointer-events-none z-10"></div>
                     </div>
                 </div>
             }

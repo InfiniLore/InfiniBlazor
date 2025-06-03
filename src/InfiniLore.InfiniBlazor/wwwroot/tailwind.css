@@ -16,37 +16,60 @@
 }
 
 @utility bgc-* {
-    background: --value([*]);
+    background: --value([*]); 
 }
 
 @utility infini-scrollbar-* {
-    background: --value([*]);
+    --infini-scrollbar-background: --value([*]);
+}
+
+/* ------------------------------------------------------------------------------------------------------------------ */
+/* Custom Scrollbar                                                                                                   */
+/* ------------------------------------------------------------------------------------------------------------------ */
+@utility infini-scrollbar-left {
+    direction: rtl;
+
+    & > * {
+        direction: ltr;
+    }
+}
+
+@utility infini-scrollbar-hidden {
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 
-.infini-scrollbar::-webkit-scrollbar {
-    width: 12px;
-    height: 12px;
-}
-
-.infini-scrollbar::-webkit-scrollbar-track{
-    background: transparent;
-}
-
-.infini-scrollbar::-webkit-scrollbar-thumb {
-    background: var(--color-base-60);
-    border-radius: 8px;
-    border: 2px solid var(--color-base-90);
-}
-
-.infini-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: var(--color-base-50);
-}
-
-.infini-scrollbar::-webkit-scrollbar-corner {
-    background: var(--color-base-90);
-}
-
-.infini-scrollbar::-webkit-scrollbar-thumb:active {
-    background: var(--color-base-40);
+@utility infini-scrollbar {
+    --infini-scrollbar-background: transparent;
+    --infini-scrollbar-direction: right;
+    
+    &::-webkit-scrollbar {
+        direction: var(--infini-scrollbar-direction);
+        width: 12px;
+        height: 12px;
+    }
+    
+    &::-webkit-scrollbar-track{
+        background: var(--infini-scrollbar-background);
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background: var(--color-base-60);
+        border-radius: 8px;
+        border: 2px solid var(--color-base-90);
+    }
+    
+    &::-webkit-scrollbar-thumb:hover {
+        background: var(--color-base-50);
+    }
+    
+    &::-webkit-scrollbar-corner {
+        background: var(--color-base-90);
+    }
+    
+    &::-webkit-scrollbar-thumb:active {
+        background: var(--color-base-40);
+    }
 }
