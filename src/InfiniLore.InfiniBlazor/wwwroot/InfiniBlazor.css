@@ -994,6 +994,9 @@
   .text-yellow-500 {
     color: var(--color-yellow-500);
   }
+  .lowercase {
+    text-transform: lowercase;
+  }
   .italic {
     font-style: italic;
   }

@@ -9,6 +9,9 @@ namespace InfiniLore.InfiniBlazor.JsRuntime;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IJsRuntimeHelper {
+    Task<T?> GetFromLocalStorageAsync<T>(string key);
+    Task SetToLocalStorageAsync<T>(string key, T value);
+    
     Task<int> GetSelectionStartAsync(ElementReference element);
     Task<int> GetSelectionEndAsync(ElementReference element);
     Task<(int, int)> GetSelectionAsync(ElementReference element);
