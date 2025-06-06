@@ -72,6 +72,7 @@ public partial record InfiniBlazorTheme : ITheme {
     #endregion
     
     [CssData, InterpretAsVar(nameof(ColorBase00))] public partial string TextColor { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorRed))] public partial string TextErrorColor { get; init; }
     [CssData, InterpretAsVar(nameof(ColorBase60))] public partial string BorderColor { get; init; }
     
     [CssData, InterpretAsVar(nameof(TextColor))] public partial string SidebarHamburgerColor { get; init; }

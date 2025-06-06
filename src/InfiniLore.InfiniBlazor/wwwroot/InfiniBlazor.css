@@ -1226,6 +1226,9 @@
   .text-\(--text-color\) {
     color: var(--text-color);
   }
+  .text-\(--text-error-color\) {
+    color: var(--text-error-color);
+  }
   .text-\(--usericon-alt\) {
     color: var(--usericon-alt);
   }

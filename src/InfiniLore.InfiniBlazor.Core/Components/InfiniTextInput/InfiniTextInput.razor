@@ -10,14 +10,19 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="flex flex-col w-full">
-    @if (Label.IsNotNullOrWhiteSpace()) {
+    @* ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault *@
+    @if (LabelLocation == LabelLocation.OnTop && Label.IsNotNullOrWhiteSpace()) {
         <div class="flex flex-row pb-1">
             <InfiniLabel>@Label</InfiniLabel>
             <InfiniSpacer/>
-            <div class="text-(--color-red) text-sm mt-1">@ValidationMessage</div>
+            <div class="text-(--text-error-color) text-sm">@ValidationMessage</div>
         </div>
     }
+    
     <div class="flex items-center gap-x-2 ">
+        @if (LabelLocation == LabelLocation.Left && Label.IsNotNullOrWhiteSpace()) {
+            <InfiniLabel>@Label</InfiniLabel>
+        }
         <input type="@Type"
                value="@Value"
                @oninput="OnInputHandler"
@@ -33,7 +38,7 @@
     </div>
 
     @if (Label.IsNullOrWhiteSpace() && ValidationMessage.IsNotNullOrEmpty()) {
-        <div class="text-(--color-red) text-sm mt-1">@ValidationMessage</div>
+        <div class="text-(--text-error-color) text-sm mt-1">@ValidationMessage</div>
     }
 </div>
 
@@ -51,8 +56,10 @@
     [Parameter] public bool Disabled { get; set; }
     [Parameter] public bool AutoFocus { get; set; }
     [Parameter] public int? MaxLength { get; set; }
-    [Parameter] public string? Label { get; set; }
     [Parameter] public string? ValidationMessage { get; set; }
+    
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public LabelLocation LabelLocation { get; set; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

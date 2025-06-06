@@ -80,6 +80,7 @@ public interface ITheme {
     #endregion
     
     [CssData] string TextColor { get; }
+    [CssData] string TextErrorColor { get; }
     [CssData] string BorderColor { get; }
     
     [CssData] string SidebarHamburgerColor { get; }
