@@ -1,8 +1,6 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
-@* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
@@ -12,7 +10,19 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="flex flex-col w-full">
+    @* ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault *@
+    @if (LabelLocation == LabelLocation.OnTop && Label.IsNotNullOrWhiteSpace()) {
+        <div class="flex flex-row pb-1">
+            <InfiniLabel>@Label</InfiniLabel>
+            <InfiniSpacer/>
+            <div class="text-(--text-error-color) text-sm">@ValidationMessage</div>
+        </div>
+    }
+    
     <div class="flex items-center gap-x-2 ">
+        @if (LabelLocation == LabelLocation.Left && Label.IsNotNullOrWhiteSpace()) {
+            <InfiniLabel>@Label</InfiniLabel>
+        }
         <input type="@Type"
                value="@Value"
                @oninput="OnInputHandler"
@@ -21,14 +31,14 @@
                disabled="@Disabled"
                @attributes="@(AutoFocus ? new Dictionary<string, object> { { "autofocus", "autofocus" } } : null)"
                maxlength="@MaxLength"
-               class="@Class @(Disabled ? "opacity-50 cursor-not-allowed" : "hover:ring-2") w-full placeholder-(--color-base-40) bg-(--color-base-70) rounded-md border border-(--border-color) focus:ring-2 outline-none ring-(--color-accent) text-sm p-2 shadow-sm transition" />
+               class="@Class @(Disabled ? "opacity-50 cursor-not-allowed" : "hover:ring-2") w-full placeholder-(--color-base-40) bg-(--color-base-70) rounded-md border border-(--border-color) focus:ring-2 outline-none ring-(--color-accent) text-sm p-2 shadow-sm transition"/>
         @if (ChildContent is not null) {
             @ChildContent
         }
     </div>
-    
-    @if (!string.IsNullOrEmpty(ValidationMessage)) {
-        <div class="text-(--color-red) text-sm mt-1">@ValidationMessage</div>
+
+    @if (Label.IsNullOrWhiteSpace() && ValidationMessage.IsNotNullOrEmpty()) {
+        <div class="text-(--text-error-color) text-sm mt-1">@ValidationMessage</div>
     }
 </div>
 
@@ -47,6 +57,9 @@
     [Parameter] public bool AutoFocus { get; set; }
     [Parameter] public int? MaxLength { get; set; }
     [Parameter] public string? ValidationMessage { get; set; }
+    
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public LabelLocation LabelLocation { get; set; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

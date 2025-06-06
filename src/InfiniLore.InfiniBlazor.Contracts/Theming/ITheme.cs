@@ -35,6 +35,8 @@ public interface ITheme {
 
     [CssData, InterpretAsRgb] string ColorAccentRgb { get; }
     [CssData] string ColorAccent { get; }
+    [CssData] string ColorAccentDark { get; }
+    [CssData] string ColorAccentLight { get; }
 
     [CssData, InterpretAsRgb] string ColorBase00Rgb { get; }
     [CssData] string ColorBase00 { get; }
@@ -80,6 +82,7 @@ public interface ITheme {
     #endregion
     
     [CssData] string TextColor { get; }
+    [CssData] string TextErrorColor { get; }
     [CssData] string BorderColor { get; }
     
     [CssData] string SidebarHamburgerColor { get; }

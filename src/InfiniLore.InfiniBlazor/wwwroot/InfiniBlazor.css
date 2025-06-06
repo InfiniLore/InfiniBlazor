@@ -23,8 +23,11 @@
     --color-blue-600: oklch(54.6% 0.245 262.881);
     --color-blue-900: oklch(37.9% 0.146 265.522);
     --color-blue-950: oklch(28.2% 0.091 267.935);
+    --color-indigo-500: oklch(58.5% 0.233 277.117);
     --color-rose-900: oklch(41% 0.159 10.272);
     --color-rose-950: oklch(27.1% 0.105 12.094);
+    --color-gray-300: oklch(87.2% 0.01 258.338);
+    --color-gray-700: oklch(37.3% 0.034 259.733);
     --color-black: #000;
     --spacing: 0.25rem;
     --container-sm: 24rem;
@@ -46,6 +49,7 @@
     --text-5xl--line-height: 1;
     --text-6xl: 3.75rem;
     --text-6xl--line-height: 1;
+    --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
     --radius-md: 0.375rem;
@@ -834,6 +838,9 @@
   .border-blue-600 {
     border-color: var(--color-blue-600);
   }
+  .border-gray-300 {
+    border-color: var(--color-gray-300);
+  }
   .border-green-600 {
     border-color: var(--color-green-600);
   }
@@ -1113,6 +1120,9 @@
   .py-4 {
     padding-block: calc(var(--spacing) * 4);
   }
+  .pb-1 {
+    padding-bottom: calc(var(--spacing) * 1);
+  }
   .pl-5 {
     padding-left: calc(var(--spacing) * 5);
   }
@@ -1169,6 +1179,10 @@
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
   }
+  .font-medium {
+    --tw-font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-medium);
+  }
   .font-semibold {
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
@@ -1197,6 +1211,9 @@
   .text-\(--color-red\) {
     color: var(--color-red);
   }
+  .text-\(--color-text\) {
+    color: var(--color-text);
+  }
   .text-\(--page-text-color\) {
     color: var(--page-text-color);
   }
@@ -1206,11 +1223,20 @@
   .text-\(--sidebar-nav-text-color\) {
     color: var(--sidebar-nav-text-color);
   }
+  .text-\(--text-color\) {
+    color: var(--text-color);
+  }
+  .text-\(--text-error-color\) {
+    color: var(--text-error-color);
+  }
   .text-\(--usericon-alt\) {
     color: var(--usericon-alt);
   }
   .text-blue-500 {
     color: var(--color-blue-500);
+  }
+  .text-gray-700 {
+    color: var(--color-gray-700);
   }
   .text-green-500 {
     color: var(--color-green-500);
@@ -1395,6 +1421,20 @@
       }
     }
   }
+  .group-hover\/button\:bg-\(--color-accent-dark\) {
+    &:is(:where(.group\/button):hover *) {
+      @media (hover: hover) {
+        background-color: var(--color-accent-dark);
+      }
+    }
+  }
+  .group-hover\/button\:bg-\(--color-accent-light\) {
+    &:is(:where(.group\/button):hover *) {
+      @media (hover: hover) {
+        background-color: var(--color-accent-light);
+      }
+    }
+  }
   .group-hover\/button\:bg-\(--color-base-70\) {
     &:is(:where(.group\/button):hover *) {
       @media (hover: hover) {
@@ -1413,6 +1453,27 @@
     &:is(:where(.group\/button):hover *) {
       @media (hover: hover) {
         color: var(--color-accent);
+      }
+    }
+  }
+  .group-hover\/button\:text-\(--color-base-10\) {
+    &:is(:where(.group\/button):hover *) {
+      @media (hover: hover) {
+        color: var(--color-base-10);
+      }
+    }
+  }
+  .group-hover\/button\:text-\(--color-base-20\) {
+    &:is(:where(.group\/button):hover *) {
+      @media (hover: hover) {
+        color: var(--color-base-20);
+      }
+    }
+  }
+  .group-hover\/button\:text-\(--color-base-30\) {
+    &:is(:where(.group\/button):hover *) {
+      @media (hover: hover) {
+        color: var(--color-base-30);
       }
     }
   }
@@ -1519,10 +1580,20 @@
       }
     }
   }
+  .focus\:border-indigo-500 {
+    &:focus {
+      border-color: var(--color-indigo-500);
+    }
+  }
   .focus\:ring-2 {
     &:focus {
       --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
       box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    }
+  }
+  .focus\:ring-indigo-500 {
+    &:focus {
+      --tw-ring-color: var(--color-indigo-500);
     }
   }
   .focus\:outline-none {
@@ -1537,6 +1608,12 @@
       --tw-scale-y: 95%;
       --tw-scale-z: 95%;
       scale: var(--tw-scale-x) var(--tw-scale-y);
+    }
+  }
+  .sm\:text-sm {
+    @media (width >= 40rem) {
+      font-size: var(--text-sm);
+      line-height: var(--tw-leading, var(--text-sm--line-height));
     }
   }
 }

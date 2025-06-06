@@ -41,18 +41,41 @@
     </div>
 </InfiniSection>
 
+<!-- Text Input with Label -->
+<InfiniSection>
+    <InfiniHeading3>Text Input with Submit</InfiniHeading3>
+    <div class="space-y-4">
+        <InfiniTextInput @bind-Value="@SubmitExample.Value"
+                         Placeholder="Type something else and submit..."
+                         Disabled="true"
+                        Label="Test Example"
+                         >
+            <InfiniButton Variant="ButtonVariant.Primary" OnClick="SubmitExample.OnSubmit">Submit</InfiniButton>
+        </InfiniTextInput>
+
+        <div class="text-sm space-y-1">
+            <p>Bound Value: @SubmitExample.Value</p>
+            <p>Submitted Value: @SubmitExample.SubmittedValue</p>
+        </div>
+    </div>
+</InfiniSection>
+
 <!-- Form Inputs Example -->
 <InfiniSection>
     <InfiniHeading3>Form Inputs</InfiniHeading3>
     <div class="space-y-4">
         <InfiniTextInput
             Type="email"
+            Label="Email"
             Value="@FormExample.Email"
             ValueChanged="FormExample.HandleEmailChange"
             ValidationMessage="@FormExample.ValidationMessage"
-            Placeholder="Enter email"/>
+            Placeholder="Enter email">
+        </InfiniTextInput>
         
         <InfiniTextInput
+            Label="Password"
+            LabelLocation="LabelLocation.Left"
             Type="password"
             Value="@FormExample.Password"
             ValueChanged="@(value => FormExample.Password = value)"
