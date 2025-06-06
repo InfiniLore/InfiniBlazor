@@ -21,12 +21,14 @@
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private string GetDebug() {
-        if (VisualDebugger.IsEnabled()) return string.Empty;
+        if (!VisualDebugger.IsEnabled()) return string.Empty;
+
+        string stripes = VisualDebugger.GetAsStripes(DebugColor);
         
         return (Direction, Spacing) switch {
-            (_, Spacing.Grow) => "bg-stripes bg-stripes-(--color-red)",
-            (SpacerDirection.Horizontal, _) => "bg-stripes bg-stripes-(--color-red) border-l border-r border-l-(--color-red) border-r-(--color-red)",
-            (SpacerDirection.Vertical, _) => "bg-stripes bg-stripes-(--color-red) border-t border-b border-t-(--color-red) border-b-(--color-red) ",
+            (_, Spacing.Grow) => stripes,
+            (SpacerDirection.Horizontal, _) => $"{stripes} {VisualDebugger.GetAsBorderLeft(DebugColor)} {VisualDebugger.GetAsBorderRight(DebugColor)}",
+            (SpacerDirection.Vertical, _) => $"{stripes} {VisualDebugger.GetAsBorderTop(DebugColor)} {VisualDebugger.GetAsBorderBottom(DebugColor)}",
             _ => string.Empty
         };
     }

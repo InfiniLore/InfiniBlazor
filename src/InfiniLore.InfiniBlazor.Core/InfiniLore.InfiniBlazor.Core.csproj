@@ -49,4 +49,14 @@
       <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Components\InfiniSpacer\Variants\InfiniSpacerL.razor" />
+      <UpToDateCheckInput Remove="Components\InfiniSpacer\Variants\InfiniSpacerM.razor" />
+      <UpToDateCheckInput Remove="Components\InfiniSpacer\Variants\InfiniSpacerS.razor" />
+      <UpToDateCheckInput Remove="Components\InfiniSpacer\Variants\InfiniSpacerXl.razor" />
+      <UpToDateCheckInput Remove="Components\InfiniSpacer\Variants\InfiniSpacerXs.razor" />
+      <UpToDateCheckInput Remove="Components\InfiniSpacer\Variants\InfiniSpacerXxl.razor" />
+      <UpToDateCheckInput Remove="Components\InfiniSpacer\Variants\InfiniSpacerXxs.razor" />
+    </ItemGroup>
+
 </Project>

@@ -10,6 +10,7 @@ namespace Infinilore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class InfiniComponentBase : ComponentBase, IAsyncDisposable {
     [Inject] protected IVisualDebuggerProvider VisualDebugger { get; set; } = null!;
+    [Parameter] public virtual DebugColor DebugColor { get; set; } = DebugColor.Red;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

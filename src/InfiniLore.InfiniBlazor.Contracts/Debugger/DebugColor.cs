@@ -6,7 +6,16 @@ namespace InfiniLore.InfiniBlazor.Debugger;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public enum DebuggerState {
-    Disabled,
-    Enabled
+public enum DebugColor {
+    Red,
+    Orange,
+    Yellow,
+    Green,
+    Cyan,
+    Blue,
+    Purple,
+    Pink,
+    Gray,
+    White,
+    Black,
 }

@@ -1,4 +1,5 @@
-﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+﻿@using InfiniLore.InfiniBlazor.Debugger
+@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -9,22 +10,25 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniSection>
-    <InfiniSpacerXxs/>
-    <InfiniSpacerXs/>
-    <InfiniSpacerS/>
-    <InfiniSpacerM/>
-    <InfiniSpacerL/>
-    <InfiniSpacerXl/>
-    <InfiniSpacerXxl/>
+    <InfiniSpacer DebugColor="DebugColor.Red" Spacing="Spacing.Xxs"/>
+    <InfiniSpacer DebugColor="DebugColor.Orange" Spacing="Spacing.Xs"/>
+    <InfiniSpacer DebugColor="DebugColor.Yellow" Spacing="Spacing.S"/>
+    <InfiniSpacer DebugColor="DebugColor.Green" Spacing="Spacing.M"/>
+    <InfiniSpacer DebugColor="DebugColor.Cyan" Spacing="Spacing.L"/>
+    <InfiniSpacer DebugColor="DebugColor.Blue" Spacing="Spacing.Xl"/>
+    <InfiniSpacer DebugColor="DebugColor.Purple" Spacing="Spacing.Xxl"/>
 </InfiniSection>
 
-<InfiniSection Class="h-24 flex flex-row">
-    <InfiniSpacerXs Direction="SpacerDirection.Horizontal"/>
-    <InfiniSpacerS Direction="SpacerDirection.Horizontal"/>
-    <InfiniSpacerM Direction="SpacerDirection.Horizontal"/>
-    <InfiniSpacerL Direction="SpacerDirection.Horizontal"/>
-    <InfiniSpacerXl Direction="SpacerDirection.Horizontal"/>
-    <InfiniSpacerXxl Direction="SpacerDirection.Horizontal"/>
+<InfiniSection Class="h-48 flex flex-row">
+    <div class="h-12 flex">
+        <InfiniSpacer DebugColor="DebugColor.Red" Spacing="Spacing.Xxs" Direction="SpacerDirection.Horizontal"/>
+        <InfiniSpacer DebugColor="DebugColor.Orange" Spacing="Spacing.Xs" Direction="SpacerDirection.Horizontal"/>
+        <InfiniSpacer DebugColor="DebugColor.Yellow" Spacing="Spacing.S" Direction="SpacerDirection.Horizontal"/>
+        <InfiniSpacer DebugColor="DebugColor.Green" Spacing="Spacing.M" Direction="SpacerDirection.Horizontal"/>
+        <InfiniSpacer DebugColor="DebugColor.Cyan" Spacing="Spacing.L" Direction="SpacerDirection.Horizontal"/>
+        <InfiniSpacer DebugColor="DebugColor.Blue" Spacing="Spacing.Xl" Direction="SpacerDirection.Horizontal"/>
+        <InfiniSpacer DebugColor="DebugColor.Purple" Spacing="Spacing.Xxl" Direction="SpacerDirection.Horizontal"/>
+    </div>
 </InfiniSection>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code

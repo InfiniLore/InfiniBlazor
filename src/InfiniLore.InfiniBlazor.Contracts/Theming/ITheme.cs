@@ -65,6 +65,20 @@ public interface ITheme {
     #endregion
 
     #region CascadedValues
+    #region Debug
+    [CssData] string DebugRed  { get; }
+    [CssData] string DebugOrange  { get; }
+    [CssData] string DebugYellow  { get; }
+    [CssData] string DebugGreen  { get; }
+    [CssData] string DebugCyan  { get; }
+    [CssData] string DebugBlue  { get; }
+    [CssData] string DebugPurple  { get; }
+    [CssData] string DebugPink  { get; }
+    [CssData] string DebugGray  { get; }
+    [CssData] string DebugWhite  { get; }
+    [CssData] string DebugBlack  { get; }
+    #endregion
+    
     [CssData] string TextColor { get; }
     [CssData] string BorderColor { get; }
     
