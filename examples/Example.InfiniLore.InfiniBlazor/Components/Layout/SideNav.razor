@@ -1,6 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Debugger
 @using InfiniLore.InfiniBlazor.Theming
 @using InfiniLore.InfiniBlazor.Toasting
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -10,6 +11,7 @@
 @inject IThemeSelector ThemeSelector
 @inject IToastStorage ToastService
 @inject IToastAppearanceProvider ToastAppearanceProvider
+@inject IVisualDebuggerProvider DebuggerProvider
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -49,9 +51,14 @@
         
         <InfiniSpacer/>
 
-        <InfiniSideNavButton OnClickAsync="@(OnCreateToastAsync)">
+        <InfiniSideNavButton OnClick="@OnCreateToastAsync">
             <Icon><LiPopcorn/></Icon>
             <Text>Create Toast</Text>
+        </InfiniSideNavButton>
+
+        <InfiniSideNavButton OnClick="@DebuggerProvider.ToggleStateAsync">
+            <Icon><LiBug/></Icon>
+            <Text>Toggle Debug View</Text>
         </InfiniSideNavButton>
     </Body>
 
@@ -64,14 +71,14 @@
         </InfiniSideNavLink>
 
         @* DEBUG *@
-        <InfiniSideNavButton OnClickAsync="@(SwitchTheme)">
+        <InfiniSideNavButton OnClick="@SwitchTheme">
             <Icon>
                 <LiPalette/>
             </Icon>
             <Text>Switch Theme</Text>
         </InfiniSideNavButton>
 
-        <InfiniSideNavButton OnClickAsync="@(ThemeSelector.TrySelectNextThemeModeAsync)">
+        <InfiniSideNavButton OnClick="@(ThemeSelector.TrySelectNextThemeModeAsync)">
             <Icon>
                 <LiSun/>
             </Icon>

@@ -9,7 +9,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<button @onclick="@HandleClickAsync" class="@InfiniSideNavItem.ContainerClasses">
+<button @onclick="OnClick" class="@InfiniSideNavItem.ContainerClasses">
     <InfiniSideNavItem Text="@Text" Icon="@Icon"/>
 </button>
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -18,21 +18,12 @@
 @code {
     [CascadingParameter] public bool MenuCollapsed { get; set; }
     
-    [Parameter] public Action? OnClick { get; set; }
-    [Parameter] public Func<Task>? OnClickAsync { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> OnClick  { get; set; } 
     [Parameter] public RenderFragment? Text { get; set; }
     [Parameter] public RenderFragment? Icon { get; set; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private async Task HandleClickAsync() {
-        if (OnClickAsync is not null) {
-            await OnClickAsync();
-            return;
-        }
-
-        OnClick?.Invoke();
-    }
 }
 

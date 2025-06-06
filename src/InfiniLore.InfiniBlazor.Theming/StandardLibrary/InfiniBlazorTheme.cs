@@ -57,6 +57,20 @@ public partial record InfiniBlazorTheme : ITheme {
     #endregion
 
     #region CascadedValues
+    #region Debug
+    [CssData, InterpretAsVar(nameof(ColorRed))] public partial string DebugRed { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorOrange))] public partial string DebugOrange { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorYellow))] public partial string DebugYellow { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorGreen))] public partial string DebugGreen { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorCyan))] public partial string DebugCyan { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBlue))] public partial string DebugBlue { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorPurple))] public partial string DebugPurple { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorPink))] public partial string DebugPink { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorGray))] public partial string DebugGray { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorWhite))] public partial string DebugWhite { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBlack))] public partial string DebugBlack { get; init; }
+    #endregion
+    
     [CssData, InterpretAsVar(nameof(ColorBase00))] public partial string TextColor { get; init; }
     [CssData, InterpretAsVar(nameof(ColorBase60))] public partial string BorderColor { get; init; }
     
