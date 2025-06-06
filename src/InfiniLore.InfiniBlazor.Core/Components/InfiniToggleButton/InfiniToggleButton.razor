@@ -1,0 +1,123 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using Infinilore.InfiniBlazor
+@using InfiniLore.Lucide
+@inherits InfiniComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="@Class flex group/toggle p-0.5 relative">
+    <button @onclick="OnClickAsync"
+            @onclick:stopPropagation="@StopPropagation"
+            type="@Type"
+            disabled="@Disabled"
+            aria-label="@AriaLabel"
+            aria-checked="@Value"
+            class="@(DisableClasses) w-full">
+        <div class="@ContainerClasses">
+            <div class="relative w-full h-full">
+                <div class="@SliderClasses">
+                    @if (OnIcon.IsNotNullOrWhiteSpace()) {
+                        <LucideIcon Name="@OnIcon" class="@(Value ? IconOnClasses : "opacity-0")"/>
+                    }
+                    @if (OffIcon.IsNotNullOrWhiteSpace()) {
+                        <LucideIcon Name="@OffIcon" class="@(!Value ? IconOffClasses : "opacity-0")"/>
+                    }
+                </div>
+            </div>
+        </div>
+    </button>
+    @if (Tooltip.IsNotNullOrEmpty()) {
+        @* <div *@
+        // class="@TooltipAnchorClasses absolute transform px-3 py-1 bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md opacity-0 group-hover/toggle:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
+        @* @Tooltip *@
+        // </div>
+    }
+</div>
+
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [Parameter] public string? OnIcon { get; set; }
+    [Parameter] public string? OffIcon { get; set; }
+    [Parameter] public bool StopPropagation { get; set; } = true;
+    [Parameter] public EventCallback<bool> ValueChanged { get; set; }
+    [Parameter] public bool Value { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public string Type { get; set; } = "button";
+    [Parameter] public string? AriaLabel { get; set; }
+    [Parameter] public Size Size { get; set; } = Size.Md;
+    [Parameter] public string? Tooltip { get; set; }
+    [Parameter] public Anchor TooltipAnchor { get; set; } = Anchor.Center | Anchor.Bottom;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private string ContainerClasses => Size switch {
+            Size.Sm => "w-12 h-6",
+            Size.Md => "w-14 h-7",
+            Size.Lg => "w-16 h-8",
+            _ => "w-14 h-7"
+        } + $" rounded-full bg-(--color-base-70) {(Value ? "bg-(--color-accent)" : "")} transition-colors duration-300 relative overflow-hidden";
+
+    private string SliderClasses => Size switch {
+            Size.Sm => "absolute w-4 h-4 top-1 left-1",
+            Size.Md => "absolute w-5 h-5 top-1 left-1",
+            Size.Lg => "absolute w-6 h-6 top-1 left-1",
+            _ => "absolute w-5 h-5 top-1 left-1"
+        } + " flex items-center justify-center " +
+        "bg-(--color-base-30) rounded-full transition-transform duration-300 " +
+        (Value
+            ? Size switch {
+                Size.Sm => "translate-x-[1.5rem]",
+                Size.Md => "translate-x-[1.75rem]",
+                Size.Lg => "translate-x-[2rem]",
+                _ => "translate-x-[2.25rem]"
+            }
+            : "translate-x-0");
+
+    private string IconOnClasses => Size switch {
+        Size.Sm => "absolute w-3 h-3",
+        Size.Md => "absolute w-4 h-4",
+        Size.Lg => "absolute w-5 h-5",
+        _ => "absolute w-4 h-4"
+    } + " transform transition-opacity duration-300 text-(--color-accent)";
+
+    private string IconOffClasses => Size switch {
+        Size.Sm => "absolute w-3 h-3",
+        Size.Md => "absolute w-4 h-4",
+        Size.Lg => "absolute w-5 h-5",
+        _ => "absolute w-4 h-4"
+    } + " transform transition-opacity duration-300 text-(--color-base-70)";
+
+    private string DisableClasses => Disabled
+        ? "opacity-50 cursor-not-allowed"
+        : "cursor-pointer";
+
+    // private string TooltipAnchorClasses => TooltipAnchor switch {
+    //     Anchor.Center | Anchor.Bottom => "top-full left-1/2 -translate-x-1/2 mt-2",
+    //     Anchor.Left | Anchor.Bottom => "top-full right-1 translate-x-1 mt-2",
+    //     Anchor.Right | Anchor.Bottom => "top-full left-1 -translate-x-1 mt-2",
+    //     Anchor.Center | Anchor.Top => "bottom-full left-1/2 -translate-x-1/2 mb-2",
+    //     Anchor.Left | Anchor.Top => "bottom-full right-1 translate-x-1 mb-2",
+    //     Anchor.Right | Anchor.Top => "bottom-full left-1 -translate-x-1 mb-2",
+    //     Anchor.Left => "top-0 translate-y-1 right-full mr-2",
+    //     Anchor.Right => "top-0 translate-y-1 left-full ml-2",
+    //     _ => "top-full left-1/2 -translate-x-1/2 mt-2"
+    // };
+
+    private async Task OnClickAsync() {
+        if (Disabled) return;
+
+        Value = !Value;
+        await ValueChanged.InvokeAsync(Value);
+    }
+}

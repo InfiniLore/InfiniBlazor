@@ -1,7 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
+@using Infinilore.InfiniBlazor
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -11,6 +11,30 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniPage>
+    <InfiniSection>
+        <InfiniToggleButton 
+            @bind-Value="isEnabled"
+            OnIcon="sun"
+            OffIcon="moon"
+            Size="Size.Md"
+            Tooltip="Toggle theme"
+        ></InfiniToggleButton>
+        <InfiniToggleButton 
+            @bind-Value="isEnabled"
+            OnIcon="sun"
+            OffIcon="moon"
+            Size="Size.Sm"
+            Tooltip="Toggle theme"
+        ></InfiniToggleButton>
+        <InfiniToggleButton 
+            @bind-Value="isEnabled"
+            OnIcon="sun"
+            OffIcon="moon"
+            Size="Size.Lg"
+            Tooltip="Toggle theme"
+        ></InfiniToggleButton>
+    </InfiniSection>
+    
     <SectionTextInput/>
     
     <SectionCodeBlock/>
@@ -23,5 +47,5 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    
+    bool isEnabled;
 }
