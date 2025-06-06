@@ -11,35 +11,42 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@Class flex group/toggle p-0.5 relative">
-    <button @onclick="OnClickAsync"
-            @onclick:stopPropagation="@StopPropagation"
-            type="@Type"
-            disabled="@Disabled"
-            aria-label="@AriaLabel"
-            aria-checked="@Value"
-            class="@(DisableClasses) w-full">
-        <div class="@ContainerClasses">
-            <div class="relative w-full h-full">
-                <div class="@SliderClasses">
-                    @if (OnIcon.IsNotNullOrWhiteSpace()) {
-                        <LucideIcon Name="@OnIcon" class="@(Value ? IconOnClasses : "opacity-0")"/>
-                    }
-                    @if (OffIcon.IsNotNullOrWhiteSpace()) {
-                        <LucideIcon Name="@OffIcon" class="@(!Value ? IconOffClasses : "opacity-0")"/>
-                    }
+<div class="@GetContainerClasses()">
+    @if (Label != null && LabelPos == LabelPosition.Top) {
+        <InfiniLabel class="mb-2">@Label</InfiniLabel>
+    }
+    <div class="@GetToggleContainerClasses()">
+        @if (Label != null && LabelPos == LabelPosition.Left) {
+            <InfiniLabel class="mr-2">@Label</InfiniLabel>
+        }
+        <button @onclick="OnClickAsync"
+                @onclick:stopPropagation="@StopPropagation"
+                type="@Type"
+                disabled="@Disabled"
+                aria-label="@AriaLabel"
+                aria-checked="@Value"
+                class="@(DisableClasses) @GetInnerDebugClasses()">
+            <div class="@ContainerClasses">
+                <div class="relative w-full h-full">
+                    <div class="@SliderClasses @GetSliderDebugClasses()">
+                        @if (OnIcon.IsNotNullOrWhiteSpace()) {
+                            <LucideIcon Name="@OnIcon" class="@(Value ? IconOnClasses : "opacity-0")"/>
+                        }
+                        @if (OffIcon.IsNotNullOrWhiteSpace()) {
+                            <LucideIcon Name="@OffIcon" class="@(!Value ? IconOffClasses : "opacity-0")"/>
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
-    </button>
-    @if (Tooltip.IsNotNullOrEmpty()) {
-        @* <div *@
-        // class="@TooltipAnchorClasses absolute transform px-3 py-1 bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md opacity-0 group-hover/toggle:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
-        @* @Tooltip *@
-        // </div>
+        </button>
+        @if (Label != null && LabelPos == LabelPosition.Right) {
+            <InfiniLabel class="ml-2">@Label</InfiniLabel>
+        }
+    </div>
+    @if (Label != null && LabelPos == LabelPosition.Bottom) {
+        <InfiniLabel class="mt-2">@Label</InfiniLabel>
     }
 </div>
-
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
@@ -58,9 +65,21 @@
     [Parameter] public string? Tooltip { get; set; }
     [Parameter] public Anchor TooltipAnchor { get; set; } = Anchor.Center | Anchor.Bottom;
 
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public LabelPosition LabelPos { get; set; } = LabelPosition.Left;
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    private string GetContainerClasses() => Class + " " + (LabelPos is LabelPosition.Top or LabelPosition.Bottom 
+        ? "flex flex-col items-center" 
+        : "flex") + " " + GetDebugClasses();
+
+    private string GetToggleContainerClasses() => LabelPos is LabelPosition.Left or LabelPosition.Right 
+        ? "flex items-center" 
+        : "";
+
+    
     private string ContainerClasses => Size switch {
             Size.Xxs => "w-8 h-4",
             Size.Xs => "w-10 h-5",
@@ -140,4 +159,20 @@
         Value = !Value;
         await ValueChanged.InvokeAsync(Value);
     }
+    
+    private string GetDebugClasses() {
+        if (!VisualDebugger.IsEnabled()) return string.Empty;
+        return $"{VisualDebugger.GetAsBorder(DebugColor)} {VisualDebugger.GetAsStripes(DebugColor)}";
+    }
+
+    private string GetInnerDebugClasses() {
+        if (!VisualDebugger.IsEnabled()) return string.Empty;
+        return $"{VisualDebugger.GetAsBorder(DebugColor)} {VisualDebugger.GetAsStripes(DebugColor)}";
+    }
+
+    private string GetSliderDebugClasses() {
+        if (!VisualDebugger.IsEnabled()) return string.Empty;
+        return VisualDebugger.GetAsBorder(DebugColor);
+    }
+
 }
