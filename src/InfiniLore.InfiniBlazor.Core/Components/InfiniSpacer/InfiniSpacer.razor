@@ -1,7 +1,6 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
@@ -10,7 +9,45 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="grow"></div>
+<div class="@GetSpacing() @GetDebug() shrink-0"></div>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter] public Spacing Spacing { get; set; } = Spacing.Grow;
+    [Parameter] public SpacerDirection Direction { get; set; } = SpacerDirection.Vertical;
+    [Parameter] public bool Debug { get; set; } = true;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private string GetDebug()
+        => (Debug, Direction, Spacing) switch {
+            (true, _, Spacing.Grow) => "bg-stripes bg-stripes-(--color-red)",
+            (true, SpacerDirection.Horizontal, _) => "bg-stripes bg-stripes-(--color-red) border-l border-r border-l-(--color-red) border-r-(--color-red)",
+            (true, SpacerDirection.Vertical, _) => "bg-stripes bg-stripes-(--color-red) border-t border-b border-t-(--color-red) border-b-(--color-red) ",
+            _ => string.Empty
+        };
+    
+    private string GetSpacing()
+        => (Direction, Spacing) switch {
+            (_, Spacing.Grow) => "grow flex-auto", 
+            
+            (SpacerDirection.Vertical, Spacing.Xxs) => "h-1",
+            (SpacerDirection.Vertical, Spacing.Xs) => "h-2",
+            (SpacerDirection.Vertical, Spacing.S) => "h-4",
+            (SpacerDirection.Vertical, Spacing.M) => "h-8",
+            (SpacerDirection.Vertical, Spacing.L) => "h-12",
+            (SpacerDirection.Vertical, Spacing.Xl) => "h-16",
+            (SpacerDirection.Vertical, Spacing.Xxl) => "h-24",
+            
+            (SpacerDirection.Horizontal, Spacing.Xxs) => "w-1",
+            (SpacerDirection.Horizontal, Spacing.Xs) => "w-2",
+            (SpacerDirection.Horizontal, Spacing.S) => "w-4",
+            (SpacerDirection.Horizontal, Spacing.M) => "w-8",
+            (SpacerDirection.Horizontal, Spacing.L) => "w-12",
+            (SpacerDirection.Horizontal, Spacing.Xl) => "w-16",
+            (SpacerDirection.Horizontal, Spacing.Xxl) => "w-24",
+            _ => throw new ArgumentOutOfRangeException()
+        };
+}

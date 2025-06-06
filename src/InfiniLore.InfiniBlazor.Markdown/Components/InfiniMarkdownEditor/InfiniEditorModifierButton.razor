@@ -10,13 +10,15 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniButton
-    OnClick="@(async () => await Editor.OnModifierClickAsync(Modifier))"
-    Variant="@Variant"
-    IconName="@IconName"
->
-    @ChildContent
-</InfiniButton>
+<div class="flex items-center">
+    <InfiniButton
+        OnClick="@(async () => await Editor.OnModifierClickAsync(Modifier))"
+        Variant="@Variant"
+        IconName="@IconName"
+    >
+        @ChildContent
+    </InfiniButton>
+</div>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@

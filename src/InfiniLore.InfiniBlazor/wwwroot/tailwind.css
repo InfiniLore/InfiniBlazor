@@ -19,13 +19,13 @@
     background: --value([*]); 
 }
 
+/* ------------------------------------------------------------------------------------------------------------------ */
+/* Custom Scrollbar                                                                                                   */
+/* ------------------------------------------------------------------------------------------------------------------ */
 @utility infini-scrollbar-* {
     --infini-scrollbar-background: --value([*]);
 }
 
-/* ------------------------------------------------------------------------------------------------------------------ */
-/* Custom Scrollbar                                                                                                   */
-/* ------------------------------------------------------------------------------------------------------------------ */
 @utility infini-scrollbar-left {
     direction: rtl;
 
@@ -71,3 +71,38 @@
         background: var(--color-base-40);
     }
 }
+
+/* ------------------------------------------------------------------------------------------------------------------ */
+/*                                                                                                                    */
+/* ------------------------------------------------------------------------------------------------------------------ */
+@utility bg-stripes {
+    --stripe-color: white;
+    --stripe-angle: 45deg;
+    
+    --strip-scape-1: 5%;
+    --strip-scape-2: 45%;
+    --strip-scape-3: 55%;
+    --strip-scape-4: 95%;
+
+    background-image: linear-gradient(
+        var(--stripe-angle),
+        var(--stripe-color) var(--strip-scape-1),
+        transparent         var(--strip-scape-1),
+        transparent         var(--strip-scape-2),
+        var(--stripe-color) var(--strip-scape-2),
+        var(--stripe-color) var(--strip-scape-3),
+        transparent         var(--strip-scape-3),
+        transparent         var(--strip-scape-4),
+        var(--stripe-color) var(--strip-scape-4)
+    );
+    background-size: 1rem 1rem;
+}
+
+@utility bg-stripes-*  {
+    --stripe-color: --value([*]);
+}
+
+@utility bg-stripes-direction-* {
+    --stripe-angle: --value(number)deg;
+}
+

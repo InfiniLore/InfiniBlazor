@@ -1,44 +1,18 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
+@namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@page "/html"
-@rendermode InteractiveServer
+@inherits ComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniPage>
-    <SectionTextInput/>
-    
-    <SectionCodeBlock/>
-    
-    <SectionHeadings/>
-    
-    <SectionSpacers/>
-    
-    <InfiniSection/>
-    <InfiniSection/>
-    <InfiniSection/>
-    <InfiniSection/>
-    <InfiniSection/>
-    <InfiniSection/>
-    <InfiniSection/>
-    <InfiniSection/>
-    <InfiniSection/>
-    <InfiniSection/>
-    <InfiniSection/>
-    <InfiniSection/>
-    <InfiniSection/>
-    <InfiniSection/>
-    <InfiniSection/>
-    <InfiniSection/>
-</InfiniPage>
+<InfiniSpacer Spacing="Spacing.Xxl" Direction="@Direction"/>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    
+    [Parameter] public SpacerDirection Direction { get; set; } = SpacerDirection.Vertical;
 }
