@@ -9,18 +9,18 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@GetSpacing() @GetDebug() shrink-0"></div>
+<div class="@GetSpacing() @GetDebug()"></div>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public Spacing Spacing { get; set; } = Spacing.Grow;
-    [Parameter] public SpacerDirection Direction { get; set; } = SpacerDirection.Vertical;
+    [Parameter] public virtual Spacing Spacing { get; set; } = Spacing.Grow;
+    [Parameter] public virtual SpacerDirection Direction { get; set; } = SpacerDirection.Vertical;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private string GetDebug() {
+    protected string GetDebug() {
         if (!VisualDebugger.IsEnabled()) return string.Empty;
 
         string stripes = VisualDebugger.GetAsStripes(DebugColor);
@@ -33,7 +33,7 @@
         };
     }
     
-    private string GetSpacing()
+    protected string GetSpacing()
         => (Direction, Spacing) switch {
             (_, Spacing.Grow) => "grow flex-auto", 
             
