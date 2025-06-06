@@ -1,11 +1,13 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Debugger
+
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits ComponentBase
+@inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -16,18 +18,20 @@
 @code {
     [Parameter] public Spacing Spacing { get; set; } = Spacing.Grow;
     [Parameter] public SpacerDirection Direction { get; set; } = SpacerDirection.Vertical;
-    [Parameter] public bool Debug { get; set; } = true;
-
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private string GetDebug()
-        => (Debug, Direction, Spacing) switch {
-            (true, _, Spacing.Grow) => "bg-stripes bg-stripes-(--color-red)",
-            (true, SpacerDirection.Horizontal, _) => "bg-stripes bg-stripes-(--color-red) border-l border-r border-l-(--color-red) border-r-(--color-red)",
-            (true, SpacerDirection.Vertical, _) => "bg-stripes bg-stripes-(--color-red) border-t border-b border-t-(--color-red) border-b-(--color-red) ",
+    private string GetDebug() {
+        if (Debugger.GetState() is not DebuggerState.Enabled) return string.Empty;
+        
+        return (Direction, Spacing) switch {
+            (_, Spacing.Grow) => "bg-stripes bg-stripes-(--color-red)",
+            (SpacerDirection.Horizontal, _) => "bg-stripes bg-stripes-(--color-red) border-l border-r border-l-(--color-red) border-r-(--color-red)",
+            (SpacerDirection.Vertical, _) => "bg-stripes bg-stripes-(--color-red) border-t border-b border-t-(--color-red) border-b-(--color-red) ",
             _ => string.Empty
         };
+    }
     
     private string GetSpacing()
         => (Direction, Spacing) switch {

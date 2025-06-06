@@ -1,6 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Debugger
 @using InfiniLore.InfiniBlazor.Theming
 @using InfiniLore.InfiniBlazor.Toasting
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -10,6 +11,7 @@
 @inject IThemeSelector ThemeSelector
 @inject IToastStorage ToastService
 @inject IToastAppearanceProvider ToastAppearanceProvider
+@inject IDebuggerProvider DebuggerProvider
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -49,9 +51,14 @@
         
         <InfiniSpacer/>
 
-        <InfiniSideNavButton OnClickAsync="@(OnCreateToastAsync)">
+        <InfiniSideNavButton OnClick="@OnCreateToastAsync">
             <Icon><LiPopcorn/></Icon>
             <Text>Create Toast</Text>
+        </InfiniSideNavButton>
+
+        <InfiniSideNavButton OnClick="@OnDebuggerClickAsync">
+            <Icon><LiBug/></Icon>
+            <Text>Toggle Debug View</Text>
         </InfiniSideNavButton>
     </Body>
 
@@ -64,14 +71,14 @@
         </InfiniSideNavLink>
 
         @* DEBUG *@
-        <InfiniSideNavButton OnClickAsync="@(SwitchTheme)">
+        <InfiniSideNavButton OnClick="@SwitchTheme">
             <Icon>
                 <LiPalette/>
             </Icon>
             <Text>Switch Theme</Text>
         </InfiniSideNavButton>
 
-        <InfiniSideNavButton OnClickAsync="@(ThemeSelector.TrySelectNextThemeModeAsync)">
+        <InfiniSideNavButton OnClick="@(ThemeSelector.TrySelectNextThemeModeAsync)">
             <Icon>
                 <LiSun/>
             </Icon>
@@ -153,5 +160,17 @@
         ];
 
         await Task.WhenAll(messages.Select(message => ToastService.AddToastAsync(message).AsTask()));
+    }
+    
+    private async Task OnDebuggerClickAsync() {
+        DebuggerState state = DebuggerProvider.GetState();
+
+        DebuggerState newState = state switch {
+            DebuggerState.Disabled => DebuggerState.Enabled,
+            DebuggerState.Enabled => DebuggerState.Disabled,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+        
+        await DebuggerProvider.SetStateAsync(newState);
     }
 }
