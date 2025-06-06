@@ -1421,6 +1421,20 @@
       }
     }
   }
+  .group-hover\/button\:bg-\(--color-accent-dark\) {
+    &:is(:where(.group\/button):hover *) {
+      @media (hover: hover) {
+        background-color: var(--color-accent-dark);
+      }
+    }
+  }
+  .group-hover\/button\:bg-\(--color-accent-light\) {
+    &:is(:where(.group\/button):hover *) {
+      @media (hover: hover) {
+        background-color: var(--color-accent-light);
+      }
+    }
+  }
   .group-hover\/button\:bg-\(--color-base-70\) {
     &:is(:where(.group\/button):hover *) {
       @media (hover: hover) {
@@ -1439,6 +1453,27 @@
     &:is(:where(.group\/button):hover *) {
       @media (hover: hover) {
         color: var(--color-accent);
+      }
+    }
+  }
+  .group-hover\/button\:text-\(--color-base-10\) {
+    &:is(:where(.group\/button):hover *) {
+      @media (hover: hover) {
+        color: var(--color-base-10);
+      }
+    }
+  }
+  .group-hover\/button\:text-\(--color-base-20\) {
+    &:is(:where(.group\/button):hover *) {
+      @media (hover: hover) {
+        color: var(--color-base-20);
+      }
+    }
+  }
+  .group-hover\/button\:text-\(--color-base-30\) {
+    &:is(:where(.group\/button):hover *) {
+      @media (hover: hover) {
+        color: var(--color-base-30);
       }
     }
   }

@@ -39,7 +39,10 @@ public partial record InfiniBlazorTheme : ITheme {
     public string ColorGray { get; init; } = "#4b5563";
     public string ColorWhite { get; init; } = "#ffffff";
     public string ColorBlack { get; init; } = "#000000";
+    
     public string ColorAccent { get; init; } = "#fa9f3e";
+    public string ColorAccentDark { get; init; } = "#965f25";
+    public string ColorAccentLight { get; init; } = "#faa951";
 
     public string ColorBase00 { get; init; } = "#ffffff";
     public string ColorBase05 { get; init; } = "#f6f7f7";
