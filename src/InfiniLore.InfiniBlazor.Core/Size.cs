@@ -9,9 +9,9 @@ namespace Infinilore.InfiniBlazor;
 public enum Size {
     Xxs,
     Xs,
-    Sm,
-    Md,
-    Lg,
+    S,
+    M,
+    L,
     Xl,
     Xxl
 }

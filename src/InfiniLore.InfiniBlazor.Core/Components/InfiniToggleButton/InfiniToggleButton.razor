@@ -54,7 +54,7 @@
     [Parameter] public bool Disabled { get; set; }
     [Parameter] public string Type { get; set; } = "button";
     [Parameter] public string? AriaLabel { get; set; }
-    [Parameter] public Size Size { get; set; } = Size.Md;
+    [Parameter] public Size Size { get; set; } = Size.M;
     [Parameter] public string? Tooltip { get; set; }
     [Parameter] public Anchor TooltipAnchor { get; set; } = Anchor.Center | Anchor.Bottom;
 
@@ -62,41 +62,61 @@
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private string ContainerClasses => Size switch {
-            Size.Sm => "w-12 h-6",
-            Size.Md => "w-14 h-7",
-            Size.Lg => "w-16 h-8",
+            Size.Xxs => "w-8 h-4",
+            Size.Xs => "w-10 h-5",
+            Size.S => "w-12 h-6",
+            Size.M => "w-14 h-7",
+            Size.L => "w-16 h-8",
+            Size.Xl => "w-20 h-10",
+            Size.Xxl => "w-24 h-12",
             _ => "w-14 h-7"
         } + $" rounded-full bg-(--color-base-70) {(Value ? "bg-(--color-accent)" : "")} transition-colors duration-300 relative overflow-hidden";
 
     private string SliderClasses => Size switch {
-            Size.Sm => "absolute w-4 h-4 top-1 left-1",
-            Size.Md => "absolute w-5 h-5 top-1 left-1",
-            Size.Lg => "absolute w-6 h-6 top-1 left-1",
-            _ => "absolute w-5 h-5 top-1 left-1"
+            Size.Xxs => "absolute w-3 h-3 top-0.5 left-0.5",
+            Size.Xs => "absolute w-4 h-4 top-0.5 left-0.5",
+            Size.S => "absolute w-5 h-5 top-0.5 left-0.5",
+            Size.M => "absolute w-6 h-6 top-0.5 left-0.5",
+            Size.L => "absolute w-7 h-7 top-0.5 left-0.5",
+            Size.Xl => "absolute w-9 h-9 top-0.5 left-0.5",
+            Size.Xxl => "absolute w-11 h-11 top-0.5 left-0.5",
+            _ => "absolute w-6 h-6 top-0.5 left-0.5"
         } + " flex items-center justify-center " +
         "bg-(--color-base-30) rounded-full transition-transform duration-300 " +
         (Value
             ? Size switch {
-                Size.Sm => "translate-x-[1.5rem]",
-                Size.Md => "translate-x-[1.75rem]",
-                Size.Lg => "translate-x-[2rem]",
-                _ => "translate-x-[2.25rem]"
+                Size.Xxs => "translate-x-[1rem]",
+                Size.Xs => "translate-x-[1.25rem]",
+                Size.S => "translate-x-[1.5rem]",
+                Size.M => "translate-x-[1.75rem]",
+                Size.L => "translate-x-[2rem]",
+                Size.Xl => "translate-x-[2.5rem]",
+                Size.Xxl => "translate-x-[3rem]",
+                _ => "translate-x-[1.75rem]"
             }
             : "translate-x-0");
 
     private string IconOnClasses => Size switch {
-        Size.Sm => "absolute w-3 h-3",
-        Size.Md => "absolute w-4 h-4",
-        Size.Lg => "absolute w-5 h-5",
+        Size.Xxs => "absolute w-2 h-2",
+        Size.Xs => "absolute w-2.5 h-2.5",
+        Size.S => "absolute w-3 h-3",
+        Size.M => "absolute w-4 h-4",
+        Size.L => "absolute w-5 h-5",
+        Size.Xl => "absolute w-6 h-6",
+        Size.Xxl => "absolute w-8 h-8",
         _ => "absolute w-4 h-4"
-    } + " transform transition-opacity duration-300 text-(--color-accent)";
+    } + " transform transition-all duration-300 text-(--color-accent)";
 
     private string IconOffClasses => Size switch {
-        Size.Sm => "absolute w-3 h-3",
-        Size.Md => "absolute w-4 h-4",
-        Size.Lg => "absolute w-5 h-5",
+        Size.Xxs => "absolute w-2 h-2",
+        Size.Xs => "absolute w-2.5 h-2.5",
+        Size.S => "absolute w-3 h-3",
+        Size.M => "absolute w-4 h-4",
+        Size.L => "absolute w-5 h-5",
+        Size.Xl => "absolute w-6 h-6",
+        Size.Xxl => "absolute w-8 h-8",
         _ => "absolute w-4 h-4"
-    } + " transform transition-opacity duration-300 text-(--color-base-70)";
+    } + " transform transition-all duration-300 text-(--color-base-70)";
 
     private string DisableClasses => Disabled
         ? "opacity-50 cursor-not-allowed"

@@ -12,40 +12,69 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniPage>
     <InfiniSection>
-        <InfiniToggleButton 
+        <InfiniToggleButton
             @bind-Value="isEnabled"
             OnIcon="sun"
             OffIcon="moon"
-            Size="Size.Md"
+            Size="Size.Xxs"
             Tooltip="Toggle theme"
-        ></InfiniToggleButton>
-        <InfiniToggleButton 
+        />
+        <InfiniToggleButton
             @bind-Value="isEnabled"
             OnIcon="sun"
             OffIcon="moon"
-            Size="Size.Sm"
+            Size="Size.Xs"
             Tooltip="Toggle theme"
-        ></InfiniToggleButton>
-        <InfiniToggleButton 
+        />
+        <InfiniToggleButton
             @bind-Value="isEnabled"
             OnIcon="sun"
             OffIcon="moon"
-            Size="Size.Lg"
+            Size="Size.S"
             Tooltip="Toggle theme"
-        ></InfiniToggleButton>
+        />
+        <InfiniToggleButton
+            @bind-Value="isEnabled"
+            OnIcon="sun"
+            OffIcon="moon"
+            Size="Size.M"
+            Tooltip="Toggle theme"
+        />
+        <InfiniToggleButton
+            @bind-Value="isEnabled"
+            OnIcon="sun"
+            OffIcon="moon"
+            Size="Size.L"
+            Tooltip="Toggle theme"
+        />
+        <InfiniToggleButton
+            @bind-Value="isEnabled"
+            OnIcon="sun"
+            OffIcon="moon"
+            Size="Size.Xl"
+            Tooltip="Toggle theme"
+        />
+        <InfiniToggleButton
+            @bind-Value="isEnabled"
+            OnIcon="sun"
+            OffIcon="moon"
+            Size="Size.Xxl"
+            Tooltip="Toggle theme"
+        />
     </InfiniSection>
-    
+
     <SectionTextInput/>
-    
+
     <SectionCodeBlock/>
-    
+
     <SectionHeadings/>
-    
+
     <SectionSpacers/>
 </InfiniPage>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     bool isEnabled;
 }

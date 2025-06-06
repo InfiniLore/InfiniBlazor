@@ -238,6 +238,9 @@
   .top-0 {
     top: calc(var(--spacing) * 0);
   }
+  .top-0\.5 {
+    top: calc(var(--spacing) * 0.5);
+  }
   .top-1 {
     top: calc(var(--spacing) * 1);
   }
@@ -294,6 +297,9 @@
   }
   .left-0 {
     left: calc(var(--spacing) * 0);
+  }
+  .left-0\.5 {
+    left: calc(var(--spacing) * 0.5);
   }
   .left-1 {
     left: calc(var(--spacing) * 1);
@@ -414,6 +420,9 @@
   .h-2 {
     height: calc(var(--spacing) * 2);
   }
+  .h-2\.5 {
+    height: calc(var(--spacing) * 2.5);
+  }
   .h-3 {
     height: calc(var(--spacing) * 3);
   }
@@ -434,6 +443,15 @@
   }
   .h-8 {
     height: calc(var(--spacing) * 8);
+  }
+  .h-9 {
+    height: calc(var(--spacing) * 9);
+  }
+  .h-10 {
+    height: calc(var(--spacing) * 10);
+  }
+  .h-11 {
+    height: calc(var(--spacing) * 11);
   }
   .h-12 {
     height: calc(var(--spacing) * 12);
@@ -486,6 +504,9 @@
   .w-2 {
     width: calc(var(--spacing) * 2);
   }
+  .w-2\.5 {
+    width: calc(var(--spacing) * 2.5);
+  }
   .w-3 {
     width: calc(var(--spacing) * 3);
   }
@@ -504,8 +525,20 @@
   .w-6 {
     width: calc(var(--spacing) * 6);
   }
+  .w-7 {
+    width: calc(var(--spacing) * 7);
+  }
   .w-8 {
     width: calc(var(--spacing) * 8);
+  }
+  .w-9 {
+    width: calc(var(--spacing) * 9);
+  }
+  .w-10 {
+    width: calc(var(--spacing) * 10);
+  }
+  .w-11 {
+    width: calc(var(--spacing) * 11);
   }
   .w-12 {
     width: calc(var(--spacing) * 12);
@@ -515,6 +548,9 @@
   }
   .w-16 {
     width: calc(var(--spacing) * 16);
+  }
+  .w-20 {
+    width: calc(var(--spacing) * 20);
   }
   .w-24 {
     width: calc(var(--spacing) * 24);
@@ -608,6 +644,10 @@
     --tw-translate-x: 1.5rem;
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
+  .translate-x-\[1\.25rem\] {
+    --tw-translate-x: 1.25rem;
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
   .translate-x-\[1\.75rem\] {
     --tw-translate-x: 1.75rem;
     translate: var(--tw-translate-x) var(--tw-translate-y);
@@ -618,6 +658,10 @@
   }
   .translate-x-\[2\.0rem\] {
     --tw-translate-x: 2.0rem;
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+  .translate-x-\[2\.5rem\] {
+    --tw-translate-x: 2.5rem;
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
   .translate-x-\[2\.25rem\] {
@@ -634,6 +678,10 @@
   }
   .translate-x-\[2rem\] {
     --tw-translate-x: 2rem;
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+  .translate-x-\[3rem\] {
+    --tw-translate-x: 3rem;
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
   .translate-x-\[calc\(100\%-0\.5rem\)\] {
