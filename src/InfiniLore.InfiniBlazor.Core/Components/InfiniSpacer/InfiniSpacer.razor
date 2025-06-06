@@ -1,7 +1,6 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
@@ -10,7 +9,34 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="grow"></div>
+<div class="@GetSpacing() border border-b-red-500"></div>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter] public Spacing Spacing { get; set; } = Spacing.Grow;
+    [Parameter] public SpacerDirection Direction { get; set; } = SpacerDirection.Horizontal;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private string GetSpacing()
+        => (Spacing, Direction) switch {
+            (Spacing.Grow, _) => "grow",
+            
+            (Spacing.Xs, SpacerDirection.Horizontal) => "h-1",
+            (Spacing.S, SpacerDirection.Horizontal) => "h-2",
+            (Spacing.M, SpacerDirection.Horizontal) => "h-4",
+            (Spacing.L, SpacerDirection.Horizontal) => "h-8",
+            (Spacing.Xl, SpacerDirection.Horizontal) => "h-12",
+            (Spacing.Xxl, SpacerDirection.Horizontal) => "h-16",
+            
+            (Spacing.Xs, SpacerDirection.Vertical) => "w-1",
+            (Spacing.S, SpacerDirection.Vertical) => "w-2",
+            (Spacing.M, SpacerDirection.Vertical) => "w-4",
+            (Spacing.L, SpacerDirection.Vertical) => "w-8",
+            (Spacing.Xl, SpacerDirection.Vertical) => "w-12",
+            (Spacing.Xxl, SpacerDirection.Vertical) => "w-16",
+            _ => throw new ArgumentOutOfRangeException()
+        };
+}
