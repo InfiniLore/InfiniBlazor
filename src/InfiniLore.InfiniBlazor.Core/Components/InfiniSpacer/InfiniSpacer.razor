@@ -9,34 +9,45 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@GetSpacing() border border-b-red-500"></div>
+<div class="@GetSpacing() @GetDebug()"></div>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     [Parameter] public Spacing Spacing { get; set; } = Spacing.Grow;
-    [Parameter] public SpacerDirection Direction { get; set; } = SpacerDirection.Horizontal;
+    [Parameter] public SpacerDirection Direction { get; set; } = SpacerDirection.Vertical;
+    [Parameter] public bool Debug { get; set; } = true;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    private string GetDebug()
+        => (Debug, Direction, Spacing) switch {
+            (true, _, Spacing.Grow) => "bg-stripes bg-stripes-(--color-red)",
+            (true, SpacerDirection.Horizontal, _) => "bg-stripes bg-stripes-(--color-red) border-l border-r border-l-(--color-red) border-r-(--color-red)",
+            (true, SpacerDirection.Vertical, _) => "bg-stripes bg-stripes-(--color-red) border-t border-b border-t-(--color-red) border-b-(--color-red) ",
+            _ => string.Empty
+        };
+    
     private string GetSpacing()
-        => (Spacing, Direction) switch {
-            (Spacing.Grow, _) => "grow",
+        => (Direction, Spacing) switch {
+            (_, Spacing.Grow) => "grow", 
             
-            (Spacing.Xs, SpacerDirection.Horizontal) => "h-1",
-            (Spacing.S, SpacerDirection.Horizontal) => "h-2",
-            (Spacing.M, SpacerDirection.Horizontal) => "h-4",
-            (Spacing.L, SpacerDirection.Horizontal) => "h-8",
-            (Spacing.Xl, SpacerDirection.Horizontal) => "h-12",
-            (Spacing.Xxl, SpacerDirection.Horizontal) => "h-16",
+            (SpacerDirection.Vertical, Spacing.Xxs) => "h-1",
+            (SpacerDirection.Vertical, Spacing.Xs) => "h-2",
+            (SpacerDirection.Vertical, Spacing.S) => "h-4",
+            (SpacerDirection.Vertical, Spacing.M) => "h-8",
+            (SpacerDirection.Vertical, Spacing.L) => "h-12",
+            (SpacerDirection.Vertical, Spacing.Xl) => "h-16",
+            (SpacerDirection.Vertical, Spacing.Xxl) => "h-24",
             
-            (Spacing.Xs, SpacerDirection.Vertical) => "w-1",
-            (Spacing.S, SpacerDirection.Vertical) => "w-2",
-            (Spacing.M, SpacerDirection.Vertical) => "w-4",
-            (Spacing.L, SpacerDirection.Vertical) => "w-8",
-            (Spacing.Xl, SpacerDirection.Vertical) => "w-12",
-            (Spacing.Xxl, SpacerDirection.Vertical) => "w-16",
+            (SpacerDirection.Horizontal, Spacing.Xxs) => "w-1",
+            (SpacerDirection.Horizontal, Spacing.Xs) => "w-2",
+            (SpacerDirection.Horizontal, Spacing.S) => "w-4",
+            (SpacerDirection.Horizontal, Spacing.M) => "w-8",
+            (SpacerDirection.Horizontal, Spacing.L) => "w-12",
+            (SpacerDirection.Horizontal, Spacing.Xl) => "w-16",
+            (SpacerDirection.Horizontal, Spacing.Xxl) => "w-24",
             _ => throw new ArgumentOutOfRangeException()
         };
 }

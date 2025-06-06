@@ -8,6 +8,7 @@ namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 public enum Spacing {
     Grow,
+    Xxs,
     Xs,
     S,
     M,
