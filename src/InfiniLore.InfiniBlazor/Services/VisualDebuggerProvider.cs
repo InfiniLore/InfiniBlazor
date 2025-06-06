@@ -4,23 +4,26 @@
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Debugger;
 
-namespace InfiniLore.InfiniBlazor.Components;
+namespace InfiniLore.InfiniBlazor.Services;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableScoped<IDebuggerProvider>]
-public class DebuggerProvider : IDebuggerProvider {
+[InjectableScoped<IVisualDebuggerProvider>]
+public class VisualDebuggerProvider : IVisualDebuggerProvider {
     private DebuggerState State { get; set; } = DebuggerState.Disabled;
     
     public event Action? OnChange;
-    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public DebuggerState GetState() => State;
-    public Task SetStateAsync(DebuggerState state) {
-        State = state;
+    public bool IsEnabled() => State is DebuggerState.Enabled;
+    public Task ToggleStateAsync() {
+        State = State switch {
+            DebuggerState.Disabled => DebuggerState.Enabled,
+            DebuggerState.Enabled => DebuggerState.Disabled,
+            _ => throw new ArgumentOutOfRangeException()
+        };
         OnChange?.Invoke();
         return Task.CompletedTask;
     }

@@ -11,7 +11,7 @@
 @inject IThemeSelector ThemeSelector
 @inject IToastStorage ToastService
 @inject IToastAppearanceProvider ToastAppearanceProvider
-@inject IDebuggerProvider DebuggerProvider
+@inject IVisualDebuggerProvider DebuggerProvider
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -56,7 +56,7 @@
             <Text>Create Toast</Text>
         </InfiniSideNavButton>
 
-        <InfiniSideNavButton OnClick="@OnDebuggerClickAsync">
+        <InfiniSideNavButton OnClick="@DebuggerProvider.ToggleStateAsync">
             <Icon><LiBug/></Icon>
             <Text>Toggle Debug View</Text>
         </InfiniSideNavButton>
@@ -160,17 +160,5 @@
         ];
 
         await Task.WhenAll(messages.Select(message => ToastService.AddToastAsync(message).AsTask()));
-    }
-    
-    private async Task OnDebuggerClickAsync() {
-        DebuggerState state = DebuggerProvider.GetState();
-
-        DebuggerState newState = state switch {
-            DebuggerState.Disabled => DebuggerState.Enabled,
-            DebuggerState.Enabled => DebuggerState.Disabled,
-            _ => throw new ArgumentOutOfRangeException()
-        };
-        
-        await DebuggerProvider.SetStateAsync(newState);
     }
 }

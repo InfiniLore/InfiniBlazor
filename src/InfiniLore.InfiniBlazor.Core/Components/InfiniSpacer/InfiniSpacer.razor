@@ -1,8 +1,6 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.Debugger
-
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
@@ -23,7 +21,7 @@
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private string GetDebug() {
-        if (Debugger.GetState() is not DebuggerState.Enabled) return string.Empty;
+        if (VisualDebugger.IsEnabled()) return string.Empty;
         
         return (Direction, Spacing) switch {
             (_, Spacing.Grow) => "bg-stripes bg-stripes-(--color-red)",

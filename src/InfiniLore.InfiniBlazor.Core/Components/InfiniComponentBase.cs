@@ -9,18 +9,18 @@ namespace Infinilore.InfiniBlazor.Components;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class InfiniComponentBase : ComponentBase, IAsyncDisposable {
-    [Inject] protected IDebuggerProvider Debugger { get; set; } = null!;
+    [Inject] protected IVisualDebuggerProvider VisualDebugger { get; set; } = null!;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected override void OnInitialized() {
         base.OnInitialized();
-        Debugger.OnChange += StateHasChanged;
+        VisualDebugger.OnChange += StateHasChanged;
     }
 
     public ValueTask DisposeAsync() {
-        Debugger.OnChange -= StateHasChanged;
+        VisualDebugger.OnChange -= StateHasChanged;
         GC.SuppressFinalize(this);
         return ValueTask.CompletedTask;
     }
