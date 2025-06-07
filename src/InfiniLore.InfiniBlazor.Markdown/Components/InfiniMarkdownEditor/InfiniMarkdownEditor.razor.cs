@@ -54,7 +54,7 @@ public partial class InfiniMarkdownEditor(
         }
 
         // place the caret in a newly requested location
-        if (textEditor.TryGetCaretUpdate(out int index))
+        if (textEditor.TryGetCaretUpdate(out int index)) 
             await jsRuntimeHelper.SetSelectionIndexAsync(InputRef,index);
     }
 
