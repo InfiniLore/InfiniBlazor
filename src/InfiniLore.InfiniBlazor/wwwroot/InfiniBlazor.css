@@ -1278,6 +1278,9 @@
   .text-\(--color-accent\) {
     color: var(--color-accent);
   }
+  .text-\(--color-accent-dark\) {
+    color: var(--color-accent-dark);
+  }
   .text-\(--color-base-00\) {
     color: var(--color-base-00);
   }
