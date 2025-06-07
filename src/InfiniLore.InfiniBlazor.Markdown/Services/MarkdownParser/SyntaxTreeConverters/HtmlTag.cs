@@ -10,6 +10,7 @@ public record HtmlTag(string OpenTag, string CloseTag) {
     public ReadOnlySpan<char> CloseTagSpan => CloseTag.AsSpan();
 
     public bool HasClosingTag { get; private init; } = true;
+    public bool HasClosingSmallerThan { get; init; } = false;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

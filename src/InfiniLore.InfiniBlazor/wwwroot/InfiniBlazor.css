@@ -328,29 +328,11 @@
   .my-8 {
     margin-block: calc(var(--spacing) * 8);
   }
-  .-mt-1 {
-    margin-top: calc(var(--spacing) * -1);
-  }
   .mt-1 {
     margin-top: calc(var(--spacing) * 1);
   }
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
-  }
-  .mt-4 {
-    margin-top: calc(var(--spacing) * 4);
-  }
-  .mt-5 {
-    margin-top: calc(var(--spacing) * 5);
-  }
-  .mt-6 {
-    margin-top: calc(var(--spacing) * 6);
-  }
-  .mt-7 {
-    margin-top: calc(var(--spacing) * 7);
-  }
-  .mt-8 {
-    margin-top: calc(var(--spacing) * 8);
   }
   .mr-2 {
     margin-right: calc(var(--spacing) * 2);
@@ -492,14 +474,8 @@
   .h-128 {
     height: calc(var(--spacing) * 128);
   }
-  .h-256 {
-    height: calc(var(--spacing) * 256);
-  }
   .h-\[1\.25rem\] {
     height: 1.25rem;
-  }
-  .h-\[600px\] {
-    height: 600px;
   }
   .h-auto {
     height: auto;
@@ -624,9 +600,6 @@
   .min-w-\[2rem\] {
     min-width: 2rem;
   }
-  .min-w-full {
-    min-width: 100%;
-  }
   .flex-1 {
     flex: 1;
   }
@@ -726,12 +699,6 @@
   }
   .resize-none {
     resize: none;
-  }
-  .list-inside {
-    list-style-position: inside;
-  }
-  .list-outside {
-    list-style-position: outside;
   }
   .list-decimal {
     list-style-type: decimal;
@@ -956,9 +923,6 @@
   .border-blue-600 {
     border-color: var(--color-blue-600);
   }
-  .border-gray-300 {
-    border-color: var(--color-gray-300);
-  }
   .border-green-600 {
     border-color: var(--color-green-600);
   }
@@ -1133,12 +1097,6 @@
   .bg-blue-950 {
     background-color: var(--color-blue-950);
   }
-  .bg-gray-100 {
-    background-color: var(--color-gray-100);
-  }
-  .bg-gray-200 {
-    background-color: var(--color-gray-200);
-  }
   .bg-green-950 {
     background-color: var(--color-green-950);
   }
@@ -1250,9 +1208,6 @@
   .align-middle {
     vertical-align: middle;
   }
-  .align-top {
-    vertical-align: top;
-  }
   .font-mono {
     font-family: var(--font-mono);
   }
@@ -1279,10 +1234,6 @@
   .text-base {
     font-size: var(--text-base);
     line-height: var(--tw-leading, var(--text-base--line-height));
-  }
-  .text-lg {
-    font-size: var(--text-lg);
-    line-height: var(--tw-leading, var(--text-lg--line-height));
   }
   .text-sm {
     font-size: var(--text-sm);
@@ -1343,15 +1294,6 @@
   .text-\(--color-base-50\) {
     color: var(--color-base-50);
   }
-  .text-\(--color-base-70\) {
-    color: var(--color-base-70);
-  }
-  .text-\(--color-base-80\) {
-    color: var(--color-base-80);
-  }
-  .text-\(--color-base-90\) {
-    color: var(--color-base-90);
-  }
   .text-\(--color-base-95\) {
     color: var(--color-base-95);
   }
@@ -1381,9 +1323,6 @@
   }
   .text-gray-400 {
     color: var(--color-gray-400);
-  }
-  .text-gray-700 {
-    color: var(--color-gray-700);
   }
   .text-green-500 {
     color: var(--color-green-500);
@@ -1530,6 +1469,12 @@
   .bg-stripes-\(--debug-yellow\) {
     --stripe-color: var(--debug-yellow);
   }
+  .bgc-\(--color-base-90\) {
+    background: var(--color-base-90);
+  }
+  .bgc-\(--color-base-95\) {
+    background: var(--color-base-95);
+  }
   .bgc-\(--page-background\) {
     background: var(--page-background);
   }
@@ -1623,13 +1568,6 @@
       }
     }
   }
-  .hover\:bg-gray-50 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-gray-50);
-      }
-    }
-  }
   .hover\:bg-green-900 {
     &:hover {
       @media (hover: hover) {
@@ -1677,13 +1615,6 @@
     &:hover {
       @media (hover: hover) {
         color: var(--sidebar-nav-text-color-hover);
-      }
-    }
-  }
-  .hover\:text-blue-800 {
-    &:hover {
-      @media (hover: hover) {
-        color: var(--color-blue-800);
       }
     }
   }
@@ -1741,34 +1672,9 @@
       scale: var(--tw-scale-x) var(--tw-scale-y);
     }
   }
-  .\[\&_ol\]\:my-0 {
-    & ol {
-      margin-block: calc(var(--spacing) * 0);
-    }
-  }
-  .\[\&_ul\]\:my-0 {
-    & ul {
-      margin-block: calc(var(--spacing) * 0);
-    }
-  }
   .\[\&\:has\(\>input\[type\=checkbox\]\)\]\:list-none {
     &:has(>input[type=checkbox]) {
       list-style-type: none;
-    }
-  }
-  .\[\&\:has\(\>ul\,\>ol\)\]\:my-0 {
-    &:has(>ul,>ol) {
-      margin-block: calc(var(--spacing) * 0);
-    }
-  }
-  .\[\&\:has\(input\[type\=checkbox\]\)\]\:list-none {
-    &:has(input[type=checkbox]) {
-      list-style-type: none;
-    }
-  }
-  .\[\&\:has\(input\[type\=checkbox\]\)\]\:pl-6 {
-    &:has(input[type=checkbox]) {
-      padding-left: calc(var(--spacing) * 6);
     }
   }
   .\[\&\>ol\]\:mt-2 {

@@ -75,9 +75,9 @@ public abstract class SimpleSyntaxTreeConverter {
                 HtmlTag htmlTag = MdElementLookup[element];
                 writeContent(writer, htmlTag.OpenTagSpan);
 
-                WriteAttributes(writer, writeContent, node);
+                WriteAttributes(writer,  writeContent, node);
 
-                writeContent(writer, ">");
+                if (!htmlTag.HasClosingSmallerThan) writeContent(writer, ">");
 
                 if (htmlTag.HasClosingTag) depthCache.AddOrUpdate(depth, element);
                 lastKnownDepth = depth;

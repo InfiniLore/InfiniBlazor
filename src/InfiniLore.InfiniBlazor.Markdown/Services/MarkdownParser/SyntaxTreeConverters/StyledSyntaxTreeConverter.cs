@@ -48,7 +48,12 @@ public abstract class StyledSyntaxTreeConverter : SimpleSyntaxTreeConverter {
         { MarkdownElement.TableHeadCell, HtmlTag.CreateWithClass("th", "p-4") },
         { MarkdownElement.TableRow, HtmlTag.CreateWithClass("tr", "group hover:bgc-(--table-row-background-hover) transition h-4") },
 
-        { MarkdownElement.Tag, HtmlTag.CreateWithClass("span", "inline-block bg-(--color-base-90) rounded-full px-3 py-1 text-sm font-semibold text-(--color-accent) mr-2") },
+        { MarkdownElement.Tag, new HtmlTag(
+                "<span class=\"inline-block bgc-(--color-base-95) rounded-full px-2 font-semibold text-(--color-accent)\">#",
+                "</span>" 
+        ){
+            HasClosingSmallerThan = true
+        }},
         { MarkdownElement.Underline, HtmlTag.CreateWithStyle("span", "text-decoration: underline;") }
     }.ToFrozenDictionary();
 }
