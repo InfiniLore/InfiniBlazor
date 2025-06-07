@@ -1,6 +1,8 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using Infinilore.InfiniBlazor.Components;
+using InfiniLore.InfiniBlazor.Debugger;
 using InfiniLore.InfiniBlazor.JsRuntime;
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.Components;
@@ -16,17 +18,19 @@ namespace InfiniLore.InfiniBlazor.Components;
 public partial class InfiniMarkdownEditor(
     ITextEditor textEditor,
     IJsRuntimeHelper jsRuntimeHelper,
-    [FromKeyedServices("styled")] IMarkdownParser<string, MarkupString> markdownParser
+    [FromKeyedServices("styled")] IMarkdownParser<string, MarkupString> markdownParser,
+    IVisualDebuggerProvider debuggerProvider
     // IHtmlSanitizer sanitizer
-) : ComponentBase {
+) : InfiniComponentBase {
     [Parameter, EditorRequired] public ITextSource Source { get;  set; } = null!;
     [Parameter] public EventCallback<ITextSource> SourceChanged { get; set; }
-    [Parameter] public string? Class { get; init; }
+
     [Parameter] public bool ShowPreview { get; init; } = true;
     
     public ElementReference InputRef { get; set; } 
     public event Action? SourceHasChanged;
     public MarkupString MarkdownOutput { get; private set; }
+    public string? MarkdownStringOutput { get; private set; }
     
     private InfiniEditorKeyCombo _lastPressedCombo = InfiniEditorKeyCombo.Empty;
     private Dictionary<InfiniEditorKeyCombo, Func<InfiniMarkdownEditor, Task>> KeyCombos { get; } = new() {
@@ -54,6 +58,7 @@ public partial class InfiniMarkdownEditor(
 
     protected override async Task OnInitializedAsync() {
         await InvokeSourceHasChanged();
+        debuggerProvider.OnChangeAsync += InvokeSourceHasChanged;
     }
 
     protected override async Task OnParametersSetAsync() {
@@ -63,13 +68,16 @@ public partial class InfiniMarkdownEditor(
 
     private async Task InvokeSourceHasChanged() {
         MarkdownOutput = await markdownParser.TryParseAsync(Source.Text);
+        if (debuggerProvider.IsEnabled()) MarkdownStringOutput = MarkdownOutput.ToString();
         
         SourceHasChanged?.Invoke();
         StateHasChanged();
     }
 
-    public async ValueTask DisposeAsync() {
+    public override async ValueTask DisposeAsync() {
+        await base.DisposeAsync();
         await jsRuntimeHelper.RemovePreventDefaultListenerAsync();
+        debuggerProvider.OnChangeAsync -= InvokeSourceHasChanged;
         GC.SuppressFinalize(this);
     }
     

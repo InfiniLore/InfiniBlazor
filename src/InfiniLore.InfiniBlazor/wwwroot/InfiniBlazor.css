@@ -423,6 +423,9 @@
   .h-1 {
     height: calc(var(--spacing) * 1);
   }
+  .h-1\/2 {
+    height: calc(1/2 * 100%);
+  }
   .h-2 {
     height: calc(var(--spacing) * 2);
   }
@@ -1296,6 +1299,9 @@
   }
   .text-\(--color-base-95\) {
     color: var(--color-base-95);
+  }
+  .text-\(--debug-red\) {
+    color: var(--debug-red);
   }
   .text-\(--page-text-color\) {
     color: var(--page-text-color);

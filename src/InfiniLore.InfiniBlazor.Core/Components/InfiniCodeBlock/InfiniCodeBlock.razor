@@ -13,9 +13,9 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@Class flex overflow-hidden min-h-0">
+<div class="@Class flex overflow-hidden min-h-0 text-(--color-base-20)">
     <div
-        class="relative bg-(--color-base-70) text-(--color-base-20) text-sm border border-(--border-color) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar">
+        class="relative bg-(--color-base-70) text-sm border border-(--border-color) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar">
         @if (!Language.IsNullOrWhiteSpace()) {
             <div class="mb-2"></div>
             <div class="absolute top-2 left-4 text-xs text-(--color-base-40)">@Language</div>
@@ -31,7 +31,7 @@
                     TooltipAnchor="@Anchor.Left"/>
             </div>
         }
-        <pre class="whitespace-pre m-0 font-mono min-h-0"><code>@Content</code></pre>
+        <pre class="whitespace-pre m-0 font-mono min-h-0"><code>@Content @ChildContent</code></pre>
     </div>
 </div>
 
@@ -39,7 +39,8 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public string Content { get; set; } = string.Empty;
+    [Parameter] public string? Content { get; set; } = string.Empty;
+    [Parameter] public RenderFragment? ChildContent { get; set; }
     [Parameter] public EventCallback<string> ContentChanged { get; set; }
     [Parameter] public string? Language { get; set; }
     [Parameter] public bool EnableCopy { get; set; } = true;

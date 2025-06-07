@@ -8,6 +8,7 @@ namespace InfiniLore.InfiniBlazor.Debugger;
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IVisualDebuggerProvider {
     event Action? OnChange;
+    event Func<Task>? OnChangeAsync;
 
     bool IsEnabled();
     Task ToggleStateAsync();

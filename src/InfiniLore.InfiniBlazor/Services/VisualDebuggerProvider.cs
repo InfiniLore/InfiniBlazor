@@ -13,18 +13,21 @@ public class VisualDebuggerProvider : IVisualDebuggerProvider {
     private DebuggerState State { get; set; } = DebuggerState.Disabled;
     
     public event Action? OnChange;
+    public event Func<Task>? OnChangeAsync;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public bool IsEnabled() => State is DebuggerState.Enabled;
-    public Task ToggleStateAsync() {
+    public bool IsEnabled() 
+        => State is DebuggerState.Enabled;
+    
+    public async Task ToggleStateAsync() {
         State = State switch {
             DebuggerState.Disabled => DebuggerState.Enabled,
             DebuggerState.Enabled => DebuggerState.Disabled,
             _ => throw new ArgumentOutOfRangeException()
         };
         OnChange?.Invoke();
-        return Task.CompletedTask;
+        if (OnChangeAsync is not null) await OnChangeAsync();
     }
     
     public string GetAsStripes(DebugColor color) 

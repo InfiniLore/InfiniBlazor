@@ -22,7 +22,7 @@ public abstract class InfiniComponentBase : ComponentBase, IAsyncDisposable {
         VisualDebugger.OnChange += StateHasChanged;
     }
 
-    public ValueTask DisposeAsync() {
+    public virtual ValueTask DisposeAsync() {
         VisualDebugger.OnChange -= StateHasChanged;
         GC.SuppressFinalize(this);
         return ValueTask.CompletedTask;

@@ -1,40 +1,25 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits ComponentBase
-@implements IDisposable
+@inherits Infinilore.InfiniBlazor.Components.InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="@Class flex min-h-0">
     <div class="flex-1 overflow-y-auto infini-scrollbar">
-        <div class="p-4 max-w-none">
-            @((MarkupString)ParentEditor.MarkdownOutput)
-        </div>
+        @if (!VisualDebugger.IsEnabled()) {
+            <div class="p-4 max-w-none">
+                @ParentEditor.MarkdownOutput
+            </div>
+        }
+        else {
+            <InfiniCodeBlock Class="h-full text-(--debug-red)"
+                             Content="@PrettifyHtml(MarkdownStringOutput)"/>
+        }
     </div>
 </div>
-@* ------------------------------------------------------------------------------------------------------------------ *@
-@* Code
-@* ------------------------------------------------------------------------------------------------------------------ *@
-@code {
-    [CascadingParameter] public InfiniMarkdownEditor ParentEditor { get; set; } = null!;
-    [Parameter] public string? Class { get; set; }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
-    protected override void OnInitialized() {
-        ParentEditor.SourceHasChanged += StateHasChanged;
-    }
-
-    public void Dispose() {
-        ParentEditor.SourceHasChanged -= StateHasChanged;
-    }
-}
-
 
