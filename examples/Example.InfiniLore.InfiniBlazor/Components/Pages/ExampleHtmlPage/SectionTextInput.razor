@@ -30,7 +30,7 @@
     <InfiniHeading3>Text Input with Submit</InfiniHeading3>
     <div class="space-y-4">
         <InfiniTextInput @bind-Value="@SubmitExample.Value"
-                         Placeholder="Type something else and submit..." Disabled="true">
+                         Placeholder="Type something else and submit...">
             <InfiniButton OnClick="SubmitExample.OnSubmit">Submit</InfiniButton>
         </InfiniTextInput>
 
@@ -45,11 +45,11 @@
 <InfiniSection>
     <InfiniHeading3>Text Input with Submit</InfiniHeading3>
     <div class="space-y-4">
-        <InfiniTextInput @bind-Value="@SubmitExample.Value"
-                         Placeholder="Type something else and submit..."
-                         Disabled="true"
-                        Label="Test Example"
-                         >
+        <InfiniTextInput
+            @bind-Value="@SubmitExample.Value"
+            Placeholder="Type something else and submit..."
+            Label="Test Example"
+        >
             <InfiniButton Variant="ButtonVariant.Primary" OnClick="SubmitExample.OnSubmit">Submit</InfiniButton>
         </InfiniTextInput>
 
@@ -72,7 +72,7 @@
             ValidationMessage="@FormExample.ValidationMessage"
             Placeholder="Enter email">
         </InfiniTextInput>
-        
+
         <InfiniTextInput
             Label="Password"
             LabelLocation="LabelLocation.Left"
@@ -132,5 +132,6 @@
             _ => null
         };
     }
+
 }
 

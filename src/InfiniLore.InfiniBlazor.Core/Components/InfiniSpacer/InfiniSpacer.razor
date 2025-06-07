@@ -29,8 +29,8 @@
         
         return Direction switch {
             SpacerDirection.Grow => stripes,
-            SpacerDirection.Horizontal => $"{stripes} {VisualDebugger.GetAsBorderLeft(DebugColor)} {VisualDebugger.GetAsBorderRight(DebugColor)}",
-            SpacerDirection.Vertical => $"{stripes} {VisualDebugger.GetAsBorderTop(DebugColor)} {VisualDebugger.GetAsBorderBottom(DebugColor)}",
+            SpacerDirection.Horizontal => ConcatClasses(stripes, VisualDebugger.GetAsBorderLeft(DebugColor),VisualDebugger.GetAsBorderRight(DebugColor)),
+            SpacerDirection.Vertical => ConcatClasses(stripes, VisualDebugger.GetAsBorderTop(DebugColor), VisualDebugger.GetAsBorderBottom(DebugColor)),
             _ => string.Empty
         };
     }
