@@ -1,0 +1,57 @@
+﻿@using JetBrains.Annotations
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@rendermode InteractiveServer
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniSection Class="flex flex-col gap-4">
+    <InfiniHeading3>Buttons</InfiniHeading3>
+
+    <div class="flex flex-row gap-4">
+        <div>
+            <InfiniButton Variant="ButtonVariant.Default">Something</InfiniButton>
+            <InfiniButton Variant="ButtonVariant.Dark">Something</InfiniButton>
+            <InfiniButton Variant="ButtonVariant.Transparent">Something</InfiniButton>
+            <InfiniButton Variant="ButtonVariant.Primary">Something</InfiniButton>
+
+            <InfiniButton IconName="settings" Variant="ButtonVariant.Default"/>
+            <InfiniButton IconName="settings" Variant="ButtonVariant.Dark"/>
+            <InfiniButton IconName="settings" Variant="ButtonVariant.Transparent"/>
+            <InfiniButton IconName="settings" Variant="ButtonVariant.Primary"/>
+
+            <InfiniButton IconName="settings" Variant="ButtonVariant.Default">Something</InfiniButton>
+            <InfiniButton IconName="settings" Variant="ButtonVariant.Dark">Something</InfiniButton>
+            <InfiniButton IconName="settings" Variant="ButtonVariant.Transparent">Something</InfiniButton>
+            <InfiniButton IconName="settings" Variant="ButtonVariant.Primary">Something</InfiniButton>
+        </div>
+        
+        <div>
+            <InfiniButton Disabled="true" Variant="ButtonVariant.Default">Something</InfiniButton>
+            <InfiniButton Disabled="true" Variant="ButtonVariant.Dark">Something</InfiniButton>
+            <InfiniButton Disabled="true" Variant="ButtonVariant.Transparent">Something</InfiniButton>
+            <InfiniButton Disabled="true" Variant="ButtonVariant.Primary">Something</InfiniButton>
+
+            <InfiniButton Disabled="true" IconName="settings" Variant="ButtonVariant.Default"/>
+            <InfiniButton Disabled="true" IconName="settings" Variant="ButtonVariant.Dark"/>
+            <InfiniButton Disabled="true" IconName="settings" Variant="ButtonVariant.Transparent"/>
+            <InfiniButton Disabled="true" IconName="settings" Variant="ButtonVariant.Primary"/>
+
+            <InfiniButton Disabled="true" IconName="settings" Variant="ButtonVariant.Default">Something</InfiniButton>
+            <InfiniButton Disabled="true" IconName="settings" Variant="ButtonVariant.Dark">Something</InfiniButton>
+            <InfiniButton Disabled="true" IconName="settings" Variant="ButtonVariant.Transparent">Something</InfiniButton>
+            <InfiniButton Disabled="true" IconName="settings" Variant="ButtonVariant.Primary">Something</InfiniButton>
+        </div>
+    </div>
+</InfiniSection>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [UsedImplicitly] bool _isEnabled;
+}
