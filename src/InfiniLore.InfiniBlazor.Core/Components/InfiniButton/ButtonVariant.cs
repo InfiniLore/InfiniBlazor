@@ -8,5 +8,6 @@ namespace InfiniLore.InfiniBlazor.Components;
 public enum ButtonVariant {
     Default,
     Primary,
-    Transparent
+    Transparent,
+    Dark
 }

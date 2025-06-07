@@ -58,6 +58,7 @@
     private string IconClasses => (Variant, Disabled) switch {
         (ButtonVariant.Primary, false) => "bg-(--color-accent) group-hover/button:bg-(--color-accent-light)",
         (ButtonVariant.Transparent, false) => "bg-transparent text-(--color-base-30) group-hover/button:text-(--color-accent)",
+        (ButtonVariant.Dark, false) => "bg-(--color-base-90) text-(--color-base-30)",
         (_, false) => "bg-(--color-base-70) text-(--color-base-00) group-hover/button:bg-(--color-base-80) group-hover/button:text-(--color-accent)",
         (_, true) => "bg-(--color-base-70) text-(--color-base-10)"
     } + " rounded-md";
@@ -80,6 +81,7 @@
     private string TextClasses => (Variant, Disabled) switch {
         (ButtonVariant.Primary, false) => $"bg-(--color-accent) group-hover/button:bg-(--color-accent-light) {SizeClasses}",
         (ButtonVariant.Transparent, false) => "bg-transparent",
+        (ButtonVariant.Dark, false) => $"bg-(--color-base-90) text-(--color-base-30) {SizeClasses}",
         (_, false) => $"bg-(--color-base-70) text-(--color-base-00) group-hover/button:bg-(--color-base-80) group-hover/button:text-(--color-accent) hover:ring-2 hover:ring-(--color-accent) {SizeClasses}",
         (_, true) => $"bg-(--color-base-70) text-(--color-base-10) {SizeClasses}"
     };
