@@ -1247,6 +1247,9 @@
   .align-middle {
     vertical-align: middle;
   }
+  .align-top {
+    vertical-align: top;
+  }
   .font-mono {
     font-family: var(--font-mono);
   }
@@ -1723,9 +1726,44 @@
       scale: var(--tw-scale-x) var(--tw-scale-y);
     }
   }
+  .\[\&_ol\]\:my-0 {
+    & ol {
+      margin-block: calc(var(--spacing) * 0);
+    }
+  }
+  .\[\&_ul\]\:my-0 {
+    & ul {
+      margin-block: calc(var(--spacing) * 0);
+    }
+  }
+  .\[\&\:has\(\>input\[type\=checkbox\]\)\]\:list-none {
+    &:has(>input[type=checkbox]) {
+      list-style-type: none;
+    }
+  }
+  .\[\&\:has\(\>ul\,\>ol\)\]\:my-0 {
+    &:has(>ul,>ol) {
+      margin-block: calc(var(--spacing) * 0);
+    }
+  }
   .\[\&\:has\(input\[type\=checkbox\]\)\]\:list-none {
     &:has(input[type=checkbox]) {
       list-style-type: none;
+    }
+  }
+  .\[\&\:has\(input\[type\=checkbox\]\)\]\:pl-6 {
+    &:has(input[type=checkbox]) {
+      padding-left: calc(var(--spacing) * 6);
+    }
+  }
+  .\[\&\>ol\]\:mt-2 {
+    &>ol {
+      margin-top: calc(var(--spacing) * 2);
+    }
+  }
+  .\[\&\>ul\]\:mt-2 {
+    &>ul {
+      margin-top: calc(var(--spacing) * 2);
     }
   }
 }

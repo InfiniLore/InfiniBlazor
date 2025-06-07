@@ -15,11 +15,15 @@ public abstract class StyledSyntaxTreeConverter : SimpleSyntaxTreeConverter {
         
         { MarkdownElement.CheckboxSelected, HtmlTag.CreateVoid("input type=\"checkbox\" disabled checked class=\"form-checkbox h-4 w-4 text-blue-600 rounded focus:ring-blue-500 -ml-6 mr-2 inline-block align-middle\"") },
         { MarkdownElement.CheckboxUnselected, HtmlTag.CreateVoid("input type=\"checkbox\" disabled class=\"form-checkbox h-4 w-4 text-gray-400 rounded focus:ring-blue-500 -ml-6 mr-2 inline-block align-middle\"") },
-        { MarkdownElement.ListItem, HtmlTag.CreateWithClass("li", "my-2 [&:has(input[type=checkbox])]:list-none") },
+        { MarkdownElement.ListItem, HtmlTag.CreateWithClass("li", "my-2 [&:has(>input[type=checkbox])]:list-none [&>ul]:mt-2 [&>ol]:mt-2") },
         { MarkdownElement.ListOrdered, HtmlTag.CreateWithClass("ol", "list-decimal pl-8 my-4") },
         { MarkdownElement.ListUnordered, HtmlTag.CreateWithClass("ul", "list-disc pl-8 my-4") },
 
-        { MarkdownElement.CodeBlock, new HtmlTag("<div class=\"flex overflow-hidden min-h-0\"><div class=\"relative bg-(--color-base-70) text-(--color-base-20) text-sm border border-(--border-color) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar\"><pre class=\"whitespace-pre m-0 font-mono min-h-0\"><code>", "</code></pre></div></div>")},
+        { MarkdownElement.CodeBlock, new HtmlTag(
+            "<div class=\"flex overflow-hidden min-h-0\"><div class=\"relative bg-(--color-base-70) text-(--color-base-20) text-sm border border-(--border-color) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar\"><pre class=\"whitespace-pre m-0 font-mono min-h-0\"><code", 
+            "</code></pre></div></div>"
+        )},
+
         { MarkdownElement.CodeInline, HtmlTag.CreateWithClass("code", "bg-(--color-base-70) text-(--color-base-20) rounded px-1 font-mono text-sm") },
         
         { MarkdownElement.H1, HtmlTag.CreateWithClass("h1", "text-6xl font-semibold mb-6") },

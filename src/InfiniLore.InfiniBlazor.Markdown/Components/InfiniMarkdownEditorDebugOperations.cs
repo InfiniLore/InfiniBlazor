@@ -68,6 +68,7 @@ public static class InfiniMarkdownEditorDebugInserts {
         - List item 2
         - List item 3
         
+        
         - [ ] Task 1
         - [x] Task 2
         - [ ] Task 3
@@ -76,10 +77,19 @@ public static class InfiniMarkdownEditorDebugInserts {
         - list item
           - [ ] with a nested task
           
+          
         - [ ] task item
           - with a nested list item
+          
+        1. Numbered list item 1
+        2. Numbered list item 2
+          - with a nested list item
+          - [ ] with a nested task
+          - [x] with a nested completed task
+        
         
         A random paragraph
+        
         
         | test  | something |
         |  ---- | --------- |
