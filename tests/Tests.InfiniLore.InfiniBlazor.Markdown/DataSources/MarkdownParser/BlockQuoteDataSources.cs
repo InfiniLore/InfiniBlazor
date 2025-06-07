@@ -113,7 +113,6 @@ public static class BlockQuoteDataSources {
 
                 IMarkdownSyntaxNode secondListItem = list.AddListItem("Second item");
                 secondListItem.AddListUnordered().AddListItem("Sub-item");
-                ;
             }
         );
 

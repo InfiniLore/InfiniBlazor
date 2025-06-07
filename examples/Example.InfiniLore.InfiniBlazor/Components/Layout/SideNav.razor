@@ -17,49 +17,59 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniSideNav @bind-MenuCollapsed="@MenuCollapsed" Size="SideNavSize.Large">
     <Header>
-        <a href="/" 
+        <a href="/"
            class="@(!MenuCollapsed ? "text-1xl font-bold text-(--color-base-00) hover:text-(--color-accent) no-underline" : "hidden")">
             InfiniBlazor
         </a>
     </Header>
 
     <Body>
-        <InfiniSideNavLink Href="/markdown-dual">
-            <Icon>
-                <LiSignature/>
-            </Icon>
-            <Text>Markdown Example</Text>
-        </InfiniSideNavLink>
-        @* <InfiniSideNavLink Href="/markdown-rolling"> *@
-        @*     <Icon> *@
-        @*         <LiIndentIncrease/> *@
-        @*     </Icon> *@
-        @*     <Text>Rolling Markdown Example</Text> *@
-        @* </InfiniSideNavLink> *@
-        <InfiniSideNavLink Href="/table">
-            <Icon><LiTable/></Icon>
-            <Text>Table</Text>
-        </InfiniSideNavLink>
-        <InfiniSideNavLink Href="/html">
-            <Icon><LiCodeXml/></Icon>
-            <Text>Html</Text>
-        </InfiniSideNavLink>
-        <InfiniSideNavLink Href="/theming/table">
-            <Icon><LiTable2/></Icon>
-            <Text>theming table</Text>
-        </InfiniSideNavLink>
-        
-        <InfiniSpacer/>
+    <InfiniSideNavLink Href="/markdown-dual">
+        <Icon>
+            <LiSignature/>
+        </Icon>
+        <Text>Markdown Example</Text>
+    </InfiniSideNavLink>
+    @* <InfiniSideNavLink Href="/markdown-rolling"> *@
+    @*     <Icon> *@
+    @*         <LiIndentIncrease/> *@
+    @*     </Icon> *@
+    @*     <Text>Rolling Markdown Example</Text> *@
+    @* </InfiniSideNavLink> *@
+    <InfiniSideNavLink Href="/table">
+        <Icon>
+            <LiTable/>
+        </Icon>
+        <Text>Table</Text>
+    </InfiniSideNavLink>
+    <InfiniSideNavLink Href="/html">
+        <Icon>
+            <LiCodeXml/>
+        </Icon>
+        <Text>Html</Text>
+    </InfiniSideNavLink>
+    <InfiniSideNavLink Href="/theming/table">
+        <Icon>
+            <LiTable2/>
+        </Icon>
+        <Text>theming table</Text>
+    </InfiniSideNavLink>
 
-        <InfiniSideNavButton OnClick="@OnCreateToastAsync">
-            <Icon><LiPopcorn/></Icon>
-            <Text>Create Toast</Text>
-        </InfiniSideNavButton>
+    <InfiniSpacer/>
 
-        <InfiniSideNavButton OnClick="@DebuggerProvider.ToggleStateAsync">
-            <Icon><LiBug/></Icon>
-            <Text>Toggle Debug View</Text>
-        </InfiniSideNavButton>
+    <InfiniSideNavButton OnClick="@OnCreateToastAsync">
+        <Icon>
+            <LiPopcorn/>
+        </Icon>
+        <Text>Create Toast</Text>
+    </InfiniSideNavButton>
+
+    <InfiniSideNavButton OnClick="@DebuggerProvider.ToggleStateAsync">
+        <Icon>
+            <LiBug/>
+        </Icon>
+        <Text>Toggle Debug View</Text>
+    </InfiniSideNavButton>
     </Body>
 
     <Footer>
@@ -78,13 +88,17 @@
             <Text>Switch Theme</Text>
         </InfiniSideNavButton>
 
-        <InfiniSideNavButton OnClick="@(ThemeSelector.TrySelectNextThemeModeAsync)">
+        <InfiniSideNavToggleButton
+            Value="@(ThemeSelector.CurrentThemeMode.Name != ThemeMode.DarkMode.Name)"
+            ValueChanged="@OnThemeModeChanged"
+            OnIcon="moon"
+            OffIcon="sun">
             <Icon>
                 <LiSun/>
             </Icon>
-            <Text>Switch Mode</Text>
-        </InfiniSideNavButton>
-
+            <Text>Dark Mode</Text>
+        </InfiniSideNavToggleButton>
+        
         @* User *@
         <InfiniSideNavUser UserName="InfiniLore">
             <Icon>
@@ -125,6 +139,7 @@
             "anna" => "default",
             _ => Theme
         };
+
         await ThemeSelector.TrySelectThemeCollectionAsync(Theme);
     }
 
@@ -156,9 +171,11 @@
                 "Some Data",
                 "#",
                 "click here"
-            ),
+            )
         ];
 
         await Task.WhenAll(messages.Select(message => ToastService.AddToastAsync(message).AsTask()));
     }
+
+    private async Task OnThemeModeChanged(bool isLight) => await ThemeSelector.TrySelectNextThemeModeAsync();
 }

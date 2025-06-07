@@ -31,6 +31,10 @@
     [Parameter, EditorRequired] public required RenderFragment? Text { get; set; }
     [Parameter, EditorRequired] public required RenderFragment? Icon { get; set; }
 
-    public static string ContainerClasses => "flex flex-nowrap items-center bgc-(--sidebar-nav-button-color) rounded hover:bg-(--sidebar-nav-button-color-hover) group w-full justify-start p-2";
+    public static string GetContainerClasses()
+        => GetContainerClassesNoHover() + " hover:bg-(--sidebar-nav-button-color-hover)";
+    
+    public static string GetContainerClassesNoHover() 
+        => "flex flex-nowrap items-center bgc-(--sidebar-nav-button-color) rounded group w-full justify-start p-2";
 }
 

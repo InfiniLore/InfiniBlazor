@@ -1,11 +1,11 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using Infinilore.InfiniBlazor
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @page "/html"
+@using JetBrains.Annotations
 @rendermode InteractiveServer
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
@@ -13,45 +13,45 @@
 <InfiniPage>
     <InfiniSection>
         <InfiniToggleButton
-            @bind-Value="isEnabled"
+            @bind-Value="_isEnabled"
             OnIcon="sun"
             OffIcon="moon"
             Size="Size.Xxs"
         />
         
         <InfiniToggleButton
-            @bind-Value="isEnabled"
+            @bind-Value="_isEnabled"
             OnIcon="sun"
             OffIcon="moon"
             Size="Size.Xs"
         />
         
         <InfiniToggleButton
-            @bind-Value="isEnabled"
+            @bind-Value="_isEnabled"
             OnIcon="sun"
             OffIcon="moon"
             Size="Size.S"
         />
         <InfiniToggleButton
-            @bind-Value="isEnabled"
+            @bind-Value="_isEnabled"
             OnIcon="sun"
             OffIcon="moon"
             Size="Size.M"
         />
         <InfiniToggleButton
-            @bind-Value="isEnabled"
+            @bind-Value="_isEnabled"
             OnIcon="sun"
             OffIcon="moon"
             Size="Size.L"
         />
         <InfiniToggleButton
-            @bind-Value="isEnabled"
+            @bind-Value="_isEnabled"
             OnIcon="sun"
             OffIcon="moon"
             Size="Size.Xl"
         />
         <InfiniToggleButton
-            @bind-Value="isEnabled"
+            @bind-Value="_isEnabled"
             OnIcon="sun"
             OffIcon="moon"
             Size="Size.Xxl"
@@ -71,5 +71,5 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
-    bool isEnabled;
+    [UsedImplicitly] bool _isEnabled;
 }
