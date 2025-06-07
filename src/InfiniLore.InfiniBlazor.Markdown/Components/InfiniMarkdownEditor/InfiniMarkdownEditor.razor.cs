@@ -25,7 +25,8 @@ public partial class InfiniMarkdownEditor(
     [Parameter, EditorRequired] public ITextSource Source { get;  set; } = null!;
     [Parameter] public EventCallback<ITextSource> SourceChanged { get; set; }
 
-    [Parameter] public bool ShowPreview { get; init; } = true;
+    [Parameter] public bool ShowSidePreview { get; init; } = true;
+    
     
     public ElementReference InputRef { get; set; } 
     public event Action? SourceHasChanged;
@@ -39,6 +40,8 @@ public partial class InfiniMarkdownEditor(
         [InfiniEditorKeyCombo.Underline] = static editor => editor.OnModifierClickAsync("underline"),
         [InfiniEditorKeyCombo.SelectAll] = static editor => editor.HandleSelectAllAsync()
     };
+    
+    private bool ShowEditorPreview { get; set; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
