@@ -11,52 +11,7 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniPage>
-    <InfiniSection>
-        <InfiniToggleButton
-            @bind-Value="_isEnabled"
-            OnIcon="sun"
-            OffIcon="moon"
-            Size="Size.Xxs"
-        />
-        
-        <InfiniToggleButton
-            @bind-Value="_isEnabled"
-            OnIcon="sun"
-            OffIcon="moon"
-            Size="Size.Xs"
-        />
-        
-        <InfiniToggleButton
-            @bind-Value="_isEnabled"
-            OnIcon="sun"
-            OffIcon="moon"
-            Size="Size.S"
-        />
-        <InfiniToggleButton
-            @bind-Value="_isEnabled"
-            OnIcon="sun"
-            OffIcon="moon"
-            Size="Size.M"
-        />
-        <InfiniToggleButton
-            @bind-Value="_isEnabled"
-            OnIcon="sun"
-            OffIcon="moon"
-            Size="Size.L"
-        />
-        <InfiniToggleButton
-            @bind-Value="_isEnabled"
-            OnIcon="sun"
-            OffIcon="moon"
-            Size="Size.Xl"
-        />
-        <InfiniToggleButton
-            @bind-Value="_isEnabled"
-            OnIcon="sun"
-            OffIcon="moon"
-            Size="Size.Xxl"
-        />
-    </InfiniSection>
+    <SectionToggleButtons/>
 
     <SectionTextInput/>
 
@@ -69,7 +24,5 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
-    [UsedImplicitly] bool _isEnabled;
 }
