@@ -20,4 +20,6 @@ public interface IVisualDebuggerProvider {
     string GetAsBorderRight(DebugColor color);
     string GetAsBorderBottom(DebugColor color);
     string GetAsBorderLeft(DebugColor color);
+
+    string? WithEnabled(string? onTrue, string? onFalse);
 }

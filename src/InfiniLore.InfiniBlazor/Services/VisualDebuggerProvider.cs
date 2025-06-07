@@ -125,4 +125,11 @@ public class VisualDebuggerProvider : IVisualDebuggerProvider {
             DebugColor.Black => "border-l border-l-(--debug-black)",
             _ => throw new ArgumentOutOfRangeException(nameof(color), color, null)
         };
+    
+    public string? WithEnabled(string? onTrue, string? onFalse) 
+        => State switch {
+            DebuggerState.Enabled => onTrue,
+            DebuggerState.Disabled => onFalse,
+            _ => throw new ArgumentOutOfRangeException()
+        };
 }

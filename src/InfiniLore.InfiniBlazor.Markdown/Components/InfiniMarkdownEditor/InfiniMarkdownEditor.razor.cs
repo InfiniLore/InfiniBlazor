@@ -27,7 +27,6 @@ public partial class InfiniMarkdownEditor(
 
     [Parameter] public bool ShowSidePreview { get; init; } = true;
     
-    
     public ElementReference InputRef { get; set; } 
     public event Action? SourceHasChanged;
     public MarkupString MarkdownOutput { get; private set; }

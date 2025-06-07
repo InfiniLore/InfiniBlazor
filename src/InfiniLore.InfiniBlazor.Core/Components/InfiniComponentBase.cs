@@ -27,4 +27,7 @@ public abstract class InfiniComponentBase : ComponentBase, IAsyncDisposable {
         GC.SuppressFinalize(this);
         return ValueTask.CompletedTask;
     }
+    
+    protected static string ConcatClasses(params Span<string?> classes) 
+        => string.Join(" ", classes);
 }

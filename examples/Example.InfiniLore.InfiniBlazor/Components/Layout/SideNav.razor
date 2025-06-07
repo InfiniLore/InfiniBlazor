@@ -54,10 +54,15 @@
         <Text>Create Toast</Text>
     </InfiniSideNavButton>
 
-    <InfiniSideNavButton OnClick="@DebuggerProvider.ToggleStateAsync">
+
+    <InfiniSideNavToggleButton
+        Value="@DebuggerProvider.IsEnabled()"
+        ValueChanged="@DebuggerProvider.ToggleStateAsync"
+        OnIcon="@(MenuCollapsed ? "bug" : null)"
+        OffIcon="@(MenuCollapsed ? "bug" : null)">
         <Icon><LiBug/></Icon>
-        <Text>Toggle Debug View</Text>
-    </InfiniSideNavButton>
+        <Text>Toggle Debug</Text>
+    </InfiniSideNavToggleButton>
     </Body>
 
     <Footer>
