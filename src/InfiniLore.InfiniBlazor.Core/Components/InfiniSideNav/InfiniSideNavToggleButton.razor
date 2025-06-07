@@ -11,10 +11,10 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @if (MenuCollapsed) {
-    <div class="@InfiniSideNavItem.GetContainerClassesNoHover() relative w-full h-12">
-        <div class="flex items-center justify-center w-full h-full">
-            <InfiniToggleButton 
-                Value="@Value" 
+    <div class="@InfiniSideNavItem.GetContainerClassesNoHover() relative w-full h-10">
+        <div class="flex items-center justify-end w-full h-full">
+            <InfiniToggleButton
+                Value="@Value"
                 ValueChanged="@ValueChanged"
                 Size="Size.Xs"
                 StopPropagation="true"
@@ -25,11 +25,24 @@
         </div>
     </div>
 } else {
-    <div class="@InfiniSideNavItem.GetContainerClassesNoHover() flex justify-between items-center">
-        <InfiniSideNavItem Text="@Text" Icon="@Icon"/>
+    <div class="@InfiniSideNavItem.GetContainerClassesNoHover() flex justify-between items-center h-10">
+        <span class="flex flex-nowrap items-center justify-center">
+            <span class="w-6 h-6 text-(--sidebar-nav-text-color) flex-shrink-0">
+                @Icon
+            </span>
+
+            @if (Text is not null) {
+                <span
+                    class="@(MenuCollapsed ? "w-0 opacity-0 delay-0" : "delay-300 w-auto ml-2 opacity-100") transition-all duration-300 h-6 overflow-hidden">
+                    <span class="text-(--sidebar-nav-text-color) truncate inline-block max-w-[150px]">
+                        @Text
+                    </span>
+                </span>
+            }
+        </span>
         <InfiniSpacer/>
-        <InfiniToggleButton 
-            Value="@Value" 
+        <InfiniToggleButton
+            Value="@Value"
             ValueChanged="@ValueChanged"
             Size="Size.S"
             StopPropagation="true"
@@ -43,9 +56,10 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     [CascadingParameter] public bool MenuCollapsed { get; set; }
-    
+
     [Parameter] public bool Value { get; set; }
     [Parameter] public EventCallback<bool> ValueChanged { get; set; }
     [Parameter] public RenderFragment? Text { get; set; }
