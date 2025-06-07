@@ -40,7 +40,7 @@ public partial class InfiniMarkdownEditor(
         [InfiniEditorKeyCombo.SelectAll] = static editor => editor.HandleSelectAllAsync()
     };
     
-    private bool ShowEditorPreview { get; set; }
+    private bool EditorIsLocked { get; set; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -84,6 +84,7 @@ public partial class InfiniMarkdownEditor(
     }
     
     public async Task OnInputAsync(ChangeEventArgs e) {
+        if (EditorIsLocked) return;
         if (e.Value is string value) {
             Source.Text = value;
             await SourceChanged.InvokeAsync(Source);
@@ -92,6 +93,7 @@ public partial class InfiniMarkdownEditor(
     }
 
     public async Task OnKeyDownAsync(KeyboardEventArgs args) {
+        if (EditorIsLocked) return;
         InfiniEditorKeyCombo combo = InfiniEditorKeyCombo.From(args);
         if (KeyCombos.TryGetValue(combo, out Func<InfiniMarkdownEditor, Task>? task)) await task(this);
         _lastPressedCombo = combo;
@@ -101,6 +103,7 @@ public partial class InfiniMarkdownEditor(
     // Editor Handlers
     // -----------------------------------------------------------------------------------------------------------------
     public async Task OnModifierClickAsync(string modifierName) {
+        if (EditorIsLocked) return;
         Range range = await jsRuntimeHelper.GetSelectionRangeAsync(InputRef);
         textEditor.Modify(Source, modifierName, range);
         await InvokeSourceHasChanged();
@@ -108,6 +111,7 @@ public partial class InfiniMarkdownEditor(
     }
 
     public async Task OnInsertClickAsync(string content) {
+        if (EditorIsLocked) return;
         Range range = await jsRuntimeHelper.GetSelectionRangeAsync(InputRef);
         textEditor.Insert(Source, content, range);
         await InvokeSourceHasChanged();
@@ -118,6 +122,7 @@ public partial class InfiniMarkdownEditor(
     // KeyCombo Handlers
     // -----------------------------------------------------------------------------------------------------------------
     private async Task HandleSelectAllAsync() {
+        if (EditorIsLocked) return;
         if (Source.Text.IsNullOrWhiteSpace()) return;
 
         Range range = new(0, Source.Length);

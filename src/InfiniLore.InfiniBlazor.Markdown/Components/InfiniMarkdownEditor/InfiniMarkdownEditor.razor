@@ -45,7 +45,7 @@
                         <div class="flex items-center">
                             <InfiniToggleButton
                                 Size="Size.L"
-                                @bind-Value="@ShowEditorPreview"
+                                @bind-Value="@EditorIsLocked"
                                 OffIcon="eye-off"
                                 OnIcon="eye"
                                 />
@@ -61,7 +61,7 @@
         </div>
 
         <div class="@(ShowSidePreview ? "rounded-tr-lg" : "") flex flex-1 min-h-0 h-0 border border-(--border-color) rounded-b-lg">
-            @if (ShowEditorPreview) {
+            @if (EditorIsLocked) {
                 <InfiniMarkdownPreview Class="w-full"/>
             }
             else {

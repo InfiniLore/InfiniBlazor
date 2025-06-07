@@ -30,6 +30,7 @@ public class JsRuntimeHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper> logg
             if (bool.TryParse(json, out bool result)) {
                 return (T)(object)result;
             }
+
             return default;
 
         }
@@ -82,11 +83,11 @@ public class JsRuntimeHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper> logg
     public async Task<(int, int)> GetSelectionAsync(ElementReference element) {
         try {
             var obj = await jsRuntime.InvokeAsync<Tuple<int, int>>("getInputSelection", element);
-            return (obj.Item1, obj.Item2);
+            return (Math.Max(0, obj.Item1), Math.Max(0, obj.Item2));
         }
         catch (JSException e) {
             logger.LogError(e, "Error getting selection");
-            return (-1, -1);
+            return (0, 0);
         }
     }
 
