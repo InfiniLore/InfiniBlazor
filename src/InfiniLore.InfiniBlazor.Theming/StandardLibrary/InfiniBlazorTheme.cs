@@ -74,6 +74,16 @@ public partial record InfiniBlazorTheme : ITheme {
     [CssData, InterpretAsVar(nameof(ColorBlack))] public partial string DebugBlack { get; init; }
     #endregion
     
+    [CssData, InterpretAsVar(nameof(ColorGreen))] public partial string ColorSuccess { get; init; }
+    [CssData] public string ColorSuccessText { get; init; } = "#0C4621";
+    [CssData, InterpretAsVar(nameof(ColorSuccessText))] public partial string ColorSuccessBorder { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorOrange))] public partial string ColorWarning { get; init; }
+    [CssData] public string ColorWarningText { get; init; } = "#763202";
+    [CssData, InterpretAsVar(nameof(ColorWarningText))] public partial string ColorWarningBorder { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorRed))] public partial string ColorError { get; init; }
+    [CssData] public string ColorErrorText { get; init; } = "#8D0C0C";
+    [CssData, InterpretAsVar(nameof(ColorErrorText))] public partial string ColorErrorBorder { get; init; }
+    
     [CssData, InterpretAsVar(nameof(ColorBase00))] public partial string TextColor { get; init; }
     [CssData, InterpretAsVar(nameof(ColorRed))] public partial string TextErrorColor { get; init; }
     [CssData, InterpretAsVar(nameof(ColorBase60))] public partial string BorderColor { get; init; }

@@ -9,5 +9,10 @@ public enum ButtonVariant {
     Default,
     Primary,
     Transparent,
-    Dark
+    Dark,
+    Light,
+    Outline,
+    Warning,
+    Error,
+    Success,
 }
