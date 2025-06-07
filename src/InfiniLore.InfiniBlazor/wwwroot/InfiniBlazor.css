@@ -1734,6 +1734,13 @@
       }
     }
   }
+  .hover\:text-\(--color-base-20\) {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-base-20);
+      }
+    }
+  }
   .hover\:text-\(--color-base-70\) {
     &:hover {
       @media (hover: hover) {

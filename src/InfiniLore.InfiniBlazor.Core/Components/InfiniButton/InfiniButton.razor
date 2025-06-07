@@ -13,16 +13,12 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="@Class p-0.5">
-    <button @onclick="OnClickAsync"
-            @onclick:stopPropagation="@StopPropagation"
-            type="@Type"
-            disabled="@Disabled"
-            aria-label="@AriaLabel"
-            class="@GetContainerClasses() rounded-md group/button inline-flex items-center justify-center transition-all duration-150 transform">
-
-            <span class="rounded-md inline-flex items-center gap-2">
+    @if (Href.IsNotNullOrWhiteSpace()) {
+        <a href="@Href"
+           class="@GetContainerClasses() rounded-md group/button inline-flex items-center justify-center transition-all duration-150 transform">
+            <span class="inline-flex items-center gap-2">
                 @if (IconName.IsNotNullOrWhiteSpace()) {
-                    <LucideIcon Name="@IconName" />
+                    <LucideIcon Name="@IconName"/>
                 }
                 @if (ChildContent is not null) {
                     @ChildContent
@@ -31,7 +27,30 @@
                     <span class="w-8 h-8"></span>
                 }
             </span>
-    </button>
+        </a>
+    }
+    else {
+        <button @onclick="OnClickAsync"
+                @onclick:stopPropagation="@StopPropagation"
+                type="@Type"
+                disabled="@Disabled"
+                aria-label="@AriaLabel"
+                class="@GetContainerClasses() rounded-md group/button inline-flex items-center justify-center transition-all duration-150 transform">
+
+            <span class="inline-flex items-center gap-2">
+                @if (IconName.IsNotNullOrWhiteSpace()) {
+                    <LucideIcon Name="@IconName"/>
+                }
+                @if (ChildContent is not null) {
+                    @ChildContent
+                }
+                @if (IconName.IsNullOrWhiteSpace() && ChildContent is null) {
+                    <span class="w-8 h-8"></span>
+                }
+            </span>
+        </button>
+    }
+
     @if (Tooltip.IsNotNullOrEmpty()) {
         <div
             class="@TooltipAnchorClasses absolute transform px-3 py-1 bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md opacity-0 group-hover/button:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
@@ -44,6 +63,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
+    [Parameter] public string? Href { get; set; }
     [Parameter] public string? IconName { get; set; }
     [Parameter] public bool StopPropagation { get; set; } = true;
     [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
@@ -56,26 +76,27 @@
     [Parameter] public Anchor TooltipAnchor { get; set; } = Anchor.Center | Anchor.Bottom;
 
     private string GetContainerClasses() {
-        if (Disabled) return ConcatClasses(
-            SizeClasses,
-            "bg-(--color-base-70) text-(--color-base-10) opacity-50 cursor-not-allowed"
-        );
+        if (Disabled)
+            return ConcatClasses(
+                SizeClasses,
+                "bg-(--color-base-70) text-(--color-base-10) opacity-50 cursor-not-allowed"
+            );
 
         string variantClasses = Variant switch {
             ButtonVariant.Default => "bg-(--color-base-70) text-(--color-base-10) hover:text-(--color-base-10) hover:ring-2 hover:ring-(--color-accent)",
             ButtonVariant.Primary => "bg-(--color-accent)  text-(--color-base-80) hover:text-(--color-base-90)",
-            ButtonVariant.Dark =>    "bg-(--color-base-95) text-(--color-base-30) hover:text-(--color-base-10) hover:ring-2 hover:ring-(--color-accent)",
-            ButtonVariant.Light =>   "bg-(--color-base-10) text-(--color-base-80) hover:text-(--color-base-70) hover:ring-2 hover:ring-(--color-accent)",
+            ButtonVariant.Dark => "bg-(--color-base-95) text-(--color-base-30) hover:text-(--color-base-20) hover:ring-2 hover:ring-(--color-accent)",
+            ButtonVariant.Light => "bg-(--color-base-10) text-(--color-base-80) hover:text-(--color-base-70) hover:ring-2 hover:ring-(--color-accent)",
             ButtonVariant.Success => "bg-(--color-success) text-(--color-success-text) ring-2 ring-(--color-success-border) font-normal",
             ButtonVariant.Warning => "bg-(--color-warning) text-(--color-warning-text) ring-2 ring-(--color-warning-border) font-normal",
-            ButtonVariant.Error =>   "bg-(--color-error)   text-(--color-error-text) ring-2 ring-(--color-error-border) font-normal",
-                
-            ButtonVariant.Outline =>     "bg-transparent text-(--color-base-10) ring-2 ring-(--color-base-70) hover:ring-(--color-accent)",
+            ButtonVariant.Error => "bg-(--color-error)   text-(--color-error-text) ring-2 ring-(--color-error-border) font-normal",
+
+            ButtonVariant.Outline => "bg-transparent text-(--color-base-10) ring-2 ring-(--color-base-70) hover:ring-(--color-accent)",
             ButtonVariant.Transparent => "bg-transparent hover:text-(--color-accent)",
-                
+
             _ => throw new ArgumentOutOfRangeException()
         };
-        
+
         return ConcatClasses(
             SizeClasses,
             variantClasses,
