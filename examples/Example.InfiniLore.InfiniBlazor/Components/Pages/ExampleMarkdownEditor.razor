@@ -11,19 +11,23 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniPage>
-    <InfiniSection Class="flex flex-col gap-2 overflow-auto min-h-screen infini-scrollbar">
+    <InfiniSection Class="grow flex flex-col gap-2 overflow-auto infini-scrollbar">
         <InfiniHeading1>Markdown Editor Example</InfiniHeading1>
         <InfiniMarkdownEditor @bind-Source="@TextSource0"/>
 
-        @* <InfiniSpacer/> *@
-        @* <InfiniCodeBlock Class="h-256" Content="@TextSource0.Text"/> *@
+        <InfiniSpacerVertical Spacing="Size.L" />
+        <InfiniHeading3>Debug View:</InfiniHeading3>
+        <InfiniCodeBlock Class="h-64" Content="@TextSource0.Text"/>
     </InfiniSection>
 
     <InfiniSection Class="flex flex-col gap-2 overflow-auto min-h-screen infini-scrollbar">
         <InfiniHeading1>Markdown Editor Example</InfiniHeading1>
         <InfiniMarkdownEditor @bind-Source="@TextSource1" ShowPreview="false"/>
 
-        @* <InfiniCodeBlock Class="h-256" @bind-Content="@TextSource1.Text"/> *@
+
+        <InfiniSpacerVertical Spacing="Size.L" />
+        <InfiniHeading3>Debug View:</InfiniHeading3>
+        <InfiniCodeBlock Class="h-64" @bind-Content="@TextSource1.Text"/>
     </InfiniSection>
 </InfiniPage>
 
