@@ -13,9 +13,9 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@Class flex overflow-none">
+<div class="@Class flex overflow-hidden min-h-0">
     <div
-        class="relative bg-(--color-base-70) text-(--color-base-20) text-sm border border-(--border-color) rounded p-4 overflow-auto w-full infini-scrollbar">
+        class="relative bg-(--color-base-70) text-(--color-base-20) text-sm border border-(--border-color) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar">
         @if (!Language.IsNullOrWhiteSpace()) {
             <div class="mb-2"></div>
             <div class="absolute top-2 left-4 text-xs text-(--color-base-40)">@Language</div>
@@ -31,9 +31,10 @@
                     TooltipAnchor="@Anchor.Left"/>
             </div>
         }
-        <pre class="whitespace-pre m-0 font-mono"><code>@Content</code></pre>
+        <pre class="whitespace-pre m-0 font-mono min-h-0"><code>@Content</code></pre>
     </div>
 </div>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@

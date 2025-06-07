@@ -11,20 +11,22 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniPage>
-    <InfiniSection Class="flex flex-col h-screen gap-2">
+    <InfiniSection Class="flex flex-col gap-2 overflow-auto">
         <InfiniHeading1>Markdown Editor Example</InfiniHeading1>
         <InfiniMarkdownEditor @bind-Source="@TextSource0"/>
-        
-        <InfiniCodeBlock Content="@TextSource0.Text"/>
+
+        <InfiniSpacer/>
+        <InfiniCodeBlock Class="h-256" Content="@TextSource0.Text"/>
     </InfiniSection>
-    
-    <InfiniSection Class="flex flex-col h-screen gap-2">
+
+    <InfiniSection Class="flex flex-col gap-2 h-[600px] overflow-auto">
         <InfiniHeading1>Markdown Editor Example</InfiniHeading1>
         <InfiniMarkdownEditor @bind-Source="@TextSource1" ShowPreview="false"/>
-        
-        <InfiniCodeBlock @bind-Content="@TextSource1.Text"/>
+
+        <InfiniCodeBlock Class="h-256" @bind-Content="@TextSource1.Text"/>
     </InfiniSection>
 </InfiniPage>
+
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code

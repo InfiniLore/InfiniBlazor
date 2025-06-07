@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.SyntaxTreeConverters;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class SimpleSyntaxTreeConverter {
-    private static readonly FrozenDictionary<MarkdownElement, HtmlTag> MdElementLookup = new Dictionary<MarkdownElement, HtmlTag> {
+    protected virtual FrozenDictionary<MarkdownElement, HtmlTag> MdElementLookup { get; } = new Dictionary<MarkdownElement, HtmlTag> {
         { MarkdownElement.Blockquote, HtmlTag.Create("blockquote") },
         { MarkdownElement.Bold, HtmlTag.Create("strong") },
         { MarkdownElement.CheckboxSelected, HtmlTag.CreateVoid("input type=\"checkbox\" disabled checked/") },
@@ -43,13 +43,13 @@ public abstract class SimpleSyntaxTreeConverter {
         { MarkdownElement.Underline, HtmlTag.CreateWithStyle("span", "text-decoration: underline;") }
     }.ToFrozenDictionary();
 
-    private static readonly FrozenSet<MarkdownElement> DefinedElements = MdElementLookup.Keys.ToFrozenSet();
+    private FrozenSet<MarkdownElement> DefinedElements => MdElementLookup.Keys.ToFrozenSet();
 
     protected delegate void WriteDelegate<in T>(T writer, ReadOnlySpan<char> content);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected static ValueTask ProcessNodeTree<T>(IMarkdownSyntaxTree tree, T writer, WriteDelegate<T> writeContent, CancellationToken ct = default) {
+    protected ValueTask ProcessNodeTree<T>(IMarkdownSyntaxTree tree, T writer, WriteDelegate<T> writeContent, CancellationToken ct = default) {
         Dictionary<int, MarkdownElement> depthCache = MarkdownPoolCache.DepthCachePool.Get();
         try {
             int lastKnownDepth = -1;
@@ -106,7 +106,7 @@ public abstract class SimpleSyntaxTreeConverter {
         }
     }
 
-    private static void CloseOpenTags<T>(T writer, Dictionary<int, MarkdownElement> depthCache, int depth, WriteDelegate<T> writeContent) {
+    private void CloseOpenTags<T>(T writer, Dictionary<int, MarkdownElement> depthCache, int depth, WriteDelegate<T> writeContent) {
         if (depthCache.Count == 0) return;
 
         Span<int> keysToRemove = stackalloc int[depthCache.Count];

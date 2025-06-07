@@ -21,10 +21,7 @@ public class MarkdownConfig(IInfiniBlazorConfig infiniBlazorConfig) {
         return config;
     }
     
-    public MarkdownParserConfig<TInput, TOutput> AddMarkdownParser<TInput, TOutput>(object? key = null)
-        where TInput : class 
-        where TOutput : class
-    {
+    public MarkdownParserConfig<TInput, TOutput> AddMarkdownParser<TInput, TOutput>(object? key = null) {
         var config = new MarkdownParserConfig<TInput, TOutput>(infiniBlazorConfig, key);
 
         if (key is null) infiniBlazorConfig.Services.AddSingleton(MarkdownParserFactory.CreateParser<TInput, TOutput>);

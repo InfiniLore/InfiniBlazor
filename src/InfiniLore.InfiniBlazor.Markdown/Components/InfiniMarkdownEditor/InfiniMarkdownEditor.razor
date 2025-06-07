@@ -12,9 +12,10 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="@(this)" IsFixed="true">
-    <div class="@Class flex flex-col flex-1 min-h-0">
+    <div class="@Class flex flex-col h-full min-h-0">
         <div class="flex flex-none w-full">
             <InfiniMarkdownEditorToolbar Class="@(ShowPreview ? "w-1/2" : "w-full")">
+
                 <ToolbarButtons>
                     <InfiniEditorModifierButton Modifier="bold" IconName="bold"/>
                     <InfiniEditorModifierButton Modifier="italic" IconName="italic"/>
@@ -46,7 +47,7 @@
             }
         </div>
 
-        <div class="flex flex-1 min-h-0 border border-(--border-color) rounded-tr-lg rounded-b-lg">
+        <div class="flex flex-1 min-h-0 h-0 border border-(--border-color) rounded-tr-lg rounded-b-lg">
             <InfiniMarkdownInput Class="@(ShowPreview ? "w-1/2" : "w-full")"/>
             @if (ShowPreview) {
                 <InfiniMarkdownPreview Class="w-1/2"/>
