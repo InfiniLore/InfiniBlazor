@@ -4,8 +4,7 @@
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Debugger;
 
-namespace InfiniLore.InfiniBlazor.Services;
-
+namespace InfiniLore.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

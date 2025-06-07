@@ -15,9 +15,9 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="MenuCollapsed">
-    <aside
-        class="flex-shrink-0 h-full flex flex-col bgc-(--sidebar-nav-background) border-r border-(--sidebar-nav-border-color)">
-        <div class="@(MenuCollapsed ? ClassClosed : ClassOpen) px-2 h-full flex flex-col transition-all duration-300">
+    <aside class="flex-shrink-0 h-full flex flex-col overflow-x-hidden bgc-(--sidebar-nav-background) border-r border-(--sidebar-nav-border-color)">
+        <div class="@(MenuCollapsed ? ClassClosed : ClassOpen) px-2 h-full flex flex-col overflow-x-hidden transition-all duration-300">
+
             <!-- Top Logo and Hamburger -->
             <div
                 class="@(MenuCollapsed ? "justify-center" : "justify-between") flex items-center h-12 min-h-[3rem] max-h-[3rem] w-full">
@@ -37,8 +37,7 @@
             <!-- Navigation -->
             @if (Body is not null) {
                 <div class="border-t border-(--sidebar-nav-border-color) flex flex-col flex-grow overflow-x-hidden">
-                    <div
-                        class="@(MenuCollapsed ? "infini-scrollbar-hidden" : "infini-scrollbar") relative flex grow overflow-y-auto mt-2 mb-2">
+                    <div class="@(MenuCollapsed ? "infini-scrollbar-hidden" : "infini-scrollbar") relative flex grow overflow-x-hidden overflow-y-auto mt-2 mb-2">
                         <div
                             class="sticky top-0 left-0 right-0 h-3 bg-gradient-to-b from-black/10 to-transparent pointer-events-none z-10"></div>
                         <nav class="grow flex flex-col space-y-2">
@@ -54,7 +53,7 @@
             @if (Footer is not null) {
                 <div class="border-t border-(--sidebar-nav-border-color) flex overflow-x-hidden shrink-0">
                     <div
-                        class="@(MenuCollapsed ? "infini-scrollbar-hidden" : "infini-scrollbar") relative flex grow overflow-y-auto mt-2 mb-2">
+                        class="@(MenuCollapsed ? "infini-scrollbar-hidden" : "infini-scrollbar") relative flex grow overflow-x-hidden overflow-y-auto mt-2 mb-2">
                         <div
                             class="sticky top-0 left-0 right-0 h-3 bg-gradient-to-b from-black/10 to-transparent pointer-events-none z-10"></div>
                         <nav class="grow flex flex-col space-y-2">

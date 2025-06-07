@@ -1,0 +1,181 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using Infinilore.InfiniBlazor
+@using InfiniLore.Lucide
+@inherits InfiniComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="@GetLabelContainerClasses()">
+    @if (IsLabelValid(LabelPosition.Top)) {
+        <InfiniLabel class="mb-2">@Label</InfiniLabel>
+    }
+    <div class="@GetToggleContainerClasses()">
+        @if (IsLabelValid(LabelPosition.Left)) {
+            <InfiniLabel class="mr-2">@Label</InfiniLabel>
+        }
+        <button @onclick="OnClickAsync"
+                @onclick:stopPropagation="@StopPropagation"
+                type="@Type"
+                disabled="@Disabled"
+                aria-label="@AriaLabel"
+                aria-checked="@Value"
+                class="@GetDisableClasses() @GetInnerDebugClasses()">
+            <div class="@GetToggleInnerContainerClasses()">
+                <div class="relative">
+                    <div class="@GetSliderClasses() @GetSliderDebugClasses()">
+                        @if (OnIcon.IsNotNullOrWhiteSpace()) {
+                            <LucideIcon Name="@OnIcon" class="@OnValue(GetIconOnClasses(), "opacity-0")"/>
+                        }
+                        @if (OffIcon.IsNotNullOrWhiteSpace()) {
+                            <LucideIcon Name="@OffIcon" class="@OnValue("opacity-0", GetIconOffClasses())"/>
+                        }
+                    </div>
+                </div>
+            </div>
+        </button>
+        @if (IsLabelValid(LabelPosition.Right)) {
+            <InfiniLabel class="ml-2">@Label</InfiniLabel>
+        }
+    </div>
+    @if (IsLabelValid(LabelPosition.Bottom)) {
+        <InfiniLabel class="mt-2">@Label</InfiniLabel>
+    }
+</div>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [Parameter] public string? OnIcon { get; set; }
+    [Parameter] public string? OffIcon { get; set; }
+    [Parameter] public bool StopPropagation { get; set; } = true;
+    [Parameter] public EventCallback<bool> ValueChanged { get; set; }
+    [Parameter] public bool Value { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public string Type { get; set; } = "button";
+    [Parameter] public string? AriaLabel { get; set; }
+    [Parameter] public Size Size { get; set; } = Size.M;
+   
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public LabelPosition LabelPos { get; set; } = LabelPosition.Left;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private string GetLabelContainerClasses()
+        => Class + " " + (LabelPos is LabelPosition.Top or LabelPosition.Bottom
+            ? "flex flex-col items-center"
+            : "flex") + " " + GetDebugClasses();
+
+    private string GetToggleContainerClasses()
+        => LabelPos is LabelPosition.Left or LabelPosition.Right
+            ? "flex items-center"
+            : "";
+
+    private string? OnValue(string? onTrue = null, string? onFalse = null)
+        => Value ? onTrue : onFalse;
+
+    private bool IsLabelValid(LabelPosition position)
+        => Label.IsNotNullOrWhiteSpace() && LabelPos == position;
+
+    private string GetToggleInnerContainerClasses()
+        => Size switch {
+                Size.Xxs => "w-8 h-4",
+                Size.Xs => "w-10 h-5",
+                Size.S => "w-12 h-6",
+                Size.M => "w-14 h-7",
+                Size.L => "w-16 h-8",
+                Size.Xl => "w-20 h-10",
+                Size.Xxl => "w-24 h-12",
+                _ => "w-14 h-7"
+            } + " rounded-full bg-(--color-base-70) transition-colors duration-300 relative overflow-hidden";
+
+    private string GetSliderClasses()
+        => Size switch {
+                Size.Xxs => "absolute w-3 h-3 top-0.5 left-0.5",
+                Size.Xs => "absolute w-4 h-4 top-0.5 left-0.5",
+                Size.S => "absolute w-5 h-5 top-0.5 left-0.5",
+                Size.M => "absolute w-6 h-6 top-0.5 left-0.5",
+                Size.L => "absolute w-7 h-7 top-0.5 left-0.5",
+                Size.Xl => "absolute w-9 h-9 top-0.5 left-0.5",
+                Size.Xxl => "absolute w-11 h-11 top-0.5 left-0.5",
+                _ => "absolute w-6 h-6 top-0.5 left-0.5"
+            }
+            + " flex items-center justify-center " 
+            + OnValue("bg-(--color-accent)", "bg-(--color-base-30)")
+            + " rounded-full transition-transform duration-300 "
+            + OnValue(
+                Size switch {
+                    Size.Xxs => "translate-x-[1rem]",
+                    Size.Xs => "translate-x-[1.25rem]",
+                    Size.S => "translate-x-[1.5rem]",
+                    Size.M => "translate-x-[1.75rem]",
+                    Size.L => "translate-x-[2rem]",
+                    Size.Xl => "translate-x-[2.5rem]",
+                    Size.Xxl => "translate-x-[3rem]",
+                    _ => "translate-x-[1.75rem]"
+                },
+                "translate-x-0"
+            );
+
+    private string GetIconOnClasses()
+        => Size switch {
+            Size.Xxs => "absolute w-2 h-2",
+            Size.Xs => "absolute w-2.5 h-2.5",
+            Size.S => "absolute w-3 h-3",
+            Size.M => "absolute w-4 h-4",
+            Size.L => "absolute w-5 h-5",
+            Size.Xl => "absolute w-6 h-6",
+            Size.Xxl => "absolute w-8 h-8",
+            _ => "absolute w-4 h-4"
+        } + " transform transition-all duration-300 text-(--color-base-70)";
+
+    private string GetIconOffClasses()
+        => Size switch {
+            Size.Xxs => "absolute w-2 h-2",
+            Size.Xs => "absolute w-2.5 h-2.5",
+            Size.S => "absolute w-3 h-3",
+            Size.M => "absolute w-4 h-4",
+            Size.L => "absolute w-5 h-5",
+            Size.Xl => "absolute w-6 h-6",
+            Size.Xxl => "absolute w-8 h-8",
+            _ => "absolute w-4 h-4"
+        } + " transform transition-all duration-300 text-(--color-base-70)";
+
+    private string GetDisableClasses()
+        => Disabled
+            ? "opacity-50 cursor-not-allowed"
+            : "cursor-pointer";
+
+    private async Task OnClickAsync() {
+        if (Disabled) return;
+
+        Value = !Value;
+        await ValueChanged.InvokeAsync(Value);
+    }
+
+    private string GetDebugClasses() {
+        if (!VisualDebugger.IsEnabled()) return string.Empty;
+
+        return $"{VisualDebugger.GetAsBorder(DebugColor)} {VisualDebugger.GetAsStripes(DebugColor)}";
+    }
+
+    private string GetInnerDebugClasses() {
+        if (!VisualDebugger.IsEnabled()) return string.Empty;
+
+        return $"{VisualDebugger.GetAsBorder(DebugColor)} {VisualDebugger.GetAsStripes(DebugColor)}";
+    }
+
+    private string GetSliderDebugClasses() {
+        if (!VisualDebugger.IsEnabled()) return string.Empty;
+
+        return VisualDebugger.GetAsBorder(DebugColor);
+    }
+}

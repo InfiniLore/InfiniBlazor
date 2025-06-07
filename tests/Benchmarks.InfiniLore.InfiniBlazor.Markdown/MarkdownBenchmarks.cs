@@ -18,7 +18,6 @@ namespace Benchmarks.InfiniLore.InfiniBlazor.Markdown;
 public class MarkdownBenchmarks {
     private string Markdown { get; set; } = string.Empty;
     private IMarkdownParser<string, string> Parser { get; set; } = null!;
-    private IMarkdownParser<string, string> SanitizedParser { get; set; } = null!;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -36,7 +35,7 @@ public class MarkdownBenchmarks {
         // Markdown = await response.Content.ReadAsStringAsync();
         
         Parser = CreateParser();
-        SanitizedParser = CreateParser(static config => {
+        CreateParser(static config => {
             config.AddMarkdownParser<string, string>()
                 .AddOutputProcessor<StringOutputSanitizerProcessor>();
         });

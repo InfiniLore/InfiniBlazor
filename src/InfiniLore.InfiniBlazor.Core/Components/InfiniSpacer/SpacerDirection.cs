@@ -7,6 +7,7 @@ namespace InfiniLore.InfiniBlazor.Components;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public enum SpacerDirection {
+    Grow,
     Horizontal,
     Vertical,
 }
