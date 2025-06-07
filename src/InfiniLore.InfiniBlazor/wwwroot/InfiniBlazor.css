@@ -1340,8 +1340,20 @@
   .text-\(--color-base-40\) {
     color: var(--color-base-40);
   }
+  .text-\(--color-base-50\) {
+    color: var(--color-base-50);
+  }
   .text-\(--color-base-70\) {
     color: var(--color-base-70);
+  }
+  .text-\(--color-base-80\) {
+    color: var(--color-base-80);
+  }
+  .text-\(--color-base-90\) {
+    color: var(--color-base-90);
+  }
+  .text-\(--color-base-95\) {
+    color: var(--color-base-95);
   }
   .text-\(--page-text-color\) {
     color: var(--page-text-color);
