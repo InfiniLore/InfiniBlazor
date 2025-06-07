@@ -319,11 +319,17 @@
   .m-0 {
     margin: calc(var(--spacing) * 0);
   }
+  .my-2 {
+    margin-block: calc(var(--spacing) * 2);
+  }
   .my-4 {
     margin-block: calc(var(--spacing) * 4);
   }
   .my-8 {
     margin-block: calc(var(--spacing) * 8);
+  }
+  .-mt-1 {
+    margin-top: calc(var(--spacing) * -1);
   }
   .mt-1 {
     margin-top: calc(var(--spacing) * 1);
@@ -369,6 +375,9 @@
   }
   .-ml-1 {
     margin-left: calc(var(--spacing) * -1);
+  }
+  .-ml-6 {
+    margin-left: calc(var(--spacing) * -6);
   }
   .ml-1 {
     margin-left: calc(var(--spacing) * 1);
@@ -515,6 +524,9 @@
   }
   .min-h-\[3rem\] {
     min-height: 3rem;
+  }
+  .min-h-screen {
+    min-height: 100vh;
   }
   .w-0 {
     width: calc(var(--spacing) * 0);
@@ -715,6 +727,9 @@
   .list-inside {
     list-style-position: inside;
   }
+  .list-outside {
+    list-style-position: outside;
+  }
   .list-decimal {
     list-style-type: decimal;
   }
@@ -846,6 +861,10 @@
   }
   .rounded-tl-lg {
     border-top-left-radius: var(--radius-lg);
+  }
+  .rounded-r {
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
   }
   .rounded-tr-lg {
     border-top-right-radius: var(--radius-lg);
@@ -1216,11 +1235,17 @@
   .pl-5 {
     padding-left: calc(var(--spacing) * 5);
   }
+  .pl-8 {
+    padding-left: calc(var(--spacing) * 8);
+  }
   .text-center {
     text-align: center;
   }
   .text-right {
     text-align: right;
+  }
+  .align-middle {
+    vertical-align: middle;
   }
   .font-mono {
     font-family: var(--font-mono);
@@ -1290,6 +1315,9 @@
   }
   .whitespace-pre {
     white-space: pre;
+  }
+  .text-\(--color-accent\) {
+    color: var(--color-accent);
   }
   .text-\(--color-base-00\) {
     color: var(--color-base-00);
@@ -1620,6 +1648,13 @@
       }
     }
   }
+  .hover\:text-\(--color-accent-light\) {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-accent-light);
+      }
+    }
+  }
   .hover\:text-\(--sidebar-nav-text-color-hover\) {
     &:hover {
       @media (hover: hover) {
@@ -1686,6 +1721,11 @@
       --tw-scale-y: 95%;
       --tw-scale-z: 95%;
       scale: var(--tw-scale-x) var(--tw-scale-y);
+    }
+  }
+  .\[\&\:has\(input\[type\=checkbox\]\)\]\:list-none {
+    &:has(input[type=checkbox]) {
+      list-style-type: none;
     }
   }
 }
