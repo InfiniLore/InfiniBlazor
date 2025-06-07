@@ -11,7 +11,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@Class border-r border-(--border-color) min-h-0 flex">
+<div class="@Class @(ParentEditor.ShowSidePreview ? "border-r border-(--border-color)" : "") min-h-0 flex">
     <textarea
         class="grow p-4 border-none focus:outline-none resize-none overflow-scroll infini-scrollbar"
         value="@ParentEditor.Source.Text"

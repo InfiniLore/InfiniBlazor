@@ -1,6 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using Infinilore.InfiniBlazor
 @using InfiniLore.InfiniBlazor.Markdown.Components
 @using Infinilore.InfiniBlazor.Components
 
@@ -42,10 +43,12 @@
                     
                     @if (!ShowSidePreview) {
                         <div class="flex items-center">
-                            <InfiniButton
-                                OnClick="@(() => ShowEditorPreview = !ShowEditorPreview)"
-                                Variant="ButtonVariant.Primary"
-                                IconName="eye"/>
+                            <InfiniToggleButton
+                                Size="Size.L"
+                                @bind-Value="@ShowEditorPreview"
+                                OffIcon="eye-off"
+                                OnIcon="eye"
+                                />
                         </div>
                     }
                 </ToolbarButtons>
@@ -57,7 +60,7 @@
             }
         </div>
 
-        <div class="flex flex-1 min-h-0 h-0 border border-(--border-color) rounded-tr-lg rounded-b-lg">
+        <div class="@(ShowSidePreview ? "rounded-tr-lg" : "") flex flex-1 min-h-0 h-0 border border-(--border-color) rounded-b-lg">
             @if (ShowEditorPreview) {
                 <InfiniMarkdownPreview Class="w-full"/>
             }
