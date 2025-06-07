@@ -39,7 +39,7 @@
 
             <span class="inline-flex items-center gap-2">
                 @if (IconName.IsNotNullOrWhiteSpace()) {
-                    <LucideIcon Name="@IconName"/>
+                    <LucideIcon Name="@IconName" />
                 }
                 @if (ChildContent is not null) {
                     @ChildContent
@@ -78,7 +78,7 @@
     private string GetContainerClasses() {
         if (Disabled)
             return ConcatClasses(
-                SizeClasses,
+                ContainerSizeClasses,
                 "bg-(--color-base-70) text-(--color-base-10) opacity-50 cursor-not-allowed"
             );
 
@@ -98,7 +98,7 @@
         };
 
         return ConcatClasses(
-            SizeClasses,
+            ContainerSizeClasses,
             variantClasses,
             "cursor-pointer active:scale-95 hover:scale-105"
         );
@@ -119,8 +119,15 @@
         _ => "top-full left-1/2 -translate-x-1/2 mt-2"
     };
 
-    private string SizeClasses => Size switch {
-        _ => "px-2 py-1 text-base"
+    private string ContainerSizeClasses => Size switch {
+        Size.Xxs => "px-2 py-1 text-xs",
+        Size.Xs => "px-2 py-1 text-sm",
+        Size.S => "px-2 py-1 text-base",
+        Size.M => "px-2 py-1 text-lg",
+        Size.L => "px-2 py-1 text-xl",
+        Size.Xl => "px-2 py-1 text-2xl",
+        Size.Xxl => "px-2 py-1 text-3xl",
+        _ => throw new ArgumentOutOfRangeException()
     };
 
     // -----------------------------------------------------------------------------------------------------------------
