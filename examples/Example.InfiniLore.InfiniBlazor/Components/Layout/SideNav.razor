@@ -25,9 +25,7 @@
 
     <Body>
     <InfiniSideNavLink Href="/markdown-dual">
-        <Icon>
-            <LiSignature/>
-        </Icon>
+        <Icon><LiSignature/></Icon>
         <Text>Markdown Example</Text>
     </InfiniSideNavLink>
     @* <InfiniSideNavLink Href="/markdown-rolling"> *@
@@ -37,54 +35,40 @@
     @*     <Text>Rolling Markdown Example</Text> *@
     @* </InfiniSideNavLink> *@
     <InfiniSideNavLink Href="/table">
-        <Icon>
-            <LiTable/>
-        </Icon>
+        <Icon><LiTable/></Icon>
         <Text>Table</Text>
     </InfiniSideNavLink>
     <InfiniSideNavLink Href="/html">
-        <Icon>
-            <LiCodeXml/>
-        </Icon>
+        <Icon><LiCodeXml/></Icon>
         <Text>Html</Text>
     </InfiniSideNavLink>
     <InfiniSideNavLink Href="/theming/table">
-        <Icon>
-            <LiTable2/>
-        </Icon>
+        <Icon><LiTable2/></Icon>
         <Text>theming table</Text>
     </InfiniSideNavLink>
 
     <InfiniSpacer/>
 
     <InfiniSideNavButton OnClick="@OnCreateToastAsync">
-        <Icon>
-            <LiPopcorn/>
-        </Icon>
+        <Icon><LiPopcorn/></Icon>
         <Text>Create Toast</Text>
     </InfiniSideNavButton>
 
     <InfiniSideNavButton OnClick="@DebuggerProvider.ToggleStateAsync">
-        <Icon>
-            <LiBug/>
-        </Icon>
+        <Icon><LiBug/></Icon>
         <Text>Toggle Debug View</Text>
     </InfiniSideNavButton>
     </Body>
 
     <Footer>
         <InfiniSideNavLink Href="https://github.com/InfiniLore/infinilore.infiniblazor">
-            <Icon>
-                <LiPackage/>
-            </Icon>
+            <Icon><LiPackage/></Icon>
             <Text>Github</Text>
         </InfiniSideNavLink>
 
         @* DEBUG *@
         <InfiniSideNavButton OnClick="@SwitchTheme">
-            <Icon>
-                <LiPalette/>
-            </Icon>
+            <Icon><LiPalette/></Icon>
             <Text>Switch Theme</Text>
         </InfiniSideNavButton>
 
@@ -93,9 +77,7 @@
             ValueChanged="@OnThemeModeChanged"
             OnIcon="moon"
             OffIcon="sun">
-            <Icon>
-                <LiSun/>
-            </Icon>
+            <Icon><LiSun/></Icon>
             <Text>Toggle Mode</Text>
         </InfiniSideNavToggleButton>
         
