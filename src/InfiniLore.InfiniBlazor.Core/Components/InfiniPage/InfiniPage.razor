@@ -9,8 +9,10 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<main class="@Class h-screen flex flex-1 flex-col gap-4 overflow-y-auto bgc-(--page-background) text-(--page-text-color) px-4 infini-scrollbar">
-    @ChildContent
+<main class="@Class h-screen flex-1 overflow-y-auto bgc-(--page-background) text-(--page-text-color) px-4 infini-scrollbar">
+    <div class="flex flex-col gap-4">
+        @ChildContent
+    </div>
 </main>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code

@@ -4,6 +4,7 @@
 using Ganss.Xss;
 using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Markdown.Processors.InputProcessors;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Config;
@@ -18,7 +19,11 @@ public static class IInfiniBlazorConfigExtensions {
         
         var markdownConfig = new MarkdownConfig(config);
         markdownConfig.AddTextEditor().AddDefaultModifiers();
+        
         markdownConfig.AddMarkdownParser<string, string>()
+            .AddInputProcessor<StringInputProcessor>();
+        
+        markdownConfig.AddMarkdownParser<string, MarkupString>("styled")
             .AddInputProcessor<StringInputProcessor>();
         
         config.Services.AddSingleton<IHtmlSanitizer, HtmlSanitizer>();

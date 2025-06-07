@@ -1,12 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Ganss.Xss;
 using InfiniLore.InfiniBlazor.JsRuntime;
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.Components;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.DependencyInjection;
 
 // ReSharper disable once CheckNamespace
 namespace InfiniLore.InfiniBlazor.Components;
@@ -16,8 +16,8 @@ namespace InfiniLore.InfiniBlazor.Components;
 public partial class InfiniMarkdownEditor(
     ITextEditor textEditor,
     IJsRuntimeHelper jsRuntimeHelper,
-    IMarkdownParser<string, string> markdownParser,
-    IHtmlSanitizer sanitizer
+    [FromKeyedServices("styled")] IMarkdownParser<string, MarkupString> markdownParser
+    // IHtmlSanitizer sanitizer
 ) : ComponentBase {
     [Parameter, EditorRequired] public ITextSource Source { get;  set; } = null!;
     [Parameter] public EventCallback<ITextSource> SourceChanged { get; set; }
@@ -26,7 +26,7 @@ public partial class InfiniMarkdownEditor(
     
     public ElementReference InputRef { get; set; } 
     public event Action? SourceHasChanged;
-    public string MarkdownOutput { get; private set; } = string.Empty;
+    public MarkupString MarkdownOutput { get; private set; }
     
     private InfiniEditorKeyCombo _lastPressedCombo = InfiniEditorKeyCombo.Empty;
     private Dictionary<InfiniEditorKeyCombo, Func<InfiniMarkdownEditor, Task>> KeyCombos { get; } = new() {
@@ -62,9 +62,8 @@ public partial class InfiniMarkdownEditor(
     }
 
     private async Task InvokeSourceHasChanged() {
-        string? output = await markdownParser.TryParseAsync(Source.Text);
-        if (output is not null) MarkdownOutput = sanitizer.Sanitize(output);
-    
+        MarkdownOutput = await markdownParser.TryParseAsync(Source.Text);
+        
         SourceHasChanged?.Invoke();
         StateHasChanged();
     }

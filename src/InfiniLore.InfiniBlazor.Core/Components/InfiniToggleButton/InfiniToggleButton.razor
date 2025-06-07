@@ -6,6 +6,7 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using Infinilore.InfiniBlazor
+@using InfiniLore.InfiniBlazor.Debugger
 @using InfiniLore.Lucide
 @inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -135,7 +136,7 @@
             Size.Xl => "absolute w-6 h-6",
             Size.Xxl => "absolute w-8 h-8",
             _ => "absolute w-4 h-4"
-        } + " transform transition-all duration-300 text-(--color-base-70)";
+        } + " transform transition-all duration-300 text-(--color-base-50)";
 
     private string GetIconOffClasses()
         => Size switch {
@@ -147,7 +148,7 @@
             Size.Xl => "absolute w-6 h-6",
             Size.Xxl => "absolute w-8 h-8",
             _ => "absolute w-4 h-4"
-        } + " transform transition-all duration-300 text-(--color-base-70)";
+        } + " transform transition-all duration-300 text-(--color-base-95)";
 
     private string GetDisableClasses()
         => Disabled
@@ -161,21 +162,15 @@
         await ValueChanged.InvokeAsync(Value);
     }
 
-    private string GetDebugClasses() {
-        if (!VisualDebugger.IsEnabled()) return string.Empty;
+    private string GetDebugClasses() => VisualDebugger.IsEnabled()
+        ? $"{VisualDebugger.GetAsBorder(DebugColor)} {VisualDebugger.GetAsStripes(DebugColor)}"
+        : string.Empty;
 
-        return $"{VisualDebugger.GetAsBorder(DebugColor)} {VisualDebugger.GetAsStripes(DebugColor)}";
-    }
+    private string GetInnerDebugClasses() => VisualDebugger.IsEnabled()
+        ? $"{VisualDebugger.GetAsBorder(DebugColor.Blue)} {VisualDebugger.GetAsStripes(DebugColor.Blue)}"
+        : string.Empty;
 
-    private string GetInnerDebugClasses() {
-        if (!VisualDebugger.IsEnabled()) return string.Empty;
-
-        return $"{VisualDebugger.GetAsBorder(DebugColor)} {VisualDebugger.GetAsStripes(DebugColor)}";
-    }
-
-    private string GetSliderDebugClasses() {
-        if (!VisualDebugger.IsEnabled()) return string.Empty;
-
-        return VisualDebugger.GetAsBorder(DebugColor);
-    }
+    private string GetSliderDebugClasses() => VisualDebugger.IsEnabled()
+        ? VisualDebugger.GetAsBorder(DebugColor) 
+        : string.Empty;
 }
