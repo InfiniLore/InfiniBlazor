@@ -8,32 +8,52 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits ComponentBase
+@inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@Class flex group/button p-0.5 relative">
-    <button @onclick="OnClickAsync" 
-            @onclick:stopPropagation="@StopPropagation"
-            type="@Type"
-            disabled="@Disabled"
-            aria-label="@AriaLabel"
-            class="@(DisableClasses) inline-flex items-center justify-center rounded-md transition-all duration-150 transform">
-        
-        <span class="@TextClasses rounded-md inline-flex items-center gap-2">
-            @if (IconName.IsNotNullOrWhiteSpace()) { 
-                <LucideIcon Name="@IconName" class="@IconClasses"/>
-            }
-            @if (ChildContent is not null) { 
-                @ChildContent
-            }
-            @if (IconName.IsNullOrWhiteSpace() && ChildContent is null) {
-                <span class="w-8 h-8"></span>
-            }
-        </span>
-    </button>
+<div class="@Class p-0.5">
+    @if (Href.IsNotNullOrWhiteSpace()) {
+        <a href="@Href"
+           class="@GetContainerClasses() rounded-md group/button inline-flex items-center justify-center transition-all duration-150 transform">
+            <span class="inline-flex items-center gap-2">
+                @if (IconName.IsNotNullOrWhiteSpace()) {
+                    <LucideIcon Name="@IconName"/>
+                }
+                @if (ChildContent is not null) {
+                    @ChildContent
+                }
+                @if (IconName.IsNullOrWhiteSpace() && ChildContent is null) {
+                    <span class="w-8 h-8"></span>
+                }
+            </span>
+        </a>
+    }
+    else {
+        <button @onclick="OnClickAsync"
+                @onclick:stopPropagation="@StopPropagation"
+                type="@Type"
+                disabled="@Disabled"
+                aria-label="@AriaLabel"
+                class="@GetContainerClasses() rounded-md group/button inline-flex items-center justify-center transition-all duration-150 transform">
+
+            <span class="inline-flex items-center gap-2">
+                @if (IconName.IsNotNullOrWhiteSpace()) {
+                    <LucideIcon Name="@IconName" />
+                }
+                @if (ChildContent is not null) {
+                    @ChildContent
+                }
+                @if (IconName.IsNullOrWhiteSpace() && ChildContent is null) {
+                    <span class="w-8 h-8"></span>
+                }
+            </span>
+        </button>
+    }
+
     @if (Tooltip.IsNotNullOrEmpty()) {
-        <div class="@TooltipAnchorClasses absolute transform px-3 py-1 bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md opacity-0 group-hover/button:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
+        <div
+            class="@TooltipAnchorClasses absolute transform px-3 py-1 bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md opacity-0 group-hover/button:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
             @Tooltip
         </div>
     }
@@ -41,9 +61,10 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
+    [Parameter] public string? Href { get; set; }
     [Parameter] public string? IconName { get; set; }
-    [Parameter] public RenderFragment? ChildContent { get; set; }
     [Parameter] public bool StopPropagation { get; set; } = true;
     [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
     [Parameter] public bool Disabled { get; set; }
@@ -51,17 +72,37 @@
     [Parameter] public string? AriaLabel { get; set; }
     [Parameter] public ButtonVariant Variant { get; set; } = ButtonVariant.Default;
     [Parameter] public Size Size { get; set; } = Size.M;
-    [Parameter] public string Class { get; set; } = string.Empty;
     [Parameter] public string? Tooltip { get; set; }
     [Parameter] public Anchor TooltipAnchor { get; set; } = Anchor.Center | Anchor.Bottom;
 
-    private string IconClasses => (Variant, Disabled) switch {
-        (ButtonVariant.Primary, false) => "bg-(--color-accent) group-hover/button:bg-(--color-accent-light)",
-        (ButtonVariant.Transparent, false) => "bg-transparent text-(--color-base-30) group-hover/button:text-(--color-accent)",
-        (ButtonVariant.Dark, false) => "bg-(--color-base-90) text-(--color-base-30)",
-        (_, false) => "bg-(--color-base-70) text-(--color-base-00) group-hover/button:bg-(--color-base-80) group-hover/button:text-(--color-accent)",
-        (_, true) => "bg-(--color-base-70) text-(--color-base-10)"
-    } + " rounded-md";
+    private string GetContainerClasses() {
+        if (Disabled)
+            return ConcatClasses(
+                ContainerSizeClasses,
+                "bg-(--color-base-70) text-(--color-base-10) opacity-50 cursor-not-allowed"
+            );
+
+        string variantClasses = Variant switch {
+            ButtonVariant.Default => "bg-(--color-base-70) text-(--color-base-10) hover:text-(--color-base-10) hover:ring-2 hover:ring-(--color-accent)",
+            ButtonVariant.Primary => "bg-(--color-accent)  text-(--color-base-80) hover:text-(--color-base-90)",
+            ButtonVariant.Dark => "bg-(--color-base-95) text-(--color-base-30) hover:text-(--color-base-20) hover:ring-2 hover:ring-(--color-accent)",
+            ButtonVariant.Light => "bg-(--color-base-10) text-(--color-base-80) hover:text-(--color-base-70) hover:ring-2 hover:ring-(--color-accent)",
+            ButtonVariant.Success => "bg-(--color-success) text-(--color-success-text) ring-2 ring-(--color-success-border) font-normal",
+            ButtonVariant.Warning => "bg-(--color-warning) text-(--color-warning-text) ring-2 ring-(--color-warning-border) font-normal",
+            ButtonVariant.Error => "bg-(--color-error)   text-(--color-error-text) ring-2 ring-(--color-error-border) font-normal",
+
+            ButtonVariant.Outline => "bg-transparent text-(--color-base-10) ring-2 ring-(--color-base-70) hover:ring-(--color-accent)",
+            ButtonVariant.Transparent => "bg-transparent hover:text-(--color-accent)",
+
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
+        return ConcatClasses(
+            ContainerSizeClasses,
+            variantClasses,
+            "cursor-pointer active:scale-95 hover:scale-105"
+        );
+    }
 
     private string TooltipAnchorClasses => TooltipAnchor switch {
         Anchor.Center | Anchor.Bottom => "top-full left-1/2 -translate-x-1/2 mt-2",
@@ -78,25 +119,23 @@
         _ => "top-full left-1/2 -translate-x-1/2 mt-2"
     };
 
-    private string TextClasses => (Variant, Disabled) switch {
-        (ButtonVariant.Primary, false) => $"bg-(--color-accent) group-hover/button:bg-(--color-accent-light) {SizeClasses}",
-        (ButtonVariant.Transparent, false) => "bg-transparent",
-        (ButtonVariant.Dark, false) => $"bg-(--color-base-90) text-(--color-base-30) {SizeClasses}",
-        (_, false) => $"bg-(--color-base-70) text-(--color-base-00) group-hover/button:bg-(--color-base-80) group-hover/button:text-(--color-accent) hover:ring-2 hover:ring-(--color-accent) {SizeClasses}",
-        (_, true) => $"bg-(--color-base-70) text-(--color-base-10) {SizeClasses}"
+    private string ContainerSizeClasses => Size switch {
+        Size.Xxs => "px-2 py-1 text-xs",
+        Size.Xs => "px-2 py-1 text-sm",
+        Size.S => "px-2 py-1 text-base",
+        Size.M => "px-2 py-1 text-lg",
+        Size.L => "px-2 py-1 text-xl",
+        Size.Xl => "px-2 py-1 text-2xl",
+        Size.Xxl => "px-2 py-1 text-3xl",
+        _ => throw new ArgumentOutOfRangeException()
     };
 
-    private string DisableClasses => Disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer active:scale-95 hover:scale-105";
-
-    private string SizeClasses => Size switch {
-        _ => "px-2 py-1 text-base"
-    };
-    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private async Task OnClickAsync(MouseEventArgs args) {
         if (Disabled) return;
+
         await OnClick.InvokeAsync(args);
     }
 }

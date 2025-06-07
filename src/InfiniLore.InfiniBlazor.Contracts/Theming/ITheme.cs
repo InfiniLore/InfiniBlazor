@@ -81,6 +81,16 @@ public interface ITheme {
     [CssData] string DebugBlack  { get; }
     #endregion
     
+    [CssData] string ColorSuccess { get; }
+    [CssData] string ColorSuccessText { get; }
+    [CssData] string ColorSuccessBorder { get; }
+    [CssData] string ColorWarning { get; }
+    [CssData] string ColorWarningText { get; }
+    [CssData] string ColorWarningBorder { get; }
+    [CssData] string ColorError { get; }
+    [CssData] string ColorErrorText { get; }
+    [CssData] string ColorErrorBorder { get; }
+    
     [CssData] string TextColor { get; }
     [CssData] string TextErrorColor { get; }
     [CssData] string BorderColor { get; }

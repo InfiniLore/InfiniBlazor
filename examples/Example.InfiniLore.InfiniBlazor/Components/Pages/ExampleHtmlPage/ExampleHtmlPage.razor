@@ -5,71 +5,20 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @page "/html"
-@using JetBrains.Annotations
 @rendermode InteractiveServer
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniPage>
-    <InfiniSection>
-        <InfiniToggleButton
-            @bind-Value="_isEnabled"
-            OnIcon="sun"
-            OffIcon="moon"
-            Size="Size.Xxs"
-        />
-        
-        <InfiniToggleButton
-            @bind-Value="_isEnabled"
-            OnIcon="sun"
-            OffIcon="moon"
-            Size="Size.Xs"
-        />
-        
-        <InfiniToggleButton
-            @bind-Value="_isEnabled"
-            OnIcon="sun"
-            OffIcon="moon"
-            Size="Size.S"
-        />
-        <InfiniToggleButton
-            @bind-Value="_isEnabled"
-            OnIcon="sun"
-            OffIcon="moon"
-            Size="Size.M"
-        />
-        <InfiniToggleButton
-            @bind-Value="_isEnabled"
-            OnIcon="sun"
-            OffIcon="moon"
-            Size="Size.L"
-        />
-        <InfiniToggleButton
-            @bind-Value="_isEnabled"
-            OnIcon="sun"
-            OffIcon="moon"
-            Size="Size.Xl"
-        />
-        <InfiniToggleButton
-            @bind-Value="_isEnabled"
-            OnIcon="sun"
-            OffIcon="moon"
-            Size="Size.Xxl"
-        />
-    </InfiniSection>
-
+    <SectionButtons/>
+    <SectionToggleButtons/>
     <SectionTextInput/>
-
     <SectionCodeBlock/>
-
     <SectionHeadings/>
-
     <SectionSpacers/>
 </InfiniPage>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
-    [UsedImplicitly] bool _isEnabled;
 }
