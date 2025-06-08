@@ -31,7 +31,7 @@
     <ItemGroup>
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core\InfiniLore.InfiniBlazor.Core.csproj" />
-
+        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Theming.Generators\InfiniLore.InfiniBlazor.Theming.Generators.csproj" />
         <Analyzer Include="..\InfiniLore.InfiniBlazor.Theming.Generators\bin\$(Configuration)\netstandard2.0\InfiniLore.InfiniBlazor.Theming.Generators.dll" PrivateAssets="all" />
     </ItemGroup>
 
