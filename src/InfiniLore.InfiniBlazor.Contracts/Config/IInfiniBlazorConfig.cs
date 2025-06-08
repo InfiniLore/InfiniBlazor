@@ -9,5 +9,5 @@ namespace InfiniLore.InfiniBlazor.Config;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IInfiniBlazorConfig {
-    internal IServiceCollection Services { get; }
+    public IServiceCollection Services { get; }
 }
