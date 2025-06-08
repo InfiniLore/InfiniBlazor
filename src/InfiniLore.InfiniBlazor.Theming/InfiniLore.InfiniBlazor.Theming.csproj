@@ -7,7 +7,7 @@
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.InfiniBlazor.Theming</PackageId>
-        <Version>0.1.0-preview.52</Version>
+        <Version>0.1.0-preview.53</Version>
         <Authors>Anna Sas</Authors>
         <Description>CSS Theme library for InfiniLore's Component Library</Description>
         <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
@@ -32,7 +32,7 @@
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core\InfiniLore.InfiniBlazor.Core.csproj" />
 
-        <Analyzer Include="..\InfiniLore.InfiniBlazor.Theming.Generators\bin\$(Configuration)\netstandard2.0\InfiniLore.InfiniBlazor.Theming.Generators.dll" PrivateAssets="all"/>
+        <Analyzer Include="..\InfiniLore.InfiniBlazor.Theming.Generators\bin\$(Configuration)\netstandard2.0\InfiniLore.InfiniBlazor.Theming.Generators.dll" PrivateAssets="all" />
     </ItemGroup>
 
     <ItemGroup>

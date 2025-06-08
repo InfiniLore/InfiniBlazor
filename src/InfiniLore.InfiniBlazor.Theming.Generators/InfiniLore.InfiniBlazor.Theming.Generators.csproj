@@ -12,7 +12,7 @@
         
         <!-- Package metadata -->
         <PackageId>InfiniLore.InfiniBlazor.Theming.Generators</PackageId>
-        <Version>0.1.0-preview.52</Version>
+        <Version>0.1.0-preview.53</Version>
         <Authors>Anna Sas</Authors>
         <Description>Generators to help with InfiniBlazor's Theming Library</Description>
         <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
@@ -67,14 +67,8 @@
             <InputAssemblies Include="$(OutputPath)CodeOfChaos.GeneratorTools.dll" />
         </ItemGroup>
 
-        <ILRepack OutputFile="$(OutputPath)$(AssemblyName).Merged.dll"
-                  InputAssemblies="@(InputAssemblies)"
-                  Internalize="true"
-                  DebugInfo="true"
-                  Verbose="true" />
+        <ILRepack OutputFile="$(OutputPath)$(AssemblyName).Merged.dll" InputAssemblies="@(InputAssemblies)" Internalize="true" DebugInfo="true" Verbose="true" />
 
-        <Copy SourceFiles="$(OutputPath)$(AssemblyName).Merged.dll"
-              DestinationFiles="$(OutputPath)$(AssemblyName).dll"
-              OverwriteReadOnlyFiles="true" />
+        <Copy SourceFiles="$(OutputPath)$(AssemblyName).Merged.dll" DestinationFiles="$(OutputPath)$(AssemblyName).dll" OverwriteReadOnlyFiles="true" />
     </Target>
 </Project>
