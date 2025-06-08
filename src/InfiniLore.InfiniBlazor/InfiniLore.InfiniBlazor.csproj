@@ -50,8 +50,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
       <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core\InfiniLore.InfiniBlazor.Core.csproj" />
+      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
       <ProjectReference Include="..\InfiniLore.InfiniBlazor.Markdown\InfiniLore.InfiniBlazor.Markdown.csproj" />
       <ProjectReference Include="..\InfiniLore.InfiniBlazor.Theming\InfiniLore.InfiniBlazor.Theming.csproj" />
       <ProjectReference Include="..\InfiniLore.InfiniBlazor.Toasting\InfiniLore.InfiniBlazor.Toasting.csproj" />

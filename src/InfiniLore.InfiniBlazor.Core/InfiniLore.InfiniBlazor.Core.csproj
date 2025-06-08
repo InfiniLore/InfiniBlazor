@@ -32,31 +32,16 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CodeOfChaos.Extensions" />
         <PackageReference Include="Microsoft.AspNetCore.Components" />
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
 
-        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" />
-        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
         <PackageReference Include="InfiniLore.Lucide" />
+        <PackageReference Include="CodeOfChaos.Extensions" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <UpToDateCheckInput Remove="Components\InfiniSpacer\Variants\InfiniSpacerL.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniSpacer\Variants\InfiniSpacerM.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniSpacer\Variants\InfiniSpacerS.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniSpacer\Variants\InfiniSpacerXl.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniSpacer\Variants\InfiniSpacerXs.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniSpacer\Variants\InfiniSpacerXxl.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniSpacer\Variants\InfiniSpacerXxs.razor" />
     </ItemGroup>
 
 </Project>
