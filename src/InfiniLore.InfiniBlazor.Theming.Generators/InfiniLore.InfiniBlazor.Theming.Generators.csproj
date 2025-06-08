@@ -12,7 +12,7 @@
         
         <!-- Package metadata -->
         <PackageId>InfiniLore.InfiniBlazor.Theming.Generators</PackageId>
-        <Version>0.1.0-preview.55</Version>
+        <Version>0.1.0-preview.52</Version>
         <Authors>Anna Sas</Authors>
         <Description>Generators to help with InfiniBlazor's Theming Library</Description>
         <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
@@ -33,10 +33,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="ILRepack.Lib.MSBuild.Task">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
         <PackageReference Include="IsExternalInit">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -56,18 +52,6 @@
 
     <ItemGroup>
         <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <None Include="$(PkgCodeOfChaos_GeneratorTools)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     </ItemGroup>
-
-    <Target Name="ILRepack" AfterTargets="Build" BeforeTargets="Pack">
-        <Message Text="Running ILRepack after build, before pack." Importance="high" />
-        <Message Text="Input DLL: $(OutputPath)$(AssemblyName).dll" Importance="high" />
-
-        <ItemGroup>
-            <InputAssemblies Include="$(OutputPath)*.dll" />
-        </ItemGroup>
-
-        <ILRepack OutputFile="$(OutputPath)$(AssemblyName).Merged.dll" InputAssemblies="@(InputAssemblies)" Internalize="true" DebugInfo="true" Verbose="true" />
-
-        <Copy SourceFiles="$(OutputPath)$(AssemblyName).Merged.dll" DestinationFiles="$(OutputPath)$(AssemblyName).dll" OverwriteReadOnlyFiles="true" />
-    </Target>
 </Project>
