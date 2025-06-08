@@ -31,9 +31,10 @@
     <ItemGroup>
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core\InfiniLore.InfiniBlazor.Core.csproj" />
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Theming.Generators\InfiniLore.InfiniBlazor.Theming.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="contentfiles;build" Pack="true" />
+
+        <Analyzer Include="..\InfiniLore.InfiniBlazor.Theming.Generators\bin\$(Configuration)\netstandard2.0\InfiniLore.InfiniBlazor.Theming.Generators.dll" PrivateAssets="all"/>
     </ItemGroup>
-    
+
     <ItemGroup>
         <PackageReference Include="CodeOfChaos.Extensions" />
         <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" />
@@ -41,11 +42,7 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        
-        <!-- Ugly, but this is because of some weirdness with how analyzers are imported through a project reference -->
-        <PackageReference Include="CodeOfChaos.GeneratorTools" GeneratePathProperty="true" PrivateAssets="all" />
-        <Analyzer Include="$(PkgCodeOfChaos_GeneratorTools)\lib\netstandard2.0\*.dll" />
-        
+
         <PackageReference Include="JetBrains.Annotations" />
         <PackageReference Include="Microsoft.AspNetCore.Components" />
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" />

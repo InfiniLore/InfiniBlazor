@@ -33,6 +33,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="ILRepack.Lib.MSBuild.Task">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="IsExternalInit">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -52,6 +56,25 @@
 
     <ItemGroup>
         <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-        <None Include="$(PkgCodeOfChaos_GeneratorTools)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     </ItemGroup>
+
+    <Target Name="ILRepack" AfterTargets="Build" BeforeTargets="Pack">
+        <Message Text="Running ILRepack after build, before pack." Importance="high" />
+        <Message Text="Input DLL: $(OutputPath)$(AssemblyName).dll" Importance="high" />
+
+        <ItemGroup>
+            <InputAssemblies Include="$(OutputPath)$(AssemblyName).dll" />
+            <InputAssemblies Include="$(OutputPath)CodeOfChaos.GeneratorTools.dll" />
+        </ItemGroup>
+
+        <ILRepack OutputFile="$(OutputPath)$(AssemblyName).Merged.dll"
+                  InputAssemblies="@(InputAssemblies)"
+                  Internalize="true"
+                  DebugInfo="true"
+                  Verbose="true" />
+
+        <Copy SourceFiles="$(OutputPath)$(AssemblyName).Merged.dll"
+              DestinationFiles="$(OutputPath)$(AssemblyName).dll"
+              OverwriteReadOnlyFiles="true" />
+    </Target>
 </Project>
