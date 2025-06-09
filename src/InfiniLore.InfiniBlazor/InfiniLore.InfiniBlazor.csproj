@@ -10,7 +10,7 @@
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.InfiniBlazor</PackageId>
-        <Version>0.1.0-preview.58</Version>
+        <Version>0.1.0-preview.61</Version>
         <Authors>Anna Sas</Authors>
         <Description>InfiniLore's Component Library</Description>
         <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
