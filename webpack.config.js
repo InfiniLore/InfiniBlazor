@@ -6,10 +6,10 @@ module.exports = {
     // mode: "production",
     devtool: "inline-source-map",
     entry: {
-        main: "./src/InfiniLore.InfiniBlazor/TsLib/WindowDefinitions.ts",
+        main: "./src/InfiniLore.InfiniBlazor.Core/TsLib/WindowDefinitions.ts",
     },
     output: {
-        path: path.resolve(__dirname, './src/InfiniLore.InfiniBlazor/wwwroot'),
+        path: path.resolve(__dirname, './src/InfiniLore.InfiniBlazor.Core/wwwroot'),
         filename: "InfiniBlazor.js" // <--- Will be compiled to this single file
     },
     resolve: {

@@ -3,8 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using Example.Components;
 using InfiniLore.InfiniBlazor.Markdown.Config;
-using InfiniLore.InfiniBlazor.Theming.Config;
-using InfiniLore.InfiniBlazor.Theming.Library;
 
 namespace Example;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -18,7 +16,7 @@ public class Program {
 
         builder.Services.AddInfiniBlazor(config => {
             config.AddMarkdownLogic();
-            config.AddThemingLogic(themeConfig => themeConfig.RegisterTheme<AnnaSasDevThemeCollection>("anna"));
+            config.RegisterTheme<AnnaSasDevThemeCollection>("anna");
         });
         
         builder.Services.AddRazorComponents()

@@ -32,16 +32,39 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
-
-        <PackageReference Include="InfiniLore.Lucide" />
-        <PackageReference Include="CodeOfChaos.Extensions" />
+        <EmbeddedResource Include="wwwroot\InfiniBlazor.js" />
+        <EmbeddedResource Include="wwwroot\InfiniBlazor.css" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
+        <ProjectReference Include="..\InfiniLore.InfiniBlazor.SourceGenerators\InfiniLore.InfiniBlazor.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="contentfiles;build" Pack="true" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
+        <PackageReference Include="CodeOfChaos.Extensions.ObjectPool" />
+        <PackageReference Include="InfiniLore.Lucide" />
+        <PackageReference Include="CodeOfChaos.Extensions" />
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" />
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+
+        <!-- Ugly, but this is because of some weirdness with how analyzers are imported through a project reference -->
+        <PackageReference Include="CodeOfChaos.GeneratorTools" GeneratePathProperty="true" PrivateAssets="all" />
+        <Analyzer Include="$(PkgCodeOfChaos_GeneratorTools)\lib\netstandard2.0\*.dll" />
+
+        <PackageReference Include="JetBrains.Annotations" />
+        <PackageReference Include="Microsoft.AspNetCore.Components" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="wwwroot\InfiniBlazor.css" />
+      <EmbeddedResource Include="wwwroot\InfiniBlazor.js" />
+    </ItemGroup>
+
 
 </Project>

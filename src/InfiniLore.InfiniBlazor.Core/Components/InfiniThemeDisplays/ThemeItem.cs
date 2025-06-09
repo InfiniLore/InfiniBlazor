@@ -1,13 +1,9 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Microsoft.Extensions.DependencyInjection;
-
-namespace InfiniLore.InfiniBlazor.Config;
+namespace Infinilore.InfiniBlazor.Components;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IInfiniBlazorConfig {
-    IServiceCollection Services { get; }
-}
+public record ThemeItem(string CssVarName, string CssData);

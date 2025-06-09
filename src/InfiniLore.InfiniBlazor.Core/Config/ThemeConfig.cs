@@ -1,13 +1,15 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Microsoft.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.Config;
+using InfiniLore.InfiniBlazor.Theming;
 
-namespace InfiniLore.InfiniBlazor.Config;
-
+namespace Infinilore.InfiniBlazor.Config;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IInfiniBlazorConfig {
-    IServiceCollection Services { get; }
+public class ThemeConfig : IThemeConfig{
+    internal readonly HashSet<string> RegisteredThemesSet = [];
+    public IReadOnlyCollection<string> RegisteredThemes  => RegisteredThemesSet;
+    public IThemeMode DefaultThemeMode { get; set; } = ThemeMode.DarkMode;
 }

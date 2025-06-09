@@ -26,7 +26,7 @@ public static class Program {
             "InfiniLore.InfiniBlazor.Core",
             "InfiniLore.InfiniBlazor.Markdown",
             "InfiniLore.InfiniBlazor.Theming",
-            "InfiniLore.InfiniBlazor.Theming.Generators",
+            "InfiniLore.InfiniBlazor.SourceGenerators",
             "InfiniLore.InfiniBlazor.Theming.Library",
             "InfiniLore.InfiniBlazor.Toasting"
         );

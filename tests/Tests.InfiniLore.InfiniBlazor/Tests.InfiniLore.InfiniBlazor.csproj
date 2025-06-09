@@ -11,6 +11,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="CodeOfChaos.Extensions"/>
+        <PackageReference Include="CodeOfChaos.Extensions.AspNetCore"/>
         <PackageReference Include="CodeOfChaos.Testing.TUnit" />
         <PackageReference Include="JetBrains.Annotations"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />

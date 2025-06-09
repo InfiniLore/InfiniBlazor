@@ -10,7 +10,6 @@
     <ItemGroup>
       <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
       <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Markdown\InfiniLore.InfiniBlazor.Markdown.csproj" />
-      <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Theming.Library\InfiniLore.InfiniBlazor.Theming.Library.csproj" />
       <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Toasting\InfiniLore.InfiniBlazor.Toasting.csproj" />
       <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" />
     </ItemGroup>
