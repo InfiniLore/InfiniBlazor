@@ -1,8 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Theming.Generators.Helpers.Extensions;
-using InfiniLore.InfiniBlazor.Theming.Generators.Helpers.GeneratorStringBuilder;
+using CodeOfChaos.GeneratorTools;
 using Microsoft.CodeAnalysis;
 using System;
 using System.Buffers;

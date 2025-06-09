@@ -1,7 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Theming.Generators.Helpers.Extensions;
+using CodeOfChaos.GeneratorTools;
 using Microsoft.CodeAnalysis;
 using System.Collections.Immutable;
 using System.Linq;

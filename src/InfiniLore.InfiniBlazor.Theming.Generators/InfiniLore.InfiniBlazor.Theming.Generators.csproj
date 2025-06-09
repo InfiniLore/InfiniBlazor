@@ -12,7 +12,7 @@
         
         <!-- Package metadata -->
         <PackageId>InfiniLore.InfiniBlazor.Theming.Generators</PackageId>
-        <Version>0.1.0-preview.60</Version>
+        <Version>0.1.0-preview.58</Version>
         <Authors>Anna Sas</Authors>
         <Description>Generators to help with InfiniBlazor's Theming Library</Description>
         <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
@@ -43,6 +43,7 @@
         </PackageReference>
         <PackageReference Include="Microsoft.CodeAnalysis.Common" PrivateAssets="all" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
+        <PackageReference Include="CodeOfChaos.GeneratorTools" Pack="true" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Nullable">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -51,5 +52,6 @@
 
     <ItemGroup>
         <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <None Include="$(PkgCodeOfChaos_GeneratorTools)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     </ItemGroup>
 </Project>
