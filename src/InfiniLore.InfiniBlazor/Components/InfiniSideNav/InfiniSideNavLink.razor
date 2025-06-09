@@ -11,17 +11,29 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<NavLink href="@Href" class="@InfiniSideNavItem.GetContainerClasses()">
-    <InfiniSideNavItem Text="@Text" Icon="@Icon"/>
-</NavLink>
+@if (OpenInNewTab) {
+    <a href="@Href"
+       class="@InfiniSideNavItem.GetContainerClasses()"
+       target="_blank"
+       rel="noopener noreferrer">
+        <InfiniSideNavItem Text="@Text" Icon="@Icon"/>
+    </a>
+} else {
+    <NavLink href="@Href" class="@InfiniSideNavItem.GetContainerClasses()">
+        <InfiniSideNavItem Text="@Text" Icon="@Icon"/>
+    </NavLink>
+}
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
-    [Parameter, EditorRequired] public required string Href { get; init; }
+    [Parameter][EditorRequired] public required string Href { get; init; }
 
     [CascadingParameter] public bool MenuCollapsed { get; set; }
     [Parameter] public RenderFragment? Text { get; set; }
     [Parameter] public RenderFragment? Icon { get; set; }
+
+    [Parameter] public bool OpenInNewTab { get; set; }
 }
 
