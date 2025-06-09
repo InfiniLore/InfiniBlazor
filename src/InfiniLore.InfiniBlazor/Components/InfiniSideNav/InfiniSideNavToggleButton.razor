@@ -21,7 +21,8 @@
                 Disabled="@Disabled"
                 OnIcon="@OnIcon"
                 OffIcon="@OffIcon"
-                class="transform -translate-x-2"/>
+                Class="transform -translate-x-2"
+                Color="@Color"/>
         </div>
     </div>
 } else {
@@ -49,7 +50,8 @@
             Disabled="@Disabled"
             OnIcon="@OnIcon"
             OffIcon="@OffIcon"
-            class="ml-2"/>
+            Class="ml-2"
+            Color="@Color"/>
     </div>
 }
 
@@ -67,6 +69,7 @@
     [Parameter] public bool Disabled { get; set; }
     [Parameter] public string? OnIcon { get; set; }
     [Parameter] public string? OffIcon { get; set; }
+    [Parameter] public Color Color { get; set; } = Color.Default;
 
 
     // -----------------------------------------------------------------------------------------------------------------

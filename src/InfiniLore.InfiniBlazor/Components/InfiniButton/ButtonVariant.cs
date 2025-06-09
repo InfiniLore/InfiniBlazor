@@ -11,8 +11,5 @@ public enum ButtonVariant {
     Transparent,
     Dark,
     Light,
-    Outline,
-    Warning,
-    Error,
-    Success,
+    Outline
 }

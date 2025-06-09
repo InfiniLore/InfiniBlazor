@@ -1,6 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor
 @using InfiniLore.InfiniBlazor.Debugger
 @using InfiniLore.InfiniBlazor.Theming
 @using InfiniLore.InfiniBlazor.Toasting
@@ -59,7 +60,8 @@
         Value="@DebuggerProvider.IsEnabled()"
         ValueChanged="@DebuggerProvider.ToggleStateAsync"
         OnIcon="@(MenuCollapsed ? "bug" : null)"
-        OffIcon="@(MenuCollapsed ? "bug" : null)">
+        OffIcon="@(MenuCollapsed ? "bug" : null)"
+        Color="Color.Red">
         <Icon><LiBug/></Icon>
         <Text>Toggle Debug</Text>
     </InfiniSideNavToggleButton>

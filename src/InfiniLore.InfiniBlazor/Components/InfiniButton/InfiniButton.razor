@@ -15,7 +15,7 @@
 <div class="@Class p-0.5">
     @if (Href.IsNotNullOrWhiteSpace()) {
         <a href="@Href"
-           class="@GetContainerClasses() rounded-md group/button inline-flex items-center justify-center transition-all duration-150 transform">
+           class="@ContainerClasses rounded-md group/button inline-flex items-center justify-center transition-all duration-150 transform cursor-pointer active:scale-95 hover:scale-105">
             <span class="inline-flex items-center gap-2">
                 @if (IconName.IsNotNullOrWhiteSpace()) {
                     <LucideIcon Name="@IconName"/>
@@ -28,18 +28,17 @@
                 }
             </span>
         </a>
-    }
-    else {
+    } else {
         <button @onclick="OnClickAsync"
                 @onclick:stopPropagation="@StopPropagation"
                 type="@Type"
                 disabled="@Disabled"
                 aria-label="@AriaLabel"
-                class="@GetContainerClasses() rounded-md group/button inline-flex items-center justify-center transition-all duration-150 transform">
+                class="@ContainerClasses rounded-md group/button inline-flex items-center justify-center transition-all duration-150 transform">
 
             <span class="inline-flex items-center gap-2">
                 @if (IconName.IsNotNullOrWhiteSpace()) {
-                    <LucideIcon Name="@IconName" />
+                    <LucideIcon Name="@IconName"/>
                 }
                 @if (ChildContent is not null) {
                     @ChildContent
@@ -71,39 +70,131 @@
     [Parameter] public string Type { get; set; } = "button";
     [Parameter] public string? AriaLabel { get; set; }
     [Parameter] public ButtonVariant Variant { get; set; } = ButtonVariant.Default;
+    [Parameter] public Color Color { get; set; } = Color.Default;
     [Parameter] public Size Size { get; set; } = Size.M;
     [Parameter] public string? Tooltip { get; set; }
     [Parameter] public Anchor TooltipAnchor { get; set; } = Anchor.Center | Anchor.Bottom;
 
-    private string GetContainerClasses() {
-        if (Disabled)
-            return ConcatClasses(
-                ContainerSizeClasses,
-                "bg-(--color-base-70) text-(--color-base-10) opacity-50 cursor-not-allowed"
-            );
+    private const string ContainerReaction = "cursor-pointer active:scale-95 hover:scale-105";
 
-        string variantClasses = Variant switch {
-            ButtonVariant.Default => "bg-(--color-base-70) text-(--color-base-10) hover:text-(--color-base-10) hover:ring-2 hover:ring-(--color-accent)",
-            ButtonVariant.Primary => "bg-(--color-accent)  text-(--color-base-80) hover:text-(--color-base-90)",
-            ButtonVariant.Dark => "bg-(--color-base-95) text-(--color-base-30) hover:text-(--color-base-20) hover:ring-2 hover:ring-(--color-accent)",
-            ButtonVariant.Light => "bg-(--color-base-10) text-(--color-base-80) hover:text-(--color-base-70) hover:ring-2 hover:ring-(--color-accent)",
-            ButtonVariant.Success => "bg-(--color-success) text-(--color-success-text) ring-2 ring-(--color-success-border) font-normal",
-            ButtonVariant.Warning => "bg-(--color-warning) text-(--color-warning-text) ring-2 ring-(--color-warning-border) font-normal",
-            ButtonVariant.Error => "bg-(--color-error)   text-(--color-error-text) ring-2 ring-(--color-error-border) font-normal",
-
-            ButtonVariant.Outline => "bg-transparent text-(--color-base-10) ring-2 ring-(--color-base-70) hover:ring-(--color-accent)",
-            ButtonVariant.Transparent => "bg-transparent hover:text-(--color-accent)",
-
-            _ => throw new ArgumentOutOfRangeException()
-        };
-
-        return ConcatClasses(
+    private string ContainerClasses => (Variant, Color) switch {
+        _ when Disabled => ConcatClasses(
             ContainerSizeClasses,
-            variantClasses,
-            "cursor-pointer active:scale-95 hover:scale-105"
-        );
-    }
+            "bg-(--color-base-70) text-(--color-base-10) opacity-50 cursor-not-allowed"
+        ),
 
+        (ButtonVariant.Default, Color.Default) =>
+            ConcatClasses(
+                ContainerReaction,
+                ContainerSizeClasses,
+                "bg-(--color-base-70) text-(--color-base-10) hover:text-(--color-base-10) hover:ring-2 hover:ring-(--color-accent)"
+            ),
+
+        (ButtonVariant.Default, _) =>
+            ConcatClasses(
+                "cursor-pointer active:scale-95 hover:scale-105",
+                ContainerSizeClasses,
+                Color.ToBackgroundTailwind(),
+                Color.ToReadableTextColorTailwind()
+            ),
+
+        (ButtonVariant.Primary, Color.Default) =>
+            ConcatClasses(
+                ContainerReaction,
+                ContainerSizeClasses,
+                "bg-(--color-accent) text-(--color-base-80) hover:text-(--color-base-90)"
+            ),
+
+        (ButtonVariant.Primary, _) =>
+            ConcatClasses(
+                ContainerReaction,
+                ContainerSizeClasses,
+                "bg-(--color-accent)",
+                Color.ToTextTailwind()
+            ),
+
+        (ButtonVariant.Transparent, Color.Default) =>
+            ConcatClasses(
+                ContainerReaction,
+                ContainerSizeClasses,
+                "bg-transparent hover:text-(--color-accent)"
+            ),
+
+        (ButtonVariant.Transparent, _) =>
+            ConcatClasses(
+                ContainerReaction,
+                ContainerSizeClasses,
+                "bg-transparent",
+                Color.ToTextTailwind()
+            ),
+
+        (ButtonVariant.Dark, Color.Default) =>
+            ConcatClasses(
+                ContainerReaction,
+                ContainerSizeClasses,
+                "bg-(--color-base-95) text-(--color-base-30) hover:text-(--color-base-20) hover:ring-2 hover:ring-(--color-accent)"
+            ),
+
+        (ButtonVariant.Dark, _) =>
+            ConcatClasses(
+                ContainerSizeClasses,
+                Color.ToTextTailwind(),
+                Color.ToHoverRingTailwind(),
+                "bg-(--color-base-95) hover:ring-2"
+            ),
+
+        (ButtonVariant.Light, Color.Default) =>
+            ConcatClasses(
+                ContainerReaction,
+                ContainerSizeClasses,
+                "bg-(--color-base-10) text-(--color-base-80) hover:text-(--color-base-70)"
+            ),
+
+        (ButtonVariant.Light, _) =>
+            ConcatClasses(
+                ContainerReaction,
+                ContainerSizeClasses,
+                Color.ToTextTailwind(),
+                Color.ToHoverRingTailwind(),
+                "bg-(--color-base-10)"
+            ),
+
+        (ButtonVariant.Outline, Color.Default) =>
+            ConcatClasses(
+                ContainerReaction,
+                ContainerSizeClasses,
+                "bg-transparent text-(--color-base-10) ring-2 ring-(--color-base-70) hover:ring-(--color-accent)"
+            ),
+
+        (ButtonVariant.Outline, _) =>
+            ConcatClasses(
+                ContainerReaction,
+                ContainerSizeClasses,
+                "bg-transparent ring-2",
+                Color.ToTextTailwind(),
+                Color.ToRingTailwind()
+            ),
+
+        _ => throw new ArgumentOutOfRangeException()
+    };
+    // return ConcatClasses(
+    //     ContainerReaction,
+    //     ContainerSizeClasses,
+    //     Variant switch {
+    //         ButtonVariant.Default => "bg-(--color-base-70) text-(--color-base-10) hover:text-(--color-base-10) hover:ring-2 hover:ring-(--color-accent)",
+    //         ButtonVariant.Primary => "bg-(--color-accent)  text-(--color-base-80) hover:text-(--color-base-90)",
+    //         ButtonVariant.Dark => "bg-(--color-base-95) text-(--color-base-30) hover:text-(--color-base-20) hover:ring-2 hover:ring-(--color-accent)",
+    //         ButtonVariant.Light => "bg-(--color-base-10) text-(--color-base-80) hover:text-(--color-base-70) hover:ring-2 hover:ring-(--color-accent)",
+    //         ButtonVariant.Success => "bg-(--color-success) text-(--color-success-text) ring-2 ring-(--color-success-border) font-normal",
+    //         ButtonVariant.Warning => "bg-(--color-warning) text-(--color-warning-text) ring-2 ring-(--color-warning-border) font-normal",
+    //         ButtonVariant.Error => "bg-(--color-error)   text-(--color-error-text) ring-2 ring-(--color-error-border) font-normal",
+    //
+    //         ButtonVariant.Outline => "bg-transparent text-(--color-base-10) ring-2 ring-(--color-base-70) hover:ring-(--color-accent)",
+    //         ButtonVariant.Transparent => "bg-transparent hover:text-(--color-accent)",
+    //
+    //         _ => throw new ArgumentOutOfRangeException()
+    //     }
+    // );
     private string TooltipAnchorClasses => TooltipAnchor switch {
         Anchor.Center | Anchor.Bottom => "top-full left-1/2 -translate-x-1/2 mt-2",
         Anchor.Left | Anchor.Bottom => "top-full right-1 translate-x-1 mt-2",

@@ -56,12 +56,15 @@
     [Parameter] public string? OnIcon { get; set; }
     [Parameter] public string? OffIcon { get; set; }
     [Parameter] public bool StopPropagation { get; set; } = true;
-    [Parameter] public EventCallback<bool> ValueChanged { get; set; }
+    
     [Parameter] public bool Value { get; set; }
+    [Parameter] public EventCallback<bool> ValueChanged { get; set; }
+    
     [Parameter] public bool Disabled { get; set; }
     [Parameter] public string Type { get; set; } = "button";
     [Parameter] public string? AriaLabel { get; set; }
     [Parameter] public Size Size { get; set; } = Size.M;
+    [Parameter] public Color Color { get; set; } = Color.Accent;
 
     [Parameter] public string? Label { get; set; }
     [Parameter] public LabelPosition LabelPos { get; set; } = LabelPosition.Left;
@@ -129,10 +132,14 @@
             _ => "translate-x-[1.75rem]"
         };
 
+        string background = Color is not Color.Default
+            ? Color.ToBackgroundTailwind()
+            : "bg-(--color-accent)";
+
         return ConcatClasses(
             sizeClasses,
             "flex items-center justify-center",
-            WithValue("bg-(--color-accent)", "bg-(--color-base-30)"),
+            WithValue(background, "bg-(--color-base-30)"),
             "rounded-full transition-transform duration-300",
             WithValue(translateX, "translate-x-0")
         );
@@ -141,20 +148,25 @@
 
     private string GetIconClasses(bool isOn) {
         string sizeClasses = Size switch {
-            Size.Xxs => "absolute w-2 h-2",
-            Size.Xs => "absolute w-2.5 h-2.5",
-            Size.S => "absolute w-3 h-3",
-            Size.M => "absolute w-4 h-4",
-            Size.L => "absolute w-5 h-5",
-            Size.Xl => "absolute w-6 h-6",
-            Size.Xxl => "absolute w-8 h-8",
-            _ => "absolute w-4 h-4"
+            Size.Xxs =>"w-2.5 h-2.5",
+            Size.Xs =>"w-3 h-3", 
+            Size.S => "w-4 h-4",
+            Size.M => "w-5 h-5",
+            Size.L => "w-6 h-6",
+            Size.Xl => "w-8 h-8",
+            Size.Xxl => "w-10 h-10",
+            _ => "w-5 h-5"
         };
-
+        
+        string textColor = Color is not Color.Default
+            ? Color.ToReadableTextColorTailwind()
+            : "text-(--color-base-70)";
+        
         return ConcatClasses(
+            "absolute",
             sizeClasses,
             "transform transition-all duration-300",
-            isOn ? "text-(--color-base-50)" : "text-(--color-base-95)"
+            isOn ? textColor : "text-(--color-base-95)"
         );
     }
 
