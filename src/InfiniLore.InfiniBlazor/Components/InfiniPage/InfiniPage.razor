@@ -13,6 +13,12 @@
     <PageTitle>@Title</PageTitle>
 }
 
+@if (VisualDebugger.IsEnabled()) {
+    <div class="absolute top-0 right-0 bg-(--color-error) text-(--color-error-text) p-2 rounded-bl-md opacity-75">
+        Render Mode : <strong>@RendererInfo.Name</strong>
+    </div>
+}
+
 <main class="@Class h-screen flex-1 overflow-y-auto bgc-(--page-background) text-(--page-text-color) px-4 infini-scrollbar">
     <div class="flex flex-col gap-4">
         @ChildContent
@@ -23,4 +29,5 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     [Parameter] public string? Title { get; set; } 
+    [CascadingParameter] public IComponentRenderMode? ComponentRenderMode { get; set; }
 }
