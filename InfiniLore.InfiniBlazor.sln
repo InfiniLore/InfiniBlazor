@@ -8,7 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{197E72AD-DEA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8DD280D4-1E14-4D5E-AFE6-58DD8F079DCC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.InfiniLore.InfiniBlazor", "src\Tools.InfiniLore.InfiniBlazor\Tools.InfiniLore.InfiniBlazor.csproj", "{ADEADD97-0AFA-4D9E-970B-9FFB932949B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevTools.InfiniLore.InfiniBlazor", "src\DevTools.InfiniLore.InfiniBlazor\DevTools.InfiniLore.InfiniBlazor.csproj", "{ADEADD97-0AFA-4D9E-970B-9FFB932949B3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "example", "example", "{85D9748B-B4DD-428D-850A-DCF23F8DBA39}"
 EndProject
