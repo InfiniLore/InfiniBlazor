@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Config;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MarkdownConfig(IInfiniBlazorConfig infiniBlazorConfig) {
+public class MarkdownConfig(InfiniBlazorConfig infiniBlazorConfig) {
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

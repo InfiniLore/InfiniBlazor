@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Config;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class TextEditorConfig(IInfiniBlazorConfig config, object? key) {
+public class TextEditorConfig(InfiniBlazorConfig config, object? key) {
     private static readonly HashSet<(Type Type, object? Key)> AllRegisteredTypes = new();
 
     // -----------------------------------------------------------------------------------------------------------------

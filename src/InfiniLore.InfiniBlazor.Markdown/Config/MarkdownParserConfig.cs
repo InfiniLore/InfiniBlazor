@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Config;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MarkdownParserConfig<TInput, TOutput>(IInfiniBlazorConfig config, object? key) {
+public class MarkdownParserConfig<TInput, TOutput>(InfiniBlazorConfig config, object? key) {
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

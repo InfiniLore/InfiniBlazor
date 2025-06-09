@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Toasting.Config;
 // ---------------------------------------------------------------------------------------------------------------------
 // ReSharper disable once InconsistentNaming
 public static class IInfiniBlazorConfigExtensions {
-    public static void AddToastingLogic(this IInfiniBlazorConfig config, Action<ToastConfig>? configure = null) {
+    public static void AddToastingLogic(this InfiniBlazorConfig config, Action<ToastConfig>? configure = null) {
         config.Services.RegisterServicesFromInfiniLoreInfiniBlazorToasting();
         config.Services.AddSingleton<IToastStorage, ToastStorage>();
         

@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Config;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class InfiniBlazorConfig(IServiceCollection collection) : IInfiniBlazorConfig {
+public class InfiniBlazorConfig(IServiceCollection collection) {
     public IServiceCollection Services { get; } = collection;
     public ThemeConfig ThemeConfig { get; } = new();
     

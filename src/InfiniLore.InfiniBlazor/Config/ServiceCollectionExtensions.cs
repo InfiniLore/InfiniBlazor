@@ -1,8 +1,8 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor;
 using InfiniLore.InfiniBlazor.Config;
-using InfiniLore.InfiniBlazor.Core;
 using InfiniLore.InfiniBlazor.Theming;
 
 // ReSharper disable once CheckNamespace
@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 public static class ServiceCollectionExtensions {
     public static IServiceCollection AddInfiniBlazor(this IServiceCollection services, Action<InfiniBlazorConfig>? configure = null) {
         var config = new InfiniBlazorConfig(services);
-        services.RegisterServicesFromInfiniLoreInfiniBlazorCore();
+        services.RegisterServicesFromInfiniLoreInfiniBlazor();
         services.AddLucideIcons();
         
         services.AddKeyedSingleton<IThemeCollection, InfiniBlazorThemeCollection>(null); // Add Default theme
