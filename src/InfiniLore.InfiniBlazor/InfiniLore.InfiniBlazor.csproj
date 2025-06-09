@@ -58,4 +58,8 @@
         <PackageReference Include="InfiniLore.InfiniBlazor.Toasting" Version="$(Version)" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\" />
+    </ItemGroup>
+
 </Project>

@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using Example.Components;
 using InfiniLore.InfiniBlazor.Markdown.Config;
+using InfiniLore.InfiniBlazor.Toasting.Config;
 
 namespace Example;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -15,8 +16,9 @@ public class Program {
         builder.Services.AddLogging();
 
         builder.Services.AddInfiniBlazor(config => {
-            config.AddMarkdownLogic();
             config.RegisterTheme<AnnaSasDevThemeCollection>("anna");
+            config.AddMarkdownLogic();
+            config.AddToastingLogic();
         });
         
         builder.Services.AddRazorComponents()
