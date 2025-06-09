@@ -60,11 +60,4 @@
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     </ItemGroup>
-
-    <ItemGroup>
-      <EmbeddedResource Include="wwwroot\InfiniBlazor.css" />
-      <EmbeddedResource Include="wwwroot\InfiniBlazor.js" />
-    </ItemGroup>
-
-
 </Project>
