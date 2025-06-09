@@ -356,6 +356,12 @@
   .-ml-6 {
     margin-left: calc(var(--spacing) * -6);
   }
+  .ml-0 {
+    margin-left: calc(var(--spacing) * 0);
+  }
+  .ml-0\.5 {
+    margin-left: calc(var(--spacing) * 0.5);
+  }
   .ml-1 {
     margin-left: calc(var(--spacing) * 1);
   }
@@ -1065,6 +1071,9 @@
   .bg-\(--color-base-30\) {
     background-color: var(--color-base-30);
   }
+  .bg-\(--color-base-60\) {
+    background-color: var(--color-base-60);
+  }
   .bg-\(--color-base-70\) {
     background-color: var(--color-base-70);
   }
@@ -1073,6 +1082,9 @@
   }
   .bg-\(--color-base-95\) {
     background-color: var(--color-base-95);
+  }
+  .bg-\(--color-base-170\) {
+    background-color: var(--color-base-170);
   }
   .bg-\(--color-error\) {
     background-color: var(--color-error);
@@ -1175,6 +1187,9 @@
   }
   .px-1 {
     padding-inline: calc(var(--spacing) * 1);
+  }
+  .px-1\.5 {
+    padding-inline: calc(var(--spacing) * 1.5);
   }
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);

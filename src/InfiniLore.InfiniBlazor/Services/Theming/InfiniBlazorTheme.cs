@@ -75,14 +75,14 @@ public partial record InfiniBlazorTheme : ITheme {
     #endregion
     
     [CssData, InterpretAsVar(nameof(ColorGreen))] public partial string ColorSuccess { get; init; }
-    [CssData] public string ColorSuccessText { get; init; } = "#0C4621";
-    [CssData, InterpretAsVar(nameof(ColorSuccessText))] public partial string ColorSuccessBorder { get; init; }
+    [CssData, InterpretAsVar(nameof(TextColor))] public partial string ColorSuccessText { get; init; } 
+    [CssData] public string ColorSuccessBorder { get; init; } = "#0C4621";
     [CssData, InterpretAsVar(nameof(ColorOrange))] public partial string ColorWarning { get; init; }
-    [CssData] public string ColorWarningText { get; init; } = "#763202";
-    [CssData, InterpretAsVar(nameof(ColorWarningText))] public partial string ColorWarningBorder { get; init; }
+    [CssData, InterpretAsVar(nameof(TextColor))] public partial string ColorWarningText { get; init; } 
+    [CssData] public string ColorWarningBorder { get; init; } = "#763202";
     [CssData, InterpretAsVar(nameof(ColorRed))] public partial string ColorError { get; init; }
-    [CssData] public string ColorErrorText { get; init; } = "#8D0C0C";
-    [CssData, InterpretAsVar(nameof(ColorErrorText))] public partial string ColorErrorBorder { get; init; }
+    [CssData, InterpretAsVar(nameof(TextColor))] public partial string ColorErrorText { get; init; }
+    [CssData] public string ColorErrorBorder { get; init; }  = "#8D0C0C";
     
     [CssData, InterpretAsVar(nameof(ColorBase00))] public partial string TextColor { get; init; }
     [CssData, InterpretAsVar(nameof(ColorRed))] public partial string TextErrorColor { get; init; }
