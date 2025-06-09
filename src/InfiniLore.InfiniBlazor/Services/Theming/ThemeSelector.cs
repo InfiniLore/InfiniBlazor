@@ -60,6 +60,7 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
     }
     
     public async Task<bool> TrySelectNextThemeModeAsync() {
+        logger.LogInformation("{q}", CurrentThemeCollection.ContainedModes.Keys.Select(m => m.Name));
         if (!CurrentThemeCollection.TryGetNextThemeMode(CurrentThemeMode, out IThemeMode? themeMode)) {
             logger.LogWarning("No next theme variant found for current mode '{Mode}'.", CurrentThemeMode.Name);
             return false;

@@ -12,7 +12,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@Class p-0.5">
+<div class="@Class py-0.5 px-1.25">
     @if (Href.IsNotNullOrWhiteSpace()) {
         <a href="@Href"
            class="@ContainerClasses rounded-md group/button inline-flex items-center justify-center transition-all duration-150 transform cursor-pointer active:scale-95 hover:scale-105">
@@ -44,7 +44,7 @@
                     @ChildContent
                 }
                 @if (IconName.IsNullOrWhiteSpace() && ChildContent is null) {
-                    <span class="w-8 h-8"></span>
+                    <span class="@IconSizeClass"></span>
                 }
             </span>
         </button>
@@ -132,7 +132,7 @@
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "bg-(--color-base-95) text-(--color-base-30) hover:text-(--color-base-20) hover:ring-2 hover:ring-(--color-accent)"
+                "bg-(--color-base-95) text-(--color-base-30) hover:text-(--color-base-20) hover:ring-2 hover:ring-(--color-base-10)"
             ),
 
         (ButtonVariant.Dark, _) =>
@@ -147,7 +147,7 @@
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "bg-(--color-base-10) text-(--color-base-80) hover:text-(--color-base-70)"
+                "bg-(--color-base-10) text-(--color-base-80) hover:text-(--color-base-70) hover:ring-2 hover:ring-(--color-base-95)"
             ),
 
         (ButtonVariant.Light, _) =>
@@ -156,7 +156,7 @@
                 ContainerSizeClasses,
                 Color.ToTextTailwind(),
                 Color.ToHoverRingTailwind(),
-                "bg-(--color-base-10)"
+                "bg-(--color-base-10) ring-2"
             ),
 
         (ButtonVariant.Outline, Color.Default) =>

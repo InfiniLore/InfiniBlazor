@@ -3,16 +3,18 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Theming;
 
-namespace Example;
+namespace Example.Themes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class AnnaSasDevTheme {
+public static class BisexualTheme {
     public static readonly ITheme DarkModeInstance = InfiniBlazorTheme.DarkModeInstance with {
-        ColorAccent = "#F5A9B8"
+        ColorAccent = "#0032a0",
+        SidebarNavBackground = "linear-gradient(to bottom, rgb(255, 0, 128), rgb(200, 37, 157), rgb(140, 71, 153), rgb(68, 46, 159), rgb(0, 50, 160))"
     };
+    
     public static readonly ITheme LightModeInstance = InfiniBlazorTheme.LightModeInstance with {
-        ColorAccent = "#5BCEFA",
-        SidebarNavBackground = "linear-gradient(to bottom, rgb(85, 205, 252), rgb(179, 157, 233), rgb(247, 168, 184), rgb(246, 216, 221), rgb(255, 255, 255) 45%, rgb(255, 255, 255), rgb(255, 255, 255) 55%, rgb(246, 216, 221), rgb(247, 168, 184), rgb(179, 157, 233), rgb(85, 205, 252))"
+        ColorAccent = "#ff0080",
+        SidebarNavBackground = "linear-gradient(to bottom, rgb(255, 0, 128), rgb(200, 37, 157), rgb(140, 71, 153), rgb(68, 46, 159), rgb(0, 50, 160))"
     };
 }
