@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
 
-namespace CodeOfChaos.GeneratorTools;
+namespace InfiniLore.InfiniBlazor.Theming.Generators.Helpers.GeneratorStringBuilder;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

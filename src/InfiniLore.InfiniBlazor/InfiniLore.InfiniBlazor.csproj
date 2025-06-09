@@ -49,12 +49,21 @@
         <PackageReference Include="InfiniLore.Lucide" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core\InfiniLore.InfiniBlazor.Core.csproj" />
-      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
-      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Markdown\InfiniLore.InfiniBlazor.Markdown.csproj" />
-      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Theming\InfiniLore.InfiniBlazor.Theming.csproj" />
-      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Toasting\InfiniLore.InfiniBlazor.Toasting.csproj" />
+    <ItemGroup Condition="'$(IsPackaging)' != 'true'">
+        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core\InfiniLore.InfiniBlazor.Core.csproj" />
+        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
+        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Markdown\InfiniLore.InfiniBlazor.Markdown.csproj" />
+        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Theming\InfiniLore.InfiniBlazor.Theming.csproj" />
+        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Toasting\InfiniLore.InfiniBlazor.Toasting.csproj" />
     </ItemGroup>
+
+    <ItemGroup Condition="'$(IsPackaging)' == 'true'">
+        <PackageReference Include="InfiniLore.InfiniBlazor.Core" Version="$(Version)" />
+        <PackageReference Include="InfiniLore.InfiniBlazor.Contracts" Version="$(Version)" />
+        <PackageReference Include="InfiniLore.InfiniBlazor.Markdown" Version="$(Version)" />
+        <PackageReference Include="InfiniLore.InfiniBlazor.Theming" Version="$(Version)" />
+        <PackageReference Include="InfiniLore.InfiniBlazor.Toasting" Version="$(Version)" />
+    </ItemGroup>
+
 
 </Project>

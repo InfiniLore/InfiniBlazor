@@ -4,7 +4,7 @@
 using Microsoft.CodeAnalysis;
 using System.Collections.Generic;
 
-namespace CodeOfChaos.GeneratorTools;
+namespace InfiniLore.InfiniBlazor.Theming.Generators.Helpers.Extensions;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

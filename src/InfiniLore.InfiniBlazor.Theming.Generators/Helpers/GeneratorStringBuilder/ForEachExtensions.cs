@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace CodeOfChaos.GeneratorTools;
+namespace InfiniLore.InfiniBlazor.Theming.Generators.Helpers.GeneratorStringBuilder;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -68,7 +68,7 @@ public static class ForEachExtensions {
         if (items is ICollection<T> { Count: 0 }) return builder; // Skip iteration if no items
         
         builder.Indent(b => {
-            foreach (T item in items) itemFormatter(builder, item, arg);
+            foreach (T item in items) itemFormatter(b, item, arg);
         });
         
         return builder;
@@ -84,7 +84,7 @@ public static class ForEachExtensions {
         if (items is ICollection<T> { Count: 0 }) return builder; // Skip iteration if no items
         
         builder.Indent(b => {
-            foreach (T item in items) itemFormatter(builder, item, arg1, arg2);
+            foreach (T item in items) itemFormatter(b, item, arg1, arg2);
         });
 
         return builder;

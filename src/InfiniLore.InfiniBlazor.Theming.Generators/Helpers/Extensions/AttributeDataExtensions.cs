@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.GeneratorTools;
 using Microsoft.CodeAnalysis;
 
 namespace InfiniLore.InfiniBlazor.Theming.Generators.Helpers.Extensions;

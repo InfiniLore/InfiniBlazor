@@ -1,12 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------s
-using InfiniLore.InfiniBlazor.Theming.Generators.Helpers.Extensions;
 using Microsoft.CodeAnalysis;
-using System.Linq;
 using System.Collections.Immutable;
+using System.Linq;
 
-namespace CodeOfChaos.GeneratorTools;
+namespace InfiniLore.InfiniBlazor.Theming.Generators.Helpers.Extensions;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
