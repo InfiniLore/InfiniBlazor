@@ -11,7 +11,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@GetSpacing() @GetDebug()"></div>
+<div class="@ConcatClasses(DebugClasses, SpacingClasses)"></div>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -22,7 +22,7 @@
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected string GetDebug() {
+    private string DebugClasses { get {
         if (!VisualDebugger.IsEnabled()) return string.Empty;
 
         string stripes = VisualDebugger.GetAsStripes(DebugColor);
@@ -33,10 +33,9 @@
             SpacerDirection.Vertical => ConcatClasses(stripes, VisualDebugger.GetAsBorderTop(DebugColor), VisualDebugger.GetAsBorderBottom(DebugColor)),
             _ => string.Empty
         };
-    }
-    
-    protected string GetSpacing()
-        => (Direction, Spacing) switch {
+    }}
+
+    private string SpacingClasses => (Direction, Spacing) switch {
             (SpacerDirection.Grow,_) => "grow flex-auto", 
             
             (SpacerDirection.Vertical, Size.Xxs) => "h-1",
