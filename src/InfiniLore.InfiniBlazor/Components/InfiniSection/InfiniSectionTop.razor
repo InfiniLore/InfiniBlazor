@@ -9,20 +9,9 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<section class="@ConcatClasses(Class, LocationClasses) flex flex-col bg-(--section-background) shadow-sm p-4 border-(--section-border-color)">
-    @ChildContent
-</section>
+<InfiniSection Class="@Class" EdgeStyle="SectionEdgeStyle.Top">@ChildContent</InfiniSection>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public SectionEdgeStyle EdgeStyle { get; set; } = SectionEdgeStyle.Middle;
-
-    private string LocationClasses 
-        => EdgeStyle switch {
-            SectionEdgeStyle.Top => "rounded-b-2xl border-l border-r border-b",
-            SectionEdgeStyle.Middle => "rounded-2xl border",
-            SectionEdgeStyle.Bottom => "rounded-t-2xl border-l border-r border-t",
-            _ => throw new ArgumentOutOfRangeException()
-        };
 }

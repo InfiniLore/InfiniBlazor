@@ -1,28 +1,31 @@
-﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@namespace InfiniLore.InfiniBlazor.Components
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniComponentBase
+@page "/sections"
+@rendermode InteractiveServer
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<section class="@ConcatClasses(Class, LocationClasses) flex flex-col bg-(--section-background) shadow-sm p-4 border-(--section-border-color)">
-    @ChildContent
-</section>
+<InfiniPage Title="Sections">
+    <InfiniSection Class="grow justify-center items-center" EdgeStyle="SectionEdgeStyle.Top">
+        <InfiniHeading3 Class="text-(--color-base-50)"> Edge Style : Top</InfiniHeading3>
+    </InfiniSection>
+    
+    <InfiniSection Class="grow justify-center items-center" EdgeStyle="SectionEdgeStyle.Middle">
+        <InfiniHeading3 Class="text-(--color-base-50)"> Edge Style : Middle</InfiniHeading3>
+    </InfiniSection>
+    
+    <InfiniSection Class="grow justify-center items-center" EdgeStyle="SectionEdgeStyle.Bottom">
+        <InfiniHeading3 Class="text-(--color-base-50)"> Edge Style : Bottom</InfiniHeading3>
+    </InfiniSection>
+</InfiniPage>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public SectionEdgeStyle EdgeStyle { get; set; } = SectionEdgeStyle.Middle;
-
-    private string LocationClasses 
-        => EdgeStyle switch {
-            SectionEdgeStyle.Top => "rounded-b-2xl border-l border-r border-b",
-            SectionEdgeStyle.Middle => "rounded-2xl border",
-            SectionEdgeStyle.Bottom => "rounded-t-2xl border-l border-r border-t",
-            _ => throw new ArgumentOutOfRangeException()
-        };
 }
