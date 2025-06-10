@@ -16,7 +16,7 @@
 <CascadingValue Value="@(this)" IsFixed="true">
     <div class="@Class flex flex-col h-full min-h-0">
         <div class="flex flex-none w-full">
-            <InfiniMarkdownEditorToolbar Class="@(ShowSidePreview ? "w-1/2" : "w-full")">
+            <InfiniMarkdownEditorToolbar Class="w-full">
 
                 <ToolbarButtons>
                     <InfiniEditorModifierButton Modifier="bold" IconName="bold"/>
@@ -53,14 +53,9 @@
                     }
                 </ToolbarButtons>
             </InfiniMarkdownEditorToolbar>
-
-            @if (ShowSidePreview) {
-                <!-- Preview header (Right side) - Empty but maintains layout -->
-                <div class="w-1/2"></div>
-            }
         </div>
 
-        <div class="@(ShowSidePreview ? "rounded-tr-lg" : "") flex flex-1 min-h-0 h-0 border border-(--border-color) rounded-b-lg">
+        <div class="flex flex-1 min-h-0 h-0 border border-(--border-color) rounded-b-lg">
             @if (EditorIsLocked) {
                 <InfiniMarkdownPreview Class="w-full"/>
             }
