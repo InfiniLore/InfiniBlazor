@@ -25,6 +25,11 @@ public partial class InfiniThemeManager(IThemeSelector themeSelector, IJsRuntime
         CurrentCss = css;
     }
     
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        if (firstRender) return;
+        await OnThemeChangedAsync();
+    }
+
     private async Task OnThemeChangedAsync() {
         if (!themeSelector.TryGetCurrentThemeModeCss(out string? css)) return;
 
@@ -35,13 +40,13 @@ public partial class InfiniThemeManager(IThemeSelector themeSelector, IJsRuntime
         await jsRuntimeHelper.AddOrUpdateStyleElementAtHead(ThemeId, CurrentCss);
         await InvokeAsync(StateHasChanged);
     }
-    
+
     public ValueTask DisposeAsync() {
         themeSelector.ThemeChangedAsync -= OnThemeChangedAsync;
         GC.SuppressFinalize(this);
         return ValueTask.CompletedTask;
     }
-    
+
     private string GetBaseThemeCss() {
         if (themeSelector.TryCreateCssString(InfiniBlazorTheme.Instance, out string? css)) return css;
 

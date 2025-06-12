@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.Theming;
 [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
 public partial record EmptyTheme : ITheme {
     public static readonly EmptyTheme Instance = new();
-    
+
     public string Border { get; init; } = string.Empty;
     public string ButtonDark { get; init; } = string.Empty;
     public string ButtonDarkHover { get; init; } = string.Empty;
@@ -39,7 +39,7 @@ public partial record EmptyTheme : ITheme {
     public string ButtonPrimaryHover { get; init; } = string.Empty;
     public string ButtonPrimaryText { get; init; } = string.Empty;
     public string ButtonPrimaryTextHover { get; init; } = string.Empty;
-    public string ButtonTransparent { get; init; } = string.Empty; 
+    public string ButtonTransparent { get; init; } = string.Empty;
     public string ButtonTransparentHover { get; init; } = string.Empty;
     public string ButtonTransparentText { get; init; } = string.Empty;
     public string ButtonTransparentTextHover { get; init; } = string.Empty;
@@ -88,29 +88,29 @@ public partial record EmptyTheme : ITheme {
     public string ColorYellow { get; init; } = string.Empty;
     public string ColorYellowDark { get; init; } = string.Empty;
     public string ColorYellowLight { get; init; } = string.Empty;
-    public string EditorHeaderBackground { get; init; } = string.Empty;
+    public string EditorHeader { get; init; } = string.Empty;
     public string EditorHeaderBorder { get; init; } = string.Empty;
     public string Page { get; init; } = string.Empty;
     public string PageText { get; init; } = string.Empty;
     public string Section { get; init; } = string.Empty;
     public string SectionBorder { get; init; } = string.Empty;
-    public string SidebarHamburger{ get; init; } = string.Empty;
+    public string SidebarHamburger { get; init; } = string.Empty;
     public string SidebarNav { get; init; } = string.Empty;
-    public string SidebarNavBorder{ get; init; } = string.Empty;
+    public string SidebarNavBorder { get; init; } = string.Empty;
+    public string SidebarNavButton { get; init; } = string.Empty;
     public string SidebarNavButtonHover { get; init; } = string.Empty;
-    public string SidebarNavButton{ get; init; } = string.Empty;
     public string SidebarNavHover { get; init; } = string.Empty;
+    public string SidebarNavText { get; init; } = string.Empty;
     public string SidebarNavTextHover { get; init; } = string.Empty;
-    public string SidebarNavText{ get; init; } = string.Empty;
-    public string TableHeaderBackground { get; init; } = string.Empty;
-    public string TableRowBackground { get; init; } = string.Empty;
-    public string TableRowBackgroundHover { get; init; } = string.Empty;
+    public string TableHeader { get; init; } = string.Empty;
+    public string TableRow { get; init; } = string.Empty;
+    public string TableRowHover { get; init; } = string.Empty;
     public string Text { get; init; } = string.Empty;
     public string TextError { get; init; } = string.Empty;
-    public string ToggleContainerBackground { get; init; } = string.Empty;
-    public string ToggleIconColorOff { get; init; } = string.Empty;
-    public string ToggleIconColorOn { get; init; } = string.Empty;
-    public string ToggleSliderBackground { get; init; } = string.Empty;
+    public string ToggleContainer { get; init; } = string.Empty;
+    public string ToggleIconOff { get; init; } = string.Empty;
+    public string ToggleIconOn { get; init; } = string.Empty;
+    public string ToggleSlider { get; init; } = string.Empty;
     public string Transparent { get; init; } = string.Empty;
     public string UsericonAlt { get; init; } = string.Empty;
     public string UsericonAltHover { get; init; } = string.Empty;

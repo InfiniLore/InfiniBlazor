@@ -100,17 +100,17 @@ public partial record InfiniBlazorTheme : ITheme {
     
     [CssData, InterpretAsVar(nameof(ColorBase70))] public partial string Section { get; init; }
     [CssData, InterpretAsVar(nameof(Border))] public partial string SectionBorder { get; init; }
-    [CssData, InterpretAsVar(nameof(ColorBase60))] public partial string TableHeaderBackground { get; init; }
-    [CssData, InterpretAsVar(nameof(ColorBase50))] public partial string TableRowBackground { get; init; }
-    [CssData, InterpretAsVar(nameof(ColorBase60))] public partial string TableRowBackgroundHover { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase60))] public partial string TableHeader { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase50))] public partial string TableRow { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase60))] public partial string TableRowHover { get; init; }
     
-    [CssData, InterpretAsVar(nameof(ColorBase80))] public partial string EditorHeaderBackground { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase80))] public partial string EditorHeader { get; init; }
     [CssData, InterpretAsVar(nameof(Border))] public partial string EditorHeaderBorder { get; init; }
     
-    [CssData, InterpretAsVar(nameof(ColorBase40))] public partial string ToggleContainerBackground { get; init; }
-    [CssData, InterpretAsVar(nameof(ColorBase80))] public partial string ToggleSliderBackground { get; init; }
-    [CssData, InterpretAsVar(nameof(ColorBase70))] public partial string ToggleIconColorOn { get; init; }
-    [CssData, InterpretAsVar(nameof(ColorBase30))] public partial string ToggleIconColorOff { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase40))] public partial string ToggleContainer { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase80))] public partial string ToggleSlider { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase70))] public partial string ToggleIconOn { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase30))] public partial string ToggleIconOff { get; init; }
     
     [CssData, InterpretAsVar(nameof(ColorBase90))] public partial string ButtonDisabled { get; init; }
     [CssData, InterpretAsVar(nameof(ColorBase10))] public partial string ButtonDisabledText { get; init; }

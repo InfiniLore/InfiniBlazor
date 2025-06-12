@@ -8,7 +8,6 @@ namespace InfiniLore.InfiniBlazor.Theming;
 public interface ITheme {
     IEnumerable<(string, string)> AsCssVariables();
 
-    #region CssData
     #region Helpers
     [CssData] public string Transparent { get; }
     #endregion
@@ -89,17 +88,17 @@ public interface ITheme {
     [CssData] string Section { get; }
     [CssData] string SectionBorder { get; }
     
-    [CssData] string TableHeaderBackground { get; }
-    [CssData] string TableRowBackground { get; }
-    [CssData] string TableRowBackgroundHover { get; }
+    [CssData] string TableHeader { get; }
+    [CssData] string TableRow { get; }
+    [CssData] string TableRowHover { get; }
     
-    [CssData] string EditorHeaderBackground { get; }
+    [CssData] string EditorHeader { get; }
     [CssData] string EditorHeaderBorder { get; }
     
-    [CssData] string ToggleContainerBackground { get; }
-    [CssData] string ToggleSliderBackground { get; }
-    [CssData] string ToggleIconColorOn { get; }
-    [CssData] string ToggleIconColorOff { get; }
+    [CssData] string ToggleContainer { get; }
+    [CssData] string ToggleSlider { get; }
+    [CssData] string ToggleIconOn { get; }
+    [CssData] string ToggleIconOff { get; }
     
     [CssData] public string ButtonDisabled { get; }
     [CssData] public string ButtonDisabledText { get; }
@@ -131,6 +130,5 @@ public interface ITheme {
     [CssData] public string ButtonOutlineTextHover { get; }
     [CssData] public string ButtonOutlineRing { get; }
     [CssData] public string ButtonOutlineRingHover { get; }
-    #endregion
     #endregion
 }

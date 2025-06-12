@@ -105,7 +105,7 @@
 
         return ConcatClasses(
             sizeClasses,
-            "rounded-full infini-bg-(--toggle-container-background) transition-colors duration-300 relative overflow-hidden"
+            "rounded-full infini-bg-(--toggle-container) transition-colors duration-300 relative overflow-hidden"
         );
     }
 
@@ -139,7 +139,7 @@
         return ConcatClasses(
             sizeClasses,
             "flex items-center justify-center",
-            WithValue(background, "bg-(--toggle-slider-background)"),
+            WithValue(background, "bg-(--toggle-slider)"),
             "rounded-full transition-transform duration-300",
             WithValue(translateX, "translate-x-0")
         );
@@ -160,13 +160,13 @@
 
         string textColor = Color is not Color.Default
             ? Color.ToReadableTextColorTailwind()
-            : "text-(--toggle-icon-color-on)";
+            : "text-(--toggle-icon-on)";
         
         return ConcatClasses(
             "absolute",
             sizeClasses,
             "transform transition-all duration-300",
-            WithValue(textColor, "text-(--toggle-icon-color-off)" )
+            WithValue(textColor, "text-(--toggle-icon-off)" )
         );
     }
 
