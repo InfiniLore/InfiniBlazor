@@ -28,14 +28,14 @@
 } else {
     <div class="@InfiniSideNavItem.GetContainerClassesNoHover() flex justify-between items-center h-10">
         <span class="flex flex-nowrap items-center justify-center">
-            <span class="w-6 h-6 text-(--sidebar-nav-text-color) flex-shrink-0">
+            <span class="w-6 h-6 text-(--sidebar-nav-text) flex-shrink-0">
                 @Icon
             </span>
 
             @if (Text is not null) {
                 <span
                     class="@(MenuCollapsed ? "w-0 opacity-0 delay-0" : "delay-300 w-auto ml-2 opacity-100") transition-all duration-300 h-6 overflow-hidden">
-                    <span class="text-(--sidebar-nav-text-color) truncate inline-block max-w-[150px]">
+                    <span class="text-(--sidebar-nav-text) truncate inline-block max-w-[150px]">
                         @Text
                     </span>
                 </span>

@@ -27,8 +27,8 @@ public partial class InfiniBlazorThemeTests {
     ];
 
     public static IEnumerable<Func<ITheme>> ThemeDataSources() {
-        yield return () => InfiniBlazorTheme.DarkModeInstance; 
-        yield return () => InfiniBlazorTheme.LightModeInstance; 
+        yield return () => DefaultThemeCollection.DarkModeInstance; 
+        yield return () => DefaultThemeCollection.LightModeInstance; 
     }
     
     // -----------------------------------------------------------------------------------------------------------------
@@ -66,7 +66,7 @@ public partial class InfiniBlazorThemeTests {
     [Test]
     public async Task TryGetNextThemeMode_ShouldLoop() {
         // Arrange
-        var themeCollection = new InfiniBlazorThemeCollection();
+        var themeCollection = new DefaultThemeCollection();
         
         // Act
         bool resultThemeMode0 = themeCollection.TryGetNextThemeMode(null, out IThemeMode? themeMode0);

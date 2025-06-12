@@ -16,7 +16,7 @@ public static class ServiceCollectionExtensions {
         services.RegisterServicesFromInfiniLoreInfiniBlazor();
         services.AddLucideIcons();
         
-        services.AddKeyedSingleton<IThemeCollection, InfiniBlazorThemeCollection>(null); // Add Default theme
+        services.AddKeyedSingleton<IThemeCollection, DefaultThemeCollection>(null); // Add Default theme
 
         configure?.Invoke(config);
         

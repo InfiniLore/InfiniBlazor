@@ -13,7 +13,7 @@ namespace Tests.InfiniLore.InfiniBlazor;
 public class ThemeCollectionTests(IServiceProvider provider) {
     
     [Test]
-    [Arguments(typeof(InfiniBlazorThemeCollection), null)] // default
+    [Arguments(typeof(DefaultThemeCollection), null)] // default
     public async Task RegisteredThemes_ShouldExist(Type themeType, object? themeName){
         // Arrange
         
@@ -25,7 +25,7 @@ public class ThemeCollectionTests(IServiceProvider provider) {
     }
     
     [Test]
-    [Arguments(typeof(InfiniBlazorThemeCollection), null)] // default
+    [Arguments(typeof(DefaultThemeCollection), null)] // default
     public async Task Theme_ShouldHaveDefaultModes_ByThemeMode(Type themeType, object? themeName){
         // Arrange
         var theme = provider.GetKeyedService<IThemeCollection>(themeName);
@@ -45,7 +45,7 @@ public class ThemeCollectionTests(IServiceProvider provider) {
     }
     
     [Test]
-    [Arguments(typeof(InfiniBlazorThemeCollection), null)] // default
+    [Arguments(typeof(DefaultThemeCollection), null)] // default
     public async Task Theme_ShouldHaveDefaultModes_ByString(Type themeType, object? themeName){
         // Arrange
         var theme = provider.GetKeyedService<IThemeCollection>(themeName);
@@ -65,7 +65,7 @@ public class ThemeCollectionTests(IServiceProvider provider) {
     }
     
     [Test]
-    [Arguments(typeof(InfiniBlazorThemeCollection), null)] // default
+    [Arguments(typeof(DefaultThemeCollection), null)] // default
     public async Task Theme_ShouldHaveDefaultModes_ByReadonlySpan(Type themeType, object? themeName){
         // Arrange
         var theme = provider.GetKeyedService<IThemeCollection>(themeName);

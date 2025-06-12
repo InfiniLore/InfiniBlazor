@@ -11,7 +11,7 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div @onclick="OnContainerClick"
-     class="@(MenuCollapsed ? "px-0 py-2" : "p-2") flex flex-nowrap items-center rounded hover:bg-(--sidebar-nav-button-color-hover) group w-full transition-all duration-300">
+     class="@(MenuCollapsed ? "px-0 py-2" : "p-2") flex flex-nowrap items-center rounded hover:bg-(--sidebar-nav-button-hover) group w-full transition-all duration-300">
     <span class="flex grow items-center w-full transition-all justify-between">
         <span class="@(MenuCollapsed ? "ml-1" : "-ml-1") flex-shrink-0 transition-all duration-300">
             @Icon
@@ -23,7 +23,7 @@
             <span>
                 <a href="@HrefUserProfile"
                    @onclick:stopPropagation
-                   class="font-semibold text-(--sidebar-nav-text-color) hover:text-(--sidebar-nav-text-color-hover) whitespace-nowrap text-right"
+                   class="font-semibold text-(--sidebar-nav-text) hover:text-(--sidebar-nav-text-hover) whitespace-nowrap text-right"
                    style="font-size: clamp(0.45rem, calc(150px / (@UserName.Length * 0.6)), 1rem);"
                    title="@UserName">
                     @UserName

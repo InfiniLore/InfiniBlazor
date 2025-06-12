@@ -31,7 +31,7 @@
 
     @if (Tooltip.IsNotNullOrEmpty()) {
         <div
-            class="@TooltipAnchorClasses absolute transform px-3 py-1 infini-bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md opacity-0 group-hover/button:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
+            class="@TooltipAnchorClasses absolute transform px-3 py-1 infini-bg-(--text-base-90) text-(--text-base-10) text-sm rounded-md opacity-0 group-hover/button:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
             @Tooltip
         </div>
     }
@@ -73,14 +73,14 @@
     private string ContainerClasses => (Variant, Color) switch {
         _ when Disabled => ConcatClasses(
             ContainerSizeClasses,
-            "infini-bg-(--button-disabled-background) text-(--button-disabled-color) opacity-50 cursor-not-allowed"
+            "infini-bg-(--button-disabled) text-(--button-disabled-text) opacity-50 cursor-not-allowed"
         ),
 
         (ButtonVariant.Default, Color.Default) =>
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "infini-bg-(--button-default-background) text-(--button-default-color) hover:text-(--button-default-color-hover) hover:infini-bg-(--button-default-background-hover)"
+                "infini-bg-(--button-default) text-(--button-default-text) hover:text-(--button-default-text-hover) hover:infini-bg-(--button-default-hover)"
             ),
 
         (ButtonVariant.Default, _) =>
@@ -95,14 +95,14 @@
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "infini-bg-(--button-primary-background) text-(--button-primary-color) hover:text-(--button-primary-color-hover) hover:infini-bg-(--button-primary-background-hover)"
+                "infini-bg-(--button-primary) text-(--button-primary-text) hover:text-(--button-primary-text-hover) hover:infini-bg-(--button-primary-hover)"
             ),
 
         (ButtonVariant.Primary, _) =>
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "infini-bg-(--button-primary-background) hover:infini-bg-(--button-primary-background-hover)",
+                "infini-bg-(--button-primary) hover:infini-bg-(--button-primary-hover)",
                 Color.ToTextTailwind()
             ),
 
@@ -110,14 +110,14 @@
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "infini-bg-(--button-transparent-background) text-(--button-transparent-color) hover:text-(--button-transparent-color-hover) hover:infini-bg-(--button-transparent-background-hover)"
+                "infini-bg-(--button-transparent) text-(--button-transparent-text) hover:text-(--button-transparent-text-hover) hover:infini-bg-(--button-transparent-hover)"
             ),
 
         (ButtonVariant.Transparent, _) =>
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "infini-bg-(--button-transparent-background)  hover:infini-bg-(--button-transparent-background-hover)",
+                "infini-bg-(--button-transparent)  hover:infini-bg-(--button-transparent-hover)",
                 Color.ToTextTailwind()
             ),
 
@@ -125,7 +125,7 @@
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "infini-bg-(--button-dark-background) hover:infini-bg-(--button-dark-background-hover) text-(--button-dark-color) hover:text-(--button-dark-color-hover) hover:ring-2 hover:ring-(--button-dark-background-ring)"
+                "infini-bg-(--button-dark) hover:infini-bg-(--button-dark-hover) text-(--button-dark-text) hover:text-(--button-dark-text-hover) hover:ring-2 hover:ring-(--button-dark-ring)"
             ),
 
         (ButtonVariant.Dark, _) =>
@@ -134,14 +134,14 @@
                 ContainerSizeClasses,
                 Color.ToTextTailwind(),
                 Color.ToHoverRingTailwind(),
-                "infini-bg-(--button-dark-background) hover:infini-bg-(--button-dark-background-hover) hover:ring-2"
+                "infini-bg-(--button-dark) hover:infini-bg-(--button-dark-hover) hover:ring-2"
             ),
 
         (ButtonVariant.Light, Color.Default) =>
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "infini-bg-(--button-light-background) hover:infini-bg-(--button-light-background-hover) text-(--button-light-color) hover:text-(--button-light-color-hover) hover:ring-2 hover:ring-(--button-light-background-ring)"
+                "infini-bg-(--button-light) hover:infini-bg-(--button-light-hover) text-(--button-light-text) hover:text-(--button-light-text-hover) hover:ring-2 hover:ring-(--button-light-ring)"
             ),
 
         (ButtonVariant.Light, _) =>
@@ -150,21 +150,21 @@
                 ContainerSizeClasses,
                 Color.ToTextTailwind(),
                 Color.ToHoverRingTailwind(),
-                "infini-bg-(--button-light-background) hover:infini-bg-(--button-light-background-hover) hover:ring-2"
+                "infini-bg-(--button-light) hover:infini-bg-(--button-light-hover) hover:ring-2"
             ),
 
         (ButtonVariant.Outline, Color.Default) =>
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "infini-bg-(--button-outline-background) hover:infini-bg-(--button-outline-background-hover) text-(--button-outline-color) hover:text-(--button-outline-color-hover) ring-2 ring-(--button-outline-ring) hover:ring-(--button-outline-ring-hover)"
+                "infini-bg-(--button-outline) hover:infini-bg-(--button-outline-hover) text-(--button-outline-text) hover:text-(--button-outline-text-hover) ring-2 ring-(--button-outline-ring) hover:ring-(--button-outline-ring-hover)"
             ),
 
         (ButtonVariant.Outline, _) =>
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "infini-bg-(--button-outline-background) hover:infini-bg-(--button-outline-background-hover) ring-2",
+                "infini-bg-(--button-outline) hover:infini-bg-(--button-outline-hover) ring-2",
                 Color.ToTextTailwind(),
                 Color.ToRingTailwind()
             ),

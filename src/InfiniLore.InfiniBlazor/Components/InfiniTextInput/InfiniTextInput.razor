@@ -15,7 +15,7 @@
         <div class="flex flex-row pb-1">
             <InfiniLabel>@Label</InfiniLabel>
             <InfiniSpacer/>
-            <div class="text-(--text-error-color) text-sm">@ValidationMessage</div>
+            <div class="text-(--text-error) text-sm">@ValidationMessage</div>
         </div>
     }
     
@@ -38,7 +38,7 @@
     </div>
 
     @if (Label.IsNullOrWhiteSpace() && ValidationMessage.IsNotNullOrEmpty()) {
-        <div class="text-(--text-error-color) text-sm mt-1">@ValidationMessage</div>
+        <div class="text-(--text-error) text-sm mt-1">@ValidationMessage</div>
     }
 </div>
 

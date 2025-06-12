@@ -21,4 +21,5 @@ public interface IThemeSelector {
     
     bool TryGetCurrentThemeModeCss([NotNullWhen(true)] out string? css);
     bool TryGetCurrentTheme([NotNullWhen(true)] out ITheme? theme);
+    bool TryCreateCssString(ITheme theme, [NotNullWhen(true)] out string? css);
 }

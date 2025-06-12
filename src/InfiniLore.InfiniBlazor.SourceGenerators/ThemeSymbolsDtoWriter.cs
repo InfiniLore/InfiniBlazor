@@ -141,10 +141,10 @@ public static class ThemeSymbolsDtoWriter {
                         string cssVariableName = !args.dto.GenerateVariableStorage 
                             ? ToCssVariable(symbol.Name).ToQuotedString()
                             : $"{args.dto.ClassName}VariableNames.{symbol.Name}";
-                            
+    
                         string property = symbol.Name;
-                            
-                        return $"yield return({cssVariableName}, {property});";
+
+                        return $"if (!string.IsNullOrEmpty({property})) yield return ({cssVariableName}, {property});";
                     });
 
                     b.AppendLine("}");

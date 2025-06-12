@@ -37,7 +37,7 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
         
         if (!themes.ContainsKey("default")) {
             logger.LogWarning("No default theme found. Using first theme.");
-            themes.Add("default", new InfiniBlazorThemeCollection()); // this way there is always a default theme
+            themes.Add("default", new DefaultThemeCollection()); // this way there is always a default theme
         }
         
         logger.LogInformation("Found {Count} registered themes.", themes.Count);
@@ -74,11 +74,13 @@ public class ThemeSelector(IThemeConfig config, IServiceProvider provider, ILogg
     }
 
     public bool TryGetCurrentThemeModeCss([NotNullWhen(true)] out string? css) {
-        if (!TryGetCurrentTheme(out ITheme? theme)) {
-            css = null;
-            return false;
-        }
-        
+        if (TryGetCurrentTheme(out ITheme? theme)) return TryCreateCssString(theme, out css);
+
+        css = null;
+        return false;
+    }
+    
+    public bool TryCreateCssString(ITheme theme, [NotNullWhen(true)] out string? css) {
         StringBuilder sb = pool.StringBuilderPool.Get() ;
         try {
             sb.Append(":root {");

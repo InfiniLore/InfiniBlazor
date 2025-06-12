@@ -14,12 +14,12 @@
 }
 
 @if (VisualDebugger.IsEnabled()) {
-    <div class="absolute top-0 right-0 bg-(--color-error) text-(--color-error-text) p-2 rounded-bl-md opacity-75 z-50">
+    <div class="absolute top-0 right-0 bg-(--color-red) text-(--color-white) p-2 rounded-bl-md opacity-75 z-50">
         Render Mode : <strong>@RendererInfo.Name</strong>
     </div>
 }
 
-<main class="@Class flex flex-col h-screen flex-1 overflow-y-auto infini-bg-(--page-background) text-(--page-text-color) px-4 infini-scrollbar gap-4">
+<main class="@Class flex flex-col h-screen flex-1 overflow-y-auto infini-bg-(--page) text-(--page-text) px-4 infini-scrollbar gap-4">
     @ChildContent
 </main>
 @* ------------------------------------------------------------------------------------------------------------------ *@

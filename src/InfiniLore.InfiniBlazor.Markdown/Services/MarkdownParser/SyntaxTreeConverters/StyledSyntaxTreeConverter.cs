@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.SyntaxTreeConverters;
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class StyledSyntaxTreeConverter : SimpleSyntaxTreeConverter {
     protected override FrozenDictionary<MarkdownElement, HtmlTag> MdElementLookup { get; } = new Dictionary<MarkdownElement, HtmlTag> {
-        { MarkdownElement.Blockquote, HtmlTag.CreateWithClass("blockquote", "pl-4 border-l-4 border-(--border-color) my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)") },
+        { MarkdownElement.Blockquote, HtmlTag.CreateWithClass("blockquote", "pl-4 border-l-4 border-(--border) my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)") },
         { MarkdownElement.Bold, HtmlTag.Create("strong") },
         
         { MarkdownElement.CheckboxSelected, HtmlTag.CreateVoid("input type=\"checkbox\" disabled checked class=\"form-checkbox h-4 w-4 text-blue-600 rounded focus:ring-blue-500 -ml-6 mr-2 inline-block align-middle\"") },
@@ -20,7 +20,7 @@ public abstract class StyledSyntaxTreeConverter : SimpleSyntaxTreeConverter {
         { MarkdownElement.ListUnordered, HtmlTag.CreateWithClass("ul", "list-disc pl-8 my-4") },
 
         { MarkdownElement.CodeBlock, new HtmlTag(
-            "<div class=\"flex overflow-hidden min-h-0\"><div class=\"relative bg-(--color-base-70) text-(--color-base-20) text-sm border border-(--border-color) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar\"><pre class=\"whitespace-pre m-0 font-mono min-h-0\"><code", 
+            "<div class=\"flex overflow-hidden min-h-0\"><div class=\"relative bg-(--color-base-70) text-(--color-base-20) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar\"><pre class=\"whitespace-pre m-0 font-mono min-h-0\"><code", 
             "</code></pre></div></div>"
         )},
 
@@ -32,7 +32,7 @@ public abstract class StyledSyntaxTreeConverter : SimpleSyntaxTreeConverter {
         { MarkdownElement.H4, HtmlTag.CreateWithClass("h4", "text-3xl font-semibold mb-3") },
         { MarkdownElement.H5, HtmlTag.CreateWithClass("h5", "text-2xl font-semibold mb-2") },
         { MarkdownElement.H6, HtmlTag.CreateWithClass("h6", "text-xl  font-semibold mb-1") },
-        { MarkdownElement.HorizontalRule, HtmlTag.CreateVoid("hr class=\"my-8 border-t border-(--border-color)\"") },
+        { MarkdownElement.HorizontalRule, HtmlTag.CreateVoid("hr class=\"my-8 border-t border-(--border)\"") },
         { MarkdownElement.Image, HtmlTag.CreateVoid("img class=\"max-w-full h-auto rounded-lg shadow-lg\"") },
         { MarkdownElement.Italic, HtmlTag.Create("em") },
         { MarkdownElement.Link, HtmlTag.CreateWithClass("a", "text-(--color-accent) hover:text-(--color-accent-light) hover:underline") },
@@ -41,10 +41,10 @@ public abstract class StyledSyntaxTreeConverter : SimpleSyntaxTreeConverter {
         { MarkdownElement.Subscript, HtmlTag.Create("sub") },
         { MarkdownElement.Superscript, HtmlTag.Create("sup") },
 
-        { MarkdownElement.Table, HtmlTag.CreateWithClass("table", "w-full h-full table-auto shadow-sm rounded-2xl border border-(--border-color) overflow-hidden") },
+        { MarkdownElement.Table, HtmlTag.CreateWithClass("table", "w-full h-full table-auto shadow-sm rounded-2xl border border-(--border) overflow-hidden") },
         { MarkdownElement.TableBody, HtmlTag.Create("tbody") },
         { MarkdownElement.TableCell, HtmlTag.CreateWithClass("td", "p-4") },
-        { MarkdownElement.TableHead, HtmlTag.CreateWithClass("thead", "sticky top-0 infini-bg-(--table-header-background) border-(--border-color) z-10 border-b") },
+        { MarkdownElement.TableHead, HtmlTag.CreateWithClass("thead", "sticky top-0 infini-bg-(--table-header-background) border-(--border) z-10 border-b") },
         { MarkdownElement.TableHeadCell, HtmlTag.CreateWithClass("th", "p-4") },
         { MarkdownElement.TableRow, HtmlTag.CreateWithClass("tr", "group hover:infini-bg-(--table-row-background-hover) transition h-4") },
 
