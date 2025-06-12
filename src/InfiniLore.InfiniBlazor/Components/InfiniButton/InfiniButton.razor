@@ -16,17 +16,7 @@
     @if (Href.IsNotNullOrWhiteSpace()) {
         <a href="@Href"
            class="@ContainerClasses rounded-md group/button inline-flex items-center justify-center transition-all duration-150 transform cursor-pointer active:scale-95 hover:scale-105">
-            <span class="inline-flex items-center gap-2">
-                @if (IconName.IsNotNullOrWhiteSpace()) {
-                    <LucideIcon Name="@IconName" class="@IconSizeClass"/>
-                }
-                @if (ChildContent is not null) {
-                    @ChildContent
-                }
-                @if (IconName.IsNullOrWhiteSpace() && ChildContent is null) {
-                    <span class="w-8 h-8"></span>
-                }
-            </span>
+            @ButtonContent
         </a>
     } else {
         <button @onclick="OnClickAsync"
@@ -35,24 +25,13 @@
                 disabled="@Disabled"
                 aria-label="@AriaLabel"
                 class="@ContainerClasses rounded-md group/button inline-flex items-center justify-center transition-all duration-150 transform">
-
-            <span class="inline-flex items-center gap-2">
-                @if (IconName.IsNotNullOrWhiteSpace()) {
-                    <LucideIcon Name="@IconName" class="@IconSizeClass"/>
-                }
-                @if (ChildContent is not null) {
-                    @ChildContent
-                }
-                @if (IconName.IsNullOrWhiteSpace() && ChildContent is null) {
-                    <span class="@IconSizeClass"></span>
-                }
-            </span>
+            @ButtonContent
         </button>
     }
 
     @if (Tooltip.IsNotNullOrEmpty()) {
         <div
-            class="@TooltipAnchorClasses absolute transform px-3 py-1 bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md opacity-0 group-hover/button:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
+            class="@TooltipAnchorClasses absolute transform px-3 py-1 infini-bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md opacity-0 group-hover/button:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
             @Tooltip
         </div>
     }
@@ -60,7 +39,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
     [Parameter] public string? Href { get; set; }
     [Parameter] public string? IconName { get; set; }
@@ -75,19 +53,34 @@
     [Parameter] public string? Tooltip { get; set; }
     [Parameter] public Anchor TooltipAnchor { get; set; } = Anchor.Center | Anchor.Bottom;
 
-    private const string ContainerReaction = "cursor-pointer active:scale-95 hover:scale-105";
+    // ReSharper disable once UnusedParameter.Local
+    private RenderFragment ButtonContent => __builder => {
+        <span class="inline-flex items-center gap-2">
+            @if (IconName.IsNotNullOrWhiteSpace()) {
+                <LucideIcon Name="@IconName" class="@IconSizeClass"/>
+            }
+            @if (ChildContent is not null) {
+                @ChildContent
+            }
+            @if (IconName.IsNullOrWhiteSpace() && ChildContent is null) {
+                <span class="@IconSizeClass"></span>
+            }
+        </span>
+    };
 
+    private const string ContainerReaction = "cursor-pointer active:scale-95 hover:scale-105";
+    
     private string ContainerClasses => (Variant, Color) switch {
         _ when Disabled => ConcatClasses(
             ContainerSizeClasses,
-            "bg-(--color-base-70) text-(--color-base-10) opacity-50 cursor-not-allowed"
+            "infini-bg-(--button-disabled-background) text-(--button-disabled-color) opacity-50 cursor-not-allowed"
         ),
 
         (ButtonVariant.Default, Color.Default) =>
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "bg-(--color-base-70) text-(--color-base-10) hover:text-(--color-base-10) hover:ring-2 hover:ring-(--color-accent)"
+                "infini-bg-(--button-default-background) text-(--button-default-color) hover:text-(--button-default-color-hover) hover:infini-bg-(--button-default-background-hover)"
             ),
 
         (ButtonVariant.Default, _) =>
@@ -102,14 +95,14 @@
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "bg-(--color-accent) text-(--color-base-80) hover:text-(--color-base-90)"
+                "infini-bg-(--button-primary-background) text-(--button-primary-color) hover:text-(--button-primary-color-hover) hover:infini-bg-(--button-primary-background-hover)"
             ),
 
         (ButtonVariant.Primary, _) =>
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "bg-(--color-accent)",
+                "infini-bg-(--button-primary-background) hover:infini-bg-(--button-primary-background-hover)",
                 Color.ToTextTailwind()
             ),
 
@@ -117,14 +110,14 @@
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "bg-transparent hover:text-(--color-accent)"
+                "infini-bg-(--button-transparent-background) text-(--button-transparent-color) hover:text-(--button-transparent-color-hover) hover:infini-bg-(--button-transparent-background-hover)"
             ),
 
         (ButtonVariant.Transparent, _) =>
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "bg-transparent",
+                "infini-bg-(--button-transparent-background)  hover:infini-bg-(--button-transparent-background-hover)",
                 Color.ToTextTailwind()
             ),
 
@@ -132,22 +125,23 @@
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "bg-(--color-base-95) text-(--color-base-30) hover:text-(--color-base-20) hover:ring-2 hover:ring-(--color-base-10)"
+                "infini-bg-(--button-dark-background) hover:infini-bg-(--button-dark-background-hover) text-(--button-dark-color) hover:text-(--button-dark-color-hover) hover:ring-2 hover:ring-(--button-dark-background-ring)"
             ),
 
         (ButtonVariant.Dark, _) =>
             ConcatClasses(
+                ContainerReaction,
                 ContainerSizeClasses,
                 Color.ToTextTailwind(),
                 Color.ToHoverRingTailwind(),
-                "bg-(--color-base-95) hover:ring-2"
+                "infini-bg-(--button-dark-background) hover:infini-bg-(--button-dark-background-hover) hover:ring-2"
             ),
 
         (ButtonVariant.Light, Color.Default) =>
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "bg-(--color-base-10) text-(--color-base-80) hover:text-(--color-base-70) hover:ring-2 hover:ring-(--color-base-95)"
+                "infini-bg-(--button-light-background) hover:infini-bg-(--button-light-background-hover) text-(--button-light-color) hover:text-(--button-light-color-hover) hover:ring-2 hover:ring-(--button-light-background-ring)"
             ),
 
         (ButtonVariant.Light, _) =>
@@ -156,21 +150,21 @@
                 ContainerSizeClasses,
                 Color.ToTextTailwind(),
                 Color.ToHoverRingTailwind(),
-                "bg-(--color-base-10) ring-2"
+                "infini-bg-(--button-light-background) hover:infini-bg-(--button-light-background-hover) hover:ring-2"
             ),
 
         (ButtonVariant.Outline, Color.Default) =>
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "bg-transparent text-(--color-base-10) ring-2 ring-(--color-base-70) hover:ring-(--color-accent)"
+                "infini-bg-(--button-outline-background) hover:infini-bg-(--button-outline-background-hover) text-(--button-outline-color) hover:text-(--button-outline-color-hover) ring-2 ring-(--button-outline-ring) hover:ring-(--button-outline-ring-hover)"
             ),
 
         (ButtonVariant.Outline, _) =>
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "bg-transparent ring-2",
+                "infini-bg-(--button-outline-background) hover:infini-bg-(--button-outline-background-hover) ring-2",
                 Color.ToTextTailwind(),
                 Color.ToRingTailwind()
             ),
@@ -214,13 +208,12 @@
         Size.Xxl => "w-9 h-9 my-0.5",
         _ => "w-6 h-6"
     };
-
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private async Task OnClickAsync(MouseEventArgs args) {
         if (Disabled) return;
-
         await OnClick.InvokeAsync(args);
     }
 }

@@ -15,7 +15,7 @@
     }
 }
 
-@utility bgc-* {
+@utility infini-bg-* {
     background: --value([*]); 
 }
 
@@ -54,21 +54,21 @@
     }
     
     &::-webkit-scrollbar-thumb {
-        background: var(--color-base-60);
+        background: var(--color-base-40);
         border-radius: 8px;
         border: 2px solid var(--color-base-90);
-    }
-    
-    &::-webkit-scrollbar-thumb:hover {
-        background: var(--color-base-50);
     }
     
     &::-webkit-scrollbar-corner {
         background: var(--color-base-90);
     }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: var(--color-base-20);
+    }
     
     &::-webkit-scrollbar-thumb:active {
-        background: var(--color-base-40);
+        background: var(--color-base-20);
     }
 }
 

@@ -15,7 +15,7 @@
     <InfiniHeading3>Toggle Buttons</InfiniHeading3>
 
     <div class="flex flex-row gap-4">
-        <div>
+        <div class="flex flex-col gap-1">
             <InfiniToggleButton
                 @bind-Value="_isEnabled"
                 OnIcon="sun"
@@ -61,8 +61,8 @@
                 Size="Size.Xxl"
             />
         </div>
-        
-        <div>
+
+        <div class="flex flex-col gap-1">
             <InfiniToggleButton Color="Color.Accent" @bind-Value="_isEnabled"/>
             <InfiniToggleButton Color="Color.Red" @bind-Value="_isEnabled"/>
             <InfiniToggleButton Color="Color.Orange" @bind-Value="_isEnabled"/>
@@ -76,8 +76,8 @@
             <InfiniToggleButton Color="Color.White" @bind-Value="_isEnabled"/>
             <InfiniToggleButton Color="Color.Black" @bind-Value="_isEnabled"/>
         </div>
-        
-        <div>
+
+        <div class="flex flex-col gap-1">
             <InfiniToggleButton Color="Color.Accent" OnIcon="sun" @bind-Value="_isEnabled"/>
             <InfiniToggleButton Color="Color.Red" OnIcon="sun" @bind-Value="_isEnabled"/>
             <InfiniToggleButton Color="Color.Orange" OnIcon="sun" @bind-Value="_isEnabled"/>
@@ -91,8 +91,8 @@
             <InfiniToggleButton Color="Color.White" OnIcon="sun" @bind-Value="_isEnabled"/>
             <InfiniToggleButton Color="Color.Black" OnIcon="sun" @bind-Value="_isEnabled"/>
         </div>
-        
-        <div>
+
+        <div class="flex flex-col gap-1">
             <InfiniToggleButton Color="Color.Accent" OffIcon="moon" @bind-Value="_isEnabled"/>
             <InfiniToggleButton Color="Color.Red" OffIcon="moon" @bind-Value="_isEnabled"/>
             <InfiniToggleButton Color="Color.Orange" OffIcon="moon" @bind-Value="_isEnabled"/>

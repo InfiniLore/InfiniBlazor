@@ -44,12 +44,12 @@ public abstract class StyledSyntaxTreeConverter : SimpleSyntaxTreeConverter {
         { MarkdownElement.Table, HtmlTag.CreateWithClass("table", "w-full h-full table-auto shadow-sm rounded-2xl border border-(--border-color) overflow-hidden") },
         { MarkdownElement.TableBody, HtmlTag.Create("tbody") },
         { MarkdownElement.TableCell, HtmlTag.CreateWithClass("td", "p-4") },
-        { MarkdownElement.TableHead, HtmlTag.CreateWithClass("thead", "sticky top-0 bgc-(--table-header-background) border-(--border-color) z-10 border-b") },
+        { MarkdownElement.TableHead, HtmlTag.CreateWithClass("thead", "sticky top-0 infini-bg-(--table-header-background) border-(--border-color) z-10 border-b") },
         { MarkdownElement.TableHeadCell, HtmlTag.CreateWithClass("th", "p-4") },
-        { MarkdownElement.TableRow, HtmlTag.CreateWithClass("tr", "group hover:bgc-(--table-row-background-hover) transition h-4") },
+        { MarkdownElement.TableRow, HtmlTag.CreateWithClass("tr", "group hover:infini-bg-(--table-row-background-hover) transition h-4") },
 
         { MarkdownElement.Tag, new HtmlTag(
-                "<span class=\"inline-block bgc-(--color-base-95) rounded-full px-2 font-semibold text-(--color-accent)\">#",
+                "<span class=\"inline-block infini-bg-(--color-base-95) rounded-full px-2 font-semibold text-(--color-accent)\">#",
                 "</span>" 
         ){
             HasClosingSmallerThan = true

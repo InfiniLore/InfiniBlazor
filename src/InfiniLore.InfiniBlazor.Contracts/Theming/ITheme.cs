@@ -9,6 +9,10 @@ public interface ITheme {
     IEnumerable<(string, string)> AsCssVariables();
 
     #region CssData
+    #region Helpers
+    [CssData] public string Transparent { get; }
+    #endregion
+    
     #region Colors
     [CssData, InterpretAsRgb] string ColorRedRgb { get; }
     [CssData] string ColorRed { get; }
@@ -120,6 +124,43 @@ public interface ITheme {
     [CssData] string TableRowBackgroundHover { get; }
     
     [CssData] string EditorHeaderBackground { get; }
+    [CssData] string EditorHeaderBorder { get; }
+    
+    [CssData] string ToggleContainerBackground { get; }
+    [CssData] string ToggleSliderBackground { get; }
+    [CssData] string ToggleIconColorOn { get; }
+    [CssData] string ToggleIconColorOff { get; }
+    
+    [CssData] public string ButtonDisabledBackground { get; }
+    [CssData] public string ButtonDisabledColor { get; }
+    [CssData] public string ButtonDefaultBackground { get; }
+    [CssData] public string ButtonDefaultColor { get; }
+    [CssData] public string ButtonDefaultBackgroundHover { get; }
+    [CssData] public string ButtonDefaultColorHover { get; }
+    [CssData] public string ButtonPrimaryBackground { get; }
+    [CssData] public string ButtonPrimaryColor { get; }
+    [CssData] public string ButtonPrimaryBackgroundHover { get; }
+    [CssData] public string ButtonPrimaryColorHover { get; }
+    [CssData] public string ButtonTransparentBackground { get; }
+    [CssData] public string ButtonTransparentColor { get; }
+    [CssData] public string ButtonTransparentBackgroundHover { get; }
+    [CssData] public string ButtonTransparentColorHover { get; }
+    [CssData] public string ButtonDarkBackground { get; }
+    [CssData] public string ButtonDarkColor { get; }
+    [CssData] public string ButtonDarkBackgroundHover { get; }
+    [CssData] public string ButtonDarkColorHover { get; }
+    [CssData] public string ButtonDarkRingHover { get; }
+    [CssData] public string ButtonLightBackground { get; }
+    [CssData] public string ButtonLightColor { get; }
+    [CssData] public string ButtonLightBackgroundHover { get; }
+    [CssData] public string ButtonLightColorHover { get; }
+    [CssData] public string ButtonLightRingHover { get; }
+    [CssData] public string ButtonOutlineBackground { get; }
+    [CssData] public string ButtonOutlineColor { get; }
+    [CssData] public string ButtonOutlineBackgroundHover { get; }
+    [CssData] public string ButtonOutlineColorHover { get; }
+    [CssData] public string ButtonOutlineRing { get; }
+    [CssData] public string ButtonOutlineRingHover { get; }
     #endregion
     #endregion
 }

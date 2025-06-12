@@ -61,18 +61,18 @@ public static class ColorExtensions {
     public static string ToBackgroundTailwind(this Color color)
         => color switch {
             Color.Default => string.Empty,
-            Color.Accent => "bgc-(--color-accent)",
-            Color.Red => "bgc-(--color-red)",
-            Color.Orange => "bgc-(--color-orange)",
-            Color.Yellow => "bgc-(--color-yellow)",
-            Color.Green => "bgc-(--color-green)",
-            Color.Cyan => "bgc-(--color-cyan)",
-            Color.Blue => "bgc-(--color-blue)",
-            Color.Purple => "bgc-(--color-purple)",
-            Color.Pink => "bgc-(--color-pink)",
-            Color.Gray => "bgc-(--color-gray)",
-            Color.White => "bgc-(--color-white)",
-            Color.Black => "bgc-(--color-black)",
+            Color.Accent => "infini-bg-(--color-accent)",
+            Color.Red => "infini-bg-(--color-red)",
+            Color.Orange => "infini-bg-(--color-orange)",
+            Color.Yellow => "infini-bg-(--color-yellow)",
+            Color.Green => "infini-bg-(--color-green)",
+            Color.Cyan => "infini-bg-(--color-cyan)",
+            Color.Blue => "infini-bg-(--color-blue)",
+            Color.Purple => "infini-bg-(--color-purple)",
+            Color.Pink => "infini-bg-(--color-pink)",
+            Color.Gray => "infini-bg-(--color-gray)",
+            Color.White => "infini-bg-(--color-white)",
+            Color.Black => "infini-bg-(--color-black)",
             _ => throw new ArgumentOutOfRangeException(nameof(color), color, null)
         };
     

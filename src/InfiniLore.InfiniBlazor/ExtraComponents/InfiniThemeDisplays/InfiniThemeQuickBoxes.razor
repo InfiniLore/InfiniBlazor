@@ -3,9 +3,10 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.JsRuntime
 @using InfiniLore.InfiniBlazor.Theming
+@using InfiniLore.InfiniBlazor.Components
+@using Infinilore.InfiniBlazor.ExtraComponents
 
-@* ReSharper disable once CheckNamespace *@
-@namespace InfiniLore.InfiniBlazor.Components
+@namespace InfiniLore.InfiniBlazor.ExtraComponents
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -16,12 +17,11 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="flex flex-col justify-center items-center">
-    <div class="flex flex-row flex-wrap gap-2 justify-center w-4/5">
+    <div class="flex flex-row flex-wrap gap-2 justify-center w-9/10">
         @foreach (ThemeItem item in ThemeItems) {
             <InfiniButton
                 Variant="ButtonVariant.Transparent"
-                OnClick="() => JsRuntimeHelper.CopyToClipboardAsync(item.CssVarName)"
-                Tooltip="@item.CssVarName">
+                OnClick="() => JsRuntimeHelper.CopyToClipboardAsync(item.CssVarName)">
                 <div class="w-12 h-12 shadow-md flex items-center justify-center leading-none rounded-xl"
                      style="background: var(@item.CssVarName)">
                 </div>

@@ -30,10 +30,10 @@
                 <div class="relative">
                     <div class="@GetSliderClasses()">
                         @if (OnIcon.IsNotNullOrWhiteSpace()) {
-                            <LucideIcon Name="@OnIcon" class="@WithValue(GetIconClasses(true), "opacity-0")"/>
+                            <LucideIcon Name="@OnIcon" class="@WithValue(GetIconClasses(), "opacity-0")"/>
                         }
                         @if (OffIcon.IsNotNullOrWhiteSpace()) {
-                            <LucideIcon Name="@OffIcon" class="@WithValue("opacity-0", GetIconClasses(false))"/>
+                            <LucideIcon Name="@OffIcon" class="@WithValue("opacity-0", GetIconClasses())"/>
                         }
                     </div>
                 </div>
@@ -64,7 +64,7 @@
     [Parameter] public string Type { get; set; } = "button";
     [Parameter] public string? AriaLabel { get; set; }
     [Parameter] public Size Size { get; set; } = Size.M;
-    [Parameter] public Color Color { get; set; } = Color.Accent;
+    [Parameter] public Color Color { get; set; } = Color.Default;
 
     [Parameter] public string? Label { get; set; }
     [Parameter] public LabelPosition LabelPos { get; set; } = LabelPosition.Left;
@@ -105,7 +105,7 @@
 
         return ConcatClasses(
             sizeClasses,
-            "rounded-full bg-(--color-base-70) transition-colors duration-300 relative overflow-hidden"
+            "rounded-full infini-bg-(--toggle-container-background) transition-colors duration-300 relative overflow-hidden"
         );
     }
 
@@ -134,19 +134,19 @@
 
         string background = Color is not Color.Default
             ? Color.ToBackgroundTailwind()
-            : "bg-(--color-accent)";
+            : "bg-(--color-base-10)";
 
         return ConcatClasses(
             sizeClasses,
             "flex items-center justify-center",
-            WithValue(background, "bg-(--color-base-30)"),
+            WithValue(background, "bg-(--toggle-slider-background)"),
             "rounded-full transition-transform duration-300",
             WithValue(translateX, "translate-x-0")
         );
     }
 
 
-    private string GetIconClasses(bool isOn) {
+    private string GetIconClasses() {
         string sizeClasses = Size switch {
             Size.Xxs =>"w-2.5 h-2.5",
             Size.Xs =>"w-3 h-3", 
@@ -157,16 +157,16 @@
             Size.Xxl => "w-10 h-10",
             _ => "w-5 h-5"
         };
-        
+
         string textColor = Color is not Color.Default
             ? Color.ToReadableTextColorTailwind()
-            : "text-(--color-base-70)";
+            : "text-(--toggle-icon-color-on)";
         
         return ConcatClasses(
             "absolute",
             sizeClasses,
             "transform transition-all duration-300",
-            isOn ? textColor : "text-(--color-base-95)"
+            WithValue(textColor, "text-(--toggle-icon-color-off)" )
         );
     }
 
