@@ -5,7 +5,7 @@ using InfiniLore.InfiniBlazor.Theming;
 using InfiniLore.InfiniBlazor.Theming.CssData;
 using JetBrains.Annotations;
 
-namespace Example.InfiniBlazor.Themes;
+namespace Example.InfiniBlazor.Shared.Themes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

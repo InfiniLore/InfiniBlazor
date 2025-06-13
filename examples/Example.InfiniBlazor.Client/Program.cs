@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Example.InfiniBlazor.Themes;
+using Example.InfiniBlazor.Shared.Themes;
 using InfiniLore.InfiniBlazor.Markdown.Config;
 using InfiniLore.InfiniBlazor.Toasting.Config;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
