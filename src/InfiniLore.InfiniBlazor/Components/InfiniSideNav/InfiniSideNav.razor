@@ -1,6 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using Infinilore.InfiniBlazor
 @using InfiniLore.InfiniBlazor.JsRuntime
 @using InfiniLore.Lucide
 @using Microsoft.Extensions.Logging
@@ -18,7 +19,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="MenuCollapsed">
     <aside class="flex-shrink-0 h-full flex flex-col overflow-x-hidden infini-bg-(--sidebar-nav) border-r border-(--sidebar-nav-border)">
-        <div class="@(MenuCollapsed ? ClassClosed : ClassOpen) px-2 h-full flex flex-col overflow-x-hidden transition-all duration-300">
+        <div class="@(MenuCollapsed ? "w-14" : ClassOpen) px-2 h-full flex flex-col overflow-x-hidden transition-all duration-300">
 
             <!-- Top Logo and Hamburger -->
             <div
@@ -74,7 +75,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
-    [Parameter] public SideNavSize Size { get; set; } = SideNavSize.Medium;
+    [Parameter] public Size Size { get; set; } = Size.M;
     [Parameter] public bool MenuCollapsed { get; set; }
 
     [Parameter] public RenderFragment? Header { get; set; }
@@ -83,8 +84,16 @@
 
     [Parameter] public EventCallback<bool> MenuCollapsedChanged { get; set; }
 
-    private string ClassOpen => Size.ToTailwindWidth();
-    private string ClassClosed => "w-14";
+    private string ClassOpen => Size switch {
+        Size.Xxs => "w-14",
+        Size.Xs => "w-24",
+        Size.S => "w-48",
+        Size.M => "w-64",
+        Size.L => "w-80",
+        Size.Xl => "w-96",
+        Size.Xxl => "w-112",
+        _ => throw new ArgumentOutOfRangeException(nameof(Size), Size, null)
+    };
 
     private const string LocalStorageKey = "SideNavCollapsedState";
 
