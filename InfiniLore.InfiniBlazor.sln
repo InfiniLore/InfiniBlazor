@@ -46,9 +46,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfiniLore.InfiniBlazor.Toa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.InfiniLore.InfiniBlazor.Toasting", "tests\Tests.InfiniLore.InfiniBlazor.Toasting\Tests.InfiniLore.InfiniBlazor.Toasting.csproj", "{D6AACAFA-1E09-42F6-B790-8A1283C1E1CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.InfiniBlazor", "examples\Example.InfiniBlazor\Example.InfiniBlazor\Example.InfiniBlazor.csproj", "{56340367-3B4D-4E43-B8D2-983B8D7CB839}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.InfiniBlazor", "examples\Example.InfiniBlazor\Example.InfiniBlazor.csproj", "{56340367-3B4D-4E43-B8D2-983B8D7CB839}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.InfiniBlazor.Client", "examples\Example.InfiniBlazor\Example.InfiniBlazor.Client\Example.InfiniBlazor.Client.csproj", "{81F00243-9D48-4CE4-89D4-FB28CF9C44CD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.InfiniBlazor.Client", "examples\Example.InfiniBlazor.Client\Example.InfiniBlazor.Client.csproj", "{81F00243-9D48-4CE4-89D4-FB28CF9C44CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.InfiniBlazor.Shared", "examples\Example.InfiniBlazor.Shared\Example.InfiniBlazor.Shared.csproj", "{76B72F8D-D360-4046-83EB-BC6C38793423}"
 EndProject
