@@ -26,7 +26,7 @@ public static class Program {
         builder.Services.AddCascadingAuthenticationState();
         builder.Services.AddAuthenticationStateDeserialization();
 
-        var app = builder.Build();
+        WebAssemblyHost app = builder.Build();
         
         await app.RunAsync();
     }

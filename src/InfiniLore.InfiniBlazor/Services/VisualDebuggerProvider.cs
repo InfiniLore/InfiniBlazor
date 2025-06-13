@@ -32,7 +32,7 @@ public class VisualDebuggerProvider(NavigationManager navigationManager) : IVisu
             _ => throw new ArgumentOutOfRangeException()
         };
     
-        UpdateDebugQueryParam(State == DebuggerState.Enabled);
+        UpdateDebugQueryParam(State is DebuggerState.Enabled);
 
         OnChange?.Invoke();
         if (OnChangeAsync is not null) await OnChangeAsync();
@@ -63,9 +63,9 @@ public class VisualDebuggerProvider(NavigationManager navigationManager) : IVisu
     
     public void InitializeFromUrl() {
         Uri uri = navigationManager.ToAbsoluteUri(navigationManager.Uri);
-        var query = QueryHelpers.ParseQuery(uri.Query);
+        Dictionary<string, StringValues> query = QueryHelpers.ParseQuery(uri.Query);
 
-        if (query.TryGetValue(DebugQueryParam, out var val) && bool.TryParse(val.ToString(), out bool enabled) && enabled) {
+        if (query.TryGetValue(DebugQueryParam, out StringValues val) && bool.TryParse(val.ToString(), out bool enabled) && enabled) {
             State = DebuggerState.Enabled;
         }
         else {
