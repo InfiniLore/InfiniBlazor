@@ -3,6 +3,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.JsRuntime
 @using InfiniLore.Lucide
+@using Microsoft.Extensions.Logging
 
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -10,6 +11,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits ComponentBase
 @inject IJsRuntimeHelper JsRuntimeHelper
+@inject ILogger<InfiniSideNav> Logger
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
@@ -93,7 +95,7 @@
     // -----------------------------------------------------------------------------------------------------------------
     protected override async Task OnInitializedAsync() {
         if (!RendererInfo.IsInteractive) return; // Only try to load state from localStorage in interactive mode
-        bool savedState = await JsRuntimeHelper.GetFromLocalStorageAsync<bool>(LocalStorageKey);
+        bool savedState = await JsRuntimeHelper.LocalStorage.TryGetValueAsync<bool>(LocalStorageKey);
         if (!savedState || _initialized) return;
 
         _initialized = true;
@@ -104,7 +106,9 @@
 
     private async Task ToggleMenu() {
         MenuCollapsed = !MenuCollapsed;
-        if (RendererInfo.IsInteractive) await JsRuntimeHelper.SetToLocalStorageAsync(LocalStorageKey, MenuCollapsed);
+        if (RendererInfo.IsInteractive && !await JsRuntimeHelper.LocalStorage.TrySetValueAsync(LocalStorageKey, MenuCollapsed)) {
+            Logger.Warning("Could not store Collapsed menu state to js.LocalStorage");
+        } 
 
         await MenuCollapsedChanged.InvokeAsync(MenuCollapsed);
         await InvokeAsync(StateHasChanged);

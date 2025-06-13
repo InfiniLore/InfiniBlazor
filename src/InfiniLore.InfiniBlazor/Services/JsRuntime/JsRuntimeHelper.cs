@@ -2,64 +2,25 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using InfiniLore.InfiniBlazor.JsRuntime;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
-using System.Text.Json;
 
-namespace InfiniLore.InfiniBlazor;
+namespace InfiniLore.InfiniBlazor.JsRuntime;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableScoped<IJsRuntimeHelper>]
-public class JsRuntimeHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper> logger) : IJsRuntimeHelper {
+public class JsRuntimeHelper(
+    IJSRuntime jsRuntime,
+    ILogger<JsRuntimeHelper> logger,
+    IJsLocalStorageHelper localStorageHelper
+) : IJsRuntimeHelper {
+    public IJsLocalStorageHelper LocalStorage { get; } = localStorageHelper;
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public async Task<T?> GetFromLocalStorageAsync<T>(string key) {
-        try {
-            string json = await jsRuntime.InvokeAsync<string>("localStorage.getItem", key);
-            if (string.IsNullOrEmpty(json)) {
-                return default;
-            }
-
-            // Special handling for boolean values
-            if (typeof(T) != typeof(bool)) return JsonSerializer.Deserialize<T>(json)!;
-
-            if (bool.TryParse(json, out bool result)) {
-                return (T)(object)result;
-            }
-
-            return default;
-
-        }
-        catch (JSException e) {
-            logger.LogError(e, "Error getting item from local storage");
-            return default!;
-        }
-
-    }
-
-    public async Task SetToLocalStorageAsync<T>(string key, T value) {
-        try {
-            string json;
-            if (value is bool boolValue) {
-                // Store booleans as lowercase strings
-                json = boolValue.ToString().ToLowerInvariant();
-            }
-            else {
-                json = JsonSerializer.Serialize(value);
-            }
-
-            await jsRuntime.InvokeVoidAsync("localStorage.setItem", key, json);
-
-        }
-        catch (JSException e) {
-            logger.LogError(e, "Error setting item to local storage");
-        }
-    }
-
     public async Task<int> GetSelectionStartAsync(ElementReference element) {
         try {
             return await jsRuntime.InvokeAsync<int>("getInputSelectionStart", element);
