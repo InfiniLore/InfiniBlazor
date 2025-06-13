@@ -5,7 +5,7 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface ITheme {
+public interface ICssData {
     IEnumerable<(string, string)> AsCssVariables();
 
     #region Helpers

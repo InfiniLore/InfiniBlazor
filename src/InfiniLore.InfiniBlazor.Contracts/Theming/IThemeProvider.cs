@@ -1,25 +1,20 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Diagnostics.CodeAnalysis;
-
 namespace InfiniLore.InfiniBlazor.Theming;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IThemeSelector {
-    event Func<Task>? ThemeChangedAsync;
-    IThemeCollection CurrentThemeCollection { get; }
-    IThemeMode CurrentThemeMode { get; }
+public interface IThemeProvider {
+    event Action<IThemeCollection>? ThemeChanged;
+    event Func<IThemeCollection, Task>? ThemeChangedAsync;
+    event Action<string?>? ModeChanged;
+    event Func<string?, Task>? ModeChangedAsync;
      
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    Task<bool> TrySelectThemeCollectionAsync(string themeName);
-    Task<bool> TrySelectNextThemeModeAsync();
-    
-    bool TryGetCurrentThemeModeCss([NotNullWhen(true)] out string? css);
-    bool TryGetCurrentTheme([NotNullWhen(true)] out ITheme? theme);
-    bool TryCreateCssString(ITheme theme, [NotNullWhen(true)] out string? css);
+    ValueTask<bool> TryActivateCollectionAsync(string themeName, CancellationToken ct = default);
+    ValueTask<bool> TryActivateModeAsync(string? modeName = null, CancellationToken ct = default);
 }

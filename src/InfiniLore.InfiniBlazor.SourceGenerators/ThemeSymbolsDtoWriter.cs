@@ -7,6 +7,7 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace InfiniLore.InfiniBlazor.SourceGenerators;
@@ -65,6 +66,7 @@ public static class ThemeSymbolsDtoWriter {
         }
     }
     
+    [SuppressMessage("ReSharper", "HeapView.CanAvoidClosure")]
     public static void WritePartialClass(ThemeSymbolsDto dto, GeneratorStringBuilder builder, Compilation compilation) {
         ImmutableArray<IPropertySymbol> cssData = dto.GetCssDataProperties(compilation);
             

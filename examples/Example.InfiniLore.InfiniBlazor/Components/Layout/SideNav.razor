@@ -1,18 +1,21 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using Example.Themes
 @using InfiniLore.InfiniBlazor
 @using InfiniLore.InfiniBlazor.Debugger
 @using InfiniLore.InfiniBlazor.Theming
+@using InfiniLore.InfiniBlazor.Theming.Collections
 @using InfiniLore.InfiniBlazor.Toasting
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InteractiveServer
-@inject IThemeSelector ThemeSelector
+@inject IThemeProvider ThemeProvider
 @inject IToastStorage ToastService
 @inject IToastAppearanceProvider ToastAppearanceProvider
 @inject IVisualDebuggerProvider DebuggerProvider
+@inject ILogger<SideNav> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -26,46 +29,60 @@
 
     <Body>
     <InfiniSideNavLink Href="/markdown-dual">
-        <Icon><LiSignature/></Icon>
+        <Icon>
+            <LiSignature/>
+        </Icon>
         <Text>Markdown Example</Text>
     </InfiniSideNavLink>
-    
+
     @* <InfiniSideNavLink Href="/markdown-rolling"> *@
     @*     <Icon> *@
     @*         <LiIndentIncrease/> *@
     @*     </Icon> *@
     @*     <Text>Rolling Markdown Example</Text> *@
     @* </InfiniSideNavLink> *@
-    
+
     <InfiniSideNavLink Href="/table">
-        <Icon><LiTable/></Icon>
+        <Icon>
+            <LiTable/>
+        </Icon>
         <Text>Table</Text>
     </InfiniSideNavLink>
-    
+
     <InfiniSideNavLink Href="/html">
-        <Icon><LiCodeXml/></Icon>
+        <Icon>
+            <LiCodeXml/>
+        </Icon>
         <Text>Html</Text>
     </InfiniSideNavLink>
-    
+
     <InfiniSideNavLink Href="/theming/table">
-        <Icon><LiTable2/></Icon>
+        <Icon>
+            <LiTable2/>
+        </Icon>
         <Text>theming table</Text>
     </InfiniSideNavLink>
-    
+
     <InfiniSideNavLink Href="/sections">
-        <Icon><LiRows3/></Icon>
+        <Icon>
+            <LiRows3/>
+        </Icon>
         <Text>Sections</Text>
     </InfiniSideNavLink>
-    
+
     <InfiniSideNavLink Href="/" OpenInNewTab>
-        <Icon><LiArrowRightToLine/></Icon>
+        <Icon>
+            <LiArrowRightToLine/>
+        </Icon>
         <Text>Open New Tab</Text>
     </InfiniSideNavLink>
 
     <InfiniSpacer/>
 
     <InfiniSideNavButton OnClick="@OnCreateToastAsync">
-        <Icon><LiPopcorn/></Icon>
+        <Icon>
+            <LiPopcorn/>
+        </Icon>
         <Text>Create Toast</Text>
     </InfiniSideNavButton>
 
@@ -76,33 +93,41 @@
         OnIcon="@(MenuCollapsed ? "bug" : null)"
         OffIcon="@(MenuCollapsed ? "bug" : null)"
         Color="Color.Red">
-        <Icon><LiBug/></Icon>
+        <Icon>
+            <LiBug/>
+        </Icon>
         <Text>Toggle Debug</Text>
     </InfiniSideNavToggleButton>
     </Body>
 
     <Footer>
         <InfiniSideNavLink Href="https://github.com/InfiniLore/infinilore.infiniblazor">
-            <Icon><LiPackage/></Icon>
+            <Icon>
+                <LiPackage/>
+            </Icon>
             <Text>Github</Text>
         </InfiniSideNavLink>
 
         @* DEBUG *@
         <InfiniSideNavButton OnClick="@SwitchTheme">
-            <Icon><LiPalette/></Icon>
+            <Icon>
+                <LiPalette/>
+            </Icon>
             <Text>Switch Theme</Text>
         </InfiniSideNavButton>
 
-        
+
         <InfiniSideNavToggleButton
-            Value="@(ThemeSelector.CurrentThemeMode.Name != ThemeMode.DarkMode.Name)"
+            Value="@(ThemeModeValue)"
             ValueChanged="@OnThemeModeChanged"
             OnIcon="sun"
             OffIcon="moon">
-            <Icon><LiSun/></Icon>
+            <Icon>
+                <LiSun/>
+            </Icon>
             <Text>Toggle Mode</Text>
         </InfiniSideNavToggleButton>
-        
+
         @* User *@
         <InfiniSideNavUser UserName="InfiniLore">
             <Icon>
@@ -130,21 +155,26 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
-    private string Theme { get; set; } = "default";
+    private string Theme { get; set; } = DefaultThemeCollection.Name;
     private bool MenuCollapsed { get; set; }// Tracks whether the menu is collapsed
     private string _currentUserImage = "/icon.png";
+    private bool ThemeModeValue { get; set; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private async Task SwitchTheme() {
-        Theme = Theme switch {
-            "default" => "anna",
-            "anna" => "default",
-            _ => Theme
-        };
+        await InvokeAsync(async () => {
+            Theme = Theme switch {
+                DefaultThemeCollection.Name => QueerThemeCollection.Name,
+                QueerThemeCollection.Name => DefaultThemeCollection.Name,
+                _ => Theme
+            };
+            Logger.Information("{a}", Theme);
 
-        await ThemeSelector.TrySelectThemeCollectionAsync(Theme);
+            await ThemeProvider.TryActivateCollectionAsync(Theme);
+            StateHasChanged();
+        });
     }
 
     private void SwitchUserImage() {
@@ -181,6 +211,17 @@
         await Task.WhenAll(messages.Select(message => ToastService.AddToastAsync(message).AsTask()));
     }
 
-    private async Task OnThemeModeChanged()
-        => await ThemeSelector.TrySelectNextThemeModeAsync();
+    private async Task OnThemeModeChanged() {
+        await InvokeAsync(async () => {
+            ThemeModeValue = !ThemeModeValue;
+            
+            if (!await ThemeProvider.TryActivateModeAsync()) {
+                Logger.Warning("Could not activate next theme mode");
+            }
+            else {
+                Logger.Information("Activated next theme mode");
+            }
+            StateHasChanged();
+        });
+    }
 }

@@ -3,7 +3,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using Infinilore.InfiniBlazor
 @using InfiniLore.InfiniBlazor.JsRuntime
-@using InfiniLore.InfiniBlazor.Theming
 @using InfiniLore.InfiniBlazor.Components
 @using Infinilore.InfiniBlazor.ExtraComponents
 
@@ -12,7 +11,6 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits ComponentBase
-@inject IThemeSelector ThemeSelector
 @inject IJsRuntimeHelper JsRuntimeHelper
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
@@ -64,7 +62,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
     [Parameter] public string Class { get; set; } = string.Empty;
 
@@ -74,11 +71,13 @@
     private ThemeItem[] ThemeItems => GetThemeItems();
 
     private ThemeItem[] GetThemeItems() {
-        if (!ThemeSelector.TryGetCurrentTheme(out ITheme? theme)) return [];
-
-        return theme.AsCssVariables()
-            .Select(tuple => new ThemeItem(tuple.Item1, tuple.Item2))
-            .Where(item => !item.CssVarName.EndsWith("-rgb"))
-            .ToArray();
+        // if (!ThemeSelector.TryGetCurrentCssData(out ICssData? theme)) return [];
+        //
+        // return theme.AsCssVariables()
+        //     .Select(tuple => new ThemeItem(tuple.Item1, tuple.Item2))
+        //     .Where(item => !item.CssVarName.EndsWith("-rgb"))
+        //     .ToArray();
+        
+        return Array.Empty<ThemeItem>();
     }
 }

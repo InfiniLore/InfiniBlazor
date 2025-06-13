@@ -17,7 +17,7 @@ public class Program {
         builder.Services.AddLogging();
 
         builder.Services.AddInfiniBlazor(config => {
-            config.RegisterTheme<AnnaSasDevThemeCollection>("anna");
+            config.RegisterTheme<QueerThemeCollection>(QueerThemeCollection.Name);
             config.AddMarkdownLogic();
             config.AddToastingLogic();
         });

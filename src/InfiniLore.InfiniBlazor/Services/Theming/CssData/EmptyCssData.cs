@@ -3,14 +3,14 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using System.Diagnostics.CodeAnalysis;
 
-namespace InfiniLore.InfiniBlazor.Theming;
+namespace InfiniLore.InfiniBlazor.Theming.CssData;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [GenerateThemeSymbols]
 [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
-public partial record EmptyTheme : ITheme {
-    public static readonly EmptyTheme Instance = new();
+public partial record EmptyCssData : ICssData {
+    public static EmptyCssData Instance { get; } = new();
 
     public string Border { get; init; } = string.Empty;
     public string ButtonDark { get; init; } = string.Empty;
@@ -115,5 +115,5 @@ public partial record EmptyTheme : ITheme {
     public string UsericonAlt { get; init; } = string.Empty;
     public string UsericonAltHover { get; init; } = string.Empty;
     public string UsericonRing { get; init; } = string.Empty;
-    public string UsericonStatus { get; } = string.Empty;
+    public string UsericonStatus { get; init; } = string.Empty;
 }

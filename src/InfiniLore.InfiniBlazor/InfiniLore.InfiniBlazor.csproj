@@ -37,6 +37,7 @@
     </ItemGroup>
     
     <ItemGroup>
+        <PackageReference Include="CodeOfChaos.Extensions.MicrosoftLogging" />
         <PackageReference Include="CodeOfChaos.Extensions.ObjectPool" />
         <PackageReference Include="InfiniLore.Lucide" />
         <PackageReference Include="CodeOfChaos.Extensions" />

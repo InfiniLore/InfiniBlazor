@@ -5,24 +5,33 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public record ThemeMode(
+public readonly record struct ThemeMode(
     string Name,
-    bool IsDark,
-    bool IsLight
-) : IThemeMode {
-    private readonly int _hashCode = Name.GetHashCode();
+    ThemeModeVariants Variant
+) {
+    public const string LigtModeName = "light-mode";
+    public const string DarkModeName = "dark-mode";
+    public const string VibrantModeName = "vibrant-mode";
+    public const string MutedModeName = "muted-mode";
+    public const string OledModeName = "oled-mode";
     
-    public static IThemeMode LightMode { get; } = new ThemeMode("light-mode", false, true);
-    public static IThemeMode DarkMode { get; } = new ThemeMode("dark-mode", true, false);
+    public static ThemeMode Empty => default;
+
+    public static ThemeMode LightMode { get; } = new(LigtModeName, ThemeModeVariants.Light);
+    public static ThemeMode DarkMode { get; } = new(DarkModeName, ThemeModeVariants.Dark);
+    public static ThemeMode VibrantMode { get; } = new(VibrantModeName, ThemeModeVariants.Vibrant);
+    public static ThemeMode MutedMode { get; } = new(MutedModeName, ThemeModeVariants.Muted);
+    public static ThemeMode OledMode { get; } = new(OledModeName, ThemeModeVariants.Oled);
+
+    public static ThemeMode AsCustom(string name) => new(name, ThemeModeVariants.Custom);
+    public static ThemeMode AsUndefined(string name) => new(name, ThemeModeVariants.Undefined);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public virtual bool Equals(ThemeMode? other) {
-        if (ReferenceEquals(null, other)) return false;
-        if (ReferenceEquals(this, other)) return true;
+    public bool Equals(ThemeMode other) {
         return Name == other.Name;
     }
 
-    public override int GetHashCode() => _hashCode;
+    public override int GetHashCode() => Name.GetHashCode();
 }

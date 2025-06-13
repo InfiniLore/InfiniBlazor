@@ -51,7 +51,7 @@ public class ThemeSymbolsGenerator : IIncrementalGenerator {
 
         // Check if it implements ITheme
         bool implementsITheme = symbol.AllInterfaces
-            .Any(static i => i.ToDisplayString() == TypeNames.IThemeInterface);
+            .Any(static i => i.ToDisplayString() == TypeNames.ICssDataInterface);
 
         return implementsITheme
             ? new ThemeSymbolsDto(symbol)

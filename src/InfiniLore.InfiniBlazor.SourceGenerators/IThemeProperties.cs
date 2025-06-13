@@ -23,7 +23,7 @@ public static class IThemeProperties {
             return true;
         }
 
-        INamedTypeSymbol? iThemeSymbol = compilation.GetTypeByMetadataName(TypeNames.IThemeInterface);
+        INamedTypeSymbol? iThemeSymbol = compilation.GetTypeByMetadataName(TypeNames.ICssDataInterface);
         if (iThemeSymbol is null) {
             Properties = ImmutableArray<IPropertySymbol>.Empty;
             IsInitialized = true;

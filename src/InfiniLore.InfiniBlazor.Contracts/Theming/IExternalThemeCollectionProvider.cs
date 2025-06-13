@@ -6,8 +6,6 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IThemeMode {
-    public string Name { get; }
-    public bool IsDark { get; }
-    public bool IsLight { get; }
+public interface IExternalThemeCollectionProvider {
+    ValueTask<IThemeCollection?> TryGetCollectionAsync(string themeName, CancellationToken ct = default);
 }

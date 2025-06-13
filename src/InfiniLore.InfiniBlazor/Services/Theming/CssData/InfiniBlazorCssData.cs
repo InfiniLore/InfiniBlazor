@@ -1,13 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Theming;
+namespace InfiniLore.InfiniBlazor.Theming.CssData;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [GenerateThemeSymbols, GenerateVariableNames]
-public partial record InfiniBlazorTheme : ITheme {
-    public static readonly InfiniBlazorTheme Instance = new();
+public partial record InfiniBlazorCssData : ICssData {
+    public static InfiniBlazorCssData Instance { get; } = new();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Colors

@@ -14,5 +14,5 @@ public static class TypeNames {
     public const string InterpretAsRgbAttribute = "InfiniLore.InfiniBlazor.Theming.InterpretAsRgbAttribute";
     public const string InterpretAsVarAttribute = "InfiniLore.InfiniBlazor.Theming.InterpretAsVarAttribute";
     
-    public const string IThemeInterface = "InfiniLore.InfiniBlazor.Theming.ITheme";
+    public const string ICssDataInterface = "InfiniLore.InfiniBlazor.Theming.ICssData";
 }
