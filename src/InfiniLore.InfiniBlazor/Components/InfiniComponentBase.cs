@@ -11,15 +11,17 @@ namespace Infinilore.InfiniBlazor.Components;
 public abstract class InfiniComponentBase : ComponentBase, IAsyncDisposable {
     [Parameter] public string Class { get; set; } = string.Empty;
     [Parameter] public RenderFragment? ChildContent { get; set; }
-    
+
+    [Inject] protected NavigationManager NavigationManager { get; set; } = null!;
+
     [Inject] protected IVisualDebuggerProvider VisualDebugger { get; set; } = null!;
     [Parameter] public virtual DebugColor DebugColor { get; set; } = DebugColor.Red;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override void OnInitialized() {
-        base.OnInitialized();
+    protected override void OnParametersSet() {
+        base.OnParametersSet();
         VisualDebugger.OnChange += StateHasChanged;
     }
 
@@ -28,7 +30,7 @@ public abstract class InfiniComponentBase : ComponentBase, IAsyncDisposable {
         GC.SuppressFinalize(this);
         return ValueTask.CompletedTask;
     }
-    
-    protected static string ConcatClasses(params ReadOnlySpan<string?> classes) 
+
+    protected static string ConcatClasses(params ReadOnlySpan<string?> classes)
         => string.Join(" ", classes);
 }

@@ -9,7 +9,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits ComponentBase
+@inherits InfiniComponentBase
 @inject IJsRuntimeHelper JsRuntimeHelper
 @inject ILogger<InfiniSideNav> Logger
 
@@ -94,6 +94,8 @@
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected override async Task OnInitializedAsync() {
+        VisualDebugger.InitializeFromUrl();
+        
         if (!RendererInfo.IsInteractive) return; // Only try to load state from localStorage in interactive mode
         bool savedState = await JsRuntimeHelper.LocalStorage.TryGetValueAsync<bool>(LocalStorageKey);
         if (!savedState || _initialized) return;

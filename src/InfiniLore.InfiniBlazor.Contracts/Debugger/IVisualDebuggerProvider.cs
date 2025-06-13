@@ -12,6 +12,10 @@ public interface IVisualDebuggerProvider {
 
     bool IsEnabled();
     Task ToggleStateAsync();
+    Task SetStateAsync(DebuggerState state);
+
+    string AddDebugQueryParam(string uri);
+    void InitializeFromUrl();
     
     string GetAsStripes(DebugColor color);
     

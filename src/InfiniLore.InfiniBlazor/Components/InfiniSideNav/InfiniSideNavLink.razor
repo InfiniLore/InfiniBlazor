@@ -1,28 +1,20 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using Microsoft.AspNetCore.Components.Routing
-
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits ComponentBase
+@inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@if (OpenInNewTab) {
-    <a href="@Href"
-       class="@InfiniSideNavItem.GetContainerClasses()"
-       target="_blank"
-       rel="noopener noreferrer">
-        <InfiniSideNavItem Text="@Text" Icon="@Icon"/>
-    </a>
-} else {
-    <NavLink href="@Href" class="@InfiniSideNavItem.GetContainerClasses()">
-        <InfiniSideNavItem Text="@Text" Icon="@Icon"/>
-    </NavLink>
-}
+<a href="@VisualDebugger.AddDebugQueryParam(Href)"
+   class="@InfiniSideNavItem.GetContainerClasses()"
+   target="@(OpenInNewTab ? "_blank" : null)" 
+   rel="noopener noreferrer">
+    <InfiniSideNavItem Text="@Text" Icon="@Icon"/>
+</a>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
