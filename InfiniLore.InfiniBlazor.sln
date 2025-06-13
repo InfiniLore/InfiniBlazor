@@ -50,6 +50,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.InfiniBlazor", "exa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.InfiniBlazor.Client", "examples\Example.InfiniBlazor\Example.InfiniBlazor.Client\Example.InfiniBlazor.Client.csproj", "{81F00243-9D48-4CE4-89D4-FB28CF9C44CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.InfiniBlazor.Shared", "examples\Example.InfiniBlazor.Shared\Example.InfiniBlazor.Shared.csproj", "{76B72F8D-D360-4046-83EB-BC6C38793423}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +106,10 @@ Global
 		{81F00243-9D48-4CE4-89D4-FB28CF9C44CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81F00243-9D48-4CE4-89D4-FB28CF9C44CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81F00243-9D48-4CE4-89D4-FB28CF9C44CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76B72F8D-D360-4046-83EB-BC6C38793423}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76B72F8D-D360-4046-83EB-BC6C38793423}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76B72F8D-D360-4046-83EB-BC6C38793423}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76B72F8D-D360-4046-83EB-BC6C38793423}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{26284571-0E09-4BAF-8C2B-DF87DCC1BA0B} = {8DD280D4-1E14-4D5E-AFE6-58DD8F079DCC}
@@ -120,5 +126,6 @@ Global
 		{4AD1DD6F-E20D-4FBA-821D-4CEB5F7727C4} = {197E72AD-DEAB-4350-AFC3-A3BB38720BF5}
 		{56340367-3B4D-4E43-B8D2-983B8D7CB839} = {85D9748B-B4DD-428D-850A-DCF23F8DBA39}
 		{81F00243-9D48-4CE4-89D4-FB28CF9C44CD} = {85D9748B-B4DD-428D-850A-DCF23F8DBA39}
+		{76B72F8D-D360-4046-83EB-BC6C38793423} = {85D9748B-B4DD-428D-850A-DCF23F8DBA39}
 	EndGlobalSection
 EndGlobal

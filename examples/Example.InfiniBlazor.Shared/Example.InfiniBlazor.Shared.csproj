@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="JetBrains.Annotations" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Markdown\InfiniLore.InfiniBlazor.Markdown.csproj" />
+      <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Toasting\InfiniLore.InfiniBlazor.Toasting.csproj" />
+      <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" />
+    </ItemGroup>
+
+</Project>

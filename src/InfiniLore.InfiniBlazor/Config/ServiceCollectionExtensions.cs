@@ -18,7 +18,7 @@ public static class ServiceCollectionExtensions {
         services.RegisterServicesFromInfiniLoreInfiniBlazor();
         services.AddLucideIcons();
 
-        config.RegisterTheme<DefaultThemeCollection>(DefaultThemeCollection.Name);
+        config.RegisterTheme<DefaultThemeCollection>();
 
         configure?.Invoke(config);
         

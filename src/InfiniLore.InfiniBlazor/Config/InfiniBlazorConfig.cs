@@ -19,13 +19,9 @@ public class InfiniBlazorConfig(IServiceCollection collection) {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public InfiniBlazorConfig RegisterTheme<TTheme>(string themeName) where TTheme : class, IThemeCollection, new() {
-        RegisteredBaseThemeCollections.AddOrUpdate(themeName, new TTheme());
-        return this;
-    }
-
-    public InfiniBlazorConfig RegisterTheme(IThemeCollection themeType, string themeName) {
-        RegisteredBaseThemeCollections.AddOrUpdate(themeName, themeType);
+    public InfiniBlazorConfig RegisterTheme<TTheme>() where TTheme : class, IThemeCollection, new() {
+        var theme = new TTheme();
+        RegisteredBaseThemeCollections.AddOrUpdate(theme.CollectionName, theme);
         return this;
     }
     

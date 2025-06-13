@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using Example.InfiniBlazor.Components;
+using Example.InfiniBlazor.Shared;
 using Example.InfiniBlazor.Themes;
 using InfiniLore.InfiniBlazor.Markdown.Config;
 using InfiniLore.InfiniBlazor.Toasting.Config;
@@ -17,7 +18,7 @@ public class Program {
         builder.Services.AddLogging();
 
         builder.Services.AddInfiniBlazor(config => {
-            config.RegisterTheme<QueerThemeCollection>(QueerThemeCollection.Name);
+            config.RegisterTheme<QueerThemeCollection>();
             config.AddMarkdownLogic();
             config.AddToastingLogic();
         });
@@ -51,7 +52,7 @@ public class Program {
         app.MapRazorComponents<App>()
             .AddInteractiveServerRenderMode()
             .AddInteractiveWebAssemblyRenderMode()
-            .AddAdditionalAssemblies(typeof(Client._Imports).Assembly);
+            .AddAdditionalAssemblies(typeof(Client._Imports).Assembly, ISharedEntry.Assembly);
 
         app.Run();
     }
