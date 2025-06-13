@@ -11,7 +11,7 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InteractiveServer
-@inject IThemeProvider ThemeProvider
+@inject IThemeStateProvider ThemeProvider
 @inject IToastStorage ToastService
 @inject IToastAppearanceProvider ToastAppearanceProvider
 @inject IVisualDebuggerProvider DebuggerProvider
@@ -172,7 +172,7 @@
             };
             Logger.Information("{a}", Theme);
 
-            await ThemeProvider.TryActivateCollectionAsync(Theme);
+            await ThemeProvider.TrySelectCollectionAsync(Theme);
             StateHasChanged();
         });
     }
@@ -215,7 +215,7 @@
         await InvokeAsync(async () => {
             ThemeModeValue = !ThemeModeValue;
             
-            if (!await ThemeProvider.TryActivateModeAsync()) {
+            if (!await ThemeProvider.TrySelectNextModeAsync()) {
                 Logger.Warning("Could not activate next theme mode");
             }
             else {

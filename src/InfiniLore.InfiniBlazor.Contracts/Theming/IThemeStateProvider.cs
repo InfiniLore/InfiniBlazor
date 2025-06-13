@@ -6,15 +6,18 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IThemeProvider {
-    event Action<IThemeCollection>? ThemeChanged;
-    event Func<IThemeCollection, Task>? ThemeChangedAsync;
-    event Action<string?>? ModeChanged;
-    event Func<string?, Task>? ModeChangedAsync;
-     
+public interface IThemeStateProvider {
+    event Action? OnChanged;
+    event Func<Task>? OnChangedAsync;
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    ValueTask<bool> TryActivateCollectionAsync(string themeName, CancellationToken ct = default);
-    ValueTask<bool> TryActivateModeAsync(string? modeName = null, CancellationToken ct = default);
+    IThemeState GetState();
+    
+    ValueTask<bool> TrySelectCollectionAsync(string themeName, CancellationToken ct = default);
+    ValueTask<bool> TrySelectModeAsync(string modeName, CancellationToken ct = default);
+    ValueTask<bool> TrySelectNextModeAsync(CancellationToken ct = default);
+
+    ValueTask<IThemeCollection?> TryGetCollectionAsync(string themeName, CancellationToken ct = default);
 }

@@ -11,7 +11,8 @@ namespace InfiniLore.InfiniBlazor.Theming.Collections;
 [UsedImplicitly]
 public class DefaultThemeCollection : ThemeCollection {
     public const string Name = "Default";
-    
+    public override string CollectionName => Name;
+
     protected override OrderedDictionary<ThemeMode, ICssData> Modes { get; } = new() {
         [ThemeMode.DarkMode] = EmptyCssData.Instance,
         

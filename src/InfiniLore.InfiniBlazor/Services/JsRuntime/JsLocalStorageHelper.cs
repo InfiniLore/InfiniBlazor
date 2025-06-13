@@ -22,9 +22,9 @@ public class JsLocalStorageHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper>
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public async Task<T?> TryGetValueAsync<T>(string key) {
+    public async Task<T?> TryGetValueAsync<T>(string key, CancellationToken ct = default) {
         try {
-            string json = await jsRuntime.InvokeAsync<string>("localStorage.getItem", key);
+            string json = await jsRuntime.InvokeAsync<string>("localStorage.getItem", ct, key);
             if (json.IsNullOrEmpty()) return default;
 
             var item = JsonSerializer.Deserialize<ExpiringStorageItem<T>>(json);
@@ -32,7 +32,7 @@ public class JsLocalStorageHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper>
 
             if (!item.Expiry.HasValue || item.Expiry.Value >= DateTime.UtcNow) return item.Data;
 
-            await TryRemoveValueAsync(key); // Optional cleanup
+            await TryRemoveValueAsync(key, ct); // Optional cleanup
             return default;
 
         }
@@ -42,7 +42,7 @@ public class JsLocalStorageHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper>
         }
     }
 
-    public async Task<bool> TrySetValueAsync<T>(string key, T value, TimeSpan? expiresIn = null) {
+    public async Task<bool> TrySetValueAsync<T>(string key, T value, TimeSpan? expiresIn = null, CancellationToken ct = default) {
         try {
             ExpiringStorageItem<T> item = new () {
                 Data = value,
@@ -50,7 +50,7 @@ public class JsLocalStorageHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper>
             };
 
             string json = JsonSerializer.Serialize(item);
-            await jsRuntime.InvokeVoidAsync("localStorage.setItem", key, json);
+            await jsRuntime.InvokeVoidAsync("localStorage.setItem", ct, key, json);
             return true;
         }
         catch (Exception e) {
@@ -59,9 +59,9 @@ public class JsLocalStorageHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper>
         }
     }
 
-    public async Task<bool> TryRemoveValueAsync(string key) {
+    public async Task<bool> TryRemoveValueAsync(string key, CancellationToken ct = default) {
         try {
-            await jsRuntime.InvokeVoidAsync("localStorage.removeItem", key);
+            await jsRuntime.InvokeVoidAsync("localStorage.removeItem", ct, key);
             return true;
         }
         catch (Exception e) {

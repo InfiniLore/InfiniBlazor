@@ -12,6 +12,7 @@ namespace Example.Themes;
 [UsedImplicitly]
 public class QueerThemeCollection : ThemeCollection {
     public const string Name = "Queer";
+    public override string CollectionName => Name;
     
     protected override OrderedDictionary<ThemeMode, ICssData> Modes { get; } = new() {
         [TransMode] = EmptyCssData.Instance with {
@@ -24,7 +25,7 @@ public class QueerThemeCollection : ThemeCollection {
             SidebarNav = "linear-gradient(to bottom, rgb(255, 0, 128), rgb(200, 37, 157), rgb(140, 71, 153), rgb(68, 46, 159), rgb(0, 50, 160))"
         }
     };
-    
+
     private static ThemeMode TransMode { get; } = ThemeMode.AsCustom("trans");
     private static ThemeMode BisexualMode { get; } = ThemeMode.AsCustom("bisexual");
 }

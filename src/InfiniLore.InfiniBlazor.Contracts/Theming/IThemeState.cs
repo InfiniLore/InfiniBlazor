@@ -1,13 +1,18 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.JsRuntime;
+namespace InfiniLore.InfiniBlazor.Theming;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IJsLocalStorageHelper {
-    Task<T?> TryGetValueAsync<T>(string key, CancellationToken ct = default);
-    Task<bool> TrySetValueAsync<T>(string key, T value, TimeSpan? expiresIn = null, CancellationToken ct = default);
-    Task<bool> TryRemoveValueAsync(string key, CancellationToken ct = default);
+public interface IThemeState {
+    ValueTask SetThemeCollectionNameAsync(string themeName, CancellationToken ct = default);
+    ValueTask<string?> TryGetThemeCollectionNameAsync(CancellationToken ct = default);
+    
+    ValueTask SetThemeModeNameAsync(string themeName, CancellationToken ct = default);
+    ValueTask<string?> TryGetThemeModeNameAsync(CancellationToken ct = default);
+    
+    void SetNextModeRequested();
+    bool IsNextModeRequested();
 }
