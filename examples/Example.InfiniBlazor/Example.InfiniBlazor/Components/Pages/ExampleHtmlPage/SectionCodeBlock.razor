@@ -1,7 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@namespace InfiniLore.InfiniBlazor.Components
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -9,7 +9,13 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<HeadContent>
-    <style id="@BaseId">@GetBaseThemeCss()</style>
-    <style id="@ThemeId">@CurrentCss</style>
-</HeadContent>
+<InfiniSection Class="flex flex-col gap-4">
+    <InfiniHeading3>CodeBlock</InfiniHeading3>
+    
+    <InfiniCodeBlock Language="csharp" Content="@CSharpCode" Class="h-16"/>
+
+    <InfiniCodeBlock Language="typescript" Content="const greeting: string = 'Hello';" EnableCopy="@false"/>
+    
+    <InfiniCodeBlock Content="Something"/>
+
+</InfiniSection>

@@ -1,17 +1,12 @@
 ﻿<component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Watch Server HTTPS" type="RunDotNetWatch" factoryName="RunDotNetWatch">
-    <option name="envs">
-      <map>
-        <entry key="DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION" value="1" />
-      </map>
-    </option>
-    <option name="exePath" value="$PROJECT_DIR$/examples/Example.InfiniLore.InfiniBlazor/bin/Debug/net9.0/Example.InfiniLore.InfiniBlazor.exe" />
-    <option name="programParameters" value="--launch-profile https" />
-    <option name="projectFilePath" value="$PROJECT_DIR$/examples/Example.InfiniLore.InfiniBlazor/Example.InfiniLore.InfiniBlazor.csproj" />
+    <option name="exePath" value="$PROJECT_DIR$/examples/Example.InfiniBlazor/Example.InfiniBlazor/bin/Debug/net9.0/Example.InfiniBlazor.exe" />
+    <option name="programParameters" value="" />
+    <option name="projectFilePath" value="$PROJECT_DIR$/examples/Example.InfiniBlazor/Example.InfiniBlazor/Example.InfiniBlazor.csproj" />
     <option name="projectTfm" value="net9.0" />
     <option name="restartOnRudeEditEditor" value="true" />
     <option name="watchParameters" value="" />
-    <option name="workingDirectory" value="$PROJECT_DIR$/examples/Example.InfiniLore.InfiniBlazor" />
+    <option name="workingDirectory" value="$PROJECT_DIR$/examples/Example.InfiniBlazor/Example.InfiniBlazor" />
     <method v="2" />
   </configuration>
 </component>

@@ -4,6 +4,7 @@
 using InfiniLore.InfiniBlazor.JsRuntime;
 using InfiniLore.InfiniBlazor.Theming;
 using InfiniLore.InfiniBlazor.Theming.CssData;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
@@ -18,43 +19,101 @@ public partial class InfiniThemeManager(
     IJsRuntimeHelper jsRuntimeHelper,
     ILogger<InfiniThemeManager> logger,
     IPoolCache pool
-) : IAsyncDisposable {
-    
+) : ComponentBase, IAsyncDisposable {
+
     private const string BaseId = "infiniThemeManager-base-css";
     private const string ThemeId = "infiniThemeManager-selected-css";
-    
+    private bool _isUpdatingTheme;
+    private string? CurrentCss { get; set; }
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override async Task OnInitializedAsync() {
-        themeStateProvider.OnChangedAsync += OnThemeStateChanged;
-        
-        if (!RendererInfo.IsInteractive) return;
-
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
         await OnThemeStateChanged();
-    }
-    
-    private async Task OnThemeStateChanged() {
-        IThemeState state = themeStateProvider.GetState();
-        
-        string? collectionName = await state.TryGetThemeCollectionNameAsync();
-        if (collectionName.IsNullOrWhiteSpace()) return;
 
-        IThemeCollection? collection = await themeStateProvider.TryGetCollectionAsync(collectionName);
-        if (collection is null) return;
-
-        string? mode = await state.TryGetThemeModeNameAsync();
-        if (state.IsNextModeRequested() && collection.TryGetNextThemeMode(mode, out ThemeMode nextMode)) {
-            await state.SetThemeModeNameAsync(nextMode.Name);
-            mode = nextMode.Name;
+        if (firstRender) {
+            themeStateProvider.OnChangedAsync += OnThemeStateChanged;
         }
-        
-        if (mode.IsNullOrWhiteSpace()) return;
-        if (!collection.TryGetCssData(mode, out ICssData? cssData)) return;
-        if (!TryGetCssString(cssData, out string? css)) return;
-        
-        await jsRuntimeHelper.AddOrUpdateStyleElementAtHead(ThemeId, css);
     }
+
+    protected override async Task OnInitializedAsync() {
+        await PreloadInitialThemeCss();
+    }
+
+    private async Task OnThemeStateChanged() {
+        if (_isUpdatingTheme) return;
+
+        _isUpdatingTheme = true;
+        try {
+            IThemeState state = themeStateProvider.GetState();
+
+            string? collectionName = await state.TryGetThemeCollectionNameAsync();
+            if (collectionName.IsNullOrWhiteSpace()) {
+                logger.LogWarning("Could not find theme collection.");
+                return;
+            }
+
+            IThemeCollection? collection = await themeStateProvider.TryGetCollectionAsync(collectionName);
+            if (collection is null) {
+                logger.LogWarning("Could not find theme collection.");
+                return;
+            }
+
+            string? mode = await state.TryGetThemeModeNameAsync();
+            if (state.IsNextModeRequested() && collection.TryGetNextThemeMode(mode, out ThemeMode nextMode)) {
+                await state.SetThemeModeNameAsync(nextMode.Name);
+                mode = nextMode.Name;
+            }
+
+            if (mode.IsNullOrWhiteSpace()) {
+                mode = collection.GetFirstMode().Name;
+            }
+
+            if (!collection.TryGetCssData(mode, out ICssData? cssData)) {
+                logger.LogWarning("Could not find theme mode CSS data.");
+                return;
+            }
+
+            if (!TryGetCssString(cssData, out string? css)) {
+                logger.LogWarning("Could not create theme CSS.");
+                return;
+            }
+
+            await jsRuntimeHelper.AddOrUpdateStyleElementAtHead(ThemeId, css);
+            CurrentCss = css;
+            await InvokeAsync(StateHasChanged);
+        }
+        finally {
+            _isUpdatingTheme = false;
+        }
+    }
+
+    private async Task PreloadInitialThemeCss() {
+        try {
+            IThemeState state = themeStateProvider.GetState();
+
+            string? collectionName = await state.TryGetThemeCollectionNameAsync();
+            if (collectionName.IsNullOrWhiteSpace()) return;
+
+            IThemeCollection? collection = await themeStateProvider.TryGetCollectionAsync(collectionName);
+            if (collection is null) return;
+
+            string? mode = await state.TryGetThemeModeNameAsync();
+            if (mode.IsNullOrWhiteSpace()) {
+                mode = collection.GetFirstMode().Name;
+            }
+
+            if (collection.TryGetCssData(mode, out ICssData? cssData) &&
+                TryGetCssString(cssData, out string? css)) {
+                CurrentCss = css;
+            }
+        }
+        catch (Exception ex) {
+            logger.LogError(ex, "Failed to preload theme CSS.");
+        }
+    }
+
 
     public ValueTask DisposeAsync() {
         themeStateProvider.OnChangedAsync -= OnThemeStateChanged;
@@ -63,14 +122,15 @@ public partial class InfiniThemeManager(
     }
 
     private bool TryGetCssString(ICssData cssData, [NotNullWhen(true)] out string? css) {
-        StringBuilder sb = pool.StringBuilderPool.Get() ;
+        StringBuilder sb = pool.StringBuilderPool.Get();
         try {
             sb.Append(":root{");
             foreach ((string key, string value) in cssData.AsCssVariables()) {
                 sb.Append($"{key}:{value};");
             }
+
             sb.Append('}');
-        
+
             css = sb.ToString();
             return true;
         }

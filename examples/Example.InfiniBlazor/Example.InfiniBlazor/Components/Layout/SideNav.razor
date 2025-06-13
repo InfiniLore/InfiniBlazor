@@ -1,0 +1,224 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports *@
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using Example.InfiniBlazor.Themes
+@using InfiniLore.InfiniBlazor
+@using InfiniLore.InfiniBlazor.Debugger
+@using InfiniLore.InfiniBlazor.Theming
+@using InfiniLore.InfiniBlazor.Theming.Collections
+@using InfiniLore.InfiniBlazor.Toasting
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@rendermode InteractiveAuto
+@inject IThemeStateProvider ThemeStateProvider
+@inject IToastStorage ToastService
+@inject IToastAppearanceProvider ToastAppearanceProvider
+@inject IVisualDebuggerProvider DebuggerProvider
+@inject ILogger<SideNav> Logger
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html *@
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniSideNav @bind-MenuCollapsed="@MenuCollapsed" Size="SideNavSize.Large">
+    <Header>
+        <a href="/"
+           class="@(!MenuCollapsed ? "text-1xl font-bold text-(--color-base-00) hover:text-(--color-accent) no-underline" : "hidden")">
+            InfiniBlazor
+        </a>
+    </Header>
+
+    <Body>
+    <InfiniSideNavLink Href="/markdown-dual">
+        <Icon>
+            <LiSignature/>
+        </Icon>
+        <Text>Markdown Example</Text>
+    </InfiniSideNavLink>
+
+    @* <InfiniSideNavLink Href="/markdown-rolling"> *@
+    @*     <Icon> *@
+    @*         <LiIndentIncrease/> *@
+    @*     </Icon> *@
+    @*     <Text>Rolling Markdown Example</Text> *@
+    @* </InfiniSideNavLink> *@
+
+    <InfiniSideNavLink Href="/table">
+        <Icon>
+            <LiTable/>
+        </Icon>
+        <Text>Table</Text>
+    </InfiniSideNavLink>
+
+    <InfiniSideNavLink Href="/html">
+        <Icon>
+            <LiCodeXml/>
+        </Icon>
+        <Text>Html</Text>
+    </InfiniSideNavLink>
+
+    <InfiniSideNavLink Href="/theming/table">
+        <Icon>
+            <LiTable2/>
+        </Icon>
+        <Text>theming table</Text>
+    </InfiniSideNavLink>
+
+    <InfiniSideNavLink Href="/sections">
+        <Icon>
+            <LiRows3/>
+        </Icon>
+        <Text>Sections</Text>
+    </InfiniSideNavLink>
+
+    <InfiniSideNavLink Href="/" OpenInNewTab>
+        <Icon>
+            <LiArrowRightToLine/>
+        </Icon>
+        <Text>Open New Tab</Text>
+    </InfiniSideNavLink>
+
+    <InfiniSpacer/>
+
+    <InfiniSideNavButton OnClick="@OnCreateToastAsync">
+        <Icon>
+            <LiPopcorn/>
+        </Icon>
+        <Text>Create Toast</Text>
+    </InfiniSideNavButton>
+
+
+    <InfiniSideNavToggleButton
+        Value="@DebuggerProvider.IsEnabled()"
+        ValueChanged="@DebuggerProvider.ToggleStateAsync"
+        OnIcon="@(MenuCollapsed ? "bug" : null)"
+        OffIcon="@(MenuCollapsed ? "bug" : null)"
+        Color="Color.Red">
+        <Icon>
+            <LiBug/>
+        </Icon>
+        <Text>Toggle Debug</Text>
+    </InfiniSideNavToggleButton>
+    </Body>
+
+    <Footer>
+        <InfiniSideNavLink Href="https://github.com/InfiniLore/infinilore.infiniblazor">
+            <Icon>
+                <LiPackage/>
+            </Icon>
+            <Text>Github</Text>
+        </InfiniSideNavLink>
+
+        @* DEBUG *@
+        <InfiniSideNavButton OnClick="@SwitchTheme">
+            <Icon>
+                <LiPalette/>
+            </Icon>
+            <Text>Switch Theme</Text>
+        </InfiniSideNavButton>
+
+
+        <InfiniSideNavToggleButton
+            Value="@(ToggleState)"
+            ValueChanged="@OnThemeModeChanged"
+            OnIcon="sun"
+            OffIcon="moon">
+            <Icon>
+                <LiSun/>
+            </Icon>
+            <Text>Toggle Mode</Text>
+        </InfiniSideNavToggleButton>
+
+        @* User *@
+        <InfiniSideNavUser UserName="InfiniLore">
+            <Icon>
+                <InfiniUserIcon
+                    ImageUrl="@_currentUserImage"
+                    HrefUserProfile="/"/>
+            </Icon>
+            <AdditionalLinks>
+                <button @onclick="SwitchUserImage"
+                        class="@(InfiniSideNavUser.AdditionalLinkClasses)">
+                    switch
+                </button>
+                <NavLink href="/"
+                         class="@(InfiniSideNavUser.AdditionalLinkClasses)">
+                    logout
+                </NavLink>
+            </AdditionalLinks>
+        </InfiniSideNavUser>
+
+    </Footer>
+</InfiniSideNav>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code *@
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    private bool MenuCollapsed { get; set; }// Tracks whether the menu is collapsed
+    private string _currentUserImage = "/icon.png";
+    private bool ToggleState { get; set; }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private async Task SwitchTheme() {
+        IThemeState state = ThemeStateProvider.GetState();
+
+        string? themeCollectionName = await state.TryGetThemeCollectionNameAsync();
+        themeCollectionName = themeCollectionName switch {
+            DefaultThemeCollection.Name => QueerThemeCollection.Name,
+            _ => DefaultThemeCollection.Name
+        };
+        Logger.Information("{a}", themeCollectionName);
+
+        await ThemeStateProvider.TrySelectCollectionAsync(themeCollectionName);
+        StateHasChanged();
+    }
+
+    private void SwitchUserImage() {
+        _currentUserImage = _currentUserImage == "/icon.png" ? "aaa/icon.png" : "/icon.png";
+    }
+
+    private async Task OnCreateToastAsync() {
+        IToastData[] messages = [
+            new ToastData(
+                "info",
+                10,
+                ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Info)
+            ),
+            new ToastData(
+                "success",
+                10,
+                ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Success)
+            ),
+            new ToastData(
+                "warning",
+                10,
+                ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Warning)
+            ),
+            new ToastData(
+                "error",
+                10,
+                ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Error),
+                "Some Data",
+                "#",
+                "click here"
+            )
+        ];
+
+        await Task.WhenAll(messages.Select(message => ToastService.AddToastAsync(message).AsTask()));
+    }
+
+    private async Task OnThemeModeChanged() {
+        ToggleState = !ToggleState;
+            
+        if (!await ThemeStateProvider.TrySelectNextModeAsync()) {
+            Logger.Warning("Could not activate next theme mode");
+        } 
+        else {
+            Logger.Information("Activated next theme mode");
+        }
+        StateHasChanged();
+    }
+}

@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>aspnet-Example.InfiniBlazor-318f330c-60fd-46fc-a6b4-3f85cb167613</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\src\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
+        <ProjectReference Include="..\..\..\src\InfiniLore.InfiniBlazor.Markdown\InfiniLore.InfiniBlazor.Markdown.csproj" />
+        <ProjectReference Include="..\..\..\src\InfiniLore.InfiniBlazor.Toasting\InfiniLore.InfiniBlazor.Toasting.csproj" />
+        <ProjectReference Include="..\..\..\src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" />
+        <ProjectReference Include="..\Example.InfiniBlazor.Client\Example.InfiniBlazor.Client.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" />
+    </ItemGroup>
+
+</Project>

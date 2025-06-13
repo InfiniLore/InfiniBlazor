@@ -36,4 +36,26 @@
       </None>
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Components\App.razor" />
+      <_ContentIncludedByDefault Remove="Components\Layout\MainLayout.razor" />
+      <_ContentIncludedByDefault Remove="Components\Layout\SideNav.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\Error.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\ExampleHtmlPage\ExampleHtmlPage.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\ExampleHtmlPage\SectionButtons.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\ExampleHtmlPage\SectionCodeBlock.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\ExampleHtmlPage\SectionHeadings.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\ExampleHtmlPage\SectionSpacers.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\ExampleHtmlPage\SectionTextInput.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\ExampleHtmlPage\SectionToggleButtons.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\ExampleMarkdownEditor.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\ExampleRollingMarkdownEditor.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\ExampleSections.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\ExampleTable.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\ExampleThemeTable.razor" />
+      <_ContentIncludedByDefault Remove="Components\Pages\Home.razor" />
+      <_ContentIncludedByDefault Remove="Components\Routes.razor" />
+      <_ContentIncludedByDefault Remove="Components\_Imports.razor" />
+    </ItemGroup>
+
 </Project>
