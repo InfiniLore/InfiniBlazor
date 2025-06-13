@@ -22,7 +22,7 @@ public class ThemeStateProvider(
     
     public event Action? OnChanged;
     public event Func<Task>? OnChangedAsync;
-    private readonly ThemeState State = new(jsRuntimeHelper) {
+    private readonly ThemeState State = new() {
         ThemeCollectionName = themingConfig.DefaultThemeCollectionName,
         ThemeModeName = themingConfig.DefaultThemeMode.Name,
     };
