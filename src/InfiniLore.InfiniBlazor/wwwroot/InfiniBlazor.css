@@ -57,7 +57,6 @@
     --radius-lg: 0.5rem;
     --radius-xl: 0.75rem;
     --radius-2xl: 1rem;
-    --ease-out: cubic-bezier(0, 0, 0.2, 1);
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --default-transition-duration: 150ms;
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -1101,9 +1100,6 @@
   .bg-\(--editor-header\) {
     background-color: var(--editor-header);
   }
-  .bg-\(--editor-header-background\) {
-    background-color: var(--editor-header-background);
-  }
   .bg-\(--section\) {
     background-color: var(--section);
   }
@@ -1651,9 +1647,6 @@
   }
   .infini-bg-\(--table-row\) {
     background: var(--table-row);
-  }
-  .infini-bg-\(--table-row-background\) {
-    background: var(--table-row-background);
   }
   .infini-bg-\(--text-base-90\) {
     background: var(--text-base-90);
