@@ -6,7 +6,7 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // --------------------------------------------------------------------------------------------------------------------
-public class ThemeState : IThemeState {
+public record ThemeState : IThemeState {
     public string? CollectionName { get; set; }
     public string? ModeName { get; set; }
     public bool IsBinaryCollection { get; set; }

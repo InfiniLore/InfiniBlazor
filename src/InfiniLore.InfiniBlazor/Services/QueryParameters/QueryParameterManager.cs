@@ -22,7 +22,8 @@ public class QueryParameterManager(NavigationManager navigationManager) : IQuery
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     // Set a single query parameter
-    public void SetParam<T>(string key, T value) => SetParams((key, value));
+    public void SetParam<T>(string key, T value)
+        => SetParams((key, value));
 
     // Set multiple query parameters
     public void SetParams(params Span<(string key, object? value)> parameters) {
@@ -35,7 +36,8 @@ public class QueryParameterManager(NavigationManager navigationManager) : IQuery
     }
 
     // Remove a single query parameter
-    public void RemoveParam(string key) => RemoveParams(key);
+    public void RemoveParam(string key) 
+        => RemoveParams(key);
 
     // Remove multiple query parameters
     public void RemoveParams(params Span<string> keys) {
