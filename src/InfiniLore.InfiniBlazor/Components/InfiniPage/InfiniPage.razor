@@ -28,6 +28,9 @@
 @code {
     [Parameter] public string? Title { get; set; } 
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
     protected override async Task OnInitializedAsync() {
         await base.OnInitializedAsync();
         VisualDebugger.InitializeFromUrl();

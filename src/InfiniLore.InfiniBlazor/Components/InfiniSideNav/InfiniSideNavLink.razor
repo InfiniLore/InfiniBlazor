@@ -35,6 +35,9 @@
 
     private string? _computedHref;
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
     protected override void OnInitialized() {
         if (!DisableTrackedQueryParams) NavigationManager.LocationChanged += OnLocationChanged;
         ComputeHref();

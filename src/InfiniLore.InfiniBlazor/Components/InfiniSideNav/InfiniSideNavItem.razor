@@ -31,6 +31,9 @@
     [Parameter, EditorRequired] public required RenderFragment? Text { get; set; }
     [Parameter, EditorRequired] public required RenderFragment? Icon { get; set; }
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
     public static string GetContainerClasses()
         => GetContainerClassesNoHover() + " hover:bg-(--sidebar-nav-button-hover)";
     

@@ -9,5 +9,5 @@ namespace InfiniLore.InfiniBlazor.Components;
 public enum SpacerDirection {
     Grow,
     Horizontal,
-    Vertical,
+    Vertical
 }
