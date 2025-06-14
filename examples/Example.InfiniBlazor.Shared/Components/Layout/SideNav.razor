@@ -166,7 +166,7 @@
     private async Task SwitchTheme() {
         IThemeState state = ThemeStateProvider.GetState();
 
-        string? themeCollectionName = await state.TryGetThemeCollectionNameAsync();
+        string? themeCollectionName = state.ThemeCollectionName;
         themeCollectionName = themeCollectionName switch {
             DefaultThemeCollection.Name => QueerThemeCollection.Name,
             _ => DefaultThemeCollection.Name

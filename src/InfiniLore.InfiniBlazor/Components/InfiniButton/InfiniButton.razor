@@ -9,12 +9,13 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniComponentBase
+@inject IQueryParameterManager QueryParameterManager
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="@Class py-0.5 px-1.25">
     @if (Href.IsNotNullOrWhiteSpace()) {
-        <a href="@VisualDebugger.AddDebugQueryParam(Href)"
+        <a href="@QueryParameterManager.AddTrackedQueryParameters(Href)"
            class="@ContainerClasses rounded-md group/button inline-flex items-center justify-center transition-all duration-150 transform cursor-pointer active:scale-95 hover:scale-105">
             @ButtonContent
         </a>

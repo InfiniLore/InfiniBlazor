@@ -27,10 +27,9 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     [Parameter] public string? Title { get; set; } 
-    [CascadingParameter] public IComponentRenderMode? ComponentRenderMode { get; set; }
 
-    protected override void OnInitialized() {
-        base.OnInitialized();
+    protected override async Task OnInitializedAsync() {
+        await base.OnInitializedAsync();
         VisualDebugger.InitializeFromUrl();
     }
 }

@@ -14,6 +14,8 @@ public interface IThemeStateProvider {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     IThemeState GetState();
+
+    ValueTask InitializeFromQueryAsync(CancellationToken ct = default);
     
     ValueTask<bool> TrySelectCollectionAsync(string themeName, CancellationToken ct = default);
     ValueTask<bool> TrySelectModeAsync(string modeName, CancellationToken ct = default);

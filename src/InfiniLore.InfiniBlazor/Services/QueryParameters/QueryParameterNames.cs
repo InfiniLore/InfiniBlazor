@@ -1,13 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Theming;
+namespace InfiniLore.InfiniBlazor.QueryParameters;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IThemeState {
-    string? ThemeCollectionName { get; }
-    string? ThemeModeName { get; }
-    bool IsBinaryThemeCollection { get; }
+public static class QueryParameterNames {
+    public const string Debug = "infiniblazor-debug";
+    public const string ThemeCollection= "infiniblazor-theme";
+    public const string ThemeMode = "infiniblazor-thememode";
 }

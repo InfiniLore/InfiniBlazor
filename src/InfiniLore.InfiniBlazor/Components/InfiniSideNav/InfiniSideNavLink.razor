@@ -6,12 +6,15 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniComponentBase
+@inject IQueryParameterManager QueryParameterManager
+@using Microsoft.AspNetCore.Components.Routing
+@implements IDisposable
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<a href="@VisualDebugger.AddDebugQueryParam(Href)"
+<a href="@_computedHref"
    class="@InfiniSideNavItem.GetContainerClasses()"
-   target="@(OpenInNewTab ? "_blank" : null)" 
+   target="@(OpenInNewTab ? "_blank" : null)"
    rel="noopener noreferrer">
     <InfiniSideNavItem Text="@Text" Icon="@Icon"/>
 </a>
@@ -20,12 +23,32 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
-    [Parameter][EditorRequired] public required string Href { get; init; }
+    [Parameter] [EditorRequired] public required string Href { get; init; }
 
     [CascadingParameter] public bool MenuCollapsed { get; set; }
     [Parameter] public RenderFragment? Text { get; set; }
     [Parameter] public RenderFragment? Icon { get; set; }
 
     [Parameter] public bool OpenInNewTab { get; set; }
+
+    private string? _computedHref;
+
+    protected override void OnInitialized() {
+        NavigationManager.LocationChanged += OnLocationChanged;
+        ComputeHref();
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e) {
+        ComputeHref();
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void ComputeHref() {
+        _computedHref = QueryParameterManager.AddTrackedQueryParameters(Href);
+    }
+
+    public void Dispose() {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
 }
 

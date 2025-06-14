@@ -3,22 +3,18 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Debugger;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Primitives;
+using InfiniLore.InfiniBlazor.QueryParameters;
 
 namespace InfiniLore.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableScoped<IVisualDebuggerProvider>]
-public class VisualDebuggerProvider(NavigationManager navigationManager) : IVisualDebuggerProvider {
+public class VisualDebuggerProvider(IQueryParameterManager queryParameterManager ) : IVisualDebuggerProvider {
     private DebuggerState State { get; set; } = DebuggerState.Disabled;
     
     public event Action? OnChange;
     public event Func<Task>? OnChangeAsync;
-    
-    private const string DebugQueryParam = "infiniblazor-debug";
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -32,45 +28,16 @@ public class VisualDebuggerProvider(NavigationManager navigationManager) : IVisu
             _ => throw new ArgumentOutOfRangeException()
         };
     
-        UpdateDebugQueryParam(State is DebuggerState.Enabled);
+        if (State is DebuggerState.Disabled) queryParameterManager.RemoveParam(QueryParameterNames.Debug);
+        else queryParameterManager.SetParam(QueryParameterNames.Debug, true);
 
         OnChange?.Invoke();
         if (OnChangeAsync is not null) await OnChangeAsync();
     }
-
-    public string AddDebugQueryParam(string uri) 
-        => State is DebuggerState.Enabled 
-            ? QueryHelpers.AddQueryString(uri, DebugQueryParam, "true")
-            : uri;
-
-    private void UpdateDebugQueryParam(bool enabled) {
-        Uri uri = navigationManager.ToAbsoluteUri(navigationManager.Uri);
-
-        string baseUri = uri.GetLeftPart(UriPartial.Path);
-        Dictionary<string, StringValues> query = QueryHelpers.ParseQuery(uri.Query);
-
-        var dict = new Dictionary<string, string?>();
-        foreach ((string k, StringValues v) in query) {
-            dict[k] = v.ToString();
-        }
-
-        if (enabled) dict[DebugQueryParam] = "true";
-        else dict.Remove(DebugQueryParam);
-
-        string newUri = QueryHelpers.AddQueryString(baseUri, dict);
-        navigationManager.NavigateTo(newUri, forceLoad: false);
-    }
     
     public void InitializeFromUrl() {
-        Uri uri = navigationManager.ToAbsoluteUri(navigationManager.Uri);
-        Dictionary<string, StringValues> query = QueryHelpers.ParseQuery(uri.Query);
-
-        if (query.TryGetValue(DebugQueryParam, out StringValues val) && bool.TryParse(val.ToString(), out bool enabled) && enabled) {
-            State = DebuggerState.Enabled;
-        }
-        else {
-            State = DebuggerState.Disabled;
-        }
+        bool enabled = queryParameterManager.GetParam<bool>(QueryParameterNames.Debug);
+        State = enabled ? DebuggerState.Enabled : DebuggerState.Disabled;
     }
 
     public async Task SetStateAsync(DebuggerState state) {

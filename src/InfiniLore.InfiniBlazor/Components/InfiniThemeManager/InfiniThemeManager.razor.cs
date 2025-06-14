@@ -38,6 +38,7 @@ public partial class InfiniThemeManager(
     }
 
     protected override async Task OnInitializedAsync() {
+        await themeStateProvider.InitializeFromQueryAsync();
         await PreloadInitialThemeCss();
     }
 
@@ -48,7 +49,7 @@ public partial class InfiniThemeManager(
         try {
             IThemeState state = themeStateProvider.GetState();
 
-            string? collectionName = await state.TryGetThemeCollectionNameAsync();
+            string? collectionName = state.ThemeCollectionName;
             if (collectionName.IsNullOrWhiteSpace()) {
                 logger.LogWarning("Could not find theme collection.");
                 return;
@@ -60,12 +61,7 @@ public partial class InfiniThemeManager(
                 return;
             }
 
-            string? mode = await state.TryGetThemeModeNameAsync();
-            if (state.IsNextModeRequested() && collection.TryGetNextThemeMode(mode, out ThemeMode nextMode)) {
-                await state.SetThemeModeNameAsync(nextMode.Name);
-                mode = nextMode.Name;
-            }
-
+            string? mode = state.ThemeModeName;
             if (mode.IsNullOrWhiteSpace()) {
                 mode = collection.GetFirstMode().Name;
             }
@@ -82,24 +78,24 @@ public partial class InfiniThemeManager(
 
             await jsRuntimeHelper.AddOrUpdateStyleElementAtHead(ThemeId, css);
             CurrentCss = css;
-            await InvokeAsync(StateHasChanged);
         }
         finally {
             _isUpdatingTheme = false;
         }
     }
 
+
     private async Task PreloadInitialThemeCss() {
         try {
             IThemeState state = themeStateProvider.GetState();
 
-            string? collectionName = await state.TryGetThemeCollectionNameAsync();
+            string? collectionName = state.ThemeCollectionName;
             if (collectionName.IsNullOrWhiteSpace()) return;
 
             IThemeCollection? collection = await themeStateProvider.TryGetCollectionAsync(collectionName);
             if (collection is null) return;
 
-            string? mode = await state.TryGetThemeModeNameAsync();
+            string? mode = state.ThemeModeName;
             if (mode.IsNullOrWhiteSpace()) {
                 mode = collection.GetFirstMode().Name;
             }
