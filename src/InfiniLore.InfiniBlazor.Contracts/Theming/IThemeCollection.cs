@@ -12,7 +12,8 @@ public interface IThemeCollection {
     bool IsEmpty { get; }
     bool IsBinary { get; }
     string CollectionName { get; }
-
+    IEnumerable<string> AllModeNames { get; }
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

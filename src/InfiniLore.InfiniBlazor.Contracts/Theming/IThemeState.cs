@@ -7,7 +7,8 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IThemeState {
-    string? ThemeCollectionName { get; }
-    string? ThemeModeName { get; }
-    bool IsBinaryThemeCollection { get; }
+    string? CollectionName { get; }
+    string? ModeName { get; }
+    bool IsBinaryCollection { get; }
+    string? FirstModeInCollectionName { get; }
 }

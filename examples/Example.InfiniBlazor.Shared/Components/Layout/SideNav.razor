@@ -118,16 +118,23 @@
         </InfiniSideNavButton>
 
 
-        <InfiniSideNavToggleButton
-            Value="@(ToggleState)"
-            ValueChanged="@OnThemeModeChanged"
-            OnIcon="sun"
-            OffIcon="moon">
-            <Icon>
-                <LiSun/>
-            </Icon>
-            <Text>Toggle Mode</Text>
-        </InfiniSideNavToggleButton>
+        @if (ThemeStateProvider.GetState().IsBinaryCollection) {
+            <InfiniSideNavToggleButton
+                Value="@(ToggleState)"
+                ValueChanged="@OnThemeModeChanged"
+                OnIcon="sun"
+                OffIcon="moon">
+                <Icon>
+                    <LiSun/>
+                </Icon>
+                <Text>Toggle Mode</Text>
+            </InfiniSideNavToggleButton>
+        } else {
+            <InfiniSideNavButton OnClick="OnThemeModeChanged">
+                <Icon><LiSun/></Icon>
+                <Text>Toggle Mode</Text>
+            </InfiniSideNavButton>
+        }
 
         @* User *@
         <InfiniSideNavUser UserName="InfiniLore">
@@ -166,7 +173,7 @@
     private async Task SwitchTheme() {
         IThemeState state = ThemeStateProvider.GetState();
 
-        string? themeCollectionName = state.ThemeCollectionName;
+        string? themeCollectionName = state.CollectionName;
         themeCollectionName = themeCollectionName switch {
             DefaultThemeCollection.Name => QueerThemeCollection.Name,
             _ => DefaultThemeCollection.Name
@@ -174,6 +181,8 @@
         Logger.Information("{a}", themeCollectionName);
 
         await ThemeStateProvider.TrySelectCollectionAsync(themeCollectionName);
+        ToggleState = state.ModeName != state.FirstModeInCollectionName;
+        
         StateHasChanged();
     }
 
@@ -212,7 +221,6 @@
     }
 
     private async Task OnThemeModeChanged() {
-        ToggleState = !ToggleState;
             
         if (!await ThemeStateProvider.TrySelectNextModeAsync()) {
             Logger.Warning("Could not activate next theme mode");
@@ -220,6 +228,10 @@
         else {
             Logger.Information("Activated next theme mode");
         }
+
+        IThemeState state = ThemeStateProvider.GetState();
+        ToggleState = state.ModeName != state.FirstModeInCollectionName;
+        
         StateHasChanged();
     }
 }

@@ -10,6 +10,7 @@ namespace InfiniLore.InfiniBlazor.Theming;
 public abstract class ThemeCollection : IThemeCollection {
     protected abstract OrderedDictionary<ThemeMode, ICssData> Modes { get; }
     public abstract string CollectionName { get; }
+    public IEnumerable<string> AllModeNames => Modes.Keys.Select(mode => mode.Name);
 
     public bool IsEmpty => Modes.IsEmpty();
     public bool IsBinary => Modes.Count == 2;

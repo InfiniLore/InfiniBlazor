@@ -49,7 +49,7 @@ public partial class InfiniThemeManager(
         try {
             IThemeState state = themeStateProvider.GetState();
 
-            string? collectionName = state.ThemeCollectionName;
+            string? collectionName = state.CollectionName;
             if (collectionName.IsNullOrWhiteSpace()) {
                 logger.LogWarning("Could not find theme collection.");
                 return;
@@ -61,7 +61,7 @@ public partial class InfiniThemeManager(
                 return;
             }
 
-            string? mode = state.ThemeModeName;
+            string? mode = state.ModeName;
             if (mode.IsNullOrWhiteSpace()) {
                 mode = collection.GetFirstMode().Name;
             }
@@ -89,13 +89,13 @@ public partial class InfiniThemeManager(
         try {
             IThemeState state = themeStateProvider.GetState();
 
-            string? collectionName = state.ThemeCollectionName;
+            string? collectionName = state.CollectionName;
             if (collectionName.IsNullOrWhiteSpace()) return;
 
             IThemeCollection? collection = await themeStateProvider.TryGetCollectionAsync(collectionName);
             if (collection is null) return;
 
-            string? mode = state.ThemeModeName;
+            string? mode = state.ModeName;
             if (mode.IsNullOrWhiteSpace()) {
                 mode = collection.GetFirstMode().Name;
             }
