@@ -37,7 +37,7 @@ public class JsLocalStorageHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper>
 
         }
         catch (Exception e) {
-            logger.Error(e, "Error getting value from local storage for key '{Key}'", key);
+            logger.Warning(e, "Error getting value from local storage for key '{Key}'", key);
             return default;
         }
     }
@@ -54,7 +54,7 @@ public class JsLocalStorageHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper>
             return true;
         }
         catch (Exception e) {
-            logger.Error(e, "Error setting value in local storage for key '{Key}'", key);
+            logger.Warning(e, "Error setting value in local storage for key '{Key}'", key);
             return false;
         }
     }
@@ -65,7 +65,7 @@ public class JsLocalStorageHelper(IJSRuntime jsRuntime, ILogger<JsRuntimeHelper>
             return true;
         }
         catch (Exception e) {
-            logger.Error(e, "Error removing value from local storage for key '{Key}'", key);
+            logger.Warning(e, "Error removing value from local storage for key '{Key}'", key);
             return false;
         }
     }

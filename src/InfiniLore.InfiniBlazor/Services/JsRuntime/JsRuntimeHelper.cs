@@ -25,8 +25,8 @@ public class JsRuntimeHelper(
         try {
             return await jsRuntime.InvokeAsync<int>("getInputSelectionStart", element);
         }
-        catch (JSException e) {
-            logger.LogError(e, "Error getting selection start");
+        catch (Exception e) {
+            logger.Warning(e, "Error getting selection start");
             return -1;
         }
     }
@@ -35,8 +35,8 @@ public class JsRuntimeHelper(
         try {
             return await jsRuntime.InvokeAsync<int>("getInputSelectionEnd", element);
         }
-        catch (JSException e) {
-            logger.LogError(e, "Error getting selection end");
+        catch (Exception e) {
+            logger.Warning(e, "Error getting selection end");
             return -1;
         }
     }
@@ -46,8 +46,8 @@ public class JsRuntimeHelper(
             var obj = await jsRuntime.InvokeAsync<Tuple<int, int>>("getInputSelection", element);
             return (Math.Max(0, obj.Item1), Math.Max(0, obj.Item2));
         }
-        catch (JSException e) {
-            logger.LogError(e, "Error getting selection");
+        catch (Exception e) {
+            logger.Warning(e, "Error getting selection");
             return (0, 0);
         }
     }
@@ -61,7 +61,7 @@ public class JsRuntimeHelper(
         try {
             await jsRuntime.InvokeVoidAsync("setInputSelectionRange", element, start, end);
         }
-        catch (JSException e) {
+        catch (Exception e) {
             logger.LogWarning(e, "Error setting selection range");
         }
     }
@@ -76,11 +76,11 @@ public class JsRuntimeHelper(
         try {
             await jsRuntime.InvokeVoidAsync("addPreventDefaultListener");
         }
-        catch (JSException e) {
-            logger.LogError(e, "Error adding prevent default listener");
-        }
         catch (JSDisconnectedException e) {
-            logger.LogDebug(e, "Prevent default listener already added or the server is in static rendering mode, usually during a reconnection.");
+            logger.Debug(e, "Prevent default listener already added or the server is in static rendering mode, usually during a reconnection.");
+        }
+        catch (Exception e) {
+            logger.Warning(e, "Error adding prevent default listener");
         }
     }
 
@@ -88,14 +88,14 @@ public class JsRuntimeHelper(
         try {
             await jsRuntime.InvokeVoidAsync("removePreventDefaultListener");
         }
-        catch (JSException e) {
-            logger.LogWarning(e, "failed to remove prevent default listener");
-        }
         catch (JSDisconnectedException e) {
-            logger.LogDebug(e, "Prevent default listener already removed or the server is in static rendering mode, usually during a reconnection.");
+            logger.Debug(e, "Prevent default listener already removed or the server is in static rendering mode, usually during a reconnection.");
         }
         catch (InvalidOperationException e) {
-            logger.LogDebug(e, "Prevent default listener already removed or the server is in static rendering mode, usually during a reconnection.");
+            logger.Debug(e, "Prevent default listener already removed or the server is in static rendering mode, usually during a reconnection.");
+        }
+        catch (Exception e) {
+            logger.LogWarning(e, "failed to remove prevent default listener");
         }
     }
 
@@ -103,8 +103,8 @@ public class JsRuntimeHelper(
         try {
             await jsRuntime.InvokeVoidAsync("setTextContent", element, text);
         }
-        catch (JSException e) {
-            logger.LogError(e, "Error setting text content");
+        catch (Exception e) {
+            logger.Warning(e, "Error setting text content");
         }
     }
 
@@ -112,8 +112,8 @@ public class JsRuntimeHelper(
         try {
             return await jsRuntime.InvokeAsync<string>("getTextContent", element);
         }
-        catch (JSException e) {
-            logger.LogError(e, "Error getting text content");
+        catch (Exception e) {
+            logger.Warning(e, "Error getting text content");
             return string.Empty;
         }
     }
@@ -122,8 +122,8 @@ public class JsRuntimeHelper(
         try {
             await jsRuntime.InvokeVoidAsync("addOrUpdateStyleElementAtHead", id, css);
         }
-        catch (JSException e) {
-            logger.LogError(e, "Error adding or updating style element at head");
+        catch (Exception e) {
+            logger.Warning(e, "Error adding or updating style element at head");
         }
     }
 
@@ -131,8 +131,8 @@ public class JsRuntimeHelper(
         try {
             await jsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", text);
         }
-        catch (JSException e) {
-            logger.LogError(e, "Error writing text to clipboard");
+        catch (Exception e) {
+            logger.Warning(e, "Error writing text to clipboard");
         }
     }
 }
