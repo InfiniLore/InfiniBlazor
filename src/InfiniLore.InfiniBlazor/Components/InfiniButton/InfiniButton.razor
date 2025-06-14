@@ -54,7 +54,8 @@
     [Parameter] public Size Size { get; set; } = Size.M;
     [Parameter] public string? Tooltip { get; set; }
     [Parameter] public Anchor TooltipAnchor { get; set; } = Anchor.Center | Anchor.Bottom;
-
+    [Parameter] public bool DisableTrackedQueryParams { get; set; }
+    
     private string? _computedHref;
 
     // ReSharper disable once UnusedParameter.Local
@@ -222,7 +223,7 @@
     }
     
     protected override void OnInitialized() {
-        if (Href is not null) NavigationManager.LocationChanged += OnLocationChanged;
+        if (Href is not null && !DisableTrackedQueryParams) NavigationManager.LocationChanged += OnLocationChanged;
         ComputeHref();
     }
 
@@ -232,11 +233,11 @@
     }
 
     private void ComputeHref() {
-        if (Href is not null) _computedHref = QueryParameterManager.AddTrackedQueryParameters(Href);
+        if (Href is not null && !DisableTrackedQueryParams) _computedHref = QueryParameterManager.AddTrackedQueryParameters(Href);
     }
 
     public override async ValueTask DisposeAsync() {
         await base.DisposeAsync();
-        if (Href is not null) NavigationManager.LocationChanged -= OnLocationChanged;
+        if (Href is not null && !DisableTrackedQueryParams) NavigationManager.LocationChanged -= OnLocationChanged;
     }
 }
