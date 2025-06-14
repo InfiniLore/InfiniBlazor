@@ -2,10 +2,9 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Toasting;
-using Tests.InfiniLore.InfiniBlazor.Toasting.DataSources;
+using Tests.InfiniLore.InfiniBlazor.DataSources;
 
-namespace Tests.InfiniLore.InfiniBlazor.Toasting;
-
+namespace Tests.InfiniLore.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
