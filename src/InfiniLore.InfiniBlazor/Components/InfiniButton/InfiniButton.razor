@@ -3,6 +3,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using Infinilore.InfiniBlazor
 @using InfiniLore.Lucide
+@using Microsoft.AspNetCore.Components.Routing
 
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -15,7 +16,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="@Class py-0.5 px-1.25">
     @if (Href.IsNotNullOrWhiteSpace()) {
-        <a href="@QueryParameterManager.AddTrackedQueryParameters(Href)"
+        <a href="@_computedHref"
            class="@ContainerClasses rounded-md group/button inline-flex items-center justify-center transition-all duration-150 transform cursor-pointer active:scale-95 hover:scale-105">
             @ButtonContent
         </a>
@@ -53,6 +54,8 @@
     [Parameter] public Size Size { get; set; } = Size.M;
     [Parameter] public string? Tooltip { get; set; }
     [Parameter] public Anchor TooltipAnchor { get; set; } = Anchor.Center | Anchor.Bottom;
+
+    private string? _computedHref;
 
     // ReSharper disable once UnusedParameter.Local
     private RenderFragment ButtonContent => __builder => {
@@ -216,5 +219,24 @@
     private async Task OnClickAsync(MouseEventArgs args) {
         if (Disabled) return;
         await OnClick.InvokeAsync(args);
+    }
+    
+    protected override void OnInitialized() {
+        if (Href is not null)  NavigationManager.LocationChanged += OnLocationChanged;
+        ComputeHref();
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e) {
+        ComputeHref();
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void ComputeHref() {
+        if (Href is not null) _computedHref = QueryParameterManager.AddTrackedQueryParameters(Href);
+    }
+
+    public override async ValueTask DisposeAsync() {
+        await base.DisposeAsync();
+        if (Href is not null) NavigationManager.LocationChanged -= OnLocationChanged;
     }
 }
