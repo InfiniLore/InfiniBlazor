@@ -222,7 +222,7 @@
     }
     
     protected override void OnInitialized() {
-        if (Href is not null)  NavigationManager.LocationChanged += OnLocationChanged;
+        if (Href is not null) NavigationManager.LocationChanged += OnLocationChanged;
         ComputeHref();
     }
 

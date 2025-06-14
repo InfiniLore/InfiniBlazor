@@ -7,7 +7,7 @@ namespace InfiniLore.InfiniBlazor.QueryParameters;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public static class QueryParameterNames {
-    public const string Debug = "ib-dbg";
-    public const string ThemeCollection= "ib-tc";
-    public const string ThemeMode = "ib-tm";
+    public const string Debug = "infblz-dbg";
+    public const string ThemeCollection= "infblz-tc";
+    public const string ThemeMode = "infblz-tm";
 }
