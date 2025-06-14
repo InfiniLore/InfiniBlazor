@@ -233,7 +233,9 @@
     }
 
     private void ComputeHref() {
-        if (Href is not null && !DisableTrackedQueryParams) _computedHref = QueryParameterManager.AddTrackedQueryParameters(Href);
+        _computedHref = Href is not null && !DisableTrackedQueryParams 
+            ? QueryParameterManager.AddTrackedQueryParameters(Href)
+            : Href;
     }
 
     public override async ValueTask DisposeAsync() {

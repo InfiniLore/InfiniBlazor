@@ -46,7 +46,9 @@
     }
 
     private void ComputeHref() {
-        if (!DisableTrackedQueryParams)  _computedHref = QueryParameterManager.AddTrackedQueryParameters(Href);
+        _computedHref = !DisableTrackedQueryParams 
+            ? QueryParameterManager.AddTrackedQueryParameters(Href)
+            : Href;
     }
 
     public void Dispose() {
