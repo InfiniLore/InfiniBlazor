@@ -7,8 +7,6 @@ namespace InfiniLore.InfiniBlazor.Toasting;
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IToastData {
     string Title { get; }
-    int DurationSeconds { get; }
-    IToastAppearance Appearance { get; }
     string? Body { get; }
     string? LinkHref { get; }
     string? LinkTitle { get; }

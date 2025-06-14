@@ -29,6 +29,10 @@ public static class ServiceCollectionExtensions {
             DefaultThemeMode = config.DefaultThemeMode,
         });
 
+        services.AddSingleton<IToastingConfig>(new FrozenToastingConfig {
+            AutoRemoveDuration = 5000
+        });
+
         return services;
     }
 }

@@ -14,7 +14,6 @@
 @rendermode InteractiveAuto
 @inject IThemeStateProvider ThemeStateProvider
 @inject IToastStorage ToastService
-@inject IToastAppearanceProvider ToastAppearanceProvider
 @inject IVisualDebuggerProvider DebuggerProvider
 @inject ILogger<SideNav> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -192,25 +191,11 @@
 
     private async Task OnCreateToastAsync() {
         IToastData[] messages = [
-            new ToastData(
-                "info",
-                10,
-                ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Info)
-            ),
-            new ToastData(
-                "success",
-                10,
-                ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Success)
-            ),
-            new ToastData(
-                "warning",
-                10,
-                ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Warning)
-            ),
+            new ToastData("info"),
+            new ToastData("success"),
+            new ToastData("warning"),
             new ToastData(
                 "error",
-                10,
-                ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Error),
                 "Some Data",
                 "#",
                 "click here"

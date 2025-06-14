@@ -1,13 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Toasting;
+namespace InfiniLore.InfiniBlazor.Config;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IToastAppearance {
-    string? IconName { get; }
-    string TailwindData { get; }
-    bool CanBeDismissed { get; }
+public class FrozenToastingConfig : IToastingConfig {
+    public required int AutoRemoveDuration { get; init; }
 }

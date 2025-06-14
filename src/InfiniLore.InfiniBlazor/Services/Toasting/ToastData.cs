@@ -8,8 +8,6 @@ namespace InfiniLore.InfiniBlazor.Toasting;
 // ---------------------------------------------------------------------------------------------------------------------
 public record ToastData(
     string Title,
-    int DurationSeconds,
-    IToastAppearance Appearance,
     string? Body = null,
     string? LinkHref = null,
     string? LinkTitle = null
