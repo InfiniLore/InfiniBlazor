@@ -5,13 +5,12 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits ComponentBase
-@inject NavigationManager NavigationManager
+@inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div @onclick="OnContainerClick"
-     class="@(MenuCollapsed ? "px-0 py-2" : "p-2") flex flex-nowrap items-center rounded hover:bg-(--sidebar-nav-button-hover) group w-full transition-all duration-300">
+     class="@(ConcatClasses(Class, MenuCollapsed ? "px-0 py-2" : "p-2")) flex flex-nowrap items-center rounded hover:bg-(--sidebar-nav-button-hover) group w-full transition-all duration-300">
     <span class="flex grow items-center w-full transition-all justify-between">
         <span class="@(MenuCollapsed ? "ml-1" : "-ml-1") flex-shrink-0 transition-all duration-300">
             @Icon

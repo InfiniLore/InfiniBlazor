@@ -5,7 +5,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits ComponentBase
+@inherits InfiniComponentBase
 @typeparam TItem
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
@@ -49,6 +49,5 @@
     [Parameter, EditorRequired] public RenderFragment Header { get; set; } = null!;
     [Parameter] public RenderFragment<TItem>? Content { get; set; }
     [Parameter] public RenderFragment<(TItem, int)>? ContentWithIndex { get; set; }
-    [Parameter] public string Class { get; set; } = string.Empty;
     [Parameter] public string EmptyMessage { get; set; } = "No entries found";
 }

@@ -1,12 +1,13 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using Infinilore.InfiniBlazor
+
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using Infinilore.InfiniBlazor
-@inherits ComponentBase
+@inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -16,12 +17,12 @@
             <InfiniToggleButton
                 Value="@Value"
                 ValueChanged="@ValueChanged"
-                Size="Size.Xs"
+                Size="Size.S"
                 StopPropagation="true"
                 Disabled="@Disabled"
                 OnIcon="@OnIcon"
                 OffIcon="@OffIcon"
-                Class="transform -translate-x-2"
+                Class="@Class transform -translate-x-2"
                 Color="@Color"/>
         </div>
     </div>
@@ -50,7 +51,7 @@
             Disabled="@Disabled"
             OnIcon="@OnIcon"
             OffIcon="@OffIcon"
-            Class="ml-2"
+            Class="@Class ml-2"
             Color="@Color"/>
     </div>
 }
