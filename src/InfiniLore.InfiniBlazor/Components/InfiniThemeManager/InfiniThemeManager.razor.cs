@@ -24,7 +24,7 @@ public partial class InfiniThemeManager(
     private const string BaseId = "infiniThemeManager-base-css";
     private const string ThemeId = "infiniThemeManager-selected-css";
     private bool _isUpdatingTheme;
-    private string? CurrentCss { get; set; }
+    private string? InitialCss { get; set; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -77,7 +77,7 @@ public partial class InfiniThemeManager(
             }
 
             await jsRuntimeHelper.AddOrUpdateStyleElementAtHead(ThemeId, css);
-            CurrentCss = css;
+            InitialCss = null; // Forget the initial state to free up memory
         }
         finally {
             _isUpdatingTheme = false;
@@ -102,7 +102,7 @@ public partial class InfiniThemeManager(
 
             if (collection.TryGetCssData(mode, out ICssData? cssData) &&
                 TryGetCssString(cssData, out string? css)) {
-                CurrentCss = css;
+                InitialCss = css;
             }
         }
         catch (Exception ex) {

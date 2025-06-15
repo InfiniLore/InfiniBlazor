@@ -17,7 +17,7 @@ public class Program {
         builder.Services.AddLogging();
 
         builder.Services.AddInfiniBlazor(config => {
-            config.RegisterTheme<QueerThemeCollection>();
+            config.RegisterTheme<PrideThemeCollection>();
             config.AddMarkdownLogic();
         });
         

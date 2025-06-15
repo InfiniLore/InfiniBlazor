@@ -14,7 +14,7 @@ public static class Program {
         var builder = WebAssemblyHostBuilder.CreateDefault(args);
         
         builder.Services.AddInfiniBlazor(config => {
-            config.RegisterTheme<QueerThemeCollection>();
+            config.RegisterTheme<PrideThemeCollection>();
             config.AddMarkdownLogic();
         });
         
