@@ -2,9 +2,12 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor;
+using Infinilore.InfiniBlazor.Components.ToastAppearances;
 using Infinilore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Config;
+using InfiniLore.InfiniBlazor.Theming;
 using InfiniLore.InfiniBlazor.Theming.Collections;
+using InfiniLore.InfiniBlazor.Toasting;
 using System.Collections.Frozen;
 
 // ReSharper disable once CheckNamespace
@@ -30,7 +33,10 @@ public static class ServiceCollectionExtensions {
         });
 
         services.AddSingleton<IToastingConfig>(new FrozenToastingConfig {
-            AutoRemoveDuration = 5000
+            AutoRemoveDuration = 5000,
+            AppearanceComponentMapping = new Dictionary<ToastAppearance, Type>() {
+                [ToastAppearance.Default] = typeof(DefaultToastMessage)
+            }
         });
 
         return services;

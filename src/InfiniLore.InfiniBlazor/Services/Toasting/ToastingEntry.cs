@@ -1,15 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Theming;
-
-namespace InfiniLore.InfiniBlazor.Config;
+namespace InfiniLore.InfiniBlazor.Toasting;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IThemingConfig {
-    IReadOnlyDictionary<string, IThemeCollection> RegisteredBaseThemes { get; }
-    string DefaultThemeCollectionName { get; }
-    ThemeMode DefaultThemeMode { get; } 
-}
+public record ToastingEntry(
+    IToastingData Data,
+    Type ComponentType
+) : IToastEntry;

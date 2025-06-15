@@ -5,10 +5,7 @@ namespace InfiniLore.InfiniBlazor.Toasting;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IToastData {
-    string Title { get; }
-    string? Body { get; }
-    string? LinkHref { get; }
-    string? LinkTitle { get; }
-    Guid Id { get; }
+public interface IToastEntry {
+    IToastingData Data { get; }
+    Type ComponentType { get; }
 }

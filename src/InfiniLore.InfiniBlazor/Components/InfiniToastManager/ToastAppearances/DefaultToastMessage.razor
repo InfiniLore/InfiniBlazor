@@ -1,0 +1,58 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using ToastMessageBase=InfiniLore.InfiniBlazor.Components.ToastAppearances.ToastMessageBase
+@using InfiniLore.InfiniBlazor.Components
+@using InfiniLore.Lucide
+@namespace Infinilore.InfiniBlazor.Components.ToastAppearances
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits ToastMessageBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="infini-bg-(--color-base-90) border-2 border-(--border) rounded-md text-(--text) py-2 px-4 transition-all duration-300 ease-in-out @(IsClosing ? "opacity-0 scale-90" : "opacity-100 scale-100")">
+    <div class="grid grid-cols-[auto_1fr_auto] grid-rows-[min-content,min-content,min-content] gap-2">
+        <div class="justify-self-start self-center">
+            <LiInfo/>
+        </div>
+        <div class="self-center mb-0.5">
+            @ToastData.Title
+        </div>
+        <div class="justify-self-end self-end -mr-3">
+            <InfiniButton
+                Variant="ButtonVariant.Transparent"
+                IconName="@LucideNames.X"
+                OnClick="@RequestCloseAsync" />
+        </div>
+
+        @if (ToastData.Body.IsNotNullOrWhiteSpace()) {
+            <div class="col-span-3 break-all">
+                @ToastData.Body
+            </div>
+        }
+
+        @if (ToastData.LinkHref.IsNotNullOrWhiteSpace()) {
+            <div class="col-span-3">
+                <InfiniButton
+                    Class="-ml-3"
+                    Href="@ToastData.LinkHref"
+                    Variant="ButtonVariant.Transparent"
+                    DisableTrackedQueryParams="@(!IsRelativeUri(ToastData.LinkHref))">
+                    @(ToastData.LinkTitle ?? ToastData.LinkHref)
+                </InfiniButton>
+            </div>
+        }
+    </div>
+</div>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    private static bool IsRelativeUri(string uriString) {
+        if (uriString.IsNullOrWhiteSpace()) return false;
+        if (!Uri.TryCreate(uriString, UriKind.RelativeOrAbsolute, out Uri? uri)) return false;
+        return !uri.IsAbsoluteUri;
+    }
+}

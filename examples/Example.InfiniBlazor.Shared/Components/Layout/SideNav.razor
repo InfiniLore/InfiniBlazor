@@ -13,7 +13,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InteractiveAuto
 @inject IThemeStateProvider ThemeStateProvider
-@inject IToastStorage ToastService
+@inject IToastingProvider ToastingProvider
 @inject IVisualDebuggerProvider DebuggerProvider
 @inject ILogger<SideNav> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -190,11 +190,11 @@
     }
 
     private async Task OnCreateToastAsync() {
-        IToastData[] messages = [
-            new ToastData("info"),
-            new ToastData("success"),
-            new ToastData("warning"),
-            new ToastData(
+        IToastingData[] messages = [
+            ToastingProvider.CreateToastData("info"),
+            ToastingProvider.CreateToastData("success"),
+            ToastingProvider.CreateToastData("warning"),
+            ToastingProvider.CreateToastData(
                 "error",
                 "Some Data",
                 "#",
@@ -202,7 +202,9 @@
             )
         ];
 
-        await Task.WhenAll(messages.Select(message => ToastService.AddToastAsync(message).AsTask()));
+        await Task.WhenAll(messages.Select(message => 
+            ToastingProvider.PublishToastAsync(message, ToastAppearance.Default)
+        ));
     }
 
     private async Task OnThemeModeChanged() {

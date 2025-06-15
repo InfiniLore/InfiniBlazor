@@ -1,14 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Toasting;
-
-namespace InfiniLore.InfiniBlazor.Config;
-
+namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class FrozenToastingConfig : IToastingConfig {
-    public required int AutoRemoveDuration { get; init; }
-    public required IReadOnlyDictionary<ToastAppearance, Type> AppearanceComponentMapping { get; init; }
+public interface IThemingConfig {
+    IReadOnlyDictionary<string, IThemeCollection> RegisteredBaseThemes { get; }
+    string DefaultThemeCollectionName { get; }
+    ThemeMode DefaultThemeMode { get; } 
 }

@@ -1,6 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Components.ToastAppearances
 @using InfiniLore.InfiniBlazor.Toasting
 
 @* ReSharper disable once CheckNamespace *@
@@ -8,15 +9,18 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inject IToastStorage ToastService
+@inject IToastingProvider ToastingProvider
 @implements IDisposable
 @rendermode InteractiveAuto
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@ContainerPositionClass fixed z-50 p-3 space-y-2 max-w-sm w-full max-h-screen overflow-y-auto hide-scrollbar">
-    @foreach (IToastData toast in ToastService.Messages) {
-        <InfiniToastMessage Message="toast"></InfiniToastMessage>
+<div class="@ContainerPositionClass fixed z-1000 p-3 space-y-2 max-w-sm w-full max-h-screen overflow-y-auto hide-scrollbar">
+    @foreach (IToastEntry toastEntry in ToastingProvider.GetToastEntries()) {
+        <DynamicComponent
+            @key="toastEntry.Data.Id" 
+            Type="@toastEntry.ComponentType"
+            Parameters="@ToastMessageBase.GetAsDynamicParameters(toastEntry.Data)"/>
     }
 </div>
 
@@ -38,13 +42,16 @@
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected override void OnInitialized() {
-        ToastService.OnChangeAsync += HandleToastServiceChange;
+        ToastingProvider.OnToastPublished += HandleToastServiceChange;
+        ToastingProvider.OnToastUnpublished += HandleToastServiceChange;
     }
+
     private async Task HandleToastServiceChange() {
         await InvokeAsync(StateHasChanged);
     }
 
     public void Dispose() {
-        ToastService.OnChangeAsync -= HandleToastServiceChange;
+        ToastingProvider.OnToastPublished -= HandleToastServiceChange;
+        ToastingProvider.OnToastUnpublished -= HandleToastServiceChange;
     }
 }
