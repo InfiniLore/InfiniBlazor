@@ -11,12 +11,10 @@
     --color-blue-500: oklch(62.3% 0.214 259.815);
     --color-blue-600: oklch(54.6% 0.245 262.881);
     --color-gray-400: oklch(70.7% 0.022 261.325);
-    --color-neutral-400: oklch(70.8% 0 0);
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
     --container-xs: 20rem;
-    --container-sm: 24rem;
     --text-xs: 0.75rem;
     --text-xs--line-height: calc(1 / 0.75);
     --text-sm: 0.875rem;
@@ -299,9 +297,6 @@
   .m-0 {
     margin: calc(var(--spacing) * 0);
   }
-  .my-0 {
-    margin-block: calc(var(--spacing) * 0);
-  }
   .my-0\.5 {
     margin-block: calc(var(--spacing) * 0.5);
   }
@@ -356,6 +351,34 @@
   .ml-2 {
     margin-left: calc(var(--spacing) * 2);
   }
+  .infini-scrollbar {
+    --infini-scrollbar-background: transparent;
+    &::-webkit-scrollbar {
+      width: 12px;
+      height: 12px;
+    }
+    &::-webkit-scrollbar-track {
+      background: var(--infini-scrollbar-background);
+      border-radius: 12px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: var(--color-base-40);
+      border-radius: 8px;
+      border: 2px solid transparent;
+      background-clip: content-box;
+      box-sizing: border-box;
+    }
+    &::-webkit-scrollbar-corner {
+      display: none;
+    }
+    &::-webkit-scrollbar-thumb:hover, &::-webkit-scrollbar-thumb:active {
+      cursor: pointer;
+      background: var(--color-base-30);
+      border: 1px solid transparent;
+      background-clip: content-box;
+      box-sizing: border-box;
+    }
+  }
   .block {
     display: block;
   }
@@ -381,30 +404,6 @@
   }
   .table {
     display: table;
-  }
-  .infini-scrollbar {
-    --infini-scrollbar-background: transparent;
-    &::-webkit-scrollbar {
-      width: 12px;
-      height: 12px;
-    }
-    &::-webkit-scrollbar-track {
-      background: var(--infini-scrollbar-background);
-    }
-    &::-webkit-scrollbar-thumb {
-      background: var(--color-base-40);
-      border-radius: 8px;
-      border: 2px solid var(--color-base-90);
-    }
-    &::-webkit-scrollbar-corner {
-      background: var(--color-base-90);
-    }
-    &::-webkit-scrollbar-thumb:hover {
-      background: var(--color-base-20);
-    }
-    &::-webkit-scrollbar-thumb:active {
-      background: var(--color-base-20);
-    }
   }
   .h-0 {
     height: calc(var(--spacing) * 0);
@@ -604,9 +603,6 @@
   .flex-none {
     flex: none;
   }
-  .flex-shrink {
-    flex-shrink: 1;
-  }
   .flex-shrink-0 {
     flex-shrink: 0;
   }
@@ -621,9 +617,6 @@
   }
   .table-auto {
     table-layout: auto;
-  }
-  .border-collapse {
-    border-collapse: collapse;
   }
   .-translate-x-1 {
     --tw-translate-x: calc(var(--spacing) * -1);
@@ -751,9 +744,6 @@
   }
   .gap-2 {
     gap: calc(var(--spacing) * 2);
-  }
-  .gap-3 {
-    gap: calc(var(--spacing) * 3);
   }
   .gap-3\.5 {
     gap: calc(var(--spacing) * 3.5);
@@ -895,9 +885,6 @@
   }
   .border-\(--border\) {
     border-color: var(--border);
-  }
-  .border-\(--border-color\) {
-    border-color: var(--border-color);
   }
   .border-\(--color-accent\) {
     border-color: var(--color-accent);
@@ -1088,9 +1075,6 @@
   .bg-\(--color-base-70\) {
     background-color: var(--color-base-70);
   }
-  .bg-\(--color-base-80\) {
-    background-color: var(--color-base-80);
-  }
   .bg-\(--color-base-90\) {
     background-color: var(--color-base-90);
   }
@@ -1136,10 +1120,6 @@
     background-image: linear-gradient( var(--stripe-angle), var(--stripe-color) var(--strip-scape-1), transparent var(--strip-scape-1), transparent var(--strip-scape-2), var(--stripe-color) var(--strip-scape-2), var(--stripe-color) var(--strip-scape-3), transparent var(--strip-scape-3), transparent var(--strip-scape-4), var(--stripe-color) var(--strip-scape-4) );
     background-size: 1rem 1rem;
   }
-  .from-black {
-    --tw-gradient-from: var(--color-black);
-    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-  }
   .from-black\/10 {
     --tw-gradient-from: color-mix(in srgb, #000 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -1180,9 +1160,6 @@
   }
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
-  }
-  .py-0 {
-    padding-block: calc(var(--spacing) * 0);
   }
   .py-0\.5 {
     padding-block: calc(var(--spacing) * 0.5);
@@ -1399,9 +1376,6 @@
   .text-\(--text-base-10\) {
     color: var(--text-base-10);
   }
-  .text-\(--text-error\) {
-    color: var(--text-error);
-  }
   .text-\(--toggle-icon-off\) {
     color: var(--toggle-icon-off);
   }
@@ -1500,10 +1474,6 @@
   }
   .ring-\(--usericon-ring\) {
     --tw-ring-color: var(--usericon-ring);
-  }
-  .outline {
-    outline-style: var(--tw-outline-style);
-    outline-width: 1px;
   }
   .transition {
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, visibility, content-visibility, overlay, pointer-events;
@@ -1619,9 +1589,6 @@
   }
   .infini-bg-\(--color-base-60\) {
     background: var(--color-base-60);
-  }
-  .infini-bg-\(--color-base-70\) {
-    background: var(--color-base-70);
   }
   .infini-bg-\(--color-base-80\) {
     background: var(--color-base-80);
@@ -2250,11 +2217,6 @@
   inherits: false;
   initial-value: 0 0 #0000;
 }
-@property --tw-outline-style {
-  syntax: "*";
-  inherits: false;
-  initial-value: solid;
-}
 @property --tw-duration {
   syntax: "*";
   inherits: false;
@@ -2304,7 +2266,6 @@
       --tw-ring-offset-width: 0px;
       --tw-ring-offset-color: #fff;
       --tw-ring-offset-shadow: 0 0 #0000;
-      --tw-outline-style: solid;
       --tw-duration: initial;
       --tw-ease: initial;
     }
