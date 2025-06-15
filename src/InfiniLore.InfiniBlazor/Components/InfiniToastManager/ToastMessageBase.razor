@@ -19,9 +19,9 @@
 
     <!-- Text Content -->
     <div class="flex flex-col justify-center grow">
-        <p class="@HeaderClasses font-semibold leading-tight">@ToastData.Title</p>
+        <p class="@HeaderClasses font-semibold leading-tight break-all">@ToastData.Title</p>
         @if (ToastData.Body.IsNotNullOrWhiteSpace()) {
-            <p class="@BodyClasses mt-1 leading-snug">@ToastData.Body</p>
+            <p class="@BodyClasses mt-1 leading-snug break-all">@ToastData.Body</p>
         }
 
         @if (ToastData.LinkHref.IsNotNullOrWhiteSpace()) {
