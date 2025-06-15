@@ -19,7 +19,7 @@ public class InfiniBlazorConfig(IServiceCollection collection) {
     internal ThemeMode DefaultThemeMode { get; private set; } = ThemeMode.DarkMode;
     internal string DefaultThemeCollectionName { get; private set; } = DefaultThemeCollection.Name;
     
-    public int ToastDefaultDuation { get; set; } = 5000;
+    public int ToastDefaultDuration { get; set; } = 5000;
     internal Dictionary<string, Type> ToastAppearanceComponentMappings { get; private set; } = new() {
         [ToastAppearance.Default.ToName()] = typeof(ToastMessageBase),
         [ToastAppearance.Info.ToName()] = typeof(InfoToastMessage),

@@ -32,7 +32,7 @@ public static class ServiceCollectionExtensions {
         });
 
         services.AddSingleton<IToastingConfig>(new FrozenToastingConfig {
-            AutoRemoveDuration = config.ToastDefaultDuation,
+            AutoRemoveDuration = config.ToastDefaultDuration,
             AppearanceComponentMapping = config.ToastAppearanceComponentMappings.ToFrozenDictionary(),
         });
 
