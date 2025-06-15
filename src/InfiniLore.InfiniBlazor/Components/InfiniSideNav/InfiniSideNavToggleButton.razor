@@ -22,7 +22,7 @@
                 Disabled="@Disabled"
                 OnIcon="@OnIcon"
                 OffIcon="@OffIcon"
-                Class="@Class transform -translate-x-2"
+                Class="@ConcatClasses(Class, "transform -translate-x-2")"
                 Color="@Color"/>
         </div>
     </div>
@@ -51,7 +51,7 @@
             Disabled="@Disabled"
             OnIcon="@OnIcon"
             OffIcon="@OffIcon"
-            Class="@Class ml-2"
+            Class="@ConcatClasses(Class, "ml-2")"
             Color="@Color"/>
     </div>
 }
