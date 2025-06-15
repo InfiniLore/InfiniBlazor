@@ -23,21 +23,21 @@ public class PrideThemeCollection : ThemeCollection {
             SidebarNavText = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
             SidebarNavTextHover = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
         },
+        
         [Pride] = new EmptyCssData {
-            ColorAccent = "rgb(85, 205, 252)",
             SidebarNav = "linear-gradient(to bottom, rgb(237, 34, 36), rgb(243, 91, 34), rgb(249, 150, 33), rgb(245, 193, 30), rgb(241, 235, 27) 27%, rgb(241, 235, 27), rgb(241, 235, 27) 33%, rgb(99, 199, 32), rgb(12, 155, 73), rgb(33, 135, 141), rgb(57, 84, 165), rgb(97, 55, 155), rgb(147, 40, 142))",
-            SidebarHamburger = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
-            SidebarNavText = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
-            SidebarNavTextHover = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
+            SidebarHamburger = $"var({InfiniBlazorCssDataVariableNames.ColorBase00})",
+            SidebarNavText = $"var({InfiniBlazorCssDataVariableNames.ColorBase00})",
+            SidebarNavTextHover = $"var({InfiniBlazorCssDataVariableNames.ColorBase00})",
         },
         
         // The remaining are inserted alphabetically
         [Agender] = new EmptyCssData {
             ColorAccent = "rgb(186, 244, 132)",
             SidebarNav = "linear-gradient(to bottom, rgb(0, 0, 0), rgb(103, 103, 103), rgb(205, 205, 205) 15%, rgb(230, 230, 230), rgb(255, 255, 255) 22%, rgb(255, 255, 255), rgb(255, 255, 255) 28%, rgb(228, 239, 201), rgb(186, 244, 132), rgb(228, 239, 201), rgb(255, 255, 255) 72%, rgb(255, 255, 255), rgb(255, 255, 255) 78%, rgb(230, 230, 230), rgb(205, 205, 205) 85%, rgb(103, 103, 103), rgb(0, 0, 0))",
-            SidebarHamburger = $"var({InfiniBlazorCssDataVariableNames.ColorBase00})",
-            SidebarNavText = $"var({InfiniBlazorCssDataVariableNames.ColorBase00})",
-            SidebarNavTextHover = $"var({InfiniBlazorCssDataVariableNames.ColorBase00})",
+            SidebarHamburger = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
+            SidebarNavText = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
+            SidebarNavTextHover = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
         },
         
         [Aromantic] = new EmptyCssData {
@@ -65,32 +65,32 @@ public class PrideThemeCollection : ThemeCollection {
         },
         
         [GayMan] = new EmptyCssData {
-            ColorAccent = "rgb(213, 44, 0)",
-            SidebarNav = "linear-gradient(to right, rgb(7, 141, 111), rgb(152, 202, 153), rgb(255, 255, 255) 45%, rgb(255, 255, 255), rgb(255, 255, 255) 55%, rgb(205, 208, 234), rgb(123, 173, 226) 70%, rgb(69, 76, 189), rgb(63, 26, 121))",
+            ColorAccent = "rgb(7, 141, 111)",
+            SidebarNav = "linear-gradient(to bottom, rgb(7, 141, 111), rgb(152, 202, 153), rgb(255, 255, 255) 45%, rgb(255, 255, 255), rgb(255, 255, 255) 55%, rgb(205, 208, 234), rgb(123, 173, 226) 70%, rgb(69, 76, 189), rgb(63, 26, 121))",
             SidebarHamburger = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
             SidebarNavText = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
             SidebarNavTextHover = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
         },
         
         [GenderFluid] = new EmptyCssData {
-            ColorAccent = "rgb(213, 44, 0)",
-            SidebarNav = "linear-gradient(to right, rgb(255, 120, 166), rgb(247, 196, 210), rgb(255, 255, 255) 23%, rgb(255, 255, 255), rgb(255, 255, 255) 28%, rgb(219, 148, 213), rgb(190, 20, 215), rgb(89, 22, 85), rgb(0, 0, 0) 73%, rgb(0, 0, 0), rgb(0, 0, 0) 78%, rgb(51, 36, 87), rgb(50, 60, 191))",
+            ColorAccent = "rgb(255, 120, 166)",
+            SidebarNav = "linear-gradient(to bottom, rgb(255, 120, 166), rgb(247, 196, 210), rgb(255, 255, 255) 23%, rgb(255, 255, 255), rgb(255, 255, 255) 28%, rgb(219, 148, 213), rgb(190, 20, 215), rgb(89, 22, 85), rgb(0, 0, 0) 73%, rgb(0, 0, 0), rgb(0, 0, 0) 78%, rgb(51, 36, 87), rgb(50, 60, 191))",
             SidebarHamburger = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
             SidebarNavText = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
             SidebarNavTextHover = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
         },
         
         [GenderQueer] = new EmptyCssData {
-            ColorAccent = "rgb(213, 44, 0)",
-            SidebarNav = "linear-gradient(to right, rgb(185, 154, 222), rgb(225, 209, 232), rgb(255, 255, 255) 45%, rgb(255, 255, 255), rgb(255, 255, 255) 55%, rgb(187, 191, 159), rgb(107, 142, 58))",
+            ColorAccent = "rgb(185, 154, 222)",
+            SidebarNav = "linear-gradient(to bottom, rgb(185, 154, 222), rgb(225, 209, 232), rgb(255, 255, 255) 45%, rgb(255, 255, 255), rgb(255, 255, 255) 55%, rgb(187, 191, 159), rgb(107, 142, 58))",
             SidebarHamburger = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
             SidebarNavText = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
             SidebarNavTextHover = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
         },
         
         [Intersex] = new EmptyCssData {
-            ColorAccent = "rgb(213, 44, 0)",
-            SidebarNav = "linear-gradient(to right, rgb(255, 217, 0), rgb(255, 217, 0), rgb(255, 217, 0) 10%, rgb(230, 54, 97), rgb(157, 0, 253), rgb(230, 54, 97), rgb(255, 217, 0) 90%, rgb(255, 217, 0), rgb(255, 217, 0))",
+            ColorAccent = "rgb(161, 3, 245)",
+            SidebarNav = "linear-gradient(to bottom, rgb(255, 217, 0), rgb(255, 217, 0), rgb(255, 217, 0) 10%, rgb(230, 54, 97), rgb(157, 0, 253), rgb(230, 54, 97), rgb(255, 217, 0) 90%, rgb(255, 217, 0), rgb(255, 217, 0))",
             SidebarHamburger = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
             SidebarNavText = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
             SidebarNavTextHover = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
@@ -105,27 +105,26 @@ public class PrideThemeCollection : ThemeCollection {
         },
         
         [NonBinary] = new EmptyCssData {
-            ColorAccent = "rgb(213, 44, 0)",
-            SidebarNav = "linear-gradient(to right, rgb(253, 219, 0), rgb(238, 212, 143), rgb(255, 255, 255) 30%, rgb(255, 255, 255), rgb(255, 255, 255) 36%, rgb(212, 181, 222), rgb(156, 92, 212), rgb(88, 50, 96), rgb(0, 0, 0))",
+            ColorAccent = "rgb(253, 219, 0)",
+            SidebarNav = "linear-gradient(to bottom, rgb(253, 219, 0), rgb(238, 212, 143), rgb(255, 255, 255) 30%, rgb(255, 255, 255), rgb(255, 255, 255) 36%, rgb(212, 181, 222), rgb(156, 92, 212), rgb(88, 50, 96), rgb(0, 0, 0))",
             SidebarHamburger = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
             SidebarNavText = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
             SidebarNavTextHover = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
         },
         
         [PanSexual] = new EmptyCssData {
-            ColorAccent = "rgb(213, 44, 0)",
-            SidebarNav = "linear-gradient(to right, rgb(255, 30, 140) 10%, rgb(255, 102, 57), rgb(255, 230, 29) 40%, rgb(255, 230, 29), rgb(255, 230, 29) 60%, rgb(87, 229, 98), rgb(31, 179, 253) 85%, rgb(31, 179, 253), rgb(31, 179, 253))",
+            ColorAccent = "rgb(255, 30, 140)",
+            SidebarNav = "linear-gradient(to bottom, rgb(255, 30, 140) 10%, rgb(255, 102, 57), rgb(255, 230, 29) 40%, rgb(255, 230, 29), rgb(255, 230, 29) 60%, rgb(87, 229, 98), rgb(31, 179, 253) 85%, rgb(31, 179, 253), rgb(31, 179, 253))",
             SidebarHamburger = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
             SidebarNavText = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
             SidebarNavTextHover = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
         },
         
         [PocInclusive] = new EmptyCssData {
-            ColorAccent = "rgb(213, 44, 0)",
-            SidebarNav = "linear-gradient(to right, rgb(0, 0, 0), rgb(54, 35, 18), rgb(120, 79, 23), rgb(181, 63, 27), rgb(237, 34, 36), rgb(243, 91, 34), rgb(249, 150, 33), rgb(245, 193, 30), rgb(241, 235, 27) 48%, rgb(241, 235, 27), rgb(241, 235, 27) 52%, rgb(99, 199, 32), rgb(12, 155, 73), rgb(33, 135, 141), rgb(57, 84, 165), rgb(97, 55, 155), rgb(147, 40, 142))",
-            SidebarHamburger = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
-            SidebarNavText = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
-            SidebarNavTextHover = $"var({InfiniBlazorCssDataVariableNames.ColorBase95})",
+            SidebarNav = "linear-gradient(to bottom, rgb(0, 0, 0), rgb(54, 35, 18), rgb(120, 79, 23), rgb(181, 63, 27), rgb(237, 34, 36), rgb(243, 91, 34), rgb(249, 150, 33), rgb(245, 193, 30), rgb(241, 235, 27) 48%, rgb(241, 235, 27), rgb(241, 235, 27) 52%, rgb(99, 199, 32), rgb(12, 155, 73), rgb(33, 135, 141), rgb(57, 84, 165), rgb(97, 55, 155), rgb(147, 40, 142))",
+            SidebarHamburger = $"var({InfiniBlazorCssDataVariableNames.ColorBase00})",
+            SidebarNavText = $"var({InfiniBlazorCssDataVariableNames.ColorBase00})",
+            SidebarNavTextHover = $"var({InfiniBlazorCssDataVariableNames.ColorBase00})",
         },
     };
     
