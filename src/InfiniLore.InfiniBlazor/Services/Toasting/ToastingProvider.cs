@@ -111,9 +111,6 @@ public class ToastingProvider(IToastingConfig toastingConfig, ILogger<ToastingPr
         }
     }
 
-    public IToastingData CreateToastData(string title, string? body = null, string? linkHref = null, string? linkTitle = null)
-        => new ToastingData(title, body, linkHref, linkTitle);
-
     public void AttachComponent(Guid id, IToastMessageBase component) {
         ToastMessageComponents.AddOrUpdate(
             id,

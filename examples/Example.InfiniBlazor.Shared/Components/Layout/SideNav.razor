@@ -190,19 +190,19 @@
     }
 
     private async Task OnCreateToastAsync() {
-        IToastingData defaultToast = ToastingProvider.CreateToastData("default");
-        IToastingData infoToast = ToastingProvider.CreateToastData("info");
-        IToastingData successToast = ToastingProvider.CreateToastData("success");
-        IToastingData warningToast = ToastingProvider.CreateToastData("warning");
-        IToastingData errorToast = ToastingProvider.CreateToastData(
+        IToastingData defaultToast = new ToastingData("default");
+        IToastingData infoToast = new ToastingData("info");
+        IToastingData successToast = new ToastingData("success");
+        IToastingData warningToast = new ToastingData("warning");
+        IToastingData errorToast = new ToastingData(
             "error",
             "Some DataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataData",
             "#",
             "click here"
         );
 
-        IToastingData debugToast = ToastingProvider.CreateToastData("Debug");
-        IToastingData achievementToast = ToastingProvider.CreateToastData("Achievement");
+        IToastingData debugToast = new ToastingData("Debug");
+        IToastingData achievementToast = new ToastingData("Achievement");
 
         await ToastingProvider.PublishToastAsync(defaultToast, ToastAppearance.Default, 0);
         await ToastingProvider.PublishToastAsync(infoToast, ToastAppearance.Info, 0);
