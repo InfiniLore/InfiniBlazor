@@ -24,7 +24,7 @@
         <button @onclick="OnClickAsync"
                 @onclick:stopPropagation="@StopPropagation"
                 type="@Type"
-                disabled="@Disabled"
+                disabled="@IsDisabled"
                 aria-label="@AriaLabel"
                 class="@ContainerClasses rounded-md group/button inline-flex items-center justify-center transition-all duration-150 transform">
             @ButtonContent
@@ -46,7 +46,7 @@
     [Parameter] public string? IconName { get; set; }
     [Parameter] public bool StopPropagation { get; set; } = true;
     [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
-    [Parameter] public bool Disabled { get; set; }
+    
     [Parameter] public string Type { get; set; } = "button";
     [Parameter] public string? AriaLabel { get; set; }
     [Parameter] public ButtonVariant Variant { get; set; } = ButtonVariant.Default;
@@ -55,6 +55,9 @@
     [Parameter] public string? Tooltip { get; set; }
     [Parameter] public Anchor TooltipAnchor { get; set; } = Anchor.Center | Anchor.Bottom;
     [Parameter] public bool DisableTrackedQueryParams { get; set; }
+    
+    [Parameter] public bool Disabled { get; set; }
+    protected override bool IsDisabled => Disabled || base.IsDisabled;
     
     private string? _computedHref;
 
@@ -76,7 +79,7 @@
     private const string ContainerReaction = "cursor-pointer active:scale-95 hover:scale-105";
     
     private string ContainerClasses => (Variant, Color) switch {
-        _ when Disabled => ConcatClasses(
+        _ when IsDisabled => ConcatClasses(
             ContainerSizeClasses,
             "infini-bg-(--button-disabled) text-(--button-disabled-text) opacity-50 cursor-not-allowed"
         ),
@@ -218,7 +221,7 @@
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private async Task OnClickAsync(MouseEventArgs args) {
-        if (Disabled) return;
+        if (IsDisabled) return;
         await OnClick.InvokeAsync(args);
     }
     

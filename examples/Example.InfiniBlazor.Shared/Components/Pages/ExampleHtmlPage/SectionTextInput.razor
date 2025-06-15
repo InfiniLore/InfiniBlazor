@@ -30,7 +30,8 @@
     <InfiniHeading3>Text Input with Submit</InfiniHeading3>
     <div class="space-y-4">
         <InfiniTextInput @bind-Value="@SubmitExample.Value"
-                         Placeholder="Type something else and submit...">
+                         Placeholder="Type something else and submit..." 
+                         Disabled="true">
             <InfiniButton OnClick="SubmitExample.OnSubmit">Submit</InfiniButton>
         </InfiniTextInput>
 

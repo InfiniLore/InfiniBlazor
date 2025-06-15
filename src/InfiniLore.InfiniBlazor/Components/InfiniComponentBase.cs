@@ -9,14 +9,17 @@ namespace Infinilore.InfiniBlazor.Components;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class InfiniComponentBase : ComponentBase, IAsyncDisposable {
+    [Inject] protected NavigationManager NavigationManager { get; set; } = null!;
+    [Inject] protected IVisualDebuggerProvider VisualDebugger { get; set; } = null!;
+    
     [Parameter] public string Class { get; set; } = string.Empty;
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
-    [Inject] protected NavigationManager NavigationManager { get; set; } = null!;
-
-    [Inject] protected IVisualDebuggerProvider VisualDebugger { get; set; } = null!;
     [Parameter] public virtual DebugColor DebugColor { get; set; } = DebugColor.Red;
 
+    // ReSharper disable once UnusedMemberInSuper.Global
+    protected virtual bool IsDisabled => CascadedDisabled;
+    [CascadingParameter(Name = nameof(CascadedDisabled))] public bool CascadedDisabled { get; set; }
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

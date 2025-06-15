@@ -5,6 +5,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.Lucide
 @inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
@@ -15,10 +16,10 @@
         <div class="flex flex-row pb-1">
             <InfiniLabel>@Label</InfiniLabel>
             <InfiniSpacer/>
-            <div class="text-(--text-error) text-sm">@ValidationMessage</div>
+            <div class="text-(--color-red) text-sm">@ValidationMessage</div>
         </div>
     }
-    
+
     <div class="flex items-center gap-x-2 ">
         @if (LabelLocation == LabelLocation.Left && Label.IsNotNullOrWhiteSpace()) {
             <InfiniLabel>@Label</InfiniLabel>
@@ -28,17 +29,18 @@
                @oninput="OnInputHandler"
                @onchange="OnChange"
                placeholder="@Placeholder"
-               disabled="@Disabled"
+               disabled="@IsDisabled"
                @attributes="@(AutoFocus ? new Dictionary<string, object> { { "autofocus", "autofocus" } } : null)"
                maxlength="@MaxLength"
-               class="@Class @(Disabled ? "opacity-50 cursor-not-allowed" : "hover:ring-2") w-full placeholder-(--color-base-40) bg-(--color-base-70) rounded-md border border-(--border-color) focus:ring-2 outline-none ring-(--color-accent) text-sm p-2 shadow-sm transition"/>
-        @if (ChildContent is not null) {
+               class="@Class @(IsDisabled ? "opacity-50 cursor-not-allowed infini-bg-(--color-base-90)" : "hover:ring-2 infini-bg-(--color-base-60)") w-full placeholder-(--color-base-40) rounded-md border border-(--border) focus:ring-2 outline-none ring-(--color-accent) text-sm p-2 shadow-sm transition"/>
+        
+        <CascadingValue TValue="bool" Name="@nameof(CascadedDisabled)" Value="@CascadedDisabled">
             @ChildContent
-        }
+        </CascadingValue>
     </div>
 
     @if (Label.IsNullOrWhiteSpace() && ValidationMessage.IsNotNullOrEmpty()) {
-        <div class="text-(--text-error) text-sm mt-1">@ValidationMessage</div>
+        <div class="text-(--color-red) text-sm mt-1">@ValidationMessage</div>
     }
 </div>
 
@@ -46,22 +48,34 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter,EditorRequired] public string? Value { get; set; }
+    [Parameter] [EditorRequired] public string? Value { get; set; }
     [Parameter] public EventCallback<string?> ValueChanged { get; set; }
     [Parameter] public EventCallback<ChangeEventArgs> OnChange { get; set; }
     [Parameter] public string Placeholder { get; set; } = string.Empty;
     [Parameter] public string Type { get; set; } = "text";
-    [Parameter] public bool Disabled { get; set; }
     [Parameter] public bool AutoFocus { get; set; }
     [Parameter] public int? MaxLength { get; set; }
     [Parameter] public string? ValidationMessage { get; set; }
-    
+
     [Parameter] public string? Label { get; set; }
     [Parameter] public LabelLocation LabelLocation { get; set; }
-    
+
+    [Parameter] public bool WithButton { get; set; }
+    [Parameter] public string? ButtonName { get; set; }
+    [Parameter] public string? ButtonIconName { get; set; } = LucideNames.Check;
+    [Parameter] public EventCallback<MouseEventArgs> OnButtonClick { get; set; }
+
+    [Parameter] public bool Disabled { get; set; }
+    protected override bool IsDisabled => Disabled || base.IsDisabled;
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    protected override void OnParametersSet() {
+        base.OnParametersSet();
+        CascadedDisabled = Disabled;
+    }
+
     private async Task OnInputHandler(ChangeEventArgs args) {
         if (args.Value is string value) {
             await ValueChanged.InvokeAsync(value);
