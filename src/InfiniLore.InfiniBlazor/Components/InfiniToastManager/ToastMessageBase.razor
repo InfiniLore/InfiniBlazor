@@ -1,6 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using Infinilore.InfiniBlazor
 @using InfiniLore.Lucide
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -16,6 +17,7 @@
             <LucideIcon Name="@IconName" class="shrink-0" Size="18" />
             <span class="flex-grow mb-0.5">@ToastData.Title</span>
             <InfiniButton
+                Size="Size.S"
                 Variant="ButtonVariant.Transparent"
                 IconName="@LucideNames.X"
                 OnClick="@RequestCloseAsync"
@@ -31,6 +33,7 @@
         @if (ToastData.LinkHref.IsNotNullOrWhiteSpace()) {
             <div class="col-span-3">
                 <InfiniButton
+                    Size="Size.Xs"
                     Class="-ml-3 underline"
                     Href="@ToastData.LinkHref"
                     Variant="ButtonVariant.Transparent"
