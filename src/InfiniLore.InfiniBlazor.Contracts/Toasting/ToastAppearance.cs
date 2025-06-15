@@ -11,5 +11,5 @@ public enum ToastAppearance {
     Info,
     Success,
     Warning,
-    Error
+    Error,
 }

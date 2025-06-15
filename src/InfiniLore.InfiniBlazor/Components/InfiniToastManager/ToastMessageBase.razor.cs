@@ -13,7 +13,7 @@ public partial class ToastMessageBase : ComponentBase, IToastMessageBase, IDispo
     [Inject] protected IToastingProvider ToastingProvider { get; set; } = null!;
     [Parameter, EditorRequired] public IToastingData ToastData { get; set; } = ToastingData.Empty;
     
-    protected virtual string HeaderClasses => "transparent";
+    protected virtual string HeaderClasses => "text-(--text)";
     protected virtual string BodyClasses => "infini-bg-(--color-base-90) border-(--border) text-(--text)";
     protected virtual string IconName => LucideNames.Info;
 

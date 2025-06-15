@@ -11,30 +11,24 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@BodyClasses text-sm border-2 rounded-md py-2 px-2 transition-all duration-300 ease-in-out @(IsClosing ? "opacity-0 scale-90" : "opacity-100 scale-100")">
-    <div class="flex flex-col gap-2">
-        <div class="@HeaderClasses col-span-3 flex items-center justify-between gap-2 pl-2 rounded-sm">
-            <LucideIcon Name="@IconName" class="shrink-0" Size="18" />
-            <span class="flex-grow mb-0.5">@ToastData.Title</span>
-            <InfiniButton
-                Size="Size.S"
-                Variant="ButtonVariant.Transparent"
-                IconName="@LucideNames.X"
-                OnClick="@RequestCloseAsync"
-                Class="shrink-0" />
-        </div>
+<div class="@BodyClasses flex flex-row gap-2 infini-bg-(--color-base-80) text-(--text) text-sm rounded-lg p-2 shadow-lg border border-(--border) transition-all duration-300 ease-in-out @(IsClosing ? "opacity-0 scale-95" : "opacity-100 scale-100")">
+    <!-- Icon -->
+    <div class="@(ToastData.Body.IsNotNullOrWhiteSpace() ? "items-start" : " items-center") flex ">
+        <LucideIcon Name="@IconName" Class="@(HeaderClasses)"/>
+    </div>
 
+    <!-- Text Content -->
+    <div class="flex flex-col justify-center grow">
+        <p class="@HeaderClasses font-semibold leading-tight">@ToastData.Title</p>
         @if (ToastData.Body.IsNotNullOrWhiteSpace()) {
-            <div class="col-span-3 break-all">
-                @ToastData.Body
-            </div>
+            <p class="@BodyClasses mt-1 leading-snug">@ToastData.Body</p>
         }
 
         @if (ToastData.LinkHref.IsNotNullOrWhiteSpace()) {
-            <div class="col-span-3">
+            <div class="flex gap-4">
                 <InfiniButton
                     Size="Size.Xs"
-                    Class="-ml-3 underline"
+                    Class="underline text-sm -ml-3"
                     Href="@ToastData.LinkHref"
                     Variant="ButtonVariant.Transparent"
                     DisableTrackedQueryParams="@(!IsRelativeUri(ToastData.LinkHref))">
@@ -43,4 +37,12 @@
             </div>
         }
     </div>
+
+    <!-- Close Button -->
+    <InfiniButton
+        Class="@HeaderClasses"
+        Size="Size.S"
+        Variant="ButtonVariant.Transparent"
+        IconName="@LucideNames.X"
+        OnClick="@RequestCloseAsync" />
 </div>

@@ -201,11 +201,11 @@
             "click here"
         );
 
-        await ToastingProvider.PublishToastAsync(defaultToast, ToastAppearance.Default);
-        await ToastingProvider.PublishToastAsync(infoToast, ToastAppearance.Info);
-        await ToastingProvider.PublishToastAsync(successToast, ToastAppearance.Success);
-        await ToastingProvider.PublishToastAsync(warningToast, ToastAppearance.Warning);
-        await ToastingProvider.PublishToastAsync(errorToast, ToastAppearance.Error);
+        await ToastingProvider.PublishToastAsync(defaultToast, ToastAppearance.Default, 0);
+        await ToastingProvider.PublishToastAsync(infoToast, ToastAppearance.Info, 0);
+        await ToastingProvider.PublishToastAsync(successToast, ToastAppearance.Success, 0);
+        await ToastingProvider.PublishToastAsync(warningToast, ToastAppearance.Warning, 0);
+        await ToastingProvider.PublishToastAsync(errorToast, ToastAppearance.Error, 0);
     }
 
     private async Task OnThemeModeChanged() {
