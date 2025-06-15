@@ -15,7 +15,7 @@ public partial class ToastMessageBase : ComponentBase, IToastMessageBase, IDispo
     
     protected virtual string HeaderClasses => "text-(--text)";
     protected virtual string BodyClasses => "infini-bg-(--color-base-90) border-(--border) text-(--text)";
-    protected virtual string IconName => LucideNames.Info;
+    protected virtual string IconName => LucideNames.CircleHelp;
 
     private bool IsClosing { get; set; }
     

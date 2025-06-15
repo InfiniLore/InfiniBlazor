@@ -28,7 +28,7 @@
             <div class="flex gap-4">
                 <InfiniButton
                     Size="Size.Xs"
-                    Class="underline text-sm -ml-3"
+                    Class="@(HeaderClasses + " underline text-sm -ml-3 ")"
                     Href="@ToastData.LinkHref"
                     Variant="ButtonVariant.Transparent"
                     DisableTrackedQueryParams="@(!IsRelativeUri(ToastData.LinkHref))">

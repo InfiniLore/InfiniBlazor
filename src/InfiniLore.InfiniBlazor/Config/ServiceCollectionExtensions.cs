@@ -41,6 +41,8 @@ public static class ServiceCollectionExtensions {
                 [ToastAppearance.Success] = typeof(SuccessToastMessage),
                 [ToastAppearance.Warning] = typeof(WarningToastMessage),
                 [ToastAppearance.Error] = typeof(ErrorToastMessage),
+                [ToastAppearance.Debug] = typeof(DebugToastMessage),
+                [ToastAppearance.Achievement] = typeof(AchievementToastMessage),
             }
         });
 

@@ -1330,6 +1330,9 @@
   .whitespace-pre {
     white-space: pre;
   }
+  .\!text-\(--text\) {
+    color: var(--text) !important;
+  }
   .text-\(--button-dark-text\) {
     color: var(--button-dark-text);
   }
@@ -1357,8 +1360,17 @@
   .text-\(--color-base-00\) {
     color: var(--color-base-00);
   }
+  .text-\(--color-base-05\) {
+    color: var(--color-base-05);
+  }
+  .text-\(--color-base-5\) {
+    color: var(--color-base-5);
+  }
   .text-\(--color-base-10\) {
     color: var(--color-base-10);
+  }
+  .text-\(--color-base-15\) {
+    color: var(--color-base-15);
   }
   .text-\(--color-base-20\) {
     color: var(--color-base-20);
@@ -1405,11 +1417,17 @@
   .text-\(--color-orange-light\) {
     color: var(--color-orange-light);
   }
+  .text-\(--color-orange-light\)\! {
+    color: var(--color-orange-light) !important;
+  }
   .text-\(--color-pink\) {
     color: var(--color-pink);
   }
   .text-\(--color-purple\) {
     color: var(--color-purple);
+  }
+  .text-\(--color-purple-light\) {
+    color: var(--color-purple-light);
   }
   .text-\(--color-red\) {
     color: var(--color-red);
@@ -1423,6 +1441,9 @@
   .text-\(--color-yellow\) {
     color: var(--color-yellow);
   }
+  .text-\(--color-yellow-light\) {
+    color: var(--color-yellow-light);
+  }
   .text-\(--page-text\) {
     color: var(--page-text);
   }
@@ -1434,6 +1455,9 @@
   }
   .text-\(--text\) {
     color: var(--text);
+  }
+  .text-\(--text\)\! {
+    color: var(--text) !important;
   }
   .text-\(--text-base-10\) {
     color: var(--text-base-10);
@@ -1701,6 +1725,9 @@
   .infini-bg-\(--color-purple\) {
     background: var(--color-purple);
   }
+  .infini-bg-\(--color-purple-dark\) {
+    background: var(--color-purple-dark);
+  }
   .infini-bg-\(--color-red\) {
     background: var(--color-red);
   }
@@ -1712,6 +1739,9 @@
   }
   .infini-bg-\(--color-yellow\) {
     background: var(--color-yellow);
+  }
+  .infini-bg-\(--color-yellow-dark\) {
+    background: var(--color-yellow-dark);
   }
   .infini-bg-\(--page\) {
     background: var(--page);
@@ -2054,6 +2084,46 @@
       scale: var(--tw-scale-x) var(--tw-scale-y);
     }
   }
+  .\[\&_svg\]\:text-\(--color-blue-light\) {
+    & svg {
+      color: var(--color-blue-light);
+    }
+  }
+  .\[\&_svg\]\:text-\(--color-green-light\) {
+    & svg {
+      color: var(--color-green-light);
+    }
+  }
+  .\[\&_svg\]\:text-\(--color-orange-light\) {
+    & svg {
+      color: var(--color-orange-light);
+    }
+  }
+  .\[\&_svg\]\:text-\(--color-purple-light\) {
+    & svg {
+      color: var(--color-purple-light);
+    }
+  }
+  .\[\&_svg\]\:text-\(--color-red-light\) {
+    & svg {
+      color: var(--color-red-light);
+    }
+  }
+  .\[\&_svg\]\:text-\(--color-yellow-light\) {
+    & svg {
+      color: var(--color-yellow-light);
+    }
+  }
+  .\[\&_svg\]\:text-\[--color-orange-light\] {
+    & svg {
+      color: --color-orange-light;
+    }
+  }
+  .\[\&_svg\:hover\]\:text-\(--color-accent\) {
+    & svg:hover {
+      color: var(--color-accent);
+    }
+  }
   .\[\&\:has\(\>input\[type\=checkbox\]\)\]\:list-none {
     &:has(>input[type=checkbox]) {
       list-style-type: none;
@@ -2067,6 +2137,11 @@
   .\[\&\>ul\]\:mt-2 {
     &>ul {
       margin-top: calc(var(--spacing) * 2);
+    }
+  }
+  .\[\&svg\]\:text-\[--color-orange-light\] {
+    &svg {
+      color: --color-orange-light;
     }
   }
 }
