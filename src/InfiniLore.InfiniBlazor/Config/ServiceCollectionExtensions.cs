@@ -2,8 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor;
-using InfiniLore.InfiniBlazor.Components;
-using InfiniLore.InfiniBlazor.Components.ToastAppearances;
 using Infinilore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Theming;
@@ -34,16 +32,8 @@ public static class ServiceCollectionExtensions {
         });
 
         services.AddSingleton<IToastingConfig>(new FrozenToastingConfig {
-            AutoRemoveDuration = 5000,
-            AppearanceComponentMapping = new Dictionary<ToastAppearance, Type> {
-                [ToastAppearance.Default] = typeof(ToastMessageBase),
-                [ToastAppearance.Info] = typeof(InfoToastMessage),
-                [ToastAppearance.Success] = typeof(SuccessToastMessage),
-                [ToastAppearance.Warning] = typeof(WarningToastMessage),
-                [ToastAppearance.Error] = typeof(ErrorToastMessage),
-                [ToastAppearance.Debug] = typeof(DebugToastMessage),
-                [ToastAppearance.Achievement] = typeof(AchievementToastMessage),
-            }
+            AutoRemoveDuration = config.ToastDefaultDuation,
+            AppearanceComponentMapping = config.ToastAppearanceComponentMappings.ToFrozenDictionary(),
         });
 
         return services;

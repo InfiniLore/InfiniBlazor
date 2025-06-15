@@ -10,5 +10,5 @@ namespace InfiniLore.InfiniBlazor.Config;
 // ---------------------------------------------------------------------------------------------------------------------
 public class FrozenToastingConfig : IToastingConfig {
     public required int AutoRemoveDuration { get; init; }
-    public required IReadOnlyDictionary<ToastAppearance, Type> AppearanceComponentMapping { get; init; }
+    public required IReadOnlyDictionary<string, Type> AppearanceComponentMapping { get; init; }
 }

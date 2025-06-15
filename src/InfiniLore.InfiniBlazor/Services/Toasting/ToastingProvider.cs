@@ -25,7 +25,9 @@ public class ToastingProvider(IToastingConfig toastingConfig, ILogger<ToastingPr
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public async Task PublishToastAsync(IToastingData data, ToastAppearance appearance, int displayDuration = -1) {
+    public Task PublishToastAsync(IToastingData data, ToastAppearance appearance, int displayDuration = -1) 
+        => PublishToastAsync(data, appearance.ToName(), displayDuration);
+    public async Task PublishToastAsync(IToastingData data, string appearanceName, int displayDuration = -1) {
         if (displayDuration < -1) {
             logger.Warning("Invalid display duration: {duration}", displayDuration);
             return;
@@ -36,8 +38,8 @@ public class ToastingProvider(IToastingConfig toastingConfig, ILogger<ToastingPr
             ? toastingConfig.AutoRemoveDuration
             : displayDuration;
 
-        if (!toastingConfig.AppearanceComponentMapping.TryGetValue(appearance, out Type? componentType)) {
-            logger.Warning("Invalid toast appearance: {appearance}", appearance);
+        if (!toastingConfig.AppearanceComponentMapping.TryGetValue(appearanceName, out Type? componentType)) {
+            logger.Warning("Invalid toast appearance: {appearance}", appearanceName);
             return;
         }
 

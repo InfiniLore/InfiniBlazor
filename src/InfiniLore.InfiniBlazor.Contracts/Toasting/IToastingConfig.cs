@@ -7,5 +7,5 @@ namespace InfiniLore.InfiniBlazor.Toasting;
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IToastingConfig {
     int AutoRemoveDuration { get; }
-    IReadOnlyDictionary<ToastAppearance, Type> AppearanceComponentMapping { get; }
+    IReadOnlyDictionary<string, Type> AppearanceComponentMapping { get; }
 }
