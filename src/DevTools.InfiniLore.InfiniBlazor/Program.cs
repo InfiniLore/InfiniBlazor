@@ -24,8 +24,7 @@ public static class Program {
             "InfiniLore.InfiniBlazor",
             "InfiniLore.InfiniBlazor.Contracts",
             "InfiniLore.InfiniBlazor.SourceGenerators",
-            "InfiniLore.InfiniBlazor.Markdown",
-            "InfiniLore.InfiniBlazor.Toasting"
+            "InfiniLore.InfiniBlazor.Markdown"
         );
         string oneLineArgs = InputHelper.ToOneLine(args).Replace("%PROJECTS%", projects);
         
