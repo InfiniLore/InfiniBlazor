@@ -34,10 +34,7 @@
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static string GetContainerClasses()
-        => GetContainerClassesNoHover() + " hover:bg-(--sidebar-nav-button-hover)";
-    
-    public static string GetContainerClassesNoHover() 
-        => "flex flex-nowrap items-center infini-bg-(--sidebar-nav-button) rounded group w-full justify-start p-2";
+    public static string ContainerClasses => ConcatClasses(ContainerClassesNoHover, "hover:bg-(--sidebar-nav-button-hover)");
+    public static string ContainerClassesNoHover => "flex flex-nowrap items-center infini-bg-(--sidebar-nav-button) rounded group w-full justify-start p-2";
 }
 
