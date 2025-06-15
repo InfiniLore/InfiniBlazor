@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using Example.InfiniBlazor.Shared.Themes;
 using InfiniLore.InfiniBlazor.Markdown.Config;
-using InfiniLore.InfiniBlazor.Toasting.Config;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace Example.InfiniBlazor.Client;
@@ -17,7 +16,6 @@ public static class Program {
         builder.Services.AddInfiniBlazor(config => {
             config.RegisterTheme<QueerThemeCollection>();
             config.AddMarkdownLogic();
-            config.AddToastingLogic();
         });
         
         builder.Services.AddHttpClient();

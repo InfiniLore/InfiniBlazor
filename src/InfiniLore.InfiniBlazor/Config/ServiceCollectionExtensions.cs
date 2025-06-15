@@ -4,7 +4,9 @@
 using InfiniLore.InfiniBlazor;
 using Infinilore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Config;
+using InfiniLore.InfiniBlazor.Theming;
 using InfiniLore.InfiniBlazor.Theming.Collections;
+using InfiniLore.InfiniBlazor.Toasting;
 using System.Collections.Frozen;
 
 // ReSharper disable once CheckNamespace
@@ -27,6 +29,11 @@ public static class ServiceCollectionExtensions {
             RegisteredBaseThemes = config.RegisteredBaseThemeCollections.ToFrozenDictionary(),
             DefaultThemeCollectionName = config.DefaultThemeCollectionName,
             DefaultThemeMode = config.DefaultThemeMode,
+        });
+
+        services.AddSingleton<IToastingConfig>(new FrozenToastingConfig {
+            AutoRemoveDuration = config.ToastDefaultDuation,
+            AppearanceComponentMapping = config.ToastAppearanceComponentMappings.ToFrozenDictionary(),
         });
 
         return services;

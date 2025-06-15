@@ -13,8 +13,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InteractiveAuto
 @inject IThemeStateProvider ThemeStateProvider
-@inject IToastStorage ToastService
-@inject IToastAppearanceProvider ToastAppearanceProvider
+@inject IToastingProvider ToastingProvider
 @inject IVisualDebuggerProvider DebuggerProvider
 @inject ILogger<SideNav> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -191,33 +190,27 @@
     }
 
     private async Task OnCreateToastAsync() {
-        IToastData[] messages = [
-            new ToastData(
-                "info",
-                10,
-                ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Info)
-            ),
-            new ToastData(
-                "success",
-                10,
-                ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Success)
-            ),
-            new ToastData(
-                "warning",
-                10,
-                ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Warning)
-            ),
-            new ToastData(
-                "error",
-                10,
-                ToastAppearanceProvider.GetAppearanceOrDefault(StandardToastAppearance.Error),
-                "Some Data",
-                "#",
-                "click here"
-            )
-        ];
+        IToastingData defaultToast = new ToastingData("default");
+        IToastingData infoToast = new ToastingData("info");
+        IToastingData successToast = new ToastingData("success");
+        IToastingData warningToast = new ToastingData("warning");
+        IToastingData errorToast = new ToastingData(
+            "error",
+            "Some DataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataData",
+            "#",
+            "click here"
+        );
 
-        await Task.WhenAll(messages.Select(message => ToastService.AddToastAsync(message).AsTask()));
+        IToastingData debugToast = new ToastingData("Debug");
+        IToastingData achievementToast = new ToastingData("Achievement");
+
+        await ToastingProvider.PublishToastAsync(defaultToast, ToastAppearance.Default, 0);
+        await ToastingProvider.PublishToastAsync(infoToast, ToastAppearance.Info, 0);
+        await ToastingProvider.PublishToastAsync(successToast, ToastAppearance.Success, 0);
+        await ToastingProvider.PublishToastAsync(warningToast, ToastAppearance.Warning, 0);
+        await ToastingProvider.PublishToastAsync(errorToast, ToastAppearance.Error, 0);
+        await ToastingProvider.PublishToastAsync(debugToast, ToastAppearance.Debug, 0);
+        await ToastingProvider.PublishToastAsync(achievementToast, ToastAppearance.Achievement, 0);
     }
 
     private async Task OnThemeModeChanged() {

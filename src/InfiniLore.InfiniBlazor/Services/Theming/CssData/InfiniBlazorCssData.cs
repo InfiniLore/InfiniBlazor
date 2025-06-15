@@ -18,36 +18,36 @@ public partial record InfiniBlazorCssData : ICssData {
     
     #region Colors
     public string ColorRed { get; init; } = "#ef4444";
-    public string ColorRedLight { get; init; } = "#fecaca";
-    public string ColorRedDark { get; init; } = "#b91c1c";
+    public string ColorRedLight { get; init; } = "#f15e5e";
+    public string ColorRedDark { get; init; } = "#500707";
     
     public string ColorOrange { get; init; } = "#f97316";
-    public string ColorOrangeLight { get; init; } = "#fdba74";
-    public string ColorOrangeDark { get; init; } = "#c2410c";
+    public string ColorOrangeLight { get; init; } = "#fa9247";
+    public string ColorOrangeDark { get; init; } = "#5e2902";
 
     public string ColorYellow { get; init; } = "#eab308";
-    public string ColorYellowLight { get; init; } = "#fef08a";
-    public string ColorYellowDark { get; init; } = "#a16207";
+    public string ColorYellowLight { get; init; } = "#f8cb45";
+    public string ColorYellowDark { get; init; } = "#423202";
     
     public string ColorGreen { get; init; } = "#22c55e";
-    public string ColorGreenLight { get; init; } = "#86efac";
-    public string ColorGreenDark { get; init; } = "#15803d";
+    public string ColorGreenLight { get; init; } = "#31dc70";
+    public string ColorGreenDark { get; init; } = "#072a14";
     
     public string ColorCyan { get; init; } = "#06b6d4";
-    public string ColorCyanLight { get; init; } = "#67e8f9";
-    public string ColorCyanDark { get; init; } = "#0e7490";
+    public string ColorCyanLight { get; init; } = "#36dbf9";
+    public string ColorCyanDark { get; init; } = "#01272e";
     
     public string ColorBlue { get; init; } = "#3b82f6";
-    public string ColorBlueLight { get; init; } = "#93c5fd";
-    public string ColorBlueDark { get; init; } = "#1d4ed8";
+    public string ColorBlueLight { get; init; } = "#669ef8";
+    public string ColorBlueDark { get; init; } = "#031a3f";
     
     public string ColorPurple { get; init; } = "#a855f7";
-    public string ColorPurpleLight { get; init; } = "#d8b4fe";
-    public string ColorPurpleDark { get; init; } = "#7e22ce";
+    public string ColorPurpleLight { get; init; } = "#bb79f9";
+    public string ColorPurpleDark { get; init; } = "#31045a";
     
     public string ColorPink { get; init; } = "#ec4899";
-    public string ColorPinkLight { get; init; } = "#f9a8d4";
-    public string ColorPinkDark { get; init; } = "#be185d";
+    public string ColorPinkLight { get; init; } = "#f17bb6";
+    public string ColorPinkDark { get; init; } = "#4f082c";
     
     public string ColorGray { get; init; } = "#4b5563";
     public string ColorGrayLight { get; init; } = "#9ca3af";

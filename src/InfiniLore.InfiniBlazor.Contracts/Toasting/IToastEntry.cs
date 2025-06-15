@@ -2,17 +2,10 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 namespace InfiniLore.InfiniBlazor.Toasting;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public record ToastData(
-    string Title,
-    int DurationSeconds,
-    IToastAppearance Appearance,
-    string? Body = null,
-    string? LinkHref = null,
-    string? LinkTitle = null
-) : IToastData {
-    public Guid Id { get; init; } = Guid.NewGuid();
+public interface IToastEntry {
+    IToastingData Data { get; }
+    Type ComponentType { get; }
 }

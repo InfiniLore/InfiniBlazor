@@ -1,14 +1,15 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Theming;
+using InfiniLore.Lucide;
 
-namespace Infinilore.InfiniBlazor.Config;
+namespace InfiniLore.InfiniBlazor.Components.ToastAppearances;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class FrozenThemingConfig : IThemingConfig{
-    public required IReadOnlyDictionary<string, IThemeCollection> RegisteredBaseThemes { get; init; }
-    public required string DefaultThemeCollectionName { get; init; }
-    public required ThemeMode DefaultThemeMode { get; init; }
+public class InfoToastMessage : ToastMessageBase {
+    protected override string HeaderClasses => "text-(--color-blue) [&_svg]:text-(--color-blue-light) [&_svg:hover]:text-(--color-accent)";
+    protected override string BodyClasses => "infini-bg-(--color-blue-dark) border-none text-(--color-base-10)";
+    protected override string IconName => LucideNames.Info;
 }

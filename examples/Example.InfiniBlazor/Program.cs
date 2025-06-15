@@ -5,7 +5,6 @@ using Example.InfiniBlazor.Components;
 using Example.InfiniBlazor.Shared;
 using Example.InfiniBlazor.Shared.Themes;
 using InfiniLore.InfiniBlazor.Markdown.Config;
-using InfiniLore.InfiniBlazor.Toasting.Config;
 
 namespace Example.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -20,7 +19,6 @@ public class Program {
         builder.Services.AddInfiniBlazor(config => {
             config.RegisterTheme<QueerThemeCollection>();
             config.AddMarkdownLogic();
-            config.AddToastingLogic();
         });
         
         builder.Services.AddRazorComponents()

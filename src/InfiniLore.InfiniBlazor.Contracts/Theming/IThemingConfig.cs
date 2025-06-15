@@ -1,14 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Theming;
-
-namespace Infinilore.InfiniBlazor.Config;
+namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class FrozenThemingConfig : IThemingConfig{
-    public required IReadOnlyDictionary<string, IThemeCollection> RegisteredBaseThemes { get; init; }
-    public required string DefaultThemeCollectionName { get; init; }
-    public required ThemeMode DefaultThemeMode { get; init; }
+public interface IThemingConfig {
+    IReadOnlyDictionary<string, IThemeCollection> RegisteredBaseThemes { get; }
+    string DefaultThemeCollectionName { get; }
+    ThemeMode DefaultThemeMode { get; } 
 }

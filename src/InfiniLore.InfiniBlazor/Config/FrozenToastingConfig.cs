@@ -1,10 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Toasting;
+using InfiniLore.InfiniBlazor.Toasting;
+
+namespace InfiniLore.InfiniBlazor.Config;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IToastAppearanceProvider {
-    IToastAppearance GetAppearanceOrDefault(object? key);
+public class FrozenToastingConfig : IToastingConfig {
+    public required int AutoRemoveDuration { get; init; }
+    public required IReadOnlyDictionary<string, Type> AppearanceComponentMapping { get; init; }
 }
