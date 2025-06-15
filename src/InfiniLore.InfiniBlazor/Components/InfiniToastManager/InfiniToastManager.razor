@@ -1,7 +1,6 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.Components.ToastAppearances
 @using InfiniLore.InfiniBlazor.Toasting
 
 @* ReSharper disable once CheckNamespace *@
@@ -15,7 +14,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@ContainerPositionClass fixed z-1000 p-3 space-y-2 max-w-sm w-full max-h-screen overflow-y-auto hide-scrollbar">
+<div class="@ContainerPositionClass fixed z-1000 p-3 space-y-2 max-w-64 w-full max-h-screen overflow-y-auto hide-scrollbar">
     @foreach (IToastEntry toastEntry in ToastingProvider.GetToastEntries()) {
         <DynamicComponent
             @key="toastEntry.Data.Id" 

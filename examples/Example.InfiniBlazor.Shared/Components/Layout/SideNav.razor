@@ -190,21 +190,22 @@
     }
 
     private async Task OnCreateToastAsync() {
-        IToastingData[] messages = [
-            ToastingProvider.CreateToastData("info"),
-            ToastingProvider.CreateToastData("success"),
-            ToastingProvider.CreateToastData("warning"),
-            ToastingProvider.CreateToastData(
-                "error",
-                "Some Data",
-                "#",
-                "click here"
-            )
-        ];
+        var defaultToast = ToastingProvider.CreateToastData("default");
+        var infoToast = ToastingProvider.CreateToastData("info");
+        var successToast = ToastingProvider.CreateToastData("success");
+        var warningToast = ToastingProvider.CreateToastData("warning");
+        var errorToast = ToastingProvider.CreateToastData(
+            "error",
+            "Some Data",
+            "#",
+            "click here"
+        );
 
-        await Task.WhenAll(messages.Select(message => 
-            ToastingProvider.PublishToastAsync(message, ToastAppearance.Default)
-        ));
+        await ToastingProvider.PublishToastAsync(defaultToast, ToastAppearance.Default);
+        await ToastingProvider.PublishToastAsync(infoToast, ToastAppearance.Info);
+        await ToastingProvider.PublishToastAsync(successToast, ToastAppearance.Success);
+        await ToastingProvider.PublishToastAsync(warningToast, ToastAppearance.Warning);
+        await ToastingProvider.PublishToastAsync(errorToast, ToastAppearance.Error);
     }
 
     private async Task OnThemeModeChanged() {

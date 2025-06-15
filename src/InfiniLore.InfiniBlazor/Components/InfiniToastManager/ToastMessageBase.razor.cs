@@ -2,28 +2,31 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Toasting;
+using InfiniLore.Lucide;
 using Microsoft.AspNetCore.Components;
 
-namespace InfiniLore.InfiniBlazor.Components.ToastAppearances;
+namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public abstract class ToastMessageBase: ComponentBase, IToastMessageBase, IDisposable {
+public partial class ToastMessageBase : ComponentBase, IToastMessageBase, IDisposable {
     [Inject] protected IToastingProvider ToastingProvider { get; set; } = null!;
-    
     [Parameter, EditorRequired] public IToastingData ToastData { get; set; } = ToastingData.Empty;
-    [Parameter] public bool IsClosing { get; set; }
+    
+    protected virtual string HeaderClasses => "transparent";
+    protected virtual string BodyClasses => "infini-bg-(--color-base-90) border-(--border) text-(--text)";
+    protected virtual string IconName => LucideNames.Info;
 
+    private bool IsClosing { get; set; }
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
     public static IDictionary<string, object> GetAsDynamicParameters(
-        IToastingData toastData,
-        bool isClosing = false
+        IToastingData toastData
     )
         => new Dictionary<string, object> {
-            [nameof(ToastData)] = toastData,
-            [nameof(IsClosing)] = isClosing
+            [nameof(ToastData)] = toastData
         };
     
     // -----------------------------------------------------------------------------------------------------------------
@@ -40,9 +43,16 @@ public abstract class ToastMessageBase: ComponentBase, IToastMessageBase, IDispo
         await Task.Delay(300); // match Tailwind animation
         await ToastingProvider.UnpublishToastAsync(ToastData.Id);
     }
-    
+
     public void Dispose() {
         ToastingProvider.DetachComponent(ToastData.Id);
         GC.SuppressFinalize(this);   
+    }
+    
+    private static bool IsRelativeUri(string uriString) {
+        if (uriString.IsNullOrWhiteSpace()) return false;
+        if (!Uri.TryCreate(uriString, UriKind.RelativeOrAbsolute, out Uri? uri)) return false;
+
+        return !uri.IsAbsoluteUri;
     }
 }
