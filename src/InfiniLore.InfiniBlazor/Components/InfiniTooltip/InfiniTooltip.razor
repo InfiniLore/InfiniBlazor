@@ -65,6 +65,7 @@
         try {
             var rectSelf = await JsRuntime.InvokeAsync<DomRect>("getBoundingClientRect", _tooltipRef);
             var rect = await JsRuntime.InvokeAsync<DomRect>("getBoundingClientRect", Target);
+            
             Logger.Warning("SELF: X: {a} \nY: {a} \nWidth: {a} \nHeight: {a} \nTop: {a} \nRight: {a} \nBottom: {a} \nLeft: {a}", 
                 rectSelf.X,
                 rectSelf.Y,
