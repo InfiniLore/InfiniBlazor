@@ -1,4 +1,5 @@
-﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+﻿@using System.Collections
+@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
@@ -31,40 +32,54 @@
     <div class="space-y-4">
         <InfiniToggleInput
             Label="Toggle Enabled State"
-            Value="@TextInputDisabled"
+            @bind-Value="@TextInputDisabled"
             ValueChanged="@HandleToggleChanged">
             @TextInputDisabled
         </InfiniToggleInput>
-        
+
         <InfiniTextInput
             Label="Do something"
-            Value="@SubmitExample.Value"
+            @bind-Value="@SubmitExample.Value"
+            Placeholder="Type something else and submit..."
+            Disabled="TextInputDisabled"/>
+
+        <InfiniTextInput
+            Label="Do something with a long label... bla bla bla blabla bla bla blabla bla bla blabla bla bla blabla bla bla blabla bla bla blabla bla bla bla bla bla bla bla bla"
+            LabelLocation="LabelLocation.Left"
+            @bind-Value="@SubmitExample.Value"
             Placeholder="Type something else and submit..."
             Disabled="TextInputDisabled">
             <InfiniButton OnClick="SubmitExample.OnSubmit">Submit</InfiniButton>
         </InfiniTextInput>
 
-        <InfiniTextInput
-            Label="Do something with a long label... bla bla bla blabla bla bla blabla bla bla blabla bla bla blabla bla bla blabla bla bla blabla bla bla bla bla bla bla bla bla"
-            LabelLocation="LabelLocation.Left"
-            Value="@SubmitExample.Value"
-            Placeholder="Type something else and submit..."
-            Disabled="TextInputDisabled">
-            <InfiniButton OnClick="SubmitExample.OnSubmit">Submit</InfiniButton>
-        </InfiniTextInput>
-        
-        <InfiniFileInput 
+        <InfiniFileInput
             Label="Upload Files"
             Accept=".png,.jpg,.jpeg"
             AllowMultipleFiles
             Disabled="TextInputDisabled"
             OnFilesChanged="HandleFilesChanged"
-            Placeholder="Choose documents..." />
+            Placeholder="Choose documents..."/>
 
         <div class="text-sm space-y-1">
             <p>Bound Value: @SubmitExample.Value</p>
             <p>Submitted Value: @SubmitExample.SubmittedValue</p>
+
+            @if (SelectedFiles is not null && SelectedFiles.Any()) {
+                <div class="mt-2 space-y-2">
+                    <p class="text-sm font-medium">Selected Files:</p>
+                    <div class="space-y-1">
+                        @foreach (IBrowserFile file in SelectedFiles) {
+                            <div class="flex items-center gap-2 text-sm p-2 bg-(--color-base-95) rounded">
+                                <span class="font-medium">@file.Name</span>
+                                <span class="text-(--color-base-40)">(@(file.Size / 1024.0) KB)</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
         </div>
+
     </div>
 </InfiniSection>
 
@@ -120,18 +135,18 @@
     private SubmitInputExample SubmitExample { get; } = new();
     private FormInputExample FormExample { get; } = new();
 
-    
     private bool TextInputDisabled { get; set; }
-    
+
+    private IEnumerable<IBrowserFile>? SelectedFiles { get; set; }
+
     // -----------------------------------------------------------------------------------------------------------------
     // Models
     // -----------------------------------------------------------------------------------------------------------------
-    private async Task HandleToggleChanged(bool value)
-    {
+    private async Task HandleToggleChanged(bool value) {
         TextInputDisabled = value;
         await InvokeAsync(StateHasChanged);
     }
-    
+
     private sealed class BasicInputExample {
         public string? Value { get; set; }
         public string? OnChangedValue { get; private set; }
@@ -169,7 +184,7 @@
         };
     }
 
-    private void HandleFilesChanged(IReadOnlyList<IBrowserFile> obj) {
-        StateHasChanged();
+    private void HandleFilesChanged(IReadOnlyList<IBrowserFile>? obj) {
+        SelectedFiles = obj;
     }
 }

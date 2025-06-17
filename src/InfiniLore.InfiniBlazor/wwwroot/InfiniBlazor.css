@@ -1129,6 +1129,9 @@
   .bg-\(--color-base-90\) {
     background-color: var(--color-base-90);
   }
+  .bg-\(--color-base-95\) {
+    background-color: var(--color-base-95);
+  }
   .bg-\(--color-gray\) {
     background-color: var(--color-gray);
   }

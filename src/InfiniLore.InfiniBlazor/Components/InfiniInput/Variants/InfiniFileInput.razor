@@ -21,7 +21,7 @@
         OnChange="OnFileChangeAsync"
         disabled="@IsDisabled"
         accept="@Accept"
-        multipzle="@AllowMultipleFiles"
+        multiple="@AllowMultipleFiles"
         class="hidden"/>
 
     <div class="flex w-full relative">
@@ -54,7 +54,7 @@
     [Parameter] public string Accept { get; set; } = string.Empty;
     [Parameter] public bool AllowMultipleFiles { get; set; }
     [Parameter] public string Placeholder { get; set; } = "Choose file(s)...";
-    [Parameter] public EventCallback<IReadOnlyList<IBrowserFile>> OnFilesChanged { get; set; }
+    [Parameter] public EventCallback<IReadOnlyList<IBrowserFile>?> OnFilesChanged { get; set; }
 
     private List<IBrowserFile>? _selectedFiles;
 
