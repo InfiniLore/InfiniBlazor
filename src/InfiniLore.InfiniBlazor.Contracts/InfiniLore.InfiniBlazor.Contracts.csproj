@@ -36,8 +36,4 @@
       <PackageReference Include="Microsoft.Extensions.ObjectPool" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Config\" />
-    </ItemGroup>
-
 </Project>
