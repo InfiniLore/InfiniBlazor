@@ -13,8 +13,8 @@
     <InfiniHeading3>Buttons</InfiniHeading3>
     
     <InfiniHeading5>Variants</InfiniHeading5>
-    <div class="flex flex-row gap-4 overflow-x-auto infini-scrollbar">
-        <div>
+    <div class="flex flex-row gap-4 overflow-x-auto infini-scrollbar px-2">
+        <div class="flex flex-col gap-2">
             <InfiniHeading6>Text</InfiniHeading6>
             <InfiniButton Variant="ButtonVariant.Default">Something</InfiniButton>
             <InfiniButton Variant="ButtonVariant.Primary">Something</InfiniButton>
@@ -24,7 +24,7 @@
             <InfiniButton Variant="ButtonVariant.Light">Something</InfiniButton>
         </div>
         
-        <div>
+        <div class="flex flex-col gap-2">
             <InfiniHeading6>Icons</InfiniHeading6>
             <InfiniButton IconName="settings" Variant="ButtonVariant.Default"/>
             <InfiniButton IconName="settings" Variant="ButtonVariant.Primary"/>
@@ -34,7 +34,7 @@
             <InfiniButton IconName="settings" Variant="ButtonVariant.Light"/>
         </div>
         
-        <div>
+        <div class="flex flex-col gap-2">
             <InfiniHeading6>Full</InfiniHeading6>
             <InfiniButton Href="/html" IconName="settings" Variant="ButtonVariant.Default">Something</InfiniButton>
             <InfiniButton Href="/html" IconName="settings" Variant="ButtonVariant.Primary">Something</InfiniButton>
@@ -43,7 +43,8 @@
             <InfiniButton Href="/html" IconName="settings" Variant="ButtonVariant.Dark">Something</InfiniButton>
             <InfiniButton Href="/html" IconName="settings" Variant="ButtonVariant.Light">Something</InfiniButton>
         </div>
-        <div>
+        
+        <div class="flex flex-col gap-2">
             <InfiniHeading6>Empty</InfiniHeading6>
             <InfiniButton Variant="ButtonVariant.Default"/>
             <InfiniButton Variant="ButtonVariant.Primary"/>
@@ -53,7 +54,7 @@
             <InfiniButton Variant="ButtonVariant.Light"/>
         </div>
         
-        <div>
+        <div class="flex flex-col gap-2">
             <InfiniHeading6>Disabled</InfiniHeading6>
             <InfiniButton Disabled="true" Variant="ButtonVariant.Default">Something</InfiniButton>
       
@@ -62,7 +63,7 @@
             <InfiniButton Disabled="true" IconName="settings" Variant="ButtonVariant.Default">Something</InfiniButton>
         </div>
 
-        <div>
+        <div class="flex flex-col gap-2">
             <InfiniHeading6>Sizes</InfiniHeading6>
             <InfiniButton Size="Size.Xxs" IconName="settings">Something</InfiniButton>
             <InfiniButton Size="Size.Xs" IconName="settings">Something</InfiniButton>
@@ -73,7 +74,7 @@
             <InfiniButton Size="Size.Xxl" IconName="settings">Something</InfiniButton>
         </div>
 
-        <div class="w-32">
+        <div class="flex flex-col w-32 gap-2">
             <InfiniHeading6>Icons</InfiniHeading6>
             <InfiniButton Size="Size.Xxs" IconName="settings"/>
             <InfiniButton Size="Size.Xs" IconName="settings"/>
@@ -85,9 +86,21 @@
         </div>
     </div>
     
+    <InfiniHeading5>Tooltips</InfiniHeading5>
+    <div class="p-8 flex flex-col gap-8 overflow-x-auto infini-scrollbar px-2 justify-center items-center">
+        <InfiniButton Tooltip="Tooltip" TooltipAnchor="Anchor.Center | Anchor.Bottom">CenterBottom</InfiniButton>
+        <InfiniButton Tooltip="Tooltip" TooltipAnchor="Anchor.Left | Anchor.Bottom">leftBottom</InfiniButton>
+        <InfiniButton Tooltip="Tooltip" TooltipAnchor="Anchor.Right | Anchor.Bottom">RightBottom</InfiniButton>
+        <InfiniButton Tooltip="Tooltip" TooltipAnchor="Anchor.Center | Anchor.Top">CenterTop</InfiniButton>
+        <InfiniButton Tooltip="Tooltip" TooltipAnchor="Anchor.Left | Anchor.Top">LeftTop</InfiniButton>
+        <InfiniButton Tooltip="Tooltip" TooltipAnchor="Anchor.Right | Anchor.Top">RightTop</InfiniButton>
+        <InfiniButton Tooltip="Tooltip" TooltipAnchor="Anchor.Left">Left</InfiniButton>
+        <InfiniButton Tooltip="Tooltip" TooltipAnchor="Anchor.Right">Right</InfiniButton>
+    </div>
+    
     <InfiniHeading5>Colors</InfiniHeading5>
-    <div class="flex flex-row gap-4 overflow-x-auto infini-scrollbar">
-        <div>
+    <div class="flex flex-row gap-4 overflow-x-auto infini-scrollbar px-2">
+        <div class="flex flex-col w-32 gap-2">
             <InfiniHeading6>Default</InfiniHeading6>
             <InfiniButton IconName="settings" Variant="ButtonVariant.Default" Color="Color.Default">Something</InfiniButton>
             <InfiniButton IconName="settings" Variant="ButtonVariant.Default" Color="Color.Accent">Something</InfiniButton>
@@ -104,7 +117,7 @@
             <InfiniButton IconName="settings" Variant="ButtonVariant.Default" Color="Color.Black">Something</InfiniButton>
         </div>
         
-        <div>
+        <div class="flex flex-col w-32 gap-2">
             <InfiniHeading6>Primary</InfiniHeading6>
             <InfiniButton IconName="settings" Variant="ButtonVariant.Primary" Color="Color.Default">Something</InfiniButton>
             <InfiniButton IconName="settings" Variant="ButtonVariant.Primary" Color="Color.Accent">Something</InfiniButton>
@@ -121,7 +134,7 @@
             <InfiniButton IconName="settings" Variant="ButtonVariant.Primary" Color="Color.Black">Something</InfiniButton>
         </div>
         
-        <div>
+        <div class="flex flex-col w-32 gap-2">
             <InfiniHeading6>Transparent</InfiniHeading6>
             <InfiniButton IconName="settings" Variant="ButtonVariant.Transparent" Color="Color.Default">Something</InfiniButton>
             <InfiniButton IconName="settings" Variant="ButtonVariant.Transparent" Color="Color.Accent">Something</InfiniButton>
@@ -138,7 +151,7 @@
             <InfiniButton IconName="settings" Variant="ButtonVariant.Transparent" Color="Color.Black">Something</InfiniButton>
         </div>
         
-        <div>
+        <div class="flex flex-col w-32 gap-2">
             <InfiniHeading6>Dark</InfiniHeading6>
             <InfiniButton IconName="settings" Variant="ButtonVariant.Dark" Color="Color.Default">Something</InfiniButton>
             <InfiniButton IconName="settings" Variant="ButtonVariant.Dark" Color="Color.Accent">Something</InfiniButton>
@@ -155,7 +168,7 @@
             <InfiniButton IconName="settings" Variant="ButtonVariant.Dark" Color="Color.Black">Something</InfiniButton>
         </div>
         
-        <div>
+        <div class="flex flex-col w-32 gap-2">
             <InfiniHeading6>Light</InfiniHeading6>
             <InfiniButton IconName="settings" Variant="ButtonVariant.Light" Color="Color.Default">Something</InfiniButton>
             <InfiniButton IconName="settings" Variant="ButtonVariant.Light" Color="Color.Accent">Something</InfiniButton>
@@ -172,7 +185,7 @@
             <InfiniButton IconName="settings" Variant="ButtonVariant.Light" Color="Color.Black">Something</InfiniButton>
         </div>
         
-        <div>
+        <div class="flex flex-col w-32 gap-2">
             <InfiniHeading6>Outline</InfiniHeading6>
             <InfiniButton IconName="settings" Variant="ButtonVariant.Outline" Color="Color.Default">Something</InfiniButton>
             <InfiniButton IconName="settings" Variant="ButtonVariant.Outline" Color="Color.Accent">Something</InfiniButton>

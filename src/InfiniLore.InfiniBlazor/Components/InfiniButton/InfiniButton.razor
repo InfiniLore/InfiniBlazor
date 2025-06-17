@@ -14,39 +14,46 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="py-0.5 px-1.25 @Class">
+<div class="@Class relative">
     @if (Href.IsNotNullOrWhiteSpace()) {
         <a href="@_computedHref"
-           class="@ContainerClasses rounded-md group/button inline-flex items-center justify-center transition-all duration-150 transform cursor-pointer active:scale-95 hover:scale-105">
+           @ref="_elementRef"
+           class="@ContainerClasses rounded-md inline-flex items-center justify-center transition-all duration-150 transform cursor-pointer active:scale-95 hover:scale-105"
+           @onmouseenter="ShowTooltip"
+           @onmouseleave="HideTooltip">
             @ButtonContent
         </a>
-    } else {
+    }
+    else {
         <button @onclick="OnClickAsync"
+                @ref="_elementRef"
                 @onclick:stopPropagation="@StopPropagation"
                 type="@Type"
                 disabled="@IsDisabled"
                 aria-label="@AriaLabel"
-                class="@ContainerClasses rounded-md group/button inline-flex items-center justify-center transition-all duration-150 transform">
+                @onmouseenter="ShowTooltip"
+                @onmouseleave="HideTooltip"
+                class="@ContainerClasses rounded-md inline-flex items-center justify-center transition-all duration-150 transform">
             @ButtonContent
         </button>
     }
-
-    @if (Tooltip.IsNotNullOrEmpty()) {
-        <div
-            class="@TooltipAnchorClasses absolute transform px-3 py-1 infini-bg-(--text-base-90) text-(--text-base-10) text-sm rounded-md opacity-0 group-hover/button:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
-            @Tooltip
-        </div>
-    }
 </div>
+@if (_showTooltip && Tooltip.IsNotNullOrEmpty()) {
+    <InfiniTooltip Content="@Tooltip"
+                   Anchor="@TooltipAnchor"
+                   Target="_elementRef"/>
+}
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     [Parameter] public string? Href { get; set; }
     [Parameter] public string? IconName { get; set; }
     [Parameter] public bool StopPropagation { get; set; } = true;
     [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
-    
+
     [Parameter] public string Type { get; set; } = "button";
     [Parameter] public string? AriaLabel { get; set; }
     [Parameter] public ButtonVariant Variant { get; set; } = ButtonVariant.Default;
@@ -55,11 +62,14 @@
     [Parameter] public string? Tooltip { get; set; }
     [Parameter] public Anchor TooltipAnchor { get; set; } = Anchor.Center | Anchor.Bottom;
     [Parameter] public bool DisableTrackedQueryParams { get; set; }
-    
+
     [Parameter] public bool Disabled { get; set; }
     protected override bool IsDisabled => Disabled || base.IsDisabled;
-    
+
     private string? _computedHref;
+
+    private ElementReference _elementRef;
+    private bool _showTooltip;
 
     // ReSharper disable once UnusedParameter.Local
     private RenderFragment ButtonContent => __builder => {
@@ -77,7 +87,7 @@
     };
 
     private const string ContainerReaction = "cursor-pointer active:scale-95 hover:scale-105";
-    
+
     private string ContainerClasses => (Variant, Color) switch {
         _ when IsDisabled => ConcatClasses(
             ContainerSizeClasses,
@@ -179,21 +189,6 @@
 
         _ => throw new ArgumentOutOfRangeException()
     };
-    
-    private string TooltipAnchorClasses => TooltipAnchor switch {
-        Anchor.Center | Anchor.Bottom => "top-full left-1/2 -translate-x-1/2 mt-2",
-        Anchor.Left | Anchor.Bottom => "top-full right-1 translate-x-1 mt-2",
-        Anchor.Right | Anchor.Bottom => "top-full left-1 -translate-x-1 mt-2",
-
-        Anchor.Center | Anchor.Top => "bottom-full left-1/2 -translate-x-1/2 mb-2",
-        Anchor.Left | Anchor.Top => "bottom-full right-1 translate-x-1 mb-2",
-        Anchor.Right | Anchor.Top => "bottom-full left-1 -translate-x-1 mb-2",
-
-        Anchor.Left => "top-0 translate-y-1 right-full mr-2",
-        Anchor.Right => "top-0 translate-y-1 left-full ml-2",
-
-        _ => "top-full left-1/2 -translate-x-1/2 mt-2"
-    };
 
     private string ContainerSizeClasses => Size switch {
         Size.Xxs => "px-2 py-1 text-xs",
@@ -205,7 +200,7 @@
         Size.Xxl => "px-2 py-1 text-3xl",
         _ => throw new ArgumentOutOfRangeException()
     };
-    
+
     private string IconSizeClass => Size switch {
         Size.Xxs => "w-3 h-3 my-0.5",
         Size.Xs => "w-4 h-4 my-0.5",
@@ -216,15 +211,19 @@
         Size.Xxl => "w-9 h-9 my-0.5",
         _ => "w-6 h-6"
     };
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    private void ShowTooltip() => _showTooltip = true;
+    private void HideTooltip() => _showTooltip = false;
+
     private async Task OnClickAsync(MouseEventArgs args) {
         if (IsDisabled) return;
+
         await OnClick.InvokeAsync(args);
     }
-    
+
     protected override void OnInitialized() {
         if (Href is not null && !DisableTrackedQueryParams) NavigationManager.LocationChanged += OnLocationChanged;
         ComputeHref();
@@ -236,7 +235,7 @@
     }
 
     private void ComputeHref() {
-        _computedHref = Href is not null && !DisableTrackedQueryParams 
+        _computedHref = Href is not null && !DisableTrackedQueryParams
             ? QueryParameterManager.AddTrackedQueryParameters(Href)
             : Href;
     }

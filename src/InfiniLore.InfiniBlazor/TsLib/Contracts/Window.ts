@@ -22,5 +22,7 @@ declare global {
         getTextContent: (element: HTMLElement) => string;
 
         addOrUpdateStyleElementAtHead : (idName: string, css: string) => void;
+
+        getBoundingClientRect : (element: Element) => DOMRect | null;
     }
 }

@@ -5,6 +5,7 @@ import {getInputSelectionStart, getInputSelectionEnd, setInputSelectionRange, ge
 import {addPreventDefaultListener, removePreventDefaultListener} from "./KeyDownListener";
 import {setTextContent, getTextContent} from "./HtmlElementHelpers";
 import {addOrUpdateStyleElementAtHead} from "./DocumentHelpers";
+import {getBoundingClientRect} from "./ElementHelpers";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -20,3 +21,5 @@ window.setTextContent = setTextContent;
 window.getTextContent = getTextContent;
 
 window.addOrUpdateStyleElementAtHead = addOrUpdateStyleElementAtHead;
+
+window.getBoundingClientRect = getBoundingClientRect;
