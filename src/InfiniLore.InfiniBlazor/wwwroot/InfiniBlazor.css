@@ -2111,6 +2111,11 @@
       background: var(--color-base-50);
     }
   }
+  .\[\&_button\:hover\]\:bg-\(--color-base-50\) {
+    & button:hover {
+      background-color: var(--color-base-50);
+    }
+  }
   .\[\&_svg\]\:text-\(--color-blue-light\) {
     & svg {
       color: var(--color-blue-light);
