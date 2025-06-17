@@ -28,7 +28,7 @@
 <!-- Text Input with Submit Button -->
 <InfiniSection>
     <InfiniHeading3>Text Input with Submit</InfiniHeading3>
-    <div class="space-y-4 w-1/2" >
+    <div class="space-y-4" >
         <InfiniToggleInput
             Label="Toggle Enabled State"
             Value="@TextInputDisabled"
@@ -59,7 +59,7 @@
             OnFilesChanged="HandleFilesChanged"
             Placeholder="Choose documents..."/>
         
-        <InfiniButtonInput Label="Does Soemthing">
+        <InfiniButtonInput Label="Does Something" Disabled="TextInputDisabled">
             Submit
         </InfiniButtonInput>
 
