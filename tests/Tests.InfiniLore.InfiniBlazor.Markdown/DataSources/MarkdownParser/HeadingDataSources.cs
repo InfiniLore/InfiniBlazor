@@ -102,5 +102,20 @@ public static class HeadingDataSources {
                 rootNode.AddH1("Heading");
             }
         );
+
+        yield return () => new MarkdownTestDto(SectionName,
+            """
+            #
+            Something
+            """,
+            """
+            <p>#</p>
+            <p>Something</p>
+            """,
+            ConfigureExpectedNode: static rootNode => {
+                rootNode.AddParagraph("#");
+                rootNode.AddParagraph("Something");
+            }
+        );
     }
 }

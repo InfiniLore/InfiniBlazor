@@ -35,7 +35,7 @@ public static partial class MarkdownRegexLib {
     public static partial Regex SinglelineStructuresRegex { get; }
 
     [GeneratedRegex("""
-          (?<heading>^(?<hLevel>\#{1,6})\s+(?<hText>[^\r\n]+)\r?\n?)
+          (?<heading>^(?<hLevel>\#{1,6})[\ ]+(?<hText>[^\r\n]+)\r?\n?)
         | (?<codeBlock>`{3}(?<cLang>.*?)?\r?\n(?<cBody>[\s\S]*?)`{3})
         | (?<headingSimple>^(?<hsText>.+?)\r?\n[\ ]*[-=]{3,})
         | (?<listUnordered>(?:^[^\S\r\n]*-\s+.*(?:\r?\n(?:[^\S\r\n]*[\-.]\d*\.?\s+.*|[^\S\r\n]+.*))*))
