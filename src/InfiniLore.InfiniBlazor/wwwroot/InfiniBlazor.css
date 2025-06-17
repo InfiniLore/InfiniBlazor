@@ -832,6 +832,9 @@
   .self-end {
     align-self: flex-end;
   }
+  .justify-self-center {
+    justify-self: center;
+  }
   .truncate {
     overflow: hidden;
     text-overflow: ellipsis;

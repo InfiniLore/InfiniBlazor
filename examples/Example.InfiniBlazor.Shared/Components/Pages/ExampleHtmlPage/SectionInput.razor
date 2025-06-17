@@ -1,5 +1,4 @@
-﻿@using System.Collections
-@* ------------------------------------------------------------------------------------------------------------------ *@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
@@ -29,10 +28,10 @@
 <!-- Text Input with Submit Button -->
 <InfiniSection>
     <InfiniHeading3>Text Input with Submit</InfiniHeading3>
-    <div class="space-y-4">
+    <div class="space-y-4 w-1/2" >
         <InfiniToggleInput
             Label="Toggle Enabled State"
-            @bind-Value="@TextInputDisabled"
+            Value="@TextInputDisabled"
             ValueChanged="@HandleToggleChanged">
             @TextInputDisabled
         </InfiniToggleInput>
@@ -59,6 +58,10 @@
             Disabled="TextInputDisabled"
             OnFilesChanged="HandleFilesChanged"
             Placeholder="Choose documents..."/>
+        
+        <InfiniButtonInput Label="Does Soemthing">
+            Submit
+        </InfiniButtonInput>
 
         <div class="text-sm space-y-1">
             <p>Bound Value: @SubmitExample.Value</p>
@@ -79,6 +82,8 @@
             }
 
         </div>
+        
+        
 
     </div>
 </InfiniSection>
@@ -108,6 +113,7 @@
     <div class="space-y-4">
         <InfiniTextInput
             Type="email"
+            LabelLocation="LabelLocation.OnTop"
             Label="Email"
             Value="@FormExample.Email"
             ValueChanged="FormExample.HandleEmailChange"
