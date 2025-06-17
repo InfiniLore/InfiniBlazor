@@ -51,6 +51,15 @@
             <InfiniButton OnClick="SubmitExample.OnSubmit">Submit</InfiniButton>
         </InfiniTextInput>
 
+        <InfiniTextAreaInput
+            Label="Do something in a text area"
+            LabelLocation="LabelLocation.Left"
+            @bind-Value="@SubmitExample.Value"
+            Placeholder="Type something else and submit..."
+            Disabled="TextInputDisabled">
+            <InfiniButton OnClick="SubmitExample.OnSubmit">Submit</InfiniButton>
+        </InfiniTextAreaInput>
+
         <InfiniFileInput
             Label="Upload Files"
             Accept=".png,.jpg,.jpeg"
