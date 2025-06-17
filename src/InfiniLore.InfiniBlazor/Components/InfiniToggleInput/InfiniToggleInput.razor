@@ -5,7 +5,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.Lucide
 @inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
@@ -20,26 +19,14 @@
         </div>
     }
 
-    <div class="flex grow items-center">
+    <div class="flex grow justify-between">
         @if (LabelLocation == LabelLocation.Left && Label.IsNotNullOrWhiteSpace()) {
             <InfiniLabel For="@Id" Class="break-words gap-x-2 md:max-w-md sm:max-w-[150px]">@Label</InfiniLabel>
+            <InfiniSpacer/>
         }
-        
-        <input
-            id="@Id"
-            type="@Type"
-            value="@Value"
-            @oninput="OnInputHandler"
-            @onchange="OnChange"
-            placeholder="@Placeholder"
-            disabled="@IsDisabled"
-            @attributes="@(AutoFocus ? new Dictionary<string, object> { { "autofocus", "autofocus" } } : null)"
-            maxlength="@MaxLength"
-            class="@Class @(IsDisabled ? "opacity-50 cursor-not-allowed infini-bg-(--color-base-90)" : "hover:ring-2 infini-bg-(--color-base-60)") w-full placeholder-(--color-base-40) rounded-md border border-(--border) focus:ring-2 outline-none ring-(--color-accent) text-sm p-2 shadow-sm transition"/>
 
-        <CascadingValue TValue="bool" Name="@nameof(CascadedDisabled)" Value="@CascadedDisabled">
-            @ChildContent
-        </CascadingValue>
+        <InfiniToggleButton Value="@Value" ValueChanged="OnValueChanged" Class="self-end mr-1"/>
+        @ChildContent
     </div>
 
     @if (Label.IsNullOrWhiteSpace() && ValidationMessage.IsNotNullOrEmpty()) {
@@ -52,22 +39,14 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
-    [Parameter, EditorRequired] public string? Value { get; set; }
-    [Parameter] public EventCallback<string?> ValueChanged { get; set; }
-    [Parameter] public EventCallback<ChangeEventArgs> OnChange { get; set; }
-    [Parameter] public string Placeholder { get; set; } = string.Empty;
-    [Parameter] public string Type { get; set; } = "text";
+    [Parameter, EditorRequired] public bool Value { get; set; }
+    [Parameter] public EventCallback<bool> ValueChanged { get; set; }
     [Parameter] public bool AutoFocus { get; set; }
     [Parameter] public int? MaxLength { get; set; }
     [Parameter] public string? ValidationMessage { get; set; }
 
     [Parameter] public string? Label { get; set; }
-    [Parameter] public LabelLocation LabelLocation { get; set; }
-
-    [Parameter] public bool WithButton { get; set; }
-    [Parameter] public string? ButtonName { get; set; }
-    [Parameter] public string? ButtonIconName { get; set; } = LucideNames.Check;
-    [Parameter] public EventCallback<MouseEventArgs> OnButtonClick { get; set; }
+    [Parameter] public LabelLocation LabelLocation { get; set; } = LabelLocation.Left;
 
     [Parameter] public string Id { get; set; } = Guid.NewGuid().ToString("N");
 
@@ -81,10 +60,14 @@
         base.OnParametersSet();
         CascadedDisabled = Disabled;
     }
-
-    private async Task OnInputHandler(ChangeEventArgs args) {
-        if (args.Value is string value) {
+    
+    private async Task OnValueChanged(bool value) {
+        Value = value;
+        if (ValueChanged.HasDelegate) {
             await ValueChanged.InvokeAsync(value);
         }
+
+        StateHasChanged();
+
     }
 }

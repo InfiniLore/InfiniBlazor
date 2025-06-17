@@ -29,9 +29,27 @@
 <InfiniSection>
     <InfiniHeading3>Text Input with Submit</InfiniHeading3>
     <div class="space-y-4">
-        <InfiniTextInput @bind-Value="@SubmitExample.Value"
-                         Placeholder="Type something else and submit..." 
-                         Disabled="true">
+        <InfiniToggleInput
+            Label="Toggle Enabled State"
+            Value="@TextInputDisabled"
+            ValueChanged="@HandleToggleChanged">
+            @TextInputDisabled
+        </InfiniToggleInput>
+        
+        <InfiniTextInput
+            Label="Do something"
+            Value="@SubmitExample.Value"
+            Placeholder="Type something else and submit..."
+            Disabled="TextInputDisabled">
+            <InfiniButton OnClick="SubmitExample.OnSubmit">Submit</InfiniButton>
+        </InfiniTextInput>
+
+        <InfiniTextInput
+            Label="Do something with a long label... bla bla bla bla bla bla bla bla bla"
+            LabelLocation="LabelLocation.Left"
+            Value="@SubmitExample.Value"
+            Placeholder="Type something else and submit..."
+            Disabled="TextInputDisabled">
             <InfiniButton OnClick="SubmitExample.OnSubmit">Submit</InfiniButton>
         </InfiniTextInput>
 
@@ -94,9 +112,18 @@
     private SubmitInputExample SubmitExample { get; } = new();
     private FormInputExample FormExample { get; } = new();
 
+    
+    private bool TextInputDisabled { get; set; }
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Models
     // -----------------------------------------------------------------------------------------------------------------
+    private async Task HandleToggleChanged(bool value)
+    {
+        TextInputDisabled = value;
+        await InvokeAsync(StateHasChanged);
+    }
+    
     private sealed class BasicInputExample {
         public string? Value { get; set; }
         public string? OnChangedValue { get; private set; }
@@ -133,6 +160,4 @@
             _ => null
         };
     }
-
 }
-

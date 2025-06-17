@@ -23,10 +23,10 @@
         <button @onclick="OnClickAsync"
                 @onclick:stopPropagation="@StopPropagation"
                 type="@Type"
-                disabled="@Disabled"
+                disabled="@IsDisabled"
                 aria-label="@AriaLabel"
                 aria-checked="@Value"
-                class="@(Disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer")">
+                class="@(IsDisabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer")">
             <div class="@GetToggleInnerContainerClasses()">
                 <div class="relative">
                     <div class="@GetSliderClasses()">
@@ -61,7 +61,6 @@
     [Parameter] public bool Value { get; set; }
     [Parameter] public EventCallback<bool> ValueChanged { get; set; }
     
-    [Parameter] public bool Disabled { get; set; }
     [Parameter] public string Type { get; set; } = "button";
     [Parameter] public string? AriaLabel { get; set; }
     [Parameter] public Size Size { get; set; } = Size.M;
@@ -69,6 +68,11 @@
 
     [Parameter] public string? Label { get; set; }
     [Parameter] public LabelPosition LabelPos { get; set; } = LabelPosition.Left;
+    
+    
+    
+    [Parameter] public bool Disabled { get; set; }
+    protected override bool IsDisabled => Disabled || base.IsDisabled;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -172,7 +176,7 @@
     }
 
     private async Task OnClickAsync() {
-        if (Disabled) return;
+        if (IsDisabled) return;
 
         Value = !Value;
         await ValueChanged.InvokeAsync(Value);
