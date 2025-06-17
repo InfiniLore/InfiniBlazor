@@ -1,0 +1,86 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.Lucide
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.JSInterop
+
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniInputBase
+
+@inject IJSRuntime Js
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniInputLayout Component="@this">
+    <InputFile
+        id="@Id"
+        OnChange="OnFileChangeAsync"
+        disabled="@IsDisabled"
+        accept="@Accept"
+        multipzle="@AllowMultipleFiles"
+        class="hidden"/>
+
+    <div class="flex w-full relative">
+        <input
+            type="text"
+            value="@GetSelectedFilenames()"
+            placeholder="@Placeholder"
+            readonly
+            disabled="@IsDisabled"
+            class="@Class @(IsDisabled ? "opacity-50 cursor-not-allowed infini-bg-(--color-base-90)" : "cursor-default text-(--color-base-10)")  w-full placeholder-(--color-base-40) rounded-md border border-(--border) outline-none text-sm p-2 shadow-sm transition max-h-10">
+    
+        <InfiniButton
+            Disabled="@IsDisabled"
+            Class="absolute right-0 top-0 -mr-1"
+            Variant="ButtonVariant.Transparent"
+            IconName="@LucideNames.X"
+            OnClick="OnFilesClearedAsync"/>
+    </div>
+    
+    <InfiniButton
+        IconName="@LucideNames.Upload" 
+        OnClick="OpenFileDialog" />
+    
+</InfiniInputLayout>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [Parameter] public string Accept { get; set; } = string.Empty;
+    [Parameter] public bool AllowMultipleFiles { get; set; }
+    [Parameter] public string Placeholder { get; set; } = "Choose file(s)...";
+    [Parameter] public EventCallback<IReadOnlyList<IBrowserFile>> OnFilesChanged { get; set; }
+
+    private List<IBrowserFile>? _selectedFiles;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private async Task OpenFileDialog() {
+        await Js.InvokeVoidAsync("document.getElementById", Id)
+            .AsTask()
+            .ContinueWith(async _ =>
+                await Js.InvokeVoidAsync("eval", $"document.getElementById('{Id}').click()"));
+    }
+
+    private async Task OnFileChangeAsync(InputFileChangeEventArgs e) {
+        _selectedFiles = e.GetMultipleFiles(maximumFileCount: AllowMultipleFiles ? int.MaxValue : 1).ToList();
+        await OnFilesChanged.InvokeAsync(_selectedFiles);
+    }
+
+    private async Task OnFilesClearedAsync() {
+        _selectedFiles?.Clear();
+        await OnFilesChanged.InvokeAsync(_selectedFiles);
+    }
+
+    private string GetSelectedFilenames() {
+        // ReSharper disable once ConvertIfStatementToReturnStatement
+        if (!(_selectedFiles?.Count > 0)) return string.Empty;
+        return string.Join(", ", _selectedFiles.Select(f => f.Name));
+    }
+}

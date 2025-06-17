@@ -52,6 +52,14 @@
             Disabled="TextInputDisabled">
             <InfiniButton OnClick="SubmitExample.OnSubmit">Submit</InfiniButton>
         </InfiniTextInput>
+        
+        <InfiniFileInput 
+            Label="Upload Files"
+            Accept=".png,.jpg,.jpeg"
+            AllowMultipleFiles
+            Disabled="TextInputDisabled"
+            OnFilesChanged="HandleFilesChanged"
+            Placeholder="Choose documents..." />
 
         <div class="text-sm space-y-1">
             <p>Bound Value: @SubmitExample.Value</p>
@@ -159,5 +167,9 @@
             not null when !value.Contains("@") => "Please enter a valid email address",
             _ => null
         };
+    }
+
+    private void HandleFilesChanged(IReadOnlyList<IBrowserFile> obj) {
+        StateHasChanged();
     }
 }

@@ -9,7 +9,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="flex flex-col w-full">
+<div class="flex flex-col w-full min-h-10">
     @* ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault *@
     @if (Component.LabelLocation == LabelLocation.OnTop && Component.Label.IsNotNullOrWhiteSpace()) {
         <div class="flex flex-row pb-1">
@@ -19,15 +19,16 @@
         </div>
     }
 
-    <div class="flex grow justify-between gap-2">
+    <div class="flex grow justify-between items-center gap-2">
         @if (Component.LabelLocation == LabelLocation.Left && Component.Label.IsNotNullOrWhiteSpace()) {
             <InfiniLabel For="@Component.Id" Class="break-words shrink-0 gap-x-2 md:max-w-sm sm:max-w-[150px]">@Component.Label</InfiniLabel>
-            <InfiniSpacer/>
         }
         
-        <CascadingValue TValue="bool" Name="@nameof(Component.CascadedDisabled)" Value="@Component.CascadedDisabled">
-            @ChildContent
-        </CascadingValue>
+        <div class="flex flex-row w-full items-center gap-2">
+            <CascadingValue TValue="bool" Name="@nameof(Component.CascadedDisabled)" Value="@Component.CascadedDisabled">
+                @ChildContent
+            </CascadingValue>
+        </div>
     </div>
 
     @if (Component.Label.IsNullOrWhiteSpace() && Component.ValidationMessage.IsNotNullOrEmpty()) {
