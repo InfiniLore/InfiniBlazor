@@ -1,8 +1,6 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.Lucide
-
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
@@ -11,8 +9,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniInputLayout Component="@this" >
-    
+<InfiniInputLayout Component="@this">
     <textarea
         id="@Id"
         value="@Value"
@@ -32,6 +29,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     [Parameter, EditorRequired] public string? Value { get; set; }
     [Parameter] public EventCallback<string?> ValueChanged { get; set; }
@@ -40,12 +38,12 @@
     [Parameter] public bool AutoFocus { get; set; }
     [Parameter] public int? MaxLength { get; set; }
     [Parameter] public int Rows { get; set; } = 1;
-    [Parameter] public string ResizeMode { get; set; } = "vertical"; // Can be "none", "both", "horizontal", "vertical"
-    
-    private string DisabledClasses => IsDisabled 
+    [Parameter] public string ResizeMode { get; set; } = "vertical";// Can be "none", "both", "horizontal", "vertical"
+
+    private string DisabledClasses => IsDisabled
         ? "opacity-50 cursor-not-allowed infini-bg-(--color-base-90)"
         : "hover:ring-2 infini-bg-(--color-base-60)";
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

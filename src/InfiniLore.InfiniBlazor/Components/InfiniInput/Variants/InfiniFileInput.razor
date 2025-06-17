@@ -32,7 +32,7 @@
             readonly
             disabled="@IsDisabled"
             class="@Class @(IsDisabled ? "opacity-50 cursor-not-allowed infini-bg-(--color-base-90)" : "cursor-default text-(--color-base-10)")  w-full placeholder-(--color-base-40) rounded-md border border-(--border) outline-none text-sm p-2 shadow-sm transition max-h-10">
-    
+
         <InfiniButton
             Disabled="@IsDisabled"
             Class="absolute right-0 top-0 -mr-1"
@@ -40,11 +40,11 @@
             IconName="@LucideNames.X"
             OnClick="OnFilesClearedAsync"/>
     </div>
-    
+
     <InfiniButton
-        IconName="@LucideNames.Upload" 
-        OnClick="OpenFileDialog" />
-    
+        IconName="@LucideNames.Upload"
+        OnClick="OpenFileDialog"/>
+
 </InfiniInputLayout>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
@@ -81,6 +81,7 @@
     private string GetSelectedFilenames() {
         // ReSharper disable once ConvertIfStatementToReturnStatement
         if (!(_selectedFiles?.Count > 0)) return string.Empty;
+
         return string.Join(", ", _selectedFiles.Select(f => f.Name));
     }
 }
