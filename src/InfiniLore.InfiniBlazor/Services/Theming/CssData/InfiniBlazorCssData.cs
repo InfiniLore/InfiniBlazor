@@ -79,7 +79,7 @@ public partial record InfiniBlazorCssData : ICssData {
     #region CascadedValues
     [CssData, InterpretAsVar(nameof(ColorBase00))] public partial string Text { get; init; }
     [CssData, InterpretAsVar(nameof(ColorRed))] public partial string TextError { get; init; }
-    [CssData, InterpretAsVar(nameof(ColorBase50))] public partial string Border { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase40))] public partial string Border { get; init; }
     
     [CssData, InterpretAsVar(nameof(Text))] public partial string SidebarHamburger{ get; init; }
     [CssData, InterpretAsVar(nameof(ColorBase10))] public partial string SidebarNavText{ get; init; }
