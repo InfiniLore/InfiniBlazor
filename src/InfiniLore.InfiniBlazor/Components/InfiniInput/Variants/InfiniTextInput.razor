@@ -22,7 +22,7 @@
         disabled="@IsDisabled"
         @attributes="@(AutoFocus ? new Dictionary<string, object> { { "autofocus", "autofocus" } } : null)"
         maxlength="@MaxLength"
-        class="@Class @(IsDisabled ? "opacity-50 cursor-not-allowed infini-bg-(--color-base-90)" : "hover:ring-2 infini-bg-(--color-base-60)") w-full placeholder-(--color-base-40) rounded-md border border-(--border) focus:ring-2 outline-none ring-(--color-accent) text-sm p-2 shadow-sm transition max-h-10 "/>
+        class="@Class @DisabledClasses min-w-24 w-full placeholder-(--color-base-40) rounded-md border border-(--border) focus:ring-2 outline-none ring-(--color-accent) text-sm p-2 shadow-sm transition max-h-10 "/>
     @ChildContent
 </InfiniInputLayout>
 
@@ -42,6 +42,11 @@
     [Parameter] public string? ButtonName { get; set; }
     [Parameter] public string? ButtonIconName { get; set; } = LucideNames.Check;
     [Parameter] public EventCallback<MouseEventArgs> OnButtonClick { get; set; }
+
+
+    private string DisabledClasses => IsDisabled 
+        ? "opacity-50 cursor-not-allowed infini-bg-(--color-base-90)"
+        : "hover:ring-2 infini-bg-(--color-base-60)";
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
