@@ -10,10 +10,10 @@ namespace InfiniLore.InfiniBlazor.Markdown.SyntaxTreeConverters;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMarkdownSyntaxTreeConverter<string>>]
 public class ToStringConverter(IPoolCache poolCache) : SimpleSyntaxTreeConverter, IMarkdownSyntaxTreeConverter<string> {
-    public async ValueTask<string> ConvertAsync(IMarkdownSyntaxTree tree, CancellationToken ct = default) {
+    public string Convert(IMarkdownSyntaxTree tree) {
         StringBuilder builder = poolCache.StringBuilderPool.Get();
         try {
-            await ProcessNodeTree(tree, builder, static (sb, content) => sb.Append(content), ct);
+            ProcessNodeTree(tree, builder, static (sb, content) => sb.Append(content));
             return builder.ToString();
         }
         finally {

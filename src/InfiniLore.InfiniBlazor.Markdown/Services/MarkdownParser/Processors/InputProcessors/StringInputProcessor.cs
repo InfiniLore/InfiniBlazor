@@ -10,9 +10,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.Processors.InputProcessors;
 // ---------------------------------------------------------------------------------------------------------------------
 [UsedImplicitly]
 public class StringInputProcessor : IMarkdownInputProcessor<string> {
-    public ValueTask<string?> TryProcessInput(string input, CancellationToken ct = default) {
-        if (input.IsNullOrWhiteSpace()) return ValueTask.FromResult<string?>(input);
+    public string TryProcessInput(string input) {
+        if (input.IsNullOrWhiteSpace()) return input;
         string output = input.Trim();
-        return ValueTask.FromResult<string?>(output);
+        return output;
     }
 }

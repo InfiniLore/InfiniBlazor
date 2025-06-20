@@ -16,18 +16,16 @@ public class StrikeHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public ValueTask HandleMatchAsync(
+    public void HandleMatch(
         IMarkdownParserEngine engine,
         IMarkdownSyntaxNode currentNode,
         Match entireMatch,
         Group group,
-        HandlerOrigin origin,
-        CancellationToken ct = default
+        HandlerOrigin origin
     ) {
-        if (!entireMatch.Groups[SId].TryGetValue(out string? strikeValue)) return ValueTask.CompletedTask;
+        if (!entireMatch.Groups[SId].TryGetValue(out string? strikeValue)) return ;
 
         IMarkdownSyntaxNode node = currentNode.AddChildNode(MarkdownElement.Strikethrough);
         engine.AddSingleLineMatchesToStack(strikeValue, node, origin | SkipOnOrigin);
-        return ValueTask.CompletedTask;
     }
 }

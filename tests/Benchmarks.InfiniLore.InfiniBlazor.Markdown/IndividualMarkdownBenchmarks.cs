@@ -30,127 +30,127 @@ public class IndividualMarkdownBenchmarks {
     // -----------------------------------------------------------------------------------------------------------------
 
     [Benchmark]
-    public async ValueTask<string> EscapedCharacters() {
+    public string EscapedCharacters() {
         const string input = @"\*escaped text\*";
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> BoldAndItalic() {
+    public string BoldAndItalic() {
         const string input = "***bold and italic***";
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> BoldOnly() {
+    public string BoldOnly() {
         const string input = "**bold**";
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> ItalicOnly() {
+    public string ItalicOnly() {
         const string input = "*italic*";
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> Superscript() {
+    public string Superscript() {
         const string input = "^^sup-script^^";
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> Subscript() {
+    public string Subscript() {
         const string input = "^^sub-script^^";
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> Strikethrough() {
+    public string Strikethrough() {
         const string input = "~~strikethrough~~";
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> Underline() {
+    public string Underline() {
         const string input = "_underline_";
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> InlineCode() {
+    public string InlineCode() {
         const string input = "`inline code`";
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> Emotes() {
+    public string Emotes() {
         const string input = ":flag-trans:";
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> NestedLinks() {
+    public string NestedLinks() {
         const string input = "[![nested link](image_url)](outer_url)";
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> RegularLinks() {
+    public string RegularLinks() {
         const string input = "[Regular Link](https://example.com)";
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> Tags() {
+    public string Tags() {
         const string input = "#tag";
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> HtmlSpecialCharacters() {
+    public string HtmlSpecialCharacters() {
         const string input = "&copy; & < >";
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -160,71 +160,71 @@ public class IndividualMarkdownBenchmarks {
     // -----------------------------------------------------------------------------------------------------------------
 
     [Benchmark]
-    public async ValueTask<string> Headings() {
+    public string Headings() {
         const string input = """
             # Header 1
             ## Header 2
             ### Header 3
             """;
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> CodeBlocks() {
+    public string CodeBlocks() {
         const string input = """
             ```csharp
             code block
             ```
             """;
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> SimpleHeadings() {
+    public string SimpleHeadings() {
         const string input = """
             Simple Heading
             ---
             """;
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> UnorderedLists() {
+    public string UnorderedLists() {
         const string input = """
             - Item 1
             - Item 2
               - Nested Item
             """;
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> OrderedLists() {
+    public string OrderedLists() {
         const string input = """
             1. First Item
             2. Second Item
               3. Nested Item
             """;
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> Tables() {
+    public string Tables() {
         const string input =
             """
             | Column 1 | Column 2 |
@@ -232,34 +232,34 @@ public class IndividualMarkdownBenchmarks {
             | Value 1  | Value 2  |
             """;
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> BlockQuotes() {
+    public string BlockQuotes() {
         const string input = """
             > A blockquote
             > with multiple lines.
             """;
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> HtmlBlocks() {
+    public string HtmlBlocks() {
         const string input = "<div><p>HTML content</p></div>";
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> HorizontalRules() {
+    public string HorizontalRules() {
         const string input = """
             ---
 
@@ -268,16 +268,16 @@ public class IndividualMarkdownBenchmarks {
             ___
             """;
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
 
     [Benchmark]
-    public async ValueTask<string> RemainderText() {
+    public string RemainderText() {
         const string input = "This is normal text left over.";
         
-        string? output = await Parser.TryParseAsync(input);
+        string? output = Parser.TryParse(input);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }

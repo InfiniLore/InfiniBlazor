@@ -21,15 +21,14 @@ public abstract class ListHandlerBase(ILineNormalizationService lineNormalizatio
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public ValueTask HandleMatchAsync(
+    public void HandleMatch(
         IMarkdownParserEngine engine,
         IMarkdownSyntaxNode currentNode,
         Match entireMatch,
         Group group,
-        HandlerOrigin origin,
-        CancellationToken ct = default
+        HandlerOrigin origin
     ) {
-        if (!entireMatch.TryGetValue(out string? listBody)) return ValueTask.CompletedTask;
+        if (!entireMatch.TryGetValue(out string? listBody)) return;
 
         MatchCollection matchCollection = MarkdownRegexLib.ListItemBodyRegex.Matches(listBody);
         int matchCount = matchCollection.Count;
@@ -60,7 +59,6 @@ public abstract class ListHandlerBase(ILineNormalizationService lineNormalizatio
                     engine.PushElementToStack(null, listItemNode, origin, element);
                 }
             }
-            return ValueTask.CompletedTask;
         }
         finally {
             ArrayPool<Match>.Shared.Return(matchArray);

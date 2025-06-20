@@ -17,7 +17,7 @@ public class MarkdownParserTests(IMarkdownParser<string, string> parser, IMarkdo
         // Arrange
 
         // Act
-        string? output = await parser.TryParseAsync(dto.Markdown);
+        string? output = parser.TryParse(dto.Markdown);
 
         // Assert;
         await Assert.That(output)
@@ -34,7 +34,7 @@ public class MarkdownParserTests(IMarkdownParser<string, string> parser, IMarkdo
         };
 
         // Act
-        string? output = await textSourceParser.TryParseAsync(textSource);
+        string? output = textSourceParser.TryParse(textSource);
 
         // Assert
         await Assert.That(output)

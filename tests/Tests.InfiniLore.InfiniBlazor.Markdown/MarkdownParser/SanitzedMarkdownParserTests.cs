@@ -25,7 +25,7 @@ public class SanitizedMarkdownParserTests(IHtmlSanitizer sanitizer, IServiceProv
         string sanitizedOutput = sanitizer.Sanitize(dto.ExpectedStringOutput);
 
         // Act
-        string? output = await parser.TryParseAsync(dto.Markdown);
+        string? output = parser.TryParse(dto.Markdown);
 
         // Assert
         await Assert.That(output)
@@ -43,7 +43,7 @@ public class SanitizedMarkdownParserTests(IHtmlSanitizer sanitizer, IServiceProv
         };
 
         // Act
-        string? output = await textSourceParser.TryParseAsync(textSource);
+        string? output = textSourceParser.TryParse(textSource);
 
         // Assert
         await Assert.That(output)

@@ -7,5 +7,5 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMarkdownSyntaxTreeConverter<T> {
-    ValueTask<T> ConvertAsync(IMarkdownSyntaxTree tree, CancellationToken ct = default);
+    T Convert(IMarkdownSyntaxTree tree);
 }

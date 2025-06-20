@@ -37,7 +37,7 @@ public class StringMarkdownSyntaxTreeParser(IServiceProvider serviceProvider, IL
     }
     #endregion
     
-    public async ValueTask ParseToNodeTreeAsync(string markdown, IMarkdownSyntaxTree nodeTree, CancellationToken ct = default) {
+    public void ParseToNodeTreeAsync(string markdown, IMarkdownSyntaxTree nodeTree) {
         MarkdownParserEngine runningParser = MarkdownPoolCache.MarkdownParserEnginePool.Get();
 
         try {
@@ -50,7 +50,7 @@ public class StringMarkdownSyntaxTreeParser(IServiceProvider serviceProvider, IL
                     HandlerOrigin origin = fragment.Origin;
 
                     if (fragment.IsMatch) {
-                        await ProcessMatchAsync(fragment.Match, currentNode, origin, runningParser, ct);
+                        ProcessMatchAsync(fragment.Match, currentNode, origin, runningParser);
                         continue;
                     }
 
@@ -69,7 +69,7 @@ public class StringMarkdownSyntaxTreeParser(IServiceProvider serviceProvider, IL
         }
     }
 
-    private async ValueTask ProcessMatchAsync(Match match, IMarkdownSyntaxNode currentNode, HandlerOrigin origin, IMarkdownParserEngine runningParser, CancellationToken ct = default) {
+    private void ProcessMatchAsync(Match match, IMarkdownSyntaxNode currentNode, HandlerOrigin origin, IMarkdownParserEngine runningParser) {
         GroupCollection groups = match.Groups;
         for (int i = 0; i < groups.Count; i++) {
             if (groups[i] is not { Success: true, Name: var name } group) continue;
@@ -77,7 +77,7 @@ public class StringMarkdownSyntaxTreeParser(IServiceProvider serviceProvider, IL
 
             HandlerOrigin handlerOrigin = handler.SkipOnOrigin;
             if (handlerOrigin is HandlerOrigin.NotSkipped || !origin.HasFlagFast(handlerOrigin)) {
-                await handler.HandleMatchAsync(runningParser, currentNode, match, group, origin, ct);
+                handler.HandleMatch(runningParser, currentNode, match, group, origin);
             }
         }
     }

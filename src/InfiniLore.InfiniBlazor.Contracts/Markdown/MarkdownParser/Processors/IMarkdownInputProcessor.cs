@@ -7,5 +7,5 @@ namespace InfiniLore.InfiniBlazor.Markdown.Processors;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMarkdownInputProcessor<T> {
-    public ValueTask<T?> TryProcessInput(T input, CancellationToken ct = default);
+    T? TryProcessInput(T input);
 }

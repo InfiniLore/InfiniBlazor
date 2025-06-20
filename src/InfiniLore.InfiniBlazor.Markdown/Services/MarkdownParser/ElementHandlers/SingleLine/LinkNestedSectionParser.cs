@@ -19,17 +19,16 @@ public class LinkNestedHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public ValueTask HandleMatchAsync(
+    public void HandleMatch(
         IMarkdownParserEngine engine,
         IMarkdownSyntaxNode currentNode,
         Match entireMatch,
         Group group,
-        HandlerOrigin origin,
-        CancellationToken ct = default
+        HandlerOrigin origin
     ) {
         // ReSharper disable once DuplicatedSequentialIfBodies
-        if (!entireMatch.Groups[LnTextId].TryGetValue(out string? linkText)) return ValueTask.CompletedTask;
-        if (!entireMatch.Groups[LnHrefId].TryGetValue(out string? linkHref)) return ValueTask.CompletedTask;
+        if (!entireMatch.Groups[LnTextId].TryGetValue(out string? linkText)) return ;
+        if (!entireMatch.Groups[LnHrefId].TryGetValue(out string? linkHref)) return ;
 
         if (entireMatch.Groups[LnBangId].Success) {
             IMarkdownSyntaxNode imgNode = currentNode.AddChildNode(MarkdownElement.Image);
@@ -40,13 +39,12 @@ public class LinkNestedHandler : IMarkdownElementHandler {
                 imgNode.WithAttribute(MarkdownAttribute.ImageTitle, altTextValue);
             }
 
-            return ValueTask.CompletedTask;
+            return ;
         }
 
         IMarkdownSyntaxNode linkNode = currentNode.AddChildNode(MarkdownElement.Link);
         linkNode.WithAttribute(MarkdownAttribute.LinkHref, linkHref);
 
         engine.AddSingleLineMatchesToStack(linkText, linkNode, origin);
-        return ValueTask.CompletedTask;
     }
 }

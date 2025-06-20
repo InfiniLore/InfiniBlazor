@@ -24,27 +24,27 @@ public class MarkdownParser<TInput, TOutput> : IMarkdownParser<TInput, TOutput> 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public async ValueTask<TOutput?> TryParseAsync(TInput input, CancellationToken ct = default) {
+    public TOutput? TryParse(TInput input, CancellationToken ct = default) {
         MarkdownSyntaxTree nodeTree = MarkdownPoolCache.MarkdownSyntaxTreePool.Get();
 
         try {
             TInput? processedInput = input;
             if (HasInputProcessors) {
-                processedInput = await ExecuteInputProcessorsAsync(processedInput, ct);
+                processedInput = ExecuteInputProcessorsAsync(processedInput);
                 if (processedInput is null) return default;
                 ct.ThrowIfCancellationRequested();
             }
 
-            await NodeTreeParser.ParseToNodeTreeAsync(processedInput, nodeTree, ct);
-            if (HasPostProcessors && !await ExecutePostProcessorsAsync(input, nodeTree, ct)) return default;
+            NodeTreeParser.ParseToNodeTreeAsync(processedInput, nodeTree);
+            if (HasPostProcessors && !ExecutePostProcessorsAsync(input, nodeTree)) return default;
             ct.ThrowIfCancellationRequested();
 
-            TOutput output = await Converter.ConvertAsync(nodeTree, ct);
+            TOutput output = Converter.Convert(nodeTree);
             TOutput? processedOutput = output;
 
             // ReSharper disable once InvertIf
             if (HasOutputProcessors) {
-                processedOutput = await ExecuteOutputProcessors(processedOutput, ct);
+                processedOutput = ExecuteOutputProcessors(processedOutput);
                 if (processedOutput is null) return default;
                 ct.ThrowIfCancellationRequested();
             }
@@ -65,12 +65,12 @@ public class MarkdownParser<TInput, TOutput> : IMarkdownParser<TInput, TOutput> 
         }
     }
     
-    private async ValueTask<TInput?> ExecuteInputProcessorsAsync(TInput processedInput, CancellationToken ct) {
+    private TInput? ExecuteInputProcessorsAsync(TInput processedInput) {
         int count = InputProcessors.Length;
         TInput? inputProcessed = processedInput;
         for (int i = 0; i < count; i++) {
             IMarkdownInputProcessor<TInput> processor = InputProcessors[i];
-            inputProcessed = await processor.TryProcessInput(inputProcessed, ct);
+            inputProcessed = processor.TryProcessInput(inputProcessed);
             
             // ReSharper disable once InvertIf
             if (inputProcessed is null) {
@@ -82,13 +82,13 @@ public class MarkdownParser<TInput, TOutput> : IMarkdownParser<TInput, TOutput> 
         return inputProcessed;
     }
     
-    private async ValueTask<bool> ExecutePostProcessorsAsync(TInput input, IMarkdownSyntaxTree syntaxTree, CancellationToken ct) {
+    private bool ExecutePostProcessorsAsync(TInput input, IMarkdownSyntaxTree syntaxTree) {
         int count = PostProcessors.Length;
         for (int i = 0; i < count; i++) {
             IMarkdownPostProcessor<TInput> processor = PostProcessors[i];
             
             // ReSharper disable once InvertIf 
-            if (!await processor.TryProcessAsync(input, syntaxTree, ct)) {
+            if (!processor.TryProcessAsync(input, syntaxTree)) {
                 Logger.LogWarning("PostProcessor {processor} failed.", processor.GetType());
                 return false;
             }
@@ -97,12 +97,12 @@ public class MarkdownParser<TInput, TOutput> : IMarkdownParser<TInput, TOutput> 
         return true;
     }
     
-    private async ValueTask<TOutput?> ExecuteOutputProcessors(TOutput output, CancellationToken ct) {
+    private TOutput? ExecuteOutputProcessors(TOutput output){
         int count = OutputProcessors.Length;
         TOutput? outputProcessed = output;
         for (int i = 0; i < count; i++) {
             IMarkdownOutputProcessor<TOutput> processor = OutputProcessors[i];
-            outputProcessed = await processor.TryProcessOutputAsync(output, ct);
+            outputProcessed = processor.TryProcessOutputAsync(output);
             
             // ReSharper disable once InvertIf
             if (outputProcessed is null) {

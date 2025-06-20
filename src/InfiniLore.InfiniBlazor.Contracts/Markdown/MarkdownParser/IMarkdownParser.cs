@@ -5,6 +5,6 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMarkdownParser<in TInput, TOutput> {
-    ValueTask<TOutput?> TryParseAsync(TInput markdown, CancellationToken ct = default);
+public interface IMarkdownParser<in TInput, out TOutput> {
+    TOutput? TryParse(TInput markdown, CancellationToken ct = default);
 }

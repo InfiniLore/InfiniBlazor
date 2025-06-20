@@ -16,19 +16,17 @@ public class HeadingSimpleHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public ValueTask HandleMatchAsync(
+    public void HandleMatch(
         IMarkdownParserEngine engine,
         IMarkdownSyntaxNode currentNode,
         Match entireMatch,
         Group group,
-        HandlerOrigin origin,
-        CancellationToken ct = default
+        HandlerOrigin origin
     ) {
-        if (!entireMatch.Groups[HsTextId].TryGetValue(out string? headerSimpleText)) return ValueTask.CompletedTask;
+        if (!entireMatch.Groups[HsTextId].TryGetValue(out string? headerSimpleText)) return;
 
 
         IMarkdownSyntaxNode headingElement = currentNode.AddChildNode(MarkdownElement.H1);
         engine.AddSingleLineMatchesToStack(headerSimpleText, headingElement, origin);
-        return ValueTask.CompletedTask;
     }
 }

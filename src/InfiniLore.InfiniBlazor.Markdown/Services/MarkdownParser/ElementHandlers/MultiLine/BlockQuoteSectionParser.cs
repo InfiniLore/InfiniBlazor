@@ -15,15 +15,14 @@ public class BlockQuoteHandler(ILineNormalizationService lineNormalizationHelper
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public ValueTask HandleMatchAsync(
+    public void HandleMatch(
         IMarkdownParserEngine engine,
         IMarkdownSyntaxNode currentNode,
         Match entireMatch,
         Group group,
-        HandlerOrigin origin,
-        CancellationToken ct = default
+        HandlerOrigin origin
     ) {
-        if (!group.TryGetValueSpan(out ReadOnlySpan<char> blockQuoteBody)) return ValueTask.CompletedTask;
+        if (!group.TryGetValueSpan(out ReadOnlySpan<char> blockQuoteBody)) return;
 
         // Replace Regex usage with span-based logic:
         ReadOnlySpan<char> normalized = NormalizeBlockQuote(blockQuoteBody);
@@ -31,7 +30,6 @@ public class BlockQuoteHandler(ILineNormalizationService lineNormalizationHelper
 
         IMarkdownSyntaxNode blockquoteNode = currentNode.AddChildNode(MarkdownElement.Blockquote);
         engine.AddMultiLineMatchesToStack(adjustedBlockquote, blockquoteNode, origin | HandlerOrigin.PreserveHtml);
-        return ValueTask.CompletedTask;
     }
 
     private ReadOnlySpan<char> NormalizeBlockQuote(ReadOnlySpan<char> span) {

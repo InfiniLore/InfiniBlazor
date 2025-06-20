@@ -21,13 +21,12 @@ public class TableHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public ValueTask HandleMatchAsync(
+    public void HandleMatch(
         IMarkdownParserEngine engine,
         IMarkdownSyntaxNode currentNode,
         Match entireMatch,
         Group group,
-        HandlerOrigin origin,
-        CancellationToken ct = default
+        HandlerOrigin origin
     ) {
         // Extract header, separator, and rows
         ReadOnlySpan<char> header = entireMatch.Groups[HeadId].ValueSpan;
@@ -87,6 +86,5 @@ public class TableHandler : IMarkdownElementHandler {
         finally {
             if (rowColumnRanges != null) ArrayPool<Range>.Shared.Return(rowColumnRanges);
         }
-        return ValueTask.CompletedTask;
     }
 }

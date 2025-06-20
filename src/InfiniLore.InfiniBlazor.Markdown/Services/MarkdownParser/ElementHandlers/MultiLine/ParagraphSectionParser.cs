@@ -16,22 +16,20 @@ public class ParagraphHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public ValueTask HandleMatchAsync(
+    public void HandleMatch(
         IMarkdownParserEngine engine,
         IMarkdownSyntaxNode currentNode,
         Match entireMatch,
         Group group,
-        HandlerOrigin origin,
-        CancellationToken ct = default
+        HandlerOrigin origin
     ) {
         // ReSharper disable once DuplicatedSequentialIfBodies
-        if (!entireMatch.Groups[PId].TryGetValue(out string? paragraph)) return ValueTask.CompletedTask;
-        if (paragraph.IsNullOrWhiteSpace()) return ValueTask.CompletedTask;
+        if (!entireMatch.Groups[PId].TryGetValue(out string? paragraph)) return;
+        if (paragraph.IsNullOrWhiteSpace()) return;
 
         bool writeParagraph = !origin.HasFlag(HandlerOrigin.Html);
 
         if (writeParagraph) currentNode = currentNode.AddChildNode(MarkdownElement.Paragraph);
         engine.AddSingleLineMatchesToStack(paragraph.TrimStart(), currentNode, origin);
-        return ValueTask.CompletedTask;
     }
 }

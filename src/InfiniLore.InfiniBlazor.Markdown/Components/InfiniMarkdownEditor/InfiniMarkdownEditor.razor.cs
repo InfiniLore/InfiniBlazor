@@ -58,18 +58,18 @@ public partial class InfiniMarkdownEditor(
             await jsRuntimeHelper.SetSelectionIndexAsync(InputRef,index);
     }
 
-    protected override async Task OnInitializedAsync() {
-        await InvokeSourceHasChanged();
-        debuggerProvider.OnChangeAsync += InvokeSourceHasChanged;
+    protected override void OnInitialized() {
+        InvokeSourceHasChanged();
+        debuggerProvider.OnChange += InvokeSourceHasChanged;
     }
 
-    protected override async Task OnParametersSetAsync() {
-        await base.OnParametersSetAsync();
-        await InvokeSourceHasChanged();
+    protected override void OnParametersSet() {
+        base.OnParametersSet();
+        InvokeSourceHasChanged();
     }
 
-    private async Task InvokeSourceHasChanged() {
-        MarkdownOutput = await markdownParser.TryParseAsync(Source.Text);
+    private void InvokeSourceHasChanged() {
+        MarkdownOutput = markdownParser.TryParse(Source.Text);
         if (debuggerProvider.IsEnabled()) MarkdownStringOutput = MarkdownOutput.ToString();
         
         SourceHasChanged?.Invoke();
@@ -79,7 +79,7 @@ public partial class InfiniMarkdownEditor(
     public override async ValueTask DisposeAsync() {
         await base.DisposeAsync();
         await jsRuntimeHelper.RemovePreventDefaultListenerAsync();
-        debuggerProvider.OnChangeAsync -= InvokeSourceHasChanged;
+        debuggerProvider.OnChange -= InvokeSourceHasChanged;
         GC.SuppressFinalize(this);
     }
     
@@ -88,7 +88,7 @@ public partial class InfiniMarkdownEditor(
         if (e.Value is string value) {
             Source.Text = value;
             await SourceChanged.InvokeAsync(Source);
-            await InvokeSourceHasChanged();
+            InvokeSourceHasChanged();
         }
     }
 
@@ -106,7 +106,7 @@ public partial class InfiniMarkdownEditor(
         if (EditorIsLocked) return;
         Range range = await jsRuntimeHelper.GetSelectionRangeAsync(InputRef);
         textEditor.Modify(Source, modifierName, range);
-        await InvokeSourceHasChanged();
+        InvokeSourceHasChanged();
         await SourceChanged.InvokeAsync(Source);
     }
 
@@ -114,7 +114,7 @@ public partial class InfiniMarkdownEditor(
         if (EditorIsLocked) return;
         Range range = await jsRuntimeHelper.GetSelectionRangeAsync(InputRef);
         textEditor.Insert(Source, content, range);
-        await InvokeSourceHasChanged();
+        InvokeSourceHasChanged();
         await SourceChanged.InvokeAsync(Source);
     }
 

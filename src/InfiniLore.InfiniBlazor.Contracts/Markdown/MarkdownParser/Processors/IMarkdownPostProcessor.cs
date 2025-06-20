@@ -7,5 +7,5 @@ namespace InfiniLore.InfiniBlazor.Markdown.Processors;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMarkdownPostProcessor<in TInput> {
-    public ValueTask<bool> TryProcessAsync(TInput input, IMarkdownSyntaxTree syntaxTree, CancellationToken ct = default);
+    public bool TryProcessAsync(TInput input, IMarkdownSyntaxTree syntaxTree);
 }

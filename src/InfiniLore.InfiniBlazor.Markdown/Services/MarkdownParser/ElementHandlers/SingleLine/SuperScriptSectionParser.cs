@@ -16,18 +16,16 @@ public class SuperScriptHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public ValueTask HandleMatchAsync(
+    public void HandleMatch(
         IMarkdownParserEngine engine,
         IMarkdownSyntaxNode currentNode,
         Match entireMatch,
         Group group,
-        HandlerOrigin origin,
-        CancellationToken ct = default
+        HandlerOrigin origin
     ) {
-        if (!entireMatch.Groups[SpId].TryGetValue(out string? superValue)) return ValueTask.CompletedTask;
+        if (!entireMatch.Groups[SpId].TryGetValue(out string? superValue)) return ;
 
         IMarkdownSyntaxNode node = currentNode.AddChildNode(MarkdownElement.Superscript);
         engine.AddSingleLineMatchesToStack(superValue, node, origin | SkipOnOrigin);
-        return ValueTask.CompletedTask;
     }
 }

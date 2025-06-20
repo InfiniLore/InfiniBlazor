@@ -11,10 +11,10 @@ namespace InfiniLore.InfiniBlazor.Markdown.SyntaxTreeConverters;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMarkdownSyntaxTreeConverter<MarkupString>>]
 public class ToStyledStringConverter(IPoolCache poolCache) : StyledSyntaxTreeConverter, IMarkdownSyntaxTreeConverter<MarkupString> {
-    public async ValueTask<MarkupString> ConvertAsync(IMarkdownSyntaxTree tree, CancellationToken ct = default) {
+    public MarkupString Convert(IMarkdownSyntaxTree tree) {
         StringBuilder builder = poolCache.StringBuilderPool.Get();
         try {
-            await ProcessNodeTree(tree, builder, static (sb, content) => sb.Append(content), ct);
+            ProcessNodeTree(tree, builder, static (sb, content) => sb.Append(content));
             string str = builder.ToString();
             return new MarkupString(str);
         }
