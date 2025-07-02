@@ -24,10 +24,7 @@ public static class SyntaxTreeConverter {
         try {
             int lastKnownDepth = -1;
 
-            foreach (IMarkdownSyntaxVisitor mdNodeVisitor in tree.VisitNodesBreadthFirst()) {
-                int depth = mdNodeVisitor.Depth;
-                IMdSyntaxNode node = mdNodeVisitor.Node;
-
+            foreach ((int depth, IMdSyntaxNode node) in tree.VisitNodesBreadthFirst()) {
                 if (lastKnownDepth + 1 > depth) 
                     CloseOpenTags(nodeConverter, depthCache, depth);
 

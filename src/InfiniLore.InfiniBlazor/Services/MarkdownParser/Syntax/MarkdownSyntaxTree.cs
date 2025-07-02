@@ -12,31 +12,25 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 public class MarkdownSyntaxTree : IMarkdownSyntaxTree, IResettable {
     public IMdSyntaxNode RootNode { get; private set; } = RootMdSyntaxNode.Shared.Get();
 
-    public static MarkdownSyntaxTree WithRootNode(IMdSyntaxNode rootNode) {
-        ArgumentNullException.ThrowIfNull(rootNode);
-        return new MarkdownSyntaxTree { RootNode = rootNode };
-    }
+    private static readonly ObjectPool<Stack<(int Depth, IMdSyntaxNode Node)>> DepthStackPool = new DefaultObjectPool<Stack<(int Depth, IMdSyntaxNode Node)>>(new DefaultPooledObjectPolicy<Stack<(int Depth, IMdSyntaxNode Node)>>(), 4);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region Visit Nodes
-    public IEnumerable<IMarkdownSyntaxVisitor> VisitNodesBreadthFirst() {
+    public IEnumerable<(int Depth, IMdSyntaxNode Node)> VisitNodesBreadthFirst() {
         ReadOnlySpan<IMdSyntaxNode> rootNodeChildren = RootNode.GetChildrenSpan();
         int rootNodeChildCount = rootNodeChildren.Length;
         if (rootNodeChildCount == 0) yield break;// Early exit for empty tree nodes
 
-        Stack<MarkdownSyntaxVisitor> stack = MarkdownPoolCache.MarkdownSyntaxVisitorStackPool.Get();
+        Stack<(int, IMdSyntaxNode)> stack = DepthStackPool.Get();
         try {
             // Add Root children directly to avoid an extra if call during the while loop
             for (int i = rootNodeChildCount - 1; i >= 0; i--) {
-                MarkdownSyntaxVisitor visitor = MarkdownPoolCache.MarkdownSyntaxVisitorPool.Get();
-                visitor.Depth = 1;
-                visitor.Node = rootNodeChildren[i];
-                stack.Push(visitor);
+                stack.Push((1, rootNodeChildren[i]));
             }
 
-            while (stack.TryPop(out MarkdownSyntaxVisitor? visitor)) {
+            while (stack.TryPop(out (int Depth, IMdSyntaxNode Node) visitor)) {
                 int depth = visitor.Depth;
                 IMdSyntaxNode currentNode = visitor.Node;
 
@@ -48,28 +42,23 @@ public class MarkdownSyntaxTree : IMarkdownSyntaxTree, IResettable {
                 stack.EnsureCapacity(stack.Count + childrenCount);
 
                 for (int i = childrenCount - 1; i >= 0; i--) {
-                    MarkdownSyntaxVisitor childVisitor = MarkdownPoolCache.MarkdownSyntaxVisitorPool.Get();
-                    childVisitor.Depth = depth + 1;
-                    childVisitor.Node = children[i];
-                    stack.Push(childVisitor);
+                    stack.Push((depth + 1, children[i]));
                 }
-
-                MarkdownPoolCache.MarkdownSyntaxVisitorPool.Return(visitor);
             }
         }
         finally {
             // Also handles MdNodeVisitorPool.Return(visitor) if the stack isn't empty yet
-            MarkdownPoolCache.MarkdownSyntaxVisitorStackPool.Return(stack);
+            DepthStackPool.Return(stack);
         }
     }
 
-    public IEnumerable<IMarkdownSyntaxVisitor> VisitNodesDeepestFirst() {
+    public IEnumerable<(int Depth, IMdSyntaxNode Node)> VisitNodesDeepestFirst() {
         ReadOnlySpan<IMdSyntaxNode> rootNodeChildren = RootNode.GetChildrenSpan();
         int rootNodeChildCount = rootNodeChildren.Length;
         if (rootNodeChildCount == 0) yield break; // Early exit for empty trees
 
-        Stack<MarkdownSyntaxVisitor> stackCache = MarkdownPoolCache.MarkdownSyntaxVisitorStackPool.Get();
-        Stack<MarkdownSyntaxVisitor> outputStack = MarkdownPoolCache.MarkdownSyntaxVisitorStackPool.Get();
+        Stack<(int, IMdSyntaxNode)> stackCache = DepthStackPool.Get();
+        Stack<(int, IMdSyntaxNode)> outputStack = DepthStackPool.Get();
 
         try {
             stackCache.EnsureCapacity(rootNodeChildCount);
@@ -77,14 +66,11 @@ public class MarkdownSyntaxTree : IMarkdownSyntaxTree, IResettable {
 
             // Add Root children directly to avoid an extra if call during the while loop
             for (int i = 0; i < rootNodeChildCount; i++) {
-                MarkdownSyntaxVisitor visitor = MarkdownPoolCache.MarkdownSyntaxVisitorPool.Get();
-                visitor.Depth = 1;
-                visitor.Node = rootNodeChildren[i];
-                stackCache.Push(visitor);
+                stackCache.Push((1, rootNodeChildren[i]));
             }
 
             // First pass: build the traversal order
-            while (stackCache.TryPop(out MarkdownSyntaxVisitor? visitor)) {
+            while (stackCache.TryPop(out (int Depth, IMdSyntaxNode Node) visitor)) {
                 outputStack.Push(visitor);
                 IMdSyntaxNode currentNode = visitor.Node;
 
@@ -95,24 +81,18 @@ public class MarkdownSyntaxTree : IMarkdownSyntaxTree, IResettable {
                 outputStack.EnsureCapacity(outputStack.Count + childrenCount);
 
                 for (int i = 0; i < childrenCount; i++) {
-                    MarkdownSyntaxVisitor childVisitor = MarkdownPoolCache.MarkdownSyntaxVisitorPool.Get();
-                    childVisitor.Depth = visitor.Depth + 1;
-                    childVisitor.Node = children[i];
-                    stackCache.Push(childVisitor);
+                    stackCache.Push((visitor.Depth + 1, children[i]));
                 }
             }
 
             // Second pass: yield the nodes in reverse order
-            while (outputStack.TryPop(out MarkdownSyntaxVisitor? visitor)) {
+            while (outputStack.TryPop(out (int Depth, IMdSyntaxNode Node) visitor)) {
                 yield return visitor;
-
-                MarkdownPoolCache.MarkdownSyntaxVisitorPool.Return(visitor);
             }
         }
         finally {
             // Clean up both stacks
-            MarkdownPoolCache.MarkdownSyntaxVisitorStackPool.Return(stackCache);
-            MarkdownPoolCache.MarkdownSyntaxVisitorStackPool.Return(outputStack);
+            DepthStackPool.Return(outputStack);
         }
     }
     #endregion

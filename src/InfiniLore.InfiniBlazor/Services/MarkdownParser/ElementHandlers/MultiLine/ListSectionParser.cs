@@ -18,7 +18,6 @@ public abstract class ListHandlerBase(ILineNormalizationService lineNormalizatio
     
     public HandlerOrigin SkipOnOrigin => HandlerOrigin.NotSkipped;
     
-    protected abstract MarkdownElement ListType { get; }
     protected abstract bool IsOrdered { get; }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -74,12 +73,10 @@ public abstract class ListHandlerBase(ILineNormalizationService lineNormalizatio
 
 [InjectableSingleton<IMarkdownElementHandler>("listOrdered")]
 public class ListOrderedHandlerBase(ILineNormalizationService lineNormalizationHelper) : ListHandlerBase(lineNormalizationHelper) {
-    protected override MarkdownElement ListType => MarkdownElement.ListOrdered;
     protected override bool IsOrdered => true;
 }
 
 [InjectableSingleton<IMarkdownElementHandler>("listUnordered")]
 public class ListUnorderedHandler(ILineNormalizationService lineNormalizationHelper) : ListHandlerBase(lineNormalizationHelper) {
-    protected override MarkdownElement ListType => MarkdownElement.ListUnordered;
     protected override bool IsOrdered => false;
 }
