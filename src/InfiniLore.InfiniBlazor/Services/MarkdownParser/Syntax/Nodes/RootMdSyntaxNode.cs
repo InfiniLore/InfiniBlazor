@@ -7,6 +7,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class RootMdSyntaxNode : MdSyntaxNode<RootMdSyntaxNode> {
+    // ReSharper disable once RedundantDefaultMemberInitializer
     public override int Depth { get; set; } = 0; // root always starts at 0;
 
     public override bool TryReset() {
