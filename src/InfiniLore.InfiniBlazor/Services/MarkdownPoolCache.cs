@@ -3,7 +3,8 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.ObjectPool;
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Syntax;
+using InfiniLore.InfiniBlazor.MarkdownParser;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 using Microsoft.Extensions.ObjectPool;
 
 namespace InfiniLore.InfiniBlazor;

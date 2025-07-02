@@ -1,7 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Syntax;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 using Microsoft.Extensions.ObjectPool;
 
 namespace InfiniLore.InfiniBlazor;

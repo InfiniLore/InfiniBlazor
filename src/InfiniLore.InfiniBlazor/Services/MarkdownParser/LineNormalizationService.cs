@@ -8,7 +8,7 @@ using System.Buffers;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor;
+namespace InfiniLore.InfiniBlazor.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

@@ -6,7 +6,7 @@ using InfiniLore.InfiniBlazor.Markdown.Processors;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 
-namespace InfiniLore.InfiniBlazor.Processors.OutputProcessors;
+namespace InfiniLore.InfiniBlazor.MarkdownParser.Processors.OutputProcessors;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

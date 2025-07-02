@@ -6,7 +6,7 @@ using InfiniLore.InfiniBlazor.Markdown;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.ElementHandlers.MultiLine;
+namespace InfiniLore.InfiniBlazor.MarkdownParser.ElementHandlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

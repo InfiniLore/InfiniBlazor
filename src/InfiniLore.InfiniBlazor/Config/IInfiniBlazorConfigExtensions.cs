@@ -3,7 +3,8 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using Ganss.Xss;
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Processors.InputProcessors;
+using InfiniLore.InfiniBlazor.MarkdownParser;
+using InfiniLore.InfiniBlazor.MarkdownParser.Processors.InputProcessors;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 

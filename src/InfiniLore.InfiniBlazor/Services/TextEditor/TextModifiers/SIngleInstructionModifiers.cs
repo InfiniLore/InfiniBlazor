@@ -5,7 +5,7 @@ using InfiniLore.InfiniBlazor.Markdown;
 using Microsoft.Extensions.Logging;
 using System.Buffers;
 
-namespace InfiniLore.InfiniBlazor.TextModifiers;
+namespace InfiniLore.InfiniBlazor.TextEditor.TextModifiers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

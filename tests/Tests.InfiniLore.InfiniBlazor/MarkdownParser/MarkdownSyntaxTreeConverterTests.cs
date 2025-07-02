@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Syntax;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 using Tests.InfiniLore.InfiniBlazor.DataSources;
 
 namespace Tests.InfiniLore.InfiniBlazor.MarkdownParser;

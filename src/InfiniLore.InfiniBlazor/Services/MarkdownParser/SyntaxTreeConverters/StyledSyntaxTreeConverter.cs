@@ -4,7 +4,7 @@
 using InfiniLore.InfiniBlazor.Markdown;
 using System.Collections.Frozen;
 
-namespace InfiniLore.InfiniBlazor.SyntaxTreeConverters;
+namespace InfiniLore.InfiniBlazor.MarkdownParser.SyntaxTreeConverters;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

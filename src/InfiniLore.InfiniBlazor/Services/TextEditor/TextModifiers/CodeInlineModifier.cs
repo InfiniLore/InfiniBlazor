@@ -6,7 +6,7 @@ using InfiniLore.InfiniBlazor.Markdown;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 
-namespace InfiniLore.InfiniBlazor.TextModifiers;
+namespace InfiniLore.InfiniBlazor.TextEditor.TextModifiers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

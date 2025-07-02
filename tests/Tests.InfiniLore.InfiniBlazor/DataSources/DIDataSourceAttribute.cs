@@ -3,9 +3,9 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Processors.InputProcessors;
-using InfiniLore.InfiniBlazor.Processors.OutputProcessors;
-using InfiniLore.InfiniBlazor.TextModifiers;
+using InfiniLore.InfiniBlazor.MarkdownParser.Processors.InputProcessors;
+using InfiniLore.InfiniBlazor.MarkdownParser.Processors.OutputProcessors;
+using InfiniLore.InfiniBlazor.TextEditor.TextModifiers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Tests.InfiniLore.InfiniBlazor.DataSources;

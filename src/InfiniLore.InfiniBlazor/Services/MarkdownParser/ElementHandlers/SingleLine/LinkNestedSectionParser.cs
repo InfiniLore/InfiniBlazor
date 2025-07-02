@@ -5,7 +5,7 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.ElementHandlers.SingleLine;
+namespace InfiniLore.InfiniBlazor.MarkdownParser.ElementHandlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

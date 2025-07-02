@@ -3,11 +3,11 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.Processors;
-using InfiniLore.InfiniBlazor.Syntax;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 using Microsoft.Extensions.Logging;
 using System.Collections.Immutable;
 
-namespace InfiniLore.InfiniBlazor;
+namespace InfiniLore.InfiniBlazor.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

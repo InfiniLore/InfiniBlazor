@@ -6,7 +6,7 @@ using InfiniLore.InfiniBlazor.Markdown;
 using Microsoft.AspNetCore.Components;
 using System.Text;
 
-namespace InfiniLore.InfiniBlazor.SyntaxTreeConverters;
+namespace InfiniLore.InfiniBlazor.MarkdownParser.SyntaxTreeConverters;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

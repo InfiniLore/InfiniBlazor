@@ -5,7 +5,7 @@ using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.Processors;
 using JetBrains.Annotations;
 
-namespace InfiniLore.InfiniBlazor.Processors.InputProcessors;
+namespace InfiniLore.InfiniBlazor.MarkdownParser.Processors.InputProcessors;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
