@@ -31,7 +31,7 @@ public class SimpleSyntaxNodeConverter : ISyntaxNodeConverter, IResettable {
 
             case CodeBlockMdSyntaxNode {Language: var lang} when lang.IsNotNullOrWhiteSpace(): {
                 Sb.Append("<pre><code class=\"language-");
-                Sb.Append(lang);
+                Sb.Append(lang.AsSpan());
                 Sb.Append("\">");
                 break;
             }
@@ -58,7 +58,7 @@ public class SimpleSyntaxNodeConverter : ISyntaxNodeConverter, IResettable {
             }
             
             case HtmlSpanMdSyntaxNode { TagValue: var tagValue }: {
-                Sb.Append(tagValue);
+                Sb.Append(tagValue.AsSpan());
                 break;
             }
             
@@ -66,13 +66,13 @@ public class SimpleSyntaxNodeConverter : ISyntaxNodeConverter, IResettable {
 
             case ImageMdSyntaxNode {AltText: var altText, Href: var href, Title: var title }: {
                 Sb.Append("<img src=\"");
-                Sb.Append(href);
+                Sb.Append(href.AsSpan());
                 Sb.Append("\" alt=\"");
-                Sb.Append(altText);
+                Sb.Append(altText.AsSpan());
                 Sb.Append('"');
                 if (title.IsNotNullOrWhiteSpace()) {
                     Sb.Append(" title=\"");
-                    Sb.Append(title);
+                    Sb.Append(title.AsSpan());
                     Sb.Append('"');
                 }
                 Sb.Append('>');
@@ -86,7 +86,7 @@ public class SimpleSyntaxNodeConverter : ISyntaxNodeConverter, IResettable {
 
             case LinkMdSyntaxNode {Href: var href}: {
                 Sb.Append("<a href=\"");
-                Sb.Append(href);
+                Sb.Append(href.AsSpan());
                 Sb.Append("\">");
                 break;
             }
@@ -183,27 +183,27 @@ public class SimpleSyntaxNodeConverter : ISyntaxNodeConverter, IResettable {
             case BoldMdSyntaxNode:break;
 
             case CodeBlockMdSyntaxNode { ContentCode: var code }: {
-                Sb.Append(code);
+                Sb.Append(code.AsSpan());
                 break;
             }
 
             case CodeInlineMdSyntaxNode {ContentCode: var code }: {
-                Sb.Append(code);
+                Sb.Append(code.AsSpan());
                 break;
             }
 
             case ContentHtmlMdSyntaxNode { ContentHtml: var content }: {
-                Sb.Append(content);
+                Sb.Append(content.AsSpan());
                 break;
             }
 
             case ContentMdSyntaxNode { Content: var content }: {
-                Sb.Append(content);
+                Sb.Append(content.AsSpan());
                 break;
             }
 
             case EmoteMdSyntaxNode { ContentEmote: var content }: {
-                Sb.Append(content);
+                Sb.Append(content.AsSpan());
                 break;
             }
 
@@ -239,7 +239,7 @@ public class SimpleSyntaxNodeConverter : ISyntaxNodeConverter, IResettable {
 
             case TagMdSyntaxNode { ContentTag: var contentTag }: {
                 Sb.Append('#');
-                Sb.Append(contentTag);
+                Sb.Append(contentTag.AsSpan());
                 break;
             }
             case UnderlineMdSyntaxNode:break;
