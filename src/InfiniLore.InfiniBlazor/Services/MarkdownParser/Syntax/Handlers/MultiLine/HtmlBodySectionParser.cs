@@ -45,8 +45,8 @@ public class HtmlBodyHandler : IMdSyntaxHandler {
             if (match.Groups[SpanTagId].TryGetValue(out string? spanTag) && match.Groups[SpanBodyId].TryGetValue(out string? spanBody)) {
                 HtmlSpanMdSyntaxNode spanNode = HtmlSpanMdSyntaxNode.Pool.Get();
                 spanNode.TagValue = spanTag;
-                engine.PushProcessedNodeToStack(parentNode, spanNode);
                 engine.PushMultiLineMatchesToStack(spanBody, spanNode, origin | MdSyntaxHandlerOrigin.Html);
+                engine.PushProcessedNodeToStack(parentNode, spanNode);
             }
             else {
                 ContentHtmlMdSyntaxNode htmlNode = ContentHtmlMdSyntaxNode.Pool.Get();

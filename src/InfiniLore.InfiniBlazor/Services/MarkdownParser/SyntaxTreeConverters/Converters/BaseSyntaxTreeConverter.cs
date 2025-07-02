@@ -23,7 +23,8 @@ public static class BaseMdSyntaxTreeConverter {
         try {
             int lastKnownDepth = -1;
 
-            foreach ((int depth, IMdSyntaxNode node) in tree.VisitNodesBreadthFirst()) {
+            foreach (IMdSyntaxNode node in tree.VisitNodesBreadthFirst()) {
+                int depth = node.Depth;
                 if (lastKnownDepth + 1 > depth) 
                     CloseOpenTags(nodeConverter, depthCache, depth);
 

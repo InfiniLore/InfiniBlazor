@@ -14,53 +14,49 @@ public class MdSyntaxTree : IMdSyntaxTree, IResettable {
     
     public static ObjectPool<MdSyntaxTree> Pool { get; } = Pooling.CreateResettablePool<MdSyntaxTree>(Pooling.ParsersRetained);
     private static ObjectPool<Stack<IMdSyntaxNode>> MdSyntaxNodeStackPool { get; } = Pooling.CreateStackPool<IMdSyntaxNode>(Pooling.ParsersRetained);
-    private static ObjectPool<Stack<(int Depth, IMdSyntaxNode Node)>> DepthStackPool { get; } = Pooling.CreateStackPool<(int Depth, IMdSyntaxNode Node)>(4);
-
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region Visit Nodes
-    public IEnumerable<(int Depth, IMdSyntaxNode Node)> VisitNodesBreadthFirst() {
+    public IEnumerable<IMdSyntaxNode> VisitNodesBreadthFirst() {
         ReadOnlySpan<IMdSyntaxNode> rootNodeChildren = RootNode.GetChildrenSpan();
         int rootNodeChildCount = rootNodeChildren.Length;
         if (rootNodeChildCount == 0) yield break;// Early exit for empty tree nodes
 
-        Stack<(int, IMdSyntaxNode)> stack = DepthStackPool.Get();
+        Stack<IMdSyntaxNode> stack = MdSyntaxNodeStackPool.Get();
         try {
             // Add Root children directly to avoid an extra if call during the while loop
             for (int i = rootNodeChildCount - 1; i >= 0; i--) {
-                stack.Push((1, rootNodeChildren[i]));
+                stack.Push(rootNodeChildren[i]);
             }
 
-            while (stack.TryPop(out (int Depth, IMdSyntaxNode Node) visitor)) {
-                int depth = visitor.Depth;
-                IMdSyntaxNode currentNode = visitor.Node;
-
+            while (stack.TryPop(out IMdSyntaxNode? visitor)) {
                 yield return visitor;
 
                 // Push children in reverse order so they're processed in the correct order when popped
-                ReadOnlySpan<IMdSyntaxNode> children = currentNode.GetChildrenSpan();
+                ReadOnlySpan<IMdSyntaxNode> children = visitor.GetChildrenSpan();
                 int childrenCount = children.Length;
                 stack.EnsureCapacity(stack.Count + childrenCount);
 
                 for (int i = childrenCount - 1; i >= 0; i--) {
-                    stack.Push((depth + 1, children[i]));
+                    stack.Push(children[i]);
                 }
             }
         }
         finally {
             // Also handles MdNodeVisitorPool.Return(visitor) if the stack isn't empty yet
-            DepthStackPool.Return(stack);
+            MdSyntaxNodeStackPool.Return(stack);
         }
     }
 
-    public IEnumerable<(int Depth, IMdSyntaxNode Node)> VisitNodesDeepestFirst() {
+    public IEnumerable<IMdSyntaxNode> VisitNodesDeepestFirst() {
         ReadOnlySpan<IMdSyntaxNode> rootNodeChildren = RootNode.GetChildrenSpan();
         int rootNodeChildCount = rootNodeChildren.Length;
         if (rootNodeChildCount == 0) yield break; // Early exit for empty trees
 
-        Stack<(int, IMdSyntaxNode)> stackCache = DepthStackPool.Get();
-        Stack<(int, IMdSyntaxNode)> outputStack = DepthStackPool.Get();
+        Stack<IMdSyntaxNode> stackCache = MdSyntaxNodeStackPool.Get();
+        Stack<IMdSyntaxNode> outputStack = MdSyntaxNodeStackPool.Get();
 
         try {
             stackCache.EnsureCapacity(rootNodeChildCount);
@@ -68,33 +64,33 @@ public class MdSyntaxTree : IMdSyntaxTree, IResettable {
 
             // Add Root children directly to avoid an extra if call during the while loop
             for (int i = 0; i < rootNodeChildCount; i++) {
-                stackCache.Push((1, rootNodeChildren[i]));
+                stackCache.Push(rootNodeChildren[i]);
             }
 
             // First pass: build the traversal order
-            while (stackCache.TryPop(out (int Depth, IMdSyntaxNode Node) visitor)) {
+            while (stackCache.TryPop(out IMdSyntaxNode? visitor)) {
                 outputStack.Push(visitor);
-                IMdSyntaxNode currentNode = visitor.Node;
 
                 // Push children in normal order
-                ReadOnlySpan<IMdSyntaxNode> children = currentNode.GetChildrenSpan();
+                ReadOnlySpan<IMdSyntaxNode> children = visitor.GetChildrenSpan();
                 int childrenCount = children.Length;
                 stackCache.EnsureCapacity(stackCache.Count + childrenCount);
                 outputStack.EnsureCapacity(outputStack.Count + childrenCount);
 
                 for (int i = 0; i < childrenCount; i++) {
-                    stackCache.Push((visitor.Depth + 1, children[i]));
+                    stackCache.Push(children[i]);
                 }
             }
 
             // Second pass: yield the nodes in reverse order
-            while (outputStack.TryPop(out (int Depth, IMdSyntaxNode Node) visitor)) {
+            while (outputStack.TryPop(out IMdSyntaxNode? visitor)) {
                 yield return visitor;
             }
         }
         finally {
             // Clean up both stacks
-            DepthStackPool.Return(outputStack);
+            MdSyntaxNodeStackPool.Return(stackCache);
+            MdSyntaxNodeStackPool.Return(outputStack);
         }
     }
     #endregion

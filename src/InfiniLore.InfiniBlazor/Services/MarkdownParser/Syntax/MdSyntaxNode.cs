@@ -17,7 +17,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
 
     private const int ChildrenMinimumCapacity = 2;
     public int ChildCount { get; private set; }
-    public int Depth { get; set; } = -1;
+    public virtual int Depth { get; set; } = -1;
     
     protected virtual IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(ChildrenMinimumCapacity);
 
