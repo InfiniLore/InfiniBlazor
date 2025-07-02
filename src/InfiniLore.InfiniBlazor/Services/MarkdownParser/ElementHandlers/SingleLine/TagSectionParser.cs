@@ -27,7 +27,7 @@ public class TagHandler : IMarkdownElementHandler {
     ) {
         if (!entireMatch.Groups[TextId].TryGetValue(out string? tagValue)) return ;
 
-        TagMdSyntaxNode node = TagMdSyntaxNode.Shared.Get();
+        TagMdSyntaxNode node = TagMdSyntaxNode.Pool.Get();
         node.ContentTag = tagValue;
         parentNode.AddChildNode(node);
     }

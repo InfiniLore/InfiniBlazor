@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.ElementHandlers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMarkdownElementHandler>("blockQuote")]
-public class BlockQuoteHandler(ILineNormalizationService lineNormalizationHelper, IPoolCache poolCache) : IMarkdownElementHandler {
+public class BlockQuoteHandler : IMarkdownElementHandler {
     public HandlerOrigin SkipOnOrigin => HandlerOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -28,16 +28,16 @@ public class BlockQuoteHandler(ILineNormalizationService lineNormalizationHelper
 
         // Replace Regex usage with span-based logic:
         ReadOnlySpan<char> normalized = NormalizeBlockQuote(blockQuoteBody);
-        string adjustedBlockquote = lineNormalizationHelper.NormalizeLineIndentation(normalized);
+        string adjustedBlockquote = LineNormalization.NormalizeLineIndentation(normalized);
 
-        BlockQuoteMdSyntaxNode blockQuoteNode = BlockQuoteMdSyntaxNode.Shared.Get();
+        BlockQuoteMdSyntaxNode blockQuoteNode = BlockQuoteMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(blockQuoteNode);
         engine.PushMultiLineMatchesToStack(adjustedBlockquote, blockQuoteNode, origin | HandlerOrigin.PreserveHtml);
     }
 
     private ReadOnlySpan<char> NormalizeBlockQuote(ReadOnlySpan<char> span) {
         // Use a ValueStringBuilder for efficient memory writing
-        StringBuilder builder = poolCache.StringBuilderPool.Get();
+        StringBuilder builder = GlobalPools.StringBuilder.Get();
         try {
             foreach (ReadOnlySpan<char> line in span.EnumerateLines()) {
                 // Example: Remove leading '>' and any extra whitespace
@@ -55,7 +55,7 @@ public class BlockQuoteHandler(ILineNormalizationService lineNormalizationHelper
             return builder.ToString();
         }
         finally {
-            poolCache.StringBuilderPool.Return(builder);
+            GlobalPools.StringBuilder.Return(builder);
         }
 
     }

@@ -16,5 +16,5 @@ public interface IMdSyntaxNode {
 
     IMdSyntaxNode WithContent(string content);
 
-    void ReturnToShared();
+    void ReturnToPool();
 }

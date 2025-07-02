@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.TextEditor;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class TextEditor(IPoolCache poolCache) : ITextEditor {
+public class TextEditor : ITextEditor {
     private int _caretIndexToUpdate = -1;
     public required FrozenDictionary<string, ITextModifier> ModifierLookup { private get; init; }  
     
@@ -114,7 +114,7 @@ public class TextEditor(IPoolCache poolCache) : ITextEditor {
         ReadOnlySpan<char> possibleTable = source.Text.AsSpan(intersectStart, intersectEnd - intersectStart);
         if (TextEditorRegexLib.IsTableLineRegex.IsMatch(possibleTable)) {
             Regex.ValueMatchEnumerator tableCellMatches = TextEditorRegexLib.TableCellsRegex.EnumerateMatches(possibleTable);
-            Stack<Range> tableCellMatchesStack = poolCache.RangeStackPool.Get();
+            Stack<Range> tableCellMatchesStack = GlobalPools.RangeStack.Get();
             try {
                 while (tableCellMatches.MoveNext()) {
                     ValueMatch current = tableCellMatches.Current;
@@ -133,7 +133,7 @@ public class TextEditor(IPoolCache poolCache) : ITextEditor {
                 return true;
             }
             finally {
-                poolCache.RangeStackPool.Return(tableCellMatchesStack);
+                GlobalPools.RangeStack.Return(tableCellMatchesStack);
             }
         }
 

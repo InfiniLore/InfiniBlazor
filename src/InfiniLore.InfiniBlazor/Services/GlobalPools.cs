@@ -1,11 +1,15 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Markdown;
+using Microsoft.Extensions.ObjectPool;
+using System.Text;
+
+namespace InfiniLore.InfiniBlazor;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface ILineNormalizationService {
-    string NormalizeLineIndentation(ReadOnlySpan<char> input);
+public static class GlobalPools {
+    public static ObjectPool<StringBuilder> StringBuilder { get; } = new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy());
+    public static ObjectPool<Stack<Range>> RangeStack { get; } = Pooling.CreateStackPool<Range>(16);
 }

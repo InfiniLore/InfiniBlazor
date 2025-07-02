@@ -48,7 +48,7 @@ public class EmoteHandler(ILogger<EmoteHandler> logger) : IMarkdownElementHandle
             return ;
         }
 
-        EmoteMdSyntaxNode node = EmoteMdSyntaxNode.Shared.Get();
+        EmoteMdSyntaxNode node = EmoteMdSyntaxNode.Pool.Get();
         node.ContentEmote = value;
         parentNode.AddChildNode(node);
     }

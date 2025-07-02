@@ -30,7 +30,7 @@ public class HeadingHandler : IMarkdownElementHandler {
         if (!entireMatch.Groups[HLevelId].TryGetLength(out int headingLevel)) return;
         if (!entireMatch.Groups[HTextId].TryGetValue(out string? headerText)) return;
 
-        HeadingMdSyntaxNode headingNode = HeadingMdSyntaxNode.Shared.Get();
+        HeadingMdSyntaxNode headingNode = HeadingMdSyntaxNode.Pool.Get();
         headingNode.Level = headingLevel;
         parentNode.AddChildNode(headingNode);
         

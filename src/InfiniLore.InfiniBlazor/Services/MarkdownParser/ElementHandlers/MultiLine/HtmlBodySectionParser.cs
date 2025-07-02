@@ -32,7 +32,7 @@ public class HtmlBodyHandler : IMarkdownElementHandler {
     ) {
         if (!origin.HasFlag(HandlerOrigin.PreserveHtml)) {
             
-            parentNode = parentNode.AddChildNode(ParagraphMdSyntaxNode.Shared.Get());
+            parentNode = parentNode.AddChildNode(ParagraphMdSyntaxNode.Pool.Get());
         }
 
         if (entireMatch.Groups[HtmlPostId].TryGetValue(out string? post)) {
@@ -43,13 +43,13 @@ public class HtmlBodyHandler : IMarkdownElementHandler {
             // Span should be the only special case allowed that allows for Markdown parsing within it
             Match match = MarkdownRegexLib.FindSpanHtmlRegex.Match(htmlBody);
             if (match.Groups[SpanTagId].TryGetValue(out string? spanTag) && match.Groups[SpanBodyId].TryGetValue(out string? spanBody)) {
-                HtmlSpanMdSyntaxNode spanNode = HtmlSpanMdSyntaxNode.Shared.Get();
+                HtmlSpanMdSyntaxNode spanNode = HtmlSpanMdSyntaxNode.Pool.Get();
                 spanNode.TagValue = spanTag;
                 engine.PushProcessedNodeToStack(parentNode, spanNode);
                 engine.PushMultiLineMatchesToStack(spanBody, spanNode, origin | HandlerOrigin.Html);
             }
             else {
-                ContentHtmlMdSyntaxNode htmlNode = ContentHtmlMdSyntaxNode.Shared.Get();
+                ContentHtmlMdSyntaxNode htmlNode = ContentHtmlMdSyntaxNode.Pool.Get();
                 htmlNode.ContentHtml= htmlBody;
                 engine.PushProcessedNodeToStack(parentNode, htmlNode);
             }

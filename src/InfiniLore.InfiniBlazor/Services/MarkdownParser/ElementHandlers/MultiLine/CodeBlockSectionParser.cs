@@ -30,7 +30,7 @@ public class CodeBlockHandler : IMarkdownElementHandler {
     ) {
         if (!entireMatch.Groups[CBodyId].TryGetValueSpan(out ReadOnlySpan<char> codeBlockBody)) return;
 
-        CodeBlockMdSyntaxNode codeNode = CodeBlockMdSyntaxNode.Shared.Get();
+        CodeBlockMdSyntaxNode codeNode = CodeBlockMdSyntaxNode.Pool.Get();
 
         string langNameValue = entireMatch.Groups[CLangId].Value;
         if (!langNameValue.IsEmpty()) codeNode.Language = langNameValue;

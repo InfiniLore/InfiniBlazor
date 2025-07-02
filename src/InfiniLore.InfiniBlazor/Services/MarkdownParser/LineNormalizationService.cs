@@ -2,8 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions;
-using CodeOfChaos.Extensions.DependencyInjection;
-using InfiniLore.InfiniBlazor.Markdown;
 using System.Buffers;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -12,19 +10,18 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ILineNormalizationService>]
-public class LineNormalizationService(IPoolCache poolCache) : ILineNormalizationService {
+public static class LineNormalization {
     private const int StackAllocThreshold = 256;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public string NormalizeLineIndentation(ReadOnlySpan<char> input) {
+    public static string NormalizeLineIndentation(ReadOnlySpan<char> input) {
         int matchCount = input.Count('\n');
         int splitCount = matchCount + 1;
 
         // Estimate initial capacity to avoid reallocations
-        StringBuilder stringBuilder = poolCache.StringBuilderPool.Get();
+        StringBuilder stringBuilder = GlobalPools.StringBuilder.Get();
         Range[]? rentedArray = null;
         Span<Range> rangeSpan = splitCount <= StackAllocThreshold
             ? stackalloc Range[splitCount]
@@ -72,7 +69,7 @@ public class LineNormalizationService(IPoolCache poolCache) : ILineNormalization
             return stringBuilder.ToString();
         }
         finally {
-            poolCache.StringBuilderPool.Return(stringBuilder);
+            GlobalPools.StringBuilder.Return(stringBuilder);
             if (rentedArray is not null) ArrayPool<Range>.Shared.Return(rentedArray);
         }
     }

@@ -27,7 +27,7 @@ public class SubScriptHandler : IMarkdownElementHandler {
     ) {
         if (!entireMatch.Groups[SbId].TryGetValue(out string? subValue)) return ;
 
-        SubScriptMdSyntaxNode node = SubScriptMdSyntaxNode.Shared.Get();
+        SubScriptMdSyntaxNode node = SubScriptMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
         engine.PushSingleLineMatchesToStack(subValue, node, origin | SkipOnOrigin);
     }

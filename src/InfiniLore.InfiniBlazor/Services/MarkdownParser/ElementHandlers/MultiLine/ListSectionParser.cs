@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.ElementHandlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public abstract class ListHandlerBase(ILineNormalizationService lineNormalizationHelper) : IMarkdownElementHandler {
+public abstract class ListHandlerBase : IMarkdownElementHandler {
     private static readonly int LTaskId = MarkdownRegexLib.GetListGroupId("lTask");
     private static readonly int LHeadId = MarkdownRegexLib.GetListGroupId("lHead");
     private static readonly int LBodyId = MarkdownRegexLib.GetListGroupId("lBody");
@@ -39,18 +39,18 @@ public abstract class ListHandlerBase(ILineNormalizationService lineNormalizatio
         try {
             matchCollection.CopyTo(matchArray, 0);
 
-            ListMdSyntaxNode listNode = ListMdSyntaxNode.Shared.Get();
+            ListMdSyntaxNode listNode = ListMdSyntaxNode.Pool.Get();
             listNode.IsOrdered = IsOrdered;
             parentNode.AddChildNode(listNode);
             
             for (int i = 0; i < matchCount; i++) {
                 GroupCollection groups = matchArray[i].Groups;
 
-                ListItemMdSyntaxNode listItemNode = ListItemMdSyntaxNode.Shared.Get();
+                ListItemMdSyntaxNode listItemNode = ListItemMdSyntaxNode.Pool.Get();
                 listNode.AddChildNode(listItemNode);
             
                 if (groups[LBodyId].TryGetValueSpan(out ReadOnlySpan<char> itemBody) && !itemBody.IsEmpty) {
-                    string normalizedBody = lineNormalizationHelper.NormalizeLineIndentation(itemBody);
+                    string normalizedBody = LineNormalization.NormalizeLineIndentation(itemBody);
                     engine.PushMultiLineMatchesToStack(normalizedBody, listItemNode, origin | HandlerOrigin.PreserveHtml);
                 }
 
@@ -72,11 +72,11 @@ public abstract class ListHandlerBase(ILineNormalizationService lineNormalizatio
 }
 
 [InjectableSingleton<IMarkdownElementHandler>("listOrdered")]
-public class ListOrderedHandlerBase(ILineNormalizationService lineNormalizationHelper) : ListHandlerBase(lineNormalizationHelper) {
+public class ListOrderedHandlerBase : ListHandlerBase {
     protected override bool IsOrdered => true;
 }
 
 [InjectableSingleton<IMarkdownElementHandler>("listUnordered")]
-public class ListUnorderedHandler(ILineNormalizationService lineNormalizationHelper) : ListHandlerBase(lineNormalizationHelper) {
+public class ListUnorderedHandler : ListHandlerBase {
     protected override bool IsOrdered => false;
 }

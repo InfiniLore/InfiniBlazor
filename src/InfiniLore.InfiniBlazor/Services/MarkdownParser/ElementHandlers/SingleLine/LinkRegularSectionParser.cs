@@ -34,7 +34,7 @@ public class LinkRegularHandler : IMarkdownElementHandler {
         if (!entireMatch.Groups[LrHrefId].TryGetValue(out string? linkHref)) return ;
         
         if (entireMatch.Groups[LrBangId].Success) {
-            ImageMdSyntaxNode imgNode = ImageMdSyntaxNode.Shared.Get();
+            ImageMdSyntaxNode imgNode = ImageMdSyntaxNode.Pool.Get();
             imgNode.Href = linkHref;
             imgNode.AltText = linkText;
             
@@ -47,7 +47,7 @@ public class LinkRegularHandler : IMarkdownElementHandler {
             return ;
         }
         
-        LinkMdSyntaxNode linkNode = LinkMdSyntaxNode.Shared.Get();
+        LinkMdSyntaxNode linkNode = LinkMdSyntaxNode.Pool.Get();
         linkNode.Href = linkHref;
         parentNode.AddChildNode(linkNode);
         

@@ -27,7 +27,7 @@ public class SuperScriptHandler : IMarkdownElementHandler {
     ) {
         if (!entireMatch.Groups[SpId].TryGetValue(out string? superValue)) return ;
         
-        SuperScriptMdSyntaxNode node = SuperScriptMdSyntaxNode.Shared.Get();
+        SuperScriptMdSyntaxNode node = SuperScriptMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
         engine.PushSingleLineMatchesToStack(superValue, node, origin | SkipOnOrigin);
     }

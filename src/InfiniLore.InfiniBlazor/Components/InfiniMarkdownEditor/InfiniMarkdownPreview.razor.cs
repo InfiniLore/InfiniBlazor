@@ -8,9 +8,7 @@ namespace InfiniLore.InfiniBlazor.Components;
 // -----------------------------------------------------------------------------------------------------------------
 // Methods
 // -----------------------------------------------------------------------------------------------------------------
-public partial class InfiniMarkdownPreview(
-    IPoolCache poolCache
-) : InfiniComponentBase {
+public partial class InfiniMarkdownPreview : InfiniComponentBase {
     [CascadingParameter] public InfiniMarkdownEditor ParentEditor { get; set; } = null!; 
 
     private string? MarkdownStringOutput => ParentEditor.MarkdownStringOutput;
@@ -41,7 +39,7 @@ public partial class InfiniMarkdownPreview(
     private string PrettifyHtml(string? html) {
         if (string.IsNullOrWhiteSpace(html)) return string.Empty;
 
-        StringBuilder sb = poolCache.StringBuilderPool.Get();
+        StringBuilder sb = GlobalPools.StringBuilder.Get();
         Regex emptySpaces = EmptySpacesRegex();
 
         try {
@@ -93,7 +91,7 @@ public partial class InfiniMarkdownPreview(
             return html;
         }
         finally {
-            poolCache.StringBuilderPool.Return(sb);
+            GlobalPools.StringBuilder.Return(sb);
         }
 
     }

@@ -21,7 +21,7 @@ public class BoldHandler : IMarkdownElementHandler {
     public void HandleMatch(IMarkdownParserEngine engine, IMdSyntaxNode parentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!entireMatch.Groups[BId].TryGetValue(out string? boldValue)) return;
 
-        BoldMdSyntaxNode node = BoldMdSyntaxNode.Shared.Get();
+        BoldMdSyntaxNode node = BoldMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
         engine.PushSingleLineMatchesToStack(boldValue, node, origin | SkipOnOrigin);
     }

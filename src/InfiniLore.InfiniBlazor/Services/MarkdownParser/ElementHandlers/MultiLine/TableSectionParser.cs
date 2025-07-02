@@ -44,17 +44,17 @@ public class TableHandler : IMarkdownElementHandler {
         int rowCount = rows.Split(rowRanges, '\n', StringSplitOptions.TrimEntries);
 
         // Construct table HTML
-        TableMdSyntaxNode tableNode = TableMdSyntaxNode.Shared.Get();
+        TableMdSyntaxNode tableNode = TableMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(tableNode);
 
         // Add headers
-        TableHeadMdSyntaxNode tableHead = TableHeadMdSyntaxNode.Shared.Get();
+        TableHeadMdSyntaxNode tableHead = TableHeadMdSyntaxNode.Pool.Get();
         tableNode.AddChildNode(tableHead);
-        TableRowMdSyntaxNode tableHeadRow = TableRowMdSyntaxNode.Shared.Get();
+        TableRowMdSyntaxNode tableHeadRow = TableRowMdSyntaxNode.Pool.Get();
         tableHead.AddChildNode(tableHeadRow);
         
         for (int index = 0; index < headerColumnCount; index++) {
-            TableHeadCellMdSyntaxNode tableHeadCellNode = TableHeadCellMdSyntaxNode.Shared.Get();
+            TableHeadCellMdSyntaxNode tableHeadCellNode = TableHeadCellMdSyntaxNode.Pool.Get();
             tableHeadRow.AddChildNode(tableHeadCellNode);
             
             ReadOnlySpan<char> column = header[headerColumns[index]];
@@ -62,7 +62,7 @@ public class TableHandler : IMarkdownElementHandler {
         }
 
         // Add rows
-        TableBodyMdSyntaxNode tableBody = TableBodyMdSyntaxNode.Shared.Get();
+        TableBodyMdSyntaxNode tableBody = TableBodyMdSyntaxNode.Pool.Get();
         tableNode.AddChildNode(tableBody);
 
         Range[]? rowColumnRanges = null;
@@ -80,10 +80,10 @@ public class TableHandler : IMarkdownElementHandler {
 
                 if (rowColumnCount != headerColumnCount) continue; // Skip malformed rows
 
-                TableRowMdSyntaxNode tableRow = TableRowMdSyntaxNode.Shared.Get();
+                TableRowMdSyntaxNode tableRow = TableRowMdSyntaxNode.Pool.Get();
                 tableBody.AddChildNode(tableRow);
                 for (int columnIndex = 0; columnIndex < rowColumnCount; columnIndex++) {
-                    TableCellMdSyntaxNode tableCell = TableCellMdSyntaxNode.Shared.Get();
+                    TableCellMdSyntaxNode tableCell = TableCellMdSyntaxNode.Pool.Get();
                     tableRow.AddChildNode(tableCell);
                     engine.PushSingleLineMatchesToStack(
                         row[columnBuffer[columnIndex]].ToString(), 

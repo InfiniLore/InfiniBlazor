@@ -21,6 +21,6 @@ public class HorizontalRuleHandler : IMarkdownElementHandler {
         Group group,
         HandlerOrigin origin
     ) {
-        parentNode.AddChildNode(HorizontalRuleMdSyntaxNode.Shared.Get());
+        parentNode.AddChildNode(HorizontalRuleMdSyntaxNode.Pool.Get());
     }
 }

@@ -31,7 +31,7 @@ public class ParagraphHandler : IMarkdownElementHandler {
         bool writeParagraph = !origin.HasFlag(HandlerOrigin.Html);
         
         if (writeParagraph) {
-            ParagraphMdSyntaxNode node = ParagraphMdSyntaxNode.Shared.Get();
+            ParagraphMdSyntaxNode node = ParagraphMdSyntaxNode.Pool.Get();
             parentNode = parentNode.AddChildNode(node);
         }
         engine.PushSingleLineMatchesToStack(paragraph.TrimStart(), parentNode, origin);

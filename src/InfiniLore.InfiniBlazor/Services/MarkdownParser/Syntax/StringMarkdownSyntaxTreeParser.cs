@@ -39,7 +39,7 @@ public class StringMarkdownSyntaxTreeParser(IServiceProvider serviceProvider, IL
     #endregion
     
     public void ParseToNodeTreeAsync(string markdown, IMarkdownSyntaxTree nodeTree) {
-        MarkdownParserEngine runningParser = MarkdownPoolCache.MarkdownParserEnginePool.Get();
+        MarkdownParserEngine runningParser = MarkdownParserEngine.Pool.Get();
 
         try {
             runningParser.NodeTree = nodeTree;
@@ -55,12 +55,12 @@ public class StringMarkdownSyntaxTreeParser(IServiceProvider serviceProvider, IL
                     }
                 }
                 finally {
-                    MarkdownPoolCache.MarkdownFragmentPool.Return(fragment);
+                    SyntaxFragment.Pool.Return(fragment);
                 }
             }
         }
         finally {
-            MarkdownPoolCache.MarkdownParserEnginePool.Return(runningParser);
+            MarkdownParserEngine.Pool.Return(runningParser);
         }
     }
 

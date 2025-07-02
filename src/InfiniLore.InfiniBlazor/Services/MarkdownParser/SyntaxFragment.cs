@@ -23,6 +23,8 @@ public class SyntaxFragment : ISyntaxFragment, IResettable {
         ProcessedNode
     }
     
+    public static ObjectPool<SyntaxFragment> Pool { get; } = Pooling.CreateResettablePool<SyntaxFragment>(Pooling.ParsersRetained * Pooling.VisitorPerParserRetained);
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

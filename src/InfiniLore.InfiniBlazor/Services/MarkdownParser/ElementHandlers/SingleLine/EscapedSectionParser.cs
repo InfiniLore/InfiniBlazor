@@ -25,7 +25,7 @@ public class EscapedHandler : IMarkdownElementHandler {
         HandlerOrigin origin
     ) {
         char value = group.ValueSpan[1];
-        EscapedCharacterMdSyntaxNode node = EscapedCharacterMdSyntaxNode.Shared.Get();
+        EscapedCharacterMdSyntaxNode node = EscapedCharacterMdSyntaxNode.Pool.Get();
         node.ContentChar = value;
         parentNode.AddChildNode(node);
     }

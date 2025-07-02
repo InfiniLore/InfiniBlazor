@@ -23,7 +23,7 @@ public static class TextEditorFactory {
                 group => group.Last()
             );
 
-        return new TextEditor(provider.GetRequiredService<IPoolCache>()) {
+        return new TextEditor {
             ModifierLookup = modifierLookup
         };
 

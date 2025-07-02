@@ -27,7 +27,7 @@ public class StrikeHandler : IMarkdownElementHandler {
     ) {
         if (!entireMatch.Groups[SId].TryGetValue(out string? strikeValue)) return ;
 
-        StrikeMdSyntaxNode node = StrikeMdSyntaxNode.Shared.Get();
+        StrikeMdSyntaxNode node = StrikeMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
         engine.PushSingleLineMatchesToStack(strikeValue, node, origin | SkipOnOrigin);
     }

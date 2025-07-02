@@ -15,6 +15,8 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
     private readonly Stack<SyntaxFragment> _stack = new();
     public IMarkdownSyntaxTree NodeTree { get; set; } = null!;
     
+    public static ObjectPool<MarkdownParserEngine> Pool { get; } = Pooling.CreateResettablePool<MarkdownParserEngine>(Pooling.ParsersRetained);
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -48,7 +50,7 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
 
             // If there's an uncaught text between this match's end and the last position, add it as raw input
             if (matchEnd < currentIndex) {
-                ContentMdSyntaxNode contentNode = ContentMdSyntaxNode.Shared.Get();
+                ContentMdSyntaxNode contentNode = ContentMdSyntaxNode.Pool.Get();
                 contentNode.Content = input[matchEnd..currentIndex];
                 PushProcessedNodeToStack(node, contentNode);
             }
@@ -60,20 +62,20 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
         // ReSharper disable once InvertIf
         if (currentIndex > 0) {
             // Handle any remaining text before the first match
-            ContentMdSyntaxNode contentNode = ContentMdSyntaxNode.Shared.Get();
+            ContentMdSyntaxNode contentNode = ContentMdSyntaxNode.Pool.Get();
             contentNode.Content = input[..currentIndex];
             PushProcessedNodeToStack(node, contentNode);
         }
     }
 
     public void PushProcessedNodeToStack(IMdSyntaxNode parentNode, IMdSyntaxNode childNode) {
-        SyntaxFragment fragment = MarkdownPoolCache.MarkdownFragmentPool.Get();
+        SyntaxFragment fragment = SyntaxFragment.Pool.Get();
         fragment.AsProcessedNode(parentNode, childNode);
         _stack.Push(fragment);
     }
 
     private void PushMatchToStack(Match match, IMdSyntaxNode currentNode, HandlerOrigin origin) {
-        SyntaxFragment fragment = MarkdownPoolCache.MarkdownFragmentPool.Get();
+        SyntaxFragment fragment = SyntaxFragment.Pool.Get();
         fragment.AsUnhandledMatch(match, currentNode, origin);
         _stack.Push(fragment);
     }
@@ -84,7 +86,7 @@ public class MarkdownParserEngine : IMarkdownParserEngine, IResettable {
     
     public bool TryReset() {
         while (_stack.TryPop(out SyntaxFragment? fragment)) {
-            MarkdownPoolCache.MarkdownFragmentPool.Return(fragment);// Makes sure we clean everything
+            SyntaxFragment.Pool.Return(fragment);// Makes sure we clean everything
         }
 
         NodeTree = null!;

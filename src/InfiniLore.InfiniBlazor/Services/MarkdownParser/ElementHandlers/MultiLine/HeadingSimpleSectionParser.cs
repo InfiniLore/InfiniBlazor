@@ -27,7 +27,7 @@ public class HeadingSimpleHandler : IMarkdownElementHandler {
     ) {
         if (!entireMatch.Groups[HsTextId].TryGetValue(out string? headerSimpleText)) return;
 
-        HeadingMdSyntaxNode headingNode = HeadingMdSyntaxNode.Shared.Get();
+        HeadingMdSyntaxNode headingNode = HeadingMdSyntaxNode.Pool.Get();
         headingNode.Level = 1;
         parentNode.AddChildNode(headingNode);
         

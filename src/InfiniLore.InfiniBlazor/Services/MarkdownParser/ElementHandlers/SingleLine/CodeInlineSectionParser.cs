@@ -22,7 +22,7 @@ public class CodeInlineHandler : IMarkdownElementHandler {
         if (!entireMatch.Groups[CId].TryGetValue(out string? codeValue)) return ;
 
         string normalizedBackticks = codeValue.Replace("\\`", "`");
-        CodeInlineMdSyntaxNode node = CodeInlineMdSyntaxNode.Shared.Get();
+        CodeInlineMdSyntaxNode node = CodeInlineMdSyntaxNode.Pool.Get();
         node.ContentCode = normalizedBackticks;
         parentNode.AddChildNode(node);
     }

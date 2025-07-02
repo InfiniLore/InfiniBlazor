@@ -17,8 +17,7 @@ namespace InfiniLore.InfiniBlazor.Components;
 public partial class InfiniThemeManager(
     IThemeStateProvider themeStateProvider,
     IJsRuntimeHelper jsRuntimeHelper,
-    ILogger<InfiniThemeManager> logger,
-    IPoolCache pool
+    ILogger<InfiniThemeManager> logger
 ) : ComponentBase, IAsyncDisposable {
 
     private const string BaseId = "infiniThemeManager-base-css";
@@ -118,7 +117,7 @@ public partial class InfiniThemeManager(
     }
 
     private bool TryGetCssString(ICssData cssData, [NotNullWhen(true)] out string? css) {
-        StringBuilder sb = pool.StringBuilderPool.Get();
+        StringBuilder sb = GlobalPools.StringBuilder.Get();
         try {
             sb.Append(":root{");
             foreach ((string key, string value) in cssData.AsCssVariables()) {
@@ -131,7 +130,7 @@ public partial class InfiniThemeManager(
             return true;
         }
         finally {
-            pool.StringBuilderPool.Return(sb);
+            GlobalPools.StringBuilder.Return(sb);
         }
     }
 

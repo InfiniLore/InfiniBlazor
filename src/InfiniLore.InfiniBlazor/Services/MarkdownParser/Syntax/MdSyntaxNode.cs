@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.ObjectPool;
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using Microsoft.Extensions.ObjectPool;
@@ -14,7 +13,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
     where T : MdSyntaxNode<T>, new() 
 {
-    public static ObjectPool<T> Shared { get; } = new DefaultObjectPool<T>(new ResettablePoolPolicy<T>());
+    public static ObjectPool<T> Pool { get; } = Pooling.CreateResettablePool<T>(16);
 
     private const int ChildrenMinimumCapacity = 2;
     public int ChildCount { get; private set; }
@@ -77,7 +76,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
         if (content.IsNullOrWhiteSpace()) return this;
 
         if (ChildNodes.LastOrDefault() is not ContentMdSyntaxNode lastNode) {
-            ContentMdSyntaxNode newNode = ContentMdSyntaxNode.Shared.Get();
+            ContentMdSyntaxNode newNode = ContentMdSyntaxNode.Pool.Get();
             newNode.Content = content;
             AddChildNode(newNode);
             return this;
@@ -96,12 +95,12 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
         return this;
     }
 
-    public void ReturnToShared() {
+    public void ReturnToPool() {
         if (this is not T casted) {
             throw new InvalidOperationException($"Cannot return {GetType()} to shared pool. Expected {typeof(T)}");
         }
 
-        Shared.Return(casted);// Calls TryReset so don't do it in this method!
+        Pool.Return(casted);// Calls TryReset so don't do it in this method!
     }
 
     public virtual bool TryReset() {

@@ -10,10 +10,12 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MarkdownSyntaxTree : IMarkdownSyntaxTree, IResettable {
-    public IMdSyntaxNode RootNode { get; private set; } = RootMdSyntaxNode.Shared.Get();
-
-    private static readonly ObjectPool<Stack<(int Depth, IMdSyntaxNode Node)>> DepthStackPool = new DefaultObjectPool<Stack<(int Depth, IMdSyntaxNode Node)>>(new DefaultPooledObjectPolicy<Stack<(int Depth, IMdSyntaxNode Node)>>(), 4);
+    public IMdSyntaxNode RootNode { get; private set; } = RootMdSyntaxNode.Pool.Get();
     
+    public static ObjectPool<MarkdownSyntaxTree> Pool { get; } = Pooling.CreateResettablePool<MarkdownSyntaxTree>(Pooling.ParsersRetained);
+    private static ObjectPool<Stack<IMdSyntaxNode>> MdSyntaxNodeStackPool { get; } = Pooling.CreateStackPool<IMdSyntaxNode>(Pooling.ParsersRetained);
+    private static ObjectPool<Stack<(int Depth, IMdSyntaxNode Node)>> DepthStackPool { get; } = Pooling.CreateStackPool<(int Depth, IMdSyntaxNode Node)>(4);
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -101,7 +103,7 @@ public class MarkdownSyntaxTree : IMarkdownSyntaxTree, IResettable {
         if (RootNode is not RootMdSyntaxNode rootNode) return false;
 
         // Using depth-first traversal with a single stack
-        Stack<IMdSyntaxNode> stack = MarkdownPoolCache.MarkdownSyntaxNodeStackPool.Get();
+        Stack<IMdSyntaxNode> stack = MdSyntaxNodeStackPool.Get();
         try {
             ReadOnlySpan<IMdSyntaxNode> children = rootNode.GetChildrenSpan();
             int childCount = children.Length;
@@ -120,16 +122,16 @@ public class MarkdownSyntaxTree : IMarkdownSyntaxTree, IResettable {
                 for (int i = 0; i < childCount; i++) {
                     stack.Push(children[i]);
                 }
-                node.ReturnToShared();
+                node.ReturnToPool();
             }
 
             // Finally, reset and replace the root node
-            RootNode.ReturnToShared();
-            RootNode = RootMdSyntaxNode.Shared.Get();
+            RootNode.ReturnToPool();
+            RootNode = RootMdSyntaxNode.Pool.Get();
             return true;
         }
         finally {
-            MarkdownPoolCache.MarkdownSyntaxNodeStackPool.Return(stack);
+            MdSyntaxNodeStackPool.Return(stack);
         }
     }
 }

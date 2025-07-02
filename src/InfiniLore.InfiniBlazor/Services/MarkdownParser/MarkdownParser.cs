@@ -26,7 +26,7 @@ public class MarkdownParser<TInput, TOutput> : IMarkdownParser<TInput, TOutput> 
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public TOutput? TryParse(TInput input, CancellationToken ct = default) {
-        MarkdownSyntaxTree nodeTree = MarkdownPoolCache.MarkdownSyntaxTreePool.Get();
+        MarkdownSyntaxTree nodeTree = MarkdownSyntaxTree.Pool.Get();
 
         try {
             TInput? processedInput = input;
@@ -62,7 +62,7 @@ public class MarkdownParser<TInput, TOutput> : IMarkdownParser<TInput, TOutput> 
             return default;
         }
         finally {
-            MarkdownPoolCache.MarkdownSyntaxTreePool.Return(nodeTree);
+            MarkdownSyntaxTree.Pool.Return(nodeTree);
         }
     }
     

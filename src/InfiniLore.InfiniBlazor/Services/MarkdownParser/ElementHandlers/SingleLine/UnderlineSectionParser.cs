@@ -27,7 +27,7 @@ public class UnderlineHandler : IMarkdownElementHandler {
     ) {
         if (!entireMatch.Groups[UId].TryGetValue(out string? underlineValue)) return ;
         
-        UnderlineMdSyntaxNode node = UnderlineMdSyntaxNode.Shared.Get();
+        UnderlineMdSyntaxNode node = UnderlineMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
         engine.PushSingleLineMatchesToStack(underlineValue, node, origin | SkipOnOrigin);
     }

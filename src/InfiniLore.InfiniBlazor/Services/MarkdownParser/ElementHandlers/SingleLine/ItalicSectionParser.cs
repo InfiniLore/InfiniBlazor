@@ -27,7 +27,7 @@ public class ItalicHandler : IMarkdownElementHandler {
     ) {
         if (!entireMatch.Groups[IId].TryGetValue(out string? italicValue)) return ;
 
-        ItalicMdSyntaxNode node = ItalicMdSyntaxNode.Shared.Get();
+        ItalicMdSyntaxNode node = ItalicMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
         engine.PushSingleLineMatchesToStack(italicValue, node, origin | SkipOnOrigin);
     }
