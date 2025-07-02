@@ -17,7 +17,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.SyntaxTreeConverters;
 public class MdSyntaxTreeConverter : IMdSyntaxTreeConverter {
     private static readonly Lock PoolLock = new();
     private static readonly ObjectPool<SimpleMdSyntaxNodeConverter> SimpleSyntaxNodeConverterPool = 
-        Pooling.CreateResettablePool<SimpleMdSyntaxNodeConverter>(4);
+        Pooling.CreateResettablePool<SimpleMdSyntaxNodeConverter>(Pooling.ParsersRetained);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
