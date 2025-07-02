@@ -34,6 +34,6 @@ public class ServiceCollectionTests {
         services.AddInfiniBlazor(config => config.AddMarkdownLogic());
 
         // Assert
-        await Assert.That(services).ContainsServiceImplementation(typeof(IMarkdownParser<,>), typeof(MarkdownParser<,>));
+        await Assert.That(services).ContainsServiceImplementation(typeof(IMdSyntaxParser), typeof(MdSyntaxParser));
     }
 }

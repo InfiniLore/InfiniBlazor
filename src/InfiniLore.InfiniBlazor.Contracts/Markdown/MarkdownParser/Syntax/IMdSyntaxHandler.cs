@@ -1,21 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using System.Text.RegularExpressions;
+
 namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMdSyntaxNode {
-    IMdSyntaxNode? Parent { get; set; }
-    int ChildCount { get; }
-    int Depth { get; set; }
+public interface IMdSyntaxHandler{
+    MdSyntaxHandlerOrigin SkipOnOrigin { get; }
 
-    ReadOnlySpan<IMdSyntaxNode> GetChildrenSpan();
-
-    void AddChildNode(IMdSyntaxNode childNode);
-    TChild AddChildNode<TChild>(TChild childNode) where TChild : IMdSyntaxNode;
-
-    IMdSyntaxNode WithContent(string content);
-
-    void ReturnToPool();
+    public void HandleMatch(IMdParserEngine engine, IMdSyntaxNode parentNode, Match entireMatch, Group group, MdSyntaxHandlerOrigin origin);
 }

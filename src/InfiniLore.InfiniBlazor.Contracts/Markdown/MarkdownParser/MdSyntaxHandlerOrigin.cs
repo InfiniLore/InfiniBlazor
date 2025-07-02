@@ -5,17 +5,28 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMdSyntaxNode {
-    IMdSyntaxNode? Parent { get; set; }
-    int ChildCount { get; }
-    int Depth { get; set; }
+[Flags]
+public enum MdSyntaxHandlerOrigin {
+    Undefined = 0,
 
-    ReadOnlySpan<IMdSyntaxNode> GetChildrenSpan();
+    Bold = 1 << 0,
+    Italic = 1 << 1,
+    Strike = 1 << 2,
+    Code = 1 << 3,
+    Link = 1 << 4,
+    Underline = 1 << 5,
+    Emote = 1 << 6,
+    SuperScript = 1 << 7,
+    SubScript = 1 << 8,
 
-    void AddChildNode(IMdSyntaxNode childNode);
-    TChild AddChildNode<TChild>(TChild childNode) where TChild : IMdSyntaxNode;
+    // Special cases
+    PreserveHtml = 1 << 29,
+    Html = 1 << 30,
+    NotSkipped = 1 << 31
+}
 
-    IMdSyntaxNode WithContent(string content);
-
-    void ReturnToPool();
+public static class HandlerOriginExtensions {
+    public static bool HasFlagFast(this MdSyntaxHandlerOrigin value, MdSyntaxHandlerOrigin flag) {
+        return (value & flag) != 0;
+    }
 }

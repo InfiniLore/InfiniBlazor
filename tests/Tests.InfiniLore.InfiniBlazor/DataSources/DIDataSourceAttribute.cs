@@ -2,9 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Config;
-using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.MarkdownParser.Processors.InputProcessors;
-using InfiniLore.InfiniBlazor.MarkdownParser.Processors.OutputProcessors;
 using InfiniLore.InfiniBlazor.TextEditor.TextModifiers;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -31,20 +28,6 @@ public class DiDataSourceAttribute : DependencyInjectionDataSourceAttribute<ISer
             static config => {
                 config.AddTextEditor().AddDefaultModifiers();
                 config.AddTextEditor("boldOnly").AddModifier<BoldModifier>();
-                
-                config.AddMarkdownParser<string,string>()
-                    .AddInputProcessor<StringInputProcessor>();
-
-                config.AddMarkdownParser<ITextSource, string>()
-                    .AddInputProcessor<TextSourceInputProcessor>();
-                
-                config.AddMarkdownParser<string,string>("sanitized")
-                    .AddInputProcessor<StringInputProcessor>()
-                    .AddOutputProcessor<StringOutputSanitizerProcessor>();
-                
-                config.AddMarkdownParser<ITextSource, string>("sanitized")
-                    .AddInputProcessor<TextSourceInputProcessor>()
-                    .AddOutputProcessor<StringOutputSanitizerProcessor>();
             }));
 
         return services.BuildServiceProvider();

@@ -17,9 +17,11 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
 
     private const int ChildrenMinimumCapacity = 2;
     public int ChildCount { get; private set; }
+    public int Depth { get; set; } = -1;
+    
     protected virtual IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(ChildrenMinimumCapacity);
 
-    public IMdSyntaxNode? Parent { get; private set; }
+    public IMdSyntaxNode? Parent { get; set; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Constructor Methods
@@ -41,6 +43,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
     public void AddChildNode(IMdSyntaxNode childNode) {
         // Check if we need to resize
         EnsureChildNodeCapacity();
+        SetParent(childNode);
 
         // ReSharper disable once HeapView.PossibleBoxingAllocation
         ChildNodes[ChildCount++] = childNode;
@@ -49,6 +52,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
     public TChild AddChildNode<TChild>(TChild childNode) where TChild : IMdSyntaxNode {
         // Check if we need to resize
         EnsureChildNodeCapacity();
+        SetParent(childNode);
 
         // ReSharper disable once HeapView.PossibleBoxingAllocation
         ChildNodes[ChildCount++] = childNode;
@@ -70,6 +74,11 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
             ArrayPool<IMdSyntaxNode>.Shared.Return(ChildNodes);
             ChildNodes = newArray;
         }
+    }
+
+    private void SetParent<TChild>(TChild childNode) where TChild : IMdSyntaxNode {
+        childNode.Parent = this;
+        childNode.Depth = Depth + 1;
     }
 
     public IMdSyntaxNode WithContent(string content) {
@@ -110,6 +119,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
         }
 
         ChildCount = 0;
+        Depth = -1;
 
         Parent = null;
         return true;

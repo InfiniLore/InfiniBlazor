@@ -1,0 +1,39 @@
+﻿// ---------------------------------------------------------------------------------------------------------------------
+// Imports
+// ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
+using System.Text.RegularExpressions;
+
+namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
+// ---------------------------------------------------------------------------------------------------------------------
+// Code
+// ---------------------------------------------------------------------------------------------------------------------
+[InjectableSingleton<IMdSyntaxHandler>("heading")]
+public class HeadingHandler : IMdSyntaxHandler {
+
+    private static readonly int HLevelId = MarkdownRegexLib.GetMultiLineGroupId("hLevel");
+    private static readonly int HTextId = MarkdownRegexLib.GetMultiLineGroupId("hText");
+    public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    public void HandleMatch(
+        IMdParserEngine engine,
+        IMdSyntaxNode parentNode,
+        Match entireMatch,
+        Group group,
+        MdSyntaxHandlerOrigin origin
+    ) {
+        // ReSharper disable once DuplicatedSequentialIfBodies
+        if (!entireMatch.Groups[HLevelId].TryGetLength(out int headingLevel)) return;
+        if (!entireMatch.Groups[HTextId].TryGetValue(out string? headerText)) return;
+
+        HeadingMdSyntaxNode headingNode = HeadingMdSyntaxNode.Pool.Get();
+        headingNode.Level = headingLevel;
+        parentNode.AddChildNode(headingNode);
+        
+        engine.PushSingleLineMatchesToStack(headerText, headingNode, origin);
+    }
+}

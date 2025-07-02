@@ -1,0 +1,34 @@
+﻿// ---------------------------------------------------------------------------------------------------------------------
+// Imports
+// ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
+using System.Text.RegularExpressions;
+
+namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
+// ---------------------------------------------------------------------------------------------------------------------
+// Code
+// ---------------------------------------------------------------------------------------------------------------------
+[InjectableSingleton<IMdSyntaxHandler>("strike")]
+public class StrikeHandler : IMdSyntaxHandler {
+
+    private static readonly int SId = MarkdownRegexLib.GetSingleLineGroupId("s");
+    public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.Strike;
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    public void HandleMatch(
+        IMdParserEngine engine,
+        IMdSyntaxNode parentNode,
+        Match entireMatch,
+        Group group,
+        MdSyntaxHandlerOrigin origin
+    ) {
+        if (!entireMatch.Groups[SId].TryGetValue(out string? strikeValue)) return ;
+
+        StrikeMdSyntaxNode node = StrikeMdSyntaxNode.Pool.Get();
+        parentNode.AddChildNode(node);
+        engine.PushSingleLineMatchesToStack(strikeValue, node, origin | SkipOnOrigin);
+    }
+}

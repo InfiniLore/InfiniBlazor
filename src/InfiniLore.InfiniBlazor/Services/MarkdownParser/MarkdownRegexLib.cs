@@ -98,9 +98,6 @@ public static partial class MarkdownRegexLib {
     [GeneratedRegex(@"^[ ]*[-.]?\d*\.?\s+(?<lTask>\[[\ xX]\] )?(?<lHead>[^\r\n]+)(?<lBody>(?:\r?\n[ ]+.+)*)(?<!\r)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex ListItemBodyRegex { get; }
 
-    [GeneratedRegex("\r?\n", RegexOptions.Compiled)]
-    public static partial Regex NormalizeNewlinesRegex { get; }
-
     [GeneratedRegex("""
         (?<spanTag><(?<tag>span)\b[^>]*>)
         (?<spanBody>
@@ -144,5 +141,4 @@ public static partial class MarkdownRegexLib {
     public static int GetMultiLineGroupId(string groupName) => GroupNameToGroupId[groupName];
     public static int GetSpanGroupId(string groupName) => GroupNameToGroupId[groupName];
     public static int GetListGroupId(string groupName) => GroupNameToGroupId[groupName];
-    
 }

@@ -1,23 +1,18 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.TextEditor;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace InfiniLore.InfiniBlazor.Config;
+namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MarkdownConfig(InfiniBlazorConfig infiniBlazorConfig) {
-    
+public interface IMdParserEngine {
+    IMdSyntaxTree NodeTree { get; }
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public TextEditorConfig AddTextEditor(object? key = null) {
-        var config = new TextEditorConfig(infiniBlazorConfig, key);
-        
-        if (key is null) infiniBlazorConfig.Services.AddSingleton(TextEditorFactory.CreateTextEditor);
-        else infiniBlazorConfig.Services.AddKeyedSingleton(key, TextEditorFactory.CreateKeyedTextEditor);
-        return config;
-    }
+    void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node, MdSyntaxHandlerOrigin origin);
+    void PushSingleLineMatchesToStack(string input, IMdSyntaxNode node, MdSyntaxHandlerOrigin origin);
+    
+    void PushProcessedNodeToStack(IMdSyntaxNode parentNode, IMdSyntaxNode childNode);
 }

@@ -2,14 +2,17 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Markdown
+@using InfiniLore.InfiniBlazor.MarkdownParser.Syntax
 @using System.Text.RegularExpressions
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @page "/markdown-rolling"
 @rendermode InteractiveAuto
-@inject IMarkdownParser<string, string> Parser
+@inject IMdSyntaxParser Parser
+@inject IMdSyntaxTreeConverter Converter
 @inject IJSRuntime JsRuntime
+@implements IDisposable
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -60,6 +63,7 @@
     private ElementReference _editableDiv;
     private bool _pendingActivation;
     private int _pendingIndex;
+    private MdSyntaxTree MdSyntaxTree { get; set; } = MdSyntaxTree.Pool.Get();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -144,7 +148,10 @@
 
     private MarkupString GetParsedParagraph(int index) {
         string paragraph = Paragraphs.ElementAtOrDefault(index) ?? string.Empty;
-        return new MarkupString(Parser.TryParse(paragraph) ?? string.Empty);
+        Parser.ParseToTree(paragraph, MdSyntaxTree);
+        
+        
+        return Converter.ConvertToMarkupString(MdSyntaxTree);
     }
     
     private async Task OnContainerClick() {
@@ -154,6 +161,10 @@
         }
 
         await InvokeAsync(StateHasChanged);
+    }
+    
+    public void Dispose() {
+        MdSyntaxTree.Pool.Return(MdSyntaxTree);
     }
 }
 

@@ -4,6 +4,7 @@
 using InfiniLore.InfiniBlazor.Debugger;
 using InfiniLore.InfiniBlazor.JsRuntime;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +17,8 @@ namespace InfiniLore.InfiniBlazor.Components;
 public partial class InfiniMarkdownEditor(
     ITextEditor textEditor,
     IJsRuntimeHelper jsRuntimeHelper,
-    [FromKeyedServices("styled")] IMarkdownParser<string, MarkupString> markdownParser,
+    IMdSyntaxParser syntaxParser,
+    [FromKeyedServices("styled")] IMdSyntaxTreeConverter treeConverter,
     IVisualDebuggerProvider debuggerProvider
     // IHtmlSanitizer sanitizer
 ) : InfiniComponentBase {
@@ -67,11 +69,19 @@ public partial class InfiniMarkdownEditor(
     }
 
     private void InvokeSourceHasChanged() {
-        MarkdownOutput = markdownParser.TryParse(Source.Text);
-        if (debuggerProvider.IsEnabled()) MarkdownStringOutput = MarkdownOutput.ToString();
+        MdSyntaxTree tree = MdSyntaxTree.Pool.Get();
+        try {
+            syntaxParser.ParseToTree(Source.Text, tree);
+            MarkdownOutput = treeConverter.ConvertToMarkupString(tree);
+            if (debuggerProvider.IsEnabled()) MarkdownStringOutput = MarkdownOutput.ToString();
         
-        SourceHasChanged?.Invoke();
-        StateHasChanged();
+            SourceHasChanged?.Invoke();
+            StateHasChanged();
+            
+        }
+        finally {
+            MdSyntaxTree.Pool.Return(tree);
+        }
     }
 
     public override async ValueTask DisposeAsync() {

@@ -5,7 +5,6 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
 using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.MarkdownParser.Processors.OutputProcessors;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 
@@ -17,7 +16,9 @@ namespace Benchmarks.InfiniLore.InfiniBlazor.Markdown;
 [Orderer(SummaryOrderPolicy.Declared)]
 public class MarkdownBenchmarks {
     private string Markdown { get; set; } = string.Empty;
-    private IMarkdownParser<string, string> Parser { get; set; } = null!;
+    
+    private IMdSyntaxParser Parser { get; set; } = null!;
+    private IMdSyntaxTreeConverter Converter { get; set; } = null!;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -34,25 +35,22 @@ public class MarkdownBenchmarks {
         // HttpResponseMessage response = await client.GetAsync(url);
         // Markdown = await response.Content.ReadAsStringAsync();
         
-        Parser = CreateParser();
-        CreateParser(static config => {
-            config.AddMarkdownParser<string, string>()
-                .AddOutputProcessor<StringOutputSanitizerProcessor>();
-        });
+        var provider = CreateProvider();
+        Parser = provider.GetRequiredService<IMdSyntaxParser>();
+        Converter = provider.GetRequiredService<IMdSyntaxTreeConverter>();
     }
-    
-    private static IMarkdownParser<string, string> CreateParser(Action<MarkdownConfig>? configure = null) {
+
+    private static IServiceProvider CreateProvider(Action<MarkdownConfig>? configure = null) {
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddInfiniBlazor(config => config.AddMarkdownLogic(configure));
         serviceCollection.AddLogging();
-        ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
-        return serviceProvider.GetRequiredService<IMarkdownParser<string, string>>();
+        return serviceCollection.BuildServiceProvider();
     }
 
     [Benchmark(Baseline = true)]
     public string RenderMarkdown() {
-        string input = Markdown;
-        string? output = Parser.TryParse(input);
+        IMdSyntaxTree tree = Parser.ParseToTree(Markdown);
+        string? output = Converter.ConvertToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
