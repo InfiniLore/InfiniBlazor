@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Buffers;
 using System.Text.RegularExpressions;
 
@@ -22,21 +23,21 @@ public class CodeBlockHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
         IMarkdownParserEngine engine,
-        IMarkdownSyntaxNode currentNode,
+        IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
         HandlerOrigin origin
     ) {
         if (!entireMatch.Groups[CBodyId].TryGetValueSpan(out ReadOnlySpan<char> codeBlockBody)) return;
 
-        IMarkdownSyntaxNode codeNode = currentNode.AddChildNode(MarkdownElement.CodeBlock);
+        CodeBlockMdSyntaxNode codeNode = CodeBlockMdSyntaxNode.Shared.Get();
 
         string langNameValue = entireMatch.Groups[CLangId].Value;
-        if (!langNameValue.IsEmpty()) codeNode.WithAttribute(MarkdownAttribute.CodeLanguage, langNameValue);
+        if (!langNameValue.IsEmpty()) codeNode.Language = langNameValue;
 
         string content = ProcessCodeBlockContent(ref codeBlockBody);
-        codeNode.WithContent(content);
-
+        codeNode.ContentCode = content;
+        parentNode.AddChildNode(codeNode);
     }
 
     private static string ProcessCodeBlockContent(ref ReadOnlySpan<char> content) {

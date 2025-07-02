@@ -1,9 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
-
 namespace Tests.InfiniLore.InfiniBlazor.DataSources.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -14,8 +11,8 @@ public static class CodeDataSources {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
-        yield return static () => new MarkdownTestDto(SectionName,
+    public static IEnumerable<Func<MdTestData>> DataSources() {
+        yield return static () => new MdTestData(SectionName,
             """
             ```
             const code = sample();
@@ -25,12 +22,9 @@ public static class CodeDataSources {
             <pre><code>
             const code = sample();
             </code></pre>
-            """,
-            ConfigureExpectedNode: static rootNode => {
-                rootNode.AddCodeBlock("const code = sample();");
-            });
+            """);
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             """
             ```javascript
             const code = sample();
@@ -40,13 +34,9 @@ public static class CodeDataSources {
             <pre><code class="language-javascript">
             const code = sample();
             </code></pre>
-            """,
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode code = rootNode.AddCodeBlock("const code = sample();");
-                code.WithAttribute(MarkdownAttribute.CodeLanguage, "javascript");
-            });
+            """);
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             """
             ```
             tell application "Foo"
@@ -60,12 +50,9 @@ public static class CodeDataSources {
                 beep
             end tell
             </code></pre>
-            """,
-            ConfigureExpectedNode: static rootNode => {
-                rootNode.AddCodeBlock("tell application \"Foo\"\n    beep\nend tell");
-            });
+            """);
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             """
             ```
             **some valid markdown**
@@ -75,9 +62,6 @@ public static class CodeDataSources {
             <pre><code>
             **some valid markdown**
             </code></pre>
-            """,
-            ConfigureExpectedNode: static rootNode => {
-                rootNode.AddCodeBlock("**some valid markdown**");
-            });
+            """);
     }
 }

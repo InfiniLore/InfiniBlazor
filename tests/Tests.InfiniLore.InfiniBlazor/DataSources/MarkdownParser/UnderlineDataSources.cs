@@ -1,9 +1,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
-
 namespace Tests.InfiniLore.InfiniBlazor.DataSources.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -14,146 +11,80 @@ public class UnderlineDataSources {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
-        yield return static () => new MarkdownTestDto(SectionName,
+    public static IEnumerable<Func<MdTestData>> DataSources() {
+        yield return static () => new MdTestData(SectionName,
             "something _underlined_",
             """
-            <p>something <span style="text-decoration: underline;">underlined</span></p>
-            """,
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("something ");
-                paragraph.AddUnderline("underlined");
-            }
+            <p>something <u>underlined</u></p>
+            """
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "something _underlined with an \\_ escaped_",
             """
-            <p>something <span style="text-decoration: underline;">underlined with an _ escaped</span></p>
-            """,
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("something ");
-                paragraph.AddUnderline()
-                    .WithContent("underlined with an _ escaped");
-            }
+            <p>something <u>underlined with an _ escaped</u></p>
+            """
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "something _**bold and underlined**_",
             """
-            <p>something <span style="text-decoration: underline;"><strong>bold and underlined</strong></span></p>
-            """,
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("something ");
-                paragraph.AddUnderline()
-                    .AddBold()
-                    .WithContent("bold and underlined");
-            }
+            <p>something <u><strong>bold and underlined</strong></u></p>
+            """
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "something _*italic and underlined*_",
             """
-            <p>something <span style="text-decoration: underline;"><em>italic and underlined</em></span></p>
-            """,
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("something ");
-                paragraph.AddUnderline()
-                    .AddItalic()
-                    .WithContent("italic and underlined");
-            }
+            <p>something <u><em>italic and underlined</em></u></p>
+            """
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "something _***bold, italic, and underlined***_",
             """
-            <p>something <span style="text-decoration: underline;"><strong><em>bold, italic, and underlined</em></strong></span></p>
-            """,
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("something ");
-                paragraph.AddUnderline()
-                    .AddBold()
-                    .AddItalic()
-                    .WithContent("bold, italic, and underlined");
-            }
+            <p>something <u><strong><em>bold, italic, and underlined</em></strong></u></p>
+            """
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "click _[here](https://example.com)_",
             """
-            <p>click <span style="text-decoration: underline;"><a href="https://example.com">here</a></span></p>
-            """,
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("click ");
-                paragraph.AddUnderline()
-                    .AddLink()
-                    .WithAttribute(MarkdownAttribute.LinkHref, "https://example.com")
-                    .WithContent("here");
-            }
+            <p>click <u><a href="https://example.com">here</a></u></p>
+            """
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "something _**[bold link](https://example.com)**_",
             """
-            <p>something <span style="text-decoration: underline;"><strong><a href="https://example.com">bold link</a></strong></span></p>
-            """,
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("something ");
-                paragraph.AddUnderline()
-                    .AddBold()
-                    .AddLink()
-                    .WithAttribute(MarkdownAttribute.LinkHref, "https://example.com")
-                    .WithContent("bold link");
-            }
+            <p>something <u><strong><a href="https://example.com">bold link</a></strong></u></p>
+            """
         );
 
-        yield return static () => new MarkdownTestDto(
+        yield return static () => new MdTestData(
             SectionName,
             "this has _**multiple** elements to *underline*_",
             """
-            <p>this has <span style="text-decoration: underline;"><strong>multiple</strong> elements to<em> underline</em></span></p>
-            """,
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("this has ");
-                IMarkdownSyntaxNode underline = paragraph.AddUnderline();
-                underline.AddBold("multiple");
-                underline.WithContent(" elements to ");
-                underline.AddItalic("underline");
-            }
+            <p>this has <u><strong>multiple</strong> elements to<em> underline</em></u></p>
+            """
         );
 
-        yield return static () => new MarkdownTestDto(
+        yield return static () => new MdTestData(
             SectionName,
             "__",
-            "<p>__</p>",
-            ConfigureExpectedNode: static rootNode => rootNode.AddParagraph()
-                .WithContent("__")
+            "<p>__</p>"
         );
 
-        yield return static () => new MarkdownTestDto(
+        yield return static () => new MdTestData(
             SectionName,
             @"\_escaped_",
-            "<p>_escaped_</p>",
-            ConfigureExpectedNode: static rootNode => rootNode.AddParagraph()
-                .WithContent("_")// Escaped Char
-                .WithContent("escaped_")
+            "<p>_escaped_</p>"
         );
 
-        yield return static () => new MarkdownTestDto(
+        yield return static () => new MdTestData(
             SectionName,
             @"_escaped\_",
-            "<p>_escaped_</p>",
-            ConfigureExpectedNode: static rootNode => rootNode.AddParagraph()
-                .WithContent("_escaped")
-                .WithContent("_")// Escaped Char
+            "<p>_escaped_</p>"// Escaped Char
         );
     }
 }

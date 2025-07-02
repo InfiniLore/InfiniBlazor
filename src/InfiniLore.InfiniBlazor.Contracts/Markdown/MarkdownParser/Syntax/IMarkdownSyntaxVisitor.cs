@@ -8,5 +8,5 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMarkdownSyntaxVisitor {
     int Depth { get; }
-    IMarkdownSyntaxNode Node { get; }
+    IMdSyntaxNode Node { get; }
 }

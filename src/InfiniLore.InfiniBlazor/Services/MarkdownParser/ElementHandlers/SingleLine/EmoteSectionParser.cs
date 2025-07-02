@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
 using System.Text.RegularExpressions;
@@ -34,7 +35,7 @@ public class EmoteHandler(ILogger<EmoteHandler> logger) : IMarkdownElementHandle
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
         IMarkdownParserEngine engine,
-        IMarkdownSyntaxNode currentNode,
+        IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
         HandlerOrigin origin
@@ -43,10 +44,12 @@ public class EmoteHandler(ILogger<EmoteHandler> logger) : IMarkdownElementHandle
 
         if (!EmoteLookup.TryGetValue(lookupValue, out string? value)) {
             logger.LogWarning("Lookup emote not found: {LookupValue}", lookupValue);
-            currentNode.WithContent(group.Value);
+            parentNode.WithContent(group.Value);
             return ;
         }
 
-        currentNode.WithContent(value);
+        EmoteMdSyntaxNode node = EmoteMdSyntaxNode.Shared.Get();
+        node.ContentEmote = value;
+        parentNode.AddChildNode(node);
     }
 }

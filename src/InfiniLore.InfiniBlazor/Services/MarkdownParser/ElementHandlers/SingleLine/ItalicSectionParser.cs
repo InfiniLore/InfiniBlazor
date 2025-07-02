@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.MarkdownParser.ElementHandlers.SingleLine;
@@ -19,14 +20,15 @@ public class ItalicHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
         IMarkdownParserEngine engine,
-        IMarkdownSyntaxNode currentNode,
+        IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
         HandlerOrigin origin
     ) {
         if (!entireMatch.Groups[IId].TryGetValue(out string? italicValue)) return ;
 
-        IMarkdownSyntaxNode node = currentNode.AddChildNode(MarkdownElement.Italic);
-        engine.AddSingleLineMatchesToStack(italicValue, node, origin | SkipOnOrigin);
+        ItalicMdSyntaxNode node = ItalicMdSyntaxNode.Shared.Get();
+        parentNode.AddChildNode(node);
+        engine.PushSingleLineMatchesToStack(italicValue, node, origin | SkipOnOrigin);
     }
 }

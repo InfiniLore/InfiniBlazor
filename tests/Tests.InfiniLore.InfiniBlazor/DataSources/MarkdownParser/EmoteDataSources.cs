@@ -1,9 +1,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
-
 namespace Tests.InfiniLore.InfiniBlazor.DataSources.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -14,34 +11,23 @@ public class EmoteDataSources {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
-        yield return static () => new MarkdownTestDto(
+    public static IEnumerable<Func<MdTestData>> DataSources() {
+        yield return static () => new MdTestData(
             SectionName,
             ":flag-transgender:",
-            "<p>\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f</p>",
-            ConfigureExpectedNode: static rootNode => {
-                rootNode.AddParagraph("\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f");
-            }
+            "<p>\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f</p>"
         );
 
-        yield return static () => new MarkdownTestDto(
+        yield return static () => new MdTestData(
             SectionName,
             "[:flag-transgender:](https://www.twitch.tv/annasasdev)",
-            "<p><a href=\"https://www.twitch.tv/annasasdev\">\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f</a></p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                IMarkdownSyntaxNode link = paragraph.AddLink("\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f");
-                link.WithAttribute(MarkdownAttribute.LinkHref, "https://www.twitch.tv/annasasdev");
-            }
+            "<p><a href=\"https://www.twitch.tv/annasasdev\">\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f</a></p>"
         );
 
-        yield return static () => new MarkdownTestDto(
+        yield return static () => new MdTestData(
             SectionName,
             ":not-an-emote:",
-            "<p>:not-an-emote:</p>",
-            ConfigureExpectedNode: static rootNode => {
-                rootNode.AddParagraph(":not-an-emote:");
-            }
+            "<p>:not-an-emote:</p>"
         );
 
     }

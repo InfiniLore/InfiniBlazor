@@ -43,21 +43,15 @@ public class StringMarkdownSyntaxTreeParser(IServiceProvider serviceProvider, IL
 
         try {
             runningParser.NodeTree = nodeTree;
-            runningParser.AddMultiLineMatchesToStack(markdown, nodeTree.RootNode, HandlerOrigin.Undefined);
+            runningParser.PushMultiLineMatchesToStack(markdown, nodeTree.RootNode, HandlerOrigin.Undefined);
 
-            while (runningParser.TryPopDto(out MarkdownFragment? fragment)) {
+            while (runningParser.TryPopDto(out SyntaxFragment? fragment)) {
                 try {
-                    IMarkdownSyntaxNode currentNode = fragment.Node;
-                    HandlerOrigin origin = fragment.Origin;
-
-                    if (fragment.IsMatch) {
-                        ProcessMatchAsync(fragment.Match, currentNode, origin, runningParser);
-                        continue;
+                    if (fragment.TryGetAsMatch(out Match? match, out IMdSyntaxNode? parentNode, out HandlerOrigin handlerOrigin)) {
+                        ProcessMatch(match, parentNode, handlerOrigin, runningParser);
                     }
-
-                    // ReSharper disable once InvertIf
-                    if (fragment.Element is not MarkdownElement.Undefined) {
-                        ProcessElement(fragment.Element, fragment.Content, currentNode);
+                    else if (fragment.TryGetAsProcessedNode(out parentNode, out IMdSyntaxNode? childNode)) {
+                        parentNode.AddChildNode(childNode);
                     }
                 }
                 finally {
@@ -70,7 +64,7 @@ public class StringMarkdownSyntaxTreeParser(IServiceProvider serviceProvider, IL
         }
     }
 
-    private void ProcessMatchAsync(Match match, IMarkdownSyntaxNode currentNode, HandlerOrigin origin, IMarkdownParserEngine runningParser) {
+    private void ProcessMatch(Match match, IMdSyntaxNode currentNode, HandlerOrigin origin, IMarkdownParserEngine runningParser) {
         GroupCollection groups = match.Groups;
         for (int i = 0; i < groups.Count; i++) {
             if (groups[i] is not { Success: true, Name: var name } group) continue;
@@ -80,18 +74,6 @@ public class StringMarkdownSyntaxTreeParser(IServiceProvider serviceProvider, IL
             if (handlerOrigin is HandlerOrigin.NotSkipped || !origin.HasFlagFast(handlerOrigin)) {
                 handler.HandleMatch(runningParser, currentNode, match, group, origin);
             }
-        }
-    }
-
-    private static void ProcessElement(MarkdownElement element, string? content, IMarkdownSyntaxNode currentNode) {
-        // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
-        switch (element) {
-            case MarkdownElement.HtmlContent: currentNode.WithHtmlContent(content);
-                break;
-            case MarkdownElement.Content: currentNode.WithContent(content);
-                break;
-            default: currentNode.AddChildNode(element, content);
-                break;
         }
     }
 }

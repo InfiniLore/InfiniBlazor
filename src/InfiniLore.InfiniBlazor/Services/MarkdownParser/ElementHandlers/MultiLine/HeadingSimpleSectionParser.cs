@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.MarkdownParser.ElementHandlers.MultiLine;
@@ -19,15 +20,17 @@ public class HeadingSimpleHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
         IMarkdownParserEngine engine,
-        IMarkdownSyntaxNode currentNode,
+        IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
         HandlerOrigin origin
     ) {
         if (!entireMatch.Groups[HsTextId].TryGetValue(out string? headerSimpleText)) return;
 
-
-        IMarkdownSyntaxNode headingElement = currentNode.AddChildNode(MarkdownElement.H1);
-        engine.AddSingleLineMatchesToStack(headerSimpleText, headingElement, origin);
+        HeadingMdSyntaxNode headingNode = HeadingMdSyntaxNode.Shared.Get();
+        headingNode.Level = 1;
+        parentNode.AddChildNode(headingNode);
+        
+        engine.PushSingleLineMatchesToStack(headerSimpleText, headingNode, origin);
     }
 }

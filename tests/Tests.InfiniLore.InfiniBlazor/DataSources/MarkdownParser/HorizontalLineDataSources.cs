@@ -1,19 +1,17 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
-
 namespace Tests.InfiniLore.InfiniBlazor.DataSources.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class HorizontalLineDataSources {
+public static class HorizontalLineDataSources {
     private static readonly string SectionName = nameof(HorizontalLineDataSources)[..^nameof(DataSources).Length];
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
+    public static IEnumerable<Func<MdTestData>> DataSources() {
         char[] chars = new[] { '-', '=' };
         foreach (char c in chars) {
             for (int i = 1; i < 10; i++) {
@@ -22,15 +20,11 @@ public class HorizontalLineDataSources {
                     ? $"<p>{text}</p>"
                     : "<hr>";
 
-                int index = i;
-                yield return () => new MarkdownTestDto(
+                // int index = i;
+                yield return () => new MdTestData(
                     SectionName,
                     text,
-                    content,
-                    ConfigureExpectedNode: rootNode => {
-                        if (index < 3) rootNode.AddParagraph(text);
-                        else rootNode.AddHorizontalRule();
-                    }
+                    content
                 );
             }
         }

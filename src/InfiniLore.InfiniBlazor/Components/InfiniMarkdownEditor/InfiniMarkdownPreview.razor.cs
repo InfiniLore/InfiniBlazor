@@ -1,5 +1,4 @@
-﻿using Infinilore.InfiniBlazor.Components;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using System.Collections.Frozen;
 using System.Text;
 using System.Text.RegularExpressions;

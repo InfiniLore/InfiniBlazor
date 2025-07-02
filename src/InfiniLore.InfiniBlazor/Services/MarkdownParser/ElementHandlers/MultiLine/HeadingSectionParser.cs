@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.MarkdownParser.ElementHandlers.MultiLine;
@@ -20,7 +21,7 @@ public class HeadingHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
         IMarkdownParserEngine engine,
-        IMarkdownSyntaxNode currentNode,
+        IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
         HandlerOrigin origin
@@ -29,17 +30,10 @@ public class HeadingHandler : IMarkdownElementHandler {
         if (!entireMatch.Groups[HLevelId].TryGetLength(out int headingLevel)) return;
         if (!entireMatch.Groups[HTextId].TryGetValue(out string? headerText)) return;
 
-        MarkdownElement mdElement = headingLevel switch {
-            1 => MarkdownElement.H1,
-            2 => MarkdownElement.H2,
-            3 => MarkdownElement.H3,
-            4 => MarkdownElement.H4,
-            5 => MarkdownElement.H5,
-            6 => MarkdownElement.H6,
-            _ => MarkdownElement.H1
-        };
-
-        IMarkdownSyntaxNode headingElement = currentNode.AddChildNode(mdElement);
-        engine.AddSingleLineMatchesToStack(headerText, headingElement, origin);
+        HeadingMdSyntaxNode headingNode = HeadingMdSyntaxNode.Shared.Get();
+        headingNode.Level = headingLevel;
+        parentNode.AddChildNode(headingNode);
+        
+        engine.PushSingleLineMatchesToStack(headerText, headingNode, origin);
     }
 }

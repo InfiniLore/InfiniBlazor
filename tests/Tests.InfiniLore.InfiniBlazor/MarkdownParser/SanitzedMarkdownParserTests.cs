@@ -21,12 +21,12 @@ public class SanitizedMarkdownParserTests(IHtmlSanitizer sanitizer, IServiceProv
     // -----------------------------------------------------------------------------------------------------------------
     [Test]
     [MethodDataSource(typeof(MarkdownDataSources), nameof(MarkdownDataSources.DataSources))]
-    public async Task TryParse_String_ValidInputs(MarkdownTestDto dto) {
+    public async Task TryParse_String_ValidInputs(MdTestData data) {
         // Arrange
-        string sanitizedOutput = sanitizer.Sanitize(dto.ExpectedStringOutput);
+        string sanitizedOutput = sanitizer.Sanitize(data.ExpectedStringOutput);
 
         // Act
-        string? output = parser.TryParse(dto.Markdown);
+        string? output = parser.TryParse(data.Markdown);
 
         // Assert
         await Assert.That(output)
@@ -36,11 +36,11 @@ public class SanitizedMarkdownParserTests(IHtmlSanitizer sanitizer, IServiceProv
     
     [Test]
     [MethodDataSource(typeof(MarkdownDataSources), nameof(MarkdownDataSources.DataSources))]
-    public async Task TryParse_TextSource_ValidInputs(MarkdownTestDto dto) {
+    public async Task TryParse_TextSource_ValidInputs(MdTestData data) {
         // Arrange
-        string sanitizedOutput = sanitizer.Sanitize(dto.ExpectedStringOutput);
+        string sanitizedOutput = sanitizer.Sanitize(data.ExpectedStringOutput);
         var textSource = new TextSource {
-            Text = dto.Markdown
+            Text = data.Markdown
         };
 
         // Act

@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -18,7 +19,7 @@ public class BlockQuoteHandler(ILineNormalizationService lineNormalizationHelper
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
         IMarkdownParserEngine engine,
-        IMarkdownSyntaxNode currentNode,
+        IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
         HandlerOrigin origin
@@ -29,8 +30,9 @@ public class BlockQuoteHandler(ILineNormalizationService lineNormalizationHelper
         ReadOnlySpan<char> normalized = NormalizeBlockQuote(blockQuoteBody);
         string adjustedBlockquote = lineNormalizationHelper.NormalizeLineIndentation(normalized);
 
-        IMarkdownSyntaxNode blockquoteNode = currentNode.AddChildNode(MarkdownElement.Blockquote);
-        engine.AddMultiLineMatchesToStack(adjustedBlockquote, blockquoteNode, origin | HandlerOrigin.PreserveHtml);
+        BlockQuoteMdSyntaxNode blockQuoteNode = BlockQuoteMdSyntaxNode.Shared.Get();
+        parentNode.AddChildNode(blockQuoteNode);
+        engine.PushMultiLineMatchesToStack(adjustedBlockquote, blockQuoteNode, origin | HandlerOrigin.PreserveHtml);
     }
 
     private ReadOnlySpan<char> NormalizeBlockQuote(ReadOnlySpan<char> span) {

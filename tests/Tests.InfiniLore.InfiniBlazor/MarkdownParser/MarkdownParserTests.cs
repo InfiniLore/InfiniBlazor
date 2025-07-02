@@ -14,24 +14,24 @@ public class MarkdownParserTests(IMarkdownParser<string, string> parser, IMarkdo
     
     [Test]
     [MethodDataSource(typeof(MarkdownDataSources), nameof(MarkdownDataSources.DataSources))]
-    public async Task TryParse_String_ValidInputs(MarkdownTestDto dto) {
+    public async Task TryParse_String_ValidInputs(MdTestData data) {
         // Arrange
 
         // Act
-        string? output = parser.TryParse(dto.Markdown);
+        string? output = parser.TryParse(data.Markdown);
 
         // Assert;
         await Assert.That(output)
             .IsNotNullOrWhitespace()
-            .IsEqualTo(dto.ExpectedStringOutput).IgnoringWhitespace();
+            .IsEqualTo(data.ExpectedStringOutput).IgnoringWhitespace();
     }
     
     [Test]
     [MethodDataSource(typeof(MarkdownDataSources), nameof(MarkdownDataSources.DataSources))]
-    public async Task TryParse_TextSource_ValidInputs(MarkdownTestDto dto) {
+    public async Task TryParse_TextSource_ValidInputs(MdTestData data) {
         // Arrange
         var textSource = new TextSource {
-            Text = dto.Markdown
+            Text = data.Markdown
         };
 
         // Act
@@ -40,6 +40,6 @@ public class MarkdownParserTests(IMarkdownParser<string, string> parser, IMarkdo
         // Assert
         await Assert.That(output)
             .IsNotNullOrWhitespace()
-            .IsEqualTo(dto.ExpectedStringOutput).IgnoringWhitespace();
+            .IsEqualTo(data.ExpectedStringOutput).IgnoringWhitespace();
     }
 }

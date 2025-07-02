@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.MarkdownParser.ElementHandlers.SingleLine;
@@ -17,12 +18,12 @@ public class CodeInlineHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownParserEngine engine, IMarkdownSyntaxNode currentNode, Match entireMatch, Group group, HandlerOrigin origin) {
+    public void HandleMatch(IMarkdownParserEngine engine, IMdSyntaxNode parentNode, Match entireMatch, Group group, HandlerOrigin origin) {
         if (!entireMatch.Groups[CId].TryGetValue(out string? codeValue)) return ;
 
         string normalizedBackticks = codeValue.Replace("\\`", "`");
-
-        IMarkdownSyntaxNode codeNode = currentNode.AddChildNode(MarkdownElement.CodeInline);
-        codeNode.WithContent(normalizedBackticks);
+        CodeInlineMdSyntaxNode node = CodeInlineMdSyntaxNode.Shared.Get();
+        node.ContentCode = normalizedBackticks;
+        parentNode.AddChildNode(node);
     }
 }

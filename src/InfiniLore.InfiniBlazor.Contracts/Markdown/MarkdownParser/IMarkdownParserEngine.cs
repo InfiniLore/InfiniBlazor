@@ -11,8 +11,8 @@ public interface IMarkdownParserEngine {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    void AddMultiLineMatchesToStack(string input, IMarkdownSyntaxNode node, HandlerOrigin origin);
-    void AddSingleLineMatchesToStack(string input, IMarkdownSyntaxNode node, HandlerOrigin origin);
-    void PushContentToStack(string content, IMarkdownSyntaxNode currentNode, HandlerOrigin origin);
-    void PushElementToStack(string? content, IMarkdownSyntaxNode currentNode, HandlerOrigin origin, MarkdownElement element);
+    void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node, HandlerOrigin origin);
+    void PushSingleLineMatchesToStack(string input, IMdSyntaxNode node, HandlerOrigin origin);
+    
+    void PushProcessedNodeToStack(IMdSyntaxNode parentNode, IMdSyntaxNode childNode);
 }

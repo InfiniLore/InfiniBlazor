@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Infinilore.InfiniBlazor.Components;
 using Microsoft.AspNetCore.Components;
 
 namespace InfiniLore.InfiniBlazor.Components;

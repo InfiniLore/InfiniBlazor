@@ -1,9 +1,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
-
 namespace Tests.InfiniLore.InfiniBlazor.DataSources.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -14,103 +11,59 @@ public class StrikethroughDataSources {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
-        yield return static () => new MarkdownTestDto(
+    public static IEnumerable<Func<MdTestData>> DataSources() {
+        yield return static () => new MdTestData(
             SectionName,
             "~something~",
-            "<p><s>something</s></p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.AddStrikethrough("something");
-            }
+            "<p><s>something</s></p>"
         );
 
-        yield return static () => new MarkdownTestDto(
+        yield return static () => new MdTestData(
             SectionName,
             @"\~escaped~",
-            "<p>~escaped~</p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("~escaped~");
-            }
+            "<p>~escaped~</p>"
         );
 
-        yield return static () => new MarkdownTestDto(
+        yield return static () => new MdTestData(
             SectionName,
             @"~escaped\~",
-            "<p>~escaped~</p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("~escaped~");
-            }
+            "<p>~escaped~</p>"
         );
 
-        yield return static () => new MarkdownTestDto(
+        yield return static () => new MdTestData(
             SectionName,
             "~nested ~strikethrough~ does not work~",
-            "<p><s>nested</s>strikethrough<s> does not work</s></p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.AddStrikethrough("nested ");
-                paragraph.WithContent("strikethrough");
-                paragraph.AddStrikethrough(" does not work");
-            }
+            "<p><s>nested</s>strikethrough<s> does not work</s></p>"
         );
 
-        yield return static () => new MarkdownTestDto(
+        yield return static () => new MdTestData(
             SectionName,
             "~**bold and strike-through**~",
-            "<p><s><strong>bold and strike-through</strong></s></p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                IMarkdownSyntaxNode strike = paragraph.AddStrikethrough();
-                strike.AddBold("bold and strike-through");
-            }
+            "<p><s><strong>bold and strike-through</strong></s></p>"
         );
 
-        yield return static () => new MarkdownTestDto(
+        yield return static () => new MdTestData(
             SectionName,
             "~*italic and strike-through*~",
-            "<p><s><em>italic and strike-through</em></s></p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                IMarkdownSyntaxNode strike = paragraph.AddStrikethrough();
-                strike.AddItalic("italic and strike-through");
-            }
+            "<p><s><em>italic and strike-through</em></s></p>"
         );
 
-        yield return static () => new MarkdownTestDto(
+        yield return static () => new MdTestData(
             SectionName,
             "**~bold strike~** normal ~strikethrough~",
-            "<p><strong><s>bold strike</s></strong> normal <s>strikethrough</s></p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.AddBold().AddStrikethrough("bold strike");
-                paragraph.WithContent(" normal ");
-                paragraph.AddStrikethrough("strikethrough");
-            }
+            "<p><strong><s>bold strike</s></strong> normal <s>strikethrough</s></p>"
         );
 
-        yield return static () => new MarkdownTestDto(
+        yield return static () => new MdTestData(
             SectionName,
             "~~",
-            "<p>~~</p>",
-            ConfigureExpectedNode: static rootNode => {
-                rootNode.AddParagraph("~~");
-            }
+            "<p>~~</p>"
         );
 
-        yield return static () => new MarkdownTestDto(
+        yield return static () => new MdTestData(
             SectionName,
             "~one~ and ~two~!",
-            "<p><s>one</s> and <s>two</s>!</p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.AddStrikethrough("one");
-                paragraph.WithContent(" and ");
-                paragraph.AddStrikethrough("two");
-                paragraph.WithContent("!");
-            }
+            "<p><s>one</s> and <s>two</s>!</p>"
         );
 
     }

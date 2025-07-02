@@ -1,9 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
-
 namespace Tests.InfiniLore.InfiniBlazor.DataSources.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -14,8 +11,8 @@ public class HtmlDataSources {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
-        yield return static () => new MarkdownTestDto(SectionName,
+    public static IEnumerable<Func<MdTestData>> DataSources() {
+        yield return static () => new MdTestData(SectionName,
             """
             Unrelated previous paragraph followed by a blank line
             <table>
@@ -47,28 +44,10 @@ public class HtmlDataSources {
                     </tr>
                 </table>
             </p>
-            """,
-            ConfigureExpectedNode: static rootNode => {
-                rootNode.AddParagraph("Unrelated previous paragraph followed by a blank line");
-                IMarkdownSyntaxNode paragraph2 = rootNode.AddParagraph();
-                paragraph2.WithHtmlContent("""
-                    <table>
-                        <tr>
-                            <td>Table cell</td>
-                            <td>
-                                <table>
-                                    <tr>
-                                        <td>*Tables in tables*</td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                    """);
-            }
+            """
         );
 
-        yield return () => new MarkdownTestDto(SectionName,
+        yield return () => new MdTestData(SectionName,
             """
             <pre>
             Buffalo Bill ’s
@@ -98,28 +77,10 @@ public class HtmlDataSources {
             how do you like your blueeyed boy
             Mister Death
             </pre></p>
-            """,
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.WithHtmlContent("""
-                    <pre>
-                    Buffalo Bill ’s
-                    defunct
-                           who used to
-                           ride a watersmooth-silver
-                                                    stallion
-                    and break onetwothreefourfive pigeonsjustlikethat
-                                                                     Jesus
-                    he was a handsome man
-                                         and what i want to know is
-                    how do you like your blueeyed boy
-                    Mister Death
-                    </pre>
-                    """);
-            }
+            """
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             """
             test <div>
             <strong>something</strong>
@@ -129,19 +90,10 @@ public class HtmlDataSources {
             <p> test <div>
             <strong>something</strong>
             </div> </p>
-            """,
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph("test ");
-                paragraph.WithHtmlContent("""
-                    <div>
-                    <strong>something</strong>
-                    </div>
-                    """
-                );
-            }
+            """
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             """
             test <div>
             <script>something</script>
@@ -149,43 +101,20 @@ public class HtmlDataSources {
             """,
             """
             <p> test <div><script>something</script></div></p> 
-            """,
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph("test ");
-
-                // HTML Sanitization is handled as a post-processor, so we can't test it here
-                paragraph.WithHtmlContent("""
-                    <div>
-                    <script>something</script>
-                    </div>
-                    """
-                );
-            }
+            """
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "test <div> <script>something</script> </div>",
-            "<p> test <div> <script>something</script> </div> </p> ",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph("test ");
-                // HTML Sanitization is handled as a post-processor, so we can't test it here
-                paragraph.WithHtmlContent("<div> <script>something</script> </div>"
-                );
-            }
+            "<p> test <div> <script>something</script> </div> </p> "
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "test <script>something</script>",
-            "<p> test <script>something</script></p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph("test ");
-                // HTML Sanitization is handled as a post-processor, so we can't test it here
-                paragraph.WithHtmlContent("<script>something</script>"
-                );
-            }
+            "<p> test <script>something</script></p>"
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             """
             *test* <div>
             <strong>something</strong>
@@ -195,22 +124,7 @@ public class HtmlDataSources {
             <p> <em>test</em> <div>
             <strong>something</strong>
             </div> <strong>bold this</strong> </p>
-            """,
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.AddItalic("test");
-                paragraph.WithContent(" ");
-                paragraph.WithHtmlContent("""
-                    <div>
-                    <strong>something</strong>
-                    </div>
-                    """
-                );
-
-                paragraph.WithContent(" ");
-                paragraph.AddBold("bold this");
-
-            }
+            """
         );
     }
 }

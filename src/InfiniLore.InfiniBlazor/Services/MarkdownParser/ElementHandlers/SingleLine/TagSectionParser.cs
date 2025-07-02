@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.MarkdownParser.ElementHandlers.SingleLine;
@@ -19,14 +20,15 @@ public class TagHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
         IMarkdownParserEngine engine,
-        IMarkdownSyntaxNode currentNode,
+        IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
         HandlerOrigin origin
     ) {
         if (!entireMatch.Groups[TextId].TryGetValue(out string? tagValue)) return ;
 
-        IMarkdownSyntaxNode spanNode = currentNode.AddChildNode(MarkdownElement.Tag);
-        spanNode.WithContent(tagValue);
+        TagMdSyntaxNode node = TagMdSyntaxNode.Shared.Get();
+        node.ContentTag = tagValue;
+        parentNode.AddChildNode(node);
     }
 }

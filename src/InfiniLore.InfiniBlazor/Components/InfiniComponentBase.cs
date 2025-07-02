@@ -4,7 +4,7 @@
 using InfiniLore.InfiniBlazor.Debugger;
 using Microsoft.AspNetCore.Components;
 
-namespace Infinilore.InfiniBlazor.Components;
+namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor;
-using Infinilore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Theming;
 using InfiniLore.InfiniBlazor.Theming.Collections;

@@ -1,9 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
-
 namespace Tests.InfiniLore.InfiniBlazor.DataSources.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -15,51 +12,31 @@ public static class XSSDataSources {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
-        yield return static () => new MarkdownTestDto(SectionName,
+    public static IEnumerable<Func<MdTestData>> DataSources() {
+        yield return static () => new MdTestData(SectionName,
             "<a href=\"javascript:alert('XSS')\">Click Me</a>",
-            "<p><a href=\"javascript:alert('XSS')\">Click Me</a></p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.WithHtmlContent("<a href=\"javascript:alert('XSS')\">Click Me</a>");
-            }
+            "<p><a href=\"javascript:alert('XSS')\">Click Me</a></p>"
         );
 
         // Some tests based on https://github.com/cujanovic/Markdown-XSS-Payloads/blob/master/Markdown-XSS-Payloads.txt
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "![Uh oh...](\"onerror=\"alert('XSS'))",
-            "<p>![Uhoh...](\"onerror=\"alert('XSS'))</p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("![Uh oh...](\"onerror=\"alert('XSS'))");
-            }
+            "<p>![Uhoh...](\"onerror=\"alert('XSS'))</p>"
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "[a](javascript:prompt(document.cookie))",
-            "<p>[a](javascript:prompt(document.cookie))</p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("[a](javascript:prompt(document.cookie))");
-            }
+            "<p>[a](javascript:prompt(document.cookie))</p>"
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "![a](javascript:prompt(document.cookie))\\",
-            "<p>![a](javascript:prompt(document.cookie))\\</p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("![a](javascript:prompt(document.cookie))\\");
-            }
+            "<p>![a](javascript:prompt(document.cookie))\\</p>"
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "<javascript:prompt(document.cookie)>",
-            "<p><javascript:prompt(document.cookie)></p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("<javascript:prompt(document.cookie)>");
-            }
+            "<p><javascript:prompt(document.cookie)></p>"
         );
     }
 }

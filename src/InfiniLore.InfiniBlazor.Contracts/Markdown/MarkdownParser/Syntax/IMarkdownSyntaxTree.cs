@@ -7,7 +7,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMarkdownSyntaxTree {
-    IMarkdownSyntaxNode RootNode { get; }
+    IMdSyntaxNode RootNode { get; }
 
     IEnumerable<IMarkdownSyntaxVisitor> VisitNodesBreadthFirst();
     IEnumerable<IMarkdownSyntaxVisitor> VisitNodesDeepestFirst();

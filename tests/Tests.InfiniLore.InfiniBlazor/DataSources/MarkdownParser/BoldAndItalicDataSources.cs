@@ -1,9 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
-
 namespace Tests.InfiniLore.InfiniBlazor.DataSources.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -14,47 +11,25 @@ public static class BoldAndItalicDataSources {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
-        yield return static () => new MarkdownTestDto(SectionName,
+    public static IEnumerable<Func<MdTestData>> DataSources() {
+        yield return static () => new MdTestData(SectionName,
             "***bold and italic***",
-            "<p><strong><em>bold and italic</em></strong></p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                IMarkdownSyntaxNode bold = paragraph.AddBold();
-                bold.AddItalic("bold and italic");
-            }
+            "<p><strong><em>bold and italic</em></strong></p>"
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             @"***\*bold and italic***",
-            "<p><strong><em>*bold and italic</em></strong></p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                IMarkdownSyntaxNode bold = paragraph.AddBold();
-                IMarkdownSyntaxNode italic = bold.AddItalic();
-                italic.WithContent("*bold and italic");
-            }
+            "<p><strong><em>*bold and italic</em></strong></p>"
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             @"***bold and italic\****",
-            "<p><strong><em>bold and italic*</em></strong></p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                IMarkdownSyntaxNode bold = paragraph.AddBold();
-                IMarkdownSyntaxNode italic = bold.AddItalic();
-                italic.WithContent("bold and italic*");
-            }
+            "<p><strong><em>bold and italic*</em></strong></p>"
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             @"*** \* \* \* ***",
-            "<p><strong><em> * * * </em></strong></p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                IMarkdownSyntaxNode bold = paragraph.AddBold();
-                bold.AddItalic(" * * * ");
-            }
+            "<p><strong><em> * * * </em></strong></p>"
         );
     }
 }

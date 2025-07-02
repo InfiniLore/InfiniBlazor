@@ -14,16 +14,14 @@ namespace InfiniLore.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
 public static class MarkdownPoolCache {
     private const int ParsersRetained = 8;
-    private const int NodesPerParserRetained = 96;
     private const int VisitorPerParserRetained = 16;
     
     public static readonly ObjectPool<MarkdownParserEngine> MarkdownParserEnginePool = CreateResettablePool<MarkdownParserEngine>(ParsersRetained);
     public static readonly ObjectPool<Dictionary<int, MarkdownElement>> DepthCachePool = CreateDictionaryPool<int, MarkdownElement>(ParsersRetained);
     public static readonly ObjectPool<Stack<MarkdownSyntaxVisitor>> MarkdownSyntaxVisitorStackPool = CreateMdNodeVisitorStackPool(ParsersRetained);
-    public static readonly ObjectPool<Stack<MarkdownSyntaxNode>> MarkdownSyntaxNodeStackPool = CreateStackPool<MarkdownSyntaxNode>(ParsersRetained);
+    public static readonly ObjectPool<Stack<IMdSyntaxNode>> MarkdownSyntaxNodeStackPool = CreateStackPool<IMdSyntaxNode>(ParsersRetained);
     public static readonly ObjectPool<MarkdownSyntaxTree> MarkdownSyntaxTreePool = CreateResettablePool<MarkdownSyntaxTree>(ParsersRetained);
-    public static readonly ObjectPool<MarkdownSyntaxNode> MarkdownSyntaxNodePool = CreateResettablePool<MarkdownSyntaxNode>(ParsersRetained * NodesPerParserRetained);
-    public static readonly ObjectPool<MarkdownFragment> MarkdownFragmentPool = CreateResettablePool<MarkdownFragment>(ParsersRetained * VisitorPerParserRetained);
+    public static readonly ObjectPool<SyntaxFragment> MarkdownFragmentPool = CreateResettablePool<SyntaxFragment>(ParsersRetained * VisitorPerParserRetained);
     public static readonly ObjectPool<MarkdownSyntaxVisitor> MarkdownSyntaxVisitorPool = CreateResettablePool<MarkdownSyntaxVisitor>(ParsersRetained * VisitorPerParserRetained);
     
     // -----------------------------------------------------------------------------------------------------------------

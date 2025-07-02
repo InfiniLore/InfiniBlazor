@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Buffers;
 using System.Text.RegularExpressions;
 
@@ -24,7 +25,7 @@ public class TableHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
         IMarkdownParserEngine engine,
-        IMarkdownSyntaxNode currentNode,
+        IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
         HandlerOrigin origin
@@ -43,21 +44,26 @@ public class TableHandler : IMarkdownElementHandler {
         int rowCount = rows.Split(rowRanges, '\n', StringSplitOptions.TrimEntries);
 
         // Construct table HTML
-        IMarkdownSyntaxNode tableNode = currentNode.AddChildNode(MarkdownElement.Table);
+        TableMdSyntaxNode tableNode = TableMdSyntaxNode.Shared.Get();
+        parentNode.AddChildNode(tableNode);
 
         // Add headers
-        IMarkdownSyntaxNode tableHeaderNode = tableNode
-            .AddChildNode(MarkdownElement.TableHead)
-            .AddChildNode(MarkdownElement.TableRow);
-
+        TableHeadMdSyntaxNode tableHead = TableHeadMdSyntaxNode.Shared.Get();
+        tableNode.AddChildNode(tableHead);
+        TableRowMdSyntaxNode tableHeadRow = TableRowMdSyntaxNode.Shared.Get();
+        tableHead.AddChildNode(tableHeadRow);
+        
         for (int index = 0; index < headerColumnCount; index++) {
-            IMarkdownSyntaxNode tableHeadCellNode = tableHeaderNode.AddChildNode(MarkdownElement.TableHeadCell);
+            TableHeadCellMdSyntaxNode tableHeadCellNode = TableHeadCellMdSyntaxNode.Shared.Get();
+            tableHeadRow.AddChildNode(tableHeadCellNode);
+            
             ReadOnlySpan<char> column = header[headerColumns[index]];
-            engine.AddSingleLineMatchesToStack(column.ToString(), tableHeadCellNode, origin);
+            engine.PushSingleLineMatchesToStack(column.ToString(), tableHeadCellNode, origin);
         }
 
         // Add rows
-        IMarkdownSyntaxNode tableBodyNode = tableNode.AddChildNode(MarkdownElement.TableBody);
+        TableBodyMdSyntaxNode tableBody = TableBodyMdSyntaxNode.Shared.Get();
+        tableNode.AddChildNode(tableBody);
 
         Range[]? rowColumnRanges = null;
         Span<Range> columnBuffer = headerColumnCount <= StackAllocThreshold 
@@ -74,12 +80,14 @@ public class TableHandler : IMarkdownElementHandler {
 
                 if (rowColumnCount != headerColumnCount) continue; // Skip malformed rows
 
-                IMarkdownSyntaxNode rowNode = tableBodyNode.AddChildNode(MarkdownElement.TableRow);
+                TableRowMdSyntaxNode tableRow = TableRowMdSyntaxNode.Shared.Get();
+                tableBody.AddChildNode(tableRow);
                 for (int columnIndex = 0; columnIndex < rowColumnCount; columnIndex++) {
-                    IMarkdownSyntaxNode cellNode = rowNode.AddChildNode(MarkdownElement.TableCell);
-                    engine.AddSingleLineMatchesToStack(
+                    TableCellMdSyntaxNode tableCell = TableCellMdSyntaxNode.Shared.Get();
+                    tableRow.AddChildNode(tableCell);
+                    engine.PushSingleLineMatchesToStack(
                         row[columnBuffer[columnIndex]].ToString(), 
-                        cellNode, 
+                        tableCell, 
                         origin);
                 }
             }

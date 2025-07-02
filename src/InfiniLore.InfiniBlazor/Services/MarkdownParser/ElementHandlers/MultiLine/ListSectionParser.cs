@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Buffers;
 using System.Text.RegularExpressions;
 
@@ -18,13 +19,14 @@ public abstract class ListHandlerBase(ILineNormalizationService lineNormalizatio
     public HandlerOrigin SkipOnOrigin => HandlerOrigin.NotSkipped;
     
     protected abstract MarkdownElement ListType { get; }
+    protected abstract bool IsOrdered { get; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
         IMarkdownParserEngine engine,
-        IMarkdownSyntaxNode currentNode,
+        IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
         HandlerOrigin origin
@@ -38,26 +40,29 @@ public abstract class ListHandlerBase(ILineNormalizationService lineNormalizatio
         try {
             matchCollection.CopyTo(matchArray, 0);
 
-            IMarkdownSyntaxNode listNode = currentNode.AddChildNode(ListType);
+            ListMdSyntaxNode listNode = ListMdSyntaxNode.Shared.Get();
+            listNode.IsOrdered = IsOrdered;
+            parentNode.AddChildNode(listNode);
+            
             for (int i = 0; i < matchCount; i++) {
                 GroupCollection groups = matchArray[i].Groups;
 
-                IMarkdownSyntaxNode listItemNode = listNode.AddChildNode(MarkdownElement.ListItem);
+                ListItemMdSyntaxNode listItemNode = ListItemMdSyntaxNode.Shared.Get();
+                listNode.AddChildNode(listItemNode);
             
                 if (groups[LBodyId].TryGetValueSpan(out ReadOnlySpan<char> itemBody) && !itemBody.IsEmpty) {
                     string normalizedBody = lineNormalizationHelper.NormalizeLineIndentation(itemBody);
-                    engine.AddMultiLineMatchesToStack(normalizedBody, listItemNode, origin | HandlerOrigin.PreserveHtml);
+                    engine.PushMultiLineMatchesToStack(normalizedBody, listItemNode, origin | HandlerOrigin.PreserveHtml);
                 }
 
                 if (groups[LHeadId].TryGetValue(out string? listHeader)) {
-                    engine.AddSingleLineMatchesToStack(listHeader, listItemNode, origin);
+                    engine.PushSingleLineMatchesToStack(listHeader, listItemNode, origin);
                 }
 
                 // ReSharper disable once InvertIf
                 if (groups[LTaskId].TryGetValue(out string? taskMarker)) {
-                    bool isChecked = taskMarker.ToLowerInvariant().Contains('x');
-                    MarkdownElement element = isChecked ? MarkdownElement.CheckboxSelected : MarkdownElement.CheckboxUnselected;
-                    engine.PushElementToStack(null, listItemNode, origin, element);
+                    listItemNode.IsCheckable = true;
+                    listItemNode.IsChecked = taskMarker.ToLowerInvariant().Contains('x');
                 }
             }
         }
@@ -70,9 +75,11 @@ public abstract class ListHandlerBase(ILineNormalizationService lineNormalizatio
 [InjectableSingleton<IMarkdownElementHandler>("listOrdered")]
 public class ListOrderedHandlerBase(ILineNormalizationService lineNormalizationHelper) : ListHandlerBase(lineNormalizationHelper) {
     protected override MarkdownElement ListType => MarkdownElement.ListOrdered;
+    protected override bool IsOrdered => true;
 }
 
 [InjectableSingleton<IMarkdownElementHandler>("listUnordered")]
 public class ListUnorderedHandler(ILineNormalizationService lineNormalizationHelper) : ListHandlerBase(lineNormalizationHelper) {
     protected override MarkdownElement ListType => MarkdownElement.ListUnordered;
+    protected override bool IsOrdered => false;
 }

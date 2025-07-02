@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.MarkdownParser.ElementHandlers.MultiLine;
@@ -24,34 +25,38 @@ public class HtmlBodyHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
         IMarkdownParserEngine engine,
-        IMarkdownSyntaxNode currentNode,
+        IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
         HandlerOrigin origin
     ) {
         if (!origin.HasFlag(HandlerOrigin.PreserveHtml)) {
-            currentNode = currentNode.AddChildNode(MarkdownElement.Paragraph);
+            
+            parentNode = parentNode.AddChildNode(ParagraphMdSyntaxNode.Shared.Get());
         }
 
         if (entireMatch.Groups[HtmlPostId].TryGetValue(out string? post)) {
-            engine.AddSingleLineMatchesToStack(post, currentNode, origin);
+            engine.PushSingleLineMatchesToStack(post, parentNode, origin);
         }
 
         if (entireMatch.Groups[HtmlBodyId].TryGetValue(out string? htmlBody)) {
             // Span should be the only special case allowed that allows for Markdown parsing within it
             Match match = MarkdownRegexLib.FindSpanHtmlRegex.Match(htmlBody);
             if (match.Groups[SpanTagId].TryGetValue(out string? spanTag) && match.Groups[SpanBodyId].TryGetValue(out string? spanBody)) {
-                engine.PushElementToStack("</span>", currentNode, origin, MarkdownElement.HtmlContent);
-                engine.AddMultiLineMatchesToStack(spanBody, currentNode, origin | HandlerOrigin.Html);
-                engine.PushElementToStack(spanTag, currentNode, origin, MarkdownElement.HtmlContent);
+                HtmlSpanMdSyntaxNode spanNode = HtmlSpanMdSyntaxNode.Shared.Get();
+                spanNode.TagValue = spanTag;
+                engine.PushProcessedNodeToStack(parentNode, spanNode);
+                engine.PushMultiLineMatchesToStack(spanBody, spanNode, origin | HandlerOrigin.Html);
             }
             else {
-                engine.PushElementToStack(htmlBody, currentNode, origin, MarkdownElement.HtmlContent);
+                ContentHtmlMdSyntaxNode htmlNode = ContentHtmlMdSyntaxNode.Shared.Get();
+                htmlNode.ContentHtml= htmlBody;
+                engine.PushProcessedNodeToStack(parentNode, htmlNode);
             }
         }
 
         if (entireMatch.Groups[HtmlPreId].TryGetValue(out string? pre)) {
-            engine.AddSingleLineMatchesToStack(pre, currentNode, origin);
+            engine.PushSingleLineMatchesToStack(pre, parentNode, origin);
         }
     }
 }

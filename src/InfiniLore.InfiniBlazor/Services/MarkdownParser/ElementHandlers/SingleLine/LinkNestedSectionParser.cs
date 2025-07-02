@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.MarkdownParser.ElementHandlers.SingleLine;
@@ -22,7 +23,7 @@ public class LinkNestedHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
         IMarkdownParserEngine engine,
-        IMarkdownSyntaxNode currentNode,
+        IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
         HandlerOrigin origin
@@ -32,20 +33,23 @@ public class LinkNestedHandler : IMarkdownElementHandler {
         if (!entireMatch.Groups[LnHrefId].TryGetValue(out string? linkHref)) return ;
 
         if (entireMatch.Groups[LnBangId].Success) {
-            IMarkdownSyntaxNode imgNode = currentNode.AddChildNode(MarkdownElement.Image);
-            imgNode.WithAttribute(MarkdownAttribute.ImageSource, linkHref);
-            imgNode.WithAttribute(MarkdownAttribute.ImageAlt, linkText);
-
+            ImageMdSyntaxNode imgNode = ImageMdSyntaxNode.Shared.Get();
+            imgNode.Href = linkHref;
+            imgNode.AltText = linkText;
+            
             if (entireMatch.Groups[LnTitleId].TryGetValue(out string? altTextValue)) {
-                imgNode.WithAttribute(MarkdownAttribute.ImageTitle, altTextValue);
+                imgNode.Title = altTextValue;
             }
+            
+            parentNode.AddChildNode(imgNode);
 
             return ;
         }
+        
+        LinkMdSyntaxNode linkNode = LinkMdSyntaxNode.Shared.Get();
+        linkNode.Href = linkHref;
+        parentNode.AddChildNode(linkNode);
 
-        IMarkdownSyntaxNode linkNode = currentNode.AddChildNode(MarkdownElement.Link);
-        linkNode.WithAttribute(MarkdownAttribute.LinkHref, linkHref);
-
-        engine.AddSingleLineMatchesToStack(linkText, linkNode, origin);
+        engine.PushSingleLineMatchesToStack(linkText, linkNode, origin);
     }
 }

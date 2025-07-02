@@ -9,8 +9,8 @@ namespace Tests.InfiniLore.InfiniBlazor.DataSources;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MarkdownDataSources {
-    public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
-        List<IEnumerable<Func<MarkdownTestDto>>> sources = [
+    public static IEnumerable<Func<MdTestData>> DataSources() {
+        List<IEnumerable<Func<MdTestData>>> sources = [
             AggregateDataSources.DataSources(),
             BlockQuoteDataSources.DataSources(),
             BoldAndItalicDataSources.DataSources(),
@@ -37,7 +37,7 @@ public class MarkdownDataSources {
             XSSDataSources.DataSources()
         ];
         
-        IEnumerable<Func<MarkdownTestDto>> sourcesCombined = sources.SelectMany(static source => source);
+        IEnumerable<Func<MdTestData>> sourcesCombined = sources.SelectMany(static source => source);
         return sourcesCombined;
     }
 }

@@ -1,9 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
-
 namespace Tests.InfiniLore.InfiniBlazor.DataSources.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -14,61 +11,38 @@ public static class TagDataSources {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
-        yield return static () => new MarkdownTestDto(SectionName,
+    public static IEnumerable<Func<MdTestData>> DataSources() {
+        yield return static () => new MdTestData(SectionName,
             "#tag",
-            "<p><span class=\"tag\">tag</span></p>",
-            ConfigureExpectedNode: static rootNode => rootNode.AddParagraph()
-                .AddTag("tag")
+            "<p><span class=\"tag\">#tag</span></p>"
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "#不",
-            "<p><span class=\"tag\">不</span></p>",
-            ConfigureExpectedNode: static rootNode => rootNode.AddParagraph()
-                .AddTag("不")
+            "<p><span class=\"tag\">#不</span></p>"
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "#öäüÖÄÜß",
-            "<p><span class=\"tag\">öäüÖÄÜß</span></p>",
-            ConfigureExpectedNode: static rootNode => rootNode.AddParagraph()
-                .AddTag("öäüÖÄÜß")
+            "<p><span class=\"tag\">#öäüÖÄÜß</span></p>"
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "**#tag**",
-            "<p><strong><span class=\"tag\">tag</span></strong></p>",
-            ConfigureExpectedNode: static rootNode => rootNode.AddParagraph()
-                .AddBold().AddTag("tag")
+            "<p><strong><span class=\"tag\">#tag</span></strong></p>"
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "*#tag*",
-            "<p><em><span class=\"tag\">tag</span></em></p>",
-            ConfigureExpectedNode: static rootNode => rootNode.AddParagraph()
-                .AddItalic().AddTag("tag")
+            "<p><em><span class=\"tag\">#tag</span></em></p>"
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "#this is not a valid tag",
-            "<p><span class=\"tag\">this</span> is not a valid tag</p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.AddTag("this");
-                paragraph.WithContent(" is not a valid tag");
-            });
+            "<p><span class=\"tag\">#this</span> is not a valid tag</p>");
         
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "#[link](https://www.transgenderinfo.be)",
-            "<p>#<a href=\"https://www.transgenderinfo.be\">link</a></p>",
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode paragraph = rootNode.AddParagraph();
-                paragraph.WithContent("#"); 
-                
-                IMarkdownSyntaxNode link = paragraph.AddLink("link");
-                link.WithAttribute(MarkdownAttribute.LinkHref, "https://www.transgenderinfo.be");
-                
-            });
+            "<p>#<a href=\"https://www.transgenderinfo.be\">link</a></p>");
     }
 }

@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.MarkdownParser.ElementHandlers.SingleLine;
@@ -19,14 +20,15 @@ public class SuperScriptHandler : IMarkdownElementHandler {
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
         IMarkdownParserEngine engine,
-        IMarkdownSyntaxNode currentNode,
+        IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
         HandlerOrigin origin
     ) {
         if (!entireMatch.Groups[SpId].TryGetValue(out string? superValue)) return ;
-
-        IMarkdownSyntaxNode node = currentNode.AddChildNode(MarkdownElement.Superscript);
-        engine.AddSingleLineMatchesToStack(superValue, node, origin | SkipOnOrigin);
+        
+        SuperScriptMdSyntaxNode node = SuperScriptMdSyntaxNode.Shared.Get();
+        parentNode.AddChildNode(node);
+        engine.PushSingleLineMatchesToStack(superValue, node, origin | SkipOnOrigin);
     }
 }

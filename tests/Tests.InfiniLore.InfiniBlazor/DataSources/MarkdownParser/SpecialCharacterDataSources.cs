@@ -1,8 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
-
 namespace Tests.InfiniLore.InfiniBlazor.DataSources.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -13,61 +11,40 @@ public static class SpecialCharacterDataSources {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
-        yield return static () => new MarkdownTestDto(SectionName,
+    public static IEnumerable<Func<MdTestData>> DataSources() {
+        yield return static () => new MdTestData(SectionName,
             "&",
-            "<p>&</p>",
-            ConfigureExpectedNode: static rootNode => {
-                rootNode.AddParagraph("&");
-            }
+            "<p>&</p>"
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "<",
-            "<p><</p>",
-            ConfigureExpectedNode: static rootNode => {
-                rootNode.AddParagraph("<");
-            }
+            "<p><</p>"
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             ">",
-            "<p>></p>",
-            ConfigureExpectedNode: static rootNode => {
-                rootNode.AddParagraph(">");
-            }
+            "<p>></p>"
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "&copy;",
-            "<p>&copy;</p>",
-            ConfigureExpectedNode: static rootNode => {
-                rootNode.AddParagraph("&copy;");
-            }
+            "<p>&copy;</p>"
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "This contains an emoji: 😀",
-            "<p>This contains an emoji: 😀</p>",
-            ConfigureExpectedNode: static rootNode => {
-                rootNode.AddParagraph("This contains an emoji: 😀");
-            }
+            "<p>This contains an emoji: 😀</p>"
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "@username mentions",
-            "<p>@username mentions</p>",
-            ConfigureExpectedNode: static rootNode => {
-                rootNode.AddParagraph("@username mentions");
-            }
+            "<p>@username mentions</p>"
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             "test <br/> test",
-            "<p>test <br/> test</p>",
-            ConfigureExpectedNode: static rootNode => {
-                rootNode.AddParagraph("test <br/> test");
-            }
+            "<p>test <br/> test</p>"
         );
     }
 }

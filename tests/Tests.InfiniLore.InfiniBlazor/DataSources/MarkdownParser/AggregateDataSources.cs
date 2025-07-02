@@ -1,9 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
-
 namespace Tests.InfiniLore.InfiniBlazor.DataSources.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -14,9 +11,9 @@ public static class AggregateDataSources {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static IEnumerable<Func<MarkdownTestDto>> DataSources() {
+    public static IEnumerable<Func<MdTestData>> DataSources() {
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             """
             ## Longer Example with Multiple Sections
 
@@ -109,67 +106,10 @@ public static class AggregateDataSources {
             <h3>Links and Images</h3>
             <p>You can visit <a href="https://www.google.com">Google</a> or check out the following image:</p>
             <p><img src="https://via.placeholder.com/150" alt="Placeholder Image"></p>
-            """,
-            ConfigureExpectedNode: static rootNode => {
-                rootNode.AddH2("Longer Example with Multiple Sections");
-
-                rootNode.AddH3("Introduction");
-                IMarkdownSyntaxNode paragraph0 = rootNode.AddParagraph();
-                paragraph0.WithContent("Welcome to this test. This section introduces the topic, along with ");
-                paragraph0.AddBold("bold");
-                paragraph0.WithContent(", ");
-                paragraph0.AddItalic("italic");
-                paragraph0.WithContent(", and ");
-                paragraph0.AddCodeInline("code");
-                paragraph0.WithContent(" formatting.");
-
-                rootNode.AddH3("Code Snippet");
-                rootNode.AddParagraph("Below is an example of a C# code snippet:");
-                IMarkdownSyntaxNode csharpCode = rootNode.AddCodeBlock("public class Program {\n    public static void Main() {\n        Console.WriteLine(\"Hello, World!\");\n    }\n}\n");
-                csharpCode.WithAttribute(MarkdownAttribute.CodeLanguage, "csharp");
-                rootNode.AddH3("Bullet Points");
-                rootNode.AddParagraph("Here are some bullet points:");
-                IMarkdownSyntaxNode bulletList = rootNode.AddListUnordered();
-                bulletList.AddListItem("Point one");
-                IMarkdownSyntaxNode nestedItem = bulletList.AddListItem("Point two");
-                IMarkdownSyntaxNode bulletList2 = nestedItem.AddListUnordered();
-                bulletList2.AddListItem("Subpoint A");
-                bulletList2.AddListItem("Subpoint B");
-
-                rootNode.AddH3("Blockquote");
-                IMarkdownSyntaxNode blockquote = rootNode.AddBlockquote();
-                blockquote.AddParagraph("This is a blockquote. It can contain multiple lines of text");
-                blockquote.AddParagraph("and demonstrates how Markdown handles quoted content.");
-
-                rootNode.AddH3("Table Example");
-                IMarkdownSyntaxNode table = rootNode.AddTable();
-                IMarkdownSyntaxNode tableHeader = table.AddTableHead();
-                IMarkdownSyntaxNode tableHeaderRow = tableHeader.AddTableRow();
-                tableHeaderRow.AddTableHeadCell("Column 1");
-                tableHeaderRow.AddTableHeadCell("Column 2");
-                tableHeaderRow.AddTableHeadCell("Column 3");
-                IMarkdownSyntaxNode tableBody = table.AddTableBody();
-                IMarkdownSyntaxNode tableBodyRow0 = tableBody.AddTableRow();
-                tableBodyRow0.AddTableCell("Data 1");
-                tableBodyRow0.AddTableCell("Data 2");
-                tableBodyRow0.AddTableCell("Data 3");
-                IMarkdownSyntaxNode tableBodyRow1 = tableBody.AddTableRow();
-                tableBodyRow1.AddTableCell("Data 4");
-                tableBodyRow1.AddTableCell("Data 5");
-                tableBodyRow1.AddTableCell("Data 6");
-
-                rootNode.AddH3("Links and Images");
-                IMarkdownSyntaxNode paragraph1 = rootNode.AddParagraph();
-                paragraph1.WithContent("You can visit ");
-                paragraph1.AddLink("Google").WithAttribute(MarkdownAttribute.LinkHref, "https://www.google.com");
-                paragraph1.WithContent(" or check out the following image:");
-                IMarkdownSyntaxNode image = rootNode.AddParagraph().AddImage();
-                image.WithAttribute(MarkdownAttribute.ImageSource, "https://via.placeholder.com/150");
-                image.WithAttribute(MarkdownAttribute.ImageAlt, "Placeholder Image");
-            }
+            """
         );
 
-        yield return static () => new MarkdownTestDto(SectionName,
+        yield return static () => new MdTestData(SectionName,
             """
             ## Nested Lists and Complex Formatting
 
@@ -215,41 +155,7 @@ public static class AggregateDataSources {
                     </ol>
                 </li>
             </ul>
-            """,
-            ConfigureExpectedNode: static rootNode => {
-                IMarkdownSyntaxNode heading = rootNode.AddH2();
-                heading.WithContent("Nested Lists and Complex Formatting");
-
-                IMarkdownSyntaxNode unOrderedList = rootNode.AddListUnordered();
-                IMarkdownSyntaxNode topic1 = unOrderedList.AddListItem();
-                topic1.AddBold("Main Topic 1");
-                IMarkdownSyntaxNode topic1List = topic1.AddListUnordered();
-                IMarkdownSyntaxNode subtopic1 = topic1List.AddListItem();
-                subtopic1.WithContent("Subtopic 1.1");
-                IMarkdownSyntaxNode subtopic1List = subtopic1.AddListUnordered();
-                IMarkdownSyntaxNode detail1 = subtopic1List.AddListItem();
-                detail1.WithContent("Detail 1.1.1");
-                IMarkdownSyntaxNode detail2 = subtopic1List.AddListItem();
-                detail2.WithContent("Detail 1.1.2");
-                IMarkdownSyntaxNode detail2List = detail2.AddListUnordered();
-                IMarkdownSyntaxNode extraDetail = detail2List.AddListItem();
-                extraDetail.WithContent("Extra Detail 1.1.2.1");
-                IMarkdownSyntaxNode subtopic2 = topic1List.AddListItem();
-                subtopic2.WithContent("Subtopic 1.2");
-
-                IMarkdownSyntaxNode topic2 = unOrderedList.AddListItem();
-                topic2.AddBold("Main Topic 2");
-                IMarkdownSyntaxNode topic2List = topic2.AddListOrdered();
-                IMarkdownSyntaxNode item21 = topic2List.AddListItem();
-                item21.WithContent("Item 2.1");
-                IMarkdownSyntaxNode item22 = topic2List.AddListItem();
-                item22.WithContent("Item 2.2");
-                IMarkdownSyntaxNode item22List = item22.AddListUnordered();
-                IMarkdownSyntaxNode subItem221 = item22List.AddListItem();
-                subItem221.WithContent("Sub-Item 2.2.1");
-                IMarkdownSyntaxNode subItem222 = item22List.AddListItem();
-                subItem222.WithContent("Sub-Item 2.2.2");
-            }
+            """
         );
     }
 }

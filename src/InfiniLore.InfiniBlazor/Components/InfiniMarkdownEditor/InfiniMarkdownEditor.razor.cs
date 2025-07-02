@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Infinilore.InfiniBlazor.Components;
 using InfiniLore.InfiniBlazor.Debugger;
 using InfiniLore.InfiniBlazor.JsRuntime;
 using InfiniLore.InfiniBlazor.Markdown;
