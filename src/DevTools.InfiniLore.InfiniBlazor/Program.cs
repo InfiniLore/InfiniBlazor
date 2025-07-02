@@ -23,8 +23,7 @@ public static class Program {
         string projects = string.Join(";", 
             "InfiniLore.InfiniBlazor",
             "InfiniLore.InfiniBlazor.Contracts",
-            "InfiniLore.InfiniBlazor.SourceGenerators",
-            "InfiniLore.InfiniBlazor"
+            "InfiniLore.InfiniBlazor.SourceGenerators"
         );
         string oneLineArgs = InputHelper.ToOneLine(args).Replace("%PROJECTS%", projects);
         
