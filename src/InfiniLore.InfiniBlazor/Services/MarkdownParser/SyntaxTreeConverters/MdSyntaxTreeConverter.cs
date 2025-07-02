@@ -15,25 +15,37 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.SyntaxTreeConverters;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxTreeConverter>]
 public class MdSyntaxTreeConverter : IMdSyntaxTreeConverter {
-    private static readonly ObjectPool<SimpleMdSyntaxNodeConverter> SimpleSyntaxNodeConverterPool = Pooling.CreateResettablePool<SimpleMdSyntaxNodeConverter>(4);
-
+    private static readonly Lock PoolLock = new();
+    private static readonly ObjectPool<SimpleMdSyntaxNodeConverter> SimpleSyntaxNodeConverterPool = 
+        Pooling.CreateResettablePool<SimpleMdSyntaxNodeConverter>(4);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public MarkupString ConvertToMarkupString(IMdSyntaxTree tree) 
         => new(ConvertToString(tree));
     
+
     public string ConvertToString(IMdSyntaxTree tree) {
-        StringBuilder builder = GlobalPools.StringBuilder.Get();
-        SimpleMdSyntaxNodeConverter converter = SimpleSyntaxNodeConverterPool.Get();
+        StringBuilder builder;
+        SimpleMdSyntaxNodeConverter converter;
+    
+        lock (PoolLock) {
+            builder = GlobalPools.StringBuilder.Get();
+            converter = SimpleSyntaxNodeConverterPool.Get();
+        }
+    
         try {
             converter.Sb = builder;
             BaseMdSyntaxTreeConverter.ProcessNodeTree(tree, converter);
             return builder.ToString();
         }
         finally {
-            GlobalPools.StringBuilder.Return(builder);
-            SimpleSyntaxNodeConverterPool.Return(converter);
+            lock (PoolLock) {
+                builder.Clear();
+                GlobalPools.StringBuilder.Return(builder);
+                SimpleSyntaxNodeConverterPool.Return(converter);
+            }
         }
     }
+
 }

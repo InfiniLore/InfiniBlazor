@@ -17,8 +17,7 @@ namespace Benchmarks.InfiniLore.InfiniBlazor.Markdown;
 public class MarkdownBenchmarks {
     private string Markdown { get; set; } = string.Empty;
     
-    private IMdSyntaxParser Parser { get; set; } = null!;
-    private IMdSyntaxTreeConverter Converter { get; set; } = null!;
+    private IMarkdownParser Parser { get; set; } = null!;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -36,8 +35,7 @@ public class MarkdownBenchmarks {
         // Markdown = await response.Content.ReadAsStringAsync();
         
         var provider = CreateProvider();
-        Parser = provider.GetRequiredService<IMdSyntaxParser>();
-        Converter = provider.GetRequiredService<IMdSyntaxTreeConverter>();
+        Parser = provider.GetRequiredService<IMarkdownParser>();
     }
 
     private static IServiceProvider CreateProvider(Action<MarkdownConfig>? configure = null) {
@@ -49,8 +47,7 @@ public class MarkdownBenchmarks {
 
     [Benchmark(Baseline = true)]
     public string RenderMarkdown() {
-        IMdSyntaxTree tree = Parser.ParseToTree(Markdown);
-        string? output = Converter.ConvertToString(tree);
+        string? output = Parser.ParseToString(Markdown);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }

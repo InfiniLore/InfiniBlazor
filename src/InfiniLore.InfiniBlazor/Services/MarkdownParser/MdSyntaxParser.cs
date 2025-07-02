@@ -48,6 +48,7 @@ public class MdSyntaxParser(IServiceProvider serviceProvider, ILogger<MdSyntaxPa
     }
 
     public void ParseToTree(string markdown, IMdSyntaxTree nodeTree) {
+        nodeTree.RootNode.Depth = 0;
         MdSyntaxParserEngine runningParser = MdSyntaxParserEngine.Pool.Get();
 
         try {

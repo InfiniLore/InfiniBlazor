@@ -1,9 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
+using Microsoft.AspNetCore.Components;
 
+namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class RootMdSyntaxNode : MdSyntaxNode<RootMdSyntaxNode>;
+public interface IMarkdownParser {
+    string ParseToString(string input);
+    MarkupString ParseToMarkupString(string input);
+}

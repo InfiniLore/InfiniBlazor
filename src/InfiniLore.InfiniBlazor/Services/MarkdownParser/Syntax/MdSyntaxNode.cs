@@ -17,7 +17,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
 
     private const int ChildrenMinimumCapacity = 2;
     public int ChildCount { get; private set; }
-    public virtual int Depth { get; set; } = -1;
+    public virtual int Depth { get; set; }
     
     protected virtual IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(ChildrenMinimumCapacity);
 
@@ -109,7 +109,8 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
             throw new InvalidOperationException($"Cannot return {GetType()} to shared pool. Expected {typeof(T)}");
         }
 
-        Pool.Return(casted);// Calls TryReset so don't do it in this method!
+        TryReset();
+        Pool.Return(casted);
     }
 
     public virtual bool TryReset() {
@@ -119,7 +120,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
         }
 
         ChildCount = 0;
-        Depth = -1;
+        Depth = 0;
 
         Parent = null;
         return true;

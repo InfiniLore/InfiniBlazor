@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 public class MdSyntaxTree : IMdSyntaxTree, IResettable {
     public IMdSyntaxNode RootNode { get; private set; } = RootMdSyntaxNode.Pool.Get();
     
-    public static ObjectPool<MdSyntaxTree> Pool { get; } = Pooling.CreateResettablePool<MdSyntaxTree>(Pooling.ParsersRetained);
+    public static ObjectPool<MdSyntaxTree> Pool { get; } = Pooling.CreateResettablePool<MdSyntaxTree>(16);
     private static ObjectPool<Stack<IMdSyntaxNode>> MdSyntaxNodeStackPool { get; } = Pooling.CreateStackPool<IMdSyntaxNode>(Pooling.ParsersRetained);
     
     // -----------------------------------------------------------------------------------------------------------------
@@ -45,7 +45,7 @@ public class MdSyntaxTree : IMdSyntaxTree, IResettable {
             }
         }
         finally {
-            // Also handles MdNodeVisitorPool.Return(visitor) if the stack isn't empty yet
+            stack.Clear();
             MdSyntaxNodeStackPool.Return(stack);
         }
     }
@@ -96,6 +96,7 @@ public class MdSyntaxTree : IMdSyntaxTree, IResettable {
     #endregion
 
     public bool TryReset() {
+        RootNode.Depth = 0;
         if (RootNode is not RootMdSyntaxNode rootNode) return false;
 
         // Using depth-first traversal with a single stack
@@ -124,6 +125,7 @@ public class MdSyntaxTree : IMdSyntaxTree, IResettable {
             // Finally, reset and replace the root node
             RootNode.ReturnToPool();
             RootNode = RootMdSyntaxNode.Pool.Get();
+            RootNode.Depth = 0;
             return true;
         }
         finally {

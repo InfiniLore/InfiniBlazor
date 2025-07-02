@@ -19,25 +19,30 @@ public static class BaseMdSyntaxTreeConverter {
         where TNodeConverter : IMdSyntaxNodeConverter  
     {
         Dictionary<int, IMdSyntaxNode> depthCache = DepthCachePool.Get();
-
         try {
             int lastKnownDepth = -1;
 
             foreach (IMdSyntaxNode node in tree.VisitNodesBreadthFirst()) {
                 int depth = node.Depth;
-                if (lastKnownDepth + 1 > depth) 
-                    CloseOpenTags(nodeConverter, depthCache, depth);
+            
+                lock (depthCache) {
+                    if (lastKnownDepth + 1 > depth) 
+                        CloseOpenTags(nodeConverter, depthCache, depth);
 
-                nodeConverter.HandleOpenTag(node);
-                nodeConverter.HandleContent(node);
+                    nodeConverter.HandleOpenTag(node);
+                    nodeConverter.HandleContent(node);
                 
-                depthCache.AddOrUpdate(depth, node);
-                lastKnownDepth = depth;
+                    depthCache.AddOrUpdate(depth, node);
+                    lastKnownDepth = depth;
+                }
             }
 
-            CloseOpenTags(nodeConverter, depthCache, -1);
+            lock (depthCache) {
+                CloseOpenTags(nodeConverter, depthCache, -1);
+            }
         }
         finally {
+            depthCache.Clear();
             DepthCachePool.Return(depthCache);
         }
     }
