@@ -4,7 +4,7 @@
 using Example.InfiniBlazor.Components;
 using Example.InfiniBlazor.Shared;
 using Example.InfiniBlazor.Shared.Themes;
-using InfiniLore.InfiniBlazor.Markdown.Config;
+using InfiniLore.InfiniBlazor.Config;
 
 namespace Example.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------

@@ -3,8 +3,8 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
+using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.Config;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Benchmarks.InfiniLore.InfiniBlazor.Markdown;

@@ -39,6 +39,7 @@
     <ItemGroup>
         <PackageReference Include="CodeOfChaos.Extensions.MicrosoftLogging" />
         <PackageReference Include="CodeOfChaos.Extensions.ObjectPool" />
+        <PackageReference Include="HtmlSanitizer" />
         <PackageReference Include="InfiniLore.Lucide" />
         <PackageReference Include="CodeOfChaos.Extensions" />
         <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" />
@@ -61,5 +62,14 @@
     <ItemGroup>
       <EmbeddedResource Include="wwwroot\InfiniBlazor.css" />
       <EmbeddedResource Include="wwwroot\InfiniBlazor.js" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <AdditionalFiles Include="Components\InfiniMarkdownEditor\InfiniEditorInsertButton.razor" />
+      <AdditionalFiles Include="Components\InfiniMarkdownEditor\InfiniEditorModifierButton.razor" />
+      <AdditionalFiles Include="Components\InfiniMarkdownEditor\InfiniMarkdownEditor.razor" />
+      <AdditionalFiles Include="Components\InfiniMarkdownEditor\InfiniMarkdownEditorToolbar.razor" />
+      <AdditionalFiles Include="Components\InfiniMarkdownEditor\InfiniMarkdownInput.razor" />
+      <AdditionalFiles Include="Components\InfiniMarkdownEditor\InfiniMarkdownPreview.razor" />
     </ItemGroup>
 </Project>

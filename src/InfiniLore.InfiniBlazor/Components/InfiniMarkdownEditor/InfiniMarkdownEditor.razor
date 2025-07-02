@@ -1,0 +1,68 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<CascadingValue Value="@(this)" IsFixed="true">
+    <div class="@Class flex flex-col h-full min-h-0">
+        <div class="flex flex-none w-full">
+            <InfiniMarkdownEditorToolbar Class="w-full">
+
+                <ToolbarButtons>
+                    <InfiniEditorModifierButton Modifier="bold" IconName="bold"/>
+                    <InfiniEditorModifierButton Modifier="italic" IconName="italic"/>
+                    <InfiniEditorModifierButton Modifier="underline" IconName="underline"/>
+                    <InfiniEditorModifierButton Modifier="strike" IconName="strikethrough"/>
+                    <InfiniEditorModifierButton Modifier="superscript" IconName="superscript"/>
+                    <InfiniEditorModifierButton Modifier="subscript" IconName="subscript"/>
+
+                    <InfiniSpacer />
+                    
+                    <InfiniEditorInsertButton
+                        Content="@InfiniMarkdownEditorDebugInserts.MarkdownText"
+                        Variant="ButtonVariant.Default">Markdown
+                    </InfiniEditorInsertButton>
+                    <InfiniEditorInsertButton
+                        Content="@InfiniMarkdownEditorDebugInserts.LoremText"
+                        Variant="ButtonVariant.Default">Lorem
+                    </InfiniEditorInsertButton>
+                    <InfiniEditorInsertButton
+                        Content="@InfiniMarkdownEditorDebugInserts.TableText"
+                        Variant="ButtonVariant.Default">Table
+                    </InfiniEditorInsertButton>
+                    
+                    @if (!ShowSidePreview) {
+                        <div class="flex items-center">
+                            <InfiniToggleButton
+                                Size="Size.L"
+                                @bind-Value="@EditorIsLocked"
+                                OffIcon="eye-off"
+                                OnIcon="eye"
+                                />
+                        </div>
+                    }
+                </ToolbarButtons>
+            </InfiniMarkdownEditorToolbar>
+        </div>
+
+        <div class="flex flex-1 min-h-0 h-0 border border-(--border) rounded-b-lg">
+            @if (EditorIsLocked) {
+                <InfiniMarkdownPreview Class="w-full"/>
+            }
+            else {
+                <InfiniMarkdownInput Class="@(ShowSidePreview ? "w-1/2" : "w-full")"/>
+                if (ShowSidePreview) {
+                    <InfiniMarkdownPreview Class="w-1/2"/>
+                }
+            }
+            
+        </div>
+    </div>
+</CascadingValue>

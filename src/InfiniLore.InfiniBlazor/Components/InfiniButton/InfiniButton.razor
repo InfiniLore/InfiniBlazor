@@ -1,7 +1,6 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using Infinilore.InfiniBlazor
 @using InfiniLore.Lucide
 @using Microsoft.AspNetCore.Components.Routing
 
@@ -19,8 +18,8 @@
         <a href="@_computedHref"
            @ref="_elementRef"
            class="@ContainerClasses rounded-md inline-flex items-center justify-center transition-all duration-150 transform cursor-pointer active:scale-95 hover:scale-105"
-           @onmouseenter="ShowTooltip"
-           @onmouseleave="HideTooltip">
+           @onmouseenter="@ShowTooltip"
+           @onmouseleave="@HideTooltip">
             @ButtonContent
         </a>
     }
@@ -31,8 +30,8 @@
                 type="@Type"
                 disabled="@IsDisabled"
                 aria-label="@AriaLabel"
-                @onmouseenter="ShowTooltip"
-                @onmouseleave="HideTooltip"
+                @onmouseenter="@ShowTooltip"
+                @onmouseleave="@HideTooltip"
                 class="@ContainerClasses rounded-md inline-flex items-center justify-center transition-all duration-150 transform">
             @ButtonContent
         </button>

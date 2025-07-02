@@ -3,9 +3,9 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
+using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.Config;
-using InfiniLore.InfiniBlazor.Markdown.Processors.OutputProcessors;
+using InfiniLore.InfiniBlazor.Processors.OutputProcessors;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 

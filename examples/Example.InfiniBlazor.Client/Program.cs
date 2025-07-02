@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using Example.InfiniBlazor.Shared.Themes;
-using InfiniLore.InfiniBlazor.Markdown.Config;
+using InfiniLore.InfiniBlazor.Config;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace Example.InfiniBlazor.Client;

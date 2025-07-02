@@ -2,7 +2,10 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Testing.TUnit;
+using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.JsRuntime;
+using InfiniLore.InfiniBlazor;
+using InfiniLore.InfiniBlazor.Markdown;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Tests.InfiniLore.InfiniBlazor;
@@ -21,5 +24,16 @@ public class ServiceCollectionTests {
 
         // Assert
         await Assert.That(services).ContainsServiceType<IJsRuntimeHelper>();
+    }
+    [Test]
+    public async Task ShouldAddServices_AddMarkdownLogic() {
+        // Arrange
+        var services = new ServiceCollection();
+
+        // Act
+        services.AddInfiniBlazor(config => config.AddMarkdownLogic());
+
+        // Assert
+        await Assert.That(services).ContainsServiceImplementation(typeof(IMarkdownParser<,>), typeof(MarkdownParser<,>));
     }
 }
