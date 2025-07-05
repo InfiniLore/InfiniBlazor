@@ -23,7 +23,7 @@ public class MdSyntaxParserStack : IMdSyntaxParserStack, IResettable {
     // -----------------------------------------------------------------------------------------------------------------
     #region AddToStack
     public void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node, MdSyntaxHandlerOrigin origin) {
-        MatchCollection matches = RegexLib.MarkdownRegexLib.MultilineStructuresRegex.Matches(input);
+        MatchCollection matches = RegexLib.MdRegexLib.MultilineStructuresRegex.Matches(input);
         int count = matches.Count;
 
         // ArrayPooling this is not needed, ensuring capacity should do it
@@ -36,7 +36,7 @@ public class MdSyntaxParserStack : IMdSyntaxParserStack, IResettable {
     }
 
     public void PushSingleLineMatchesToStack(string input, IMdSyntaxNode node, MdSyntaxHandlerOrigin origin) {
-        MatchCollection matches = RegexLib.MarkdownRegexLib.SinglelineStructuresRegex.Matches(input);
+        MatchCollection matches = RegexLib.MdRegexLib.SinglelineStructuresRegex.Matches(input);
         int count = matches.Count;
 
         // ArrayPooling this is not needed, ensuring capacity should do it

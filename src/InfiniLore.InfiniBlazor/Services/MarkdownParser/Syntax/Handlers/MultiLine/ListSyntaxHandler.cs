@@ -13,9 +13,9 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class BaseListSyntaxHandler : IMdSyntaxHandler {
-    private static readonly int LTaskId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.LTask);
-    private static readonly int LHeadId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.LHead);
-    private static readonly int LBodyId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.LBody);
+    private static readonly int LTaskId = MdRegexLib.GetGroupId(MdRegexGroupNames.LTask);
+    private static readonly int LHeadId = MdRegexLib.GetGroupId(MdRegexGroupNames.LHead);
+    private static readonly int LBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.LBody);
     
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
     
@@ -33,7 +33,7 @@ public abstract class BaseListSyntaxHandler : IMdSyntaxHandler {
     ) {
         if (!entireMatch.TryGetValue(out string? listBody)) return;
 
-        MatchCollection matchCollection = MarkdownRegexLib.ListItemBodyRegex.Matches(listBody);
+        MatchCollection matchCollection = MdRegexLib.ListItemBodyRegex.Matches(listBody);
         int matchCount = matchCollection.Count;
         Match[] matchArray = ArrayPool<Match>.Shared.Rent(matchCount);
         
@@ -72,12 +72,12 @@ public abstract class BaseListSyntaxHandler : IMdSyntaxHandler {
     }
 }
 
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.ListOrdered)]
+[InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.ListOrdered)]
 public sealed class ListOrderedHandler : BaseListSyntaxHandler {
     protected override bool IsOrdered => true;
 }
 
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.ListUnordered)]
+[InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.ListUnordered)]
 public sealed class ListUnorderedHandler : BaseListSyntaxHandler {
     protected override bool IsOrdered => false;
 }

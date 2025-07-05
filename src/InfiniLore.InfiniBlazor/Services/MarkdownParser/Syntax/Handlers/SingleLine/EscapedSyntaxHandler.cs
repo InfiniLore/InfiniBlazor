@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.Escaped)]
+[InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.Escaped)]
 public sealed class EscapedSyntaxHandler : IMdSyntaxHandler {
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
 

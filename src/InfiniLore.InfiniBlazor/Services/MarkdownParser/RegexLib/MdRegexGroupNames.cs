@@ -5,7 +5,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class MarkdownRegexGroupNames {
+public static class MdRegexGroupNames {
     public const string B = "b";
     public const string BlockQuote = "blockQuote";
     public const string Bold = "bold";

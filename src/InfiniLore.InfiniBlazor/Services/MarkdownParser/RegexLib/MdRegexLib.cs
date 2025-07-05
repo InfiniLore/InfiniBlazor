@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static partial class MarkdownRegexLib {
+public static partial class MdRegexLib {
     [GeneratedRegex("""
           (?<escaped>\\[][!"\#$%&'()*+,\-./:;<=>?@\\^_`{|}~])
         | (?<bold>\*\*(?<b>(?>[^\\\*]+|\\\*|\*|(?<open>\*\*)|(?<-open>\*\*))+?\*?)(?(open)(?!))\*\*)

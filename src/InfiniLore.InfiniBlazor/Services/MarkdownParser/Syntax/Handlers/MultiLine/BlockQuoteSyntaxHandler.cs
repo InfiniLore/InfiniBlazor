@@ -13,7 +13,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.BlockQuote)]
+[InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.BlockQuote)]
 public sealed class BlockQuoteSyntaxHandler : IMdSyntaxHandler {
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------

@@ -11,12 +11,12 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.LinkNested)]
+[InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.LinkNested)]
 public sealed class LinkNestedSyntaxHandler : IMdSyntaxHandler {
-    private static readonly int LnTextId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.LnText);
-    private static readonly int LnHrefId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.LnHref);
-    private static readonly int LnTitleId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.LnTitle);
-    private static readonly int LnBangId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.LnBang);
+    private static readonly int LnTextId = MdRegexLib.GetGroupId(MdRegexGroupNames.LnText);
+    private static readonly int LnHrefId = MdRegexLib.GetGroupId(MdRegexGroupNames.LnHref);
+    private static readonly int LnTitleId = MdRegexLib.GetGroupId(MdRegexGroupNames.LnTitle);
+    private static readonly int LnBangId = MdRegexLib.GetGroupId(MdRegexGroupNames.LnBang);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
     
     // -----------------------------------------------------------------------------------------------------------------

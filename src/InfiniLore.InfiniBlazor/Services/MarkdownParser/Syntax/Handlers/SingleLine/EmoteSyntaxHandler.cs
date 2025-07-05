@@ -11,9 +11,9 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.Emote)]
+[InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.Emote)]
 public sealed class EmoteSyntaxHandler(IMdEmoteProvider mdEmoteProvider) : IMdSyntaxHandler {
-    private static readonly int EId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.E);
+    private static readonly int EId = MdRegexLib.GetGroupId(MdRegexGroupNames.E);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.Emote;
     
     // -----------------------------------------------------------------------------------------------------------------

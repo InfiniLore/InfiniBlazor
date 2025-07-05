@@ -11,13 +11,13 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.HtmlBody)]
+[InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.HtmlBody)]
 public sealed class HtmlBodySyntaxHandler : IMdSyntaxHandler {
-    private static readonly int HtmlPreId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.HtmlPre);
-    private static readonly int HtmlBodyId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.HtmlBody);
-    private static readonly int HtmlPostId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.HtmlPost);
-    private static readonly int SpanTagId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.SpanTag);
-    private static readonly int SpanBodyId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.SpanBody);
+    private static readonly int HtmlPreId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlPre);
+    private static readonly int HtmlBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlBody);
+    private static readonly int HtmlPostId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlPost);
+    private static readonly int SpanTagId = MdRegexLib.GetGroupId(MdRegexGroupNames.SpanTag);
+    private static readonly int SpanBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.SpanBody);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ public sealed class HtmlBodySyntaxHandler : IMdSyntaxHandler {
 
         if (entireMatch.Groups[HtmlBodyId].TryGetValue(out string? htmlBody)) {
             // Span should be the only special case allowed that allows for Markdown parsing within it
-            Match match = MarkdownRegexLib.FindSpanHtmlRegex.Match(htmlBody);
+            Match match = MdRegexLib.FindSpanHtmlRegex.Match(htmlBody);
             if (match.Groups[SpanTagId].TryGetValue(out string? spanTag) && match.Groups[SpanBodyId].TryGetValue(out string? spanBody)) {
                 HtmlSpanMdSyntaxNode spanNode = HtmlSpanMdSyntaxNode.Pool.Get();
                 spanNode.TagValue = spanTag;

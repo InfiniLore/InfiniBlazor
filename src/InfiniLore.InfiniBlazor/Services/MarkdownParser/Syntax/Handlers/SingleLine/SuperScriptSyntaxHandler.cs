@@ -11,9 +11,9 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.SupScript)]
+[InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.SupScript)]
 public sealed class SuperScriptSyntaxHandler : IMdSyntaxHandler {
-    private static readonly int SpId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.Sp);
+    private static readonly int SpId = MdRegexLib.GetGroupId(MdRegexGroupNames.Sp);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.SuperScript;
     
     // -----------------------------------------------------------------------------------------------------------------
