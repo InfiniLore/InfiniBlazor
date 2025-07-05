@@ -142,24 +142,4 @@ public static partial class MarkdownRegexLib {
         if (GroupNameToGroupId.TryGetValue(groupName, out int groupId)) return groupId;
         throw new ArgumentException($"No group name '{groupName}' found in any of the regexes.");
     }
-    
-    public static int Sum<T>(this in Span<T> span, Func<T, int> selector, int length = -1) {
-        int totalGroups = 0;
-        if (length == -1) length = span.Length;
-
-        for (int index = 0; index < length; index++) {
-            totalGroups += selector(span[index]);
-        }
-        return totalGroups;
-    }
-    
-    public static int Sum<T>(this in ReadOnlySpan<T> span, Func<T, int> selector, int length = -1) {
-        int totalGroups = 0;
-        if (length == -1) length = span.Length;
-
-        for (int index = 0; index < length; index++) {
-            totalGroups += selector(span[index]);
-        }
-        return totalGroups;
-    }
 }

@@ -1,12 +1,13 @@
-// ---------------------------------------------------------------------------------------------------------------------
+﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Collections.Frozen;
+using System.Diagnostics.CodeAnalysis;
 
-namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public record EmoteKey(params FrozenSet<string> Keys) {
-    public static EmoteKey FromKeys(params FrozenSet<string> keys) => new(keys);
+public interface IMdEmoteProvider{
+    bool TryGetValue(ReadOnlySpan<char> lookupValue,[NotNullWhen(true)] out string? s);
 }

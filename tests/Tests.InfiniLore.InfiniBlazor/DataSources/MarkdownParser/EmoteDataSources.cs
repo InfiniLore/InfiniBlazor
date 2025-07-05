@@ -5,7 +5,7 @@ namespace Tests.InfiniLore.InfiniBlazor.DataSources.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class EmoteDataSources {
+public static class EmoteDataSources {
     private static readonly string SectionName = nameof(EmoteDataSources)[..^nameof(DataSources).Length];
 
     // -----------------------------------------------------------------------------------------------------------------
