@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using System.Collections.Frozen;
-using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
@@ -20,15 +19,10 @@ public static partial class MdRegexLib {
         | (?<underline>_(?<u>.+?)(?<!\\)_)
         | (?<code>(?<open>`+)(?<c>(?>[^`\\]+|\\.|`(?!\k<open>))*?)\k<open>)
         | (?<emote>:(?<e>[\p{L}\p{N}\-_]+):)
-        | (?<linkNested>
+        | (?<link>
             (?<lnBang>!)?
-            \[(?<lnText>!?\[.+?\]\(.+?\))\]
+            \[(?<lnText>(?:!?\[.+?\]\(.+?\))|(?:[^\]]+?))\]
             \((?<lnHref>http(?:s)?[^\)]+?)(?:\s?"(?<lnTitle>[^"]*)")?\)
-          )
-        | (?<linkRegular>
-            (?<lrBang>!)?
-            \[(?<lrText>[^\]]+?)\]
-            \((?<lrHref>http(?:s)?[^\)]+?)(?:\s?"(?<lrTitle>[^"]*)")?\)
           )
         | (?<tag>\#(?<tText>[\p{L}\p{N}\-_/]+))
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
@@ -67,32 +61,31 @@ public static partial class MdRegexLib {
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex MultilineStructuresRegex { get; }
 
-    public static readonly ImmutableArray<string> MarkdownStructureGroupNames = [ 
+    public static readonly string[] MarkdownStructureGroupNames = [ 
         // Multiline
-        "paragraph",
-        "heading",
-        "codeBlock",
-        "headingSimple",
-        "listUnordered",
-        "listOrdered",
-        "table",
-        "blockQuote",
-        "htmlBody",
-        "horizontalRule",
+        MdRegexGroupNames.Paragraph,
+        MdRegexGroupNames.Heading,
+        MdRegexGroupNames.CodeBlock,
+        MdRegexGroupNames.HeadingSimple,
+        MdRegexGroupNames.ListUnordered,
+        MdRegexGroupNames.ListOrdered,
+        MdRegexGroupNames.Table,
+        MdRegexGroupNames.BlockQuote,
+        MdRegexGroupNames.HtmlBody,
+        MdRegexGroupNames.HorizontalRule,
 
         // Singleline
-        "escaped",
-        "bold",
-        "italic",
-        "supScript",
-        "subScript",
-        "strike",
-        "code",
-        "linkNested",
-        "linkRegular",
-        "underline",
-        "emote",
-        "tag"
+        MdRegexGroupNames.Escaped,
+        MdRegexGroupNames.Bold,
+        MdRegexGroupNames.Italic,
+        MdRegexGroupNames.SupScript,
+        MdRegexGroupNames.SubScript,
+        MdRegexGroupNames.Strike,
+        MdRegexGroupNames.Code,
+        MdRegexGroupNames.Link,
+        MdRegexGroupNames.Underline,
+        MdRegexGroupNames.Emote,
+        MdRegexGroupNames.Tag
     ];
 
     [GeneratedRegex(@"^ *(?:-|\d*\.)\s+(?:\[(?<lTask>[ xX])] )?(?<lHead>[^\n]+)(?<lBody>(?:\n +.+)*)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]

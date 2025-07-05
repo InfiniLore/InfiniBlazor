@@ -11,8 +11,8 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.LinkNested)]
-public sealed class LinkNestedSyntaxHandler : IMdSyntaxHandler {
+[InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.Link)]
+public sealed class LinkSyntaxHandler : IMdSyntaxHandler {
     private static readonly int LnTextId = MdRegexLib.GetGroupId(MdRegexGroupNames.LnText);
     private static readonly int LnHrefId = MdRegexLib.GetGroupId(MdRegexGroupNames.LnHref);
     private static readonly int LnTitleId = MdRegexLib.GetGroupId(MdRegexGroupNames.LnTitle);
@@ -42,7 +42,6 @@ public sealed class LinkNestedSyntaxHandler : IMdSyntaxHandler {
             }
             
             parentNode.AddChildNode(imgNode);
-
             return ;
         }
         
