@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
@@ -10,13 +11,13 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.HtmlBody)]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.HtmlBody)]
 public sealed class HtmlBodyHandler : IMdSyntaxHandler {
-    private static readonly int HtmlPreId = MarkdownRegexLib.GetMultiLineGroupId(MarkdownRegexLib.GroupNames.HtmlPre);
-    private static readonly int HtmlBodyId = MarkdownRegexLib.GetMultiLineGroupId(MarkdownRegexLib.GroupNames.HtmlBody);
-    private static readonly int HtmlPostId = MarkdownRegexLib.GetMultiLineGroupId(MarkdownRegexLib.GroupNames.HtmlPost);
-    private static readonly int SpanTagId = MarkdownRegexLib.GetSpanGroupId(MarkdownRegexLib.GroupNames.SpanTag);
-    private static readonly int SpanBodyId = MarkdownRegexLib.GetSpanGroupId(MarkdownRegexLib.GroupNames.SpanBody);
+    private static readonly int HtmlPreId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.HtmlPre);
+    private static readonly int HtmlBodyId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.HtmlBody);
+    private static readonly int HtmlPostId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.HtmlPost);
+    private static readonly int SpanTagId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.SpanTag);
+    private static readonly int SpanBodyId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.SpanBody);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------

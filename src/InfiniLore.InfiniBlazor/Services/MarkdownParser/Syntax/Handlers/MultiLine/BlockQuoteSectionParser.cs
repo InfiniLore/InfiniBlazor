@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using InfiniLore.InfiniBlazor.Pooling;
 using System.Text;
@@ -12,7 +13,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.BlockQuote)]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.BlockQuote)]
 public sealed class BlockQuoteHandler : IMdSyntaxHandler {
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------

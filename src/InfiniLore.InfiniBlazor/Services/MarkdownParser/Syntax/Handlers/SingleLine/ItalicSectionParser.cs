@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
@@ -10,9 +11,9 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.Italic)]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.Italic)]
 public sealed class ItalicHandler : IMdSyntaxHandler {
-    private static readonly int IId = MarkdownRegexLib.GetSingleLineGroupId(MarkdownRegexLib.GroupNames.I);
+    private static readonly int IId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.I);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.Italic;
     
     // -----------------------------------------------------------------------------------------------------------------

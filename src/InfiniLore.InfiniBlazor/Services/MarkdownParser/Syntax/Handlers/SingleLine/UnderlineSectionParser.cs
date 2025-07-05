@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
@@ -10,9 +11,9 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.Underline)]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.Underline)]
 public sealed class UnderlineHandler : IMdSyntaxHandler {
-    private static readonly int UId = MarkdownRegexLib.GetSingleLineGroupId(MarkdownRegexLib.GroupNames.U);
+    private static readonly int UId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.U);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.Underline;
     
     // -----------------------------------------------------------------------------------------------------------------

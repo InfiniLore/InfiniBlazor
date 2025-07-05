@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Buffers;
 using System.Text.RegularExpressions;
@@ -11,13 +12,13 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.Table)]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.Table)]
 public sealed class TableHandler : IMdSyntaxHandler {
     private const int StackAllocThreshold = 16;
 
-    private static readonly int BodyId = MarkdownRegexLib.GetMultiLineGroupId(MarkdownRegexLib.GroupNames.TBody);
-    private static readonly int HeadId = MarkdownRegexLib.GetMultiLineGroupId(MarkdownRegexLib.GroupNames.THead);
-    private static readonly int SepId = MarkdownRegexLib.GetMultiLineGroupId(MarkdownRegexLib.GroupNames.TSep);
+    private static readonly int BodyId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.TBody);
+    private static readonly int HeadId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.THead);
+    private static readonly int SepId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.TSep);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------

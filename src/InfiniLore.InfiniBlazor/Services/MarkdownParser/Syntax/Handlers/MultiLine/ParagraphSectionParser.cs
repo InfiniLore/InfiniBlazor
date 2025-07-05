@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
@@ -10,10 +11,10 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.Paragraph)]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.Paragraph)]
 public sealed class ParagraphHandler : IMdSyntaxHandler {
 
-    private static readonly int PId = MarkdownRegexLib.GetSingleLineGroupId(MarkdownRegexLib.GroupNames.P);
+    private static readonly int PId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.P);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

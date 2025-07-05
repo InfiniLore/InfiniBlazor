@@ -22,7 +22,7 @@ public class MdSyntaxParser(IServiceProvider serviceProvider, ILogger<MdSyntaxPa
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
     private static FrozenDictionary<string, IMdSyntaxHandler> ToFrozenDictionary(ILogger logger, IServiceProvider serviceProvider) {
-        ReadOnlySpan<string> keyNames = MarkdownRegexLib.MarkdownStructureGroupNames.AsSpan();
+        ReadOnlySpan<string> keyNames = RegexLib.MarkdownRegexLib.MarkdownStructureGroupNames.AsSpan();
         var dictionaryBuilder = new Dictionary<string, IMdSyntaxHandler>(keyNames.Length);
 
         for (int index = keyNames.Length - 1; index >= 0; index--) {

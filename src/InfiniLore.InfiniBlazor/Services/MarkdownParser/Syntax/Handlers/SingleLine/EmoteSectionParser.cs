@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
@@ -12,10 +13,10 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.Emote)]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.Emote)]
 public sealed class EmoteHandler(ILogger<EmoteHandler> logger) : IMdSyntaxHandler {
 
-    private static readonly int EId = MarkdownRegexLib.GetSingleLineGroupId(MarkdownRegexLib.GroupNames.E);
+    private static readonly int EId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.E);
 
     // TODO Requires some sort of Emote service
     private FrozenDictionary<EmoteKey, string> EmoteDict { get; } = new Dictionary<EmoteKey, string> {

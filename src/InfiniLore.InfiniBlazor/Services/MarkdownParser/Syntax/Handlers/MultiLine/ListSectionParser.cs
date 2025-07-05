@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Buffers;
 using System.Text.RegularExpressions;
@@ -12,9 +13,9 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class BaseListHandler : IMdSyntaxHandler {
-    private static readonly int LTaskId = MarkdownRegexLib.GetListGroupId(MarkdownRegexLib.GroupNames.LTask);
-    private static readonly int LHeadId = MarkdownRegexLib.GetListGroupId(MarkdownRegexLib.GroupNames.LHead);
-    private static readonly int LBodyId = MarkdownRegexLib.GetListGroupId(MarkdownRegexLib.GroupNames.LBody);
+    private static readonly int LTaskId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.LTask);
+    private static readonly int LHeadId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.LHead);
+    private static readonly int LBodyId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.LBody);
     
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
     
@@ -71,12 +72,12 @@ public abstract class BaseListHandler : IMdSyntaxHandler {
     }
 }
 
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.ListOrdered)]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.ListOrdered)]
 public sealed class ListOrderedHandler : BaseListHandler {
     protected override bool IsOrdered => true;
 }
 
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.ListUnordered)]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.ListUnordered)]
 public sealed class ListUnorderedHandler : BaseListHandler {
     protected override bool IsOrdered => false;
 }

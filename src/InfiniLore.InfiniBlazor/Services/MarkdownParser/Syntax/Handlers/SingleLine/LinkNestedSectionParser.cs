@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
@@ -10,12 +11,12 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.LinkNested)]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.LinkNested)]
 public sealed class LinkNestedHandler : IMdSyntaxHandler {
-    private static readonly int LnTextId = MarkdownRegexLib.GetSingleLineGroupId(MarkdownRegexLib.GroupNames.LnText);
-    private static readonly int LnHrefId = MarkdownRegexLib.GetSingleLineGroupId(MarkdownRegexLib.GroupNames.LnHref);
-    private static readonly int LnTitleId = MarkdownRegexLib.GetSingleLineGroupId(MarkdownRegexLib.GroupNames.LnTitle);
-    private static readonly int LnBangId = MarkdownRegexLib.GetSingleLineGroupId(MarkdownRegexLib.GroupNames.LnBang);
+    private static readonly int LnTextId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.LnText);
+    private static readonly int LnHrefId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.LnHref);
+    private static readonly int LnTitleId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.LnTitle);
+    private static readonly int LnBangId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.LnBang);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
     
     // -----------------------------------------------------------------------------------------------------------------
