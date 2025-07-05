@@ -32,8 +32,7 @@ public static partial class MdRegexLib {
           (?<heading>^(?<hLevel>\#{1,6})[\ ]+(?<hText>[^\n]+)\n?)
         | (?<codeBlock>`{3}(?<cLang>.*?)?\n(?<cBody>[\s\S]*?)`{3})
         | (?<headingSimple>^(?<hsText>.+?)\n[\ ]*[-=]{3,})
-        | (?<listUnordered>(?:^[^\S\n]*-\s+.*(?:\n(?:[^\S\n]*[\-.]\d*\.?\s+.*|[^\S\n]+.*))*))
-        | (?<listOrdered>(?:^[^\S\n]*\d+\.\s+?.*(?:\n(?:[^\S\n]*[\-.]?\d+\.?\s+.*|[^\S\n]+.*))*))
+        | (?<list>^[^\S\n]*(?<lsId>-|\d+\.)\s+.*(?:\n[^\S\n]+[^\n]+)*(?:\n[^\S\n]*(?:-|\d+\.)\s+.*(?:\n[^\S\n]+[^\n]+)*)*)
         | (?<table>
             ^\|(?<tHead>.+)\|\s*\n
             ^\|(?<tSep>[:\-|\ ]+?)\|\s*\n
@@ -67,8 +66,7 @@ public static partial class MdRegexLib {
         MdRegexGroupNames.Heading,
         MdRegexGroupNames.CodeBlock,
         MdRegexGroupNames.HeadingSimple,
-        MdRegexGroupNames.ListUnordered,
-        MdRegexGroupNames.ListOrdered,
+        MdRegexGroupNames.List,
         MdRegexGroupNames.Table,
         MdRegexGroupNames.BlockQuote,
         MdRegexGroupNames.HtmlBody,

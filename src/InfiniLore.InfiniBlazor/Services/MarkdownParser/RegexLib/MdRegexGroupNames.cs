@@ -32,8 +32,8 @@ public static class MdRegexGroupNames {
     public const string LHead = "lHead";
     public const string LTask = "lTask";
     public const string Link = "link";
-    public const string ListOrdered = "listOrdered";
-    public const string ListUnordered = "listUnordered";
+    public const string List = "list";
+    public const string ListIdentifier = "lsId";
     public const string LnBang = "lnBang";
     public const string LnHref = "lnHref";
     public const string LnText = "lnText";

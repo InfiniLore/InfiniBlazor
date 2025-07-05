@@ -12,14 +12,14 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public abstract class BaseListSyntaxHandler : IMdSyntaxHandler {
+[InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.List)]
+public sealed class BaseListSyntaxHandler : IMdSyntaxHandler {
+    private static readonly int LsId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListIdentifier);
     private static readonly int LTaskId = MdRegexLib.GetGroupId(MdRegexGroupNames.LTask);
     private static readonly int LHeadId = MdRegexLib.GetGroupId(MdRegexGroupNames.LHead);
     private static readonly int LBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.LBody);
     
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
-    
-    protected abstract bool IsOrdered { get; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -31,6 +31,7 @@ public abstract class BaseListSyntaxHandler : IMdSyntaxHandler {
         MdSyntaxHandlerOrigin parentOrigin
     ) {
         if (!entireMatch.TryGetValue(out string? listBody)) return;
+        bool isOrdered = !entireMatch.Groups[LsId].ValueSpan.Contains('-');
 
         MatchCollection matchCollection = MdRegexLib.ListItemBodyRegex.Matches(listBody);
         int matchCount = matchCollection.Count;
@@ -40,7 +41,7 @@ public abstract class BaseListSyntaxHandler : IMdSyntaxHandler {
             matchCollection.CopyTo(matchArray, 0);
 
             ListMdSyntaxNode listNode = ListMdSyntaxNode.Pool.Get();
-            listNode.IsOrdered = IsOrdered;
+            listNode.IsOrdered = isOrdered;
             parentNode.AddChildNode(listNode);
             
             for (int i = 0; i < matchCount; i++) {
@@ -69,14 +70,4 @@ public abstract class BaseListSyntaxHandler : IMdSyntaxHandler {
             ArrayPool<Match>.Shared.Return(matchArray);
         }
     }
-}
-
-[InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.ListOrdered)]
-public sealed class ListOrderedHandler : BaseListSyntaxHandler {
-    protected override bool IsOrdered => true;
-}
-
-[InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.ListUnordered)]
-public sealed class ListUnorderedHandler : BaseListSyntaxHandler {
-    protected override bool IsOrdered => false;
 }
