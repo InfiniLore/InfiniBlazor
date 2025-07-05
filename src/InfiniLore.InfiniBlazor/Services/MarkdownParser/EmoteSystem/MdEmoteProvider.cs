@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.EmoteSystem;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdEmoteProvider>]
 public sealed class MdEmoteProvider : IMdEmoteProvider{
-    private FrozenDictionary<EmoteKey, string> EmoteDictionary { get; } = new Dictionary<EmoteKey, string> {
+    private static FrozenDictionary<EmoteKey, string> EmoteDictionary { get; } = new Dictionary<EmoteKey, string> {
         {
             EmoteKey.FromPossibleKeys("flag-transgender", "flag-trans", "flag_trans", "flag_transgender"),
             "\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f" // 🏳️‍⚧️,
@@ -22,9 +22,36 @@ public sealed class MdEmoteProvider : IMdEmoteProvider{
         }
     }.ToFrozenDictionary(comparer: EmoteKeyComparer.Instance);
     
-    private FrozenDictionary<EmoteKey, string>.AlternateLookup<ReadOnlySpan<char>> EmoteLookup 
+    private static FrozenDictionary<EmoteKey, string>.AlternateLookup<ReadOnlySpan<char>> EmoteSpanLookup 
         => EmoteDictionary.GetAlternateLookup<ReadOnlySpan<char>>();
     
-    public bool TryGetValue(ReadOnlySpan<char> lookupValue, [NotNullWhen(true)] out string? s)
-        => EmoteLookup.TryGetValue(lookupValue, out s);
+    private static FrozenDictionary<EmoteKey, string>.AlternateLookup<string> EmoteStringLookup 
+        => EmoteDictionary.GetAlternateLookup<string>();
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    public bool TryGetValue(string lookupValue, [NotNullWhen(true)] out string? s)
+        => EmoteStringLookup.TryGetValue(lookupValue, out s);
+    
+    public bool TryGetValueSpan(string lookupValue, out ReadOnlySpan<char> s) {
+        if (!EmoteStringLookup.TryGetValue(lookupValue, out string? value)) {
+            s = ReadOnlySpan<char>.Empty;
+            return false;
+        }
+        s = value.AsSpan();
+        return true;
+    }
+    
+    public bool TryGetValue(in ReadOnlySpan<char> lookupValue, [NotNullWhen(true)] out string? s)
+        => EmoteSpanLookup.TryGetValue(lookupValue, out s);
+    
+    public bool TryGetValueSpan(in ReadOnlySpan<char> lookupValue, out ReadOnlySpan<char> s) {
+        if (!EmoteSpanLookup.TryGetValue(lookupValue, out string? value)) {
+            s = ReadOnlySpan<char>.Empty;
+            return false;
+        }
+        s = value.AsSpan();
+        return true;
+    }
 }
