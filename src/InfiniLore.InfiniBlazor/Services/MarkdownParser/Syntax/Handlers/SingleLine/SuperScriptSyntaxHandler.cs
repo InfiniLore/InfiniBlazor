@@ -11,19 +11,25 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.Bold)]
-public sealed class BoldHandler : IMdSyntaxHandler {
-    private static readonly int BId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.B);
-    public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.Bold;
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.SupScript)]
+public sealed class SuperScriptSyntaxHandler : IMdSyntaxHandler {
+    private static readonly int SpId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.Sp);
+    public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.SuperScript;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMdSyntaxParserStack stack, IMdSyntaxNode parentNode, Match entireMatch, Group group, MdSyntaxHandlerOrigin origin) {
-        if (!entireMatch.Groups[BId].TryGetValue(out string? boldValue)) return;
-
-        BoldMdSyntaxNode node = BoldMdSyntaxNode.Pool.Get();
+    public void HandleMatch(
+        IMdSyntaxParserStack stack,
+        IMdSyntaxNode parentNode,
+        Match entireMatch,
+        Group group,
+        MdSyntaxHandlerOrigin origin
+    ) {
+        if (!entireMatch.Groups[SpId].TryGetValue(out string? superValue)) return ;
+        
+        SuperScriptMdSyntaxNode node = SuperScriptMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
-        stack.PushSingleLineMatchesToStack(boldValue, node, origin | SkipOnOrigin);
+        stack.PushSingleLineMatchesToStack(superValue, node, origin | SkipOnOrigin);
     }
 }

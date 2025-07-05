@@ -7,14 +7,15 @@ using InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
+namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.HorizontalRule)]
-public sealed class HorizontalRuleHandler : IMdSyntaxHandler {
-    public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
-
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.Italic)]
+public sealed class ItalicSyntaxHandler : IMdSyntaxHandler {
+    private static readonly int IId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.I);
+    public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.Italic;
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -25,6 +26,10 @@ public sealed class HorizontalRuleHandler : IMdSyntaxHandler {
         Group group,
         MdSyntaxHandlerOrigin origin
     ) {
-        parentNode.AddChildNode(HorizontalRuleMdSyntaxNode.Pool.Get());
+        if (!entireMatch.Groups[IId].TryGetValue(out string? italicValue)) return ;
+
+        ItalicMdSyntaxNode node = ItalicMdSyntaxNode.Pool.Get();
+        parentNode.AddChildNode(node);
+        stack.PushSingleLineMatchesToStack(italicValue, node, origin | SkipOnOrigin);
     }
 }

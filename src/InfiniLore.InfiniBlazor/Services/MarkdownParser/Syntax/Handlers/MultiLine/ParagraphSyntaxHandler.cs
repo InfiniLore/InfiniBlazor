@@ -7,15 +7,15 @@ using InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
+namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.SupScript)]
-public sealed class SuperScriptHandler : IMdSyntaxHandler {
-    private static readonly int SpId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.Sp);
-    public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.SuperScript;
-    
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.Paragraph)]
+public sealed class ParagraphSyntaxHandler : IMdSyntaxHandler {
+
+    private static readonly int PId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.P);
+    public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -26,10 +26,15 @@ public sealed class SuperScriptHandler : IMdSyntaxHandler {
         Group group,
         MdSyntaxHandlerOrigin origin
     ) {
-        if (!entireMatch.Groups[SpId].TryGetValue(out string? superValue)) return ;
+        if (!entireMatch.Groups[PId].TryGetValue(out string? paragraph)) return;
+        if (paragraph.IsNullOrWhiteSpace()) return;
+
+        bool writeParagraph = !origin.HasFlag(MdSyntaxHandlerOrigin.Html);
         
-        SuperScriptMdSyntaxNode node = SuperScriptMdSyntaxNode.Pool.Get();
-        parentNode.AddChildNode(node);
-        stack.PushSingleLineMatchesToStack(superValue, node, origin | SkipOnOrigin);
+        if (writeParagraph) {
+            ParagraphMdSyntaxNode node = ParagraphMdSyntaxNode.Pool.Get();
+            parentNode = parentNode.AddChildNode(node);
+        }
+        stack.PushSingleLineMatchesToStack(paragraph.TrimStart(), parentNode, origin);
     }
 }

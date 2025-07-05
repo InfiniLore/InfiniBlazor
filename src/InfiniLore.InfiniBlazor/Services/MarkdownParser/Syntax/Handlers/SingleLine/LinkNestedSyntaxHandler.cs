@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.LinkNested)]
-public sealed class LinkNestedHandler : IMdSyntaxHandler {
+public sealed class LinkNestedSyntaxHandler : IMdSyntaxHandler {
     private static readonly int LnTextId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.LnText);
     private static readonly int LnHrefId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.LnHref);
     private static readonly int LnTitleId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.LnTitle);

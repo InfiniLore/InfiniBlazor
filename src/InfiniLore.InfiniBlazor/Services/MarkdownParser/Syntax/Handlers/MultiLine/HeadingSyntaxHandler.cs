@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.Heading)]
-public sealed class HeadingHandler : IMdSyntaxHandler {
+public sealed class HeadingSyntaxHandler : IMdSyntaxHandler {
     private static readonly int HLevelId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.HLevel);
     private static readonly int HTextId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.HText);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;

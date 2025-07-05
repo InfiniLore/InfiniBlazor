@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.SubScript)]
-public sealed class SubScriptHandler : IMdSyntaxHandler {
+public sealed class SubScriptSyntaxHandler : IMdSyntaxHandler {
     private static readonly int SbId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.Sb);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.SubScript;
     

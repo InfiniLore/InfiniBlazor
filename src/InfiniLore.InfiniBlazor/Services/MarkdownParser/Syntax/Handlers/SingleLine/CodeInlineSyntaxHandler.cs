@@ -11,25 +11,20 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.Tag)]
-public sealed class TagHandler : IMdSyntaxHandler {
-    private static readonly int TextId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.TText);
-    public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.Code)]
+public sealed class CodeInlineSyntaxHandler : IMdSyntaxHandler {
+    private static readonly int CId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.C);
+    public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.Code;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(
-        IMdSyntaxParserStack stack,
-        IMdSyntaxNode parentNode,
-        Match entireMatch,
-        Group group,
-        MdSyntaxHandlerOrigin origin
-    ) {
-        if (!entireMatch.Groups[TextId].TryGetValue(out string? tagValue)) return ;
+    public void HandleMatch(IMdSyntaxParserStack stack, IMdSyntaxNode parentNode, Match entireMatch, Group group, MdSyntaxHandlerOrigin origin) {
+        if (!entireMatch.Groups[CId].TryGetValue(out string? codeValue)) return ;
 
-        TagMdSyntaxNode node = TagMdSyntaxNode.Pool.Get();
-        node.ContentTag = tagValue;
+        string normalizedBackticks = codeValue.Replace("\\`", "`");
+        CodeInlineMdSyntaxNode node = CodeInlineMdSyntaxNode.Pool.Get();
+        node.ContentCode = normalizedBackticks;
         parentNode.AddChildNode(node);
     }
 }

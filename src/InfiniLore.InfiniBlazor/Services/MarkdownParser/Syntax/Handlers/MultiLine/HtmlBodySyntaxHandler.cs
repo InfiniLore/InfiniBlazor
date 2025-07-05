@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.HtmlBody)]
-public sealed class HtmlBodyHandler : IMdSyntaxHandler {
+public sealed class HtmlBodySyntaxHandler : IMdSyntaxHandler {
     private static readonly int HtmlPreId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.HtmlPre);
     private static readonly int HtmlBodyId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.HtmlBody);
     private static readonly int HtmlPostId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.HtmlPost);

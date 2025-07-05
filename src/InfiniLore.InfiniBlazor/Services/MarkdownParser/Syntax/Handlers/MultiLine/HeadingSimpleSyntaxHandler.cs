@@ -7,15 +7,14 @@ using InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
+namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.Strike)]
-public sealed class StrikeHandler : IMdSyntaxHandler {
-    private static readonly int SId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.S);
-    public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.Strike;
-    
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.HeadingSimple)]
+public sealed class HeadingSimpleSyntaxHandler : IMdSyntaxHandler {
+    private static readonly int HsTextId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.HsText);
+    public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -26,10 +25,12 @@ public sealed class StrikeHandler : IMdSyntaxHandler {
         Group group,
         MdSyntaxHandlerOrigin origin
     ) {
-        if (!entireMatch.Groups[SId].TryGetValue(out string? strikeValue)) return ;
+        if (!entireMatch.Groups[HsTextId].TryGetValue(out string? headerSimpleText)) return;
 
-        StrikeMdSyntaxNode node = StrikeMdSyntaxNode.Pool.Get();
-        parentNode.AddChildNode(node);
-        stack.PushSingleLineMatchesToStack(strikeValue, node, origin | SkipOnOrigin);
+        HeadingMdSyntaxNode headingNode = HeadingMdSyntaxNode.Pool.Get();
+        headingNode.Level = 1;
+        parentNode.AddChildNode(headingNode);
+        
+        stack.PushSingleLineMatchesToStack(headerSimpleText, headingNode, origin);
     }
 }

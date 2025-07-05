@@ -13,7 +13,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexGroupNames.Table)]
-public sealed class TableHandler : IMdSyntaxHandler {
+public sealed class TableSyntaxHandler : IMdSyntaxHandler {
     private const int StackAllocThreshold = 16;
 
     private static readonly int BodyId = MarkdownRegexLib.GetGroupId(MarkdownRegexGroupNames.TBody);
