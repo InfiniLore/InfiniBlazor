@@ -23,8 +23,7 @@ public sealed class HeadingSyntaxHandler : IMdSyntaxHandler {
         IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        Group group,
-        MdSyntaxHandlerOrigin origin
+        MdSyntaxHandlerOrigin parentOrigin
     ) {
         // ReSharper disable once DuplicatedSequentialIfBodies
         if (!entireMatch.Groups[HLevelId].TryGetLength(out int headingLevel)) return;
@@ -34,6 +33,6 @@ public sealed class HeadingSyntaxHandler : IMdSyntaxHandler {
         headingNode.Level = headingLevel;
         parentNode.AddChildNode(headingNode);
         
-        stack.PushSingleLineMatchesToStack(headerText, headingNode, origin);
+        stack.PushSingleLineMatchesToStack(headerText, headingNode, parentOrigin);
     }
 }

@@ -14,6 +14,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 [InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.Escaped)]
 public sealed class EscapedSyntaxHandler : IMdSyntaxHandler {
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
+    private static readonly int EscapedId = MdRegexLib.GetGroupId(MdRegexGroupNames.Escaped);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -22,10 +23,9 @@ public sealed class EscapedSyntaxHandler : IMdSyntaxHandler {
         IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        Group group,
-        MdSyntaxHandlerOrigin origin
+        MdSyntaxHandlerOrigin parentOrigin
     ) {
-        char value = group.ValueSpan[1];
+        char value = entireMatch.Groups[EscapedId].ValueSpan[1];
         EscapedCharacterMdSyntaxNode node = EscapedCharacterMdSyntaxNode.Pool.Get();
         node.ContentChar = value;
         parentNode.AddChildNode(node);

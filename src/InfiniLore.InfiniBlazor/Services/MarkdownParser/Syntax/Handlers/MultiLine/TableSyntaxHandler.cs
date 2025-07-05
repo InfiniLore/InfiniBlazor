@@ -28,8 +28,7 @@ public sealed class TableSyntaxHandler : IMdSyntaxHandler {
         IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        Group group,
-        MdSyntaxHandlerOrigin origin
+        MdSyntaxHandlerOrigin parentOrigin
     ) {
         // Extract header, separator, and rows
         ReadOnlySpan<char> header = entireMatch.Groups[HeadId].ValueSpan;
@@ -59,7 +58,7 @@ public sealed class TableSyntaxHandler : IMdSyntaxHandler {
             tableHeadRow.AddChildNode(tableHeadCellNode);
             
             ReadOnlySpan<char> column = header[headerColumns[index]];
-            stack.PushSingleLineMatchesToStack(column.ToString(), tableHeadCellNode, origin);
+            stack.PushSingleLineMatchesToStack(column.ToString(), tableHeadCellNode, parentOrigin);
         }
 
         // Add rows
@@ -89,7 +88,7 @@ public sealed class TableSyntaxHandler : IMdSyntaxHandler {
                     stack.PushSingleLineMatchesToStack(
                         row[columnBuffer[columnIndex]].ToString(), 
                         tableCell, 
-                        origin);
+                        parentOrigin);
                 }
             }
         }

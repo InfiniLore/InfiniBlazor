@@ -23,13 +23,12 @@ public sealed class SubScriptSyntaxHandler : IMdSyntaxHandler {
         IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        Group group,
-        MdSyntaxHandlerOrigin origin
+        MdSyntaxHandlerOrigin parentOrigin
     ) {
         if (!entireMatch.Groups[SbId].TryGetValue(out string? subValue)) return ;
 
         SubScriptMdSyntaxNode node = SubScriptMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
-        stack.PushSingleLineMatchesToStack(subValue, node, origin | SkipOnOrigin);
+        stack.PushSingleLineMatchesToStack(subValue, node, parentOrigin | SkipOnOrigin);
     }
 }

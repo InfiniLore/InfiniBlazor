@@ -23,18 +23,17 @@ public sealed class ParagraphSyntaxHandler : IMdSyntaxHandler {
         IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        Group group,
-        MdSyntaxHandlerOrigin origin
+        MdSyntaxHandlerOrigin parentOrigin
     ) {
         if (!entireMatch.Groups[PId].TryGetValue(out string? paragraph)) return;
         if (paragraph.IsNullOrWhiteSpace()) return;
 
-        bool writeParagraph = !origin.HasFlag(MdSyntaxHandlerOrigin.Html);
+        bool writeParagraph = !parentOrigin.HasFlag(MdSyntaxHandlerOrigin.Html);
         
         if (writeParagraph) {
             ParagraphMdSyntaxNode node = ParagraphMdSyntaxNode.Pool.Get();
             parentNode = parentNode.AddChildNode(node);
         }
-        stack.PushSingleLineMatchesToStack(paragraph.TrimStart(), parentNode, origin);
+        stack.PushSingleLineMatchesToStack(paragraph.TrimStart(), parentNode, parentOrigin);
     }
 }

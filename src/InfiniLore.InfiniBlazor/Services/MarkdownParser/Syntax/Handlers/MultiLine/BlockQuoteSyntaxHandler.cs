@@ -16,6 +16,8 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 [InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.BlockQuote)]
 public sealed class BlockQuoteSyntaxHandler : IMdSyntaxHandler {
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
+    private static readonly int BlockQuoteId = MdRegexLib.GetGroupId(MdRegexGroupNames.BlockQuote);
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -23,9 +25,9 @@ public sealed class BlockQuoteSyntaxHandler : IMdSyntaxHandler {
         IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        Group group,
-        MdSyntaxHandlerOrigin origin
+        MdSyntaxHandlerOrigin parentOrigin
     ) {
+        Group group = entireMatch.Groups[BlockQuoteId];
         if (!group.TryGetValueSpan(out ReadOnlySpan<char> blockQuoteBody)) return;
 
         // Replace Regex usage with span-based logic:
@@ -34,7 +36,7 @@ public sealed class BlockQuoteSyntaxHandler : IMdSyntaxHandler {
 
         BlockQuoteMdSyntaxNode blockQuoteNode = BlockQuoteMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(blockQuoteNode);
-        stack.PushMultiLineMatchesToStack(adjustedBlockquote, blockQuoteNode, origin | MdSyntaxHandlerOrigin.PreserveHtml);
+        stack.PushMultiLineMatchesToStack(adjustedBlockquote, blockQuoteNode, parentOrigin | MdSyntaxHandlerOrigin.PreserveHtml);
     }
 
     private ReadOnlySpan<char> NormalizeBlockQuote(ReadOnlySpan<char> span) {

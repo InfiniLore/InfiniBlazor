@@ -22,8 +22,7 @@ public sealed class HeadingSimpleSyntaxHandler : IMdSyntaxHandler {
         IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        Group group,
-        MdSyntaxHandlerOrigin origin
+        MdSyntaxHandlerOrigin parentOrigin
     ) {
         if (!entireMatch.Groups[HsTextId].TryGetValue(out string? headerSimpleText)) return;
 
@@ -31,6 +30,6 @@ public sealed class HeadingSimpleSyntaxHandler : IMdSyntaxHandler {
         headingNode.Level = 1;
         parentNode.AddChildNode(headingNode);
         
-        stack.PushSingleLineMatchesToStack(headerSimpleText, headingNode, origin);
+        stack.PushSingleLineMatchesToStack(headerSimpleText, headingNode, parentOrigin);
     }
 }

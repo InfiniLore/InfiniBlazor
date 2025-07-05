@@ -5,7 +5,6 @@ using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using InfiniLore.InfiniBlazor.Pooling;
 using Microsoft.Extensions.ObjectPool;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.MarkdownParser;
@@ -22,7 +21,7 @@ public class MdSyntaxParserStack : IMdSyntaxParserStack, IResettable {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region AddToStack
-    public void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node, MdSyntaxHandlerOrigin origin) {
+    public void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node, MdSyntaxHandlerOrigin handlerOrigin) {
         MatchCollection matches = RegexLib.MdRegexLib.MultilineStructuresRegex.Matches(input);
         int count = matches.Count;
 
@@ -31,11 +30,11 @@ public class MdSyntaxParserStack : IMdSyntaxParserStack, IResettable {
 
         // Process matches in reverse order for _stack
         for (int i = count - 1; i >= 0; i--) {
-            PushMatchToStack(matches[i], node, origin);
+            PushMatchToStack(matches[i], node, handlerOrigin);
         }
     }
 
-    public void PushSingleLineMatchesToStack(string input, IMdSyntaxNode node, MdSyntaxHandlerOrigin origin) {
+    public void PushSingleLineMatchesToStack(string input, IMdSyntaxNode node, MdSyntaxHandlerOrigin handlerOrigin) {
         MatchCollection matches = RegexLib.MdRegexLib.SinglelineStructuresRegex.Matches(input);
         int count = matches.Count;
 
@@ -56,7 +55,7 @@ public class MdSyntaxParserStack : IMdSyntaxParserStack, IResettable {
                 PushProcessedNodeToStack(node, contentNode);
             }
 
-            PushMatchToStack(match, node, origin);
+            PushMatchToStack(match, node, handlerOrigin);
             currentIndex = match.Index;
         }
 
@@ -69,29 +68,19 @@ public class MdSyntaxParserStack : IMdSyntaxParserStack, IResettable {
         }
     }
 
-    public void PushProcessedNodeToStack(IMdSyntaxNode parentNode, IMdSyntaxNode childNode) {
-        MdSyntaxFragment fragment = MdSyntaxFragment.Pool.Get();
-        fragment.AsProcessedNode(parentNode, childNode);
-        _stack.Push(fragment);
-    }
+    public void PushProcessedNodeToStack(IMdSyntaxNode parentNode, IMdSyntaxNode childNode) 
+        => _stack.Push(MdSyntaxFragment.AsProcessedNode(parentNode, childNode));
 
-    private void PushMatchToStack(Match match, IMdSyntaxNode currentNode, MdSyntaxHandlerOrigin origin) {
-        MdSyntaxFragment fragment = MdSyntaxFragment.Pool.Get();
-        fragment.AsUnhandledMatch(match, currentNode, origin);
-        _stack.Push(fragment);
-    }
+    private void PushMatchToStack(Match match, IMdSyntaxNode currentNode, MdSyntaxHandlerOrigin handlerOrigin) 
+        => _stack.Push(MdSyntaxFragment.AsUnhandledMatch(match, currentNode, handlerOrigin));
     #endregion
 
-    public bool TryPopDto([NotNullWhen(true)] out MdSyntaxFragment? dto)
+    public bool TryPopDto(out MdSyntaxFragment dto)
         => _stack.TryPop(out dto);
     
     public bool TryReset() {
-        while (_stack.TryPop(out MdSyntaxFragment? fragment)) {
-            MdSyntaxFragment.Pool.Return(fragment);// Makes sure we clean everything
-        }
-
+        _stack.Clear();
         NodeTree = null!;
-
         return _stack.Count == 0;
     }
 }

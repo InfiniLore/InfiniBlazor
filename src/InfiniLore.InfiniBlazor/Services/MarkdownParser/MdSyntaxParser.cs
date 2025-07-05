@@ -55,17 +55,14 @@ public class MdSyntaxParser(IServiceProvider serviceProvider, ILogger<MdSyntaxPa
             runningParser.NodeTree = nodeTree;
             runningParser.PushMultiLineMatchesToStack(markdown, nodeTree.RootNode, MdSyntaxHandlerOrigin.Undefined);
 
-            while (runningParser.TryPopDto(out MdSyntaxFragment? fragment)) {
-                try {
-                    if (fragment.TryGetAsMatch(out Match? match, out IMdSyntaxNode? parentNode, out MdSyntaxHandlerOrigin handlerOrigin)) {
-                        ProcessMatch(match, parentNode, handlerOrigin, runningParser);
-                    }
-                    else if (fragment.TryGetAsProcessedNode(out parentNode, out IMdSyntaxNode? childNode)) {
-                        parentNode.AddChildNode(childNode);
-                    }
+            while (runningParser.TryPopDto(out MdSyntaxFragment fragment)) {
+                if (fragment.TryGetAsMatch(out Match? match, out IMdSyntaxNode? parentNode, out MdSyntaxHandlerOrigin handlerOrigin)) {
+                    ProcessMatch(match, parentNode, handlerOrigin, runningParser);
+                    continue;
                 }
-                finally {
-                    MdSyntaxFragment.Pool.Return(fragment);
+
+                if (fragment.TryGetAsProcessedNode(out parentNode, out IMdSyntaxNode? childNode)) {
+                    parentNode.AddChildNode(childNode);
                 }
             }
         }
@@ -74,16 +71,21 @@ public class MdSyntaxParser(IServiceProvider serviceProvider, ILogger<MdSyntaxPa
         }
     }
 
-    private void ProcessMatch(Match match, IMdSyntaxNode currentNode, MdSyntaxHandlerOrigin origin, IMdSyntaxParserStack runningParser) {
+    private void ProcessMatch(Match match, IMdSyntaxNode currentNode, MdSyntaxHandlerOrigin parentOrigin, IMdSyntaxParserStack runningParser) {
         GroupCollection groups = match.Groups;
-        for (int i = 0; i < groups.Count; i++) {
-            if (groups[i] is not { Success: true, Name: var name } group) continue;
+        int length = groups.Count;
+        if (length == 0) return;
+
+        for (int index = 0; index < length; index++) {
+            Group group = groups[index];
+            if (!group.Success) continue;
+            string name = group.Name;  
             if (!_elementHandlers.TryGetValue(name, out IMdSyntaxHandler? handler)) continue;
 
             MdSyntaxHandlerOrigin handlerOrigin = handler.SkipOnOrigin;
-            if (handlerOrigin is MdSyntaxHandlerOrigin.NotSkipped || !origin.HasFlagFast(handlerOrigin)) {
-                handler.HandleMatch(runningParser, currentNode, match, group, origin);
-            }
+            if (handlerOrigin is not MdSyntaxHandlerOrigin.NotSkipped && parentOrigin.HasFlagFast(handlerOrigin)) continue;
+
+            handler.HandleMatch(runningParser, currentNode, match, parentOrigin);
         }
     }
 }

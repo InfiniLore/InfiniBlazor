@@ -23,13 +23,12 @@ public sealed class SuperScriptSyntaxHandler : IMdSyntaxHandler {
         IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        Group group,
-        MdSyntaxHandlerOrigin origin
+        MdSyntaxHandlerOrigin parentOrigin
     ) {
         if (!entireMatch.Groups[SpId].TryGetValue(out string? superValue)) return ;
         
         SuperScriptMdSyntaxNode node = SuperScriptMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
-        stack.PushSingleLineMatchesToStack(superValue, node, origin | SkipOnOrigin);
+        stack.PushSingleLineMatchesToStack(superValue, node, parentOrigin | SkipOnOrigin);
     }
 }

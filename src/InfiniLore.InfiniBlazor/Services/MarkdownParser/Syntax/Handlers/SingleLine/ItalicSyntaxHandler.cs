@@ -23,13 +23,12 @@ public sealed class ItalicSyntaxHandler : IMdSyntaxHandler {
         IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        Group group,
-        MdSyntaxHandlerOrigin origin
+        MdSyntaxHandlerOrigin parentOrigin
     ) {
         if (!entireMatch.Groups[IId].TryGetValue(out string? italicValue)) return ;
 
         ItalicMdSyntaxNode node = ItalicMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
-        stack.PushSingleLineMatchesToStack(italicValue, node, origin | SkipOnOrigin);
+        stack.PushSingleLineMatchesToStack(italicValue, node, parentOrigin | SkipOnOrigin);
     }
 }

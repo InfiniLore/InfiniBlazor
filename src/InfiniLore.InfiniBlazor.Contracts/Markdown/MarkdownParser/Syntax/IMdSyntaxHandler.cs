@@ -10,5 +10,5 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 public interface IMdSyntaxHandler{
     MdSyntaxHandlerOrigin SkipOnOrigin { get; }
 
-    public void HandleMatch(IMdSyntaxParserStack engine, IMdSyntaxNode parentNode, Match entireMatch, Group group, MdSyntaxHandlerOrigin origin);
+    void HandleMatch(IMdSyntaxParserStack engine, IMdSyntaxNode parentNode, Match entireMatch, MdSyntaxHandlerOrigin parentOrigin);
 }

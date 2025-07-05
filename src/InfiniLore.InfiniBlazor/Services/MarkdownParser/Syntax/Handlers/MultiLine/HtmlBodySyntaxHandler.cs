@@ -27,16 +27,15 @@ public sealed class HtmlBodySyntaxHandler : IMdSyntaxHandler {
         IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        Group group,
-        MdSyntaxHandlerOrigin origin
+        MdSyntaxHandlerOrigin parentOrigin
     ) {
-        if (!origin.HasFlag(MdSyntaxHandlerOrigin.PreserveHtml)) {
+        if (!parentOrigin.HasFlag(MdSyntaxHandlerOrigin.PreserveHtml)) {
             
             parentNode = parentNode.AddChildNode(ParagraphMdSyntaxNode.Pool.Get());
         }
 
         if (entireMatch.Groups[HtmlPostId].TryGetValue(out string? post)) {
-            stack.PushSingleLineMatchesToStack(post, parentNode, origin);
+            stack.PushSingleLineMatchesToStack(post, parentNode, parentOrigin);
         }
 
         if (entireMatch.Groups[HtmlBodyId].TryGetValue(out string? htmlBody)) {
@@ -45,7 +44,7 @@ public sealed class HtmlBodySyntaxHandler : IMdSyntaxHandler {
             if (match.Groups[SpanTagId].TryGetValue(out string? spanTag) && match.Groups[SpanBodyId].TryGetValue(out string? spanBody)) {
                 HtmlSpanMdSyntaxNode spanNode = HtmlSpanMdSyntaxNode.Pool.Get();
                 spanNode.TagValue = spanTag;
-                stack.PushMultiLineMatchesToStack(spanBody, spanNode, origin | MdSyntaxHandlerOrigin.Html);
+                stack.PushMultiLineMatchesToStack(spanBody, spanNode, parentOrigin | MdSyntaxHandlerOrigin.Html);
                 stack.PushProcessedNodeToStack(parentNode, spanNode);
             }
             else {
@@ -56,7 +55,7 @@ public sealed class HtmlBodySyntaxHandler : IMdSyntaxHandler {
         }
 
         if (entireMatch.Groups[HtmlPreId].TryGetValue(out string? pre)) {
-            stack.PushSingleLineMatchesToStack(pre, parentNode, origin);
+            stack.PushSingleLineMatchesToStack(pre, parentNode, parentOrigin);
         }
     }
 }

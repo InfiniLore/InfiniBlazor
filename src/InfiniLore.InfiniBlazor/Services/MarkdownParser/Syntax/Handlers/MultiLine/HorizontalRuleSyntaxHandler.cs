@@ -22,8 +22,7 @@ public sealed class HorizontalRuleSyntaxHandler : IMdSyntaxHandler {
         IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        Group group,
-        MdSyntaxHandlerOrigin origin
+        MdSyntaxHandlerOrigin parentOrigin
     ) {
         parentNode.AddChildNode(HorizontalRuleMdSyntaxNode.Pool.Get());
     }

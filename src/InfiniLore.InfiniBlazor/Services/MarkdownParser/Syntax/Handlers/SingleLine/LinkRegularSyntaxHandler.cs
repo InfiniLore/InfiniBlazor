@@ -26,8 +26,7 @@ public sealed class LinkRegularSyntaxHandler : IMdSyntaxHandler {
         IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        Group group,
-        MdSyntaxHandlerOrigin origin
+        MdSyntaxHandlerOrigin parentOrigin
     ) {
         // ReSharper disable once DuplicatedSequentialIfBodies
         if (!entireMatch.Groups[LrTextId].TryGetValue(out string? linkText)) return ;
@@ -51,6 +50,6 @@ public sealed class LinkRegularSyntaxHandler : IMdSyntaxHandler {
         linkNode.Href = linkHref;
         parentNode.AddChildNode(linkNode);
         
-        stack.PushSingleLineMatchesToStack(linkText, linkNode, origin | SkipOnOrigin);
+        stack.PushSingleLineMatchesToStack(linkText, linkNode, parentOrigin | SkipOnOrigin);
     }
 }

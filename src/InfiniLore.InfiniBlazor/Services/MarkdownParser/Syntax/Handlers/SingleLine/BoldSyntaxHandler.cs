@@ -19,11 +19,11 @@ public sealed class BoldSyntaxHandler : IMdSyntaxHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMdSyntaxParserStack stack, IMdSyntaxNode parentNode, Match entireMatch, Group group, MdSyntaxHandlerOrigin origin) {
+    public void HandleMatch(IMdSyntaxParserStack stack, IMdSyntaxNode parentNode, Match entireMatch, MdSyntaxHandlerOrigin parentOrigin) {
         if (!entireMatch.Groups[BId].TryGetValue(out string? boldValue)) return;
 
         BoldMdSyntaxNode node = BoldMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
-        stack.PushSingleLineMatchesToStack(boldValue, node, origin | SkipOnOrigin);
+        stack.PushSingleLineMatchesToStack(boldValue, node, parentOrigin | SkipOnOrigin);
     }
 }

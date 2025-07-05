@@ -13,7 +13,8 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.Emote)]
 public sealed class EmoteSyntaxHandler(IMdEmoteProvider mdEmoteProvider) : IMdSyntaxHandler {
-    private static readonly int EId = MdRegexLib.GetGroupId(MdRegexGroupNames.E);
+    private static readonly int EmoteBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.E);
+    private static readonly int EmoteId = MdRegexLib.GetGroupId(MdRegexGroupNames.Emote);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.Emote;
     
     // -----------------------------------------------------------------------------------------------------------------
@@ -23,12 +24,11 @@ public sealed class EmoteSyntaxHandler(IMdEmoteProvider mdEmoteProvider) : IMdSy
         IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        Group group,
-        MdSyntaxHandlerOrigin origin
+        MdSyntaxHandlerOrigin parentOrigin
     ) {
-        if (entireMatch.Groups[EId] is not {Success: true, ValueSpan: var span}) return ;
+        if (entireMatch.Groups[EmoteBodyId] is not {Success: true, ValueSpan: var span}) return ;
         if (!mdEmoteProvider.TryGetValue(span, out string? value)) {
-            parentNode.WithContent(group.Value);
+            parentNode.WithContent(entireMatch.Groups[EmoteId].Value);
             return ;
         }
 
