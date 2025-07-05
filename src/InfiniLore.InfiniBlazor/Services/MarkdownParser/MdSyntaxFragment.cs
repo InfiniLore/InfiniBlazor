@@ -2,6 +2,8 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Pooling;
+using Microsoft.Extensions.ObjectPool;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
@@ -9,46 +11,57 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public readonly record struct MdSyntaxFragment {
-    private IMdSyntaxNode? ParentNode { get; init; }
-    private IMdSyntaxNode? ChildNode { get; init; }
-    private MdSyntaxHandlerOrigin HandlerOrigin { get; init; }
-    private Match? Match { get; init; }
-    private SyntaxFragmentState State { get; init; }
 
-    private enum SyntaxFragmentState {
-        Match,
-        ProcessedNode
+public sealed class MdSyntaxFragment : IResettable {
+    private IMdSyntaxNode? _parentNode;
+    private IMdSyntaxNode? _childNode;
+    private Match? _match;
+    private MdSyntaxHandlerOrigin _handlerOrigin;
+    private bool _isMatch;
+
+    public static ObjectPool<MdSyntaxFragment> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxFragment>(32);
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Constructors
+    // -----------------------------------------------------------------------------------------------------------------
+    public static MdSyntaxFragment AsUnhandledMatch(Match match, IMdSyntaxNode node, MdSyntaxHandlerOrigin handlerOrigin) {
+        MdSyntaxFragment fragment = Pool.Get();
+        fragment._parentNode = node;
+        fragment._match = match;
+        fragment._handlerOrigin = handlerOrigin;
+        fragment._isMatch = true;
+        return fragment;
     }
+
+    public static MdSyntaxFragment AsProcessedNode(IMdSyntaxNode parentNode, IMdSyntaxNode childNode) {
+        MdSyntaxFragment fragment = Pool.Get();
+        fragment._parentNode = parentNode;
+        fragment._childNode = childNode;
+        fragment._isMatch = false;
+        return fragment;
+    }
+
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static MdSyntaxFragment AsUnhandledMatch(Match match, IMdSyntaxNode node, MdSyntaxHandlerOrigin handlerOrigin)
-        => new() {
-            ParentNode = node,
-            HandlerOrigin = handlerOrigin,
-            Match = match,
-            State = SyntaxFragmentState.Match
-        };
-
-    public static MdSyntaxFragment AsProcessedNode(IMdSyntaxNode parentNode, IMdSyntaxNode childNode)
-        => new() {
-            ParentNode = parentNode,
-            ChildNode = childNode,
-            State = SyntaxFragmentState.ProcessedNode,
-        };
-
+    #pragma warning disable CS8762// Parameter must have a non-null value when exiting in some condition.
     public bool TryGetAsMatch([NotNullWhen(true)] out Match? match, [NotNullWhen(true)] out IMdSyntaxNode? parentNode, out MdSyntaxHandlerOrigin parentOrigin) {
-        match = Match;
-        parentNode = ParentNode;
-        parentOrigin = HandlerOrigin;
-        return State is SyntaxFragmentState.Match;
+        match = _match;
+        parentNode = _parentNode;
+        parentOrigin = _handlerOrigin;
+        return _isMatch;
     }
 
     public bool TryGetAsProcessedNode([NotNullWhen(true)] out IMdSyntaxNode? parentNode, [NotNullWhen(true)] out IMdSyntaxNode? childNode) {
-        parentNode = ParentNode;
-        childNode = ChildNode;
-        return State is SyntaxFragmentState.ProcessedNode;
+        parentNode = _parentNode;
+        childNode = _childNode;
+        return !_isMatch;
     }
+    #pragma warning restore CS8762// Parameter must have a non-null value when exiting in some condition.
+
+    public bool TryReset() {
+        return true;
+    }
+
 }

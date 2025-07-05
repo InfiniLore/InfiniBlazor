@@ -51,22 +51,24 @@ public class MdSyntaxParser(IServiceProvider serviceProvider, ILogger<MdSyntaxPa
         nodeTree.RootNode.Depth = 0;
         MdSyntaxParserStack runningParser = MdSyntaxParserStack.Pool.Get();
 
+        MdSyntaxFragment? fragment = null;
         try {
             runningParser.NodeTree = nodeTree;
             runningParser.PushMultiLineMatchesToStack(markdown, nodeTree.RootNode, MdSyntaxHandlerOrigin.Undefined);
 
-            while (runningParser.TryPopDto(out MdSyntaxFragment fragment)) {
+            while (runningParser.TryPopDto(out fragment)) {
                 if (fragment.TryGetAsMatch(out Match? match, out IMdSyntaxNode? parentNode, out MdSyntaxHandlerOrigin handlerOrigin)) {
                     ProcessMatch(match, parentNode, handlerOrigin, runningParser);
-                    continue;
-                }
-
-                if (fragment.TryGetAsProcessedNode(out parentNode, out IMdSyntaxNode? childNode)) {
+                } else if (fragment.TryGetAsProcessedNode(out parentNode, out IMdSyntaxNode? childNode)) {
                     parentNode.AddChildNode(childNode);
                 }
+                
+                MdSyntaxFragment.Pool.Return(fragment);
+                fragment = null;
             }
         }
         finally {
+            if (fragment is not null) MdSyntaxFragment.Pool.Return(fragment);
             MdSyntaxParserStack.Pool.Return(runningParser);
         }
     }

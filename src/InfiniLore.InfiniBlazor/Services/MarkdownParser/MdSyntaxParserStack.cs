@@ -2,9 +2,11 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using InfiniLore.InfiniBlazor.Pooling;
 using Microsoft.Extensions.ObjectPool;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.MarkdownParser;
@@ -22,7 +24,7 @@ public class MdSyntaxParserStack : IMdSyntaxParserStack, IResettable {
     // -----------------------------------------------------------------------------------------------------------------
     #region AddToStack
     public void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node, MdSyntaxHandlerOrigin handlerOrigin) {
-        MatchCollection matches = RegexLib.MdRegexLib.MultilineStructuresRegex.Matches(input);
+        MatchCollection matches = MdRegexLib.MultilineStructuresRegex.Matches(input);
         int count = matches.Count;
 
         // ArrayPooling this is not needed, ensuring capacity should do it
@@ -35,7 +37,7 @@ public class MdSyntaxParserStack : IMdSyntaxParserStack, IResettable {
     }
 
     public void PushSingleLineMatchesToStack(string input, IMdSyntaxNode node, MdSyntaxHandlerOrigin handlerOrigin) {
-        MatchCollection matches = RegexLib.MdRegexLib.SinglelineStructuresRegex.Matches(input);
+        MatchCollection matches = MdRegexLib.SinglelineStructuresRegex.Matches(input);
         int count = matches.Count;
 
         // ArrayPooling this is not needed, ensuring capacity should do it
@@ -74,12 +76,15 @@ public class MdSyntaxParserStack : IMdSyntaxParserStack, IResettable {
     private void PushMatchToStack(Match match, IMdSyntaxNode currentNode, MdSyntaxHandlerOrigin handlerOrigin) 
         => _stack.Push(MdSyntaxFragment.AsUnhandledMatch(match, currentNode, handlerOrigin));
     #endregion
-
-    public bool TryPopDto(out MdSyntaxFragment dto)
-        => _stack.TryPop(out dto);
+    
+    public bool TryPopDto([NotNullWhen(true)] out MdSyntaxFragment? dto) {
+        return _stack.TryPop(out dto);
+    }
     
     public bool TryReset() {
-        _stack.Clear();
+        while (TryPopDto(out MdSyntaxFragment? dto)) {
+            MdSyntaxFragment.Pool.Return(dto);
+        }
         NodeTree = null!;
         return _stack.Count == 0;
     }
