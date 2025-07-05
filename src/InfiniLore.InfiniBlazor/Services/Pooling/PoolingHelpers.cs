@@ -4,12 +4,12 @@
 using CodeOfChaos.Extensions.ObjectPool;
 using Microsoft.Extensions.ObjectPool;
 
-namespace InfiniLore.InfiniBlazor;
+namespace InfiniLore.InfiniBlazor.Pooling;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class Pooling {
+public static class PoolingHelpers {
     public const int ParsersRetained = 8;
     public const int VisitorPerParserRetained = 16;
 

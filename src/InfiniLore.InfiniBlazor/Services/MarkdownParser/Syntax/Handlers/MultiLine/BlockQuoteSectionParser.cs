@@ -4,6 +4,7 @@
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
+using InfiniLore.InfiniBlazor.Pooling;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -32,7 +33,7 @@ public sealed class BlockQuoteHandler : IMdSyntaxHandler {
 
         BlockQuoteMdSyntaxNode blockQuoteNode = BlockQuoteMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(blockQuoteNode);
-        engine.PushMultiLineMatchesToStack(adjustedBlockquote, blockQuoteNode, origin | MdSyntaxHandlerOrigin.PreserveHtml);
+        stack.PushMultiLineMatchesToStack(adjustedBlockquote, blockQuoteNode, origin | MdSyntaxHandlerOrigin.PreserveHtml);
     }
 
     private ReadOnlySpan<char> NormalizeBlockQuote(ReadOnlySpan<char> span) {

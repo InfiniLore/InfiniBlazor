@@ -4,6 +4,7 @@
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.MarkdownParser.SyntaxTreeConverters.Converters;
+using InfiniLore.InfiniBlazor.Pooling;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.ObjectPool;
 using System.Text;
@@ -16,7 +17,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.SyntaxTreeConverters;
 public abstract class BaseMdSyntaxTreeConverter<TConverter> : IMdSyntaxTreeConverter where TConverter : class, IMdSyntaxNodeConverter, IResettable, new() {
     private readonly Lock PoolLock = new();
     private static readonly ObjectPool<TConverter> ConverterPool = 
-        Pooling.CreateResettablePool<TConverter>(Pooling.ParsersRetained);
+        PoolingHelpers.CreateResettablePool<TConverter>(PoolingHelpers.ParsersRetained);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

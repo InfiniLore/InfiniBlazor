@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
+using InfiniLore.InfiniBlazor.Pooling;
 using Microsoft.Extensions.ObjectPool;
 using System.Buffers;
 
@@ -13,7 +14,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
     where T : MdSyntaxNode<T>, new() 
 {
-    public static ObjectPool<T> Pool { get; } = Pooling.CreateResettablePool<T>(16);
+    public static ObjectPool<T> Pool { get; } = PoolingHelpers.CreateResettablePool<T>(16);
 
     private const int ChildrenMinimumCapacity = 2;
     public int ChildCount { get; private set; }

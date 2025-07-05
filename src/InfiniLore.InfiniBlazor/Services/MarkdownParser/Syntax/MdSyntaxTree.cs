@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
+using InfiniLore.InfiniBlazor.Pooling;
 using Microsoft.Extensions.ObjectPool;
 
 namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
@@ -12,8 +13,8 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 public class MdSyntaxTree : IMdSyntaxTree, IResettable {
     public IMdSyntaxNode RootNode { get; private set; } = RootMdSyntaxNode.Pool.Get();
     
-    public static ObjectPool<MdSyntaxTree> Pool { get; } = Pooling.CreateResettablePool<MdSyntaxTree>(16);
-    private static ObjectPool<Stack<IMdSyntaxNode>> MdSyntaxNodeStackPool { get; } = Pooling.CreateStackPool<IMdSyntaxNode>(Pooling.ParsersRetained);
+    public static ObjectPool<MdSyntaxTree> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxTree>(16);
+    private static ObjectPool<Stack<IMdSyntaxNode>> MdSyntaxNodeStackPool { get; } = PoolingHelpers.CreateStackPool<IMdSyntaxNode>(PoolingHelpers.ParsersRetained);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

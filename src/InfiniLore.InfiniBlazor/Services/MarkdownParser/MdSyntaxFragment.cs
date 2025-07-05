@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Pooling;
 using Microsoft.Extensions.ObjectPool;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
@@ -23,7 +24,7 @@ public class MdSyntaxFragment : IResettable {
         ProcessedNode
     }
     
-    public static ObjectPool<MdSyntaxFragment> Pool { get; } = Pooling.CreateResettablePool<MdSyntaxFragment>(Pooling.ParsersRetained * Pooling.VisitorPerParserRetained);
+    public static ObjectPool<MdSyntaxFragment> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxFragment>(PoolingHelpers.ParsersRetained * PoolingHelpers.VisitorPerParserRetained);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

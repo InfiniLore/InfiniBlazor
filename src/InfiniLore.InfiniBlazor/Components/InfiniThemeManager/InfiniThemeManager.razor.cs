@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.JsRuntime;
+using InfiniLore.InfiniBlazor.Pooling;
 using InfiniLore.InfiniBlazor.Theming;
 using InfiniLore.InfiniBlazor.Theming.CssData;
 using Microsoft.AspNetCore.Components;

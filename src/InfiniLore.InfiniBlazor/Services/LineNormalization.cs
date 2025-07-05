@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions;
+using InfiniLore.InfiniBlazor.Pooling;
 using System.Buffers;
 using System.Text;
 using System.Text.RegularExpressions;

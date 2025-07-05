@@ -4,12 +4,17 @@
 using Microsoft.Extensions.ObjectPool;
 using System.Text;
 
-namespace InfiniLore.InfiniBlazor;
+namespace InfiniLore.InfiniBlazor.Pooling.Policies;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class GlobalPools {
-    public static ObjectPool<StringBuilder> StringBuilder { get; } = new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy());
-    public static ObjectPool<Stack<Range>> RangeStack { get; } = Pooling.CreateStackPool<Range>(16);
+public class StringBuilderPolicy : PooledObjectPolicy<StringBuilder> {
+    private const int InitialCapacity = 1024;
+    
+    public override StringBuilder Create() => new(InitialCapacity);
+    public override bool Return(StringBuilder obj) {
+        obj.Clear();
+        return true;
+    }
 }

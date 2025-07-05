@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using InfiniLore.InfiniBlazor.Pooling;
+using Microsoft.AspNetCore.Components;
 using System.Collections.Frozen;
 using System.Text;
 using System.Text.RegularExpressions;
