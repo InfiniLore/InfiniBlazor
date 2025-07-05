@@ -27,18 +27,13 @@ public class MarkdownBenchmarks {
         // Read the file content
         const string filePath = "markdownBenchmark.md";
         Markdown = await File.ReadAllTextAsync(filePath, new UTF8Encoding(encoderShouldEmitUTF8Identifier:false));
-        Markdown = Markdown.Replace("\r\n", "\n");
+        Markdown = Markdown.ReplaceLineEndings("\n");
         
-        // const string url = "https://gist.githubusercontent.com/allysonsilva/85fff14a22bbdf55485be947566cc09e/raw/fa8048a906ebed3c445d08b20c9173afd1b4a1e5/Full-Markdown.md";
-        // var client = new HttpClient{Timeout = TimeSpan.FromSeconds(10)};
-        // HttpResponseMessage response = await client.GetAsync(url);
-        // Markdown = await response.Content.ReadAsStringAsync();
-        
-        var provider = CreateProvider();
+        ServiceProvider provider = CreateProvider();
         Parser = provider.GetRequiredService<IMarkdownParser>();
     }
 
-    private static IServiceProvider CreateProvider(Action<MarkdownConfig>? configure = null) {
+    private static ServiceProvider CreateProvider(Action<MarkdownConfig>? configure = null) {
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddInfiniBlazor(config => config.AddMarkdownLogic(configure));
         serviceCollection.AddLogging();
