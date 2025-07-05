@@ -13,7 +13,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MdSyntaxParserStack : IMdSyntaxParserStack, IResettable {
+public sealed class MdSyntaxParserStack : IMdSyntaxParserStack, IResettable {
     private readonly Stack<MdSyntaxFragment> _stack = new();
     public IMdSyntaxTree NodeTree { get; set; } = null!;
     

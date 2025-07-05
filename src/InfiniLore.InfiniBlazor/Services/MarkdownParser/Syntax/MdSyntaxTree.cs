@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MdSyntaxTree : IMdSyntaxTree, IResettable {
+public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     public IMdSyntaxNode RootNode { get; private set; } = RootMdSyntaxNode.Pool.Get();
     
     public static ObjectPool<MdSyntaxTree> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxTree>(16);

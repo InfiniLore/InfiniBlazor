@@ -5,17 +5,14 @@ using CodeOfChaos.Extensions;
 using InfiniLore.InfiniBlazor.Pooling;
 using System.Buffers;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static partial class LineNormalization {
+public static class LineNormalization {
     private const int StackAllocThreshold = 256;
     
-    [GeneratedRegex("\r?\n", RegexOptions.Compiled)]
-    public static partial Regex NormalizeNewlinesRegex { get; }
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -36,9 +33,8 @@ public static partial class LineNormalization {
 
             int minIndent = int.MaxValue;
             int index = 0;
-
-            Regex.ValueSplitEnumerator splits = NormalizeNewlinesRegex.EnumerateSplits(input);
-            foreach (Range split in splits) {
+            
+            foreach (Range split in input.Split('\n')) {
                 ReadOnlySpan<char> line = input[split];
                 rangeSpan[index++] = split;
 

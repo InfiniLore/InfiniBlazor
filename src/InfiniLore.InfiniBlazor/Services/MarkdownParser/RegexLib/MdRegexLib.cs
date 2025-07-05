@@ -35,17 +35,17 @@ public static partial class MdRegexLib {
     public static partial Regex SinglelineStructuresRegex { get; }
 
     [GeneratedRegex("""
-          (?<heading>^(?<hLevel>\#{1,6})[\ ]+(?<hText>[^\r\n]+)\r?\n?)
-        | (?<codeBlock>`{3}(?<cLang>.*?)?\r?\n(?<cBody>[\s\S]*?)`{3})
-        | (?<headingSimple>^(?<hsText>.+?)\r?\n[\ ]*[-=]{3,})
-        | (?<listUnordered>(?:^[^\S\r\n]*-\s+.*(?:\r?\n(?:[^\S\r\n]*[\-.]\d*\.?\s+.*|[^\S\r\n]+.*))*))
-        | (?<listOrdered>(?:^[^\S\r\n]*\d+\.\s+?.*(?:\r?\n(?:[^\S\r\n]*[\-.]?\d+\.?\s+.*|[^\S\r\n]+.*))*))
+          (?<heading>^(?<hLevel>\#{1,6})[\ ]+(?<hText>[^\n]+)\n?)
+        | (?<codeBlock>`{3}(?<cLang>.*?)?\n(?<cBody>[\s\S]*?)`{3})
+        | (?<headingSimple>^(?<hsText>.+?)\n[\ ]*[-=]{3,})
+        | (?<listUnordered>(?:^[^\S\n]*-\s+.*(?:\n(?:[^\S\n]*[\-.]\d*\.?\s+.*|[^\S\n]+.*))*))
+        | (?<listOrdered>(?:^[^\S\n]*\d+\.\s+?.*(?:\n(?:[^\S\n]*[\-.]?\d+\.?\s+.*|[^\S\n]+.*))*))
         | (?<table>
-            ^\|(?<tHead>.+)\|\s*\r?\n
-            ^\|(?<tSep>[:\-|\ ]+?)\|\s*\r?\n
-            (?<tBody>(?:^\|.*\S.*\|(?:\r?\n|$))+)
+            ^\|(?<tHead>.+)\|\s*\n
+            ^\|(?<tSep>[:\-|\ ]+?)\|\s*\n
+            (?<tBody>(?:^\|.*\S.*\|(?:\n|$))+)
           )
-        | (?<blockQuote>^>\s+.*(?:\r?\n(?![*+-]\s|[-.]?\d|\s*[^>]).+)*)
+        | (?<blockQuote>^>\s+.*(?:\n(?![*+-]\s|[-.]?\d|\s*[^>]).+)*)
         | (?:
             (?<htmlPre>.+?)?
               (?<htmlBody>
@@ -62,12 +62,12 @@ public static partial class MdRegexLib {
             (?<htmlPost>.+)?
           )
         | (?<horizontalRule>^[\-=]{3,64}\s*$)
-        | (?<paragraph>(?<p>.+?)(?:\r?\n|$))
+        | (?<paragraph>(?<p>.+?)(?:\n|$))
 
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex MultilineStructuresRegex { get; }
 
-    public static ImmutableArray<string> MarkdownStructureGroupNames = [ 
+    public static readonly ImmutableArray<string> MarkdownStructureGroupNames = [ 
         // Multiline
         "paragraph",
         "heading",
@@ -95,7 +95,7 @@ public static partial class MdRegexLib {
         "tag"
     ];
 
-    [GeneratedRegex(@"^[ ]*[-.]?\d*\.?\s+(?<lTask>\[[\ xX]\] )?(?<lHead>[^\r\n]+)(?<lBody>(?:\r?\n[ ]+.+)*)(?<!\r)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"^ *(?:-|\d*\.)\s+(?:\[(?<lTask>[ xX])] )?(?<lHead>[^\n]+)(?<lBody>(?:\n +.+)*)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex ListItemBodyRegex { get; }
 
     [GeneratedRegex("""

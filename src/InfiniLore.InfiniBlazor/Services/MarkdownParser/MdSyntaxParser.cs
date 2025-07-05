@@ -15,7 +15,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxParser>]
-public class MdSyntaxParser(IServiceProvider serviceProvider, ILogger<MdSyntaxParser> logger) : IMdSyntaxParser {
+public sealed class MdSyntaxParser(IServiceProvider serviceProvider, ILogger<MdSyntaxParser> logger) : IMdSyntaxParser {
     private readonly FrozenDictionary<string, IMdSyntaxHandler> _elementHandlers = ToFrozenDictionary(logger, serviceProvider);
     
     // -----------------------------------------------------------------------------------------------------------------
@@ -52,9 +52,11 @@ public class MdSyntaxParser(IServiceProvider serviceProvider, ILogger<MdSyntaxPa
         MdSyntaxParserStack runningParser = MdSyntaxParserStack.Pool.Get();
 
         MdSyntaxFragment? fragment = null;
+        string normalized = markdown.ReplaceLineEndings("\n");
+        
         try {
             runningParser.NodeTree = nodeTree;
-            runningParser.PushMultiLineMatchesToStack(markdown, nodeTree.RootNode, MdSyntaxHandlerOrigin.Undefined);
+            runningParser.PushMultiLineMatchesToStack(normalized, nodeTree.RootNode, MdSyntaxHandlerOrigin.Undefined);
 
             while (runningParser.TryPopDto(out fragment)) {
                 if (fragment.TryGetAsMatch(out Match? match, out IMdSyntaxNode? parentNode, out MdSyntaxHandlerOrigin handlerOrigin)) {

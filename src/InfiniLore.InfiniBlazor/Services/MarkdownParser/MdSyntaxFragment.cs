@@ -11,7 +11,6 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-
 public sealed class MdSyntaxFragment : IResettable {
     private IMdSyntaxNode? _parentNode;
     private IMdSyntaxNode? _childNode;
@@ -40,7 +39,6 @@ public sealed class MdSyntaxFragment : IResettable {
         fragment._isMatch = false;
         return fragment;
     }
-
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
