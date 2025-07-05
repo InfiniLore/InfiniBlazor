@@ -12,10 +12,10 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>("emote")]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.Emote)]
 public sealed class EmoteHandler(ILogger<EmoteHandler> logger) : IMdSyntaxHandler {
 
-    private static readonly int EId = MarkdownRegexLib.GetSingleLineGroupId("e");
+    private static readonly int EId = MarkdownRegexLib.GetSingleLineGroupId(MarkdownRegexLib.GroupNames.E);
 
     // TODO Requires some sort of Emote service
     private FrozenDictionary<EmoteKey, string> EmoteDict { get; } = new Dictionary<EmoteKey, string> {

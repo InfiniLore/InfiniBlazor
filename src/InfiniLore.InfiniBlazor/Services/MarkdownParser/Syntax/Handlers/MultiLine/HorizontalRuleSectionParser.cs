@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>("horizontalRule")]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.HorizontalRule)]
 public sealed class HorizontalRuleHandler : IMdSyntaxHandler {
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
 

@@ -10,9 +10,9 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>("bold")]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.Bold)]
 public sealed class BoldHandler : IMdSyntaxHandler {
-    private static readonly int BId = MarkdownRegexLib.GetSingleLineGroupId("b");
+    private static readonly int BId = MarkdownRegexLib.GetSingleLineGroupId(MarkdownRegexLib.GroupNames.B);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.Bold;
     
     // -----------------------------------------------------------------------------------------------------------------

@@ -10,9 +10,9 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>("subScript")]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.SubScript)]
 public sealed class SubScriptHandler : IMdSyntaxHandler {
-    private static readonly int SbId = MarkdownRegexLib.GetSingleLineGroupId("sb");
+    private static readonly int SbId = MarkdownRegexLib.GetSingleLineGroupId(MarkdownRegexLib.GroupNames.Sb);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.SubScript;
     
     // -----------------------------------------------------------------------------------------------------------------

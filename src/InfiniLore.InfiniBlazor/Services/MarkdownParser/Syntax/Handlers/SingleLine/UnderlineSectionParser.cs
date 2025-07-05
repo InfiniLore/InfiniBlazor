@@ -10,9 +10,9 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>("underline")]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.Underline)]
 public sealed class UnderlineHandler : IMdSyntaxHandler {
-    private static readonly int UId = MarkdownRegexLib.GetSingleLineGroupId("u");
+    private static readonly int UId = MarkdownRegexLib.GetSingleLineGroupId(MarkdownRegexLib.GroupNames.U);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.Underline;
     
     // -----------------------------------------------------------------------------------------------------------------

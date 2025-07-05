@@ -11,10 +11,10 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>("codeBlock")]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.CodeBlock)]
 public sealed class CodeBlockHandler : IMdSyntaxHandler {
-    private static readonly int CBodyId = MarkdownRegexLib.GetMultiLineGroupId("cBody");
-    private static readonly int CLangId = MarkdownRegexLib.GetMultiLineGroupId("cLang");
+    private static readonly int CBodyId = MarkdownRegexLib.GetMultiLineGroupId(MarkdownRegexLib.GroupNames.CBody);
+    private static readonly int CLangId = MarkdownRegexLib.GetMultiLineGroupId(MarkdownRegexLib.GroupNames.CLang);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------

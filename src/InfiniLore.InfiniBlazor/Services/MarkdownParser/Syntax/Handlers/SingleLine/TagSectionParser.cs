@@ -10,9 +10,9 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>("tag")]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.Tag)]
 public sealed class TagHandler : IMdSyntaxHandler {
-    private static readonly int TextId = MarkdownRegexLib.GetSingleLineGroupId("tText");
+    private static readonly int TextId = MarkdownRegexLib.GetSingleLineGroupId(MarkdownRegexLib.GroupNames.TText);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
     
     // -----------------------------------------------------------------------------------------------------------------

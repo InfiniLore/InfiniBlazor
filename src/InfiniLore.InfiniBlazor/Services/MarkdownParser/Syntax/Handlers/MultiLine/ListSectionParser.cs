@@ -12,9 +12,9 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class BaseListHandler : IMdSyntaxHandler {
-    private static readonly int LTaskId = MarkdownRegexLib.GetListGroupId("lTask");
-    private static readonly int LHeadId = MarkdownRegexLib.GetListGroupId("lHead");
-    private static readonly int LBodyId = MarkdownRegexLib.GetListGroupId("lBody");
+    private static readonly int LTaskId = MarkdownRegexLib.GetListGroupId(MarkdownRegexLib.GroupNames.LTask);
+    private static readonly int LHeadId = MarkdownRegexLib.GetListGroupId(MarkdownRegexLib.GroupNames.LHead);
+    private static readonly int LBodyId = MarkdownRegexLib.GetListGroupId(MarkdownRegexLib.GroupNames.LBody);
     
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
     
@@ -71,12 +71,12 @@ public abstract class BaseListHandler : IMdSyntaxHandler {
     }
 }
 
-[InjectableSingleton<IMdSyntaxHandler>("listOrdered")]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.ListOrdered)]
 public sealed class ListOrderedHandler : BaseListHandler {
     protected override bool IsOrdered => true;
 }
 
-[InjectableSingleton<IMdSyntaxHandler>("listUnordered")]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.ListUnordered)]
 public sealed class ListUnorderedHandler : BaseListHandler {
     protected override bool IsOrdered => false;
 }

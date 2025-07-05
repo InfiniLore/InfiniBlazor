@@ -11,13 +11,13 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>("table")]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.Table)]
 public sealed class TableHandler : IMdSyntaxHandler {
     private const int StackAllocThreshold = 16;
 
-    private static readonly int BodyId = MarkdownRegexLib.GetMultiLineGroupId("tBody");
-    private static readonly int HeadId = MarkdownRegexLib.GetMultiLineGroupId("tHead");
-    private static readonly int SepId = MarkdownRegexLib.GetMultiLineGroupId("tSep");
+    private static readonly int BodyId = MarkdownRegexLib.GetMultiLineGroupId(MarkdownRegexLib.GroupNames.TBody);
+    private static readonly int HeadId = MarkdownRegexLib.GetMultiLineGroupId(MarkdownRegexLib.GroupNames.THead);
+    private static readonly int SepId = MarkdownRegexLib.GetMultiLineGroupId(MarkdownRegexLib.GroupNames.TSep);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------

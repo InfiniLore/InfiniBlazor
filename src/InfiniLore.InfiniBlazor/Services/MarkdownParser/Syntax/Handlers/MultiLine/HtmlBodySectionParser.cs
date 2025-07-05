@@ -10,13 +10,13 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>("htmlBody")]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.HtmlBody)]
 public sealed class HtmlBodyHandler : IMdSyntaxHandler {
-    private static readonly int HtmlPreId = MarkdownRegexLib.GetMultiLineGroupId("htmlPre");
-    private static readonly int HtmlBodyId = MarkdownRegexLib.GetMultiLineGroupId("htmlBody");
-    private static readonly int HtmlPostId = MarkdownRegexLib.GetMultiLineGroupId("htmlPost");
-    private static readonly int SpanTagId = MarkdownRegexLib.GetSpanGroupId("spanTag");
-    private static readonly int SpanBodyId = MarkdownRegexLib.GetSpanGroupId("spanBody");
+    private static readonly int HtmlPreId = MarkdownRegexLib.GetMultiLineGroupId(MarkdownRegexLib.GroupNames.HtmlPre);
+    private static readonly int HtmlBodyId = MarkdownRegexLib.GetMultiLineGroupId(MarkdownRegexLib.GroupNames.HtmlBody);
+    private static readonly int HtmlPostId = MarkdownRegexLib.GetMultiLineGroupId(MarkdownRegexLib.GroupNames.HtmlPost);
+    private static readonly int SpanTagId = MarkdownRegexLib.GetSpanGroupId(MarkdownRegexLib.GroupNames.SpanTag);
+    private static readonly int SpanBodyId = MarkdownRegexLib.GetSpanGroupId(MarkdownRegexLib.GroupNames.SpanBody);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------

@@ -10,10 +10,10 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxHandler>("paragraph")]
+[InjectableSingleton<IMdSyntaxHandler>(MarkdownRegexLib.GroupNames.Paragraph)]
 public sealed class ParagraphHandler : IMdSyntaxHandler {
 
-    private static readonly int PId = MarkdownRegexLib.GetSingleLineGroupId("p");
+    private static readonly int PId = MarkdownRegexLib.GetSingleLineGroupId(MarkdownRegexLib.GroupNames.P);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
