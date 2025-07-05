@@ -24,7 +24,7 @@ public sealed class TableHandler : IMdSyntaxHandler {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMdParserEngine engine,
+        IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
@@ -58,7 +58,7 @@ public sealed class TableHandler : IMdSyntaxHandler {
             tableHeadRow.AddChildNode(tableHeadCellNode);
             
             ReadOnlySpan<char> column = header[headerColumns[index]];
-            engine.PushSingleLineMatchesToStack(column.ToString(), tableHeadCellNode, origin);
+            stack.PushSingleLineMatchesToStack(column.ToString(), tableHeadCellNode, origin);
         }
 
         // Add rows
@@ -85,7 +85,7 @@ public sealed class TableHandler : IMdSyntaxHandler {
                 for (int columnIndex = 0; columnIndex < rowColumnCount; columnIndex++) {
                     TableCellMdSyntaxNode tableCell = TableCellMdSyntaxNode.Pool.Get();
                     tableRow.AddChildNode(tableCell);
-                    engine.PushSingleLineMatchesToStack(
+                    stack.PushSingleLineMatchesToStack(
                         row[columnBuffer[columnIndex]].ToString(), 
                         tableCell, 
                         origin);

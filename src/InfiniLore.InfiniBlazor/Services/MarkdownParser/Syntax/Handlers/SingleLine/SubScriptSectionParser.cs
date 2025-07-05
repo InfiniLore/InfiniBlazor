@@ -19,7 +19,7 @@ public sealed class SubScriptHandler : IMdSyntaxHandler {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMdParserEngine engine,
+        IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
@@ -29,6 +29,6 @@ public sealed class SubScriptHandler : IMdSyntaxHandler {
 
         SubScriptMdSyntaxNode node = SubScriptMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
-        engine.PushSingleLineMatchesToStack(subValue, node, origin | SkipOnOrigin);
+        stack.PushSingleLineMatchesToStack(subValue, node, origin | SkipOnOrigin);
     }
 }

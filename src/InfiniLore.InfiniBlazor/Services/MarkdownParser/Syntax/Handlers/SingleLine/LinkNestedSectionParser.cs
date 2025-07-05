@@ -22,7 +22,7 @@ public sealed class LinkNestedHandler : IMdSyntaxHandler {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMdParserEngine engine,
+        IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
@@ -50,6 +50,6 @@ public sealed class LinkNestedHandler : IMdSyntaxHandler {
         linkNode.Href = linkHref;
         parentNode.AddChildNode(linkNode);
 
-        engine.PushSingleLineMatchesToStack(linkText, linkNode, origin);
+        stack.PushSingleLineMatchesToStack(linkText, linkNode, origin);
     }
 }

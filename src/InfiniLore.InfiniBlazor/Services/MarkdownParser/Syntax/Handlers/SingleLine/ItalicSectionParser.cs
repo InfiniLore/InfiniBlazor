@@ -19,7 +19,7 @@ public sealed class ItalicHandler : IMdSyntaxHandler {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMdParserEngine engine,
+        IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
@@ -29,6 +29,6 @@ public sealed class ItalicHandler : IMdSyntaxHandler {
 
         ItalicMdSyntaxNode node = ItalicMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
-        engine.PushSingleLineMatchesToStack(italicValue, node, origin | SkipOnOrigin);
+        stack.PushSingleLineMatchesToStack(italicValue, node, origin | SkipOnOrigin);
     }
 }

@@ -18,7 +18,7 @@ public sealed class HorizontalRuleHandler : IMdSyntaxHandler {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMdParserEngine engine,
+        IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,

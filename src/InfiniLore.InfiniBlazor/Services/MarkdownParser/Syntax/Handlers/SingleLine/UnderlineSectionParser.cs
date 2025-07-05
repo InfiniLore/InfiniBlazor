@@ -19,7 +19,7 @@ public sealed class UnderlineHandler : IMdSyntaxHandler {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMdParserEngine engine,
+        IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
@@ -29,6 +29,6 @@ public sealed class UnderlineHandler : IMdSyntaxHandler {
         
         UnderlineMdSyntaxNode node = UnderlineMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
-        engine.PushSingleLineMatchesToStack(underlineValue, node, origin | SkipOnOrigin);
+        stack.PushSingleLineMatchesToStack(underlineValue, node, origin | SkipOnOrigin);
     }
 }

@@ -18,7 +18,7 @@ public sealed class CodeInlineHandler : IMdSyntaxHandler {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMdParserEngine engine, IMdSyntaxNode parentNode, Match entireMatch, Group group, MdSyntaxHandlerOrigin origin) {
+    public void HandleMatch(IMdSyntaxParserStack stack, IMdSyntaxNode parentNode, Match entireMatch, Group group, MdSyntaxHandlerOrigin origin) {
         if (!entireMatch.Groups[CId].TryGetValue(out string? codeValue)) return ;
 
         string normalizedBackticks = codeValue.Replace("\\`", "`");

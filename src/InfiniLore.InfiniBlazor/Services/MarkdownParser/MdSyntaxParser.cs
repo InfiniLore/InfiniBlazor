@@ -49,7 +49,7 @@ public class MdSyntaxParser(IServiceProvider serviceProvider, ILogger<MdSyntaxPa
 
     public void ParseToTree(string markdown, IMdSyntaxTree nodeTree) {
         nodeTree.RootNode.Depth = 0;
-        MdSyntaxParserEngine runningParser = MdSyntaxParserEngine.Pool.Get();
+        MdSyntaxParserStack runningParser = MdSyntaxParserStack.Pool.Get();
 
         try {
             runningParser.NodeTree = nodeTree;
@@ -70,11 +70,11 @@ public class MdSyntaxParser(IServiceProvider serviceProvider, ILogger<MdSyntaxPa
             }
         }
         finally {
-            MdSyntaxParserEngine.Pool.Return(runningParser);
+            MdSyntaxParserStack.Pool.Return(runningParser);
         }
     }
 
-    private void ProcessMatch(Match match, IMdSyntaxNode currentNode, MdSyntaxHandlerOrigin origin, IMdParserEngine runningParser) {
+    private void ProcessMatch(Match match, IMdSyntaxNode currentNode, MdSyntaxHandlerOrigin origin, IMdSyntaxParserStack runningParser) {
         GroupCollection groups = match.Groups;
         for (int i = 0; i < groups.Count; i++) {
             if (groups[i] is not { Success: true, Name: var name } group) continue;

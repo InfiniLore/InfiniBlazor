@@ -11,11 +11,11 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MdSyntaxParserEngine : IMdParserEngine, IResettable {
+public class MdSyntaxParserStack : IMdSyntaxParserStack, IResettable {
     private readonly Stack<MdSyntaxFragment> _stack = new();
     public IMdSyntaxTree NodeTree { get; set; } = null!;
     
-    public static ObjectPool<MdSyntaxParserEngine> Pool { get; } = Pooling.CreateResettablePool<MdSyntaxParserEngine>(Pooling.ParsersRetained);
+    public static ObjectPool<MdSyntaxParserStack> Pool { get; } = Pooling.CreateResettablePool<MdSyntaxParserStack>(Pooling.ParsersRetained);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

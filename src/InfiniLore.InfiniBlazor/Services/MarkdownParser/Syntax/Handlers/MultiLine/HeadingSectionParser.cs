@@ -19,7 +19,7 @@ public sealed class HeadingHandler : IMdSyntaxHandler {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMdParserEngine engine,
+        IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
@@ -33,6 +33,6 @@ public sealed class HeadingHandler : IMdSyntaxHandler {
         headingNode.Level = headingLevel;
         parentNode.AddChildNode(headingNode);
         
-        engine.PushSingleLineMatchesToStack(headerText, headingNode, origin);
+        stack.PushSingleLineMatchesToStack(headerText, headingNode, origin);
     }
 }

@@ -23,7 +23,7 @@ public sealed class HtmlBodyHandler : IMdSyntaxHandler {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMdParserEngine engine,
+        IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
@@ -35,7 +35,7 @@ public sealed class HtmlBodyHandler : IMdSyntaxHandler {
         }
 
         if (entireMatch.Groups[HtmlPostId].TryGetValue(out string? post)) {
-            engine.PushSingleLineMatchesToStack(post, parentNode, origin);
+            stack.PushSingleLineMatchesToStack(post, parentNode, origin);
         }
 
         if (entireMatch.Groups[HtmlBodyId].TryGetValue(out string? htmlBody)) {
@@ -44,18 +44,18 @@ public sealed class HtmlBodyHandler : IMdSyntaxHandler {
             if (match.Groups[SpanTagId].TryGetValue(out string? spanTag) && match.Groups[SpanBodyId].TryGetValue(out string? spanBody)) {
                 HtmlSpanMdSyntaxNode spanNode = HtmlSpanMdSyntaxNode.Pool.Get();
                 spanNode.TagValue = spanTag;
-                engine.PushMultiLineMatchesToStack(spanBody, spanNode, origin | MdSyntaxHandlerOrigin.Html);
-                engine.PushProcessedNodeToStack(parentNode, spanNode);
+                stack.PushMultiLineMatchesToStack(spanBody, spanNode, origin | MdSyntaxHandlerOrigin.Html);
+                stack.PushProcessedNodeToStack(parentNode, spanNode);
             }
             else {
                 ContentHtmlMdSyntaxNode htmlNode = ContentHtmlMdSyntaxNode.Pool.Get();
                 htmlNode.ContentHtml= htmlBody;
-                engine.PushProcessedNodeToStack(parentNode, htmlNode);
+                stack.PushProcessedNodeToStack(parentNode, htmlNode);
             }
         }
 
         if (entireMatch.Groups[HtmlPreId].TryGetValue(out string? pre)) {
-            engine.PushSingleLineMatchesToStack(pre, parentNode, origin);
+            stack.PushSingleLineMatchesToStack(pre, parentNode, origin);
         }
     }
 }

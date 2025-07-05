@@ -18,7 +18,7 @@ public sealed class HeadingSimpleHandler : IMdSyntaxHandler {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMdParserEngine engine,
+        IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
@@ -30,6 +30,6 @@ public sealed class HeadingSimpleHandler : IMdSyntaxHandler {
         headingNode.Level = 1;
         parentNode.AddChildNode(headingNode);
         
-        engine.PushSingleLineMatchesToStack(headerSimpleText, headingNode, origin);
+        stack.PushSingleLineMatchesToStack(headerSimpleText, headingNode, origin);
     }
 }

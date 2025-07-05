@@ -19,7 +19,7 @@ public sealed class ParagraphHandler : IMdSyntaxHandler {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMdParserEngine engine,
+        IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
@@ -34,6 +34,6 @@ public sealed class ParagraphHandler : IMdSyntaxHandler {
             ParagraphMdSyntaxNode node = ParagraphMdSyntaxNode.Pool.Get();
             parentNode = parentNode.AddChildNode(node);
         }
-        engine.PushSingleLineMatchesToStack(paragraph.TrimStart(), parentNode, origin);
+        stack.PushSingleLineMatchesToStack(paragraph.TrimStart(), parentNode, origin);
     }
 }

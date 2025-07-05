@@ -19,7 +19,7 @@ public sealed class StrikeHandler : IMdSyntaxHandler {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMdParserEngine engine,
+        IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
@@ -29,6 +29,6 @@ public sealed class StrikeHandler : IMdSyntaxHandler {
 
         StrikeMdSyntaxNode node = StrikeMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
-        engine.PushSingleLineMatchesToStack(strikeValue, node, origin | SkipOnOrigin);
+        stack.PushSingleLineMatchesToStack(strikeValue, node, origin | SkipOnOrigin);
     }
 }

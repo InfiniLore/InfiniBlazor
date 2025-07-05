@@ -19,7 +19,7 @@ public sealed class SuperScriptHandler : IMdSyntaxHandler {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMdParserEngine engine,
+        IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
@@ -29,6 +29,6 @@ public sealed class SuperScriptHandler : IMdSyntaxHandler {
         
         SuperScriptMdSyntaxNode node = SuperScriptMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
-        engine.PushSingleLineMatchesToStack(superValue, node, origin | SkipOnOrigin);
+        stack.PushSingleLineMatchesToStack(superValue, node, origin | SkipOnOrigin);
     }
 }

@@ -24,7 +24,7 @@ public abstract class BaseListHandler : IMdSyntaxHandler {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMdParserEngine engine,
+        IMdSyntaxParserStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
         Group group,
@@ -51,11 +51,11 @@ public abstract class BaseListHandler : IMdSyntaxHandler {
             
                 if (groups[LBodyId].TryGetValueSpan(out ReadOnlySpan<char> itemBody) && !itemBody.IsEmpty) {
                     string normalizedBody = LineNormalization.NormalizeLineIndentation(itemBody);
-                    engine.PushMultiLineMatchesToStack(normalizedBody, listItemNode, origin | MdSyntaxHandlerOrigin.PreserveHtml);
+                    stack.PushMultiLineMatchesToStack(normalizedBody, listItemNode, origin | MdSyntaxHandlerOrigin.PreserveHtml);
                 }
 
                 if (groups[LHeadId].TryGetValue(out string? listHeader)) {
-                    engine.PushSingleLineMatchesToStack(listHeader, listItemNode, origin);
+                    stack.PushSingleLineMatchesToStack(listHeader, listItemNode, origin);
                 }
 
                 // ReSharper disable once InvertIf
