@@ -31,7 +31,6 @@ public class IndividualMarkdownBenchmarks {
     // -----------------------------------------------------------------------------------------------------------------
     // Benchmarks for SinglelineStructuresRegex Features
     // -----------------------------------------------------------------------------------------------------------------
-
     [Benchmark]
     public string EscapedCharacters() {
         const string input = @"\*escaped text\*";
@@ -236,7 +235,7 @@ public class IndividualMarkdownBenchmarks {
         const string input = """
             1. First Item
             2. Second Item
-              3. Nested Item
+              - Nested Item
             """;
         
         IMdSyntaxTree tree = Parser.ParseToTree(input);
