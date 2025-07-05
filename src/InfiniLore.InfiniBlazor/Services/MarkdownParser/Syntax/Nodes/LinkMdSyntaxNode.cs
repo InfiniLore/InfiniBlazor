@@ -5,7 +5,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class LinkMdSyntaxNode : MdSyntaxNode<LinkMdSyntaxNode> {
+public sealed class LinkMdSyntaxNode : MdSyntaxNode<LinkMdSyntaxNode> {
     public string Href { get; set; } = string.Empty;
     
     // -----------------------------------------------------------------------------------------------------------------

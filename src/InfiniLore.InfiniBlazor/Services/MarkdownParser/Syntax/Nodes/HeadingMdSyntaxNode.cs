@@ -5,7 +5,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class HeadingMdSyntaxNode : EmptyMdSyntaxNode<HeadingMdSyntaxNode> {
+public sealed class HeadingMdSyntaxNode : EmptyMdSyntaxNode<HeadingMdSyntaxNode> {
     public int Level { get; set; } 
     
     // -----------------------------------------------------------------------------------------------------------------

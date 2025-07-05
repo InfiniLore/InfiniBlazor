@@ -11,10 +11,10 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>("code")]
-public class CodeInlineHandler : IMdSyntaxHandler {
-
+public sealed class CodeInlineHandler : IMdSyntaxHandler {
     private static readonly int CId = MarkdownRegexLib.GetSingleLineGroupId("c");
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.Code;
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

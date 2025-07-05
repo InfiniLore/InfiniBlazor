@@ -6,4 +6,4 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class SubScriptMdSyntaxNode : MdSyntaxNode<SubScriptMdSyntaxNode>;
+public sealed class SubScriptMdSyntaxNode : MdSyntaxNode<SubScriptMdSyntaxNode>;

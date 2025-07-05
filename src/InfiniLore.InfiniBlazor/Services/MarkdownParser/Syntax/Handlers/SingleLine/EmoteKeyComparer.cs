@@ -5,8 +5,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class EmoteKeyComparer : IEqualityComparer<EmoteKey>, IAlternateEqualityComparer<string, EmoteKey> {
-
+public sealed class EmoteKeyComparer : IEqualityComparer<EmoteKey>, IAlternateEqualityComparer<string, EmoteKey> {
     public bool Equals(string alternate, EmoteKey other)
         => other.Keys.Contains(alternate);
 

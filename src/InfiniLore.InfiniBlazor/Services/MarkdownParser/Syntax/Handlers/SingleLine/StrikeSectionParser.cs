@@ -11,10 +11,10 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>("strike")]
-public class StrikeHandler : IMdSyntaxHandler {
-
+public sealed class StrikeHandler : IMdSyntaxHandler {
     private static readonly int SId = MarkdownRegexLib.GetSingleLineGroupId("s");
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.Strike;
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

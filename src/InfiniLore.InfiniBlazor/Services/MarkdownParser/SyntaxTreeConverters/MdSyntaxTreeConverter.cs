@@ -13,25 +13,25 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.SyntaxTreeConverters;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxTreeConverter>]
-public class MdSyntaxTreeConverter : IMdSyntaxTreeConverter {
-    private static readonly Lock PoolLock = new();
-    private static readonly ObjectPool<SimpleMdSyntaxNodeConverter> SimpleSyntaxNodeConverterPool = 
-        Pooling.CreateResettablePool<SimpleMdSyntaxNodeConverter>(Pooling.ParsersRetained);
+public abstract class BaseMdSyntaxTreeConverter<TConverter> : IMdSyntaxTreeConverter where TConverter : class, IMdSyntaxNodeConverter, IResettable, new() {
+    private readonly Lock PoolLock = new();
+    private static readonly ObjectPool<TConverter> ConverterPool = 
+        Pooling.CreateResettablePool<TConverter>(Pooling.ParsersRetained);
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public MarkupString ConvertToMarkupString(IMdSyntaxTree tree) 
         => new(ConvertToString(tree));
     
-
     public string ConvertToString(IMdSyntaxTree tree) {
         StringBuilder builder;
-        SimpleMdSyntaxNodeConverter converter;
+        TConverter converter;
     
+        // WTF why is a lock needed here? This makes no sense!
         lock (PoolLock) {
             builder = GlobalPools.StringBuilder.Get();
-            converter = SimpleSyntaxNodeConverterPool.Get();
+            converter = ConverterPool.Get();
         }
     
         try {
@@ -43,9 +43,14 @@ public class MdSyntaxTreeConverter : IMdSyntaxTreeConverter {
             lock (PoolLock) {
                 builder.Clear();
                 GlobalPools.StringBuilder.Return(builder);
-                SimpleSyntaxNodeConverterPool.Return(converter);
+                ConverterPool.Return(converter);
             }
         }
     }
-
 }
+
+[InjectableSingleton<IMdSyntaxTreeConverter>]
+public sealed class MdSyntaxTreeConverter : BaseMdSyntaxTreeConverter<SimpleMdSyntaxNodeConverter>;
+
+[InjectableSingleton<IMdSyntaxTreeConverter>("styled")]
+public sealed class StyledMdSyntaxTreeConverter : BaseMdSyntaxTreeConverter<StyledMdSyntaxNodeConverter>;

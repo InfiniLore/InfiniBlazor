@@ -6,7 +6,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class ListMdSyntaxNode : MdSyntaxNode<ListMdSyntaxNode> {
+public sealed class ListMdSyntaxNode : MdSyntaxNode<ListMdSyntaxNode> {
     public bool IsOrdered { get; set; }
     
     // -----------------------------------------------------------------------------------------------------------------

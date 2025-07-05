@@ -13,7 +13,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>("emote")]
-public class EmoteHandler(ILogger<EmoteHandler> logger) : IMdSyntaxHandler {
+public sealed class EmoteHandler(ILogger<EmoteHandler> logger) : IMdSyntaxHandler {
 
     private static readonly int EId = MarkdownRegexLib.GetSingleLineGroupId("e");
 

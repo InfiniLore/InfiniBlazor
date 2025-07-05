@@ -12,8 +12,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>("codeBlock")]
-public class CodeBlockHandler : IMdSyntaxHandler {
-
+public sealed class CodeBlockHandler : IMdSyntaxHandler {
     private static readonly int CBodyId = MarkdownRegexLib.GetMultiLineGroupId("cBody");
     private static readonly int CLangId = MarkdownRegexLib.GetMultiLineGroupId("cLang");
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;

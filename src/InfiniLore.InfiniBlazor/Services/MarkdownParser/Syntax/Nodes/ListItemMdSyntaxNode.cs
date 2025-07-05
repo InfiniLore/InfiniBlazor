@@ -6,7 +6,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class ListItemMdSyntaxNode : MdSyntaxNode<ListItemMdSyntaxNode> {
+public sealed class ListItemMdSyntaxNode : MdSyntaxNode<ListItemMdSyntaxNode> {
     public bool IsCheckable { get; set; }
     public bool IsChecked { get; set; }
     

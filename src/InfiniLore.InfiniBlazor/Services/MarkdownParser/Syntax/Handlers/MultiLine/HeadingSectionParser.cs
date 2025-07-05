@@ -11,8 +11,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>("heading")]
-public class HeadingHandler : IMdSyntaxHandler {
-
+public sealed class HeadingHandler : IMdSyntaxHandler {
     private static readonly int HLevelId = MarkdownRegexLib.GetMultiLineGroupId("hLevel");
     private static readonly int HTextId = MarkdownRegexLib.GetMultiLineGroupId("hText");
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;

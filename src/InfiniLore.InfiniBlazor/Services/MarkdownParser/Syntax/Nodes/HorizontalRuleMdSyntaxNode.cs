@@ -5,4 +5,4 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class HorizontalRuleMdSyntaxNode : EmptyMdSyntaxNode<HorizontalRuleMdSyntaxNode>;
+public sealed class HorizontalRuleMdSyntaxNode : EmptyMdSyntaxNode<HorizontalRuleMdSyntaxNode>;

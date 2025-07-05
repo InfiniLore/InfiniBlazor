@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>("escaped")]
-public class EscapedHandler : IMdSyntaxHandler {
+public sealed class EscapedHandler : IMdSyntaxHandler {
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------

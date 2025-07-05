@@ -6,7 +6,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class ContentHtmlMdSyntaxNode : MdSyntaxNode<ContentHtmlMdSyntaxNode> {
+public sealed class ContentHtmlMdSyntaxNode : MdSyntaxNode<ContentHtmlMdSyntaxNode> {
     public string ContentHtml { get; set; } = string.Empty;
 
     // -----------------------------------------------------------------------------------------------------------------

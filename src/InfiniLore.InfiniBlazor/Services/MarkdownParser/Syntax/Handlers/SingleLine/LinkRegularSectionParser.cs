@@ -11,8 +11,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>("linkRegular")]
-public class LinkRegularHandler : IMdSyntaxHandler {
-
+public sealed class LinkRegularHandler : IMdSyntaxHandler {
     private static readonly int LrTextId = MarkdownRegexLib.GetSingleLineGroupId("lrText");
     private static readonly int LrHrefId = MarkdownRegexLib.GetSingleLineGroupId("lrHref");
     private static readonly int LrTitleId = MarkdownRegexLib.GetSingleLineGroupId("lrTitle");

@@ -11,8 +11,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>("htmlBody")]
-public class HtmlBodyHandler : IMdSyntaxHandler {
-
+public sealed class HtmlBodyHandler : IMdSyntaxHandler {
     private static readonly int HtmlPreId = MarkdownRegexLib.GetMultiLineGroupId("htmlPre");
     private static readonly int HtmlBodyId = MarkdownRegexLib.GetMultiLineGroupId("htmlBody");
     private static readonly int HtmlPostId = MarkdownRegexLib.GetMultiLineGroupId("htmlPost");

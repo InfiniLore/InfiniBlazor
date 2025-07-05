@@ -6,4 +6,4 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class ParagraphMdSyntaxNode : MdSyntaxNode<ParagraphMdSyntaxNode>;
+public sealed class ParagraphMdSyntaxNode : MdSyntaxNode<ParagraphMdSyntaxNode>;

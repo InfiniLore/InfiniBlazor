@@ -11,10 +11,10 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>("italic")]
-public class ItalicHandler : IMdSyntaxHandler {
-
+public sealed class ItalicHandler : IMdSyntaxHandler {
     private static readonly int IId = MarkdownRegexLib.GetSingleLineGroupId("i");
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.Italic;
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
