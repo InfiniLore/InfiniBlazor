@@ -13,7 +13,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="@Class @(ParentEditor.ShowSidePreview ? "border-r border-(--border)" : "") min-h-0 flex">
     <textarea
-        class="grow p-4 border-none focus:outline-none resize-none overflow-scroll infini-scrollbar"
+        class="grow p-4 border-none focus:outline-none resize-none overflow-scroll infini-scrollbar font-mono"
         value="@ParentEditor.Source.Text"
         @ref="@ParentEditor.InputRef"
         @oninput="@ParentEditor.OnInputAsync"
