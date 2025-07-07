@@ -35,7 +35,7 @@ public static class InfiniMarkdownEditorDebugInserts {
 
     public const string TableText = """
         | test  | something |
-        |  ---- | --------- |
+        | ----- | --------- |
         | alpha | beta      |
         """;
 
@@ -50,17 +50,19 @@ public static class InfiniMarkdownEditorDebugInserts {
         Indirect Heading
         ---
         
-        > This is a block quote
+        ---
+        
+        > This is a **block quote**
         
         > This is a quote.
         > Over multiple lines.
+        
+        ---
         
         ```csharp
         MdEditor editor = new();
         editor.DoSomething();
         ```
-        
-        Horizontal Rule
         
         ---
         
@@ -73,27 +75,30 @@ public static class InfiniMarkdownEditorDebugInserts {
         - [x] Task 2
         - [ ] Task 3
         
-        
         - list item
           - [ ] with a nested task
           
           
         - [ ] task item
           - with a nested list item
-          
+        
         1. Numbered list item 1
         2. Numbered list item 2
           - with a nested list item
           - [ ] with a nested task
           - [x] with a nested completed task
         
+        ---
         
         A random paragraph
         
+        ---
         
         | test  | something |
         |  ---- | --------- |
         | alpha | beta      |
+        
+        ---
         
         A paragragh with a **bold** word in it.
         A paragraph with an *italic* word in it.
@@ -101,7 +106,7 @@ public static class InfiniMarkdownEditorDebugInserts {
         A paragraph with a ~strikethrough~ word in it.
         A paragraph with a `code` word in it.
         A paragraph with a [link](https://google.com) in it.
-        A paragraph with a ![image](https://localhost:7006/icon.png) in it.
+        A paragraph with a ![image](https://localhost:7210/icon.png) in it.
         A paragraph with an :flag-trans: emote in it.
         A paragraph with a ^subscript^ word in it.
         A paragraph with a ^^superscript^^ word in it.

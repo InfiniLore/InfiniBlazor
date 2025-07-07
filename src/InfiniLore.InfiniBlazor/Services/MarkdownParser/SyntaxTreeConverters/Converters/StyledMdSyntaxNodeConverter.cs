@@ -26,7 +26,7 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
 
             case CodeBlockMdSyntaxNode {Language: var lang} when lang.IsNotNullOrWhiteSpace(): {
                 Sb.Append("<div class=\"flex overflow-hidden min-h-0\">");
-                Sb.Append("<div class=\"relative bg-(--color-base-70) text-(--color-base-20) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar\">");
+                Sb.Append("<div class=\"relative infini-bg-(--codeblock) text-(--color-base-20) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar\">");
                 Sb.Append("<pre class=\"whitespace-pre m-0 font-mono min-h-0\">");
                 Sb.Append("<code class=\"language-");
                 Sb.Append(lang);
@@ -37,14 +37,14 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
             
             case CodeBlockMdSyntaxNode: {
                 Sb.Append("<div class=\"flex overflow-hidden min-h-0\">");
-                Sb.Append("<div class=\"relative bg-(--color-base-70) text-(--color-base-20) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar>");
+                Sb.Append("<div class=\"relative infini-bg-(--codeblock) text-(--color-base-20) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar>");
                 Sb.Append("<pre class=\"whitespace-pre m-0 font-mono min-h-0\">");
                 Sb.Append("<code>");
                 break;
             }
 
             case CodeInlineMdSyntaxNode: {
-                Sb.Append("<code class=\"bg-(--color-base-70) text-(--color-base-20) rounded px-1 font-mono text-sm\">");
+                Sb.Append("<code class=\"infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm\">");
                 break;
             }
             

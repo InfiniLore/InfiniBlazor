@@ -130,5 +130,6 @@ public interface ICssData {
     [CssData] public string ButtonOutlineTextHover { get; }
     [CssData] public string ButtonOutlineRing { get; }
     [CssData] public string ButtonOutlineRingHover { get; }
+    [CssData] public string Codeblock { get; }
     #endregion
 }

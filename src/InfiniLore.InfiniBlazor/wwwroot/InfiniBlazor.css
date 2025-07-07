@@ -1629,6 +1629,9 @@
   .infini-bg-\(--button-transparent\) {
     background: var(--button-transparent);
   }
+  .infini-bg-\(--codeblock\) {
+    background: var(--codeblock);
+  }
   .infini-bg-\(--color-accent\) {
     background: var(--color-accent);
   }
