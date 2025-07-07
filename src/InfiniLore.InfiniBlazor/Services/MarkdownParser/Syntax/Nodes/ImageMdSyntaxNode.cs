@@ -12,6 +12,7 @@ public sealed class ImageMdSyntaxNode : MdSyntaxNode<ImageMdSyntaxNode> {
     public bool ContainsMods { get; set; }
     public string? ModTitle { get; set; }
     public (int width, int height)? ModSize { get; set; }
+    public bool ModFit { get; set; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -21,8 +22,10 @@ public sealed class ImageMdSyntaxNode : MdSyntaxNode<ImageMdSyntaxNode> {
         AltText = string.Empty;
         
         ContainsMods = false;
-        ModTitle = string.Empty;
+        ModTitle = null;
         ModSize = null;
+        ModFit = false;
+        
         return base.TryReset();
     }
 }

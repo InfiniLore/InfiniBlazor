@@ -59,4 +59,5 @@ public static class MdRegexGroupNames {
     
     public const string ModTitle = "modTitle";
     public const string ModSize = "modSize";
+    public const string ModFit = "modFit";
 }

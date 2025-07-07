@@ -12,6 +12,7 @@ public static partial class MdRegexLib {
     [GeneratedRegex("""
           (?:title=(?<modTitle>[^|]*))
         | (?:size=(?<modSize>\d+x\d+|\d+))
+        | (?<modFit>fit)
     """, RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex ModifierStructuresRegex { get; }
     

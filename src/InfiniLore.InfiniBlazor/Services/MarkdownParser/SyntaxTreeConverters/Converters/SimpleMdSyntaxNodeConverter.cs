@@ -80,8 +80,12 @@ public class SimpleMdSyntaxNodeConverter : IMdSyntaxNodeConverter, IResettable {
                         Sb.Append('"');
                     }
                     
-                    if (imgNode.ModSize is var (width, height)) {
-                        Sb.Append("style=\"width: ");
+                    if (imgNode.ModFit) {
+                        Sb.Append(" style=\"width:auto;height:2em;vertical-align:baseline;object-fit:contain;\"");
+                    }
+                    
+                    else if (imgNode is { ModFit: false, ModSize: var (width, height) }) {
+                        Sb.Append(" style=\"width: ");
                         Sb.Append(width);
                         Sb.Append("px; height: ");
                         Sb.Append(height);

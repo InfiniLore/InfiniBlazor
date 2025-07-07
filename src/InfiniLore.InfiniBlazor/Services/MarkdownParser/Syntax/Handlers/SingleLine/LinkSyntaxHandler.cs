@@ -21,6 +21,7 @@ public sealed partial class LinkSyntaxHandler : IMdSyntaxHandler {
     
     private static readonly int ModTitleId = MdRegexLib.GetGroupId(MdRegexGroupNames.ModTitle);
     private static readonly int ModSizeId = MdRegexLib.GetGroupId(MdRegexGroupNames.ModSize);
+    private static readonly int ModFitId = MdRegexLib.GetGroupId(MdRegexGroupNames.ModFit);
     
     
     [GeneratedRegex(@"\\(?!\\)")]
@@ -49,9 +50,11 @@ public sealed partial class LinkSyntaxHandler : IMdSyntaxHandler {
                 imgNode.ContainsMods = true;
                 Match mods = MdRegexLib.ModifierStructuresRegex.Match(linkMods);
                 GroupCollection groups = mods.Groups;
-                if (groups[ModTitleId] is { Success: true, Value: var title }) {
-                    imgNode.ModTitle = title;
-                }
+                
+                if (groups[ModTitleId] is { Success: true, Value: var title }) imgNode.ModTitle = title;
+
+                if (groups[ModFitId].Success) imgNode.ModFit = true;
+                
                 if (groups[ModSizeId] is { Success: true, Value: var size }) {
                     if (size.Contains('x')) {
                         string[] split = size.Split('x');
