@@ -39,6 +39,6 @@ public class MarkdownParser(IMdSyntaxTreeConverter treeConverter, IMdSyntaxParse
 
 [InjectableSingleton<IMarkdownParser>("styled")]
 public class StyledMarkdownParser(
-    IMdSyntaxTreeConverter treeConverter,
-    [FromKeyedServices("styled")] IMdSyntaxParser syntaxParser
+    [FromKeyedServices("styled")] IMdSyntaxTreeConverter treeConverter,
+    IMdSyntaxParser syntaxParser
 ) : MarkdownParser(treeConverter, syntaxParser);

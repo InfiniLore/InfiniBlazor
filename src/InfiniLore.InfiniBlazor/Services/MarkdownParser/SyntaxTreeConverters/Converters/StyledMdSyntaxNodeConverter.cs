@@ -20,7 +20,7 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
             }
 
             case BoldMdSyntaxNode: {
-                Sb.Append("<b>");
+                Sb.Append("<strong>");
                 break;
             }
 
@@ -51,11 +51,31 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
             case HeadingMdSyntaxNode { Level: var level and > 0 }: {
                 Sb.Append("<h");
                 Sb.Append(level);
-                Sb.Append("class=\"text-");
-                if (level != 1) Sb.Append(level);
-                Sb.Append("xl font-semibold mb-");
-                Sb.Append(level);
-                Sb.Append('>');
+                Sb.Append(" class=\"text-");
+                Sb.Append(level switch {
+                    1 => "6xl",
+                    2 => "5xl",
+                    3 => "4xl",
+                    4 => "3xl",
+                    5 => "2xl",
+                    6 => "xl",
+                    _ => "md"
+                });
+                Sb.Append(" font-semibold");
+                Sb.Append(level switch {
+                    1 => "mb-6",
+                    2 => "mb-5",
+                    3 => "mb-4",
+                    4 => "mb-3",
+                    5 => "mb-2",
+                    _ => "mb-1"
+                });
+                Sb.Append("\">");
+                break;
+            }
+            
+            case HtmlSpanMdSyntaxNode { TagValue: var tagValue }: {
+                Sb.Append(tagValue.AsSpan());
                 break;
             }
             
@@ -73,7 +93,7 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
             }
 
             case ItalicMdSyntaxNode: {
-                Sb.Append("<i>");
+                Sb.Append("<em>");
                 break;
             }
 
@@ -111,10 +131,11 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                 Sb.Append("<p class=\"my-4 leading-relaxed\">");
                 break;
             }
+            
             case RootMdSyntaxNode:break;
 
             case StrikeMdSyntaxNode: {
-                Sb.Append("<strike>");
+                Sb.Append("<s>");
                 break;
             }
 
@@ -137,19 +158,30 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                 Sb.Append("<td class=\"p-4\">");
                 break;
             }
+            
+            case TableHeadCellMdSyntaxNode: {
+                Sb.Append("<th class=\"p-4\">");
+                break;
+            }
 
             case TableHeadMdSyntaxNode: {
-                Sb.Append("<thead class=\"sticky top-0 infini-bg-(--table-header-background) border-(--border) z-10 border-b\">");
+                Sb.Append("<thead class=\"sticky top-0 infini-bg-(--table-header) border-(--border) z-10 border-b\">");
                 break;
             }
 
             case TableMdSyntaxNode: {
-                Sb.Append("<table class=\"w-full h-full table-auto shadow-sm rounded-2xl border border-(--border) overflow-hidden\">");
+                Sb.Append("<div class=\"rounded-2xl border border-(--border) flex flex-col overflow-hidden\">");
+                Sb.Append("<table class=\"w-full h-full table-auto shadow-sm rounded-2xl overflow-hidden\">");
                 break;
             }
 
-            case TableRowMdSyntaxNode: {
-                Sb.Append("<tr class=\"group hover:infini-bg-(--table-row-background-hover) transition h-4\">");
+            case TableRowMdSyntaxNode { Parent: TableHeadMdSyntaxNode}: {
+                Sb.Append("<tr>");
+                break;
+            }
+            
+            case TableRowMdSyntaxNode { Parent: not TableHeadMdSyntaxNode}: {
+                Sb.Append("<tr class=\"group infini-bg-(--table-row) hover:infini-bg-(--table-row-hover) transition h-4\">");
                 break;
             }
 
@@ -162,8 +194,6 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                 Sb.Append("<u>");
                 break;
             }
-            default:
-                throw new ArgumentOutOfRangeException(nameof(node), node, null);
         }
     }
     
@@ -203,6 +233,7 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
             }
             
             case HeadingMdSyntaxNode:break;
+            case HtmlSpanMdSyntaxNode: break;
 
             case HorizontalRuleMdSyntaxNode: {
                 Sb.Append("<hr class=\"my-8 border-t border-(--border)\"/>");
@@ -230,8 +261,6 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                 break;
             }
             case UnderlineMdSyntaxNode:break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(node), node, null);
         }
     }
     
@@ -257,9 +286,9 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                 break;
             }
             
-            case ContentHtmlMdSyntaxNode:break;
-            case ContentMdSyntaxNode:break;
-            case EmoteMdSyntaxNode:break;
+            case ContentHtmlMdSyntaxNode:
+            case ContentMdSyntaxNode:
+            case EmoteMdSyntaxNode:
             case EscapedCharacterMdSyntaxNode:break;
 
             case HeadingMdSyntaxNode {Level: var level and > 0 }: {
@@ -270,13 +299,15 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
             }
             case HorizontalRuleMdSyntaxNode:break;
 
-            case ImageMdSyntaxNode: {
-                Sb.Append("</img>");
+            case HtmlSpanMdSyntaxNode: {
+                Sb.Append("</span>");
                 break;
             }
+            
+            case ImageMdSyntaxNode:break;
 
             case ItalicMdSyntaxNode: {
-                Sb.Append("</i>");
+                Sb.Append("</em>");
                 break;
             }
 
@@ -307,7 +338,7 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
             case RootMdSyntaxNode:break;
 
             case StrikeMdSyntaxNode: {
-                Sb.Append("</strike>");
+                Sb.Append("</s>");
                 break;
             }
 
@@ -330,9 +361,14 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                 Sb.Append("</td>");
                 break;
             }
+            
+            case TableHeadCellMdSyntaxNode: {
+                Sb.Append("</th>");
+                break;
+            }
 
             case TableHeadMdSyntaxNode: {
-                Sb.Append("</thead>");
+                Sb.Append("</thead></div>");
                 break;
             }
 
