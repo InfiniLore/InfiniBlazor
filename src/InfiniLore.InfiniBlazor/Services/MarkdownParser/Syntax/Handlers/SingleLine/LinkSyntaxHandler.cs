@@ -15,13 +15,16 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 public sealed partial class LinkSyntaxHandler : IMdSyntaxHandler {
     private static readonly int LnTextId = MdRegexLib.GetGroupId(MdRegexGroupNames.LnText);
     private static readonly int LnHrefId = MdRegexLib.GetGroupId(MdRegexGroupNames.LnHref);
-    private static readonly int LnTitleId = MdRegexLib.GetGroupId(MdRegexGroupNames.LnTitle);
+    private static readonly int LnModsId = MdRegexLib.GetGroupId(MdRegexGroupNames.LnMods);
     private static readonly int LnBangId = MdRegexLib.GetGroupId(MdRegexGroupNames.LnBang);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
     
+    private static readonly int ModTitleId = MdRegexLib.GetGroupId(MdRegexGroupNames.ModTitle);
+    private static readonly int ModSizeId = MdRegexLib.GetGroupId(MdRegexGroupNames.ModSize);
+    
     
     [GeneratedRegex(@"\\(?!\\)")]
-    private partial Regex NormalizeAltText { get; }
+    private static partial Regex NormalizeAltText { get; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -34,16 +37,30 @@ public sealed partial class LinkSyntaxHandler : IMdSyntaxHandler {
     ) {
         // ReSharper disable once DuplicatedSequentialIfBodies
         if (!entireMatch.Groups[LnTextId].TryGetValue(out string? linkText)) return ;
-        if (!entireMatch.Groups[LnHrefId].TryGetValue(out string? linkHref)) return ;
+        if (!entireMatch.Groups[LnHrefId].TryGetValue(out string? linkHref)) return;
+        if (!entireMatch.Groups[LnModsId].TryGetValue(out string? linkMods)) return;
 
         if (entireMatch.Groups[LnBangId].Success) {
             ImageMdSyntaxNode imgNode = ImageMdSyntaxNode.Pool.Get();
             imgNode.Href = linkHref;
-            
             imgNode.AltText = NormalizeAltText.Replace(linkText, string.Empty);
             
-            if (entireMatch.Groups[LnTitleId].TryGetValue(out string? altTextValue)) {
-                imgNode.Title = altTextValue;
+            if (linkMods.IsNotNullOrWhiteSpace()) {
+                imgNode.ContainsMods = true;
+                Match mods = MdRegexLib.ModifierStructuresRegex.Match(linkMods);
+                GroupCollection groups = mods.Groups;
+                if (groups[ModTitleId] is { Success: true, Value: var title }) {
+                    imgNode.ModTitle = title;
+                }
+                if (groups[ModSizeId] is { Success: true, Value: var size }) {
+                    if (size.Contains('x')) {
+                        string[] split = size.Split('x');
+                        imgNode.ModSize = (int.Parse(split[0]), int.Parse(split[1]));
+                    }
+                    else if (int.TryParse(size, out int sizeInt)) {
+                        imgNode.ModSize = (sizeInt, sizeInt);
+                    }
+                }
             }
             
             parentNode.AddChildNode(imgNode);

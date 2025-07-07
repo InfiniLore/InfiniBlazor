@@ -67,10 +67,10 @@ public static class LinkDataSources {
         );
 
         yield return static () => new MdTestData(SectionName,
-            "![](https://localhost:7210/icon.png)",
+            "![](https://localhost:7210/icon.png|size=100x100)",
             """
             <p>
-                <img src="https://localhost:7210/icon.png"/>
+                <img src="https://localhost:7210/icon.png" style="width: 100px; height: 100px;"/>
             </p>
             """
         );

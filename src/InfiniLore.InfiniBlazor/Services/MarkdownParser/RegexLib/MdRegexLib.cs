@@ -10,6 +10,12 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
 // ---------------------------------------------------------------------------------------------------------------------
 public static partial class MdRegexLib {
     [GeneratedRegex("""
+          (?:title=(?<modTitle>[^|]*))
+        | (?:size=(?<modSize>\d+x\d+|\d+))
+    """, RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    public static partial Regex ModifierStructuresRegex { get; }
+    
+    [GeneratedRegex("""
           (?<escaped>\\[][!"\#$%&'()*+,\-./:;<=>?@\\^_`{|}~])
         | (?<bold>\*\*(?<b>(?>[^\\\*]+|\\\*|\*|(?<open>\*\*)|(?<-open>\*\*))+?\*?)(?(open)(?!))\*\*)
         | (?<italic>\*(?<i>(?>[^\\\*]+|\\\*|\*\*|(?<open>\*)|(?<-open>\*))+)(?(open)(?!))\*)
@@ -22,8 +28,11 @@ public static partial class MdRegexLib {
         | (?<link>
             (?<lnBang>!)?
             \[(?<lnText> (?:\ *!?\[.+?\]\(.+?\)\ *)|(?:[^\\\]]|\\\]|\\[^\]])*?)\]
-            \((?<lnHref>http(?:s)?[^\)]+?)(?:\s?"(?<lnTitle>(?:[^\\\"]|\\\"|\\[^\"])+?)")?\)
-        )
+            \(
+              (?<lnHref>\ *https?[^\)\ |]+?)
+              \ ?(?<lnMods>(?:\|.*)?)
+            \)
+          )
         | (?<tag>\#(?<tText>[\p{L}\p{N}\-_/]+))
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex SinglelineStructuresRegex { get; }
@@ -109,13 +118,16 @@ public static partial class MdRegexLib {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public static Regex[] GetAllRegexes() => [
+        ModifierStructuresRegex,
+        SinglelineStructuresRegex,
+        MultilineStructuresRegex,
+        FindSpanHtmlRegex,
+        ListItemBodyRegex,
+    ];
+    
     private static FrozenDictionary<string, int> GetGroupNames() {
-        ReadOnlySpan<Regex> regexes = [
-            SinglelineStructuresRegex,
-            MultilineStructuresRegex,
-            FindSpanHtmlRegex,
-            ListItemBodyRegex
-        ];
+        ReadOnlySpan<Regex> regexes = GetAllRegexes();
 
         int totalGroups = regexes.Sum(regex => regex.GetGroupNames().Length);
         Dictionary<string, int> dictionary = new(totalGroups);

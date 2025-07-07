@@ -85,21 +85,32 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
             
             case HorizontalRuleMdSyntaxNode:break;
 
-            case ImageMdSyntaxNode {AltText: var altText, Href: var href, Title: var title }: {
-                Sb.Append("<img class=\"rounded-lg shadow-lg h-full w-auto object-contain\"  src=\"");
+            case ImageMdSyntaxNode {AltText: var altText, Href: var href} imgNode: {
+                Sb.Append("<img class=\"inline-block rounded-lg shadow-lg h-full w-auto object-contain\" src=\"");
                 Sb.Append(href.AsSpan());
                 Sb.Append('"');
-                
                 if (altText.IsNotNullOrWhiteSpace()) {
                     Sb.Append(" alt=\"");
                     Sb.Append(altText.AsSpan());
                     Sb.Append('"');
                 }
-                if (title.IsNotNullOrWhiteSpace()) {
-                    Sb.Append("title=\"");
-                    Sb.Append(title);
-                    Sb.Append('"');
+
+                if (imgNode.ContainsMods) {
+                    if (imgNode.ModTitle.IsNotNullOrWhiteSpace()) {
+                        Sb.Append(" title=\"");
+                        Sb.Append(imgNode.ModTitle.AsSpan());
+                        Sb.Append('"');
+                    }
+
+                    if (imgNode.ModSize is var (width, height)) {
+                        Sb.Append("style=\"width: ");
+                        Sb.Append(width);
+                        Sb.Append("px; height: ");
+                        Sb.Append(height);
+                        Sb.Append("px;\"");
+                    }
                 }
+                
                 Sb.Append("/>");
                 break;
             }

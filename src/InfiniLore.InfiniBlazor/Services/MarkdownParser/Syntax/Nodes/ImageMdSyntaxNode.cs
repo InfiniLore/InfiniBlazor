@@ -8,15 +8,21 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 public sealed class ImageMdSyntaxNode : MdSyntaxNode<ImageMdSyntaxNode> {
     public string Href { get; set; } = string.Empty;
     public string AltText { get; set; } = string.Empty;
-    public string Title { get; set; } = string.Empty;
-
+     
+    public bool ContainsMods { get; set; }
+    public string? ModTitle { get; set; }
+    public (int width, int height)? ModSize { get; set; }
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public override bool TryReset() {
         Href = string.Empty;
         AltText = string.Empty;
-        Title = string.Empty;
+        
+        ContainsMods = false;
+        ModTitle = string.Empty;
+        ModSize = null;
         return base.TryReset();
     }
 }

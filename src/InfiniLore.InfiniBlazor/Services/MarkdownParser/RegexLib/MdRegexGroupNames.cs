@@ -37,7 +37,7 @@ public static class MdRegexGroupNames {
     public const string LnBang = "lnBang";
     public const string LnHref = "lnHref";
     public const string LnText = "lnText";
-    public const string LnTitle = "lnTitle";
+    public const string LnMods = "lnMods";
     public const string P = "p";
     public const string Paragraph = "paragraph";
     public const string S = "s";
@@ -56,4 +56,7 @@ public static class MdRegexGroupNames {
     public const string Tag = "tag";
     public const string U = "u";
     public const string Underline = "underline";
+    
+    public const string ModTitle = "modTitle";
+    public const string ModSize = "modSize";
 }
