@@ -373,5 +373,20 @@ public static class BlockQuoteDataSources {
             </ul>
             """
         );
+        
+        yield return static () => new MdTestData(SectionName,
+            """
+            >|style=note|title=**Do Something**
+            > Body Content
+            """,
+            """
+            <div class="md-callout md-callout-note">
+                <div class="md-callout-title"><strong>Do Something</strong></div>
+                <div class="md-callout-body">
+                    <p>Body Content</p>
+                </div>
+            </div>
+            """
+        );
     }
 }

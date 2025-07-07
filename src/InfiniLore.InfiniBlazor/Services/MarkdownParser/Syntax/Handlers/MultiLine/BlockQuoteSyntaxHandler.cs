@@ -5,8 +5,6 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
-using InfiniLore.InfiniBlazor.Pooling;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
@@ -17,6 +15,8 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 public sealed class BlockQuoteSyntaxHandler : IMdSyntaxHandler {
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
     private static readonly int BlockQuoteId = MdRegexLib.GetGroupId(MdRegexGroupNames.BlockQuote);
+    private static readonly int BqModId = MdRegexLib.GetGroupId(MdRegexGroupNames.BqMods);
+    private static readonly int BqBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.BqBody);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -27,39 +27,45 @@ public sealed class BlockQuoteSyntaxHandler : IMdSyntaxHandler {
         Match entireMatch,
         MdSyntaxHandlerOrigin parentOrigin
     ) {
-        Group group = entireMatch.Groups[BlockQuoteId];
-        if (!group.TryGetValueSpan(out ReadOnlySpan<char> blockQuoteBody)) return;
-
-        // Replace Regex usage with span-based logic:
-        ReadOnlySpan<char> normalized = NormalizeBlockQuote(blockQuoteBody);
-        string adjustedBlockquote = LineNormalization.NormalizeLineIndentation(normalized);
-
-        BlockQuoteMdSyntaxNode blockQuoteNode = BlockQuoteMdSyntaxNode.Pool.Get();
-        parentNode.AddChildNode(blockQuoteNode);
-        stack.PushMultiLineMatchesToStack(adjustedBlockquote, blockQuoteNode, parentOrigin | MdSyntaxHandlerOrigin.PreserveHtml);
-    }
-
-    private ReadOnlySpan<char> NormalizeBlockQuote(ReadOnlySpan<char> span) {
-        // Use a ValueStringBuilder for efficient memory writing
-        StringBuilder builder = GlobalPools.StringBuilder.Get();
-        try {
-            foreach (ReadOnlySpan<char> line in span.EnumerateLines()) {
-                // Example: Remove leading '>' and any extra whitespace
-                ReadOnlySpan<char> trimmedLine = line.TrimStart();
-
-                if (trimmedLine.StartsWith('>')) {
-                    trimmedLine = trimmedLine[1..];// Remove '>'
-                }
-
-                // Append the normalized line back to the builder
-                builder.Append(trimmedLine);
-                builder.Append('\n');
+        // If there are mods the entire structure looks a bit different, aka a callout
+        //      We need to parse the mods to get the title etc.
+        if (entireMatch.Groups[BqModId].TryGetValue(out string? mods) 
+            && mods.IsNotNullOrWhiteSpace()
+            && entireMatch.Groups[BqBodyId].TryGetValueSpan(out ReadOnlySpan<char> bodySpan)) 
+        {
+            CalloutMdSyntaxNode node = CalloutMdSyntaxNode.Pool.Get();
+            parentNode.AddChildNode(node);
+            
+            CalloutTitleMdSyntaxNode titleNode = CalloutTitleMdSyntaxNode.Pool.Get();
+            node.AddChildNode(titleNode);
+            
+            CalloutBodyMdSyntaxNode bodyNode = CalloutBodyMdSyntaxNode.Pool.Get();
+            node.AddChildNode(bodyNode);
+            
+            MdSyntaxMod mod = MdSyntaxMod.FromString(mods);            
+            node.Mod = mod;
+            
+            if (mod.Title.IsNotNullOrWhiteSpace()) {
+                stack.PushSingleLineMatchesToStack(mod.Title, titleNode, parentOrigin|MdSyntaxHandlerOrigin.PreserveHtml);
             }
-            if (builder.Length > 0) builder.Length--; // Remove the last newline
-            return builder.ToString();
+            
+            ReadOnlySpan<char> normalized = LineNormalization.NormalizeBlockQuote(bodySpan);
+            string adjustedBlockquote = LineNormalization.NormalizeLineIndentation(normalized);
+            
+            stack.PushMultiLineMatchesToStack(adjustedBlockquote, bodyNode, parentOrigin | MdSyntaxHandlerOrigin.PreserveHtml);
+            return;
         }
-        finally {
-            GlobalPools.StringBuilder.Return(builder);
+
+        // ReSharper disable once InvertIf
+        if (entireMatch.Groups[BlockQuoteId].TryGetValueSpan(out bodySpan)){
+            BlockQuoteMdSyntaxNode node = BlockQuoteMdSyntaxNode.Pool.Get();
+            parentNode.AddChildNode(node);
+            
+            ReadOnlySpan<char> normalized = LineNormalization.NormalizeBlockQuote(bodySpan);
+            string adjustedBlockquote = LineNormalization.NormalizeLineIndentation(normalized);
+            
+            stack.PushMultiLineMatchesToStack(adjustedBlockquote, node, parentOrigin | MdSyntaxHandlerOrigin.PreserveHtml);  
+            
         }
 
     }

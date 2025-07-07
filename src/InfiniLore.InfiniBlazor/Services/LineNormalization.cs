@@ -83,5 +83,28 @@ public static class LineNormalization {
 
         return count;
     }
+    
+    public static ReadOnlySpan<char> NormalizeBlockQuote(ReadOnlySpan<char> span) {
+        StringBuilder builder = GlobalPools.StringBuilder.Get();
+        try {
+            foreach (ReadOnlySpan<char> line in span.EnumerateLines()) {
+                // Example: Remove leading '>' and any extra whitespace
+                ReadOnlySpan<char> trimmedLine = line.TrimStart();
 
+                if (trimmedLine.StartsWith('>')) {
+                    trimmedLine = trimmedLine[1..];// Remove '>'
+                }
+
+                // Append the normalized line back to the builder
+                builder.Append(trimmedLine);
+                builder.Append('\n');
+            }
+            if (builder.Length > 0) builder.Length--; // Remove the last newline
+            return builder.ToString();
+        }
+        finally {
+            GlobalPools.StringBuilder.Return(builder);
+        }
+
+    }
 }

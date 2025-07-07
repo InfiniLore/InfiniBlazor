@@ -8,6 +8,8 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
 public static class MdRegexGroupNames {
     public const string B = "b";
     public const string BlockQuote = "blockQuote";
+    public const string BqBody = "bqBody";
+    public const string BqMods = "bqMods";
     public const string Bold = "bold";
     public const string C = "c";
     public const string CBody = "cBody";
@@ -58,6 +60,7 @@ public static class MdRegexGroupNames {
     public const string Underline = "underline";
     
     public const string ModTitle = "modTitle";
+    public const string ModStyle = "modStyle";
     public const string ModSize = "modSize";
     public const string ModFit = "modFit";
 }

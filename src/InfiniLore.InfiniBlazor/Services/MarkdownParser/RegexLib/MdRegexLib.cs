@@ -10,9 +10,10 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
 // ---------------------------------------------------------------------------------------------------------------------
 public static partial class MdRegexLib {
     [GeneratedRegex("""
-          (?:title=(?<modTitle>[^|]*))
-        | (?:size=(?<modSize>\d+x\d+|\d+))
-        | (?<modFit>fit)
+          (?:[tT]itle=(?<modTitle>[^\|]*))
+        | (?:[sS]tyle=(?<modStyle>[^\|]*))
+        | (?:[sS]ize=(?<modSize>\d+x\d+|\d+))
+        | (?<modFit>[fF]it)
     """, RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex ModifierStructuresRegex { get; }
     
@@ -48,7 +49,7 @@ public static partial class MdRegexLib {
             ^\|(?<tSep>[:\-|\ ]+?)\|\s*\n
             (?<tBody>(?:^\|.*\S.*\|(?:\n|$))+)
           )
-        | (?<blockQuote>^>\s+.*(?:\n(?![*+-]\s|[-.]?\d|\s*[^>]).+)*)
+        | (?<blockQuote>^>(?:(?<bqMods>(?:\|.*)?)(?:\n(?=>))|\ )(?<bqBody>\ *[^\n]*(?:\n(?!\s*[^>]).+)*))
         | (?:
             (?<htmlPre>.+?)?
               (?<htmlBody>

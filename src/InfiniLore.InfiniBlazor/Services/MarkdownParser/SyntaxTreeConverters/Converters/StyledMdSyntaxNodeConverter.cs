@@ -48,11 +48,6 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                 break;
             }
             
-            case ContentHtmlMdSyntaxNode:
-            case ContentMdSyntaxNode:
-            case EmoteMdSyntaxNode:
-            case EscapedCharacterMdSyntaxNode:break;
-
             case HeadingMdSyntaxNode { Level: var level and > 0 }: {
                 Sb.Append("<h");
                 Sb.Append(level);
@@ -82,8 +77,6 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                 Sb.Append(tagValue.AsSpan());
                 break;
             }
-            
-            case HorizontalRuleMdSyntaxNode:break;
 
             case ImageMdSyntaxNode {AltText: var altText, Href: var href} imgNode: {
                 Sb.Append("<img class=\"inline-block rounded-lg shadow-lg h-full w-auto object-contain\" src=\"");
@@ -96,17 +89,17 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                 }
 
                 if (imgNode.ContainsMods) {
-                    if (imgNode.ModTitle.IsNotNullOrWhiteSpace()) {
+                    if (imgNode.Mod.Title.IsNotNullOrWhiteSpace()) {
                         Sb.Append(" title=\"");
-                        Sb.Append(imgNode.ModTitle.AsSpan());
+                        Sb.Append(imgNode.Mod.Title.AsSpan());
                         Sb.Append('"');
                     }
                     
-                    if (imgNode.ModFit) {
+                    if (imgNode.Mod.Fit) {
                         Sb.Append(" style=\"width:auto;height:2em;vertical-align:baseline;object-fit:contain;\"");
                     }
                     
-                    else if (imgNode is { ModFit: false, ModSize: var (width, height) }) {
+                    else if (imgNode.Mod is { Fit: false, Size: var (width, height) } ) {
                         Sb.Append(" style=\"width: ");
                         Sb.Append(width);
                         Sb.Append("px; height: ");
@@ -158,8 +151,6 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                 Sb.Append("<p class=\"my-4 leading-relaxed\">");
                 break;
             }
-            
-            case RootMdSyntaxNode:break;
 
             case StrikeMdSyntaxNode: {
                 Sb.Append("<s>");
@@ -221,14 +212,28 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                 Sb.Append("<u>");
                 break;
             }
+
+            case CalloutMdSyntaxNode {Mod.Style: var style}: {
+                Sb.Append("<div class=\"md-callout md-callout-");
+                Sb.Append(style);
+                Sb.Append("\">");
+                break;
+            }
+
+            case CalloutTitleMdSyntaxNode: {
+                Sb.Append("<div class=\"md-callout-title\">");
+                break;
+            }
+
+            case CalloutBodyMdSyntaxNode: {
+                Sb.Append("<div class=\"md-callout-body\">");
+                break;
+            }
         }
     }
     
     public override void HandleContent(IMdSyntaxNode node) {
         switch (node) {
-            case BlockQuoteMdSyntaxNode:break;
-            case BoldMdSyntaxNode:break;
-
             case CodeBlockMdSyntaxNode { ContentCode: var code }: {
                 Sb.Append(code);
                 break;
@@ -258,36 +263,18 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                 Sb.Append(contentChar);
                 break;
             }
-            
-            case HeadingMdSyntaxNode:break;
-            case HtmlSpanMdSyntaxNode: break;
 
             case HorizontalRuleMdSyntaxNode: {
                 Sb.Append("<hr class=\"my-8 border-t border-(--border)\"/>");
                 break;
             }
-            case ImageMdSyntaxNode:break;
-            case ItalicMdSyntaxNode:break;
-            case LinkMdSyntaxNode:break;
-            case ListItemMdSyntaxNode:break;
-            case ListMdSyntaxNode:break;
-            case ParagraphMdSyntaxNode:break;
-            case RootMdSyntaxNode:break;
-            case StrikeMdSyntaxNode:break;
-            case SubScriptMdSyntaxNode:break;
-            case SuperScriptMdSyntaxNode:break;
-            case TableBodyMdSyntaxNode:break;
-            case TableCellMdSyntaxNode:break;
-            case TableHeadMdSyntaxNode:break;
-            case TableMdSyntaxNode:break;
-            case TableRowMdSyntaxNode:break;
 
             case TagMdSyntaxNode { ContentTag: var contentTag }: {
                 Sb.Append('#');
                 Sb.Append(contentTag);
                 break;
             }
-            case UnderlineMdSyntaxNode:break;
+
         }
     }
     
@@ -312,26 +299,18 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                 Sb.Append("</code>");
                 break;
             }
-            
-            case ContentHtmlMdSyntaxNode:
-            case ContentMdSyntaxNode:
-            case EmoteMdSyntaxNode:
-            case EscapedCharacterMdSyntaxNode:break;
 
-            case HeadingMdSyntaxNode {Level: var level and > 0 }: {
+            case HeadingMdSyntaxNode { Level: var level and > 0 }: {
                 Sb.Append("</h");
                 Sb.Append(level);
                 Sb.Append('>');
                 break;
             }
-            case HorizontalRuleMdSyntaxNode:break;
 
             case HtmlSpanMdSyntaxNode: {
                 Sb.Append("</span>");
                 break;
             }
-            
-            case ImageMdSyntaxNode:break;
 
             case ItalicMdSyntaxNode: {
                 Sb.Append("</em>");
@@ -362,8 +341,6 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                 Sb.Append("</p>");
                 break;
             }
-            
-            case RootMdSyntaxNode:break;
 
             case StrikeMdSyntaxNode: {
                 Sb.Append("</s>");
@@ -419,8 +396,13 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                 Sb.Append("</u>");
                 break;
             }
-            default:
-                throw new ArgumentOutOfRangeException(nameof(node), node, null);
+
+            case CalloutMdSyntaxNode:
+            case CalloutTitleMdSyntaxNode:
+            case CalloutBodyMdSyntaxNode: {
+                Sb.Append("</div>");
+                break;
+            }
         }
     }
 }
