@@ -25,16 +25,21 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
             }
 
             case CodeBlockMdSyntaxNode {Language: var lang} when lang.IsNotNullOrWhiteSpace(): {
-                Sb.Append("<div class=\"flex overflow-hidden min-h-0\"><div class=\"relative bg-(--color-base-70) text-(--color-base-20) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar\"><pre class=\"whitespace-pre m-0 font-mono min-h-0\">");
+                Sb.Append("<div class=\"flex overflow-hidden min-h-0\">");
+                Sb.Append("<div class=\"relative bg-(--color-base-70) text-(--color-base-20) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar\">");
+                Sb.Append("<pre class=\"whitespace-pre m-0 font-mono min-h-0\">");
                 Sb.Append("<code class=\"language-");
                 Sb.Append(lang);
                 
-                Sb.Append("\"><pre>");
+                Sb.Append("\">");
                 break;
             }
+            
             case CodeBlockMdSyntaxNode: {
-                Sb.Append("<div class=\"flex overflow-hidden min-h-0\"><div class=\"relative bg-(--color-base-70) text-(--color-base-20) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar\"><pre class=\"whitespace-pre m-0 font-mono min-h-0\">");
-                Sb.Append("<code><pre>");
+                Sb.Append("<div class=\"flex overflow-hidden min-h-0\">");
+                Sb.Append("<div class=\"relative bg-(--color-base-70) text-(--color-base-20) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar>");
+                Sb.Append("<pre class=\"whitespace-pre m-0 font-mono min-h-0\">");
+                Sb.Append("<code>");
                 break;
             }
 
@@ -43,9 +48,9 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                 break;
             }
             
-            case ContentHtmlMdSyntaxNode:break;
+            case ContentHtmlMdSyntaxNode:
             case ContentMdSyntaxNode:
-            case EmoteMdSyntaxNode:break;
+            case EmoteMdSyntaxNode:
             case EscapedCharacterMdSyntaxNode:break;
 
             case HeadingMdSyntaxNode { Level: var level and > 0 }: {
@@ -58,8 +63,7 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                     3 => "4xl",
                     4 => "3xl",
                     5 => "2xl",
-                    6 => "xl",
-                    _ => "md"
+                    _ => "xl"
                 });
                 Sb.Append(" font-semibold");
                 Sb.Append(level switch {
@@ -82,13 +86,21 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
             case HorizontalRuleMdSyntaxNode:break;
 
             case ImageMdSyntaxNode {AltText: var altText, Href: var href, Title: var title }: {
-                Sb.Append("<img class=\"max-w-full h-auto rounded-lg shadow-lg\" alt=\"");
-                Sb.Append(altText);
-                Sb.Append("\" src=\"");
-                Sb.Append(href);
-                Sb.Append("\" title=\"");
-                Sb.Append(title);
-                Sb.Append("\" />");
+                Sb.Append("<img class=\"rounded-lg shadow-lg h-full w-auto object-contain\"  src=\"");
+                Sb.Append(href.AsSpan());
+                Sb.Append('"');
+                
+                if (altText.IsNotNullOrWhiteSpace()) {
+                    Sb.Append(" alt=\"");
+                    Sb.Append(altText.AsSpan());
+                    Sb.Append('"');
+                }
+                if (title.IsNotNullOrWhiteSpace()) {
+                    Sb.Append("title=\"");
+                    Sb.Append(title);
+                    Sb.Append('"');
+                }
+                Sb.Append("/>");
                 break;
             }
 
@@ -272,12 +284,12 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
             }
 
             case BoldMdSyntaxNode: {
-                Sb.Append("</b>");
+                Sb.Append("</strong>");
                 break;
             }
 
             case CodeBlockMdSyntaxNode: {
-                Sb.Append("</pre></code></div>");
+                Sb.Append("</code></pre></div></div>");
                 break;
             }
 
@@ -335,6 +347,7 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                 Sb.Append("</p>");
                 break;
             }
+            
             case RootMdSyntaxNode:break;
 
             case StrikeMdSyntaxNode: {
@@ -368,12 +381,12 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
             }
 
             case TableHeadMdSyntaxNode: {
-                Sb.Append("</thead></div>");
+                Sb.Append("</thead>");
                 break;
             }
 
             case TableMdSyntaxNode: {
-                Sb.Append("</table>");
+                Sb.Append("</table></div>");
                 break;
             }
 

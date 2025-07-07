@@ -66,15 +66,18 @@ public class SimpleMdSyntaxNodeConverter : IMdSyntaxNodeConverter, IResettable {
             case ImageMdSyntaxNode {AltText: var altText, Href: var href, Title: var title }: {
                 Sb.Append("<img src=\"");
                 Sb.Append(href.AsSpan());
-                Sb.Append("\" alt=\"");
-                Sb.Append(altText.AsSpan());
                 Sb.Append('"');
+                if (altText.IsNotNullOrWhiteSpace()) {
+                    Sb.Append(" alt=\"");
+                    Sb.Append(altText.AsSpan());
+                    Sb.Append('"');
+                }
                 if (title.IsNotNullOrWhiteSpace()) {
                     Sb.Append(" title=\"");
                     Sb.Append(title.AsSpan());
                     Sb.Append('"');
                 }
-                Sb.Append('>');
+                Sb.Append("/>");
                 break;
             }
 

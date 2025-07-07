@@ -105,7 +105,7 @@ public static class AggregateDataSources {
             </table>
             <h3>Links and Images</h3>
             <p>You can visit <a href="https://www.google.com">Google</a> or check out the following image:</p>
-            <p><img src="https://via.placeholder.com/150" alt="Placeholder Image"></p>
+            <p><img src="https://via.placeholder.com/150" alt="Placeholder Image"/></p>
             """
         );
 

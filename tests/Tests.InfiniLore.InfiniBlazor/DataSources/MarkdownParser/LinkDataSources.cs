@@ -34,7 +34,7 @@ public static class LinkDataSources {
 
         yield return static () => new MdTestData(SectionName,
             "![Specs](https://i.imgur.com/aV8o3rE.png)",
-            "<p><img src=\"https://i.imgur.com/aV8o3rE.png\" alt=\"Specs\"></p>"
+            "<p><img src=\"https://i.imgur.com/aV8o3rE.png\" alt=\"Specs\"/></p>"
         );
 
         yield return static () => new MdTestData(SectionName,
@@ -42,8 +42,35 @@ public static class LinkDataSources {
             """
             <p>
                 <a href="https://imgur.com/">
-                    <img src="https://i.imgur.com/aV8o3rE.png" alt="Specs">
+                    <img src="https://i.imgur.com/aV8o3rE.png" alt="Specs"/>
                 </a>
+            </p>
+            """
+        );
+
+        yield return static () => new MdTestData(SectionName,
+            "![](https://localhost:7210/icon.png)",
+            """
+            <p>
+                <img src="https://localhost:7210/icon.png"/>
+            </p>
+            """
+        );
+        
+        yield return static () => new MdTestData(SectionName,
+            @"![\]](https://localhost:7210/icon.png)",
+            """
+            <p>
+                <img src="https://localhost:7210/icon.png" alt="]"/>
+            </p>
+            """
+        );
+
+        yield return static () => new MdTestData(SectionName,
+            "![](https://localhost:7210/icon.png)",
+            """
+            <p>
+                <img src="https://localhost:7210/icon.png"/>
             </p>
             """
         );

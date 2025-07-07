@@ -21,9 +21,9 @@ public static partial class MdRegexLib {
         | (?<emote>:(?<e>[\p{L}\p{N}\-_]+):)
         | (?<link>
             (?<lnBang>!)?
-            \[(?<lnText>(?:!?\[.+?\]\(.+?\))|(?:[^\]]+?))\]
-            \((?<lnHref>http(?:s)?[^\)]+?)(?:\s?"(?<lnTitle>[^"]*)")?\)
-          )
+            \[(?<lnText> (?:\ *!?\[.+?\]\(.+?\)\ *)|(?:[^\\\]]|\\\]|\\[^\]])*?)\]
+            \((?<lnHref>http(?:s)?[^\)]+?)(?:\s?"(?<lnTitle>(?:[^\\\"]|\\\"|\\[^\"])+?)")?\)
+        )
         | (?<tag>\#(?<tText>[\p{L}\p{N}\-_/]+))
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex SinglelineStructuresRegex { get; }

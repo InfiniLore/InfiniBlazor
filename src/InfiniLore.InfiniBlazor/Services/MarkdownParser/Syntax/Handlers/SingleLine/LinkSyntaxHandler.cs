@@ -12,12 +12,16 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.Link)]
-public sealed class LinkSyntaxHandler : IMdSyntaxHandler {
+public sealed partial class LinkSyntaxHandler : IMdSyntaxHandler {
     private static readonly int LnTextId = MdRegexLib.GetGroupId(MdRegexGroupNames.LnText);
     private static readonly int LnHrefId = MdRegexLib.GetGroupId(MdRegexGroupNames.LnHref);
     private static readonly int LnTitleId = MdRegexLib.GetGroupId(MdRegexGroupNames.LnTitle);
     private static readonly int LnBangId = MdRegexLib.GetGroupId(MdRegexGroupNames.LnBang);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
+    
+    
+    [GeneratedRegex(@"\\(?!\\)")]
+    private partial Regex NormalizeAltText { get; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -35,7 +39,8 @@ public sealed class LinkSyntaxHandler : IMdSyntaxHandler {
         if (entireMatch.Groups[LnBangId].Success) {
             ImageMdSyntaxNode imgNode = ImageMdSyntaxNode.Pool.Get();
             imgNode.Href = linkHref;
-            imgNode.AltText = linkText;
+            
+            imgNode.AltText = NormalizeAltText.Replace(linkText, string.Empty);
             
             if (entireMatch.Groups[LnTitleId].TryGetValue(out string? altTextValue)) {
                 imgNode.Title = altTextValue;
