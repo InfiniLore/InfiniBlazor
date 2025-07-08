@@ -213,11 +213,16 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                 break;
             }
 
-            case CalloutMdSyntaxNode {Mod.Style: var style}: {
+            case CalloutMdSyntaxNode {CalloutType: {} calloutType}: {
                 Sb.Append("<div class=\"md-callout md-callout-");
-                Sb.Append(style);
+                Sb.Append(calloutType);
                 Sb.Append("\">");
                 break;
+            }
+
+            case CalloutMdSyntaxNode: {
+                Sb.Append("<div class=\"md-callout\">");
+                break;           
             }
 
             case CalloutTitleMdSyntaxNode: {

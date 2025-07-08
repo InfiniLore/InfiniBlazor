@@ -84,15 +84,27 @@ public static class LineNormalization {
         return count;
     }
     
-    public static ReadOnlySpan<char> NormalizeBlockQuote(ReadOnlySpan<char> span) {
+    public static string NormalizeBlockQuote(ReadOnlySpan<char> span) {
+        ReadOnlySpan<char> normalized = NormalizeLinePrefixes(span, ">");
+        string adjusted = NormalizeLineIndentation(normalized);
+        return adjusted;
+    }
+    
+    public static string NormalizeCallout(ReadOnlySpan<char> span) {
+        ReadOnlySpan<char> normalized = NormalizeLinePrefixes(span, "!>");
+        string adjusted = NormalizeLineIndentation(normalized);
+        return adjusted;
+    }
+
+    private static ReadOnlySpan<char> NormalizeLinePrefixes(ReadOnlySpan<char> span, ReadOnlySpan<char> prefix) {
+        int prefixLength = prefix.Length;
         StringBuilder builder = GlobalPools.StringBuilder.Get();
         try {
             foreach (ReadOnlySpan<char> line in span.EnumerateLines()) {
-                // Example: Remove leading '>' and any extra whitespace
                 ReadOnlySpan<char> trimmedLine = line.TrimStart();
 
-                if (trimmedLine.StartsWith('>')) {
-                    trimmedLine = trimmedLine[1..];// Remove '>'
+                if (trimmedLine.StartsWith(prefix)) {
+                    trimmedLine = trimmedLine[prefixLength..];// Remove prefix
                 }
 
                 // Append the normalized line back to the builder
@@ -105,6 +117,5 @@ public static class LineNormalization {
         finally {
             GlobalPools.StringBuilder.Return(builder);
         }
-
     }
 }

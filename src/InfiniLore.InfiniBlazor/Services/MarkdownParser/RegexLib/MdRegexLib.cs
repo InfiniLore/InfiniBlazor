@@ -84,6 +84,7 @@ public static partial class MdRegexLib {
         MdRegexGroupNames.List,
         MdRegexGroupNames.Table,
         MdRegexGroupNames.BlockQuote,
+        MdRegexGroupNames.Callout,
         MdRegexGroupNames.HtmlBody,
         MdRegexGroupNames.HorizontalRule,
 

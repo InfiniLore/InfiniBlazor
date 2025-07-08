@@ -6,4 +6,14 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class CalloutMdSyntaxNode : MdSyntaxNode<CalloutMdSyntaxNode>;
+public sealed class CalloutMdSyntaxNode : MdSyntaxNode<CalloutMdSyntaxNode> {
+    public string? CalloutType { get; set; }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    public override bool TryReset() {
+        CalloutType = null;
+        return base.TryReset();
+    }
+}

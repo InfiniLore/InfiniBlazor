@@ -29,8 +29,7 @@ public sealed class BlockQuoteSyntaxHandler : IMdSyntaxHandler {
         if (!group.TryGetValueSpan(out ReadOnlySpan<char> blockQuoteBody)) return;
 
         // Replace Regex usage with span-based logic:
-        ReadOnlySpan<char> normalized = LineNormalization.NormalizeBlockQuote(blockQuoteBody);
-        string adjustedBlockquote = LineNormalization.NormalizeLineIndentation(normalized);
+        string adjustedBlockquote = LineNormalization.NormalizeBlockQuote(blockQuoteBody);
 
         BlockQuoteMdSyntaxNode blockQuoteNode = BlockQuoteMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(blockQuoteNode);
