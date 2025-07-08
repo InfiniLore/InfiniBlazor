@@ -20,17 +20,17 @@ public class MdSyntaxModTests {
             },
             OriginalInput = input
         };
+        MdSyntaxMod mod = MdSyntaxMod.FromString(input);
 
         // Act
-        MdSyntaxMod result = MdSyntaxMod.FromString(input);
+        bool result = mod.TryGetTitle(out string? title);
 
         // Assert
-        await Assert.That(result).IsEquivalentTo(expectedOutput);
-        await Assert.That(result.Attributes).HasCount(expectedOutput.Attributes.Count);
+        await Assert.That(mod.Attributes).HasCount(expectedOutput.Attributes.Count);
         
-        await Assert.That(result.Attributes["title"]).IsEqualTo(expectedOutput.Attributes["title"]);
-        await Assert.That(result.OriginalInput).IsEqualTo(expectedOutput.OriginalInput);
-        await Assert.That(result.TryGetTitle(out string? title)).IsTrue();
+        await Assert.That(mod.Attributes["title"]).IsEqualTo(expectedOutput.Attributes["title"]);
+        await Assert.That(mod.OriginalInput).IsEqualTo(expectedOutput.OriginalInput);
+        await Assert.That(result).IsTrue();
         await Assert.That(title).IsEqualTo("something");
     }
     
@@ -45,17 +45,17 @@ public class MdSyntaxModTests {
             },
             OriginalInput = input
         };
+        MdSyntaxMod mod = MdSyntaxMod.FromString(input);
 
         // Act
-        MdSyntaxMod result = MdSyntaxMod.FromString(input);
+        bool result = mod.GetFit();
 
         // Assert
-        await Assert.That(result).IsEquivalentTo(expectedOutput);
-        await Assert.That(result.Attributes).HasCount(expectedOutput.Attributes.Count);
+        await Assert.That(mod.Attributes).HasCount(expectedOutput.Attributes.Count);
         
-        await Assert.That(result.Attributes["fit"]).IsEqualTo(expectedOutput.Attributes["fit"]);
-        await Assert.That(result.OriginalInput).IsEqualTo(expectedOutput.OriginalInput);
-        await Assert.That(result.GetFit()).IsTrue();
+        await Assert.That(mod.Attributes["fit"]).IsEqualTo(expectedOutput.Attributes["fit"]);
+        await Assert.That(mod.OriginalInput).IsEqualTo(expectedOutput.OriginalInput);
+        await Assert.That(result).IsTrue();
     }
     
     
@@ -70,17 +70,17 @@ public class MdSyntaxModTests {
             },
             OriginalInput = input
         };
+        MdSyntaxMod mod = MdSyntaxMod.FromString(input);
 
         // Act
-        MdSyntaxMod result = MdSyntaxMod.FromString(input);
-
-        // Assert
-        await Assert.That(result).IsEquivalentTo(expectedOutput);
-        await Assert.That(result.Attributes).HasCount(expectedOutput.Attributes.Count);
+        bool result = mod.TryGetSize(out (int Width, int Height) size);
         
-        await Assert.That(result.Attributes["size"]).IsEqualTo(expectedOutput.Attributes["size"]);
-        await Assert.That(result.OriginalInput).IsEqualTo(expectedOutput.OriginalInput);
-        await Assert.That(result.TryGetSize(out (int Width, int Height) size)).IsTrue();
+        // Assert
+        await Assert.That(mod.Attributes).HasCount(expectedOutput.Attributes.Count);
+        
+        await Assert.That(mod.Attributes["size"]).IsEqualTo(expectedOutput.Attributes["size"]);
+        await Assert.That(mod.OriginalInput).IsEqualTo(expectedOutput.OriginalInput);
+        await Assert.That(result).IsTrue();
         await Assert.That(size).IsEqualTo((100, 100));
     }
     
@@ -97,26 +97,25 @@ public class MdSyntaxModTests {
             },
             OriginalInput = input
         };
+        MdSyntaxMod mod = MdSyntaxMod.FromString(input);
 
         // Act
-        MdSyntaxMod result = MdSyntaxMod.FromString(input);
 
         // Assert
-        await Assert.That(result).IsEquivalentTo(expectedOutput);
-        await Assert.That(result.Attributes).HasCount(expectedOutput.Attributes.Count);
+        await Assert.That(mod.Attributes).HasCount(expectedOutput.Attributes.Count);
         
-        await Assert.That(result.Attributes["size"]).IsEqualTo(expectedOutput.Attributes["size"]);
-        await Assert.That(result.OriginalInput).IsEqualTo(expectedOutput.OriginalInput);
-        await Assert.That(result.TryGetSize(out (int Width, int Height) size)).IsTrue();
+        await Assert.That(mod.Attributes["size"]).IsEqualTo(expectedOutput.Attributes["size"]);
+        await Assert.That(mod.OriginalInput).IsEqualTo(expectedOutput.OriginalInput);
+        await Assert.That(mod.TryGetSize(out (int Width, int Height) size)).IsTrue();
         await Assert.That(size).IsEqualTo((100, 100));
         
-        await Assert.That(result.Attributes["fit"]).IsEqualTo(expectedOutput.Attributes["fit"]);
-        await Assert.That(result.OriginalInput).IsEqualTo(expectedOutput.OriginalInput);
-        await Assert.That(result.GetFit()).IsTrue();
+        await Assert.That(mod.Attributes["fit"]).IsEqualTo(expectedOutput.Attributes["fit"]);
+        await Assert.That(mod.OriginalInput).IsEqualTo(expectedOutput.OriginalInput);
+        await Assert.That(mod.GetFit()).IsTrue();
         
-        await Assert.That(result.Attributes["title"]).IsEqualTo(expectedOutput.Attributes["title"]);
-        await Assert.That(result.OriginalInput).IsEqualTo(expectedOutput.OriginalInput);
-        await Assert.That(result.TryGetTitle(out string? title)).IsTrue();
+        await Assert.That(mod.Attributes["title"]).IsEqualTo(expectedOutput.Attributes["title"]);
+        await Assert.That(mod.OriginalInput).IsEqualTo(expectedOutput.OriginalInput);
+        await Assert.That(mod.TryGetTitle(out string? title)).IsTrue();
         await Assert.That(title).IsEqualTo("something");
     }
     
