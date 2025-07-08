@@ -48,7 +48,7 @@ public class MdSyntaxNodeModifierExtensionsTests {
         MdSyntaxNodeModifier mod = MdSyntaxNodeModifier.FromString(input);
 
         // Act
-        bool result = mod.GetFit();
+        bool result = mod.TryGetFit(out bool fit);
 
         // Assert
         await Assert.That(mod.Attributes).HasCount(expectedOutput.Attributes.Count);
@@ -56,6 +56,7 @@ public class MdSyntaxNodeModifierExtensionsTests {
         await Assert.That(mod.Attributes["fit"]).IsEqualTo(expectedOutput.Attributes["fit"]);
         await Assert.That(mod.OriginalInput).IsEqualTo(expectedOutput.OriginalInput);
         await Assert.That(result).IsTrue();
+        await Assert.That(fit).IsTrue();
     }
     
     
@@ -111,7 +112,8 @@ public class MdSyntaxNodeModifierExtensionsTests {
         
         await Assert.That(mod.Attributes["fit"]).IsEqualTo(expectedOutput.Attributes["fit"]);
         await Assert.That(mod.OriginalInput).IsEqualTo(expectedOutput.OriginalInput);
-        await Assert.That(mod.GetFit()).IsTrue();
+        await Assert.That(mod.TryGetFit(out bool fit)).IsTrue();
+        await Assert.That(fit).IsTrue();
         
         await Assert.That(mod.Attributes["title"]).IsEqualTo(expectedOutput.Attributes["title"]);
         await Assert.That(mod.OriginalInput).IsEqualTo(expectedOutput.OriginalInput);

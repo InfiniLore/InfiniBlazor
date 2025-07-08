@@ -38,5 +38,6 @@ public static class MdSyntaxNodeModifierExtensions {
         return false;
     }
     
-    public static bool GetFit(this MdSyntaxNodeModifier mod) => mod.Attributes.ContainsKey("fit");
+    public static bool TryGetFit(this MdSyntaxNodeModifier mod, out bool state) 
+        => mod.TryGetAttributeFlag("fit", out state);
 }

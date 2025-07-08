@@ -55,7 +55,6 @@ public sealed class MdSyntaxParser(IServiceProvider serviceProvider, ILogger<MdS
         string normalized = markdown.ReplaceLineEndings("\n");
         
         try {
-            runningParser.NodeTree = nodeTree;
             runningParser.PushMultiLineMatchesToStack(normalized, nodeTree.RootNode, MdSyntaxHandlerOrigin.Undefined);
 
             while (runningParser.TryPopDto(out fragment)) {
@@ -70,12 +69,13 @@ public sealed class MdSyntaxParser(IServiceProvider serviceProvider, ILogger<MdS
             }
         }
         finally {
+            // makes it so we don't have to have a nested try catch
             if (fragment is not null) MdSyntaxFragment.Pool.Return(fragment);
             MdSyntaxParserStack.Pool.Return(runningParser);
         }
     }
 
-    private void ProcessMatch(Match match, IMdSyntaxNode currentNode, MdSyntaxHandlerOrigin parentOrigin, IMdSyntaxParserStack runningParser) {
+    private void ProcessMatch(Match match, IMdSyntaxNode parentNode, MdSyntaxHandlerOrigin parentOrigin, IMdSyntaxParserStack runningParser) {
         GroupCollection groups = match.Groups;
         int length = groups.Count;
         if (length == 0) return;
@@ -83,13 +83,12 @@ public sealed class MdSyntaxParser(IServiceProvider serviceProvider, ILogger<MdS
         for (int index = 0; index < length; index++) {
             Group group = groups[index];
             if (!group.Success) continue;
-            string name = group.Name;  
-            if (!_elementHandlers.TryGetValue(name, out IMdSyntaxHandler? handler)) continue;
+            if (!_elementHandlers.TryGetValue(group.Name, out IMdSyntaxHandler? handler)) continue;
 
             MdSyntaxHandlerOrigin handlerOrigin = handler.SkipOnOrigin;
             if (handlerOrigin is not MdSyntaxHandlerOrigin.NotSkipped && parentOrigin.HasFlagFast(handlerOrigin)) continue;
 
-            handler.HandleMatch(runningParser, currentNode, match, parentOrigin);
+            handler.HandleMatch(runningParser, parentNode, match, parentOrigin);
         }
     }
 }

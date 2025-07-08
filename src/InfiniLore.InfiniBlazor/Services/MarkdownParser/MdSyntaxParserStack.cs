@@ -15,22 +15,17 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class MdSyntaxParserStack : IMdSyntaxParserStack, IResettable {
     private readonly Stack<MdSyntaxFragment> _stack = new();
-    public IMdSyntaxTree NodeTree { get; set; } = null!;
-    
     public static ObjectPool<MdSyntaxParserStack> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxParserStack>(PoolingHelpers.ParsersRetained);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    #region AddToStack
+    #region PushToStack
     public void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node, MdSyntaxHandlerOrigin handlerOrigin) {
         MatchCollection matches = MdRegexLib.MultilineStructuresRegex.Matches(input);
         int count = matches.Count;
-
-        // ArrayPooling this is not needed, ensuring capacity should do it
         _stack.EnsureCapacity(_stack.Count + count);
-
-        // Process matches in reverse order for _stack
+        
         for (int i = count - 1; i >= 0; i--) {
             PushMatchToStack(matches[i], node, handlerOrigin);
         }
@@ -39,13 +34,10 @@ public sealed class MdSyntaxParserStack : IMdSyntaxParserStack, IResettable {
     public void PushSingleLineMatchesToStack(string input, IMdSyntaxNode node, MdSyntaxHandlerOrigin handlerOrigin) {
         MatchCollection matches = MdRegexLib.SinglelineStructuresRegex.Matches(input);
         int count = matches.Count;
-
-        // ArrayPooling this is not needed, ensuring capacity should do it
         _stack.EnsureCapacity(_stack.Count + count);
 
         int currentIndex = input.Length;
 
-        // Process matches in reverse order for _stack
         for (int i = count - 1; i >= 0; i--) {
             Match match = matches[i];
             int matchEnd = match.Index + match.Length;
@@ -85,7 +77,6 @@ public sealed class MdSyntaxParserStack : IMdSyntaxParserStack, IResettable {
         while (TryPopDto(out MdSyntaxFragment? dto)) {
             MdSyntaxFragment.Pool.Return(dto);
         }
-        NodeTree = null!;
         return _stack.Count == 0;
     }
 }

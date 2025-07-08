@@ -7,10 +7,8 @@ namespace InfiniLore.InfiniBlazor;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public enum LabelPosition {
-    None,
     Top,
     Right,
     Bottom,
     Left
-
 }

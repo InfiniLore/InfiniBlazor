@@ -30,6 +30,7 @@ public abstract class BaseMdSyntaxTreeConverter<TConverter> : IMdSyntaxTreeConve
         TConverter converter;
     
         // WTF why is a lock needed here? This makes no sense!
+        //      Yes, it does, but poor Anna forgot why
         lock (PoolLock) {
             builder = GlobalPools.StringBuilder.Get();
             converter = ConverterPool.Get();

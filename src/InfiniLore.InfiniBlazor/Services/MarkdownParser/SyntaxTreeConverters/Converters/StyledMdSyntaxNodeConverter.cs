@@ -89,14 +89,14 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                     Sb.Append('"');
                 }
 
-                if (imgNode.ContainsMods) {
+                if (imgNode.ContainsModifiers) {
                     if (imgNode.Modifiers.TryGetTitle(out string? title)) {
                         Sb.Append(" title=\"");
                         Sb.Append(title.AsSpan());
                         Sb.Append('"');
                     }
                     
-                    if (imgNode.Modifiers.GetFit()) {
+                    if (imgNode.Modifiers.TryGetFit(out bool state) && state) {
                         Sb.Append(" style=\"width:auto;height:2em;vertical-align:baseline;object-fit:contain;\"");
                     }
                     

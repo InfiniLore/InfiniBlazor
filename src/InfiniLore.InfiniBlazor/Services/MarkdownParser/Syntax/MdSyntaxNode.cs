@@ -22,10 +22,10 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
     public virtual int Depth { get; set; }
     public IMdSyntaxNode? Parent { get; set; }
     
-    [MemberNotNullWhen(true, nameof(Modifiers))] public bool ContainsMods => Modifiers is not null;
+    [MemberNotNullWhen(true, nameof(Modifiers))] public bool ContainsModifiers => Modifiers is not null;
     public MdSyntaxNodeModifier? Modifiers { get; set; }
 
-    public static ObjectPool<T> Pool { get; } = PoolingHelpers.CreateResettablePool<T>(16);
+    public static ObjectPool<T> Pool { get; } = PoolingHelpers.CreateResettablePool<T>(PoolingHelpers.VisitorPerParserRetained);
     // -----------------------------------------------------------------------------------------------------------------
     // Constructor Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -108,9 +108,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
     }
 
     public void ReturnToPool() {
-        if (this is not T casted) {
-            throw new InvalidOperationException($"Cannot return {GetType()} to shared pool. Expected {typeof(T)}");
-        }
+        if (this is not T casted) throw new InvalidOperationException($"Cannot return {GetType()} to shared pool. Expected {typeof(T)}");
 
         TryReset();
         Pool.Return(casted);
@@ -124,7 +122,6 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
 
         ChildCount = 0;
         Depth = 0;
-
         Parent = null;
         
         // ReSharper disable once InvertIf
@@ -138,7 +135,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
-// Quick Alternatives 
+// Quick Generic Alternatives 
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class EmptyMdSyntaxNode<T> : MdSyntaxNode<T> where T : MdSyntaxNode<T>, new() {
     protected override IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(0);// Will never have children so don't initialize

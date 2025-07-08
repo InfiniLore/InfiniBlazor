@@ -37,9 +37,7 @@ public static class BaseMdSyntaxTreeConverter {
                 }
             }
 
-            lock (depthCache) {
-                CloseOpenTags(nodeConverter, depthCache, -1);
-            }
+            CloseOpenTags(nodeConverter, depthCache, -1);
         }
         finally {
             depthCache.Clear();

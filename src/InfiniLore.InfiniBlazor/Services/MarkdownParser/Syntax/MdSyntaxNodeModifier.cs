@@ -27,7 +27,6 @@ public class MdSyntaxNodeModifier : IResettable {
         
         ReadOnlySpan<char> span = input.AsSpan();
         
-        // |something=else|something=else
         int keyStart = 0;
         int keyEnd = -1;
         int valueStart = 0;
@@ -91,6 +90,7 @@ public class MdSyntaxNodeModifier : IResettable {
         return false;
     }
 
+    // ReSharper disable once InvertIf
     public bool TryGetAttributeFlag(string key, out bool value) {
         if (!Attributes.TryGetValue(key, out Range range)) {
             value = false;

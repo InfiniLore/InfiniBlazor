@@ -43,7 +43,6 @@ public sealed class MdSyntaxFragment : IResettable {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    #pragma warning disable CS8762// Parameter must have a non-null value when exiting in some condition.
     public bool TryGetAsMatch([NotNullWhen(true)] out Match? match, [NotNullWhen(true)] out IMdSyntaxNode? parentNode, out MdSyntaxHandlerOrigin parentOrigin) {
         match = _match;
         parentNode = _parentNode;
@@ -56,7 +55,6 @@ public sealed class MdSyntaxFragment : IResettable {
         childNode = _childNode;
         return !_isMatch;
     }
-    #pragma warning restore CS8762// Parameter must have a non-null value when exiting in some condition.
 
     public bool TryReset() {
         return true;

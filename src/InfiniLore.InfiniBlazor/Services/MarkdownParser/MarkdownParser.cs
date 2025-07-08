@@ -17,8 +17,7 @@ public class MarkdownParser(IMdSyntaxTreeConverter treeConverter, IMdSyntaxParse
         MdSyntaxTree tree = MdSyntaxTree.Pool.Get();
         try {
             syntaxParser.ParseToTree(input, tree);
-            string output = treeConverter.ConvertToString(tree);
-            return output;
+            return treeConverter.ConvertToString(tree);
         }
         finally {
             MdSyntaxTree.Pool.Return(tree);
