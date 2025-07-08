@@ -61,7 +61,7 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                     5 => "2xl",
                     _ => "xl"
                 });
-                Sb.Append(" font-semibold");
+                Sb.Append(" font-semibold ");
                 Sb.Append(level switch {
                     1 => "mb-6",
                     2 => "mb-5",
