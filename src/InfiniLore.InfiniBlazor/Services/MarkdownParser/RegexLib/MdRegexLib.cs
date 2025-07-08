@@ -49,7 +49,8 @@ public static partial class MdRegexLib {
             ^\|(?<tSep>[:\-|\ ]+?)\|\s*\n
             (?<tBody>(?:^\|.*\S.*\|(?:\n|$))+)
           )
-        | (?<blockQuote>^>(?:(?<bqMods>(?:\|.*)?)(?:\n(?=>))|\ )(?<bqBody>\ *[^\n]*(?:\n(?!\s*[^>]).+)*))
+        | (?<blockQuote>^>\s+.*(?:\n(?![*+-]\s|[-.]?\d|\s*[^>]).+)*)
+        | (?<callout>^!>)
         | (?:
             (?<htmlPre>.+?)?
               (?<htmlBody>

@@ -376,16 +376,18 @@ public static class BlockQuoteDataSources {
         
         yield return static () => new MdTestData(SectionName,
             """
-            >|style=note|title=**Do Something**
-            > Body Content
+            > This is a blockquote
+            - List item
             """,
             """
-            <div class="md-callout md-callout-note">
-                <div class="md-callout-title"><strong>Do Something</strong></div>
-                <div class="md-callout-body">
-                    <p>Body Content</p>
-                </div>
-            </div>
+            <blockquote>
+                <p>This is a blockquote</p>
+            </blockquote>
+            <ul>
+                <li>
+                    List item
+                </li>
+            </ul>
             """
         );
     }

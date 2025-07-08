@@ -8,9 +8,8 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
 public static class MdRegexGroupNames {
     public const string B = "b";
     public const string BlockQuote = "blockQuote";
-    public const string BqBody = "bqBody";
-    public const string BqMods = "bqMods";
     public const string Bold = "bold";
+    public const string Callout = "callout";
     public const string C = "c";
     public const string CBody = "cBody";
     public const string CLang = "cLang";
