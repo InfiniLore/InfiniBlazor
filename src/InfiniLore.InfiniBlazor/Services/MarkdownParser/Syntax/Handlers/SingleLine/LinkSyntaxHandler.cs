@@ -41,7 +41,7 @@ public sealed partial class LinkSyntaxHandler : IMdSyntaxHandler {
             imgNode.Href = linkHref;
             imgNode.AltText = NormalizeAltText.Replace(linkText, string.Empty);
             
-            if (mods.IsNotNullOrWhiteSpace()) imgNode.Mod = MdSyntaxMod.FromString(mods);
+            if (mods.IsNotNullOrWhiteSpace()) imgNode.Modifiers = MdSyntaxNodeModifier.FromString(mods);
             
             parentNode.AddChildNode(imgNode);
             return ;

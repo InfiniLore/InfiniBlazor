@@ -22,8 +22,8 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
     public virtual int Depth { get; set; }
     public IMdSyntaxNode? Parent { get; set; }
     
-    [MemberNotNullWhen(true, nameof(Mod))] public bool ContainsMods => Mod is not null;
-    public MdSyntaxMod? Mod { get; set; }
+    [MemberNotNullWhen(true, nameof(Modifiers))] public bool ContainsMods => Modifiers is not null;
+    public MdSyntaxNodeModifier? Modifiers { get; set; }
 
     public static ObjectPool<T> Pool { get; } = PoolingHelpers.CreateResettablePool<T>(16);
     // -----------------------------------------------------------------------------------------------------------------
@@ -128,9 +128,9 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
         Parent = null;
         
         // ReSharper disable once InvertIf
-        if (Mod is not null) {
-            MdSyntaxMod.Pool.Return(Mod);
-            Mod = null;
+        if (Modifiers is not null) {
+            MdSyntaxNodeModifier.Pool.Return(Modifiers);
+            Modifiers = null;
         }
         
         return true;

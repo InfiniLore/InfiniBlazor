@@ -7,11 +7,11 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class MdSyntaxModExtensions {
-    public static bool TryGetTitle(this MdSyntaxMod mod, [NotNullWhen(true)] out string? title) 
+public static class MdSyntaxNodeModifierExtensions {
+    public static bool TryGetTitle(this MdSyntaxNodeModifier mod, [NotNullWhen(true)] out string? title) 
         => mod.TryGetAttributeValue("title", out title);
 
-    public static bool TryGetSize(this MdSyntaxMod mod, out (int Width, int Height) size) {
+    public static bool TryGetSize(this MdSyntaxNodeModifier mod, out (int Width, int Height) size) {
         size = (-1,-1);
         if (!mod.Attributes.TryGetValue("size", out Range range)) return false;
             
@@ -38,5 +38,5 @@ public static class MdSyntaxModExtensions {
         return false;
     }
     
-    public static bool GetFit(this MdSyntaxMod mod) => mod.Attributes.ContainsKey("fit");
+    public static bool GetFit(this MdSyntaxNodeModifier mod) => mod.Attributes.ContainsKey("fit");
 }

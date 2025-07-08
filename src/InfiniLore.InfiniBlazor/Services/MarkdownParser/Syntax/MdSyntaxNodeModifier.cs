@@ -9,20 +9,20 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MdSyntaxMod : IResettable {
+public class MdSyntaxNodeModifier : IResettable {
     public Dictionary<string, Range> Attributes { get; } = new();
     public string OriginalInput { get; set; } = string.Empty;
     public ReadOnlySpan<char> OriginalInputSpan => OriginalInput.AsSpan();
     
-    public static ObjectPool<MdSyntaxMod> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxMod>(16);
+    public static ObjectPool<MdSyntaxNodeModifier> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxNodeModifier>(16);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
     
     // ReSharper disable once InvertIf
-    public static MdSyntaxMod FromString(string input) {
-        MdSyntaxMod mod = Pool.Get();
+    public static MdSyntaxNodeModifier FromString(string input) {
+        MdSyntaxNodeModifier mod = Pool.Get();
         mod.OriginalInput = input;
         
         ReadOnlySpan<char> span = input.AsSpan();
@@ -38,11 +38,11 @@ public class MdSyntaxMod : IResettable {
                     if (pointer > keyStart) {
                         if (keyEnd == -1) {
                             // No '=' found, this is a flag attribute
-                            mod.Attributes.Add(span[keyStart..pointer].ToString().ToLowerInvariant(), new Range(pointer, pointer));
+                            mod.Attributes.AddOrUpdate(span[keyStart..pointer].ToString().ToLowerInvariant(), new Range(pointer, pointer));
                         }
                         else {
                             // Normal key=value attribute
-                            mod.Attributes.Add(span[keyStart..keyEnd].ToString().ToLowerInvariant(), new Range(valueStart, pointer));
+                            mod.Attributes.AddOrUpdate(span[keyStart..keyEnd].ToString().ToLowerInvariant(), new Range(valueStart, pointer));
                         }
                     }
                     keyStart = ++pointer;
@@ -67,11 +67,11 @@ public class MdSyntaxMod : IResettable {
         if (span.Length > keyStart) {
             if (keyEnd == -1) {
                 // Last attribute is a flag
-                mod.Attributes.Add(span[keyStart..].ToString().ToLowerInvariant(), new Range(span.Length, span.Length));
+                mod.Attributes.AddOrUpdate(span[keyStart..].ToString().ToLowerInvariant(), new Range(span.Length, span.Length));
             }
             else if (valueStart < span.Length) {
                 // Last attribute is key=value
-                mod.Attributes.Add(span[keyStart..keyEnd].ToString().ToLowerInvariant(), new Range(valueStart, span.Length));
+                mod.Attributes.AddOrUpdate(span[keyStart..keyEnd].ToString().ToLowerInvariant(), new Range(valueStart, span.Length));
             }
         }
         
@@ -88,6 +88,29 @@ public class MdSyntaxMod : IResettable {
         }
 
         value = null;
+        return false;
+    }
+
+    public bool TryGetAttributeFlag(string key, out bool value) {
+        if (!Attributes.TryGetValue(key, out Range range)) {
+            value = false;
+            return false;
+        }
+
+        if (range.Start.Equals(range.End)) {
+            value = true;
+            return true;
+        }
+        
+        ReadOnlySpan<char> span = OriginalInputSpan[range];
+        if (bool.TryParse(span, out value)) return true;
+        
+        // Only accept 0 or 1 as valid int values
+        if (int.TryParse(span, out int intValue) && intValue is 0 or 1) {
+            value = intValue != 0;
+            return true;
+        }
+        
         return false;
     }
     

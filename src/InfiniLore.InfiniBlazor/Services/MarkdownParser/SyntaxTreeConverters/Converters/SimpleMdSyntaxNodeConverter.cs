@@ -75,17 +75,17 @@ public class SimpleMdSyntaxNodeConverter : IMdSyntaxNodeConverter, IResettable {
                 }
 
                 if (imgNode.ContainsMods) {
-                    if (imgNode.Mod.TryGetTitle(out string? title)) {
+                    if (imgNode.Modifiers.TryGetTitle(out string? title)) {
                         Sb.Append(" title=\"");
                         Sb.Append(title.AsSpan());
                         Sb.Append('"');
                     }
                     
-                    if (imgNode.Mod.GetFit()) {
+                    if (imgNode.Modifiers.GetFit()) {
                         Sb.Append(" style=\"width:auto;height:2em;vertical-align:baseline;object-fit:contain;\"");
                     }
                     
-                    else if (imgNode.Mod.TryGetSize(out (int Width, int Height) size)) {
+                    else if (imgNode.Modifiers.TryGetSize(out (int Width, int Height) size)) {
                         Sb.Append(" style=\"width: ");
                         Sb.Append(size.Width);
                         Sb.Append("px; height: ");

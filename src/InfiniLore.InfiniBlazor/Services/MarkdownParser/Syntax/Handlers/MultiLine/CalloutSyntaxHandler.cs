@@ -38,7 +38,7 @@ public sealed class CalloutSyntaxHandler : IMdSyntaxHandler {
         }
         
         if (entireMatch.Groups[CalloutModId] is { Success: true, Value: {} mods }) {
-            node.Mod = MdSyntaxMod.FromString(mods);
+            node.Modifiers = MdSyntaxNodeModifier.FromString(mods);
         }
 
         if (entireMatch.Groups[CalloutTitleId] is { Success: true, Value: {} title }) {
