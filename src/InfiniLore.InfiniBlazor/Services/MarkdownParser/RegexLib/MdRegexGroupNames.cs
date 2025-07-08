@@ -61,9 +61,4 @@ public static class MdRegexGroupNames {
     public const string Tag = "tag";
     public const string U = "u";
     public const string Underline = "underline";
-    
-    public const string ModTitle = "modTitle";
-    public const string ModStyle = "modStyle";
-    public const string ModSize = "modSize";
-    public const string ModFit = "modFit";
 }
