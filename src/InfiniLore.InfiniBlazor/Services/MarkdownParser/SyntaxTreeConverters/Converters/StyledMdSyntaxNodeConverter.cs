@@ -204,8 +204,10 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                 break;
             }
 
-            case TagMdSyntaxNode: {
-                Sb.Append("<span class=\"inline-block infini-bg-(--color-base-95) rounded-full px-2 font-semibold text-(--color-accent) md-tag\">");
+            case TagMdSyntaxNode {ContentTag: var contentTag}: {
+                Sb.Append("<span class=\"inline-block infini-bg-(--color-base-95) rounded-xl px-1.5 text-(--color-accent) md-tag md-tag-");
+                Sb.Append(contentTag.Replace('/', '-'));
+                Sb.Append("\">");
                 break;
             }
 
