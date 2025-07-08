@@ -13,7 +13,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.SupScript)]
 public sealed class SuperScriptSyntaxHandler : IMdSyntaxHandler {
-    private static readonly int SpId = MdRegexLib.GetGroupId(MdRegexGroupNames.Sp);
+    private static readonly int SpId = MdRegexLib.GetGroupId(MdRegexGroupNames.SuperScriptContent);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.SuperScript;
     
     // -----------------------------------------------------------------------------------------------------------------

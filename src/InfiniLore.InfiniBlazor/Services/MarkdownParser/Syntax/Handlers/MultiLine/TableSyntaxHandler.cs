@@ -16,9 +16,9 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 public sealed class TableSyntaxHandler : IMdSyntaxHandler {
     private const int StackAllocThreshold = 16;
 
-    private static readonly int BodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.TBody);
-    private static readonly int HeadId = MdRegexLib.GetGroupId(MdRegexGroupNames.THead);
-    private static readonly int SepId = MdRegexLib.GetGroupId(MdRegexGroupNames.TSep);
+    private static readonly int BodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.TableBody);
+    private static readonly int HeadId = MdRegexLib.GetGroupId(MdRegexGroupNames.TableHead);
+    private static readonly int SepId = MdRegexLib.GetGroupId(MdRegexGroupNames.TableSeparator);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------

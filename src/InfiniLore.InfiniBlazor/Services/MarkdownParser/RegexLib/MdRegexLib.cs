@@ -82,12 +82,12 @@ public static partial class MdRegexLib {
 
         // Singleline
         MdRegexGroupNames.Escaped,
-        MdRegexGroupNames.Bold,
+        MdRegexGroupNames.BoldContent,
         MdRegexGroupNames.Italic,
         MdRegexGroupNames.SupScript,
         MdRegexGroupNames.SubScript,
         MdRegexGroupNames.Strike,
-        MdRegexGroupNames.Code,
+        MdRegexGroupNames.CodeInline,
         MdRegexGroupNames.Link,
         MdRegexGroupNames.Underline,
         MdRegexGroupNames.Emote,

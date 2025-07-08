@@ -13,7 +13,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.Underline)]
 public sealed class UnderlineSyntaxHandler : IMdSyntaxHandler {
-    private static readonly int UId = MdRegexLib.GetGroupId(MdRegexGroupNames.U);
+    private static readonly int UId = MdRegexLib.GetGroupId(MdRegexGroupNames.UnderlineContent);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.Underline;
     
     // -----------------------------------------------------------------------------------------------------------------

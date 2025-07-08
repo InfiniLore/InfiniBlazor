@@ -15,9 +15,9 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 [InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.List)]
 public sealed class BaseListSyntaxHandler : IMdSyntaxHandler {
     private static readonly int LsId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListIdentifier);
-    private static readonly int LTaskId = MdRegexLib.GetGroupId(MdRegexGroupNames.LTask);
-    private static readonly int LHeadId = MdRegexLib.GetGroupId(MdRegexGroupNames.LHead);
-    private static readonly int LBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.LBody);
+    private static readonly int LTaskId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListTask);
+    private static readonly int LHeadId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListHead);
+    private static readonly int LBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListBody);
     
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
 

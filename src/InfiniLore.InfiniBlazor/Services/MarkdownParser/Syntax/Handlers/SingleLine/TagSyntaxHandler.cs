@@ -13,7 +13,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.Tag)]
 public sealed class TagSyntaxHandler : IMdSyntaxHandler {
-    private static readonly int TextId = MdRegexLib.GetGroupId(MdRegexGroupNames.TText);
+    private static readonly int TextId = MdRegexLib.GetGroupId(MdRegexGroupNames.TagText);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
     
     // -----------------------------------------------------------------------------------------------------------------

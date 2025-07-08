@@ -14,7 +14,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.MultiLine;
 [InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.Paragraph)]
 public sealed class ParagraphSyntaxHandler : IMdSyntaxHandler {
 
-    private static readonly int PId = MdRegexLib.GetGroupId(MdRegexGroupNames.P);
+    private static readonly int PId = MdRegexLib.GetGroupId(MdRegexGroupNames.ParagraphContent);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

@@ -13,10 +13,10 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.Link)]
 public sealed partial class LinkSyntaxHandler : IMdSyntaxHandler {
-    private static readonly int LnTextId = MdRegexLib.GetGroupId(MdRegexGroupNames.LnText);
-    private static readonly int LnHrefId = MdRegexLib.GetGroupId(MdRegexGroupNames.LnHref);
-    private static readonly int LnModsId = MdRegexLib.GetGroupId(MdRegexGroupNames.LnMods);
-    private static readonly int LnBangId = MdRegexLib.GetGroupId(MdRegexGroupNames.LnBang);
+    private static readonly int LnTextId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkText);
+    private static readonly int LnHrefId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkHref);
+    private static readonly int LnModsId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkModifiers);
+    private static readonly int LnBangId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkBang);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
     
     [GeneratedRegex(@"\\(?!\\)")]
