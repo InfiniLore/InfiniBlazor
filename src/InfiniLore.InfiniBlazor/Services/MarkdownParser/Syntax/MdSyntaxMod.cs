@@ -19,6 +19,8 @@ public class MdSyntaxMod : IResettable {
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
+    
+    // ReSharper disable once InvertIf
     public static MdSyntaxMod FromString(string input) {
         MdSyntaxMod mod = Pool.Get();
         mod.OriginalInput = input;
