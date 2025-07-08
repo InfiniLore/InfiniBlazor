@@ -26,5 +26,31 @@ public static class CalloutDataSources {
             </div>
             """
         );
+        
+        yield return static () => new MdTestData(SectionName,
+            """
+            !> callout without a type
+            !> Body Content
+            """,
+            """
+            <div class="md-callout">
+                <div class="md-callout-title">callout without a type</div>
+                <div class="md-callout-body">
+                    <p>Body Content</p>
+                </div>
+            </div>
+            """
+        );
+        
+        yield return static () => new MdTestData(SectionName,
+            """
+            !> callout with only a title
+            """,
+            """
+            <div class="md-callout">
+                <div class="md-callout-title">callout with only a title</div>
+            </div>
+            """
+        );
     }
 }

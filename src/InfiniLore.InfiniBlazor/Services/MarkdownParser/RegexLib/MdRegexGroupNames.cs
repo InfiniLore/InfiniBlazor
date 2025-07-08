@@ -10,6 +10,10 @@ public static class MdRegexGroupNames {
     public const string BlockQuote = "blockQuote";
     public const string Bold = "bold";
     public const string Callout = "callout";
+    public const string CalloutType = "clType";
+    public const string CalloutMod = "clMod";
+    public const string CalloutTitle = "clTitle";
+    public const string CalloutBody = "clBody";
     public const string C = "c";
     public const string CBody = "cBody";
     public const string CLang = "cLang";

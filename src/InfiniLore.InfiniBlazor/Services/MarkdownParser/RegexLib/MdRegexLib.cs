@@ -49,20 +49,23 @@ public static partial class MdRegexLib {
             ^\|(?<tSep>[:\-|\ ]+?)\|\s*\n
             (?<tBody>(?:^\|.*\S.*\|(?:\n|$))+)
           )
-        | (?<blockQuote>^>\s+.*(?:\n(?![*+-]\s|[-.]?\d|\s*[^>]).+)*)
-        | (?<callout>^!>)
+        | (?<blockQuote>^>\ *.+(?:\n>[^\n]*)*)
+        | (?<callout>
+            ^!>(?:\[(?<clType>[^\|]+)(?<clMod>\|.*)?\])?\ *(?<clTitle>.*)
+            (?:\n(?<clBody>!>[^\n]*(?:\n!>[^\n]*)*))?  
+          )
         | (?:
             (?<htmlPre>.+?)?
               (?<htmlBody>
-                <(?<tag>\w+)\b[^>]*>
+                <(?<htmlTag>\w+)\b[^>]*>
                 (?>
                   [^<]+
-                  | <(?<open>\k<tag>)\b[^>]*>
-                  | </(?<-open>\k<tag>)>
-                  | <(?!/?\k<tag>\b)[^>]+>
+                  | <(?<open>\k<htmlTag>)\b[^>]*>
+                  | </(?<-open>\k<htmlTag>)>
+                  | <(?!/?\k<htmlTag>\b)[^>]+>
                 )*
                 (?(open)(?!))
-                (</\k<tag>>)
+                (</\k<htmlTag>>)
               )
             (?<htmlPost>.+)?
           )
@@ -102,17 +105,17 @@ public static partial class MdRegexLib {
     public static partial Regex ListItemBodyRegex { get; }
 
     [GeneratedRegex("""
-        (?<spanTag><(?<tag>span)\b[^>]*>)
+        (?<spanTag><(?<spanHtmlTag>span)\b[^>]*>)
         (?<spanBody>
           (?>
             [^<]+
-            | <(?<open>\k<tag>)\b[^>]*>
-            | </(?<-open>\k<tag>)>
-            | <(?!/?\k<tag>\b)[^>]+>
+            | <(?<open>\k<spanHtmlTag>)\b[^>]*>
+            | </(?<-open>\k<spanHtmlTag>)>
+            | <(?!/?\k<spanHtmlTag>\b)[^>]+>
           )*
         )
         (?(open)(?!))
-        (</\k<tag>>)
+        (</\k<spanHtmlTag>>)
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.Compiled)]
     public static partial Regex FindSpanHtmlRegex { get; }
     

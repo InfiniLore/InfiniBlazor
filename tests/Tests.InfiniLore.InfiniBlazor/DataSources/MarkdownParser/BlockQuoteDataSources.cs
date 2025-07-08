@@ -288,12 +288,18 @@ public static class BlockQuoteDataSources {
         yield return static () => new MdTestData(SectionName,
             """
             > Level 1
-            >>>>>>>>>>>>>>>>>>>> Level 20
+            >>>> Level 4
             """,
             """
             <blockquote>
                 <p>Level 1</p>
-                <p>>>>>>>>>>>>>>>>>>>>Level 20</p>
+                <blockquote>
+                    <blockquote>
+                        <blockquote>
+                            <p>Level 4</p>
+                        </blockquote>
+                    </blockquote>
+                </blockquote>
             </blockquote>
             """
         );
