@@ -21,8 +21,11 @@ public static partial class MdRegexLib {
         | (?<emote>:(?<e>[\p{L}\p{N}\-_]+):)
         | (?<link>
             (?<lnBang>!)?
-            \[(?<lnText>(?:!?\[.+?\]\(.+?\))|(?:[^\]]+?))\]
-            \((?<lnHref>http(?:s)?[^\)]+?)(?:\s?"(?<lnTitle>[^"]*)")?\)
+            \[(?<lnText> (?:\ *!?\[.+?\]\(.+?\)\ *)|(?:[^\\\]]|\\\]|\\[^\]])*?)\]
+            \(
+              (?<lnHref>\ *https?[^\)\ |]+?)
+              \ ?(?<lnMods>(?:\|.*)?)
+            \)
           )
         | (?<tag>\#(?<tText>[\p{L}\p{N}\-_/]+))
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
@@ -38,19 +41,23 @@ public static partial class MdRegexLib {
             ^\|(?<tSep>[:\-|\ ]+?)\|\s*\n
             (?<tBody>(?:^\|.*\S.*\|(?:\n|$))+)
           )
-        | (?<blockQuote>^>\s+.*(?:\n(?![*+-]\s|[-.]?\d|\s*[^>]).+)*)
+        | (?<blockQuote>^>\ *.+(?:\n>[^\n]*)*)
+        | (?<callout>
+            ^!>(?:\[(?<clType>[^\|]+)(?<clMod>\|[^\n]*)?\])?\ *(?<clTitle>[^\n]*)
+            (?:\n(?<clBody>!>[^\n]*(?:\n!>[^\n]*)*))?  
+          )
         | (?:
             (?<htmlPre>.+?)?
               (?<htmlBody>
-                <(?<tag>\w+)\b[^>]*>
+                <(?<htmlTag>\w+)\b[^>]*>
                 (?>
                   [^<]+
-                  | <(?<open>\k<tag>)\b[^>]*>
-                  | </(?<-open>\k<tag>)>
-                  | <(?!/?\k<tag>\b)[^>]+>
+                  | <(?<open>\k<htmlTag>)\b[^>]*>
+                  | </(?<-open>\k<htmlTag>)>
+                  | <(?!/?\k<htmlTag>\b)[^>]+>
                 )*
                 (?(open)(?!))
-                (</\k<tag>>)
+                (</\k<htmlTag>>)
               )
             (?<htmlPost>.+)?
           )
@@ -69,6 +76,7 @@ public static partial class MdRegexLib {
         MdRegexGroupNames.List,
         MdRegexGroupNames.Table,
         MdRegexGroupNames.BlockQuote,
+        MdRegexGroupNames.Callout,
         MdRegexGroupNames.HtmlBody,
         MdRegexGroupNames.HorizontalRule,
 
@@ -90,17 +98,17 @@ public static partial class MdRegexLib {
     public static partial Regex ListItemBodyRegex { get; }
 
     [GeneratedRegex("""
-        (?<spanTag><(?<tag>span)\b[^>]*>)
+        (?<spanTag><(?<spanHtmlTag>span)\b[^>]*>)
         (?<spanBody>
           (?>
             [^<]+
-            | <(?<open>\k<tag>)\b[^>]*>
-            | </(?<-open>\k<tag>)>
-            | <(?!/?\k<tag>\b)[^>]+>
+            | <(?<open>\k<spanHtmlTag>)\b[^>]*>
+            | </(?<-open>\k<spanHtmlTag>)>
+            | <(?!/?\k<spanHtmlTag>\b)[^>]+>
           )*
         )
         (?(open)(?!))
-        (</\k<tag>>)
+        (</\k<spanHtmlTag>>)
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.Compiled)]
     public static partial Regex FindSpanHtmlRegex { get; }
     
@@ -109,13 +117,15 @@ public static partial class MdRegexLib {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public static Regex[] GetAllRegexes() => [
+        SinglelineStructuresRegex,
+        MultilineStructuresRegex,
+        FindSpanHtmlRegex,
+        ListItemBodyRegex,
+    ];
+    
     private static FrozenDictionary<string, int> GetGroupNames() {
-        ReadOnlySpan<Regex> regexes = [
-            SinglelineStructuresRegex,
-            MultilineStructuresRegex,
-            FindSpanHtmlRegex,
-            ListItemBodyRegex
-        ];
+        ReadOnlySpan<Regex> regexes = GetAllRegexes();
 
         int totalGroups = regexes.Sum(regex => regex.GetGroupNames().Length);
         Dictionary<string, int> dictionary = new(totalGroups);

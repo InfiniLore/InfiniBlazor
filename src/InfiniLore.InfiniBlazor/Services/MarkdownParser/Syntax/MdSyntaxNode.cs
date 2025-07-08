@@ -6,6 +6,7 @@ using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using InfiniLore.InfiniBlazor.Pooling;
 using Microsoft.Extensions.ObjectPool;
 using System.Buffers;
+using System.Diagnostics.CodeAnalysis;
 
 namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -14,16 +15,17 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
     where T : MdSyntaxNode<T>, new() 
 {
-    public static ObjectPool<T> Pool { get; } = PoolingHelpers.CreateResettablePool<T>(16);
-
     private const int ChildrenMinimumCapacity = 2;
     public int ChildCount { get; private set; }
-    public virtual int Depth { get; set; }
-    
     protected virtual IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(ChildrenMinimumCapacity);
 
+    public virtual int Depth { get; set; }
     public IMdSyntaxNode? Parent { get; set; }
+    
+    [MemberNotNullWhen(true, nameof(Modifiers))] public bool ContainsMods => Modifiers is not null;
+    public MdSyntaxNodeModifier? Modifiers { get; set; }
 
+    public static ObjectPool<T> Pool { get; } = PoolingHelpers.CreateResettablePool<T>(16);
     // -----------------------------------------------------------------------------------------------------------------
     // Constructor Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -124,6 +126,13 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
         Depth = 0;
 
         Parent = null;
+        
+        // ReSharper disable once InvertIf
+        if (Modifiers is not null) {
+            MdSyntaxNodeModifier.Pool.Return(Modifiers);
+            Modifiers = null;
+        }
+        
         return true;
     }
 }

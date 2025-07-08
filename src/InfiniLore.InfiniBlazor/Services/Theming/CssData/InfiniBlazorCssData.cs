@@ -148,6 +148,7 @@ public partial record InfiniBlazorCssData : ICssData {
     [CssData, InterpretAsVar(nameof(ColorAccent))] public partial string ButtonOutlineTextHover { get; init; }
     [CssData, InterpretAsVar(nameof(ColorBase40))] public partial string ButtonOutlineRing { get; init; }
     [CssData, InterpretAsVar(nameof(ColorAccent))] public partial string ButtonOutlineRingHover { get; init; }
-    
+   
+    [CssData, InterpretAsVar(nameof(ColorBase50))] public partial string Codeblock { get; init; }
     #endregion
 }

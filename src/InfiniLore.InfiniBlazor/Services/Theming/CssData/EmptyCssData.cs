@@ -116,4 +116,5 @@ public partial record EmptyCssData : ICssData {
     public string UsericonAltHover { get; init; } = string.Empty;
     public string UsericonRing { get; init; } = string.Empty;
     public string UsericonStatus { get; init; } = string.Empty;
+    public string Codeblock { get; init; } = string.Empty;
 }

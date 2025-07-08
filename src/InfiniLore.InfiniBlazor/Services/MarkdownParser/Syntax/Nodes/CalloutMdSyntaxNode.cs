@@ -2,20 +2,18 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class ImageMdSyntaxNode : MdSyntaxNode<ImageMdSyntaxNode> {
-    public string Href { get; set; } = string.Empty;
-    public string AltText { get; set; } = string.Empty;
-    
+public sealed class CalloutMdSyntaxNode : MdSyntaxNode<CalloutMdSyntaxNode> {
+    public string? CalloutType { get; set; }
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public override bool TryReset() {
-        Href = string.Empty;
-        AltText = string.Empty;
-        
+        CalloutType = null;
         return base.TryReset();
     }
 }

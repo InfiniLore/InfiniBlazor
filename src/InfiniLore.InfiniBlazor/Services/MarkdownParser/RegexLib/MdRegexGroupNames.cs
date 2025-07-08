@@ -9,6 +9,11 @@ public static class MdRegexGroupNames {
     public const string B = "b";
     public const string BlockQuote = "blockQuote";
     public const string Bold = "bold";
+    public const string Callout = "callout";
+    public const string CalloutType = "clType";
+    public const string CalloutMod = "clMod";
+    public const string CalloutTitle = "clTitle";
+    public const string CalloutBody = "clBody";
     public const string C = "c";
     public const string CBody = "cBody";
     public const string CLang = "cLang";
@@ -37,7 +42,7 @@ public static class MdRegexGroupNames {
     public const string LnBang = "lnBang";
     public const string LnHref = "lnHref";
     public const string LnText = "lnText";
-    public const string LnTitle = "lnTitle";
+    public const string LnMods = "lnMods";
     public const string P = "p";
     public const string Paragraph = "paragraph";
     public const string S = "s";

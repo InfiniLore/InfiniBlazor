@@ -288,12 +288,18 @@ public static class BlockQuoteDataSources {
         yield return static () => new MdTestData(SectionName,
             """
             > Level 1
-            >>>>>>>>>>>>>>>>>>>> Level 20
+            >>>> Level 4
             """,
             """
             <blockquote>
                 <p>Level 1</p>
-                <p>>>>>>>>>>>>>>>>>>>>Level 20</p>
+                <blockquote>
+                    <blockquote>
+                        <blockquote>
+                            <p>Level 4</p>
+                        </blockquote>
+                    </blockquote>
+                </blockquote>
             </blockquote>
             """
         );
@@ -369,6 +375,23 @@ public static class BlockQuoteDataSources {
                     <blockquote>
                         <p>This is a blockquote inside a list item.</p>
                     </blockquote>
+                </li>
+            </ul>
+            """
+        );
+        
+        yield return static () => new MdTestData(SectionName,
+            """
+            > This is a blockquote
+            - List item
+            """,
+            """
+            <blockquote>
+                <p>This is a blockquote</p>
+            </blockquote>
+            <ul>
+                <li>
+                    List item
                 </li>
             </ul>
             """

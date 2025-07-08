@@ -14,6 +14,28 @@ public class TableDataSources {
     public static IEnumerable<Func<MdTestData>> DataSources() {
         yield return static () => new MdTestData(SectionName,
             """
+            | Test  |
+            | ----- |
+            | Value |
+            """,
+            """
+            <table>
+                <thead>
+                    <tr>
+                        <th>Test</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Value</td>
+                    </tr>
+                </tbody>
+            </table>
+            """
+        );
+        
+        yield return static () => new MdTestData(SectionName,
+            """
             | Column 1      | Column 2     | Column 3      |
             | --------------| ------------ |-------------- |
             | Row 2 col 1   | Row 2 col 2  | Row 2 col 3   |

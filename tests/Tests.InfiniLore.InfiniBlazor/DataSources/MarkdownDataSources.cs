@@ -15,6 +15,7 @@ public class MarkdownDataSources {
             BlockQuoteDataSources.DataSources(),
             BoldAndItalicDataSources.DataSources(),
             BoldDataSources.DataSources(),
+            CalloutDataSources.DataSources(),
             CodeDataSources.DataSources(),
             CodeInlineDataSources.DataSources(),
             EdgeCaseDataSources.DataSources(),

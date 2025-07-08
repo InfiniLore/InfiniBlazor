@@ -21,17 +21,17 @@
         int index = i;
         if (_activeParagraphIndex is not -1 && index == _activeParagraphIndex) {
             <div
-                 contenteditable="true"
-                 spellcheck="true"
-                 @ref="_editableDiv"
-                 @oninput="@(e => OnParagraphInput(e, index))"
-                 @onkeydown="@(e => OnKeyDown(e, index))"
-                 @onblur="@(() => OnParagraphBlur(index))"
-            >
+                contenteditable="true"
+                spellcheck="true"
+                @ref="_editableDiv"
+                @oninput="@(e => OnParagraphInput(e, index))"
+                @onkeydown="@(e => OnKeyDown(e, index))"
+                @onblur="@(() => OnParagraphBlur(index))">
             </div>
 
-        } else {
-            <div  @onclick="@(() => ActivateParagraph(index))">
+        }
+        else {
+            <div @onclick="@(() => ActivateParagraph(index))">
                 @GetParsedParagraph(index)
             </div>
         }

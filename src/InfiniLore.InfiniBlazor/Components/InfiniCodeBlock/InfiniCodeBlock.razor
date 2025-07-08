@@ -19,14 +19,14 @@
                 Class="[&_button]:bg-(--color-base-50) [&_button:hover]:bg-(--color-base-50)"
                 IconName="copy"
                 Variant="ButtonVariant.Outline"
-                OnClick="CopyToClipboardAsync"
+                OnClick="@CopyToClipboardAsync"
                 Tooltip="Copy to clipboard"
                 TooltipAnchor="@Anchor.Left">
                 @Language
             </InfiniButton>
         }
     </div>
-    <div class="bg-(--color-base-50) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar">
+    <div class="infini-bg-(--codeblock) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar">
         <div class="relative">
             <pre class="whitespace-pre m-0 font-mono min-h-0"><code>@Content @ChildContent</code></pre>
         </div>

@@ -83,5 +83,39 @@ public static class LineNormalization {
 
         return count;
     }
+    
+    public static string NormalizeBlockQuote(ReadOnlySpan<char> span) {
+        ReadOnlySpan<char> normalized = NormalizeLinePrefixes(span, ">");
+        string adjusted = NormalizeLineIndentation(normalized);
+        return adjusted;
+    }
+    
+    public static string NormalizeCallout(ReadOnlySpan<char> span) {
+        ReadOnlySpan<char> normalized = NormalizeLinePrefixes(span, "!>");
+        string adjusted = NormalizeLineIndentation(normalized);
+        return adjusted;
+    }
 
+    private static ReadOnlySpan<char> NormalizeLinePrefixes(ReadOnlySpan<char> span, ReadOnlySpan<char> prefix) {
+        int prefixLength = prefix.Length;
+        StringBuilder builder = GlobalPools.StringBuilder.Get();
+        try {
+            foreach (ReadOnlySpan<char> line in span.EnumerateLines()) {
+                ReadOnlySpan<char> trimmedLine = line.TrimStart();
+
+                if (trimmedLine.StartsWith(prefix)) {
+                    trimmedLine = trimmedLine[prefixLength..];// Remove prefix
+                }
+
+                // Append the normalized line back to the builder
+                builder.Append(trimmedLine);
+                builder.Append('\n');
+            }
+            if (builder.Length > 0) builder.Length--; // Remove the last newline
+            return builder.ToString();
+        }
+        finally {
+            GlobalPools.StringBuilder.Return(builder);
+        }
+    }
 }
