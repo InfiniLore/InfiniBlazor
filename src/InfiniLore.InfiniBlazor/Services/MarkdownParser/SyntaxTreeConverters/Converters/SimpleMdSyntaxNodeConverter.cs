@@ -184,7 +184,7 @@ public class SimpleMdSyntaxNodeConverter : IMdSyntaxNodeConverter, IResettable {
             }
 
             case TagMdSyntaxNode: {
-                Sb.Append("<span class=\"tag\">");
+                Sb.Append("<span class=\"md-tag\">");
                 break;
             }
 

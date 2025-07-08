@@ -14,32 +14,32 @@ public static class TagDataSources {
     public static IEnumerable<Func<MdTestData>> DataSources() {
         yield return static () => new MdTestData(SectionName,
             "#tag",
-            "<p><span class=\"tag\">#tag</span></p>"
+            "<p><span class=\"md-tag\">#tag</span></p>"
         );
 
         yield return static () => new MdTestData(SectionName,
             "#不",
-            "<p><span class=\"tag\">#不</span></p>"
+            "<p><span class=\"md-tag\">#不</span></p>"
         );
 
         yield return static () => new MdTestData(SectionName,
             "#öäüÖÄÜß",
-            "<p><span class=\"tag\">#öäüÖÄÜß</span></p>"
+            "<p><span class=\"md-tag\">#öäüÖÄÜß</span></p>"
         );
 
         yield return static () => new MdTestData(SectionName,
             "**#tag**",
-            "<p><strong><span class=\"tag\">#tag</span></strong></p>"
+            "<p><strong><span class=\"md-tag\">#tag</span></strong></p>"
         );
 
         yield return static () => new MdTestData(SectionName,
             "*#tag*",
-            "<p><em><span class=\"tag\">#tag</span></em></p>"
+            "<p><em><span class=\"md-tag\">#tag</span></em></p>"
         );
 
         yield return static () => new MdTestData(SectionName,
             "#this is not a valid tag",
-            "<p><span class=\"tag\">#this</span> is not a valid tag</p>");
+            "<p><span class=\"md-tag\">#this</span> is not a valid tag</p>");
         
         yield return static () => new MdTestData(SectionName,
             "#[link](https://www.transgenderinfo.be)",
