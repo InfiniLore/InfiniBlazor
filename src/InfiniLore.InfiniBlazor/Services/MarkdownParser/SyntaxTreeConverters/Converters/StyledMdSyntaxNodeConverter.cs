@@ -89,21 +89,21 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                 }
 
                 if (imgNode.ContainsMods) {
-                    if (imgNode.Mod.Title.IsNotNullOrWhiteSpace()) {
+                    if (imgNode.Mod.TryGetTitle(out string? title)) {
                         Sb.Append(" title=\"");
-                        Sb.Append(imgNode.Mod.Title.AsSpan());
+                        Sb.Append(title.AsSpan());
                         Sb.Append('"');
                     }
                     
-                    if (imgNode.Mod.Fit) {
+                    if (imgNode.Mod.GetFit()) {
                         Sb.Append(" style=\"width:auto;height:2em;vertical-align:baseline;object-fit:contain;\"");
                     }
                     
-                    else if (imgNode.Mod is { Fit: false, Size: var (width, height) } ) {
+                    else if (imgNode.Mod.TryGetSize(out (int Width, int Height) size)) {
                         Sb.Append(" style=\"width: ");
-                        Sb.Append(width);
+                        Sb.Append(size.Width);
                         Sb.Append("px; height: ");
-                        Sb.Append(height);
+                        Sb.Append(size.Height);
                         Sb.Append("px;\"");
                     }
                 }
