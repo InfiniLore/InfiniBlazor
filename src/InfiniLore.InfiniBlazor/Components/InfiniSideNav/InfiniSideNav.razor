@@ -9,14 +9,14 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniComponentBase
+@inherits InfiniNavBase
 @inject IJsRuntimeHelper JsRuntimeHelper
 @inject ILogger<InfiniSideNav> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="MenuCollapsed">
-    <aside class="flex-shrink-0 h-full flex flex-col overflow-x-hidden infini-bg-(--sidebar-nav) border-r border-(--sidebar-nav-border)">
+    <aside class="@NavLocationClasses flex-shrink-0 h-full flex flex-col overflow-x-hidden infini-bg-(--sidebar-nav) border-(--sidebar-nav-border)">
         <div class="@(MenuCollapsed ? "w-14" : ClassOpen) px-2 h-full flex flex-col overflow-x-hidden transition-all duration-300">
 
             <!-- Top Logo and Hamburger -->

@@ -12,6 +12,7 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InteractiveAuto
+@inherits InfiniNavBase
 @inject IThemeStateProvider ThemeStateProvider
 @inject IToastingProvider ToastingProvider
 @inject IVisualDebuggerProvider DebuggerProvider
@@ -19,7 +20,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniSideNav @bind-MenuCollapsed="@MenuCollapsed">
+<InfiniSideNav @bind-MenuCollapsed="@MenuCollapsed" Location="@Location">
     <Header>
         <a href="/"
            class="@(!MenuCollapsed ? "text-1xl font-bold text-(--color-base-00) hover:text-(--color-accent) no-underline" : "hidden")">
@@ -164,7 +165,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
     private bool MenuCollapsed { get; set; }// Tracks whether the menu is collapsed
     private string _currentUserImage = "/icon.png";

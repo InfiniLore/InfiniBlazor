@@ -1,0 +1,99 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="flex h-screen w-screen">
+    @if (Layout.HasFastFlag(NavLayout.BarsPrimary)) {
+        <div class="flex h-screen w-full flex-col">
+            @Top
+            <div class="flex grow w-full flex-row min-h-0">
+                @Left
+                @Body
+                @Right
+            </div>
+            @Bottom
+        </div>
+    }
+    else if (Layout.HasFastFlag(NavLayout.SidesPrimary)) {
+        @Left
+        <div class="flex h-screen w-full flex-col">
+            @Top
+
+            @Body
+
+            @Bottom
+        </div>
+        @Right
+    }
+    else if (Layout.HasFastFlag(NavLayout.TopPrimary)) {
+        <div class="flex h-screen w-full flex-col">
+            @Top
+            <div class="flex grow w-full flex-row min-h-0">
+                @Left
+                <div class="flex grow w-full flex-col min-h-0">
+                    @Body
+                    @Bottom
+                </div>
+                @Right
+            </div>
+        </div>
+    }
+    else if (Layout.HasFastFlag(NavLayout.BottomPrimary)) {
+        <div class="flex h-screen w-full flex-col">
+            <div class="flex grow w-full flex-row min-h-0">
+                @Left
+                <div class="flex grow w-full flex-col min-h-0">
+                    @Top
+                    @Body
+                </div>
+                @Right
+            </div>
+            @Bottom
+        </div>
+    }
+    else if (Layout.HasFastFlag(NavLayout.LeftPrimary)) {
+        @Left
+        <div class="flex h-screen w-full flex-col">
+            @Top
+
+            <div class="flex grow">
+                @Body
+                @Right
+            </div>
+            @Bottom
+        </div>
+    }
+    else if (Layout.HasFastFlag(NavLayout.RightPrimary)) {
+        <div class="flex h-screen w-full flex-col">
+            @Top
+
+            <div class="flex grow">
+                @Left
+                @Body
+            </div>
+            @Bottom
+        </div>
+        @Right
+    }
+</div>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [Parameter] public RenderFragment? Top { get; set; }
+    [Parameter] public RenderFragment? Right { get; set; }
+    [Parameter] public RenderFragment? Left { get; set; }
+    [Parameter] public RenderFragment? Bottom { get; set; }
+
+    [Parameter] public RenderFragment? Body { get; set; }
+    [Parameter] public NavLayout Layout { get; set; } = NavLayout.SidesPrimary;
+}
