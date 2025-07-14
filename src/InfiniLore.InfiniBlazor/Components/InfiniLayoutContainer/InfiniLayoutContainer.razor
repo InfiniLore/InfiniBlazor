@@ -9,13 +9,16 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 <div class="flex h-screen w-screen">
     @if (Layout.HasFastFlag(NavLayout.BarsPrimary)) {
         <div class="flex h-screen w-full flex-col">
             @Top
-            <div class="flex grow w-full flex-row min-h-0">
+            <div class="flex grow w-full flex-row min-h-0 min-w-0">
                 @Left
-                @Body
+                <div class="flex flex-col min-w-0 w-full">
+                    @Body
+                </div>
                 @Right
             </div>
             @Bottom
@@ -23,11 +26,11 @@
     }
     else if (Layout.HasFastFlag(NavLayout.SidesPrimary)) {
         @Left
-        <div class="flex h-screen w-full flex-col">
+        <div class="flex h-screen w-full flex-col min-w-0">
             @Top
-
-            @Body
-
+            <div class="flex flex-col min-w-0 min-h-0 w-full">
+                @Body
+            </div>
             @Bottom
         </div>
         @Right
@@ -37,7 +40,7 @@
             @Top
             <div class="flex grow w-full flex-row min-h-0">
                 @Left
-                <div class="flex grow w-full flex-col min-h-0">
+                <div class="flex grow w-full flex-col min-h-0 min-w-0">
                     @Body
                     @Bottom
                 </div>
@@ -49,7 +52,7 @@
         <div class="flex h-screen w-full flex-col">
             <div class="flex grow w-full flex-row min-h-0">
                 @Left
-                <div class="flex grow w-full flex-col min-h-0">
+                <div class="flex grow w-full flex-col min-h-0 min-w-0">
                     @Top
                     @Body
                 </div>
@@ -60,27 +63,26 @@
     }
     else if (Layout.HasFastFlag(NavLayout.LeftPrimary)) {
         @Left
-        <div class="flex h-screen w-full flex-col">
+        <div class="flex h-screen w-full flex-col min-w-0">
             @Top
-
-            <div class="flex grow">
+            <div class="flex grow min-w-0 min-h-0">
                 @Body
                 @Right
             </div>
             @Bottom
         </div>
     }
-    else if (Layout.HasFastFlag(NavLayout.RightPrimary)) {
-        <div class="flex h-screen w-full flex-col">
-            @Top
 
-            <div class="flex grow">
+    else if (Layout.HasFastFlag(NavLayout.RightPrimary)) {
+        <div class="flex h-screen w-full flex-col min-w-0">
+            @Top
+            <div class="flex grow min-w-0 min-h-0">
                 @Left
                 @Body
             </div>
             @Bottom
         </div>
-        @Right
+        @Right   
     }
 </div>
 
