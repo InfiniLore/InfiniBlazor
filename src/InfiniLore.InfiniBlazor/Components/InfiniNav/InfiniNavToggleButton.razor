@@ -11,7 +11,7 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @if (MenuCollapsed) {
-    <div class="@InfiniSideNavItem.ContainerClassesNoHover relative w-full h-10">
+    <div class="@InfiniNavItem.ContainerClassesNoHover relative w-full h-10">
         <div class="flex items-center justify-end w-full h-full">
             <InfiniToggleButton
                 Value="@Value"
@@ -26,7 +26,7 @@
         </div>
     </div>
 } else {
-    <div class="@InfiniSideNavItem.ContainerClassesNoHover flex justify-between items-center h-10">
+    <div class="@InfiniNavItem.ContainerClassesNoHover flex justify-between items-center h-10">
         <span class="flex flex-nowrap items-center justify-center">
             <span class="w-6 h-6 text-(--sidebar-nav-text) flex-shrink-0">
                 @Icon

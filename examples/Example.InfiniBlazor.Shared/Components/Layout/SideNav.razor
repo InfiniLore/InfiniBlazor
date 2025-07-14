@@ -29,12 +29,12 @@
     </Header>
 
     <Body>
-    <InfiniSideNavLink Href="/markdown-dual">
+    <InfiniNavLink Href="/markdown-dual">
         <Icon>
             <LiSignature/>
         </Icon>
         <Text>Markdown Example</Text>
-    </InfiniSideNavLink>
+    </InfiniNavLink>
 
     @* <InfiniSideNavLink Href="/markdown-rolling"> *@
     @*     <Icon> *@
@@ -43,52 +43,52 @@
     @*     <Text>Rolling Markdown Example</Text> *@
     @* </InfiniSideNavLink> *@
 
-    <InfiniSideNavLink Href="/table">
+    <InfiniNavLink Href="/table">
         <Icon>
             <LiTable/>
         </Icon>
         <Text>Table</Text>
-    </InfiniSideNavLink>
+    </InfiniNavLink>
 
-    <InfiniSideNavLink Href="/html">
+    <InfiniNavLink Href="/html">
         <Icon>
             <LiCodeXml/>
         </Icon>
         <Text>Html</Text>
-    </InfiniSideNavLink>
+    </InfiniNavLink>
 
-    <InfiniSideNavLink Href="/theming/table">
+    <InfiniNavLink Href="/theming/table">
         <Icon>
             <LiTable2/>
         </Icon>
         <Text>theming table</Text>
-    </InfiniSideNavLink>
+    </InfiniNavLink>
 
-    <InfiniSideNavLink Href="/sections">
+    <InfiniNavLink Href="/sections">
         <Icon>
             <LiRows3/>
         </Icon>
         <Text>Sections</Text>
-    </InfiniSideNavLink>
+    </InfiniNavLink>
 
-    <InfiniSideNavLink Href="/" OpenInNewTab>
+    <InfiniNavLink Href="/" OpenInNewTab>
         <Icon>
             <LiArrowRightToLine/>
         </Icon>
         <Text>Open New Tab</Text>
-    </InfiniSideNavLink>
+    </InfiniNavLink>
 
     <InfiniSpacer/>
 
-    <InfiniSideNavButton OnClick="@OnCreateToastAsync">
+    <InfiniNavButton OnClick="@OnCreateToastAsync">
         <Icon>
             <LiPopcorn/>
         </Icon>
         <Text>Create Toast</Text>
-    </InfiniSideNavButton>
+    </InfiniNavButton>
 
 
-    <InfiniSideNavToggleButton
+    <InfiniNavToggleButton
         Value="@DebuggerProvider.IsEnabled()"
         ValueChanged="@DebuggerProvider.ToggleStateAsync"
         OnIcon="@(MenuCollapsed ? "bug" : null)"
@@ -98,11 +98,11 @@
             <LiBug/>
         </Icon>
         <Text>Toggle Debug</Text>
-    </InfiniSideNavToggleButton>
+    </InfiniNavToggleButton>
     </Body>
 
     <Footer>
-        <InfiniSideNavLink 
+        <InfiniNavLink 
             Href="https://github.com/InfiniLore/infinilore.infiniblazor"
             DisableTrackedQueryParams
             OpenInNewTab
@@ -111,19 +111,19 @@
                 <LiPackage/>
             </Icon>
             <Text>Github</Text>
-        </InfiniSideNavLink>
+        </InfiniNavLink>
 
         @* DEBUG *@
-        <InfiniSideNavButton OnClick="@SwitchTheme">
+        <InfiniNavButton OnClick="@SwitchTheme">
             <Icon>
                 <LiPalette/>
             </Icon>
             <Text>Switch Theme</Text>
-        </InfiniSideNavButton>
+        </InfiniNavButton>
 
 
         @if (ThemeStateProvider.GetState().IsBinaryCollection) {
-            <InfiniSideNavToggleButton
+            <InfiniNavToggleButton
                 Value="@(ToggleState)"
                 ValueChanged="@OnThemeModeChanged"
                 OnIcon="sun"
@@ -132,16 +132,16 @@
                     <LiSun/>
                 </Icon>
                 <Text>Toggle Mode</Text>
-            </InfiniSideNavToggleButton>
+            </InfiniNavToggleButton>
         } else {
-            <InfiniSideNavButton OnClick="OnThemeModeChanged">
+            <InfiniNavButton OnClick="OnThemeModeChanged">
                 <Icon><LiSun/></Icon>
                 <Text>Toggle Mode</Text>
-            </InfiniSideNavButton>
+            </InfiniNavButton>
         }
 
         @* User *@
-        <InfiniSideNavUser UserName="InfiniLore">
+        <InfiniNavUser UserName="InfiniLore">
             <Icon>
                 <InfiniUserIcon
                     ImageUrl="@_currentUserImage"
@@ -149,15 +149,15 @@
             </Icon>
             <AdditionalLinks>
                 <button @onclick="SwitchUserImage"
-                        class="@(InfiniSideNavUser.AdditionalLinkClasses)">
+                        class="@(InfiniNavUser.AdditionalLinkClasses)">
                     switch
                 </button>
                 <NavLink href="/"
-                         class="@(InfiniSideNavUser.AdditionalLinkClasses)">
+                         class="@(InfiniNavUser.AdditionalLinkClasses)">
                     logout
                 </NavLink>
             </AdditionalLinks>
-        </InfiniSideNavUser>
+        </InfiniNavUser>
 
     </Footer>
 </InfiniSideNav>

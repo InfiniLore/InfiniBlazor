@@ -1,0 +1,59 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<span class="@Class flex flex-nowrap items-center justify-center">
+    @switch (Icon, Text) {
+        case (_, null): {
+            <span class="@IconClasses">
+                @Icon
+            </span>
+            break;
+        }
+        case (null, _): {
+            <span class="@(MenuCollapsed ? "w-0 opacity-0 delay-0" : "delay-300 w-auto opacity-100") transition-all duration-300 h-6 overflow-hidden">
+                <span class="@TextClasses">
+                    @Text
+                </span>
+            </span>
+            break;
+        }
+        case (_, _): {
+            <span class="@IconClasses">
+                @Icon
+            </span>
+            
+            <span class="@(MenuCollapsed ? "w-0 opacity-0 delay-0" : "delay-300 w-auto ml-2 opacity-100") transition-all duration-300 h-6 overflow-hidden">
+                <span class="@TextClasses">
+                    @Text
+                </span>
+            </span>
+            break;
+        }
+    }
+</span>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [CascadingParameter] public bool MenuCollapsed { get; set; }
+    [Parameter, EditorRequired] public required RenderFragment? Text { get; set; }
+    [Parameter, EditorRequired] public required RenderFragment? Icon { get; set; }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    public static string ContainerClasses => ConcatClasses(ContainerClassesNoHover, "hover:bg-(--sidebar-nav-button-hover)");
+    public static string ContainerClassesNoHover => "flex flex-nowrap items-center infini-bg-(--sidebar-nav-button) rounded group w-full justify-start p-2";
+
+    private const string IconClasses = "w-6 h-6 text-(--sidebar-nav-text) flex-shrink-0 group-hover:text-(--sidebar-nav-text-hover)";
+    private const string TextClasses = "text-(--sidebar-nav-text) truncate inline-block max-w-[150px] group-hover:text-(--sidebar-nav-text-hover)";
+}
+
