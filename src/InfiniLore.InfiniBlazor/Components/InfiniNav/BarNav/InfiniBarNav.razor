@@ -14,7 +14,7 @@
 <div
     @ref="@Reference"
     @onwheel="OnWheelAsync"
-    class="@ConcatClasses(NavLocationClasses, HeightClasses) flex w-full overflow-x-auto whitespace-nowrap infini-bg-(--sidebar-nav) border-(--sidebar-nav-border) text-white infini-scrollbar-hidden">
+    class="@ConcatClasses(NavLocationClasses, HeightClasses, Class) flex w-full overflow-x-auto whitespace-nowrap infini-bg-(--sidebar-nav) border-(--sidebar-nav-border) text-white infini-scrollbar-hidden overflow-y-hidden">
     @ChildContent
 </div>
 

@@ -6,7 +6,6 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InteractiveAuto
-@using InfiniLore.InfiniBlazor
 @inherits InfiniNavBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
@@ -33,34 +32,9 @@
     <InfiniSpacer/>
     
     <InfiniNavBreak/>
-    @* User *@
-    <InfiniSpacer/>
-    
-    <InfiniNavUser UserName="InfiniLore" Direction="Direction.RightToLeft">
-        <Icon>
-            <InfiniUserIcon
-                ImageUrl="@_currentUserImage"
-                HrefUserProfile="/"/>
-        </Icon>
-        <AdditionalLinks>
-            <button @onclick="SwitchUserImage"
-                    class="@(InfiniNavUser.AdditionalLinkClasses)">
-                switch
-            </button>
-            <NavLink href="/"
-                     class="@(InfiniNavUser.AdditionalLinkClasses)">
-                logout
-            </NavLink>
-        </AdditionalLinks>
-    </InfiniNavUser>
 </InfiniBarNav>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private string _currentUserImage = "/icon.png";
-
-    private void SwitchUserImage() {
-        _currentUserImage = _currentUserImage == "/icon.png" ? "aaa/icon.png" : "/icon.png";
-    }
 }

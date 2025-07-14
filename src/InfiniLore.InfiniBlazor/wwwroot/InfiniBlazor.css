@@ -643,6 +643,9 @@
   .min-w-0 {
     min-width: calc(var(--spacing) * 0);
   }
+  .min-w-10 {
+    min-width: calc(var(--spacing) * 10);
+  }
   .min-w-24 {
     min-width: calc(var(--spacing) * 24);
   }
@@ -876,8 +879,14 @@
   .overflow-y-auto {
     overflow-y: auto;
   }
+  .overflow-y-hidden {
+    overflow-y: hidden;
+  }
   .overflow-y-scroll {
     overflow-y: scroll;
+  }
+  .overscroll-none {
+    overscroll-behavior: none;
   }
   .rounded {
     border-radius: 0.25rem;
