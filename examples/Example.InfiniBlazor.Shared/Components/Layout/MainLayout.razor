@@ -5,6 +5,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor
 @inherits LayoutComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
@@ -18,16 +19,16 @@
     </Left>
     
     <Top>
-        <TopNav Location="NavLayoutLocation.Top"/>
+        <TopNav Location="NavLayoutLocation.Top" Size="Size.Xxs"/>
     </Top>
     
     <Bottom>
-        <TopNav Location="NavLayoutLocation.Bottom"/>
+        <TopNav Location="NavLayoutLocation.Bottom" Size="Size.Xxs"/>
     </Bottom>
     
-    <Right>
-        <SideNav Location="NavLayoutLocation.Right"/>
-    </Right>
+    @* <Right> *@
+    @*     <SideNav Location="NavLayoutLocation.Right"/> *@
+    @* </Right> *@
     
     <Body>
         @Body

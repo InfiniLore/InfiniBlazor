@@ -8,6 +8,7 @@ namespace InfiniLore.InfiniBlazor.Components;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class InfiniNavBase : InfiniComponentBase {
+    [Parameter] public Size Size { get; set; } = Size.M;
     [Parameter] public NavLayoutLocation Location { get; set; }
     
     // -----------------------------------------------------------------------------------------------------------------

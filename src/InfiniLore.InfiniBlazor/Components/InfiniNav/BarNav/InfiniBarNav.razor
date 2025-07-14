@@ -14,9 +14,10 @@
 <div
     @ref="@Reference"
     @onwheel="OnWheelAsync"
-    class="@NavLocationClasses flex h-12 min-h-12 w-full overflow-x-auto whitespace-nowrap infini-bg-(--sidebar-nav) border-(--sidebar-nav-border) text-white infini-scrollbar-hidden">
+    class="@ConcatClasses(NavLocationClasses, HeightClasses) flex w-full overflow-x-auto whitespace-nowrap infini-bg-(--sidebar-nav) border-(--sidebar-nav-border) text-white infini-scrollbar-hidden">
     @ChildContent
 </div>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -30,4 +31,15 @@
         if (obj.DeltaY == 0) return;
         await JsRuntime.AddHorizontalScroll(Reference, obj.DeltaY);
     }
+    
+    private string HeightClasses => Size switch {
+        Size.Xxs => "h-6 min-h-6",
+        Size.Xs => "h-8 min-h-8",
+        Size.S => "h-10 min-h-10",
+        Size.M => "h-12 min-h-12",
+        Size.L => "h-16 min-h-16",
+        Size.Xl => "h-18 min-h-18",
+        Size.Xxl => "h-24 min-h-24",
+        _ => throw new ArgumentOutOfRangeException(nameof(Size), Size, null)
+    };
 }
