@@ -10,9 +10,9 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div @onclick="OnContainerClick"
-     class="@(ConcatClasses(Class, MenuCollapsed ? "px-0 py-2" : "p-2")) flex flex-nowrap items-center rounded hover:bg-(--sidebar-nav-button-hover) group w-full transition-all duration-300">
-    <span class="flex grow items-center w-full transition-all justify-between">
-        <span class="@(MenuCollapsed ? "ml-1" : "-ml-1") flex-shrink-0 transition-all duration-300">
+     class="@(ConcatClasses(Class, MenuCollapsed ? "px-0 py-2" : "p-2")) flex flex-nowrap items-center rounded hover:bg-(--sidebar-nav-button-hover) group transition-all duration-300">
+    <span class="@(Direction.ToFlexRow()) gap-4 flex items-center w-full transition-all justify-between">
+        <span class="@(MenuCollapsed ? "ml-1" : "-ml-1") transition-all duration-300">
             @Icon
         </span>
 
@@ -35,6 +35,8 @@
         </div>
     </span>
 </div>
+
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -45,6 +47,7 @@
     [Parameter, EditorRequired] public RenderFragment Icon { get; set; } = null!;
     
     [Parameter] public RenderFragment? AdditionalLinks { get; set; }
+    [Parameter] public Direction Direction { get; set; } = Direction.LeftToRight;
     
     public static string AdditionalLinkClasses => "text-sm text-(--color-base-10) whitespace-nowrap hover:text-(--color-accent)";
     
