@@ -1,33 +1,20 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.JsRuntime
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniNavBase
-@inject IJsRuntimeHelper JsRuntime
+@inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div
-    @ref="@Reference"
-    @onwheel="OnWheelAsync"
-    class="@NavLocationClasses flex h-12 min-h-12 w-full overflow-x-auto whitespace-nowrap infini-bg-(--sidebar-nav) border-(--sidebar-nav-border) text-white infini-scrollbar-hidden">
-    @ChildContent
+<div class="min-h-[1px] min-w-[1px] infini-bg-(--sidebar-nav-border)">
+    
 </div>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private ElementReference Reference { get; set; }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
-    private async Task OnWheelAsync(WheelEventArgs obj) {
-        if (obj.DeltaY == 0) return;
-        await JsRuntime.AddHorizontalScroll(Reference, obj.DeltaY);
-    }
+    
 }

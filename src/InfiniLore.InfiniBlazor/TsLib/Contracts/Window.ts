@@ -24,5 +24,7 @@ declare global {
         addOrUpdateStyleElementAtHead : (idName: string, css: string) => void;
 
         getBoundingClientRect : (element: Element) => DOMRect | null;
+
+        addHorizontalScroll: (element: Element, i: number) => void;
     }
 }
