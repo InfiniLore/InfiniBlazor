@@ -720,6 +720,9 @@
   .w-full {
     width: 100%;
   }
+  .w-max {
+    width: max-content;
+  }
   .w-screen {
     width: 100vw;
   }
