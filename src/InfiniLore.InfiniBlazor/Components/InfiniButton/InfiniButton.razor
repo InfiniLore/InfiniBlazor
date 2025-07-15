@@ -13,35 +13,35 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@Class relative">
-    @if (Href.IsNotNullOrWhiteSpace()) {
-        <a href="@_computedHref"
-           @ref="_elementRef"
-           class="@ContainerClasses rounded-md inline-flex items-center justify-center transition-all duration-150 transform cursor-pointer active:scale-95 hover:scale-105"
-           @onmouseenter="@ShowTooltip"
-           @onmouseleave="@HideTooltip">
-            @ButtonContent
-        </a>
-    }
-    else {
-        <button @onclick="OnClickAsync"
-                @ref="_elementRef"
-                @onclick:stopPropagation="@StopPropagation"
-                type="@Type"
-                disabled="@IsDisabled"
-                aria-label="@AriaLabel"
-                @onmouseenter="@ShowTooltip"
-                @onmouseleave="@HideTooltip"
-                class="@ContainerClasses rounded-md inline-flex items-center justify-center transition-all duration-150 transform">
-            @ButtonContent
-        </button>
-    }
+@* WHY THE F do I need to do this to make it work? https://github.com/w3c/csswg-drafts/issues/9045 *@
+<div class="relative"> 
+    <div class="@ConcatClasses("relative", Class,Tooltip.IsNotNullOrEmpty() ? InfiniTooltip.AnchorClass : string.Empty)">
+        @if (Href.IsNotNullOrWhiteSpace()) {
+            <a href="@_computedHref"
+               class="@(ContainerClasses) rounded-md inline-flex items-center justify-center transition-all duration-150 transform cursor-pointer active:scale-95 hover:scale-105"
+               @onmouseenter="@ShowTooltip"
+               @onmouseleave="@HideTooltip">
+                @ButtonContent
+            </a>
+        }
+        else {
+            <button @onclick="OnClickAsync"
+                    @onclick:stopPropagation="@StopPropagation"
+                    type="@Type"
+                    disabled="@IsDisabled"
+                    aria-label="@AriaLabel"
+                    @onmouseenter="@ShowTooltip"
+                    @onmouseleave="@HideTooltip"
+                    class="@ContainerClasses rounded-md inline-flex items-center justify-center transition-all duration-150 transform">
+                @ButtonContent
+            </button>
+        }
+    </div>
+    <InfiniTooltip 
+        Class="@(HiddenIfNot(_showTooltip && Tooltip.IsNotNullOrEmpty()))"
+        Content="@Tooltip"
+        Anchor="@TooltipAnchor"/>
 </div>
-@if (_showTooltip && Tooltip.IsNotNullOrEmpty()) {
-    <InfiniTooltip Content="@Tooltip"
-                   Anchor="@TooltipAnchor"
-                   Target="_elementRef"/>
-}
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
@@ -67,7 +67,6 @@
 
     private string? _computedHref;
 
-    private ElementReference _elementRef;
     private bool _showTooltip;
 
     // ReSharper disable once UnusedParameter.Local

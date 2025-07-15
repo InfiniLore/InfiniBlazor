@@ -1,25 +1,22 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.JsRuntime
-@using Microsoft.Extensions.Logging
-@using Microsoft.JSInterop
-
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inject IJSRuntime JsRuntime
-@inject ILogger<InfiniTooltip> Logger
+@inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div
-    @ref="_tooltipRef"
-    class="fixed z-1000"
-    style="left: @(_left)px; top: @(_top)px">
+<div class="@ConcatClasses(Class, AnchorClasses) absolute anchored z-1000 p-2">
     <div
-        class="@TooltipClasses transform px-3 py-1 infini-bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md transition-opacity duration-200 whitespace-nowrap pointer-events-none before:content-[''] before:absolute before:w-2 before:h-2 before:rotate-45 before:infini-bg-(--color-base-90) drop-shadow-md">
+        class="
+            @TriangleClasses
+            transform px-3 py-1 infini-bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md transition-opacity duration-200 whitespace-nowrap pointer-events-none drop-shadow-md
+            before:content-[''] before:absolute before:w-2 before:h-2 before:rotate-45 before:infini-bg-(--color-base-90)
+        "
+        >
         @Content
     </div>
 </div>
@@ -28,16 +25,25 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
+
 @code {
     [Parameter, EditorRequired] public string Content { get; set; } = "";
     [Parameter] public Anchor Anchor { get; set; } = Anchor.Center | Anchor.Bottom;
     [Parameter] public ElementReference Target { get; set; }
 
-    private ElementReference _tooltipRef;
-    private double _left = -1000;
-    private double _top = -1000;
+    private string AnchorClasses => Anchor switch {
+        Anchor.Center | Anchor.Bottom => "anchored-bottom-center/anchor-tooltip",
+        Anchor.Left | Anchor.Bottom => "anchored-bottom-left/anchor-tooltip",
+        Anchor.Right | Anchor.Bottom => "anchored-bottom-right/anchor-tooltip",
+        Anchor.Center | Anchor.Top => "anchored-top-center/anchor-tooltip",
+        Anchor.Left | Anchor.Top => "anchored-top-left/anchor-tooltip",
+        Anchor.Right | Anchor.Top => "anchored-top-right/anchor-tooltip",
+        Anchor.Left => "anchored-left/anchor-tooltip -mt-1.5",
+        Anchor.Right => "anchored-right/anchor-tooltip -mt-1.5",
+        _ => "anchored/anchor-tooltip"
+    };
 
-    private string TooltipClasses => Anchor switch {
+    private string TriangleClasses => Anchor switch {
         Anchor.Center | Anchor.Bottom => "before:-top-1 before:left-1/2 before:-translate-x-1/2",
         Anchor.Left | Anchor.Bottom => "before:-top-1 before:left-4",
         Anchor.Right | Anchor.Bottom => "before:-top-1 before:right-4",
@@ -49,96 +55,5 @@
         _ => "before:-top-1 before:left-1/2 before:-translate-x-1/2"
     };
 
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
-    protected override async Task OnAfterRenderAsync(bool firstRender) {
-        // TODO Position is broken in WASM
-        if (firstRender && RendererInfo.IsInteractive ) {
-            await UpdatePosition();
-        }
-    }
-
-
-    private async Task UpdatePosition() {
-        try {
-            var rectSelf = await JsRuntime.InvokeAsync<DomRect>("getBoundingClientRect", _tooltipRef);
-            var rect = await JsRuntime.InvokeAsync<DomRect>("getBoundingClientRect", Target);
-            
-            Logger.Warning("SELF: X: {a} \nY: {a} \nWidth: {a} \nHeight: {a} \nTop: {a} \nRight: {a} \nBottom: {a} \nLeft: {a}", 
-                rectSelf.X,
-                rectSelf.Y,
-                rectSelf.Width,
-                rectSelf.Height,
-                rectSelf.Top,
-                rectSelf.Right,
-                rectSelf.Bottom,
-                rectSelf.Left);
-            
-            Logger.Warning("RECT: X: {a} \nY: {a} \nWidth: {a} \nHeight: {a} \nTop: {a} \nRight: {a} \nBottom: {a} \nLeft: {a}", 
-                rect.X,
-                rect.Y,
-                rect.Width,
-                rect.Height,
-                rect.Top,
-                rect.Right,
-                rect.Bottom,
-                rect.Left);
-            
-            var sizeTriangle = 8;
-
-            (_left, _top) = Anchor switch {
-                // Bottom positions
-                Anchor.Center | Anchor.Bottom => (
-                    rect.Left + rect.Width / 2 - rectSelf.Width /2 ,
-                    rect.Top + rect.Height + sizeTriangle
-                ),
-                Anchor.Left | Anchor.Bottom => (
-                    rect.Left,
-                    rect.Bottom + sizeTriangle
-                ),
-                Anchor.Right | Anchor.Bottom => (
-                    rect.Right - rectSelf.Width,
-                    rect.Bottom + sizeTriangle
-                ),
-
-                // Top positions
-                Anchor.Center | Anchor.Top => (
-                    rect.Left + rect.Width / 2 - rectSelf.Width /2 ,
-                    rect.Top - rectSelf.Height - sizeTriangle
-                ),
-                Anchor.Left | Anchor.Top => (
-                    rect.Left,
-                    rect.Top - rectSelf.Height - sizeTriangle
-                ),
-                Anchor.Right | Anchor.Top => (
-                    rect.Right - rectSelf.Width,
-                    rect.Top - rectSelf.Height - sizeTriangle
-                ),
-
-                // Side positions
-                Anchor.Left => (
-                    rect.Left - rectSelf.Width - sizeTriangle,
-                    rect.Top + rect.Height / 2 - rectSelf.Height / 2
-                ),
-                Anchor.Right => (
-                    rect.Right + sizeTriangle,
-                    rect.Top + rect.Height / 2 - rectSelf.Height / 2
-                ),
-
-
-                _ => (
-                    rect.Left + (rect.Width - rectSelf.Width) / 2,
-                    rect.Bottom + sizeTriangle
-                )
-            };
-            
-            Logger.Error("Left: {l} \nTop: {r}", _left, _top);
-            await InvokeAsync(StateHasChanged);
-        }
-        catch (Exception e) {
-            Console.WriteLine(e);
-        }
-    }
-
+    public const string AnchorClass = "anchor/anchor-tooltip";
 }

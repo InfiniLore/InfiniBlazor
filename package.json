@@ -10,10 +10,11 @@
   "license": "GNUv3",
   "description": "",
   "devDependencies": {
+    "@toolwind/anchors": "^1.0.10",
     "tailwindcss": "^4.1.11",
     "ts-loader": "^9.5.2",
     "typescript": "^5.8.3",
-    "webpack": "^5.99.9",
+    "webpack": "^5.100.2",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
