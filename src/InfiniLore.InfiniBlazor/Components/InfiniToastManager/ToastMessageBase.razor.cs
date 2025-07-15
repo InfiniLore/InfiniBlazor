@@ -22,9 +22,7 @@ public partial class ToastMessageBase : ComponentBase, IToastMessageBase, IDispo
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
-    public static IDictionary<string, object> GetAsDynamicParameters(
-        IToastingData toastData
-    )
+    public static IDictionary<string, object> GetAsDynamicParameters(IToastingData toastData)
         => new Dictionary<string, object> {
             [nameof(ToastData)] = toastData
         };
