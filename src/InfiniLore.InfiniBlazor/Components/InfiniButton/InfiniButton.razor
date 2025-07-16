@@ -188,6 +188,22 @@
                 Color.ToRingTailwind()
             ),
 
+        (ButtonVariant.OutlineSolid, Color.Default) =>
+            ConcatClasses(
+                ContainerReaction,
+                ContainerSizeClasses,
+                "infini-bg-(--button-outline-solid) hover:infini-bg-(--button-outline-solid-hover) text-(--button-outline-solid-text) hover:text-(--button-outline-solid-text-hover) ring-1 ring-(--button-outline-solid-ring) hover:ring-(--button-outline-solid-ring-hover)"
+            ),
+
+        (ButtonVariant.OutlineSolid, _) =>
+            ConcatClasses(
+                ContainerReaction,
+                ContainerSizeClasses,
+                "infini-bg-(--button-outline-solid) hover:infini-bg-(--button-outline-solid-hover) ring-1",
+                Color.ToTextTailwind(),
+                Color.ToRingTailwind()
+            ),
+
         _ => throw new ArgumentOutOfRangeException()
     };
 

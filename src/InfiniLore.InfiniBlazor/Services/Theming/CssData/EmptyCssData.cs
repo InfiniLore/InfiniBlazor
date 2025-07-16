@@ -117,4 +117,11 @@ public partial record EmptyCssData : ICssData {
     public string UsericonRing { get; init; } = string.Empty;
     public string UsericonStatus { get; init; } = string.Empty;
     public string Codeblock { get; init; } = string.Empty;
+    
+    public string ButtonOutlineSolid { get;  init; } = string.Empty;
+    public string ButtonOutlineSolidText { get;  init; } = string.Empty;
+    public string ButtonOutlineSolidHover { get;  init; } = string.Empty;
+    public string ButtonOutlineSolidTextHover { get;  init; } = string.Empty;
+    public string ButtonOutlineSolidRing { get;  init; } = string.Empty;
+    public string ButtonOutlineSolidRingHover { get;  init; } = string.Empty;
 }

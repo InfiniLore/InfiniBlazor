@@ -130,6 +130,14 @@ public interface ICssData {
     [CssData] public string ButtonOutlineTextHover { get; }
     [CssData] public string ButtonOutlineRing { get; }
     [CssData] public string ButtonOutlineRingHover { get; }
+    
+    [CssData] string ButtonOutlineSolid { get; }
+    [CssData] string ButtonOutlineSolidText { get; }
+    [CssData] string ButtonOutlineSolidHover { get; }
+    [CssData] string ButtonOutlineSolidTextHover { get; }
+    [CssData] string ButtonOutlineSolidRing { get; }
+    [CssData] string ButtonOutlineSolidRingHover { get; }
+    
     [CssData] public string Codeblock { get; }
     #endregion
 }
