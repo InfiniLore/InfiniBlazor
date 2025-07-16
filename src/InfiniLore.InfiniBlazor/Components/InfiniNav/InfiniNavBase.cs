@@ -10,7 +10,6 @@ namespace InfiniLore.InfiniBlazor.Components;
 public abstract class InfiniNavBarBase : InfiniComponentBase {
     [Parameter] public Size Size { get; set; } = Size.M;
     [Parameter] public NavLayoutLocation Location { get; set; }
-    [Parameter] public Orientation Orientation { get; set; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

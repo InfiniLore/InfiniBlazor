@@ -21,7 +21,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniNavBar Location="NavLayoutLocation.Left" Orientation="Orientation.Vertical" Size="Size" Class="@Class" @bind-NavBarCollapsed="CollapsedState">
+<InfiniNavBar Location="NavLayoutLocation.Left" Size="Size" Class="@Class" @bind-NavBarCollapsed="CollapsedState">
     <div class="flex flex-row justify-between">
         <InfiniNavLink Href="/" Class="@ConcatClasses(HiddenIf(CollapsedState), "font-bold")" HiddenOnCollapsed>
             <Text>InfiniBlazor</Text>

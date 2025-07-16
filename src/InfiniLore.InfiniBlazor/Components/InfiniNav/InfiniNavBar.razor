@@ -46,39 +46,38 @@
     }
 
     private async Task OnWheelAsync(WheelEventArgs obj) {
-        if (Orientation is not Orientation.Horizontal) return;
+        if (!Location.IsHorizontal()) return;
         if (obj.DeltaY == 0) return;
 
         await JsRuntimeHelper.AddHorizontalScroll(Reference, obj.DeltaY);
     }
 
     private string OrientationClasses => ConcatClasses(
-        Orientation.ToFlex(),
-        Orientation.ToFull(),
-        Orientation switch {
-            Orientation.Horizontal => "overflow-y-hidden overflow-x-auto",
-            Orientation.Vertical => "overflow-x-hidden overflow-y-auto",
-            _ => throw new ArgumentOutOfRangeException()
-        }
+        Location.ToFlex(),
+        Location.ToFull(),
+        Location.OnOrientation(
+            () => "overflow-y-hidden overflow-x-auto",
+            () => "overflow-x-hidden overflow-y-auto"
+        )
     );
 
-    private string SizeClasses => (NavBarCollapsed, Orientation, Size) switch {
-        (false, Orientation.Vertical, Size.Xxs) => "w-14 min-w-14",
-        (false, Orientation.Vertical, Size.Xs) => "w-24 min-w-24",
-        (false, Orientation.Vertical, Size.S) => "w-48 min-w-48",
-        (false, Orientation.Vertical, Size.M) => "w-64 min-w-64",
-        (false, Orientation.Vertical, Size.L) => "w-80 min-w-80",
-        (false, Orientation.Vertical, Size.Xl) => "w-96 min-w-96",
-        (false, Orientation.Vertical, Size.Xxl) => "w-112 min-w-112",
-        (true, Orientation.Vertical, _) => "w-10 min-w-10",
+    private string SizeClasses => (NavBarCollapsed, Location.IsHorizontal(), Size) switch {
+        (false, false, Size.Xxs) => "w-14 min-w-14",
+        (false, false, Size.Xs) => "w-24 min-w-24",
+        (false, false, Size.S) => "w-48 min-w-48",
+        (false, false, Size.M) => "w-64 min-w-64",
+        (false, false, Size.L) => "w-80 min-w-80",
+        (false, false, Size.Xl) => "w-96 min-w-96",
+        (false, false, Size.Xxl) => "w-112 min-w-112",
+        (true, false, _) => "w-10 min-w-10",
 
-        (_, Orientation.Horizontal, Size.Xxs) => "h-4 min-h-4",
-        (_, Orientation.Horizontal, Size.Xs) => "h-6 min-h-6",
-        (_, Orientation.Horizontal, Size.S) => "h-8 min-h-8",
-        (_, Orientation.Horizontal, Size.M) => "h-10 min-h-10",
-        (_, Orientation.Horizontal, Size.L) => "h-14 min-h-14",
-        (_, Orientation.Horizontal, Size.Xl) => "h-18 min-h-18",
-        (_, Orientation.Horizontal, Size.Xxl) => "h-24 min-h-24",
+        (_, true, Size.Xxs) => "h-4 min-h-4",
+        (_, true, Size.Xs) => "h-6 min-h-6",
+        (_, true, Size.S) => "h-8 min-h-8",
+        (_, true, Size.M) => "h-10 min-h-10",
+        (_, true, Size.L) => "h-14 min-h-14",
+        (_, true, Size.Xl) => "h-18 min-h-18",
+        (_, true, Size.Xxl) => "h-24 min-h-24",
         _ => throw new ArgumentOutOfRangeException(nameof(Size), Size, null)
     };
 
