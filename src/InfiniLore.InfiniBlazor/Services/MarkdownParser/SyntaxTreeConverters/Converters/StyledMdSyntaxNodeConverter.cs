@@ -97,7 +97,7 @@ public class StyledMdSyntaxNodeConverter : SimpleMdSyntaxNodeConverter {
                     }
                     
                     if (imgNode.Modifiers.TryGetFit(out bool state) && state) {
-                        Sb.Append(" style=\"width:auto;height:2em;vertical-align:baseline;object-fit:contain;\"");
+                        Sb.Append(" style=\"width:auto;height:1em;vertical-align:text-top;object-fit:contain;transform:translate(0,0.15em);\"");
                     }
                     
                     else if (imgNode.Modifiers.TryGetSize(out (int Width, int Height) size)) {
