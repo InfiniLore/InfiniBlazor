@@ -1,46 +1,24 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits LayoutComponentBase
+@rendermode InteractiveAuto
+@inherits InfiniNavBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniThemeManager/>
-<InfiniToastManager/>
-
-<InfiniLayoutContainer Layout="NavLayout.SidesPrimary">
-    <Left>
-        <NavBarLeft/>
-    </Left>
-    
-    <Top>
-        <NavBarBottom/>
-    </Top>
-    
-    <Bottom>
-        <NavBarBottom/>
-    </Bottom>
-    
-    @* *@
-    @* <Right> *@
-    @*     <NavBarLeft Location="NavLayoutLocation.Right" Orientation="Orientation.Vertical"/> *@
-    @* </Right> *@
-    
-    <Body>
-        @Body
-    </Body>
-</InfiniLayoutContainer>
-
-<div id="blazor-error-ui" class="hidden fixed bottom-0 left-0 w-full bg-yellow-100 shadow-md z-[1000] p-3 pl-5">
-    An unhandled error has occurred.
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss cursor-pointer absolute right-3 top-2">🗙</a>
-</div>
-
+<InfiniNavBar Location="NavLayoutLocation.Top" Orientation="Orientation.Horizontal" Size="Size.Xs" Class="@Class" @bind-NavBarCollapsed="CollapsedState">
+    <InfiniNavLink Href="/table" IconName="@LucideNames.Table">
+        <Text>Table</Text>
+    </InfiniNavLink>
+</InfiniNavBar>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter] public bool CollapsedState { get; set; }
+}

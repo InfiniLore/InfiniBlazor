@@ -10,7 +10,7 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <button @onclick="OnClick" class="@InfiniNavItem.ContainerClasses">
-    <InfiniNavItem Text="@Text" Icon="@Icon" Class="@Class"/>
+    <InfiniNavItem Text="@Text" IconName="@IconName" Class="@Class"/>
 </button>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
@@ -20,6 +20,6 @@
     
     [Parameter] public EventCallback<MouseEventArgs> OnClick  { get; set; } 
     [Parameter] public RenderFragment? Text { get; set; }
-    [Parameter] public RenderFragment? Icon { get; set; }
+    [Parameter] public string? IconName { get; set; }
 }
 

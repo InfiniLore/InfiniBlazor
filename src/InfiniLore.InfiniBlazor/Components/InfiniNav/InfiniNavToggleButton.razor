@@ -26,8 +26,7 @@
         </div>
 } else {
     <div class="@InfiniNavItem.ContainerClassesNoHover flex justify-between items-center h-10">
-        <InfiniNavItem DebugColor="DebugColor">
-            <Icon>@Icon</Icon>
+        <InfiniNavItem DebugColor="DebugColor" IconName="@IconName">
             <Text>@Text</Text>
         </InfiniNavItem>
         
@@ -56,7 +55,7 @@
     [Parameter] public bool Value { get; set; }
     [Parameter] public EventCallback<bool> ValueChanged { get; set; }
     [Parameter] public RenderFragment? Text { get; set; }
-    [Parameter] public RenderFragment? Icon { get; set; }
+    [Parameter] public string? IconName { get; set; }
     [Parameter] public bool Disabled { get; set; }
     [Parameter] public string? OnIcon { get; set; }
     [Parameter] public string? OffIcon { get; set; }

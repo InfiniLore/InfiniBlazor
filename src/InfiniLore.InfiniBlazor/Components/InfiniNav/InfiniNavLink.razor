@@ -19,7 +19,7 @@
    rel="noopener noreferrer"
    hidden="@Hidden"
    >
-    <InfiniNavItem Text="@Text" Icon="@Icon" Class="@Class"/>
+    <InfiniNavItem Text="@Text" IconName="@IconName" Class="@Class"/>
 </a>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
@@ -28,7 +28,7 @@
     [Parameter] [EditorRequired] public required string Href { get; init; }
 
     [Parameter] public RenderFragment? Text { get; set; }
-    [Parameter] public RenderFragment? Icon { get; set; }
+    [Parameter] public string? IconName { get; set; }
 
     [Parameter] public bool OpenInNewTab { get; set; }
     [Parameter] public bool DisableTrackedQueryParams { get; set; }
