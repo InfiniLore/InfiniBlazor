@@ -33,7 +33,7 @@
         case UserIconStatus.Busy:
         case UserIconStatus.DoNotDisturb: {
             <div class="absolute -bottom-1 -right-1 flex items-center justify-center">
-                <div class="@GetClassFromStatus() w-3.5 h-3.5 rounded-full border-1 border-(--usericon-status)"></div>
+                <div class="@StatusClasses w-3.5 h-3.5 rounded-full border-1 border-(--usericon-status)"></div>
             </div>
             break;
         }
@@ -62,6 +62,15 @@
 
     private bool _imageLoadFailed;
 
+    private string StatusClasses => Status switch {
+        UserIconStatus.Undefined or UserIconStatus.Custom => string.Empty,
+        UserIconStatus.Online => "bg-(--color-green)",
+        UserIconStatus.Offline => "bg-(--color-gray)",
+        UserIconStatus.Busy => "bg-(--color-orange)",
+        UserIconStatus.DoNotDisturb => "bg-(--color-red)",
+        _ => throw new ArgumentOutOfRangeException()
+    };
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -84,14 +93,4 @@
     private void HandleImageError(ErrorEventArgs obj) {
         _imageLoadFailed = true;
     }
-
-    private string GetClassFromStatus() 
-        => Status switch {
-            UserIconStatus.Undefined or UserIconStatus.Custom => string.Empty,
-            UserIconStatus.Online => "bg-(--color-green)",
-            UserIconStatus.Offline => "bg-(--color-gray)",
-            UserIconStatus.Busy => "bg-(--color-orange)",
-            UserIconStatus.DoNotDisturb => "bg-(--color-red)",
-            _ => throw new ArgumentOutOfRangeException()
-        };
 }

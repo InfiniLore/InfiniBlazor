@@ -2,15 +2,14 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 namespace InfiniLore.InfiniBlazor.Components;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public enum ButtonVariant {
-    Default,
-    Primary,
-    Transparent,
-    Dark,
-    Light,
-    Outline,
-    OutlineSolid
+public enum NavLayoutLocation {
+    Undefined = 0,
+    Top,
+    Left,
+    Right,
+    Bottom
 }

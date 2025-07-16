@@ -9,3 +9,7 @@ export function getBoundingClientRect(element: Element): DOMRect | null {
     if (!element) return null;
     return element.getBoundingClientRect();
 }
+
+export function addHorizontalScroll(element: Element, i: number) : void {
+    element.scrollBy({ left: i, behavior: 'smooth' });
+}

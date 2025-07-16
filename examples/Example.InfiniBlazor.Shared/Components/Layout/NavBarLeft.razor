@@ -1,5 +1,5 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
-@* Imports *@
+@* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using Example.InfiniBlazor.Shared.Themes
 @using InfiniLore.InfiniBlazor
@@ -8,32 +8,32 @@
 @using InfiniLore.InfiniBlazor.Theming.Collections
 @using InfiniLore.InfiniBlazor.Toasting
 @using Microsoft.Extensions.Logging
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InteractiveAuto
+@inherits InfiniNavBarBase
 @inject IThemeStateProvider ThemeStateProvider
 @inject IToastingProvider ToastingProvider
 @inject IVisualDebuggerProvider DebuggerProvider
-@inject ILogger<SideNav> Logger
+@inject ILogger<NavBarLeft> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* Html *@
+@* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniSideNav @bind-MenuCollapsed="@MenuCollapsed">
-    <Header>
-        <a href="/"
-           class="@(!MenuCollapsed ? "text-1xl font-bold text-(--color-base-00) hover:text-(--color-accent) no-underline" : "hidden")">
-            InfiniBlazor
-        </a>
-    </Header>
-
-    <Body>
-    <InfiniSideNavLink Href="/markdown-dual">
-        <Icon>
-            <LiSignature/>
-        </Icon>
+<InfiniNavBar Location="NavLayoutLocation.Left" Orientation="Orientation.Vertical" Size="Size" Class="@Class" @bind-NavBarCollapsed="CollapsedState">
+    <div class="flex flex-row justify-between">
+        <InfiniNavLink Href="/" Class="@ConcatClasses(HiddenIf(CollapsedState), "font-bold")" HiddenOnCollapsed>
+            <Text>InfiniBlazor</Text>
+        </InfiniNavLink>
+        <InfiniNavCollapseButton @bind-CollapsedState="CollapsedState"/>
+    </div>
+    
+    <InfiniNavBreak/>
+    
+    <InfiniNavLink Href="/markdown-dual" IconName="@LucideNames.Signature">
         <Text>Markdown Example</Text>
-    </InfiniSideNavLink>
+    </InfiniNavLink>
 
     @* <InfiniSideNavLink Href="/markdown-rolling"> *@
     @*     <Icon> *@
@@ -42,131 +42,97 @@
     @*     <Text>Rolling Markdown Example</Text> *@
     @* </InfiniSideNavLink> *@
 
-    <InfiniSideNavLink Href="/table">
-        <Icon>
-            <LiTable/>
-        </Icon>
+    <InfiniNavLink Href="/table" IconName="@LucideNames.Table">
         <Text>Table</Text>
-    </InfiniSideNavLink>
+    </InfiniNavLink>
 
-    <InfiniSideNavLink Href="/html">
-        <Icon>
-            <LiCodeXml/>
-        </Icon>
+    <InfiniNavLink Href="/html" IconName="@LucideNames.CodeXml">
         <Text>Html</Text>
-    </InfiniSideNavLink>
+    </InfiniNavLink>
 
-    <InfiniSideNavLink Href="/theming/table">
-        <Icon>
-            <LiTable2/>
-        </Icon>
+    <InfiniNavLink Href="/theming/table" IconName="@LucideNames.Table2">
         <Text>theming table</Text>
-    </InfiniSideNavLink>
+    </InfiniNavLink>
 
-    <InfiniSideNavLink Href="/sections">
-        <Icon>
-            <LiRows3/>
-        </Icon>
+    <InfiniNavLink Href="/sections" IconName="@LucideNames.Rows3">
         <Text>Sections</Text>
-    </InfiniSideNavLink>
+    </InfiniNavLink>
 
-    <InfiniSideNavLink Href="/" OpenInNewTab>
-        <Icon>
-            <LiArrowRightToLine/>
-        </Icon>
+    <InfiniNavLink Href="/" OpenInNewTab IconName="@LucideNames.ArrowRightToLine">
         <Text>Open New Tab</Text>
-    </InfiniSideNavLink>
+    </InfiniNavLink>
 
     <InfiniSpacer/>
 
-    <InfiniSideNavButton OnClick="@OnCreateToastAsync">
-        <Icon>
-            <LiPopcorn/>
-        </Icon>
+    <InfiniNavButton OnClick="@OnCreateToastAsync" IconName="@LucideNames.Popcorn">
         <Text>Create Toast</Text>
-    </InfiniSideNavButton>
-
-
-    <InfiniSideNavToggleButton
+    </InfiniNavButton>
+    
+    <InfiniNavToggleButton
         Value="@DebuggerProvider.IsEnabled()"
         ValueChanged="@DebuggerProvider.ToggleStateAsync"
-        OnIcon="@(MenuCollapsed ? "bug" : null)"
-        OffIcon="@(MenuCollapsed ? "bug" : null)"
-        Color="Color.Red">
-        <Icon>
-            <LiBug/>
-        </Icon>
+        OnIcon="@(CollapsedState ? "bug" : null)"
+        OffIcon="@(CollapsedState ? "bug" : null)"
+        Color="Color.Red" IconName="@LucideNames.Bug">
         <Text>Toggle Debug</Text>
-    </InfiniSideNavToggleButton>
-    </Body>
+    </InfiniNavToggleButton>
+    
+    <InfiniNavBreak/>
+    
+    <InfiniNavLink
+        Href="https://github.com/InfiniLore/infinilore.infiniblazor"
+        DisableTrackedQueryParams
+        OpenInNewTab
+     IconName="@LucideNames.Package">
+        <Text>Github</Text>
+    </InfiniNavLink>
 
-    <Footer>
-        <InfiniSideNavLink 
-            Href="https://github.com/InfiniLore/infinilore.infiniblazor"
-            DisableTrackedQueryParams
-            OpenInNewTab
-            >
-            <Icon>
-                <LiPackage/>
-            </Icon>
-            <Text>Github</Text>
-        </InfiniSideNavLink>
-
-        @* DEBUG *@
-        <InfiniSideNavButton OnClick="@SwitchTheme">
-            <Icon>
-                <LiPalette/>
-            </Icon>
-            <Text>Switch Theme</Text>
-        </InfiniSideNavButton>
+    @* DEBUG *@
+    <InfiniNavButton OnClick="@SwitchTheme" IconName="@LucideNames.Palette">
+        <Text>Switch Theme</Text>
+    </InfiniNavButton>
 
 
-        @if (ThemeStateProvider.GetState().IsBinaryCollection) {
-            <InfiniSideNavToggleButton
-                Value="@(ToggleState)"
-                ValueChanged="@OnThemeModeChanged"
-                OnIcon="sun"
-                OffIcon="moon">
-                <Icon>
-                    <LiSun/>
-                </Icon>
-                <Text>Toggle Mode</Text>
-            </InfiniSideNavToggleButton>
-        } else {
-            <InfiniSideNavButton OnClick="OnThemeModeChanged">
-                <Icon><LiSun/></Icon>
-                <Text>Toggle Mode</Text>
-            </InfiniSideNavButton>
-        }
+    @if (ThemeStateProvider.GetState().IsBinaryCollection) {
+        <InfiniNavToggleButton
+            Value="@(ToggleState)"
+            ValueChanged="@OnThemeModeChanged"
+            OnIcon="sun"
+            OffIcon="moon" IconName="@LucideNames.Sun">
+            <Text>Toggle Mode</Text>
+        </InfiniNavToggleButton>
+    }
+    else {
+        <InfiniNavButton OnClick="@OnThemeModeChanged" IconName="@LucideNames.Sun">
+            <Text>Toggle Mode</Text>
+        </InfiniNavButton>
+    }
 
-        @* User *@
-        <InfiniSideNavUser UserName="InfiniLore">
-            <Icon>
-                <InfiniUserIcon
-                    ImageUrl="@_currentUserImage"
-                    HrefUserProfile="/"/>
-            </Icon>
-            <AdditionalLinks>
-                <button @onclick="SwitchUserImage"
-                        class="@(InfiniSideNavUser.AdditionalLinkClasses)">
-                    switch
-                </button>
-                <NavLink href="/"
-                         class="@(InfiniSideNavUser.AdditionalLinkClasses)">
-                    logout
-                </NavLink>
-            </AdditionalLinks>
-        </InfiniSideNavUser>
-
-    </Footer>
-</InfiniSideNav>
-
+    @* User *@
+    <InfiniNavUser UserName="InfiniLore">
+        <Icon>
+            <InfiniUserIcon
+                ImageUrl="@_currentUserImage"
+                HrefUserProfile="/"/>
+        </Icon>
+        <AdditionalLinks>
+            <button @onclick="SwitchUserImage"
+                    class="@(InfiniNavUser.AdditionalLinkClasses)">
+                switch
+            </button>
+            <NavLink href="/"
+                     class="@(InfiniNavUser.AdditionalLinkClasses)">
+                logout
+            </NavLink>
+        </AdditionalLinks>
+    </InfiniNavUser>
+</InfiniNavBar>
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* Code *@
+@* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
-    private bool MenuCollapsed { get; set; }// Tracks whether the menu is collapsed
+    [Parameter] public bool CollapsedState { get; set; }
+    
     private string _currentUserImage = "/icon.png";
     private bool ToggleState { get; set; }
 
@@ -185,7 +151,7 @@
 
         await ThemeStateProvider.TrySelectCollectionAsync(themeCollectionName);
         ToggleState = state.ModeName != state.FirstModeInCollectionName;
-        
+
         StateHasChanged();
     }
 
@@ -218,17 +184,17 @@
     }
 
     private async Task OnThemeModeChanged() {
-            
+
         if (!await ThemeStateProvider.TrySelectNextModeAsync()) {
             Logger.Warning("Could not activate next theme mode");
-        } 
+        }
         else {
             Logger.Information("Activated next theme mode");
         }
 
         IThemeState state = ThemeStateProvider.GetState();
         ToggleState = state.ModeName != state.FirstModeInCollectionName;
-        
+
         StateHasChanged();
     }
 }

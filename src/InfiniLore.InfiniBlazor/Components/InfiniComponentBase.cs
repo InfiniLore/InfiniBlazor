@@ -36,4 +36,11 @@ public abstract class InfiniComponentBase : ComponentBase, IAsyncDisposable {
 
     protected static string ConcatClasses(params ReadOnlySpan<string?> classes)
         => string.Join(" ", classes);
+    
+    protected static string HiddenIf(bool condition) {
+        return condition ? "hidden" : string.Empty;
+    }
+    protected static string HiddenIfNot(bool condition) {
+        return !condition ? "hidden" : string.Empty;
+    }
 }

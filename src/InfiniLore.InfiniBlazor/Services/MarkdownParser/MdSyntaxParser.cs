@@ -53,20 +53,25 @@ public sealed class MdSyntaxParser(IServiceProvider serviceProvider, ILogger<MdS
 
         MdSyntaxFragment? fragment = null;
         string normalized = markdown.ReplaceLineEndings("\n");
-        
+
         try {
             runningParser.PushMultiLineMatchesToStack(normalized, nodeTree.RootNode, MdSyntaxHandlerOrigin.Undefined);
 
             while (runningParser.TryPopDto(out fragment)) {
                 if (fragment.TryGetAsMatch(out Match? match, out IMdSyntaxNode? parentNode, out MdSyntaxHandlerOrigin handlerOrigin)) {
                     ProcessMatch(match, parentNode, handlerOrigin, runningParser);
-                } else if (fragment.TryGetAsProcessedNode(out parentNode, out IMdSyntaxNode? childNode)) {
+                }
+                else if (fragment.TryGetAsProcessedNode(out parentNode, out IMdSyntaxNode? childNode)) {
                     parentNode.AddChildNode(childNode);
                 }
-                
+
                 MdSyntaxFragment.Pool.Return(fragment);
                 fragment = null;
             }
+        }
+        catch (Exception ex) {
+            logger.Error(ex, "Error parsing Markdown, during tree conversion.");
+            throw;
         }
         finally {
             // makes it so we don't have to have a nested try catch

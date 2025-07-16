@@ -24,8 +24,12 @@ public static class MdSyntaxNodeModifierExtensions {
             if (!split.MoveNext()) return false;
             
             Range secondValue = split.Current;
+
+            if (!int.TryParse(sizeValue[firstValue], out int first) || !int.TryParse(sizeValue[secondValue], out int second)) {
+                return false;
+            }
             
-            size = (int.Parse(sizeValue[firstValue]), int.Parse(sizeValue[secondValue]));
+            size = (first, second);
             return true;
         }
 

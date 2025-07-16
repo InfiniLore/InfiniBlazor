@@ -75,18 +75,19 @@ public sealed class TableSyntaxHandler : IMdSyntaxHandler {
                 ReadOnlySpan<char> row = rows[rowRanges[rowIndex]].Trim();
                 if (row.IsEmpty) continue;
 
-                int rowColumnCount = row.Split(columnBuffer, '|', 
-                    StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-
-                if (rowColumnCount != headerColumnCount) continue; // Skip malformed rows
+                int rowColumnCount = row.Split(columnBuffer, '|', StringSplitOptions.RemoveEmptyEntries);
 
                 TableRowMdSyntaxNode tableRow = TableRowMdSyntaxNode.Pool.Get();
                 tableBody.AddChildNode(tableRow);
                 for (int columnIndex = 0; columnIndex < rowColumnCount; columnIndex++) {
                     TableCellMdSyntaxNode tableCell = TableCellMdSyntaxNode.Pool.Get();
                     tableRow.AddChildNode(tableCell);
+                    
+                    ReadOnlySpan<char> column = row[columnBuffer[columnIndex]];
+                    if (column.IsEmpty || column.IsWhiteSpace()) continue;
+                    
                     stack.PushSingleLineMatchesToStack(
-                        row[columnBuffer[columnIndex]].ToString(), 
+                        column.ToString(), 
                         tableCell, 
                         parentOrigin);
                 }

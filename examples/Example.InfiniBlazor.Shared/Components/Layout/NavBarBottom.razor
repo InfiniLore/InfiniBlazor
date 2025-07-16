@@ -1,25 +1,24 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@namespace InfiniLore.InfiniBlazor.Components
+@using InfiniLore.InfiniBlazor
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniComponentBase
+@rendermode InteractiveAuto
+@inherits InfiniNavBarBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<button @onclick="OnClick" class="@InfiniSideNavItem.ContainerClasses">
-    <InfiniSideNavItem Text="@Text" Icon="@Icon" Class="@Class"/>
-</button>
+<InfiniNavBar Location="NavLayoutLocation.Bottom" Orientation="Orientation.Horizontal" Size="Size.Xs" Class="@Class" @bind-NavBarCollapsed="CollapsedState">
+    @* <InfiniNavLink Href="/table" IconName="@LucideNames.Table"> *@
+    @*     <Text>Table</Text> *@
+    @* </InfiniNavLink> *@
+</InfiniNavBar>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [CascadingParameter] public bool MenuCollapsed { get; set; }
-    
-    [Parameter] public EventCallback<MouseEventArgs> OnClick  { get; set; } 
-    [Parameter] public RenderFragment? Text { get; set; }
-    [Parameter] public RenderFragment? Icon { get; set; }
+    [Parameter] public bool CollapsedState { get; set; }
 }
-

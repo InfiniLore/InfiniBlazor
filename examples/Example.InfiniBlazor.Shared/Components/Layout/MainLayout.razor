@@ -12,11 +12,28 @@
 <InfiniThemeManager/>
 <InfiniToastManager/>
 
-<div class="flex h-screen w-screen">
-    <SideNav/>
-
-    @Body
-</div>
+<InfiniLayoutContainer Layout="NavLayout.SidesPrimary">
+    <Left>
+        <NavBarLeft/>
+    </Left>
+    
+    @* <Top> *@
+    @*     <NavBarBottom/> *@
+    @* </Top> *@
+    
+    <Bottom>
+        <NavBarBottom/>
+    </Bottom>
+    
+    @* *@
+    @* <Right> *@
+    @*     <NavBarLeft Location="NavLayoutLocation.Right" Orientation="Orientation.Vertical"/> *@
+    @* </Right> *@
+    
+    <Body>
+        @Body
+    </Body>
+</InfiniLayoutContainer>
 
 <div id="blazor-error-ui" class="hidden fixed bottom-0 left-0 w-full bg-yellow-100 shadow-md z-[1000] p-3 pl-5">
     An unhandled error has occurred.

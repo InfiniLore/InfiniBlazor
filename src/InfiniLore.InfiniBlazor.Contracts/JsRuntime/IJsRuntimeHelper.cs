@@ -28,4 +28,5 @@ public interface IJsRuntimeHelper {
     Task AddOrUpdateStyleElementAtHead(string id, string css);
     
     Task CopyToClipboardAsync(string text);
+    Task AddHorizontalScroll(ElementReference element, double i);
 }

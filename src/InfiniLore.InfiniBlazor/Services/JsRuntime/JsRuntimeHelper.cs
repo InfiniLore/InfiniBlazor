@@ -135,4 +135,13 @@ public class JsRuntimeHelper(
             logger.Warning(e, "Error writing text to clipboard");
         }
     }
+    
+    public async Task AddHorizontalScroll(ElementReference element, double i) {
+        try {
+            await jsRuntime.InvokeVoidAsync("window.addHorizontalScroll", element, i);
+        }
+        catch (Exception e) {
+            logger.Warning(e, "Error adding horizontal scroll");
+        }
+    }
 }

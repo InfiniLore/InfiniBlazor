@@ -33,6 +33,8 @@ public class DefaultThemeCollection : ThemeCollection {
         
             ButtonDefault = InfiniBlazorCssData.Instance.ColorBase10,
             ButtonPrimary = InfiniBlazorCssData.Instance.ColorBase80,
+            
+            Section = InfiniBlazorCssData.Instance.ColorBase10,
         }
     };
 }

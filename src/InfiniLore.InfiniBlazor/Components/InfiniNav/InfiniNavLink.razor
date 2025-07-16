@@ -7,28 +7,28 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniComponentBase
+@inherits InfiniNavItemBase
 @inject IQueryParameterManager QueryParameterManager
 @implements IDisposable
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <a href="@_computedHref"
-   class="@InfiniSideNavItem.ContainerClasses"
+   class="@InfiniNavItem.ContainerClasses"
    target="@(OpenInNewTab ? "_blank" : null)"
-   rel="noopener noreferrer">
-    <InfiniSideNavItem Text="@Text" Icon="@Icon" Class="@Class"/>
+   rel="noopener noreferrer"
+   hidden="@Hidden"
+   >
+    <InfiniNavItem Text="@Text" IconName="@IconName" Class="@Class"/>
 </a>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
     [Parameter] [EditorRequired] public required string Href { get; init; }
 
-    [CascadingParameter] public bool MenuCollapsed { get; set; }
     [Parameter] public RenderFragment? Text { get; set; }
-    [Parameter] public RenderFragment? Icon { get; set; }
+    [Parameter] public string? IconName { get; set; }
 
     [Parameter] public bool OpenInNewTab { get; set; }
     [Parameter] public bool DisableTrackedQueryParams { get; set; }

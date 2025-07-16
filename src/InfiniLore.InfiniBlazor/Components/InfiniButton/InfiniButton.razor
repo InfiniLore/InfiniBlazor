@@ -13,35 +13,38 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@Class relative">
-    @if (Href.IsNotNullOrWhiteSpace()) {
-        <a href="@_computedHref"
-           @ref="_elementRef"
-           class="@ContainerClasses rounded-md inline-flex items-center justify-center transition-all duration-150 transform cursor-pointer active:scale-95 hover:scale-105"
-           @onmouseenter="@ShowTooltip"
-           @onmouseleave="@HideTooltip">
-            @ButtonContent
-        </a>
-    }
-    else {
-        <button @onclick="OnClickAsync"
-                @ref="_elementRef"
-                @onclick:stopPropagation="@StopPropagation"
-                type="@Type"
-                disabled="@IsDisabled"
-                aria-label="@AriaLabel"
-                @onmouseenter="@ShowTooltip"
-                @onmouseleave="@HideTooltip"
-                class="@ContainerClasses rounded-md inline-flex items-center justify-center transition-all duration-150 transform">
-            @ButtonContent
-        </button>
-    }
-</div>
-@if (_showTooltip && Tooltip.IsNotNullOrEmpty()) {
-    <InfiniTooltip Content="@Tooltip"
-                   Anchor="@TooltipAnchor"
-                   Target="_elementRef"/>
-}
+@* WHY THE F do I need to do this to make it work? https://github.com/w3c/csswg-drafts/issues/9045 *@
+<InfiniTooltipWrapper>
+    <Content>
+        @if (Href.IsNotNullOrWhiteSpace()) {
+            <a href="@_computedHref"
+               class="@(ConcatClasses(Class, ContainerClasses)) rounded-md inline-flex items-center justify-center transition-all duration-150 transform cursor-pointer active:scale-95 hover:scale-105"
+               @onmouseenter="@ShowTooltip"
+               @onmouseleave="@HideTooltip">
+                @ButtonContent
+            </a>
+        }
+        else {
+            <button @onclick="OnClickAsync"
+                    @onclick:stopPropagation="@StopPropagation"
+                    type="@Type"
+                    disabled="@IsDisabled"
+                    aria-label="@AriaLabel"
+                    @onmouseenter="@ShowTooltip"
+                    @onmouseleave="@HideTooltip"
+                    class="@(ConcatClasses(Class, ContainerClasses)) rounded-md inline-flex items-center justify-center transition-all duration-150 transform">
+                @ButtonContent
+            </button>
+        }
+    </Content>
+
+    <Tooltip>
+        <InfiniTooltip
+            Class="@(HiddenIfNot(_showTooltip && Tooltip.IsNotNullOrEmpty()))"
+            Content="@Tooltip"
+            Anchor="@TooltipAnchor"/>
+    </Tooltip>
+</InfiniTooltipWrapper>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
@@ -67,7 +70,6 @@
 
     private string? _computedHref;
 
-    private ElementReference _elementRef;
     private bool _showTooltip;
 
     // ReSharper disable once UnusedParameter.Local
@@ -158,7 +160,7 @@
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                "infini-bg-(--button-light) hover:infini-bg-(--button-light-hover) text-(--button-light-text) hover:text-(--button-light-text-hover) hover:ring-2 hover:ring-(--button-light-ring)"
+                "infini-bg-(--button-light) hover:infini-bg-(--button-light-hover) text-(--button-light-text) hover:text-(--button-light-text-hover) hover:ring-2 hover:ring-(--button-light-ring) font-[450]"
             ),
 
         (ButtonVariant.Light, _) =>
@@ -182,6 +184,22 @@
                 ContainerReaction,
                 ContainerSizeClasses,
                 "infini-bg-(--button-outline) hover:infini-bg-(--button-outline-hover) ring-1",
+                Color.ToTextTailwind(),
+                Color.ToRingTailwind()
+            ),
+
+        (ButtonVariant.OutlineSolid, Color.Default) =>
+            ConcatClasses(
+                ContainerReaction,
+                ContainerSizeClasses,
+                "infini-bg-(--button-outline-solid) hover:infini-bg-(--button-outline-solid-hover) text-(--button-outline-solid-text) hover:text-(--button-outline-solid-text-hover) ring-1 ring-(--button-outline-solid-ring) hover:ring-(--button-outline-solid-ring-hover)"
+            ),
+
+        (ButtonVariant.OutlineSolid, _) =>
+            ConcatClasses(
+                ContainerReaction,
+                ContainerSizeClasses,
+                "infini-bg-(--button-outline-solid) hover:infini-bg-(--button-outline-solid-hover) ring-1",
                 Color.ToTextTailwind(),
                 Color.ToRingTailwind()
             ),
