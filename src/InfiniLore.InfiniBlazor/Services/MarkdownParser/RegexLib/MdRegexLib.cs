@@ -37,9 +37,9 @@ public static partial class MdRegexLib {
         | (?<headingSimple>^(?<hsText>.+?)\n[\ ]*[-=]{3,})
         | (?<list>^[^\S\n]*(?<lsId>-|\d+\.)\s+.*(?:\n[^\S\n]+[^\n]+)*(?:\n[^\S\n]*(?:-|\d+\.)\s+.*(?:\n[^\S\n]+[^\n]+)*)*)
         | (?<table>
-            ^\|(?<tHead>.+)\|\s*\n
-            ^\|(?<tSep>[:\-|\ ]+?)\|\s*\n
-            (?<tBody>(?:^\|.*\S.*\|(?:\n|$))+)
+            ^\|(?<tHead>.+)\|\ *\n
+            ^\|(?<tSep>[:\-|\ ]+?)\|\ *\n
+            (?<tBody>(?:(?:^\|.*\|$)\n?)+)
           )
         | (?<blockQuote>^>\ *.+(?:\n>[^\n]*)*)
         | (?<callout>

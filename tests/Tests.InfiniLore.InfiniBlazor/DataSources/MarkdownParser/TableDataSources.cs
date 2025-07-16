@@ -59,6 +59,58 @@ public class TableDataSources {
             </table>
             """
         );
+        
+        yield return static () => new MdTestData(SectionName,
+            """
+            | Column 1      | Column 2     | Column 3      |
+            | --------------| ------------ |-------------- |
+            | Row 2 col 1   |              | Row 2 col 3   |
+            """,
+            """
+            <table>
+                <thead>
+                    <tr>
+                        <th>Column 1</th>
+                        <th>Column 2</th>
+                        <th>Column 3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Row 2 col 1</td>
+                        <td></td>
+                        <td>Row 2 col 3</td>
+                    </tr>
+                </tbody>
+            </table>
+            """
+        );
+        
+        yield return static () => new MdTestData(SectionName,
+            """
+            | Column 1      | Column 2     | Column 3      |
+            | --------------| ------------ |-------------- |
+            | Row 2 col 1   |              |               |
+            """,
+            """
+            <table>
+                <thead>
+                    <tr>
+                        <th>Column 1</th>
+                        <th>Column 2</th>
+                        <th>Column 3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Row 2 col 1</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            """
+        );
 
         yield return static () => new MdTestData(SectionName,
             """
