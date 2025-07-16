@@ -9,7 +9,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@ConcatClasses(Class, AnchorClasses) absolute anchored z-1000 p-2">
+<div class="@ConcatClasses(Class, AnchorClasses) absolute anchored z-1000">
     <div
         class="
             @TriangleClasses
@@ -30,25 +30,25 @@
     [Parameter] public ElementReference Target { get; set; }
 
     private string AnchorClasses => Anchor switch {
-        Anchor.Center | Anchor.Bottom => "anchored-bottom-center/anchor-tooltip",
+        Anchor.Center | Anchor.Bottom => "anchored-bottom-center/anchor-tooltip pt-2",
         Anchor.Left | Anchor.Bottom => "anchored-bottom-left/anchor-tooltip",
         Anchor.Right | Anchor.Bottom => "anchored-bottom-right/anchor-tooltip",
-        Anchor.Center | Anchor.Top => "anchored-top-center/anchor-tooltip",
+        Anchor.Center | Anchor.Top => "anchored-top-center/anchor-tooltip pb-2",
         Anchor.Left | Anchor.Top => "anchored-top-left/anchor-tooltip",
         Anchor.Right | Anchor.Top => "anchored-top-right/anchor-tooltip",
-        Anchor.Left => "anchored-left/anchor-tooltip -mt-1",
-        Anchor.Right => "anchored-right/anchor-tooltip -mt-1",
+        Anchor.Left => "anchored-left/anchor-tooltip pr-2",
+        Anchor.Right => "anchored-right/anchor-tooltip pl-2",
         _ => "anchored/anchor-tooltip"
     };
 
     private string TriangleClasses => Anchor switch {
         Anchor.Center | Anchor.Bottom => ConcatClasses(TriangleCommonClasses, "before:-top-1 before:left-1/2 before:-translate-x-1/2"),
         Anchor.Center | Anchor.Top => ConcatClasses(TriangleCommonClasses, "before:-bottom-1 before:left-1/2 before:-translate-x-1/2"),
-        Anchor.Left => ConcatClasses(TriangleCommonClasses, "before:top-3 before:-right-1"),
-        Anchor.Right => ConcatClasses(TriangleCommonClasses, "before:top-3 before:-left-1"),
+        Anchor.Left => ConcatClasses(TriangleCommonClasses, "before:-right-1 before:top-1/2 before:-translate-y-1/2"),
+        Anchor.Right => ConcatClasses(TriangleCommonClasses, "before:-left-1 before:top-1/2 before:-translate-y-1/2"),
         _ => string.Empty
     };
 
-    public const string TriangleCommonClasses = "before:content-[''] before:absolute before:w-2 before:h-2 before:rotate-45 before:infini-bg-(--color-base-90)";
+    private const string TriangleCommonClasses = "before:content-[''] before:absolute before:w-2 before:h-2 before:rotate-45 before:infini-bg-(--color-base-90)";
     public const string AnchorClass = "anchor/anchor-tooltip";
 }
