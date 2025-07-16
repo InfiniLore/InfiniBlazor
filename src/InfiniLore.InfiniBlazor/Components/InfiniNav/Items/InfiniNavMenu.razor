@@ -10,15 +10,56 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@ContainerClasses">
-    <InfiniNavItem Text="@Text" IconName="@IconName" Class="@Class">
-        @ChildContent
-    </InfiniNavItem>
-</div>
+<CascadingValue Value="@(Depth + 1)">
+    <div class="@ContainerClassesNoHover relative">
+        <div class="@OrientationClasses anchor/anchor-nav-bar-menu relative">
+            <InfiniNavItem Text="@Text" IconName="@IconName">
+            </InfiniNavItem>
+        </div>
+
+        <div class="@AnchoredClasses z-1000">
+            <div class="fixed infini-bg-(--sidebar-nav) border-(--border) @OffsetClasses">
+                @ChildContent
+            </div>
+        </div>
+    </div>
+</CascadingValue>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
+    [CascadingParameter] public int Depth { get; set; }
+
+    private string OrientationClasses => NavBarLocation switch {
+        NavBarLocation.Top => "flex mt-px",
+        NavBarLocation.Left => "flex w-full",
+        NavBarLocation.Right => "w-full",
+        NavBarLocation.Bottom => "flex mb-px",
+        _ => string.Empty
+    };
     
+    private string AnchoredClasses => (Depth, NavBarLocation) switch {
+        (0, NavBarLocation.Top) => "anchored-bottom/anchor-nav-bar-menu",
+        (_, NavBarLocation.Left) => "anchored-right-span-bottom/anchor-nav-bar-menu ml-2",
+        (_, NavBarLocation.Right) => "anchored-left-span-bottom/anchor-nav-bar-menu mr-2",
+        (0, NavBarLocation.Bottom) => "anchored-top/anchor-nav-bar-menu ",
+
+        (not 0, NavBarLocation.Top) => "anchored-right-span-bottom/anchor-nav-bar-menu ml-2",
+        (not 0, NavBarLocation.Bottom) => "anchored-right-span-bottom/anchor-nav-bar-menu ml-2",
+
+        _ => "anchored-bottom/anchor-nav-bar-menu"
+    };
+
+    private string OffsetClasses => (Depth, NavBarLocation) switch {
+        (0, NavBarLocation.Top) => "-translate-x-1/2 -mt-px rounded-b-md border-b border-l border-r",
+        (_, NavBarLocation.Left) => "-translate-y-1.5 -mt-[2px] rounded-r-md border-t border-b border-r ",
+        (_, NavBarLocation.Right) => "-translate-x-full -translate-y-1.5 -mt-[2px] rounded-l-md border-t border-b border-l",
+        (0, NavBarLocation.Bottom) => "-translate-x-1/2 -translate-y-full rounded-t-md border-t border-l border-r",
+
+        (not 0, NavBarLocation.Top) => "-translate-y-1.5 -mt-[4px] rounded-r-md border-t border-b border-r",
+        (not 0, NavBarLocation.Bottom) => "-translate-y-full mt-[2em] rounded-r-md border-t border-b border-r",
+
+        _ => string.Empty
+    };
 }

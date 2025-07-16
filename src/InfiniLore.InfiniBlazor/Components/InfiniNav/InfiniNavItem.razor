@@ -23,7 +23,7 @@
         case (null, not null): {
             <span
                 class="@(NavBarCollapsed ? "w-0 opacity-0 delay-0" : "delay-300 w-auto opacity-100") transition-all duration-300 h-6 overflow-hidden">
-                <span class="@TextClasses">
+                <span class="@ConcatClasses(TextClasses, TextSize)">
                     @Text
                 </span>
                 @ChildContent
@@ -38,7 +38,7 @@
 
             <span
                 class="@(NavBarCollapsed ? "w-0 opacity-0 delay-0" : "delay-300 w-auto ml-2 opacity-100") transition-all duration-300 h-6 overflow-hidden">
-                <span class="@TextClasses">
+                <span class="@ConcatClasses(TextClasses, TextSize)">
                     @Text
                 </span>
                 @ChildContent
@@ -63,6 +63,17 @@
         Size.Xl => 42,
         Size.Xxl => 48,
         _ => 324
+    };
+
+    private string TextSize => NavBarSize switch {
+        Size.Xxs => "text-xs",
+        Size.Xs => "text-xs",
+        Size.S => "text-sm",
+        Size.M => "text-base",
+        Size.L => "text-base",
+        Size.Xl => "text-lg",
+        Size.Xxl => "text-xl",
+        _ => throw new ArgumentOutOfRangeException()
     };
     
     private const string IconClasses = "text-(--sidebar-nav-text) flex-shrink-0 group-hover:text-(--sidebar-nav-text-hover)";
