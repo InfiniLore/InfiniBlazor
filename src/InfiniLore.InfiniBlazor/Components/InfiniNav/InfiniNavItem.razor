@@ -5,11 +5,11 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniComponentBase
+@inherits InfiniNavItemBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<span class="@Class flex flex-nowrap items-center justify-center">
+<span hidden="@Hidden" class="@Class flex flex-nowrap items-center justify-center">
     @switch (Icon, Text) {
         case (_, null): {
             <span class="@IconClasses">
@@ -18,7 +18,7 @@
             break;
         }
         case (null, _): {
-            <span class="@(MenuCollapsed ? "w-0 opacity-0 delay-0" : "delay-300 w-auto opacity-100") transition-all duration-300 h-6 overflow-hidden">
+            <span class="@(NavBarCollapsed ? "w-0 opacity-0 delay-0" : "delay-300 w-auto opacity-100") transition-all duration-300 h-6 overflow-hidden">
                 <span class="@TextClasses">
                     @Text
                 </span>
@@ -30,7 +30,7 @@
                 @Icon
             </span>
             
-            <span class="@(MenuCollapsed ? "w-0 opacity-0 delay-0" : "delay-300 w-auto ml-2 opacity-100") transition-all duration-300 h-6 overflow-hidden">
+            <span class="@(NavBarCollapsed ? "w-0 opacity-0 delay-0" : "delay-300 w-auto ml-2 opacity-100") transition-all duration-300 h-6 overflow-hidden">
                 <span class="@TextClasses">
                     @Text
                 </span>
@@ -43,10 +43,9 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [CascadingParameter] public bool MenuCollapsed { get; set; }
     [Parameter, EditorRequired] public required RenderFragment? Text { get; set; }
     [Parameter, EditorRequired] public required RenderFragment? Icon { get; set; }
-
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

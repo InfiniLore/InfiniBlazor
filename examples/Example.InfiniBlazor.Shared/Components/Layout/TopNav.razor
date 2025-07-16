@@ -1,40 +1,237 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using Example.InfiniBlazor.Shared.Themes
+@using InfiniLore.InfiniBlazor
+@using InfiniLore.InfiniBlazor.Debugger
+@using InfiniLore.InfiniBlazor.Theming
+@using InfiniLore.InfiniBlazor.Theming.Collections
+@using InfiniLore.InfiniBlazor.Toasting
+@using Microsoft.Extensions.Logging
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InteractiveAuto
 @inherits InfiniNavBase
+@inject IThemeStateProvider ThemeStateProvider
+@inject IToastingProvider ToastingProvider
+@inject IVisualDebuggerProvider DebuggerProvider
+@inject ILogger<TopNav> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniBarNav Location="@Location" Size="Size">
+<InfiniNavBar Location="@Location" Size="Size" Orientation="@Orientation" Class="@Class" @bind-NavBarCollapsed="CollapsedState">
+    <div class="flex flex-row justify-between">
+        <InfiniNavLink Href="/" Class="@ConcatClasses(HiddenIf(CollapsedState), "font-bold")" HiddenOnCollapsed>
+            <Text>InfiniBlazor</Text>
+        </InfiniNavLink>
+        <InfiniNavCollapseButton @bind-CollapsedState="CollapsedState"/>
+    </div>
+    
+    <InfiniNavBreak/>
+    
     <InfiniNavLink Href="/markdown-dual">
         <Icon>
             <LiSignature/>
         </Icon>
         <Text>Markdown Example</Text>
     </InfiniNavLink>
-    
-    <InfiniNavLink Href="/table">
-        <Text>Table</Text>
-    </InfiniNavLink>
-    
-    <InfiniNavBreak/>
-    
+
+    @* <InfiniSideNavLink Href="/markdown-rolling"> *@
+    @*     <Icon> *@
+    @*         <LiIndentIncrease/> *@
+    @*     </Icon> *@
+    @*     <Text>Rolling Markdown Example</Text> *@
+    @* </InfiniSideNavLink> *@
+
     <InfiniNavLink Href="/table">
         <Icon>
             <LiTable/>
         </Icon>
+        <Text>Table</Text>
     </InfiniNavLink>
+
+    <InfiniNavLink Href="/html">
+        <Icon>
+            <LiCodeXml/>
+        </Icon>
+        <Text>Html</Text>
+    </InfiniNavLink>
+
+    <InfiniNavLink Href="/theming/table">
+        <Icon>
+            <LiTable2/>
+        </Icon>
+        <Text>theming table</Text>
+    </InfiniNavLink>
+
+    <InfiniNavLink Href="/sections">
+        <Icon>
+            <LiRows3/>
+        </Icon>
+        <Text>Sections</Text>
+    </InfiniNavLink>
+
+    <InfiniNavLink Href="/" OpenInNewTab>
+        <Icon>
+            <LiArrowRightToLine/>
+        </Icon>
+        <Text>Open New Tab</Text>
+    </InfiniNavLink>
+
     <InfiniSpacer/>
+
+    <InfiniNavButton OnClick="@OnCreateToastAsync">
+        <Icon>
+            <LiPopcorn/>
+        </Icon>
+        <Text>Create Toast</Text>
+    </InfiniNavButton>
+
+
+    <InfiniNavToggleButton
+        Value="@DebuggerProvider.IsEnabled()"
+        ValueChanged="@DebuggerProvider.ToggleStateAsync"
+        OnIcon="@(CollapsedState ? "bug" : null)"
+        OffIcon="@(CollapsedState ? "bug" : null)"
+        Color="Color.Red">
+        <Icon>
+            <LiBug/>
+        </Icon>
+        <Text>Toggle Debug</Text>
+    </InfiniNavToggleButton>
     
     <InfiniNavBreak/>
-</InfiniBarNav>
+    
+    <InfiniNavLink
+        Href="https://github.com/InfiniLore/infinilore.infiniblazor"
+        DisableTrackedQueryParams
+        OpenInNewTab
+    >
+        <Icon>
+            <LiPackage/>
+        </Icon>
+        <Text>Github</Text>
+    </InfiniNavLink>
+
+    @* DEBUG *@
+    <InfiniNavButton OnClick="@SwitchTheme">
+        <Icon>
+            <LiPalette/>
+        </Icon>
+        <Text>Switch Theme</Text>
+    </InfiniNavButton>
+
+
+    @if (ThemeStateProvider.GetState().IsBinaryCollection) {
+        <InfiniNavToggleButton
+            Value="@(ToggleState)"
+            ValueChanged="@OnThemeModeChanged"
+            OnIcon="sun"
+            OffIcon="moon">
+            <Icon>
+                <LiSun/>
+            </Icon>
+            <Text>Toggle Mode</Text>
+        </InfiniNavToggleButton>
+    }
+    else {
+        <InfiniNavButton OnClick="@OnThemeModeChanged">
+            <Icon>
+                <LiSun/>
+            </Icon>
+            <Text>Toggle Mode</Text>
+        </InfiniNavButton>
+    }
+
+    @* User *@
+    <InfiniNavUser UserName="InfiniLore">
+        <Icon>
+            <InfiniUserIcon
+                ImageUrl="@_currentUserImage"
+                HrefUserProfile="/"/>
+        </Icon>
+        <AdditionalLinks>
+            <button @onclick="SwitchUserImage"
+                    class="@(InfiniNavUser.AdditionalLinkClasses)">
+                switch
+            </button>
+            <NavLink href="/"
+                     class="@(InfiniNavUser.AdditionalLinkClasses)">
+                logout
+            </NavLink>
+        </AdditionalLinks>
+    </InfiniNavUser>
+</InfiniNavBar>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
+    [Parameter] public bool CollapsedState { get; set; }
+    
+    private string _currentUserImage = "/icon.png";
+    private bool ToggleState { get; set; }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private async Task SwitchTheme() {
+        IThemeState state = ThemeStateProvider.GetState();
+
+        string? themeCollectionName = state.CollectionName;
+        themeCollectionName = themeCollectionName switch {
+            DefaultThemeCollection.Name => PrideThemeCollection.Name,
+            _ => DefaultThemeCollection.Name
+        };
+        Logger.Information("{a}", themeCollectionName);
+
+        await ThemeStateProvider.TrySelectCollectionAsync(themeCollectionName);
+        ToggleState = state.ModeName != state.FirstModeInCollectionName;
+
+        StateHasChanged();
+    }
+
+    private void SwitchUserImage() {
+        _currentUserImage = _currentUserImage == "/icon.png" ? "aaa/icon.png" : "/icon.png";
+    }
+
+    private async Task OnCreateToastAsync() {
+        IToastingData defaultToast = new ToastingData("default");
+        IToastingData infoToast = new ToastingData("info");
+        IToastingData successToast = new ToastingData("success");
+        IToastingData warningToast = new ToastingData("warning");
+        IToastingData errorToast = new ToastingData(
+            "error",
+            "Some DataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataData",
+            "#",
+            "click here"
+        );
+
+        IToastingData debugToast = new ToastingData("Debug");
+        IToastingData achievementToast = new ToastingData("Achievement");
+
+        await ToastingProvider.PublishToastAsync(defaultToast, ToastAppearance.Default, 0);
+        await ToastingProvider.PublishToastAsync(infoToast, ToastAppearance.Info, 0);
+        await ToastingProvider.PublishToastAsync(successToast, ToastAppearance.Success, 0);
+        await ToastingProvider.PublishToastAsync(warningToast, ToastAppearance.Warning, 0);
+        await ToastingProvider.PublishToastAsync(errorToast, ToastAppearance.Error, 0);
+        await ToastingProvider.PublishToastAsync(debugToast, ToastAppearance.Debug, 0);
+        await ToastingProvider.PublishToastAsync(achievementToast, ToastAppearance.Achievement, 0);
+    }
+
+    private async Task OnThemeModeChanged() {
+
+        if (!await ThemeStateProvider.TrySelectNextModeAsync()) {
+            Logger.Warning("Could not activate next theme mode");
+        }
+        else {
+            Logger.Information("Activated next theme mode");
+        }
+
+        IThemeState state = ThemeStateProvider.GetState();
+        ToggleState = state.ModeName != state.FirstModeInCollectionName;
+
+        StateHasChanged();
+    }
 }

@@ -27,7 +27,7 @@
         @Left
         <div class="flex h-screen w-full flex-col min-w-0">
             @Top
-            <div class="flex flex-col min-w-0 min-h-0 w-full">
+            <div class="flex flex-col min-w-0 min-h-0 w-full h-full">
                 @Body
             </div>
             @Bottom
@@ -96,5 +96,5 @@
     [Parameter] public RenderFragment? Bottom { get; set; }
 
     [Parameter] public RenderFragment? Body { get; set; }
-    [Parameter] public NavLayout Layout { get; set; } = NavLayout.SidesPrimary;
+    [Parameter] public NavLayout Layout { get; set; } = NavLayout.LeftPrimary;
 }

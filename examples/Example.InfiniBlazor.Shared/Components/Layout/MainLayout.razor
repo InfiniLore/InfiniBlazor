@@ -13,22 +13,22 @@
 <InfiniThemeManager/>
 <InfiniToastManager/>
 
-<InfiniLayoutContainer Layout="@NavLayout.LeftPrimary">
+<InfiniLayoutContainer Layout="NavLayout.SidesPrimary">
     <Left>
-        <SideNav Location="NavLayoutLocation.Left"/>
+        <TopNav Location="NavLayoutLocation.Left" Orientation="Orientation.Vertical"/>
     </Left>
     
-    @* <Top> *@
-    @*     <TopNav Location="NavLayoutLocation.Top" Size="Size.Xxs"/> *@
-    @* </Top> *@
+    <Top>
+        <TopNav Location="NavLayoutLocation.Top" Orientation="Orientation.Horizontal"/>
+    </Top>
     
     <Bottom>
-        <TopNav Location="NavLayoutLocation.Bottom" Size="Size.Xxs"/>
+        <TopNav Location="NavLayoutLocation.Bottom" Orientation="Orientation.Horizontal"/>
     </Bottom>
     
-    @* <Right> *@
-    @*     <SideNav Location="NavLayoutLocation.Right"/> *@
-    @* </Right> *@
+    <Right>
+        <TopNav Location="NavLayoutLocation.Right" Orientation="Orientation.Vertical"/>
+    </Right>
     
     <Body>
         @Body

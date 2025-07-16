@@ -15,15 +15,15 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<CascadingValue Value="MenuCollapsed">
+<CascadingValue Value="NavBarCollapsed">
     <aside class="@NavLocationClasses flex-shrink-0 h-full flex flex-col overflow-x-hidden infini-bg-(--sidebar-nav) border-(--sidebar-nav-border)">
-        <div class="@(MenuCollapsed ? "w-14" : ClassOpen) px-2 h-full flex flex-col overflow-x-hidden transition-all duration-300">
+        <div class="@(NavBarCollapsed ? "w-14" : ClassOpen) px-2 h-full flex flex-col overflow-x-hidden transition-all duration-300">
 
             <!-- Top Logo and Hamburger -->
             <div
-                class="@(MenuCollapsed ? "justify-center" : "justify-between") flex items-center h-12 min-h-[3rem] max-h-[3rem] w-full">
+                class="@(NavBarCollapsed ? "justify-center" : "justify-between") flex items-center h-12 min-h-[3rem] max-h-[3rem] w-full">
                 <div
-                    class="@(MenuCollapsed ? "opacity-0 w-0 overflow-hidden px-0" : "opacity-100 w-full px-2") flex items-center h-8 min-h-[2rem] max-h-[2rem] transition-all duration-300">
+                    class="@(NavBarCollapsed ? "opacity-0 w-0 overflow-hidden px-0" : "opacity-100 w-full px-2") flex items-center h-8 min-h-[2rem] max-h-[2rem] transition-all duration-300">
                     @Header
                 </div>
 
@@ -36,14 +36,14 @@
             </div>
 
             <!-- Navigation -->
-            @if (Body is not null) {
+            @if (Content is not null) {
                 <InfiniNavBreak/>
                 <div class="flex flex-col flex-grow overflow-x-hidden">
-                    <div class="@(MenuCollapsed ? "infini-scrollbar-hidden" : "infini-scrollbar") relative flex grow overflow-x-hidden overflow-y-auto mt-2 mb-2">
+                    <div class="@(NavBarCollapsed ? "infini-scrollbar-hidden" : "infini-scrollbar") relative flex grow overflow-x-hidden overflow-y-auto mt-2 mb-2">
                         <div
                             class="sticky top-0 left-0 right-0 h-3 bg-gradient-to-b from-black/10 to-transparent pointer-events-none z-10"></div>
                         <nav class="grow flex flex-col space-y-2">
-                            @Body
+                            @Content
                         </nav>
                         <div
                             class="sticky bottom-0 left-0 right-0 h-3 bg-gradient-to-t from-black/10 to-transparent pointer-events-none z-10"></div>
@@ -55,7 +55,7 @@
             @if (Footer is not null) {
                 <div class="border-t border-(--sidebar-nav-border) flex overflow-x-hidden shrink-0">
                     <div
-                        class="@(MenuCollapsed ? "infini-scrollbar-hidden" : "infini-scrollbar") relative flex grow overflow-x-hidden overflow-y-auto mt-2 mb-2">
+                        class="@(NavBarCollapsed ? "infini-scrollbar-hidden" : "infini-scrollbar") relative flex grow overflow-x-hidden overflow-y-auto mt-2 mb-2">
                         <div
                             class="sticky top-0 left-0 right-0 h-3 bg-gradient-to-b from-black/10 to-transparent pointer-events-none z-10"></div>
                         <nav class="grow flex flex-col space-y-2">
@@ -73,13 +73,13 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public bool MenuCollapsed { get; set; }
 
     [Parameter] public RenderFragment? Header { get; set; }
-    [Parameter] public RenderFragment? Body { get; set; }
+    [Parameter] public RenderFragment? Content { get; set; }
     [Parameter] public RenderFragment? Footer { get; set; }
 
-    [Parameter] public EventCallback<bool> MenuCollapsedChanged { get; set; }
+    [Parameter] public bool NavBarCollapsed { get; set; }
+    [Parameter] public EventCallback<bool> NavBarCollapsedChanged { get; set; }
 
     private string ClassOpen => Size switch {
         Size.Xxs => "w-14",
@@ -107,18 +107,18 @@
         if (!savedState || _initialized) return;
 
         _initialized = true;
-        MenuCollapsed = savedState;
-        await MenuCollapsedChanged.InvokeAsync(MenuCollapsed);
+        NavBarCollapsed = savedState;
+        await NavBarCollapsedChanged.InvokeAsync(NavBarCollapsed);
         StateHasChanged();
     }
 
     private async Task ToggleMenu() {
-        MenuCollapsed = !MenuCollapsed;
-        if (RendererInfo.IsInteractive && !await JsRuntimeHelper.LocalStorage.TrySetValueAsync(LocalStorageKey, MenuCollapsed)) {
+        NavBarCollapsed = !NavBarCollapsed;
+        if (RendererInfo.IsInteractive && !await JsRuntimeHelper.LocalStorage.TrySetValueAsync(LocalStorageKey, NavBarCollapsed)) {
             Logger.Warning("Could not store Collapsed menu state to js.LocalStorage");
         } 
 
-        await MenuCollapsedChanged.InvokeAsync(MenuCollapsed);
+        await NavBarCollapsedChanged.InvokeAsync(NavBarCollapsed);
         await InvokeAsync(StateHasChanged);
     }
 }

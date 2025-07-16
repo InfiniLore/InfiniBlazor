@@ -7,7 +7,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniComponentBase
+@inherits InfiniNavItemBase
 @inject IQueryParameterManager QueryParameterManager
 @implements IDisposable
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -16,7 +16,9 @@
 <a href="@_computedHref"
    class="@InfiniNavItem.ContainerClasses"
    target="@(OpenInNewTab ? "_blank" : null)"
-   rel="noopener noreferrer">
+   rel="noopener noreferrer"
+   hidden="@Hidden"
+   >
     <InfiniNavItem Text="@Text" Icon="@Icon" Class="@Class"/>
 </a>
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -25,7 +27,6 @@
 @code {
     [Parameter] [EditorRequired] public required string Href { get; init; }
 
-    [CascadingParameter] public bool MenuCollapsed { get; set; }
     [Parameter] public RenderFragment? Text { get; set; }
     [Parameter] public RenderFragment? Icon { get; set; }
 
