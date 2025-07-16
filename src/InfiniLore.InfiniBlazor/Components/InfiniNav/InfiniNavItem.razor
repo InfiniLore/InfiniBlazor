@@ -54,9 +54,6 @@
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static string ContainerClasses => ConcatClasses(ContainerClassesNoHover, "hover:bg-(--sidebar-nav-button-hover)");
-    public static string ContainerClassesNoHover => "flex flex-nowrap items-center infini-bg-(--sidebar-nav-button) rounded group justify-start p-2";
-
     private int IconSize => NavBarSize switch {
         Size.Xxs => 10,
         Size.Xs => 14,
