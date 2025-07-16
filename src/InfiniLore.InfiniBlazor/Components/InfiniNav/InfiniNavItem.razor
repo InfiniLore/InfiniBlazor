@@ -12,19 +12,21 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <span hidden="@Hidden" class="@Class flex flex-nowrap items-center justify-center">
     @switch (Icon: IconName, Text) {
-        case (_, null): {
+        case (not null, null): {
             <span class="@IconClasses">
                 <LucideIcon Name="@IconName" Size="@IconSize"/>
             </span>
+            @ChildContent
             break;
         }
 
-        case (null, _): {
+        case (null, not null): {
             <span
                 class="@(NavBarCollapsed ? "w-0 opacity-0 delay-0" : "delay-300 w-auto opacity-100") transition-all duration-300 h-6 overflow-hidden">
                 <span class="@TextClasses">
                     @Text
                 </span>
+                @ChildContent
             </span>
             break;
         }
@@ -39,6 +41,7 @@
                 <span class="@TextClasses">
                     @Text
                 </span>
+                @ChildContent
             </span>
             break;
         }
@@ -48,9 +51,6 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter, EditorRequired] public required RenderFragment? Text { get; set; }
-    [Parameter, EditorRequired] public required string? IconName { get; set; }
-
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
