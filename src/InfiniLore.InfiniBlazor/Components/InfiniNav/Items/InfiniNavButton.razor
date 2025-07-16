@@ -1,43 +1,23 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.Lucide
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniComponentBase
+@inherits InfiniNavItemBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@SizeClass flex justify-center items-center justify-self-center self-center">
-    <InfiniButton
-        Variant="ButtonVariant.Transparent"
-        IconName="@LucideNames.Menu"
-        OnClick="@ToggleMenu"
-    />
-</div>
+<button @onclick="OnClick" class="@InfiniNavItem.ContainerClasses">
+    <InfiniNavItem Text="@Text" IconName="@IconName" Class="@Class"/>
+</button>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [CascadingParameter] public Size NavBarSize { get; set; }
-    [Parameter] public bool CollapsedState { get; set; }
-    [Parameter] public EventCallback<bool> CollapsedStateChanged { get; set; }
-
-    private string SizeClass => NavBarSize switch {
-        _ => "w-10 min-w-10 h-10 min-h-10"
-    };
-    
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
-    private async Task ToggleMenu() {
-        CollapsedState = !CollapsedState;
-
-        await CollapsedStateChanged.InvokeAsync(CollapsedState);
-        await InvokeAsync(StateHasChanged);
-    }
-    
-    
+    [Parameter] public EventCallback<MouseEventArgs> OnClick  { get; set; } 
+    [Parameter] public RenderFragment? Text { get; set; }
+    [Parameter] public string? IconName { get; set; }
 }
+

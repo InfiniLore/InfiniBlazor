@@ -11,6 +11,7 @@ namespace InfiniLore.InfiniBlazor.Components;
 public class InfiniNavItemBase : InfiniComponentBase {
     [CascadingParameter] public bool NavBarCollapsed { get; set; }
     [CascadingParameter] public Size NavBarSize { get; set; }
+    [CascadingParameter] public NavBarLocation NavBarLocation { get; set; }
     
     [Parameter] public bool HiddenOnCollapsed { get; set; }
     protected bool Hidden => NavBarCollapsed && HiddenOnCollapsed;

@@ -5,21 +5,9 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniComponentBase
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<button @onclick="OnClick" class="@InfiniNavItem.ContainerClasses">
-    <InfiniNavItem Text="@Text" IconName="@IconName" Class="@Class"/>
-</button>
-@* ------------------------------------------------------------------------------------------------------------------ *@
-@* Code
-@* ------------------------------------------------------------------------------------------------------------------ *@
-@code {
-    [CascadingParameter] public bool NavBarCollapsed { get; set; }
-    
-    [Parameter] public EventCallback<MouseEventArgs> OnClick  { get; set; } 
-    [Parameter] public RenderFragment? Text { get; set; }
-    [Parameter] public string? IconName { get; set; }
-}
-
+<div class="-m-px min-h-[1px] min-w-[1px] infini-bg-(--sidebar-nav-border)">
+</div>

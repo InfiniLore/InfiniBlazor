@@ -9,16 +9,16 @@ namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class InfiniNavBarBase : InfiniComponentBase {
     [Parameter] public Size Size { get; set; } = Size.M;
-    [Parameter] public NavLayoutLocation Location { get; set; }
+    [Parameter] public NavBarLocation Location { get; set; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected string NavLocationClasses => Location switch {
-        NavLayoutLocation.Top => "border-b",
-        NavLayoutLocation.Left => "border-r",
-        NavLayoutLocation.Right => "border-l",
-        NavLayoutLocation.Bottom => "border-t",
+        NavBarLocation.Top => "border-b",
+        NavBarLocation.Left => "border-r",
+        NavBarLocation.Right => "border-l",
+        NavBarLocation.Bottom => "border-t",
         _ => string.Empty
     };
 }

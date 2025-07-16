@@ -13,15 +13,17 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="NavBarCollapsed">
     <CascadingValue Value="NavBarSize">
-        <div
-            @ref="@Reference"
-            @onwheel="OnWheelAsync"
-            class="@ConcatClasses(Class, NavLocationClasses, SizeClasses, OrientationClasses)
+        <CascadingValue Value="NavBarLocation">
+            <div
+                @ref="@Reference"
+                @onwheel="OnWheelAsync"
+                class="@ConcatClasses(Class, NavLocationClasses, SizeClasses, OrientationClasses)
                transition-all duration-300
                flex whitespace-nowrap infini-bg-(--sidebar-nav) border-(--sidebar-nav-border) text-white infini-scrollbar-hidden
          ">
-            @ChildContent
-        </div>
+                @ChildContent
+            </div>
+        </CascadingValue>
     </CascadingValue>
 </CascadingValue>
 
@@ -33,10 +35,11 @@
     private ElementReference Reference { get; set; }
 
     [Parameter] public bool NavBarCollapsed { get; set; }
-    public Size NavBarSize => Size;
-    
+
     [Parameter] public EventCallback<bool> NavBarCollapsedChanged { get; set; }
 
+    public Size NavBarSize => Size;
+    public NavBarLocation NavBarLocation => Location;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -53,8 +56,20 @@
     }
 
     private string OrientationClasses => ConcatClasses(
-        Location.ToFlex(),
-        Location.ToFull(),
+        Location switch {
+            NavBarLocation.Top => "flex-row",
+            NavBarLocation.Left => "flex-col",
+            NavBarLocation.Right => "flex-col",
+            NavBarLocation.Bottom => "flex-row",
+            _ => string.Empty
+        },
+        Location switch {
+            NavBarLocation.Top => "w-full",
+            NavBarLocation.Left => "h-full",
+            NavBarLocation.Right => "h-full",
+            NavBarLocation.Bottom => "w-full",
+            _ => string.Empty
+        },
         Location.OnOrientation(
             () => "overflow-y-hidden overflow-x-auto",
             () => "overflow-x-hidden overflow-y-auto"
