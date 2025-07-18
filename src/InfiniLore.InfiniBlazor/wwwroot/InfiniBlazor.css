@@ -599,6 +599,9 @@
   .flex {
     display: flex;
   }
+  .grid {
+    display: grid;
+  }
   .hidden {
     display: none;
   }
@@ -1055,6 +1058,12 @@
   .list-disc {
     list-style-type: disc;
   }
+  .grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .grid-rows-3 {
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+  }
   .flex-col {
     flex-direction: column;
   }
@@ -1206,9 +1215,16 @@
     border-top-left-radius: var(--radius-md);
     border-top-right-radius: var(--radius-md);
   }
+  .rounded-l-2xl {
+    border-top-left-radius: var(--radius-2xl);
+    border-bottom-left-radius: var(--radius-2xl);
+  }
   .rounded-l-md {
     border-top-left-radius: var(--radius-md);
     border-bottom-left-radius: var(--radius-md);
+  }
+  .rounded-tl-2xl {
+    border-top-left-radius: var(--radius-2xl);
   }
   .rounded-tl-lg {
     border-top-left-radius: var(--radius-lg);
@@ -1217,9 +1233,16 @@
     border-top-right-radius: 0.25rem;
     border-bottom-right-radius: 0.25rem;
   }
+  .rounded-r-2xl {
+    border-top-right-radius: var(--radius-2xl);
+    border-bottom-right-radius: var(--radius-2xl);
+  }
   .rounded-r-md {
     border-top-right-radius: var(--radius-md);
     border-bottom-right-radius: var(--radius-md);
+  }
+  .rounded-tr-2xl {
+    border-top-right-radius: var(--radius-2xl);
   }
   .rounded-tr-lg {
     border-top-right-radius: var(--radius-lg);
@@ -1236,6 +1259,12 @@
     border-bottom-right-radius: var(--radius-md);
     border-bottom-left-radius: var(--radius-md);
   }
+  .rounded-br-2xl {
+    border-bottom-right-radius: var(--radius-2xl);
+  }
+  .rounded-bl-2xl {
+    border-bottom-left-radius: var(--radius-2xl);
+  }
   .rounded-bl-md {
     border-bottom-left-radius: var(--radius-md);
   }
@@ -1250,6 +1279,10 @@
   .border-x {
     border-inline-style: var(--tw-border-style);
     border-inline-width: 1px;
+  }
+  .border-y {
+    border-block-style: var(--tw-border-style);
+    border-block-width: 1px;
   }
   .border-t {
     border-top-style: var(--tw-border-style);
