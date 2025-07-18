@@ -7,7 +7,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using Microsoft.Extensions.Logging
 @inherits InfiniNavItemBase
-@inject ILogger<InfiniNavMenu> Logger
+@inject ILogger<InfiniNavSubMenu> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -39,7 +39,7 @@
     [CascadingParameter] public int Depth { get; set; }
     private bool IsHidden { get; set; } = true;
     [Parameter] public bool ReverseDirection { get; set; }
-    private NavMenuContext? MenuContext { get; set; }
+    private NavSubMenuContext? MenuContext { get; set; }
 
     private string OrientationClasses => NavBarLocation switch {
         NavBarLocation.Top => "flex mt-px",
@@ -101,7 +101,7 @@
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected override void OnParametersSet() {
-        MenuContext = new NavMenuContext(OnChildPressed);// shh stupid way of doing this, but it works
+        MenuContext = new NavSubMenuContext(OnChildPressed);// shh stupid way of doing this, but it works
     }
 
     private void OnClick() {

@@ -12,7 +12,7 @@ public abstract class InfiniNavItemBase : InfiniComponentBase {
     [CascadingParameter] public bool NavBarCollapsed { get; set; }
     [CascadingParameter] public Size NavBarSize { get; set; }
     [CascadingParameter] public NavBarLocation NavBarLocation { get; set; }
-    [CascadingParameter] public NavMenuContext? SubMenuContext { get; set; }
+    [CascadingParameter] public NavSubMenuContext? SubMenuContext { get; set; }
     
     [Parameter] public string? Text { get; set; }
     [Parameter] public string? IconName { get; set; }
