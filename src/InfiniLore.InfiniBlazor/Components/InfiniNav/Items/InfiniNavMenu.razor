@@ -5,24 +5,31 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using Microsoft.Extensions.Logging
 @inherits InfiniNavItemBase
-
+@inject ILogger<InfiniNavMenu> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="@(Depth + 1)">
-    <div class="@ContainerClassesNoHover relative">
-        <div class="@OrientationClasses anchor/anchor-nav-bar-menu relative">
-            <InfiniNavItem Text="@Text" IconName="@IconName">
-            </InfiniNavItem>
-        </div>
+    <CascadingValue Value="MenuContext" IsFixed="true">
+        <div class="@OrientationClasses relative">
+            <button @onclick="OnClick" class="flex w-full cursor-pointer">
+                <div class="@ContainerClassesNoHover w-full">
+                    <div class="flex w-full anchor/anchor-nav-bar-menu relative">
+                        <InfiniNavItem Text="@Text" IconName="@IconName"/>
+                    </div>
+                </div>
+            </button>
 
-        <div class="@AnchoredClasses z-1000">
-            <div class="fixed infini-bg-(--sidebar-nav) border-(--border) @OffsetClasses">
-                @ChildContent
+            <div class="@AnchoredClasses z-1000">
+                <div
+                    class="@ConcatClasses(TransitionClasses, OffsetClasses, BorderClasses) fixed infini-bg-(--sidebar-nav) border-(--border)">
+                    @ChildContent
+                </div>
             </div>
         </div>
-    </div>
+    </CascadingValue>
 </CascadingValue>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
@@ -30,6 +37,9 @@
 
 @code {
     [CascadingParameter] public int Depth { get; set; }
+    private bool IsHidden { get; set; } = true;
+    [Parameter] public bool ReverseDirection { get; set; }
+    private NavMenuContext? MenuContext { get; set; }
 
     private string OrientationClasses => NavBarLocation switch {
         NavBarLocation.Top => "flex mt-px",
@@ -38,28 +48,71 @@
         NavBarLocation.Bottom => "flex mb-px",
         _ => string.Empty
     };
-    
-    private string AnchoredClasses => (Depth, NavBarLocation) switch {
-        (0, NavBarLocation.Top) => "anchored-bottom/anchor-nav-bar-menu",
-        (_, NavBarLocation.Left) => "anchored-right-span-bottom/anchor-nav-bar-menu ml-2",
-        (_, NavBarLocation.Right) => "anchored-left-span-bottom/anchor-nav-bar-menu mr-2",
-        (0, NavBarLocation.Bottom) => "anchored-top/anchor-nav-bar-menu ",
 
-        (not 0, NavBarLocation.Top) => "anchored-right-span-bottom/anchor-nav-bar-menu ml-2",
-        (not 0, NavBarLocation.Bottom) => "anchored-right-span-bottom/anchor-nav-bar-menu ml-2",
+    private string AnchoredClasses => (Depth, NavBarLocation, ReverseDirection) switch {
+        (0, NavBarLocation.Top, _) => "anchored-bottom/anchor-nav-bar-menu",
+        (_, NavBarLocation.Left, _) => "anchored-right-span-bottom/anchor-nav-bar-menu ml-2",
+        (_, NavBarLocation.Right, _) => "anchored-left-span-bottom/anchor-nav-bar-menu mr-2",
+        (0, NavBarLocation.Bottom, _) => "anchored-top/anchor-nav-bar-menu ",
+
+        (not 0, NavBarLocation.Top, false) => "anchored-right-span-bottom/anchor-nav-bar-menu ml-2",
+        (not 0, NavBarLocation.Top, true) => "anchored-left-span-bottom/anchor-nav-bar-menu ml-2",
+        (not 0, NavBarLocation.Bottom, false) => "anchored-right-span-bottom/anchor-nav-bar-menu ml-2",
+        (not 0, NavBarLocation.Bottom, true) => "anchored-left-span-bottom/anchor-nav-bar-menu ml-2",
 
         _ => "anchored-bottom/anchor-nav-bar-menu"
     };
 
-    private string OffsetClasses => (Depth, NavBarLocation) switch {
-        (0, NavBarLocation.Top) => "-translate-x-1/2 -mt-px rounded-b-md border-b border-l border-r",
-        (_, NavBarLocation.Left) => "-translate-y-1.5 -mt-[2px] rounded-r-md border-t border-b border-r ",
-        (_, NavBarLocation.Right) => "-translate-x-full -translate-y-1.5 -mt-[2px] rounded-l-md border-t border-b border-l",
-        (0, NavBarLocation.Bottom) => "-translate-x-1/2 -translate-y-full rounded-t-md border-t border-l border-r",
+    private string BorderClasses => (Depth, NavBarLocation, ReverseDirection) switch {
+        (0, NavBarLocation.Top, _) => "rounded-b-md border-b border-l border-r",
+        (not 0, NavBarLocation.Top, false) => "rounded-r-md border-t border-b border-r",
+        (not 0, NavBarLocation.Top, true) => "rounded-l-md border-t border-b border-l",
+        (_, NavBarLocation.Left, _) => "rounded-r-md border-t border-b border-r",
+        (_, NavBarLocation.Right, _) => "rounded-l-md border-t border-b border-l",
+        (0, NavBarLocation.Bottom, _) => "rounded-t-md border-t border-l border-r",
+        (not 0, NavBarLocation.Bottom, false) => "rounded-r-md border-t border-b border-r",
+        (not 0, NavBarLocation.Bottom, true) => "rounded-r-md border-t border-b border-r",
+        _ => string.Empty
+    };
 
-        (not 0, NavBarLocation.Top) => "-translate-y-1.5 -mt-[4px] rounded-r-md border-t border-b border-r",
-        (not 0, NavBarLocation.Bottom) => "-translate-y-full mt-[2em] rounded-r-md border-t border-b border-r",
+    private string OffsetClasses => (Depth, NavBarLocation, ReverseDirection) switch {
+        (0, NavBarLocation.Top, _) => "-translate-x-1/2 -mt-px",
+        (_, NavBarLocation.Left, false) => "-translate-y-1.5 -mt-[2px] ",
+        (_, NavBarLocation.Left, true) => "-translate-y-[calc(100%-(var(--spacing)*8))]",
+        (_, NavBarLocation.Right, false) => "-translate-x-full -translate-y-1.5 -mt-[2px] ",
+        (_, NavBarLocation.Right, true) => "-translate-x-full -translate-y-[calc(100%-(var(--spacing)*8))]",
+        (0, NavBarLocation.Bottom, _) => "-translate-x-1/2 -translate-y-full ",
+
+        (not 0, NavBarLocation.Top, false) => "-translate-y-1.5 -mt-[4px]",
+        (not 0, NavBarLocation.Top, true) => "-translate-x-[calc(100%+(var(--spacing)*2))] translate-y-[calc((var(--spacing)*-2)-2px)]",
+        (not 0, NavBarLocation.Bottom, false) => "-translate-y-full mt-[2em]",
+        (not 0, NavBarLocation.Bottom, true) => "translate-x-[calc(100%+(var(--spacing)*2))] translate-y-[calc((var(--spacing)*-2)-1px)]",
 
         _ => string.Empty
     };
+
+    private string TransitionClasses => ConcatClasses(
+        "transition-all duration-300 ",
+        IsHidden
+            ? "opacity-0 scale-95"
+            : "opacity-100 scale-100");
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override void OnParametersSet() {
+        MenuContext = new NavMenuContext(OnChildPressed);// shh stupid way of doing this, but it works
+    }
+
+    private void OnClick() {
+        IsHidden = !IsHidden;
+        StateHasChanged();
+    }
+
+    private void OnChildPressed() {
+        IsHidden = true;
+        SubMenuContext?.OnSubItemPressed?.Invoke();// ensures that multiple deeply nested states are all hidden at once
+        InvokeAsync(StateHasChanged);
+        Logger.Warning("PRESSED");
+    }
 }

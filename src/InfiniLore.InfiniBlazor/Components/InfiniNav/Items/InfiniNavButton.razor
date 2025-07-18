@@ -9,7 +9,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<button @onclick="OnClick" class="@ContainerClasses">
+<button @onclick="Callback" class="@ContainerClasses">
     <InfiniNavItem Text="@Text" IconName="@IconName" Class="@Class">
         @ChildContent
     </InfiniNavItem>
@@ -18,6 +18,14 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public EventCallback<MouseEventArgs> OnClick  { get; set; } 
+    [Parameter] public EventCallback<MouseEventArgs> OnClick  { get; set; }
+    
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private async Task Callback() {
+        SubMenuContext?.OnSubItemPressed?.Invoke();
+        await OnClick.InvokeAsync();
+    }
 }
 
