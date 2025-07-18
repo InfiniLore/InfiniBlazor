@@ -427,8 +427,23 @@
   .z-10 {
     z-index: 10;
   }
+  .z-15 {
+    z-index: 15;
+  }
+  .z-20 {
+    z-index: 20;
+  }
+  .z-30 {
+    z-index: 30;
+  }
   .z-50 {
     z-index: 50;
+  }
+  .z-900 {
+    z-index: 900;
+  }
+  .z-950 {
+    z-index: 950;
   }
   .z-1000 {
     z-index: 1000;
