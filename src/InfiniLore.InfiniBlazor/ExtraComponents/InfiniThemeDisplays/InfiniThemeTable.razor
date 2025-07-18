@@ -35,22 +35,21 @@
             <code>@item.CssData</code>
         </InfiniTableCell>
 
-        <InfiniTableCell Alignment="" Class="flex justify-center items-center">
+        <InfiniTableCell Alignment="Alignment.Right" Class="flex justify-center items-center">
             <div class="w-12 h-12 shadow-md flex items-center justify-center leading-none rounded-xl"
                  style="background: var(@item.CssVarName)">
             </div>
         </InfiniTableCell>
 
-        <InfiniTableCell Alignment="right" Class="flex justify-center gap-6">
+        <InfiniTableCell Alignment="Alignment.Right" Class="flex justify-center gap-6">
             <InfiniButton
                 IconName="copy"
-                OnClick="() => JsRuntimeHelper.CopyToClipboardAsync(item.CssVarName)"
+                OnClick="@(() => JsRuntimeHelper.CopyToClipboardAsync(item.CssVarName))"
                 TooltipAnchor="Anchor.Bottom | Anchor.Left"
-                Tooltip="@item.CssVarName"
-            />
+                Tooltip="@item.CssVarName"></InfiniButton>
             <InfiniButton
                 IconName="copy"
-                OnClick="() => JsRuntimeHelper.CopyToClipboardAsync(item.CssData)"
+                OnClick="@(() => JsRuntimeHelper.CopyToClipboardAsync(item.CssData))"
                 TooltipAnchor="Anchor.Bottom | Anchor.Left"
                 Tooltip="@item.CssData"
             />

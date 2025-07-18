@@ -16,13 +16,19 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public SectionEdgeStyle EdgeStyle { get; set; } = SectionEdgeStyle.Middle;
+    [Parameter] public SectionLocation EdgeStyle { get; set; } = SectionLocation.Center;
 
     private string LocationClasses 
         => EdgeStyle switch {
-            SectionEdgeStyle.Top => "rounded-b-2xl border-l border-r border-b",
-            SectionEdgeStyle.Middle => "rounded-2xl border",
-            SectionEdgeStyle.Bottom => "rounded-t-2xl border-l border-r border-t",
+            SectionLocation.Top => "rounded-b-2xl border-l border-r border-b",
+            SectionLocation.Center => "rounded-2xl border",
+            SectionLocation.Bottom => "rounded-t-2xl border-l border-r border-t",
+            SectionLocation.TopLeft => expr,
+            SectionLocation.TopRight => expr,
+            SectionLocation.Left => expr,
+            SectionLocation.Right => expr,
+            SectionLocation.BottomLeft => expr,
+            SectionLocation.BottomRight => expr,
             _ => throw new ArgumentOutOfRangeException()
         };
 }

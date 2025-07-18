@@ -6,8 +6,16 @@ namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public enum SectionEdgeStyle {
+public enum SectionLocation {
     Top,
-    Middle,
-    Bottom
+    TopCenter = Top,
+    TopLeft,
+    TopRight,
+    Left,
+    Right,
+    Center,
+    Bottom,
+    BottomCenter = Bottom,
+    BottomLeft,
+    BottomRight,
 }

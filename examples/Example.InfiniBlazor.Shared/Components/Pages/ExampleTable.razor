@@ -18,8 +18,8 @@
             <Header>
                 <InfiniTableHeader>Name</InfiniTableHeader>
                 <InfiniTableHeader>Email</InfiniTableHeader>
-                <InfiniTableHeader Alignment="right">Age</InfiniTableHeader>
-                <InfiniTableHeader Alignment="right">Actions</InfiniTableHeader>
+                <InfiniTableHeader Alignment="Alignment.Right">Age</InfiniTableHeader>
+                <InfiniTableHeader Alignment="Alignment.Right">Actions</InfiniTableHeader>
             </Header>
             <ContentWithIndex Context="box">
                 @{
@@ -30,10 +30,10 @@
                 
                 <InfiniTableCell>@person.Name</InfiniTableCell>
                 <InfiniTableCell>@person.Email</InfiniTableCell>
-                <InfiniTableCell Alignment="right">
+                <InfiniTableCell Alignment="Alignment.Right">
                     @person.Age years
                 </InfiniTableCell>
-                <InfiniTableCell Alignment="right">
+                <InfiniTableCell Alignment="Alignment.Right">
                     <div class="flex justify-end gap-2">
                         <InfiniButton
                             Disabled="true"
