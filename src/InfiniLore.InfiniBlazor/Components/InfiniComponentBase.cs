@@ -17,7 +17,6 @@ public abstract class InfiniComponentBase : ComponentBase, IAsyncDisposable {
 
     [Parameter] public virtual DebugColor DebugColor { get; set; } = DebugColor.Red;
 
-    // ReSharper disable once UnusedMemberInSuper.Global
     protected virtual bool IsDisabled => CascadedDisabled;
     [CascadingParameter(Name = nameof(CascadedDisabled))] public bool CascadedDisabled { get; set; }
     // -----------------------------------------------------------------------------------------------------------------
@@ -33,14 +32,13 @@ public abstract class InfiniComponentBase : ComponentBase, IAsyncDisposable {
         GC.SuppressFinalize(this);
         return ValueTask.CompletedTask;
     }
-
-    protected static string ConcatClasses(params ReadOnlySpan<string?> classes)
-        => string.Join(" ", classes);
     
-    protected static string HiddenIf(bool condition) {
-        return condition ? "hidden" : string.Empty;
-    }
-    protected static string HiddenIfNot(bool condition) {
-        return !condition ? "hidden" : string.Empty;
-    }
+    protected static string ConcatClasses(params ReadOnlySpan<string?> classes)
+        => string.Join(' ', classes);
+    
+    protected static string HiddenIf(bool condition) 
+        => condition ? "hidden" : string.Empty;
+    
+    protected static string HiddenIfNot(bool condition) 
+        => HiddenIf(!condition);
 }

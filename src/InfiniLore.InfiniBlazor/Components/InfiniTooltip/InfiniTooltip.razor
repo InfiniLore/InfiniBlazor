@@ -30,20 +30,20 @@
     [Parameter] public ElementReference Target { get; set; }
 
     private string AnchorClasses => Anchor switch {
-        Anchor.Center | Anchor.Bottom => "anchored-bottom-center/anchor-tooltip pt-2",
-        Anchor.Left | Anchor.Bottom => "anchored-bottom-left/anchor-tooltip",
-        Anchor.Right | Anchor.Bottom => "anchored-bottom-right/anchor-tooltip",
-        Anchor.Center | Anchor.Top => "anchored-top-center/anchor-tooltip pb-2",
-        Anchor.Left | Anchor.Top => "anchored-top-left/anchor-tooltip",
-        Anchor.Right | Anchor.Top => "anchored-top-right/anchor-tooltip",
+        Anchor.CenterBottom => "anchored-bottom-center/anchor-tooltip pt-2",
+        Anchor.LeftBottom => "anchored-bottom-left/anchor-tooltip",
+        Anchor.RightBottom => "anchored-bottom-right/anchor-tooltip",
+        Anchor.CenterTop => "anchored-top-center/anchor-tooltip pb-2",
+        Anchor.LeftTop => "anchored-top-left/anchor-tooltip",
+        Anchor.RightTop => "anchored-top-right/anchor-tooltip",
         Anchor.Left => "anchored-left/anchor-tooltip pr-2",
         Anchor.Right => "anchored-right/anchor-tooltip pl-2",
         _ => "anchored/anchor-tooltip"
     };
 
     private string TriangleClasses => Anchor switch {
-        Anchor.Center | Anchor.Bottom => ConcatClasses(TriangleCommonClasses, "before:-top-1 before:left-1/2 before:-translate-x-1/2"),
-        Anchor.Center | Anchor.Top => ConcatClasses(TriangleCommonClasses, "before:-bottom-1 before:left-1/2 before:-translate-x-1/2"),
+        Anchor.CenterBottom => ConcatClasses(TriangleCommonClasses, "before:-top-1 before:left-1/2 before:-translate-x-1/2"),
+        Anchor.CenterTop => ConcatClasses(TriangleCommonClasses, "before:-bottom-1 before:left-1/2 before:-translate-x-1/2"),
         Anchor.Left => ConcatClasses(TriangleCommonClasses, "before:-right-1 before:top-1/2 before:-translate-y-1/2"),
         Anchor.Right => ConcatClasses(TriangleCommonClasses, "before:-left-1 before:top-1/2 before:-translate-y-1/2"),
         _ => string.Empty

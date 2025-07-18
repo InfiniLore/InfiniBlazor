@@ -18,7 +18,7 @@
 <InfiniInputLayout Component="@this">
     <InputFile
         id="@Id"
-        OnChange="OnFileChangeAsync"
+        OnChange="@OnFileChangeAsync"
         disabled="@IsDisabled"
         accept="@Accept"
         multiple="@AllowMultipleFiles"
@@ -38,12 +38,12 @@
             Class="absolute right-0 top-0 -mr-1"
             Variant="ButtonVariant.Transparent"
             IconName="@LucideNames.X"
-            OnClick="OnFilesClearedAsync"/>
+            OnClick="@OnFilesClearedAsync"/>
     </div>
 
     <InfiniButton
         IconName="@LucideNames.Upload"
-        OnClick="OpenFileDialog"/>
+        OnClick="@OpenFileDialog"/>
 
 </InfiniInputLayout>
 @* ------------------------------------------------------------------------------------------------------------------ *@
