@@ -17,7 +17,7 @@
             <button @onclick="OnClick" class="flex w-full cursor-pointer">
                 <div class="@ContainerClassesNoHover w-full">
                     <div class="flex w-full anchor/anchor-nav-bar-menu relative">
-                        <InfiniNavItem Text="@Text" IconName="@IconName"/>
+                        <InfiniNavItem Text="@Text" Icon="@Icon"/>
                     </div>
                 </div>
             </button>
@@ -72,7 +72,7 @@
         (0, NavBarLocation.Bottom, _) => "rounded-t-md border-t border-l border-r",
         (not 0, NavBarLocation.Bottom, false) => "rounded-r-md border-t border-b border-r",
         (not 0, NavBarLocation.Bottom, true) => "rounded-r-md border-t border-b border-r",
-        _ => string.Empty
+        _ => "border rounded-md"
     };
 
     private string OffsetClasses => (Depth, NavBarLocation, ReverseDirection) switch {

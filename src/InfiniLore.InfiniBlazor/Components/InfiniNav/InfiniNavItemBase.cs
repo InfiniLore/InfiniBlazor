@@ -15,7 +15,7 @@ public abstract class InfiniNavItemBase : InfiniComponentBase {
     [CascadingParameter] public NavSubMenuContext? SubMenuContext { get; set; }
     
     [Parameter] public string? Text { get; set; }
-    [Parameter] public string? IconName { get; set; }
+    [Parameter] public string? Icon { get; set; }
     
     [Parameter] public bool HiddenOnCollapsed { get; set; }
     protected bool Hidden => NavBarCollapsed && HiddenOnCollapsed;

@@ -11,12 +11,17 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniNavBar Location="NavBarLocation.Right" Size="Size.Xs" Class="@Class" @bind-NavBarCollapsed="CollapsedState">
-
+<InfiniNavBar Location="NavBarLocation.Right" Size="Size.M" Class="@Class" @bind-NavBarCollapsed="CollapsedState">
+    <InfiniSpacer/>
+    <InfiniNavSubMenu Text="Sub Menu" Icon="@LucideNames.ChevronLeft">
+        <InfiniNavLink Text="Something" Icon="@LucideNames.AArrowDown" Href="/"/>
+        <InfiniNavLink Text="Else" Icon="@LucideNames.AArrowDown" Href="/"/>
+    </InfiniNavSubMenu>
+    <InfiniSpacer/>
 </InfiniNavBar>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public bool CollapsedState { get; set; }
+    [Parameter] public bool CollapsedState { get; set; } = true;
 }

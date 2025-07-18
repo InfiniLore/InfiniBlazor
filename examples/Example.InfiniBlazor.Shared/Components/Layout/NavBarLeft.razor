@@ -38,37 +38,37 @@
     <InfiniNavLink
         Href="/markdown-dual"
         Text="Markdown Example"
-        IconName="@LucideNames.Signature"
+        Icon="@LucideNames.Signature"
     />
 
     <InfiniNavLink
         Href="/table"
         Text="Table"
-        IconName="@LucideNames.Table"
+        Icon="@LucideNames.Table"
     />
 
     <InfiniNavLink
         Href="/html"
         Text="Html"
-        IconName="@LucideNames.CodeXml"
+        Icon="@LucideNames.CodeXml"
     />
 
     <InfiniNavLink
         Href="/theming/table"
         Text="Theming Table"
-        IconName="@LucideNames.Table2"
+        Icon="@LucideNames.Table2"
     />
 
     <InfiniNavLink
         Href="/sections"
         Text="Sections"
-        IconName="@LucideNames.Rows3"
+        Icon="@LucideNames.Rows3"
     />
 
     <InfiniNavLink
         Href="/" OpenInNewTab
         Text="Open New Tab"
-        IconName="@LucideNames.ArrowRightToLine"
+        Icon="@LucideNames.ArrowRightToLine"
     />
     
     <InfiniSpacer/>
@@ -76,7 +76,7 @@
     <InfiniNavButton
         OnClick="@OnCreateToastAsync"
         Text="Create Toast"
-        IconName="@LucideNames.Popcorn"
+        Icon="@LucideNames.Popcorn"
     />
 
     <InfiniNavToggleButton
@@ -85,7 +85,7 @@
         Text="Toggle Debug"
         OnIcon="@(CollapsedState ? "bug" : null)"
         OffIcon="@(CollapsedState ? "bug" : null)"
-        Color="Color.Red" IconName="@LucideNames.Bug"
+        Color="Color.Red" Icon="@LucideNames.Bug"
     />
 
     <InfiniNavBreak/>
@@ -95,14 +95,14 @@
         DisableTrackedQueryParams
         OpenInNewTab
         Text="Github"
-        IconName="@LucideNames.Package"
+        Icon="@LucideNames.Package"
     />
 
     @* DEBUG *@
     <InfiniNavButton
         OnClick="@SwitchTheme"
         Text="Switch Theme"
-        IconName="@LucideNames.Palette"
+        Icon="@LucideNames.Palette"
     />
 
 
@@ -112,24 +112,24 @@
             ValueChanged="@OnThemeModeChanged"
             Text="Toggle Mode"
             OnIcon="sun"
-            OffIcon="moon" IconName="@LucideNames.Sun"
+            OffIcon="moon" Icon="@LucideNames.Sun"
         />
     }
     else {
         <InfiniNavButton
             OnClick="@OnThemeModeChanged" 
             Text="Toggle Mode"
-            IconName="@LucideNames.Sun"
+            Icon="@LucideNames.Sun"
         />
     }
 
     @* User *@
     <InfiniNavUser UserName="InfiniLore">
-        <Icon>
+        <UserIcon>
             <InfiniUserIcon
                 ImageUrl="@_currentUserImage"
                 HrefUserProfile="/"/>
-        </Icon>
+        </UserIcon>
         <AdditionalLinks>
             <button @onclick="SwitchUserImage"
                     class="@(InfiniNavUser.AdditionalLinkClasses)">

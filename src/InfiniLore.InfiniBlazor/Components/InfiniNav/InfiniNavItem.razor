@@ -10,11 +10,15 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<span hidden="@Hidden" class="@Class flex flex-nowrap items-center justify-center">
-    @switch (Icon: IconName, Text) {
+<span 
+    hidden="@Hidden"  
+    title="@(NavBarCollapsed ? Text : string.Empty)"
+    class="@Class flex flex-nowrap items-center justify-center"
+> 
+    @switch (Icon, Text) {
         case (not null, null): {
             <span class="@IconClasses">
-                <LucideIcon Name="@IconName" Size="@IconSize"/>
+                <LucideIcon Name="@Icon" Size="@IconSize"/>
             </span>
             @ChildContent
             break;
@@ -33,7 +37,7 @@
 
         case (_, _): {
             <span class="@IconClasses">
-                <LucideIcon Name="@IconName" Size="@IconSize"/>
+                <LucideIcon Name="@Icon" Size="@IconSize"/>
             </span>
 
             <span
