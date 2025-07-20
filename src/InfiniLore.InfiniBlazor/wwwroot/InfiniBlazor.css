@@ -2074,6 +2074,9 @@
   .infini-bg-\(--color-base-60\) {
     background: var(--color-base-60);
   }
+  .infini-bg-\(--color-base-70\) {
+    background: var(--color-base-70);
+  }
   .infini-bg-\(--color-base-80\) {
     background: var(--color-base-80);
   }
@@ -2136,6 +2139,9 @@
   }
   .infini-bg-\(--page\) {
     background: var(--page);
+  }
+  .infini-bg-\(--section\) {
+    background: var(--section);
   }
   .infini-bg-\(--sidebar-nav\) {
     background: var(--sidebar-nav);

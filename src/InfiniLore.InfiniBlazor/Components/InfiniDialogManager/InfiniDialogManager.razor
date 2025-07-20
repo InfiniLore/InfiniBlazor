@@ -1,22 +1,26 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Dialogs
+@using Microsoft.Extensions.Logging
+@using System.Diagnostics.CodeAnalysis
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@inject IDialogProvider DialogProvider
+@inject ILogger<InfiniDialogManager> Logger
+@inherits InfiniComponentBase
 @rendermode InteractiveAuto
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="absolute flex top-0 left-0 w-screen h-screen justify-center items-center transition-all duration-300 text-(--text) @AppearClasses">
-    <InfiniSection Class="flex w-3/4 h-3/4 justify-center items-center">
-        <InfiniHeading3>InfiniDialogManager</InfiniHeading3>
-        <InfiniSpacer/>
-        <div class="flex justify-center w-full">
-            <InfiniButton OnClick="OnRemove" Text="Remove"/>
-        </div>
-    </InfiniSection>
+    <CascadingValue Value="DialogContext">
+        @if (HasDialog) {
+            <DynamicComponent Type="Dialog.ComponentType" Parameters="Dialog.Parameters"/>
+        }
+    </CascadingValue>
 </div>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -24,14 +28,51 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     // private bool HasDialog { get; set; } = false;
-    private bool HasDialog { get; set; } = true;
+    [MemberNotNullWhen(true, nameof(Dialog))] private bool HasDialog => Dialog is not null;
+    private IDialogData? Dialog { get; set; }
+
+    private DialogContext DialogContext { get; } = new();
 
     private string AppearClasses => HasDialog
         ? $"{ZIndex.DialogManager} backdrop-blur-sm bg-black/50 opacity-100 pointer-events-auto"
         : $"{ZIndex.Zero} backdrop-blur-none bg-transparent opacity-0 pointer-events-none";
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        DialogContext.OnDialogExit += RemoveCurrentDialog;
+        DialogProvider.DialogOpened += OnDialogOpened;
+    }
+
+    public override ValueTask DisposeAsync() {
+        DialogProvider.DialogOpened -= OnDialogOpened;
+        DialogContext.OnDialogExit -= RemoveCurrentDialog;
+        return base.DisposeAsync();
+    }
+
+    private void OnDialogOpened() {
+        if (Dialog is not null) {
+            Logger.Debug("A dialog has already been instantiated");
+            return;
+        }
+        if (!DialogProvider.TryPopDialog(out IDialogData? data)) {
+            Logger.Debug("No dialog in stack");
+            return;
+        }
+
+        Dialog = data;
+        if (!HasDialog) {
+            Logger.Warning("Dialog could not be initiated");
+            return;
+        }
+
+        StateHasChanged();
+    }
     
-    private void OnRemove() {
-        HasDialog = false;
+    private void RemoveCurrentDialog() {
+        Dialog = null;
         StateHasChanged();
     }
 }

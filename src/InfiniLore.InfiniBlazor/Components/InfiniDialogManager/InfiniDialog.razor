@@ -1,34 +1,22 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniComponentBase
+@inherits InfiniDialogBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<section class="@ConcatClasses(Class, LocationClasses) flex flex-col infini-bg-(--section) p-4 border-(--section-border)">
+<div
+    class="flex flex-col w-3/4 h-3/4 justify-center items-center infini-bg-(--color-base-70) shadow-sm p-4 rounded-2xl border border-(--section-border)">
     @ChildContent
-</section>
+</div>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@code {
-    [Parameter] public SectionLocation Location { get; set; } = SectionLocation.Center;
 
-    private string LocationClasses 
-        => Location switch {
-            SectionLocation.Top => "rounded-b-2xl border-x border-b",
-            SectionLocation.Center => "rounded-2xl border",
-            SectionLocation.Bottom => "rounded-t-2xl border-x border-t",
-            SectionLocation.TopLeft => "rounded-br-2xl border-b border-r",
-            SectionLocation.TopRight => "rounded-bl-2xl border-b border-l",
-            SectionLocation.Left => "rounded-r-2xl border-y border-r",
-            SectionLocation.Right => "rounded-l-2xl border-y border-l",
-            SectionLocation.BottomLeft => "rounded-tr-2xl border-t border-r",
-            SectionLocation.BottomRight => "rounded-tl-2xl border-t border-l",
-            _ => string.Empty
-        };
+@code {
 }
