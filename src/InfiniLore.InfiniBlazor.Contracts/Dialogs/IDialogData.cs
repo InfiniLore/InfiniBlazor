@@ -8,7 +8,6 @@ namespace InfiniLore.InfiniBlazor.Dialogs;
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IDialogData {
     Type ComponentType { get; }
-    Dictionary<string, object?> Parameters { get; }
-
-    bool IsValidType();
+    
+    IDictionary<string, object>? AsDynamicParameters();
 }

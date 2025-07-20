@@ -8,24 +8,17 @@ namespace InfiniLore.InfiniBlazor.Dialogs;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public record DialogData(
-    Type ComponentType,
-    Dictionary<string, object?> Parameters
+    Type ComponentType
 ) : IDialogData {
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
     public static DialogData Create<T>(Dictionary<string, object?>? parameters = null) where T : InfiniDialogBase => new(
-        typeof(T),
-        parameters ?? new Dictionary<string, object?>()
+        typeof(T)
     );
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public bool IsValidType() {
-        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-        if (ComponentType == null) return false;
-        if (!ComponentType.IsSubclassOf(typeof(InfiniDialogBase))) return false;
-        return true;
-    }
+    public IDictionary<string, object>? AsDynamicParameters() => null;
 }

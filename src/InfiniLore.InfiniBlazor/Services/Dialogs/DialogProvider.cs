@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.Components;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
@@ -26,7 +27,7 @@ public class DialogProvider(ILogger<DialogProvider> logger) : IDialogProvider {
             return;       
         }
 
-        if (!dialog.IsValidType()) {
+        if (!IsValidComponentType(dialog)) {
             logger.Warning("Invalid dialog type: {dialog}", dialog);
             return;      
         }
@@ -38,4 +39,11 @@ public class DialogProvider(ILogger<DialogProvider> logger) : IDialogProvider {
     
     public bool TryPopDialog([NotNullWhen(true)] out IDialogData? dialogData) 
         => Dialogs.TryPop(out dialogData);
+
+    private bool IsValidComponentType(IDialogData dialog) {
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+        if (dialog.ComponentType == null) return false;
+        if (!dialog.ComponentType.IsSubclassOf(typeof(InfiniDialogBase))) return false;
+        return true;
+    }
 }
