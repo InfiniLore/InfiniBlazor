@@ -1,0 +1,34 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@rendermode InteractiveAuto
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="absolute flex top-0 left-0 w-screen h-screen justify-center items-center transition-all duration-300 @AppearClasses">
+    <div class="bg-red-500 w-1/2 h-1/2 text-(--text) flex flex-col justify-center items-center gap-4">
+        <span class="justify-self-center w-full text-center">InfiniDialogManager</span>
+        <InfiniButton OnClick="OnRemove">Remove</InfiniButton>
+    </div>
+</div>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    // private bool HasDialog { get; set; } = false;
+    private bool HasDialog { get; set; } = true;
+
+    private string AppearClasses => HasDialog
+        ? $"{ZIndex.DialogManager} backdrop-blur-sm bg-black/50 opacity-100 pointer-events-auto"
+        : $"{ZIndex.Zero} backdrop-blur-none bg-transparent opacity-0 pointer-events-none";
+    
+    private void OnRemove() {
+        HasDialog = false;
+        StateHasChanged();
+    }
+}
