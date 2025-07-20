@@ -32,11 +32,10 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
-    private ElementReference Reference { get; set; }
-
     [Parameter] public bool NavBarCollapsed { get; set; }
-
     [Parameter] public EventCallback<bool> NavBarCollapsedChanged { get; set; }
+
+    private ElementReference Reference { get; set; }
 
     public Size NavBarSize => Size;
     public NavBarLocation NavBarLocation => Location;
@@ -77,6 +76,7 @@
     );
 
     private string SizeClasses => (NavBarCollapsed, Location.IsHorizontal(), Size) switch {
+        // Vertical & not collapsed
         (false, false, Size.Xxs) => "w-14 min-w-14",
         (false, false, Size.Xs) => "w-24 min-w-24",
         (false, false, Size.S) => "w-48 min-w-48",
@@ -84,8 +84,17 @@
         (false, false, Size.L) => "w-80 min-w-80",
         (false, false, Size.Xl) => "w-96 min-w-96",
         (false, false, Size.Xxl) => "w-112 min-w-112",
-        (true, false, _) => "w-10 min-w-10",
+        
+        // Vertical & collapsed
+        (true, false, Size.Xxs) => "w-4 min-w-4",
+        (true, false, Size.Xs) => "w-6 min-w-6",
+        (true, false, Size.S) => "w-8 min-w-8",
+        (true, false, Size.M) => "w-10 min-w-10",
+        (true, false, Size.L) => "w-14 min-w-14",
+        (true, false, Size.Xl) => "w-18 min-w-18",
+        (true, false, Size.Xxl) => "w-24 min-w-24",
 
+        // Horizontal
         (_, true, Size.Xxs) => "h-4 min-h-4",
         (_, true, Size.Xs) => "h-6 min-h-6",
         (_, true, Size.S) => "h-8 min-h-8",
@@ -96,23 +105,11 @@
         _ => throw new ArgumentOutOfRangeException(nameof(Size), Size, null)
     };
 
-    private const string LocalStorageKey = "SideNavCollapsedState";
-
-    private bool _initialized;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override async Task OnInitializedAsync() {
+    protected override void OnInitialized() {
         VisualDebugger.InitializeFromUrl();
-
-        if (!RendererInfo.IsInteractive) return;// Only try to load state from localStorage in interactive mode
-
-        bool savedState = await JsRuntimeHelper.LocalStorage.TryGetValueAsync<bool>(LocalStorageKey);
-        if (!savedState || _initialized) return;
-
-        _initialized = true;
-        NavBarCollapsed = savedState;
-        await NavBarCollapsedChanged.InvokeAsync(NavBarCollapsed);
         StateHasChanged();
     }
 }

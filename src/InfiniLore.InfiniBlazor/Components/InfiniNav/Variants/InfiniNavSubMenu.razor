@@ -5,9 +5,8 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using Microsoft.Extensions.Logging
+@using InfiniLore.Lucide
 @inherits InfiniNavItemBase
-@inject ILogger<InfiniNavSubMenu> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -16,8 +15,8 @@
         <div class="@OrientationClasses relative">
             <button @onclick="OnClick" class="flex w-full cursor-pointer">
                 <div class="@ContainerClassesNoHover w-full">
-                    <div class="flex w-full anchor/anchor-nav-bar-menu relative">
-                        <InfiniNavItem Text="@Text" Icon="@Icon"/>
+                    <div class="flex grow w-full anchor/anchor-nav-bar-menu">
+                        <InfiniNavItem Text="@Text" Icon="@IconName" />
                     </div>
                 </div>
             </button>
@@ -31,15 +30,23 @@
         </div>
     </CascadingValue>
 </CascadingValue>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
     [CascadingParameter] public int Depth { get; set; }
-    private bool IsHidden { get; set; } = true;
     [Parameter] public bool ReverseDirection { get; set; }
+    private bool IsMenuOpened { get; set; } 
     private NavSubMenuContext? MenuContext { get; set; }
+
+    private string IconName => Icon ?? NavBarLocation switch {
+        NavBarLocation.Top => LucideNames.ChevronDown,
+        NavBarLocation.Left => LucideNames.ChevronRight,
+        NavBarLocation.Right => LucideNames.ChevronLeft,
+        NavBarLocation.Bottom => LucideNames.ChevronUp,
+        _ => string.Empty
+    };
 
     private string OrientationClasses => NavBarLocation switch {
         NavBarLocation.Top => "flex mt-px",
@@ -93,26 +100,25 @@
 
     private string TransitionClasses => ConcatClasses(
         "transition-all duration-300 ",
-        IsHidden
-            ? "opacity-0 scale-95"
-            : "opacity-100 scale-100");
+        IsMenuOpened
+            ? "opacity-100 scale-100"
+            : "opacity-0 scale-95");
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected override void OnParametersSet() {
-        MenuContext = new NavSubMenuContext(OnChildPressed);// shh stupid way of doing this, but it works
+        MenuContext = new NavSubMenuContext(OnChildPressed); // shh, stupid way of doing this, but it works
     }
 
     private void OnClick() {
-        IsHidden = !IsHidden;
+        IsMenuOpened = !IsMenuOpened;
         StateHasChanged();
     }
 
     private void OnChildPressed() {
-        IsHidden = true;
+        IsMenuOpened = false;
         SubMenuContext?.OnSubItemPressed?.Invoke();// ensures that multiple deeply nested states are all hidden at once
         InvokeAsync(StateHasChanged);
-        Logger.Warning("PRESSED");
     }
 }
