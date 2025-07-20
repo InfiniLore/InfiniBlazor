@@ -11,9 +11,9 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniNavBar Location="NavBarLocation.Right" Size="Size.Xs" Class="@Class" NavBarCollapsed="true">
+<InfiniNavBar Location="NavBarLocation.Right" Size="Size.Xs" Class="@Class" NavBarCollapsed="true" >
     <InfiniSpacer/>
-    <InfiniNavSubMenu Text="Sub Menu">
+    <InfiniNavSubMenu Text="Sub Menu" IgnoreCascadeCollapsedState>
         <InfiniNavLink Text="Something" Icon="@LucideNames.AArrowDown" Href="/"/>
         <InfiniNavLink Text="Else" Icon="@LucideNames.AArrowDown" Href="/"/>
     </InfiniNavSubMenu>

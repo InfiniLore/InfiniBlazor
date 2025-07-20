@@ -12,7 +12,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <span 
     hidden="@IsHidden"  
-    title="@(NavBarCollapsed ? Text : string.Empty)"
+    title="@(CollapsedState ? Text : string.Empty)"
     class="@Class flex flex-nowrap items-center"
 > 
     @switch (Icon, Text) {
@@ -26,7 +26,7 @@
 
         case (null, not null): {
             <span
-                class="@(NavBarCollapsed ? "w-0 opacity-0 delay-0" : "delay-300 w-auto opacity-100") transition-all duration-300 h-6 overflow-hidden">
+                class="@(CollapsedState ? "w-0 opacity-0 delay-0" : "delay-300 w-auto opacity-100") transition-all duration-300 h-6 overflow-hidden">
                 <span class="@ConcatClasses(TextClasses, TextSize)">
                     @Text
                 </span>
@@ -41,7 +41,7 @@
             </span>
 
             <span
-                class="@(NavBarCollapsed ? "w-0 opacity-0 delay-0" : "delay-300 w-auto ml-2 opacity-100") transition-all duration-300 h-6 overflow-hidden">
+                class="@(CollapsedState ? "w-0 opacity-0 delay-0" : "delay-300 w-auto ml-2 opacity-100") transition-all duration-300 h-6 overflow-hidden">
                 <span class="@ConcatClasses(TextClasses, TextSize)">
                     @Text
                 </span>

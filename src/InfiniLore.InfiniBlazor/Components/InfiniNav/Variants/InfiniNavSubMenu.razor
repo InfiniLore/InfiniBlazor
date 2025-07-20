@@ -37,6 +37,8 @@
 @code {
     [CascadingParameter] public int Depth { get; set; }
     [Parameter] public bool ReverseDirection { get; set; }
+    [Parameter] public bool IgnoreCascadeCollapsedState { get; set; }
+    
     private bool IsMenuOpened { get; set; } 
     private NavSubMenuContext? MenuContext { get; set; }
 
@@ -108,7 +110,11 @@
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected override void OnParametersSet() {
-        MenuContext = new NavSubMenuContext(OnChildPressed); // shh, stupid way of doing this, but it works
+        // shh, stupid way of doing this, but it works
+        MenuContext = new NavSubMenuContext(
+            OnChildPressed,
+            IgnoreCascadeCollapsedState
+        ); 
     }
 
     private void OnClick() {

@@ -9,7 +9,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@if (NavBarCollapsed) {
+@if (CollapsedState) {
         <div class="@(NavBarLocation.IsVertical() ? "py-2" : "px-2") h-10 w-10 flex items-center justify-center">
             <InfiniToggleButton 
                 DebugColor="DebugColor"

@@ -20,6 +20,8 @@ public abstract class InfiniNavItemBase : InfiniComponentBase {
     [Parameter] public bool HiddenOnCollapsed { get; set; }
     protected bool IsHidden => NavBarCollapsed && HiddenOnCollapsed;
     
+    protected bool CollapsedState => NavBarCollapsed && (!SubMenuContext?.IgnoreCascadeCollapsedState ?? true);
+    
     protected static string ContainerClasses => ConcatClasses(ContainerClassesNoHover, "hover:bg-(--sidebar-nav-button-hover)");
     protected static string ContainerClassesNoHover => "flex flex-nowrap items-center infini-bg-(--sidebar-nav-button) rounded group justify-start p-2";
 }

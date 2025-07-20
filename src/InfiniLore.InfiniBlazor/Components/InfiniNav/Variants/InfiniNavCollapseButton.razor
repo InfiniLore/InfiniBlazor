@@ -21,8 +21,8 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public bool CollapsedState { get; set; }
-    [Parameter] public EventCallback<bool> CollapsedStateChanged { get; set; }
+    [Parameter] public bool State { get; set; }
+    [Parameter] public EventCallback<bool> StateChanged { get; set; }
 
     private string SizeClass => NavBarSize switch {
         _ => "w-10 min-w-10 h-10 min-h-10"
@@ -32,9 +32,9 @@
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private async Task ToggleMenu() {
-        CollapsedState = !CollapsedState;
+        State = !State;
 
-        await CollapsedStateChanged.InvokeAsync(CollapsedState);
+        await StateChanged.InvokeAsync(State);
         await InvokeAsync(StateHasChanged);
     }
     

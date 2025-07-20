@@ -6,4 +6,7 @@ namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed record NavSubMenuContext(Action? OnSubItemPressed);
+public sealed record NavSubMenuContext(
+    Action? OnSubItemPressed,
+    bool IgnoreCascadeCollapsedState
+);
