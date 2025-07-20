@@ -89,12 +89,6 @@ public static class LineNormalization {
         string adjusted = NormalizeLineIndentation(normalized);
         return adjusted;
     }
-    
-    public static string NormalizeCallout(ReadOnlySpan<char> span) {
-        ReadOnlySpan<char> normalized = NormalizeLinePrefixes(span, "!>");
-        string adjusted = NormalizeLineIndentation(normalized);
-        return adjusted;
-    }
 
     private static ReadOnlySpan<char> NormalizeLinePrefixes(ReadOnlySpan<char> span, ReadOnlySpan<char> prefix) {
         int prefixLength = prefix.Length;
