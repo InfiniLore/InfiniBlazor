@@ -13,10 +13,12 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniNavBar Location="NavBarLocation.Top" Size="Size.Xs" Class="@Class" @bind-NavBarCollapsed="CollapsedState">
     <InfiniSpacer/>
+    <InfiniNavBreak/>
     <InfiniNavSubMenu Text="Sub Menu">
         <InfiniNavLink Text="Something" Icon="@LucideNames.AArrowDown" Href="/"/>
         <InfiniNavLink Text="Else" Icon="@LucideNames.AArrowDown" Href="/"/>
     </InfiniNavSubMenu>
+    <InfiniNavBreak/>
     <InfiniSpacer/>
 </InfiniNavBar>
 

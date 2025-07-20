@@ -52,10 +52,10 @@
     };
 
     private string OrientationClasses => NavBarLocation switch {
-        NavBarLocation.Top => "flex mt-px",
+        NavBarLocation.Top => "flex mt-px px-px",
         NavBarLocation.Left => "flex w-full",
         NavBarLocation.Right => "w-full",
-        NavBarLocation.Bottom => "flex mb-px",
+        NavBarLocation.Bottom => "flex mb-px px-px",
         _ => string.Empty
     };
 
@@ -87,9 +87,9 @@
 
     private string OffsetClasses => (Depth, NavBarLocation, ReverseDirection) switch {
         (0, NavBarLocation.Top, _) => "-translate-x-1/2 -mt-px",
-        (_, NavBarLocation.Left, false) => "-translate-y-1.5 -mt-[2px] ",
+        (_, NavBarLocation.Left, false) => "-translate-y-1.5 -mt-[3px] ",
         (_, NavBarLocation.Left, true) => "-translate-y-[calc(100%-(var(--spacing)*8))]",
-        (_, NavBarLocation.Right, false) => "-translate-x-full -translate-y-1.5 -mt-[2px] ",
+        (_, NavBarLocation.Right, false) => "-translate-x-full -translate-y-1.5 -mt-[3px] ",
         (_, NavBarLocation.Right, true) => "-translate-x-full -translate-y-[calc(100%-(var(--spacing)*8))]",
         (0, NavBarLocation.Bottom, _) => "-translate-x-1/2 -translate-y-full ",
 
