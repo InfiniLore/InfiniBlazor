@@ -8,13 +8,15 @@ namespace InfiniLore.InfiniBlazor.Dialogs;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public record DialogData(
-    Type ComponentType
+    Type ComponentType,
+    Guid Id
 ) : IDialogData {
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
     public static DialogData Create<T>(Dictionary<string, object?>? parameters = null) where T : InfiniDialogBase => new(
-        typeof(T)
+        typeof(T),
+        Guid.CreateVersion7()
     );
     
     // -----------------------------------------------------------------------------------------------------------------

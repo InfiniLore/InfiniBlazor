@@ -7,6 +7,7 @@ namespace InfiniLore.InfiniBlazor.Dialogs;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IDialogData {
+    Guid Id { get; }
     Type ComponentType { get; }
     
     IDictionary<string, object>? AsDynamicParameters();

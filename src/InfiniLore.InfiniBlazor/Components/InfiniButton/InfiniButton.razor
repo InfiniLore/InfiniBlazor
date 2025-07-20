@@ -56,6 +56,8 @@
     [Parameter] public string? Text { get; set; }
     [Parameter] public bool StopPropagation { get; set; } = true;
     [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+    private EventCallbackDebouncer<MouseEventArgs>? OnClickDebounced { get; set; }
+    [Parameter] public int DebounceMs { get; set; }
 
     [Parameter] public string Type { get; set; } = "button";
     [Parameter] public string? AriaLabel { get; set; }
@@ -236,18 +238,28 @@
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        if (Href is not null && !DisableTrackedQueryParams) NavigationManager.LocationChanged += OnLocationChanged;
+        ComputeHref();
+    }
+
+    protected override async Task OnParametersSetAsync() {
+        base.OnParametersSet();
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+        if (OnClickDebounced is not null) await OnClickDebounced.DisposeAsync(); 
+        if (DebounceMs > 0) OnClickDebounced = OnClick.GetDebouncer(DebounceMs);
+    }
+
     private void ShowTooltip() => _showTooltip = true;
     private void HideTooltip() => _showTooltip = false;
-
+    
     private async Task OnClickAsync(MouseEventArgs args) {
         if (IsDisabled) return;
 
-        await OnClick.InvokeAsync(args);
-    }
-
-    protected override void OnInitialized() {
-        if (Href is not null && !DisableTrackedQueryParams) NavigationManager.LocationChanged += OnLocationChanged;
-        ComputeHref();
+        if (OnClickDebounced is not null) await OnClickDebounced.InvokeDebouncedAsync(args);
+        else await OnClick.InvokeAsync(args);
     }
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e) {
@@ -264,5 +276,6 @@
     public override async ValueTask DisposeAsync() {
         await base.DisposeAsync();
         if (Href is not null && !DisableTrackedQueryParams) NavigationManager.LocationChanged -= OnLocationChanged;
+        if (OnClickDebounced is not null) await OnClickDebounced.DisposeAsync();
     }
 }

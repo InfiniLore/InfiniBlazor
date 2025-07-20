@@ -18,7 +18,10 @@
 <div class="absolute flex top-0 left-0 w-screen h-screen justify-center items-center transition-all duration-300 text-(--text) @AppearClasses">
     <CascadingValue Value="DialogContext">
         @if (HasDialog) {
-            <DynamicComponent Type="Dialog.ComponentType" Parameters="Dialog.AsDynamicParameters()"/>
+            <DynamicComponent 
+                @key="Dialog.Id"
+                Type="Dialog.ComponentType"
+                Parameters="Dialog.AsDynamicParameters()"/>
         }
     </CascadingValue>
 </div>
@@ -30,6 +33,7 @@
     // private bool HasDialog { get; set; } = false;
     [MemberNotNullWhen(true, nameof(Dialog))] private bool HasDialog => Dialog is not null;
     private IDialogData? Dialog { get; set; }
+    private Stack<IDialogData> OpenDialogs { get; } = new();
 
     private DialogContext DialogContext { get; } = new();
 
@@ -54,9 +58,10 @@
 
     private void OnDialogOpened() {
         if (Dialog is not null) {
+            OpenDialogs.Push(Dialog);
             Logger.Debug("A dialog has already been instantiated");
-            return;
         }
+        
         if (!DialogProvider.TryPopDialog(out IDialogData? data)) {
             Logger.Debug("No dialog in stack");
             return;
@@ -73,6 +78,13 @@
     
     private void RemoveCurrentDialog() {
         Dialog = null;
+        if (OpenDialogs.TryPop(out IDialogData? stashedData)) {
+            Dialog = stashedData;
+            if (!HasDialog) {
+                Logger.Warning("Dialog could not be initiated");
+                RemoveCurrentDialog();
+            }
+        }
         StateHasChanged();
     }
 }

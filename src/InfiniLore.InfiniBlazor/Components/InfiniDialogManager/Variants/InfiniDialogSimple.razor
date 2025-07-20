@@ -1,12 +1,13 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
+@using InfiniLore.InfiniBlazor.Dialogs
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniDialogBase
+@inject IDialogProvider DialogProvider
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -17,9 +18,13 @@
         <InfiniSpacer/>
         <div class="flex flex-row justify-center">
             <InfiniButton
-                OnClick="@DialogContext.InvokeDialogExit" 
-                Text="Exit"
-            />
+                OnClick="@CreateDialog"
+                DebounceMs="5000"
+                Text="Create Dialog"
+                />
+            <InfiniButton
+                OnClick="@DialogContext.InvokeDialogExit"
+                Text="Exit"/>
         </div>
     </InfiniSection>
 </InfiniDialog>
@@ -29,4 +34,8 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     private readonly Guid guid = Guid.CreateVersion7();
+    private void CreateDialog(MouseEventArgs obj) {
+        var newDialog = DialogData.Create<InfiniDialogSimple>();
+        DialogProvider.AddDialog(newDialog);
+    }
 }
