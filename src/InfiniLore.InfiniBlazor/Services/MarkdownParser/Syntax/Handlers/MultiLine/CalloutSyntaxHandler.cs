@@ -54,7 +54,7 @@ public sealed class CalloutSyntaxHandler : IMdSyntaxHandler {
             node.AddChildNode(bodyNode);
             
             stack.PushMultiLineMatchesToStack(
-                LineNormalization.NormalizeCallout(calloutBody),
+                LineNormalization.NormalizeBlockQuote(calloutBody),
                 bodyNode,
                 parentOrigin | MdSyntaxHandlerOrigin.PreserveHtml
             );
