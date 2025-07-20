@@ -10,7 +10,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@SizeClass flex justify-center items-center justify-self-center self-center">
+<div class="flex justify-center items-center justify-self-center self-center">
     <InfiniButton
         Variant="ButtonVariant.Transparent"
         IconName="@LucideNames.Menu"
@@ -24,10 +24,6 @@
 @code {
     [Parameter] public bool State { get; set; }
     [Parameter] public EventCallback<bool> StateChanged { get; set; }
-
-    private string SizeClass => NavBarSize switch {
-        _ => ""
-    };
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
