@@ -1,15 +1,31 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@namespace InfiniLore.InfiniBlazor.Components
+@using InfiniLore.InfiniBlazor
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniComponentBase
+@rendermode InteractiveAuto
+@inherits InfiniNavBarBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniSection Class="@Class" EdgeStyle="SectionEdgeStyle.Middle">@ChildContent</InfiniSection>
+<InfiniNavBar Location="NavBarLocation.Right" Size="Size.Xs" Class="@Class" NavBarCollapsed >
+    <InfiniSpacer/>
+    <InfiniNavBreak/>
+    <InfiniNavSubMenu Text="Sub Menu" IgnoreCascadeCollapsedState>
+        <InfiniNavLink Text="Something" Icon="@LucideNames.AArrowDown" Href="/"/>
+        <InfiniNavLink Text="Else" Icon="@LucideNames.AArrowDown" Href="/"/>
+        
+        <InfiniNavSubMenu Text="Sub Menu" IgnoreCascadeCollapsedState>
+            <InfiniNavLink Text="Something" Icon="@LucideNames.AArrowDown" Href="/"/>
+            <InfiniNavLink Text="Else" Icon="@LucideNames.AArrowDown" Href="/"/>
+        </InfiniNavSubMenu>
+    </InfiniNavSubMenu>
+    <InfiniNavBreak/>
+    <InfiniSpacer/>
+</InfiniNavBar>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@

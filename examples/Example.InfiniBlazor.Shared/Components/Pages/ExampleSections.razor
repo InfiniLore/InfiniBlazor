@@ -11,21 +11,60 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniPage Title="Sections">
-    <InfiniSection Class="grow justify-center items-center" EdgeStyle="SectionEdgeStyle.Top">
-        <InfiniHeading3 Class="text-(--color-base-50)"> Edge Style : Top</InfiniHeading3>
-    </InfiniSection>
-    
-    <InfiniSection Class="grow justify-center items-center" EdgeStyle="SectionEdgeStyle.Middle">
-        <InfiniHeading3 Class="text-(--color-base-50)"> Edge Style : Middle</InfiniHeading3>
-    </InfiniSection>
-    
-    <InfiniSection Class="grow justify-center items-center" EdgeStyle="SectionEdgeStyle.Bottom">
-        <InfiniHeading3 Class="text-(--color-base-50)"> Edge Style : Bottom</InfiniHeading3>
-    </InfiniSection>
+    <div class="grid grid-cols-3 grid-rows-3 gap-4 w-full h-full">
+        <div>
+            <InfiniSection Class="w-full h-full justify-center items-center" Location="SectionLocation.TopLeft">
+                <InfiniHeading5 Class="text-(--color-base-50)"> Edge Style : TopLeft</InfiniHeading5>
+            </InfiniSection>
+        </div>
+        <div>
+            <InfiniSection Class="w-full h-full justify-center items-center" Location="SectionLocation.Top">
+                <InfiniHeading5 Class="text-(--color-base-50)"> Edge Style : Top</InfiniHeading5>
+            </InfiniSection>
+        </div>
+        <div>
+            <InfiniSection Class="w-full h-full justify-center items-center" Location="SectionLocation.TopRight">
+                <InfiniHeading5 Class="text-(--color-base-50)"> Edge Style : TopRight</InfiniHeading5>
+            </InfiniSection>
+        </div>
+        <div>
+            <InfiniSection Class="w-full h-full justify-center items-center" Location="SectionLocation.Left">
+                <InfiniHeading5 Class="text-(--color-base-50)"> Edge Style : Left</InfiniHeading5>
+            </InfiniSection>
+        </div>
+        <div>
+            <InfiniSection Class="w-full h-full justify-center items-center" Location="SectionLocation.Center">
+                <InfiniHeading5 Class="text-(--color-base-50)"> Edge Style : Center</InfiniHeading5>
+            </InfiniSection>
+        </div>
+        <div>
+            <InfiniSection Class="w-full h-full justify-center items-center" Location="SectionLocation.Right">
+                <InfiniHeading5 Class="text-(--color-base-50)"> Edge Style : Right</InfiniHeading5>
+            </InfiniSection>
+        </div>
+        <div>
+            <InfiniSection Class="w-full h-full justify-center items-center" Location="SectionLocation.BottomLeft">
+                <InfiniHeading5 Class="text-(--color-base-50)"> Edge Style : BottomLeft</InfiniHeading5>
+            </InfiniSection>
+        </div>
+        <div>
+            <InfiniSection Class="w-full h-full justify-center items-center" Location="SectionLocation.Bottom">
+                <InfiniHeading5 Class="text-(--color-base-50)"> Edge Style : Bottom</InfiniHeading5>
+            </InfiniSection>
+        </div>
+        <div>
+            <InfiniSection Class="w-full h-full justify-center items-center" Location="SectionLocation.BottomRight">
+                <InfiniHeading5 Class="text-(--color-base-50)"> Edge Style : BottomRight</InfiniHeading5>
+            </InfiniSection>
+        </div>
+    </div>
+
+
 </InfiniPage>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
 }

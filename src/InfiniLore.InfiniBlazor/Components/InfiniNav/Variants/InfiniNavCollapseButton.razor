@@ -1,17 +1,39 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.Lucide
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniComponentBase
+@inherits InfiniNavItemBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniSection Class="@Class" EdgeStyle="SectionEdgeStyle.Top">@ChildContent</InfiniSection>
+<div class="@Class flex justify-center items-center justify-self-center self-center">
+    <InfiniButton
+        Variant="ButtonVariant.Transparent"
+        IconName="@LucideNames.Menu"
+        Size="NavBarSize"
+        OnClick="@ToggleMenu"
+    />
+</div>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
+    [Parameter] public bool State { get; set; }
+    [Parameter] public EventCallback<bool> StateChanged { get; set; }
+    
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private async Task ToggleMenu() {
+        State = !State;
+
+        await StateChanged.InvokeAsync(State);
+        await InvokeAsync(StateHasChanged);
+    }
+    
+    
 }

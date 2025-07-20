@@ -109,15 +109,14 @@ public partial class InfiniThemeManager(
             logger.LogError(ex, "Failed to preload theme CSS.");
         }
     }
-
-
+    
     public ValueTask DisposeAsync() {
         themeStateProvider.OnChangedAsync -= OnThemeStateChanged;
         GC.SuppressFinalize(this);
         return ValueTask.CompletedTask;
     }
 
-    private bool TryGetCssString(ICssData cssData, [NotNullWhen(true)] out string? css) {
+    private static bool TryGetCssString(ICssData cssData, [NotNullWhen(true)] out string? css) {
         StringBuilder sb = GlobalPools.StringBuilder.Get();
         try {
             sb.Append(":root{");

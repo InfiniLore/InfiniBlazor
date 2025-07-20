@@ -15,14 +15,14 @@
 
 @if (VisualDebugger.IsEnabled()) {
     <div
-        class="absolute top-0 right-0 bg-(--color-red) text-(--color-white) transition-opacity duration-500 ease-in-out p-2 rounded-bl-md opacity-75 z-50 flex flex-col gap-2">
+        class="absolute top-0 right-0 bg-(--color-red) text-(--color-white) transition-opacity duration-500 ease-in-out p-2 rounded-bl-md opacity-75 flex flex-col gap-2 @ZIndex.DebugRenderInfo">
         <span>Render Mode : <strong>@RendererInfo.Name</strong></span>
-        @* <span>Interactive : <strong>@RendererInfo.IsInteractive</strong></span> *@
+        <span>Interactive : <strong>@RendererInfo.IsInteractive</strong></span>
     </div>
 }
 
 <main
-    class="@Class flex flex-col flex-1 overflow-y-auto infini-bg-(--page) text-(--page-text) px-4 infini-scrollbar gap-4">
+    class="@Class flex flex-col flex-1 overflow-y-auto infini-bg-(--page) text-(--page-text) infini-scrollbar gap-4">
     @ChildContent
 </main>
 @* ------------------------------------------------------------------------------------------------------------------ *@

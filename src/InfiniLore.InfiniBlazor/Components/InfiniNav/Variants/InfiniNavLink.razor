@@ -14,21 +14,21 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <a href="@_computedHref"
-   class="@InfiniNavItem.ContainerClasses"
+   class="@ContainerClasses"
    target="@(OpenInNewTab ? "_blank" : null)"
    rel="noopener noreferrer"
-   hidden="@Hidden"
+   hidden="@IsHidden"
+   @onclick="() => SubMenuContext?.OnSubItemPressed?.Invoke()"
    >
-    <InfiniNavItem Text="@Text" IconName="@IconName" Class="@Class"/>
+    <InfiniNavItem Text="@Text" Icon="@Icon" Class="@Class">
+        @ChildContent
+    </InfiniNavItem>
 </a>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] [EditorRequired] public required string Href { get; init; }
-
-    [Parameter] public RenderFragment? Text { get; set; }
-    [Parameter] public string? IconName { get; set; }
+    [Parameter, EditorRequired] public required string Href { get; init; }
 
     [Parameter] public bool OpenInNewTab { get; set; }
     [Parameter] public bool DisableTrackedQueryParams { get; set; }

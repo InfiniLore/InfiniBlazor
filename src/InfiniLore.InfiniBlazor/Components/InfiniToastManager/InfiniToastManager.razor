@@ -14,27 +14,26 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@ContainerPositionClass fixed z-1000 p-3 space-y-2 max-w-xs w-full max-h-screen overflow-y-auto infini-scrollbar-hidden">
+<div class="@ContainerPositionClass @ZIndex.ToastMessageContainer fixed space-y-2 max-w-xs w-full max-h-screen overflow-y-auto infini-scrollbar-hidden">
     @foreach (IToastEntry toastEntry in ToastingProvider.GetToastEntries()) {
         <DynamicComponent
             @key="toastEntry.Data.Id" 
             Type="@toastEntry.ComponentType"
-            Parameters="@ToastMessageBase.GetAsDynamicParameters(toastEntry.Data)"/>
+            Parameters="@ToastMessageBase.GetAsDynamicParameters(toastEntry.Data)"
+        />
     }
 </div>
-
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     [Parameter] public ToastPosition Position { get; set; } = ToastPosition.BottomRight;
 
-    // ReSharper disable once PatternIsRedundant
     private string ContainerPositionClass => Position switch {
         ToastPosition.TopRight => "top-1 right-1",
         ToastPosition.TopLeft => "top-1 left-1",
         ToastPosition.BottomLeft => "bottom-1 left-1",
-        ToastPosition.BottomRight or _ => "bottom-1 right-1"
+        _ => "bottom-1 right-1"
     };
 
     // -----------------------------------------------------------------------------------------------------------------

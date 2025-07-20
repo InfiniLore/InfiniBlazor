@@ -1,15 +1,17 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.Lucide;
-
-namespace InfiniLore.InfiniBlazor.Components.ToastAppearances;
+namespace InfiniLore.InfiniBlazor;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class InfoToastMessage : ToastMessageBase {
-    protected override string HeaderClasses => "text-(--color-blue) [&_svg]:text-(--color-blue-light) [&_svg:hover]:text-(--color-accent)";
-    protected override string BodyClasses => "infini-bg-(--color-blue-dark) border-(--color-blue) text-(--color-base-10)";
-    protected override string IconName => LucideNames.Info;
+public static class ZIndex {
+    public const string BlazorError = "z-1000";
+    public const string ToastMessageContainer = "z-900";
+    public const string DebugRenderInfo = "z-50";
+    public const string NavSubMenuItem = "z-30";
+    public const string Tooltip = "z-20";
+    public const string TableHeader = "z-15";
+    public const string CodeBlockCopyButton = "z-10";
 }

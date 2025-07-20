@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class ToastMessageBase : ComponentBase, IToastMessageBase, IDisposable {
+public partial class ToastMessageBase : InfiniComponentBase, IToastMessageBase, IDisposable {
     [Inject] protected IToastingProvider ToastingProvider { get; set; } = null!;
     [Parameter, EditorRequired] public IToastingData ToastData { get; set; } = ToastingData.Empty;
     

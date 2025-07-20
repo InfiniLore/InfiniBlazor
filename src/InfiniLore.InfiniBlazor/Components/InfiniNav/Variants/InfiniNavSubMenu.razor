@@ -1,0 +1,131 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.Lucide
+@inherits InfiniNavItemBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<CascadingValue Value="@(Depth + 1)">
+    <div class="@OrientationClasses relative">
+        <button @onclick="OnClick" class="flex w-full cursor-pointer">
+            <div class="@ContainerClassesNoHover w-full grow">
+                <div class="flex grow w-full anchor/anchor-nav-bar-menu">
+                    <InfiniNavItem Text="@Text" Icon="@IconName"/>
+                </div>
+            </div>
+        </button>
+
+        <div class="@AnchoredClasses @ZIndex.NavSubMenuItem">
+            <CascadingValue Value="MenuContext" IsFixed="true">
+                <div
+                    class="@ConcatClasses(TransitionClasses, OffsetClasses, BorderClasses) fixed infini-bg-(--sidebar-nav) border-(--border)">
+                    @ChildContent
+                </div>
+            </CascadingValue>
+        </div>
+    </div>
+</CascadingValue>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [CascadingParameter] public int Depth { get; set; }
+    [Parameter] public bool ReverseDirection { get; set; }
+    [Parameter] public bool IgnoreCascadeCollapsedState { get; set; }
+
+    private bool IsMenuOpened { get; set; }
+    private NavSubMenuContext? MenuContext { get; set; }
+
+    private string IconName => Icon ?? NavBarLocation switch {
+        NavBarLocation.Top => LucideNames.ChevronDown,
+        NavBarLocation.Left => LucideNames.ChevronRight,
+        NavBarLocation.Right => LucideNames.ChevronLeft,
+        NavBarLocation.Bottom => LucideNames.ChevronUp,
+        _ => string.Empty
+    };
+
+    private string OrientationClasses => NavBarLocation switch {
+        NavBarLocation.Top => "flex mt-px px-[2px]",
+        NavBarLocation.Left => "flex w-full ",
+        NavBarLocation.Right => "flex w-full px-px",
+        NavBarLocation.Bottom => "flex mb-px px-[2px]",
+        _ => string.Empty
+    };
+
+    private string AnchoredClasses => (Depth, NavBarLocation, ReverseDirection) switch {
+        (0, NavBarLocation.Top, _) => "anchored-bottom/anchor-nav-bar-menu",
+        (_, NavBarLocation.Left, _) => "anchored-right-span-bottom/anchor-nav-bar-menu ml-2",
+        (_, NavBarLocation.Right, _) => "anchored-left-span-bottom/anchor-nav-bar-menu mr-2",
+        (0, NavBarLocation.Bottom, _) => "anchored-top/anchor-nav-bar-menu ",
+
+        (not 0, NavBarLocation.Top, false) => "anchored-right-span-bottom/anchor-nav-bar-menu ml-2",
+        (not 0, NavBarLocation.Top, true) => "anchored-left-span-bottom/anchor-nav-bar-menu ml-2",
+        (not 0, NavBarLocation.Bottom, false) => "anchored-right-span-bottom/anchor-nav-bar-menu ml-2",
+        (not 0, NavBarLocation.Bottom, true) => "anchored-left-span-bottom/anchor-nav-bar-menu ml-2",
+
+        _ => "anchored-bottom/anchor-nav-bar-menu"
+    };
+
+    private string BorderClasses => (Depth, NavBarLocation, ReverseDirection) switch {
+        (0, NavBarLocation.Top, _) => "rounded-b-md border-b border-l border-r",
+        (not 0, NavBarLocation.Top, false) => "rounded-r-md border-t border-b border-r",
+        (not 0, NavBarLocation.Top, true) => "rounded-l-md border-t border-b border-l",
+        (_, NavBarLocation.Left, _) => "rounded-r-md border-t border-b border-r",
+        (_, NavBarLocation.Right, _) => "rounded-l-md border-t border-b border-l",
+        (0, NavBarLocation.Bottom, _) => "rounded-t-md border-t border-l border-r",
+        (not 0, NavBarLocation.Bottom, false) => "rounded-r-md border-t border-b border-r",
+        (not 0, NavBarLocation.Bottom, true) => "rounded-r-md border-t border-b border-r",
+        _ => "border rounded-md"
+    };
+
+    private string OffsetClasses => (Depth, NavBarLocation, ReverseDirection) switch {
+        (0, NavBarLocation.Top, _) => "-translate-x-1/2 -mt-px px-px",
+        (_, NavBarLocation.Left, false) => "-translate-y-1.5 -mt-[3px]",
+        (_, NavBarLocation.Left, true) => "-translate-y-[calc(100%-(var(--spacing)*8))]",
+        (_, NavBarLocation.Right, false) => "-translate-x-full -translate-y-1.5 -mt-[3px]",
+        (_, NavBarLocation.Right, true) => "-translate-x-full -translate-y-[calc(100%-(var(--spacing)*8))]",
+        (0, NavBarLocation.Bottom, _) => "-translate-x-1/2 -translate-y-full px-px",
+
+        (not 0, NavBarLocation.Top, false) => "-translate-y-1.5 -mt-[4px]",
+        (not 0, NavBarLocation.Top, true) => "-translate-x-[calc(100%+(var(--spacing)*2))] translate-y-[calc((var(--spacing)*-2)-2px)]",
+        (not 0, NavBarLocation.Bottom, false) => "-translate-y-full mt-[2em]",
+        (not 0, NavBarLocation.Bottom, true) => "translate-x-[calc(100%+(var(--spacing)*2))] translate-y-[calc((var(--spacing)*-2)-1px)]",
+
+        _ => string.Empty
+    };
+
+    private string TransitionClasses => ConcatClasses(
+        "transition-all duration-300 ",
+        IsMenuOpened
+            ? "opacity-100 scale-100"
+            : "opacity-0 scale-95");
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override void OnParametersSet() {
+        // shh, stupid way of doing this, but it works
+        MenuContext = new NavSubMenuContext(
+            OnChildPressed,
+            IgnoreCascadeCollapsedState
+        );
+    }
+
+    private void OnClick() {
+        IsMenuOpened = !IsMenuOpened;
+        StateHasChanged();
+    }
+
+    private void OnChildPressed() {
+        IsMenuOpened = false;
+        SubMenuContext?.OnSubItemPressed?.Invoke();// ensures that multiple deeply nested states are all hidden at once
+        InvokeAsync(StateHasChanged);
+    }
+}

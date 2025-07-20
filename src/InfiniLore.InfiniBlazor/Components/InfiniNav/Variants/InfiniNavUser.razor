@@ -10,16 +10,16 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div @onclick="OnContainerClick"
-     class="@(ConcatClasses(Class, NavBarCollapsed ? "px-1 py-2" : "p-2")) flex flex-nowrap items-center rounded hover:bg-(--sidebar-nav-button-hover) group transition-all duration-300">
-    <span class="@ConcatClasses(Direction.ToFlexRow(), NavBarCollapsed ? "gap-0": "gap-4")  flex items-center w-full transition-all justify-between">
-        <span class="@(NavBarCollapsed ? "" : "-ml-1") transition-all duration-300">
-            @Icon
+     class="@(ConcatClasses(Class, CollapsedState ? "px-1 py-2" : "p-2")) flex flex-nowrap items-center rounded hover:bg-(--sidebar-nav-button-hover) group transition-all duration-300">
+    <span class="@ConcatClasses(Direction.ToFlexRow(), CollapsedState ? "gap-0": "gap-4")  flex items-center w-full transition-all justify-between">
+        <span class="@(CollapsedState ? "" : "-ml-1") transition-all duration-300">
+            @UserIcon
         </span>
 
         <!-- User Info -->
         <div
-            hidden="@Hidden"
-            class="@(NavBarCollapsed ? "opacity-0 w-0 h-6 overflow-hidden" : "opacity-100 w-auto h-8") flex flex-col justify-center items-end transition-all duration-300">
+            hidden="@IsHidden"
+            class="@(CollapsedState ? "opacity-0 w-0 h-6 overflow-hidden" : "opacity-100 w-auto h-8") flex flex-col justify-center items-end transition-all duration-300">
             <span>
                 <a href="@HrefUserProfile"
                    @onclick:stopPropagation
@@ -44,7 +44,7 @@
 @code {
     [Parameter] public string UserName { get; set; } = "Unknown Username";
     [Parameter] public string HrefUserProfile { get; set; } = string.Empty;
-    [Parameter, EditorRequired] public RenderFragment Icon { get; set; } = null!;
+    [Parameter, EditorRequired] public RenderFragment UserIcon { get; set; } = null!;
     
     [Parameter] public RenderFragment? AdditionalLinks { get; set; }
     [Parameter] public Direction Direction { get; set; } = Direction.LeftToRight;
@@ -55,7 +55,7 @@
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private void OnContainerClick() {
-        if (!NavBarCollapsed) return;
+        if (!CollapsedState) return;
         NavigationManager.NavigateTo(HrefUserProfile);
     }
 }

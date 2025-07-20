@@ -1,15 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using Microsoft.AspNetCore.Components;
+
 namespace InfiniLore.InfiniBlazor.Components;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public enum NavLayoutLocation {
-    Undefined = 0,
-    Top,
-    Left,
-    Right,
-    Bottom
+public abstract class InfiniTableCellBase : InfiniComponentBase {
+    [Parameter] public Alignment Alignment { get; set; } = Alignment.Left;
 }

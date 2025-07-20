@@ -204,7 +204,7 @@
                 Color.ToRingTailwind()
             ),
 
-        _ => throw new ArgumentOutOfRangeException()
+        _ => string.Empty
     };
 
     private string ContainerSizeClasses => Size switch {
@@ -215,7 +215,7 @@
         Size.L => "px-2 py-1 text-xl",
         Size.Xl => "px-2 py-1 text-2xl",
         Size.Xxl => "px-2 py-1 text-3xl",
-        _ => throw new ArgumentOutOfRangeException()
+        _ => string.Empty
     };
 
     private string IconSizeClass => Size switch {

@@ -13,15 +13,17 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="NavBarCollapsed">
     <CascadingValue Value="NavBarSize">
-        <div
-            @ref="@Reference"
-            @onwheel="OnWheelAsync"
-            class="@ConcatClasses(Class, NavLocationClasses, SizeClasses, OrientationClasses)
+        <CascadingValue Value="NavBarLocation">
+            <div
+                @ref="@Reference"
+                @onwheel="OnWheelAsync"
+                class="@ConcatClasses(Class, NavLocationClasses, SizeClasses, OrientationClasses)
                transition-all duration-300
                flex whitespace-nowrap infini-bg-(--sidebar-nav) border-(--sidebar-nav-border) text-white infini-scrollbar-hidden
          ">
-            @ChildContent
-        </div>
+                @ChildContent
+            </div>
+        </CascadingValue>
     </CascadingValue>
 </CascadingValue>
 
@@ -30,13 +32,13 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
-    private ElementReference Reference { get; set; }
-
     [Parameter] public bool NavBarCollapsed { get; set; }
-    public Size NavBarSize => Size;
-    
     [Parameter] public EventCallback<bool> NavBarCollapsedChanged { get; set; }
 
+    private ElementReference Reference { get; set; }
+
+    public Size NavBarSize => Size;
+    public NavBarLocation NavBarLocation => Location;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -46,59 +48,68 @@
     }
 
     private async Task OnWheelAsync(WheelEventArgs obj) {
-        if (Orientation is not Orientation.Horizontal) return;
+        if (!Location.IsHorizontal()) return;
         if (obj.DeltaY == 0) return;
 
         await JsRuntimeHelper.AddHorizontalScroll(Reference, obj.DeltaY);
     }
 
     private string OrientationClasses => ConcatClasses(
-        Orientation.ToFlex(),
-        Orientation.ToFull(),
-        Orientation switch {
-            Orientation.Horizontal => "overflow-y-hidden overflow-x-auto",
-            Orientation.Vertical => "overflow-x-hidden overflow-y-auto",
-            _ => throw new ArgumentOutOfRangeException()
-        }
+        Location switch {
+            NavBarLocation.Top => "flex-row",
+            NavBarLocation.Left => "flex-col",
+            NavBarLocation.Right => "flex-col",
+            NavBarLocation.Bottom => "flex-row",
+            _ => string.Empty
+        },
+        Location switch {
+            NavBarLocation.Top => "w-full",
+            NavBarLocation.Left => "h-full",
+            NavBarLocation.Right => "h-full",
+            NavBarLocation.Bottom => "w-full",
+            _ => string.Empty
+        },
+        Location.OnOrientation(
+            () => "overflow-y-hidden overflow-x-auto",
+            () => "overflow-y-auto"
+        )
     );
 
-    private string SizeClasses => (NavBarCollapsed, Orientation, Size) switch {
-        (false, Orientation.Vertical, Size.Xxs) => "w-14 min-w-14",
-        (false, Orientation.Vertical, Size.Xs) => "w-24 min-w-24",
-        (false, Orientation.Vertical, Size.S) => "w-48 min-w-48",
-        (false, Orientation.Vertical, Size.M) => "w-64 min-w-64",
-        (false, Orientation.Vertical, Size.L) => "w-80 min-w-80",
-        (false, Orientation.Vertical, Size.Xl) => "w-96 min-w-96",
-        (false, Orientation.Vertical, Size.Xxl) => "w-112 min-w-112",
-        (true, Orientation.Vertical, _) => "w-10 min-w-10",
+    private string SizeClasses => (NavBarCollapsed, Location.IsHorizontal(), Size) switch {
+        // Vertical & not collapsed
+        (false, false, Size.Xxs) => "w-14 min-w-14",
+        (false, false, Size.Xs) => "w-24 min-w-24",
+        (false, false, Size.S) => "w-48 min-w-48",
+        (false, false, Size.M) => "w-64 min-w-64",
+        (false, false, Size.L) => "w-80 min-w-80",
+        (false, false, Size.Xl) => "w-96 min-w-96",
+        (false, false, Size.Xxl) => "w-112 min-w-112",
+        
+        // Vertical & collapsed
+        (true, false, Size.Xxs) => "w-4 min-w-4",
+        (true, false, Size.Xs) => "w-6 min-w-6",
+        (true, false, Size.S) => "w-8 min-w-8",
+        (true, false, Size.M) => "w-10 min-w-10",
+        (true, false, Size.L) => "w-14 min-w-14",
+        (true, false, Size.Xl) => "w-18 min-w-18",
+        (true, false, Size.Xxl) => "w-24 min-w-24",
 
-        (_, Orientation.Horizontal, Size.Xxs) => "h-4 min-h-4",
-        (_, Orientation.Horizontal, Size.Xs) => "h-6 min-h-6",
-        (_, Orientation.Horizontal, Size.S) => "h-8 min-h-8",
-        (_, Orientation.Horizontal, Size.M) => "h-10 min-h-10",
-        (_, Orientation.Horizontal, Size.L) => "h-14 min-h-14",
-        (_, Orientation.Horizontal, Size.Xl) => "h-18 min-h-18",
-        (_, Orientation.Horizontal, Size.Xxl) => "h-24 min-h-24",
-        _ => throw new ArgumentOutOfRangeException(nameof(Size), Size, null)
+        // Horizontal
+        (_, true, Size.Xxs) => "h-4 min-h-4",
+        (_, true, Size.Xs) => "h-6 min-h-6",
+        (_, true, Size.S) => "h-8 min-h-8",
+        (_, true, Size.M) => "h-10 min-h-10",
+        (_, true, Size.L) => "h-14 min-h-14",
+        (_, true, Size.Xl) => "h-18 min-h-18",
+        (_, true, Size.Xxl) => "h-24 min-h-24",
+        _ => string.Empty
     };
 
-    private const string LocalStorageKey = "SideNavCollapsedState";
-
-    private bool _initialized;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override async Task OnInitializedAsync() {
+    protected override void OnInitialized() {
         VisualDebugger.InitializeFromUrl();
-
-        if (!RendererInfo.IsInteractive) return;// Only try to load state from localStorage in interactive mode
-
-        bool savedState = await JsRuntimeHelper.LocalStorage.TryGetValueAsync<bool>(LocalStorageKey);
-        if (!savedState || _initialized) return;
-
-        _initialized = true;
-        NavBarCollapsed = savedState;
-        await NavBarCollapsedChanged.InvokeAsync(NavBarCollapsed);
         StateHasChanged();
     }
 }

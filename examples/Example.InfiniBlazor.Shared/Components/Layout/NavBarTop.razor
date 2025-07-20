@@ -1,43 +1,30 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.Lucide
-@namespace InfiniLore.InfiniBlazor.Components
+@using InfiniLore.InfiniBlazor
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniComponentBase
+@rendermode InteractiveAuto
+@inherits InfiniNavBarBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@SizeClass flex justify-center items-center justify-self-center self-center">
-    <InfiniButton
-        Variant="ButtonVariant.Transparent"
-        IconName="@LucideNames.Menu"
-        OnClick="@ToggleMenu"
-    />
-</div>
+<InfiniNavBar Location="NavBarLocation.Top" Size="Size.Xs" Class="@Class" @bind-NavBarCollapsed="CollapsedState">
+    <InfiniSpacer/>
+    <InfiniNavBreak/>
+    <InfiniNavSubMenu Text="Sub Menu">
+        <InfiniNavLink Text="Something" Icon="@LucideNames.AArrowDown" Href="/"/>
+        <InfiniNavLink Text="Else" Icon="@LucideNames.AArrowDown" Href="/"/>
+    </InfiniNavSubMenu>
+    <InfiniNavBreak/>
+    <InfiniSpacer/>
+</InfiniNavBar>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [CascadingParameter] public Size NavBarSize { get; set; }
     [Parameter] public bool CollapsedState { get; set; }
-    [Parameter] public EventCallback<bool> CollapsedStateChanged { get; set; }
-
-    private string SizeClass => NavBarSize switch {
-        _ => "w-10 min-w-10 h-10 min-h-10"
-    };
-    
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
-    private async Task ToggleMenu() {
-        CollapsedState = !CollapsedState;
-
-        await CollapsedStateChanged.InvokeAsync(CollapsedState);
-        await InvokeAsync(StateHasChanged);
-    }
-    
-    
 }
