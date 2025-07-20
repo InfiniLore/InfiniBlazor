@@ -11,35 +11,36 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="@(Depth + 1)">
-    <CascadingValue Value="MenuContext" IsFixed="true">
-        <div class="@OrientationClasses relative">
-            <button @onclick="OnClick" class="flex w-full cursor-pointer">
-                <div class="@ContainerClassesNoHover w-full">
-                    <div class="flex grow w-full anchor/anchor-nav-bar-menu">
-                        <InfiniNavItem Text="@Text" Icon="@IconName" />
-                    </div>
+    <div class="@OrientationClasses relative">
+        <button @onclick="OnClick" class="flex w-full cursor-pointer">
+            <div class="@ContainerClassesNoHover w-full grow">
+                <div class="flex grow w-full anchor/anchor-nav-bar-menu">
+                    <InfiniNavItem Text="@Text" Icon="@IconName"/>
                 </div>
-            </button>
+            </div>
+        </button>
 
-            <div class="@AnchoredClasses @ZIndex.NavSubMenuItem">
+        <div class="@AnchoredClasses @ZIndex.NavSubMenuItem">
+            <CascadingValue Value="MenuContext" IsFixed="true">
                 <div
                     class="@ConcatClasses(TransitionClasses, OffsetClasses, BorderClasses) fixed infini-bg-(--sidebar-nav) border-(--border)">
                     @ChildContent
                 </div>
-            </div>
+            </CascadingValue>
         </div>
-    </CascadingValue>
+    </div>
 </CascadingValue>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     [CascadingParameter] public int Depth { get; set; }
     [Parameter] public bool ReverseDirection { get; set; }
     [Parameter] public bool IgnoreCascadeCollapsedState { get; set; }
-    
-    private bool IsMenuOpened { get; set; } 
+
+    private bool IsMenuOpened { get; set; }
     private NavSubMenuContext? MenuContext { get; set; }
 
     private string IconName => Icon ?? NavBarLocation switch {
@@ -114,7 +115,7 @@
         MenuContext = new NavSubMenuContext(
             OnChildPressed,
             IgnoreCascadeCollapsedState
-        ); 
+        );
     }
 
     private void OnClick() {

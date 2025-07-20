@@ -11,11 +11,16 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniNavBar Location="NavBarLocation.Right" Size="Size.Xs" Class="@Class" NavBarCollapsed="true" >
+<InfiniNavBar Location="NavBarLocation.Right" Size="Size.Xs" Class="@Class" NavBarCollapsed >
     <InfiniSpacer/>
     <InfiniNavSubMenu Text="Sub Menu" IgnoreCascadeCollapsedState>
         <InfiniNavLink Text="Something" Icon="@LucideNames.AArrowDown" Href="/"/>
         <InfiniNavLink Text="Else" Icon="@LucideNames.AArrowDown" Href="/"/>
+        
+        <InfiniNavSubMenu Text="Sub Menu" IgnoreCascadeCollapsedState>
+            <InfiniNavLink Text="Something" Icon="@LucideNames.AArrowDown" Href="/"/>
+            <InfiniNavLink Text="Else" Icon="@LucideNames.AArrowDown" Href="/"/>
+        </InfiniNavSubMenu>
     </InfiniNavSubMenu>
     <InfiniSpacer/>
 </InfiniNavBar>

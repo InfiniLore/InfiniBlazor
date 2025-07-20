@@ -13,7 +13,7 @@
 <span 
     hidden="@IsHidden"  
     title="@(CollapsedState ? Text : string.Empty)"
-    class="@Class flex flex-nowrap items-center"
+    class="@ConcatClasses(Class, OffsetClasses) flex flex-nowrap items-center"
 > 
     @switch (Icon, Text) {
         case (not null, null): {
@@ -78,6 +78,17 @@
         Size.Xl => "text-lg",
         Size.Xxl => "text-xl",
         _ => throw new ArgumentOutOfRangeException()
+    };
+
+    private string OffsetClasses => (NavBarLocation, NavBarSize) switch {
+        (NavBarLocation.Right, Size.Xxs) => "-ml-1.5",
+        (NavBarLocation.Right, Size.Xs) => "-ml-1",
+        (NavBarLocation.Right, Size.S) => "-ml-0.5",
+        
+        (NavBarLocation.Left, Size.Xxs) => "-ml-1.5",
+        (NavBarLocation.Left, Size.Xs) => "-ml-1",
+        (NavBarLocation.Left, Size.S) => "-ml-0.5",
+        _ => string.Empty
     };
     
     private const string IconClasses = "text-(--sidebar-nav-text) flex-shrink-0 group-hover:text-(--sidebar-nav-text-hover)";
