@@ -452,6 +452,9 @@
   .mx-2 {
     margin-inline: calc(var(--spacing) * 2);
   }
+  .-my-px {
+    margin-block: -1px;
+  }
   .my-0 {
     margin-block: calc(var(--spacing) * 0);
   }
