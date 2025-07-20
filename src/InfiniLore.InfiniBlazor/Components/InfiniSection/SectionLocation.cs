@@ -8,14 +8,12 @@ namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 public enum SectionLocation {
     Top,
-    TopCenter = Top,
     TopLeft,
     TopRight,
     Left,
     Right,
     Center,
     Bottom,
-    BottomCenter = Bottom,
     BottomLeft,
     BottomRight,
 }

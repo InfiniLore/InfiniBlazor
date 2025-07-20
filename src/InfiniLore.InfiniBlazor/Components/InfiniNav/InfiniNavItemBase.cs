@@ -22,17 +22,6 @@ public abstract class InfiniNavItemBase : InfiniComponentBase {
     
     protected bool CollapsedState => NavBarCollapsed && (!SubMenuContext?.IgnoreCascadeCollapsedState ?? true);
     
-    protected int IconSize => NavBarSize switch {
-        Size.Xxs => 10,
-        Size.Xs => 14,
-        Size.S => 18,
-        Size.M => 24,
-        Size.L => 32,
-        Size.Xl => 42,
-        Size.Xxl => 48,
-        _ => 24
-    };
-    
     protected static string ContainerClasses => ConcatClasses(ContainerClassesNoHover, "hover:bg-(--sidebar-nav-button-hover)");
     protected static string ContainerClassesNoHover => "flex flex-nowrap items-center infini-bg-(--sidebar-nav-button) rounded group justify-start p-2";
 }

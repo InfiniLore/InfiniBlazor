@@ -59,6 +59,17 @@
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    private int IconSize => NavBarSize switch {
+        Size.Xxs => 10,
+        Size.Xs => 14,
+        Size.S => 18,
+        Size.M => 24,
+        Size.L => 32,
+        Size.Xl => 42,
+        Size.Xxl => 48,
+        _ => 24
+    };
+    
     private string TextSize => NavBarSize switch {
         Size.Xxs => "text-xs",
         Size.Xs => "text-xs",
