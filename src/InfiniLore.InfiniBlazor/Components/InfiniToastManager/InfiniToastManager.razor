@@ -14,7 +14,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@ContainerPositionClass @ZIndex.ToastMessageContainer fixed p-3 space-y-2 max-w-xs w-full max-h-screen overflow-y-auto infini-scrollbar-hidden">
+<div class="@ContainerPositionClass @ZIndex.ToastMessageContainer fixed space-y-2 max-w-xs w-full max-h-screen overflow-y-auto infini-scrollbar-hidden">
     @foreach (IToastEntry toastEntry in ToastingProvider.GetToastEntries()) {
         <DynamicComponent
             @key="toastEntry.Data.Id" 
