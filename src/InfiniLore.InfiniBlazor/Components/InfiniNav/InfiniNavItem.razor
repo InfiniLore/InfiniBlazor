@@ -10,8 +10,8 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<span 
-    hidden="@IsHidden"  
+<span
+    hidden="@IsHidden"
     title="@(CollapsedState ? Text : string.Empty)"
     class="@ConcatClasses(Class, OffsetClasses) flex flex-nowrap items-center"
 > 
@@ -54,6 +54,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -80,17 +81,15 @@
         _ => throw new ArgumentOutOfRangeException()
     };
 
-    private string OffsetClasses => (NavBarLocation, NavBarSize) switch {
-        (NavBarLocation.Right, Size.Xxs) => "-ml-1.5",
-        (NavBarLocation.Right, Size.Xs) => "-ml-1",
-        (NavBarLocation.Right, Size.S) => "-ml-0.5",
-        
-        (NavBarLocation.Left, Size.Xxs) => "-ml-1.5",
-        (NavBarLocation.Left, Size.Xs) => "-ml-1",
-        (NavBarLocation.Left, Size.S) => "-ml-0.5",
-        _ => string.Empty
-    };
-    
+    private string OffsetClasses => NavBarLocation.IsVertical()
+        ? NavBarSize switch {
+            Size.Xxs => "-ml-1.5",
+            Size.Xs => "-ml-1",
+            Size.S => "-ml-0.5",
+            _ => string.Empty
+        }
+        : string.Empty;
+
     private const string IconClasses = "text-(--sidebar-nav-text) flex-shrink-0 group-hover:text-(--sidebar-nav-text-hover)";
     private const string TextClasses = "text-(--sidebar-nav-text) truncate inline-block max-w-[150px] group-hover:text-(--sidebar-nav-text-hover)";
 }
