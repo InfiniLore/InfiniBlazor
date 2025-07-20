@@ -17,7 +17,7 @@
    class="@ContainerClasses"
    target="@(OpenInNewTab ? "_blank" : null)"
    rel="noopener noreferrer"
-   hidden="@Hidden"
+   hidden="@IsHidden"
    @onclick="() => SubMenuContext?.OnSubItemPressed?.Invoke()"
    >
     <InfiniNavItem Text="@Text" Icon="@Icon" Class="@Class">
