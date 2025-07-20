@@ -9,11 +9,14 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="absolute flex top-0 left-0 w-screen h-screen justify-center items-center transition-all duration-300 @AppearClasses">
-    <div class="bg-red-500 w-1/2 h-1/2 text-(--text) flex flex-col justify-center items-center gap-4">
-        <span class="justify-self-center w-full text-center">InfiniDialogManager</span>
-        <InfiniButton OnClick="OnRemove">Remove</InfiniButton>
-    </div>
+<div class="absolute flex top-0 left-0 w-screen h-screen justify-center items-center transition-all duration-300 text-(--text) @AppearClasses">
+    <InfiniSection Class="flex w-3/4 h-3/4 justify-center items-center">
+        <InfiniHeading3>InfiniDialogManager</InfiniHeading3>
+        <InfiniSpacer/>
+        <div class="flex justify-center w-full">
+            <InfiniButton OnClick="OnRemove" Text="Remove"/>
+        </div>
+    </InfiniSection>
 </div>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
