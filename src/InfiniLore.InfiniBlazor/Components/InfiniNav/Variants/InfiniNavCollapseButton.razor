@@ -14,6 +14,7 @@
     <InfiniButton
         Variant="ButtonVariant.Transparent"
         IconName="@LucideNames.Menu"
+        Size="NavBarSize"
         OnClick="@ToggleMenu"
     />
 </div>
@@ -25,7 +26,7 @@
     [Parameter] public EventCallback<bool> StateChanged { get; set; }
 
     private string SizeClass => NavBarSize switch {
-        _ => "w-10 min-w-10 h-10 min-h-10"
+        _ => ""
     };
     
     // -----------------------------------------------------------------------------------------------------------------
