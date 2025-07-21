@@ -64,4 +64,8 @@
       <EmbeddedResource Include="wwwroot\InfiniBlazor.css" />
       <EmbeddedResource Include="wwwroot\InfiniBlazor.js" />
     </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="ExtraComponents\" />
+    </ItemGroup>
 </Project>

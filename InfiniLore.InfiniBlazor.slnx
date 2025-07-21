@@ -20,6 +20,7 @@
     <Project Path="examples\Example.InfiniBlazor\Example.InfiniBlazor.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/src/">
+    <Project Path="src\InfiniLore.InfiniBlazor.ComponentsExtra\InfiniLore.InfiniBlazor.ComponentsExtra.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor.SourceGenerators\InfiniLore.InfiniBlazor.SourceGenerators.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" Type="Classic C#" />
