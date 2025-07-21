@@ -16,6 +16,7 @@ public static class Program {
         builder.Services.AddInfiniBlazor(config => {
             config.RegisterTheme<PrideThemeCollection>();
             config.AddMarkdownLogic();
+            // config.SetRenderMode(RenderMode.InteractiveAuto);
         });
         
         builder.Services.AddHttpClient();

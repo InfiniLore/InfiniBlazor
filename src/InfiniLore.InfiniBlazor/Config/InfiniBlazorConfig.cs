@@ -6,6 +6,7 @@ using InfiniLore.InfiniBlazor.Components.ToastAppearances;
 using InfiniLore.InfiniBlazor.Theming;
 using InfiniLore.InfiniBlazor.Theming.Collections;
 using InfiniLore.InfiniBlazor.Toasting;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InfiniLore.InfiniBlazor.Config;
@@ -33,6 +34,11 @@ public class InfiniBlazorConfig(IServiceCollection collection) {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public InfiniBlazorConfig SetRenderMode(IComponentRenderMode renderMode) {
+        RenderModeProvider.InfiniRenderMode = renderMode;
+        return this;
+    }
+    
     public InfiniBlazorConfig RegisterTheme<TTheme>() where TTheme : class, IThemeCollection, new() {
         var theme = new TTheme();
         RegisteredBaseThemeCollections.AddOrUpdate(theme.CollectionName, theme);
