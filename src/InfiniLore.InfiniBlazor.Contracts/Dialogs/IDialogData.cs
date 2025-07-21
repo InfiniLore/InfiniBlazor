@@ -10,5 +10,5 @@ public interface IDialogData {
     Guid Id { get; }
     Type ComponentType { get; }
     
-    IDictionary<string, object>? AsDynamicParameters();
+    IDictionary<string, object?>? AsDynamicParameters();
 }

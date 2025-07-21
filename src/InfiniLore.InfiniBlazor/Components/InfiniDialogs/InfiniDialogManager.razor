@@ -35,7 +35,7 @@
     private IDialogData? Dialog { get; set; }
     private Stack<IDialogData> OpenDialogs { get; } = new();
 
-    private DialogContext DialogContext { get; } = new();
+    private DialogManagerContext DialogContext { get; } = new();
 
     private string AppearClasses => HasDialog
         ? $"{ZIndex.DialogManager} backdrop-blur-sm bg-black/50 opacity-100 pointer-events-auto"

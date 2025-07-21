@@ -1,31 +1,49 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.Dialogs
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniDialogBase
-@inject IDialogProvider DialogProvider
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniDialog>
-    <InfiniSection Class="flex grow w-full border-none">
-        <h1>Simple Dialog</h1>
-        <h1>@guid</h1>
+    <InfiniSection Class="flex grow w-full h-full border-none">
+        <InfiniHeading3>@Title</InfiniHeading3>
+
+        <InfiniSpacerVertical Spacing="Size.Xs"/>
+        <p class="overflow-y-auto h-full infini-scrollbar">@Body</p>
+
         <InfiniSpacer/>
-        <div class="flex flex-row justify-center">
-            <InfiniButton
-                OnClick="@CreateDialog"
-                DebounceMs="300"
-                Text="Create Dialog"
-            />
-            <InfiniSpacer/>
-            <InfiniButton
-                OnClick="@DialogContext.InvokeDialogExit"
-                Text="Exit"/>
+        <InfiniSpacerVertical Spacing="Size.M"/>
+
+        <div class="flex flex-row justify-center w-full">
+            <div class="flex flex-row justify-around w-full">
+                @if (OnExit.HasDelegate) {
+                    <InfiniButton
+                        Class="w-[85px]"
+                        Color="Color.Red"
+                        OnClick="@InvokeOnExit"
+                        Text="Exit"/>
+                }
+                
+                @if (OnReturn.HasDelegate) {
+                    <InfiniButton
+                        Class="w-[85px]"
+                        OnClick="@InvokeOnReturn"
+                        Text="Return"/>
+                }
+
+                @if (OnContinue.HasDelegate) {
+                    <InfiniButton
+                        Class="w-[85px]"
+                        Color="Color.Green"
+                        OnClick="@InvokeOnContinue"
+                        Text="Continue"/>
+                }
+            </div>
         </div>
     </InfiniSection>
 </InfiniDialog>
@@ -33,10 +51,29 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
-    private readonly Guid guid = Guid.CreateVersion7();
-    private void CreateDialog(MouseEventArgs obj) {
-        var newDialog = DialogData.Create<InfiniDialogSimple>();
-        DialogProvider.AddDialog(newDialog);
+    [Parameter] public string Title { get; set; } = string.Empty;
+    [Parameter] public string Body { get; set; } = string.Empty;
+    [Parameter] public EventCallback OnReturn { get; set; }
+    [Parameter] public EventCallback OnExit { get; set; }
+    [Parameter] public EventCallback OnContinue { get; set; }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private async Task InvokeOnReturn() {
+        await OnReturn.InvokeAsync();
+        DialogManagerContext.InvokeDialogExit();
+    }
+
+    private async Task InvokeOnContinue() {
+        await OnContinue.InvokeAsync();
+        DialogManagerContext.InvokeDialogExit();
+    }
+
+    private async Task InvokeOnExit() {
+        await OnExit.InvokeAsync();
+        DialogManagerContext.InvokeDialogExit();
     }
 }

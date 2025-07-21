@@ -229,7 +229,23 @@
     }
     
     private void OnDialogCreate() {
-        var dialogData = DialogData.Create<InfiniDialogSimple>();
+        var dialogData = new InfiniDialogSimpleDto(
+            "A Simple Dialog",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dignissim erat velit. Nulla eros ligula, dignissim quis enim in, sollicitudin sodales lorem. Praesent porttitor dui consectetur, consequat odio posuere, dapibus nibh. Vivamus ut nisi magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam volutpat, massa et interdum bibendum, enim tortor pharetra sem, sit amet laoreet lacus orci eu risus. Fusce feugiat sem nec mauris aliquam, et facilisis lorem euismod. Suspendisse dolor urna, fringilla vel sapien quis, egestas ultricies lorem. Phasellus lacinia tellus a ex mattis, in laoreet mi placerat. Vivamus ultricies nec arcu et maximus.",
+            OnContinue: EventCallback.Factory.Create(this, CallbackOnContinue),
+            OnReturn: EventCallback.Factory.Create(this, CallbackOnExit),
+            OnExit: EventCallback.Factory.Create(this, CallbackOnExit)
+        );
         DialogProvider.AddDialog(dialogData);
+    }
+    
+    private async Task CallbackOnContinue() {
+        IToastingData infoToast = new ToastingData("info", "Pressed continue");
+        await ToastingProvider.PublishToastAsync(infoToast, ToastAppearance.Info, 0);
+    }
+    
+    private async Task CallbackOnExit() {
+        IToastingData infoToast = new ToastingData("info", "Pressed Exit");
+        await ToastingProvider.PublishToastAsync(infoToast, ToastAppearance.Error, 0);
     }
 }

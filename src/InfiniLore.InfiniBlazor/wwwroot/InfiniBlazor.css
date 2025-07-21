@@ -720,6 +720,9 @@
   .w-1\/2 {
     width: calc(1/2 * 100%);
   }
+  .w-1\/4 {
+    width: calc(1/4 * 100%);
+  }
   .w-2 {
     width: calc(var(--spacing) * 2);
   }
@@ -798,6 +801,18 @@
   .w-112 {
     width: calc(var(--spacing) * 112);
   }
+  .w-\[75px\] {
+    width: 75px;
+  }
+  .w-\[85px\] {
+    width: 85px;
+  }
+  .w-\[200px\] {
+    width: 200px;
+  }
+  .w-\[750px\] {
+    width: 750px;
+  }
   .w-auto {
     width: auto;
   }
@@ -827,6 +842,12 @@
   }
   .min-w-0 {
     min-width: calc(var(--spacing) * 0);
+  }
+  .min-w-1 {
+    min-width: calc(var(--spacing) * 1);
+  }
+  .min-w-1\/4 {
+    min-width: calc(1/4 * 100%);
   }
   .min-w-4 {
     min-width: calc(var(--spacing) * 4);
@@ -1045,6 +1066,9 @@
   .items-stretch {
     align-items: stretch;
   }
+  .justify-around {
+    justify-content: space-around;
+  }
   .justify-between {
     justify-content: space-between;
   }
@@ -1053,6 +1077,9 @@
   }
   .justify-end {
     justify-content: flex-end;
+  }
+  .justify-evenly {
+    justify-content: space-evenly;
   }
   .justify-start {
     justify-content: flex-start;
@@ -1139,6 +1166,9 @@
   }
   .overflow-y-hidden {
     overflow-y: hidden;
+  }
+  .overflow-y-scroll {
+    overflow-y: scroll;
   }
   .rounded {
     border-radius: 0.25rem;

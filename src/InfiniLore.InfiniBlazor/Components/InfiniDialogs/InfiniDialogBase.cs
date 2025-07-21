@@ -8,5 +8,5 @@ namespace InfiniLore.InfiniBlazor.Components;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class InfiniDialogBase : InfiniComponentBase {
-    [CascadingParameter] public DialogContext DialogContext { get; set; } = null!;
+    [CascadingParameter] public DialogManagerContext DialogManagerContext { get; set; } = null!;
 }

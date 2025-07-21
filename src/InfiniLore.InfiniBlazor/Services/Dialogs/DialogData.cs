@@ -22,5 +22,5 @@ public record DialogData(
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public IDictionary<string, object>? AsDynamicParameters() => null;
+    public virtual IDictionary<string, object?>? AsDynamicParameters() => null;
 }
