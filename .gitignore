@@ -13,6 +13,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.slnx.docstates
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -398,6 +399,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+*.slnx.iml
 
 ### DotnetCore ###
 # .NET Core build folders

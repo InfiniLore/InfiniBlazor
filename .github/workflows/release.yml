@@ -21,15 +21,15 @@ jobs:
                   dotnet-version: '9.x'
 
             - name: Restore dependencies
-              run: dotnet restore InfiniLore.InfiniBlazor.sln
+              run: dotnet restore InfiniLore.InfiniBlazor.slnx
 
             - name: Build
-              run: dotnet build InfiniLore.InfiniBlazor.sln --configuration Release --no-restore
+              run: dotnet build InfiniLore.InfiniBlazor.slnx --configuration Release --no-restore
             
             # Ensure that the tests must pass 
             # The job will fail automatically if any test fails because `dotnet test` exits with a non-zero code
             - name: Run tests     
-              run: dotnet test InfiniLore.InfiniBlazor.sln --configuration Release --no-restore --no-build
+              run: dotnet test InfiniLore.InfiniBlazor.slnx --configuration Release --no-restore --no-build
 
             - name: Publish to NuGet
               env:

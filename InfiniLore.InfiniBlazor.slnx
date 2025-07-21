@@ -1,0 +1,31 @@
+﻿<Solution>
+  <Folder Name="/.dev-tools/">
+    <Project Path="src\DevTools.InfiniLore.InfiniBlazor\DevTools.InfiniLore.InfiniBlazor.csproj" Type="Classic C#" />
+    <File Path="README.md" />
+    <File Path="Directory.Packages.props" />
+  </Folder>
+  <Folder Name="/.dev-tools/github/">
+    <File Path=".github\workflows\release.yml" />
+    <File Path=".github\workflows\workflow-todo.yml" />
+    <File Path=".github\workflows\onPullRequest-TestDotnet.yml" />
+  </Folder>
+  <Folder Name="/.dev-tools/web/">
+    <File Path="tsconfig.json" />
+    <File Path="package.json" />
+    <File Path="webpack.config.js" />
+  </Folder>
+  <Folder Name="/example/">
+    <Project Path="examples\Example.InfiniBlazor.Client\Example.InfiniBlazor.Client.csproj" Type="Classic C#" />
+    <Project Path="examples\Example.InfiniBlazor.Shared\Example.InfiniBlazor.Shared.csproj" Type="Classic C#" />
+    <Project Path="examples\Example.InfiniBlazor\Example.InfiniBlazor.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" Type="Classic C#" />
+    <Project Path="src\InfiniLore.InfiniBlazor.SourceGenerators\InfiniLore.InfiniBlazor.SourceGenerators.csproj" Type="Classic C#" />
+    <Project Path="src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests\Benchmarks.InfiniLore.InfiniBlazor.Markdown\Benchmarks.InfiniLore.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
+    <Project Path="tests\Tests.InfiniLore.InfiniBlazor\Tests.InfiniLore.InfiniBlazor.csproj" Type="Classic C#" />
+  </Folder>
+</Solution>
