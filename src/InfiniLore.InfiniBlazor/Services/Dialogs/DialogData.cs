@@ -1,26 +1,17 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Components;
 namespace InfiniLore.InfiniBlazor.Dialogs;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public record DialogData(
-    Type ComponentType,
-    Guid Id
-) : IDialogData {
-    // -----------------------------------------------------------------------------------------------------------------
-    // Constructors
-    // -----------------------------------------------------------------------------------------------------------------
-    public static DialogData Create<T>(Dictionary<string, object?>? parameters = null) where T : InfiniDialogBase => new(
-        typeof(T),
-        Guid.CreateVersion7()
-    );
-    
+public abstract record DialogData<T> : IDialogData {
+    public Guid Id { get; init; } = Guid.CreateVersion7();
+    public Type ComponentType { get; } = typeof(T);
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public virtual IDictionary<string, object?>? AsDynamicParameters() => null;
+    public abstract IDictionary<string, object?>? AsDynamicParameters();
 }

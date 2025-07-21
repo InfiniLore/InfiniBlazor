@@ -43,6 +43,13 @@
                         OnClick="@InvokeOnContinue"
                         Text="Continue"/>
                 }
+                
+                @if (!OnReturn.HasDelegate && !OnContinue.HasDelegate && !OnExit.HasDelegate) {
+                    <InfiniButton
+                        Class="w-[85px]"
+                        OnClick="@InvokeOnReturn"
+                        Text="Return"/>
+                }
             </div>
         </div>
     </InfiniSection>

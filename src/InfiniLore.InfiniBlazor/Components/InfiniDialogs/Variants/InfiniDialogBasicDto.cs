@@ -9,13 +9,13 @@ namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public record InfiniDialogSimpleDto(
+public record InfiniDialogBasicDto(
     string Title,
     string Body,
     EventCallback OnReturn = default,
     EventCallback OnExit = default,
     EventCallback OnContinue = default
-    ) : DialogData(typeof(InfiniDialogSimple), Guid.CreateVersion7()) {
+    ) : DialogData<InfiniDialogBasic> {
 
     public override IDictionary<string, object?> AsDynamicParameters() {
         return new Dictionary<string, object?> {
