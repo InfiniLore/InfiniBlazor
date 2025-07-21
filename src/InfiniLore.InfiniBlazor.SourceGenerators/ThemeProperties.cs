@@ -10,32 +10,32 @@ namespace InfiniLore.InfiniBlazor.SourceGenerators;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class IThemeProperties {
+public static class ThemeProperties {
     private static ImmutableArray<IPropertySymbol> Properties { get; set; } = ImmutableArray<IPropertySymbol>.Empty;
     private static bool IsInitialized { get; set; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static bool TryExtractProperties(Compilation compilation, out ImmutableArray<IPropertySymbol> iThemeProperties) {
+    public static bool TryExtractProperties(Compilation compilation, out ImmutableArray<IPropertySymbol> themeProperties) {
         if (IsInitialized) {
-            iThemeProperties = Properties;
+            themeProperties = Properties;
             return true;
         }
 
-        INamedTypeSymbol? iThemeSymbol = compilation.GetTypeByMetadataName(TypeNames.ICssDataInterface);
-        if (iThemeSymbol is null) {
+        INamedTypeSymbol? themeSymbol = compilation.GetTypeByMetadataName(TypeNames.CssDataInterface);
+        if (themeSymbol is null) {
             Properties = ImmutableArray<IPropertySymbol>.Empty;
             IsInitialized = true;
             return false;
         }
 
-        iThemeProperties = iThemeSymbol.GetMembers()
+        themeProperties = themeSymbol.GetMembers()
             .OfType<IPropertySymbol>()
             .Where(static symbol => symbol.HasAttributeWithDisplayName(TypeNames.CssDataAttribute))
             .ToImmutableArray();
 
-        Properties = iThemeProperties;
+        Properties = themeProperties;
         IsInitialized = true;
         return true;
     }

@@ -30,7 +30,7 @@ public record ThemeSymbolsDto(
     public ImmutableArray<IPropertySymbol> GetCssDataProperties(Compilation compilation) {
         if (_propertiesInitialized) return _properties;
         
-        IThemeProperties.TryExtractProperties(compilation, out ImmutableArray<IPropertySymbol> iThemeProperties); 
+        ThemeProperties.TryExtractProperties(compilation, out ImmutableArray<IPropertySymbol> iThemeProperties); 
         
         IEnumerable<IPropertySymbol> currentSymbolProperties = Symbol.GetMembers()
             .OfType<IPropertySymbol>()
