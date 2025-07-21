@@ -27,6 +27,7 @@ public class ToastingProvider(IToastingConfig toastingConfig, ILogger<ToastingPr
     // -----------------------------------------------------------------------------------------------------------------
     public Task PublishToastAsync(IToastingData data, ToastAppearance appearance, int displayDuration = -1) 
         => PublishToastAsync(data, appearance.ToName(), displayDuration);
+    
     public async Task PublishToastAsync(IToastingData data, string appearanceName, int displayDuration = -1) {
         if (displayDuration < -1) {
             logger.Warning("Invalid display duration: {duration}", displayDuration);
@@ -83,7 +84,9 @@ public class ToastingProvider(IToastingConfig toastingConfig, ILogger<ToastingPr
         if (OnToastPublished is not null) await OnToastPublished().ConfigureAwait(false);
     }
 
-    public async Task UnpublishToastAsync(Guid id) {
+    public Task UnpublishToastAsync(Guid id) => UnpublishToastAsync(id, true);
+
+    private async Task UnpublishToastAsync(Guid id, bool publishEvent) {
         // Attempt to mark this toast as closing; if already closing, skip
         if (!_closingToasts.TryAdd(id, true)) return;// Already closing, no need to continue
 
@@ -101,7 +104,7 @@ public class ToastingProvider(IToastingConfig toastingConfig, ILogger<ToastingPr
             while (!ToastOrder.IsEmpty) ToastOrder.TryDequeue(out _);
             foreach (Guid remainingId in newQueue) ToastOrder.Enqueue(remainingId);
 
-            if (OnToastUnpublished is not null)
+            if (OnToastUnpublished is not null && publishEvent)
                 await OnToastUnpublished().ConfigureAwait(false);
 
         }
@@ -113,7 +116,11 @@ public class ToastingProvider(IToastingConfig toastingConfig, ILogger<ToastingPr
 
     public async Task UnpublishAllToastsAsync() {
         Guid[] ids = ToastOrder.ToArray();
-        await Task.WhenAll(ids.Select(UnpublishToastAsync)).ConfigureAwait(false);
+        await Task.WhenAll(ids.Select(id => UnpublishToastAsync(id, false) )).ConfigureAwait(false);
+        
+        // Only send the unpublished event ONCE.
+        if (OnToastUnpublished is not null)
+            await OnToastUnpublished().ConfigureAwait(false);
     }
 
     public void AttachComponent(Guid id, IToastMessageBase component) {

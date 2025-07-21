@@ -12,8 +12,8 @@ namespace InfiniLore.InfiniBlazor.Dialogs;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableScoped<IDialogProvider>]
 public class DialogProvider(ILogger<DialogProvider> logger) : IDialogProvider {
-    public Func<Task>? DialogOpenedAsync { get; set; } = null;
-
+    public event Func<Task>? DialogOpenedAsync;
+    
     private ConcurrentDictionary<Guid, IDialogData> DialogsById { get; } = new();
     private int DialogCount { get; set; }
     private Guid[] DialogIds { get; set; } = ArrayPool<Guid>.Shared.Rent(0);
