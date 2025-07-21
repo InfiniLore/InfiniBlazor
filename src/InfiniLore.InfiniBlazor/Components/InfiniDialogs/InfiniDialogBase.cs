@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Dialogs;
 using Microsoft.AspNetCore.Components;
 
 namespace InfiniLore.InfiniBlazor.Components;
@@ -9,4 +10,5 @@ namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class InfiniDialogBase : InfiniComponentBase {
     [CascadingParameter] public DialogManagerContext DialogManagerContext { get; set; } = null!;
+    [Parameter] public IDialogData DialogData { get; set; } = null!;
 }

@@ -24,6 +24,7 @@ public record InfiniDialogBasicDto(
             [nameof(OnReturn)] = OnReturn,
             [nameof(OnExit)] = OnExit,
             [nameof(OnContinue)] = OnContinue,
+            ["DialogData"] = this,
         };
     }
 }

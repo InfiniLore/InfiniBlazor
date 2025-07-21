@@ -83,7 +83,7 @@
     <InfiniSpacer/>
     
     <InfiniNavButton
-        OnClick="@OnDialogCreate"
+        OnClick="@OnDialogCreateAsync"
         Text="Create Dialog"
         Icon="@LucideNames.Diamond"
     />
@@ -228,15 +228,34 @@
         StateHasChanged();
     }
     
-    private void OnDialogCreate() {
-        var dialogData = new InfiniDialogBasicDto(
-            "A Simple Dialog",
+    private async Task OnDialogCreateAsync() {
+        await DialogProvider.PushDialogAsync(new InfiniDialogBasicDto(
+            "A Simple Dialog 100",
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dignissim erat velit. Nulla eros ligula, dignissim quis enim in, sollicitudin sodales lorem. Praesent porttitor dui consectetur, consequat odio posuere, dapibus nibh. Vivamus ut nisi magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam volutpat, massa et interdum bibendum, enim tortor pharetra sem, sit amet laoreet lacus orci eu risus. Fusce feugiat sem nec mauris aliquam, et facilisis lorem euismod. Suspendisse dolor urna, fringilla vel sapien quis, egestas ultricies lorem. Phasellus lacinia tellus a ex mattis, in laoreet mi placerat. Vivamus ultricies nec arcu et maximus.",
             OnContinue: EventCallback.Factory.Create(this, CallbackOnContinue),
             OnReturn: EventCallback.Factory.Create(this, CallbackOnExit),
             OnExit: EventCallback.Factory.Create(this, CallbackOnExit)
-        );
-        DialogProvider.AddDialog(dialogData);
+        ) {
+            Priority = 100
+        });
+        
+        await DialogProvider.PushDialogAsync(new InfiniDialogBasicDto(
+            "A Simple Dialog 0",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dignissim erat velit. Nulla eros ligula, dignissim quis enim in, sollicitudin sodales lorem. Praesent porttitor dui consectetur, consequat odio posuere, dapibus nibh. Vivamus ut nisi magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam volutpat, massa et interdum bibendum, enim tortor pharetra sem, sit amet laoreet lacus orci eu risus. Fusce feugiat sem nec mauris aliquam, et facilisis lorem euismod. Suspendisse dolor urna, fringilla vel sapien quis, egestas ultricies lorem. Phasellus lacinia tellus a ex mattis, in laoreet mi placerat. Vivamus ultricies nec arcu et maximus.",
+            OnContinue: EventCallback.Factory.Create(this, CallbackOnContinue),
+            OnReturn: EventCallback.Factory.Create(this, CallbackOnExit),
+            OnExit: EventCallback.Factory.Create(this, CallbackOnExit)
+        ));
+        
+        await DialogProvider.PushDialogAsync(new InfiniDialogBasicDto(
+            "A Simple Dialog 99",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dignissim erat velit. Nulla eros ligula, dignissim quis enim in, sollicitudin sodales lorem. Praesent porttitor dui consectetur, consequat odio posuere, dapibus nibh. Vivamus ut nisi magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam volutpat, massa et interdum bibendum, enim tortor pharetra sem, sit amet laoreet lacus orci eu risus. Fusce feugiat sem nec mauris aliquam, et facilisis lorem euismod. Suspendisse dolor urna, fringilla vel sapien quis, egestas ultricies lorem. Phasellus lacinia tellus a ex mattis, in laoreet mi placerat. Vivamus ultricies nec arcu et maximus.",
+            OnContinue: EventCallback.Factory.Create(this, CallbackOnContinue),
+            OnReturn: EventCallback.Factory.Create(this, CallbackOnExit),
+            OnExit: EventCallback.Factory.Create(this, CallbackOnExit)
+        ) {
+            Priority = 99
+        });
     }
     
     private async Task CallbackOnContinue() {

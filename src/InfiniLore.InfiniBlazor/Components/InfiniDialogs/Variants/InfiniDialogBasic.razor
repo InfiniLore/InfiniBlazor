@@ -71,16 +71,16 @@
     // -----------------------------------------------------------------------------------------------------------------
     private async Task InvokeOnReturn() {
         await OnReturn.InvokeAsync();
-        DialogManagerContext.InvokeDialogExit();
+        DialogManagerContext.InvokeDialogExit(DialogData.Id);
     }
 
     private async Task InvokeOnContinue() {
         await OnContinue.InvokeAsync();
-        DialogManagerContext.InvokeDialogExit();
+        DialogManagerContext.InvokeDialogExit(DialogData.Id);
     }
 
     private async Task InvokeOnExit() {
         await OnExit.InvokeAsync();
-        DialogManagerContext.InvokeDialogExit();
+        DialogManagerContext.InvokeDialogExit(DialogData.Id);
     }
 }

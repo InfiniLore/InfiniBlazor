@@ -9,6 +9,7 @@ namespace InfiniLore.InfiniBlazor.Dialogs;
 public interface IDialogData {
     Guid Id { get; }
     Type ComponentType { get; }
+    int Priority { get; }
     
     IDictionary<string, object?>? AsDynamicParameters();
 }

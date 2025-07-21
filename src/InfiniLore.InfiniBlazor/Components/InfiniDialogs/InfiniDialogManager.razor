@@ -33,7 +33,6 @@
     // private bool HasDialog { get; set; } = false;
     [MemberNotNullWhen(true, nameof(Dialog))] private bool HasDialog => Dialog is not null;
     private IDialogData? Dialog { get; set; }
-    private Stack<IDialogData> OpenDialogs { get; } = new();
 
     private DialogManagerContext DialogContext { get; } = new();
 
@@ -46,23 +45,23 @@
     // -----------------------------------------------------------------------------------------------------------------
     protected override void OnInitialized() {
         base.OnInitialized();
-        DialogContext.OnDialogExit += RemoveCurrentDialog;
-        DialogProvider.DialogOpened += OnDialogOpened;
+        DialogContext.OnDialogExitAsync += RemoveDialogAsync;
+        DialogProvider.DialogOpenedAsync += OnDialogOpenedAsync;
     }
 
     public override ValueTask DisposeAsync() {
-        DialogProvider.DialogOpened -= OnDialogOpened;
-        DialogContext.OnDialogExit -= RemoveCurrentDialog;
+        DialogProvider.DialogOpenedAsync -= OnDialogOpenedAsync;
+        DialogContext.OnDialogExitAsync -= RemoveDialogAsync;
         return base.DisposeAsync();
     }
 
-    private void OnDialogOpened() {
+    private async Task OnDialogOpenedAsync() {
         if (Dialog is not null) {
-            OpenDialogs.Push(Dialog);
             Logger.Debug("A dialog has already been instantiated");
+            return;
         }
-        
-        if (!DialogProvider.TryPopDialog(out IDialogData? data)) {
+
+        if (await DialogProvider.TakeDialogAsync() is not {} data) {
             Logger.Debug("No dialog in stack");
             return;
         }
@@ -73,18 +72,16 @@
             return;
         }
 
-        StateHasChanged();
+        await InvokeAsync(StateHasChanged);
     }
     
-    private void RemoveCurrentDialog() {
+    private async Task RemoveDialogAsync(Guid id) {
+        await DialogProvider.TryRemoveDialogAsync(id);
         Dialog = null;
-        if (OpenDialogs.TryPop(out IDialogData? stashedData)) {
-            Dialog = stashedData;
-            if (!HasDialog) {
-                Logger.Warning("Dialog could not be initiated");
-                RemoveCurrentDialog();
-            }
-        }
+        
+        // Try To take a new Dialog
+        if (await DialogProvider.TakeDialogAsync() is {} data) Dialog = data;
+        
         StateHasChanged();
     }
 }

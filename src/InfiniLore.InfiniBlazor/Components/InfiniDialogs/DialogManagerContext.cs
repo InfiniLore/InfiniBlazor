@@ -7,6 +7,6 @@ namespace InfiniLore.InfiniBlazor.Components;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class DialogManagerContext {
-    public Action? OnDialogExit { get; set; }
-    public void InvokeDialogExit() => OnDialogExit?.Invoke();
+    public Func<Guid, Task>? OnDialogExitAsync { get; set; }
+    public void InvokeDialogExit(Guid id) => OnDialogExitAsync?.Invoke(id);
 }
