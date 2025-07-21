@@ -1454,6 +1454,9 @@
   .border-\(--editor-header-border\) {
     border-color: var(--editor-header-border);
   }
+  .border-\(--nav-border\) {
+    border-color: var(--nav-border);
+  }
   .border-\(--section-border\) {
     border-color: var(--section-border);
   }
@@ -1932,6 +1935,9 @@
   .text-\(--color-yellow-light\) {
     color: var(--color-yellow-light);
   }
+  .text-\(--nav-text\) {
+    color: var(--nav-text);
+  }
   .text-\(--page-text\) {
     color: var(--page-text);
   }
@@ -2295,6 +2301,33 @@
   .infini-bg-\(--color-yellow-dark\) {
     background: var(--color-yellow-dark);
   }
+  .infini-bg-\(--nav\) {
+    background: var(--nav);
+  }
+  .infini-bg-\(--nav-border\) {
+    background: var(--nav-border);
+  }
+  .infini-bg-\(--nav-bottom\) {
+    background: var(--nav-bottom);
+  }
+  .infini-bg-\(--nav-button\) {
+    background: var(--nav-button);
+  }
+  .infini-bg-\(--nav-horizontal\) {
+    background: var(--nav-horizontal);
+  }
+  .infini-bg-\(--nav-left\) {
+    background: var(--nav-left);
+  }
+  .infini-bg-\(--nav-right\) {
+    background: var(--nav-right);
+  }
+  .infini-bg-\(--nav-top\) {
+    background: var(--nav-top);
+  }
+  .infini-bg-\(--nav-vertical\) {
+    background: var(--nav-vertical);
+  }
   .infini-bg-\(--page\) {
     background: var(--page);
   }
@@ -2318,6 +2351,13 @@
   }
   .infini-bg-\(--toggle-container\) {
     background: var(--toggle-container);
+  }
+  .group-hover\:text-\(--nav-text-hover\) {
+    &:is(:where(.group):hover *) {
+      @media (hover: hover) {
+        color: var(--nav-text-hover);
+      }
+    }
   }
   .group-hover\:text-\(--sidebar-nav-text-hover\) {
     &:is(:where(.group):hover *) {
@@ -2438,6 +2478,13 @@
       }
     }
   }
+  .hover\:bg-\(--nav-button-hover\) {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--nav-button-hover);
+      }
+    }
+  }
   .hover\:bg-\(--sidebar-nav-button-hover\) {
     &:hover {
       @media (hover: hover) {
@@ -2505,6 +2552,13 @@
     &:hover {
       @media (hover: hover) {
         color: var(--color-accent-light);
+      }
+    }
+  }
+  .hover\:text-\(--nav-text-hover\) {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--nav-text-hover);
       }
     }
   }
