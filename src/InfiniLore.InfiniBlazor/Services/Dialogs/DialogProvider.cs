@@ -35,6 +35,7 @@ public class DialogProvider(ILogger<DialogProvider> logger) : IDialogProvider {
         Dialogs.Push(dialog);
         DialogOpened?.Invoke();
         _ = DialogOpenedAsync?.Invoke().ConfigureAwait(false);
+        logger.Information("Dialog added: {dialog}", dialog);
     }
     
     public bool TryPopDialog([NotNullWhen(true)] out IDialogData? dialogData) 

@@ -24,12 +24,12 @@
     private string DebugClasses { get {
         if (!VisualDebugger.IsEnabled()) return string.Empty;
 
-        string stripes = VisualDebugger.GetAsStripes(DebugColor);
+        string stripes = DebugColor.ToCssClassBackgroundStripes();
         
         return Direction switch {
             SpacerDirection.Grow => stripes,
-            SpacerDirection.Horizontal => ConcatClasses(stripes, VisualDebugger.GetAsBorderLeft(DebugColor),VisualDebugger.GetAsBorderRight(DebugColor)),
-            SpacerDirection.Vertical => ConcatClasses(stripes, VisualDebugger.GetAsBorderTop(DebugColor), VisualDebugger.GetAsBorderBottom(DebugColor)),
+            SpacerDirection.Horizontal => ConcatClasses(stripes, DebugColor.ToCssClassBorderLeft(), DebugColor.ToCssClassBorderRight()),
+            SpacerDirection.Vertical => ConcatClasses(stripes, DebugColor.ToCssClassBorderTop(), DebugColor.ToCssClassBorderBottom()),
             _ => string.Empty
         };
     }}

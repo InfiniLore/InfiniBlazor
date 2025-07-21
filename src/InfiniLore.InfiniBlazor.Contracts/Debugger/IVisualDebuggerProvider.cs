@@ -15,14 +15,6 @@ public interface IVisualDebuggerProvider {
     Task SetStateAsync(DebuggerState state);
 
     void InitializeFromUrl();
-    
-    string GetAsStripes(DebugColor color);
-    
-    string GetAsBorder(DebugColor color);
-    string GetAsBorderTop(DebugColor color);
-    string GetAsBorderRight(DebugColor color);
-    string GetAsBorderBottom(DebugColor color);
-    string GetAsBorderLeft(DebugColor color);
 
     string? WithEnabled(string? onTrue, string? onFalse);
 }

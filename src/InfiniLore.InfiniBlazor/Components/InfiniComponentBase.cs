@@ -15,7 +15,7 @@ public abstract class InfiniComponentBase : ComponentBase, IAsyncDisposable {
     [Parameter] public string Class { get; set; } = string.Empty;
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
-    [Parameter] public virtual DebugColor DebugColor { get; set; } = DebugColor.Red;
+    [Parameter] public virtual Color DebugColor { get; set; } = Color.Red;
 
     protected virtual bool IsDisabled => CascadedDisabled;
     [CascadingParameter(Name = nameof(CascadedDisabled))] public bool CascadedDisabled { get; set; }
