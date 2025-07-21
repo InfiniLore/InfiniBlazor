@@ -7,7 +7,6 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --color-red-500: oklch(63.7% 0.237 25.331);
     --color-yellow-100: oklch(97.3% 0.071 103.193);
     --color-blue-500: oklch(62.3% 0.214 259.815);
     --color-blue-600: oklch(54.6% 0.245 262.881);
@@ -48,7 +47,6 @@
     --drop-shadow-md: 0 3px 3px rgb(0 0 0 / 0.12);
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --blur-sm: 8px;
-    --blur-md: 12px;
     --default-transition-duration: 150ms;
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
@@ -213,10 +211,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-pn1jEIjuSe: auto;
-      --toolwind-toggle-gii19Cft0L: transparent;
-      --toolwind-toggle-nWfYBdCCCH: inherit;
-      --toolwind-toggle-818nRZAZTV: 0px;
+      --toolwind-toggle-pSNRA4Txj0: auto;
+      --toolwind-toggle-ldQIUHazxV: transparent;
+      --toolwind-toggle-DLUuAsXeHU: inherit;
+      --toolwind-toggle-AN0uC2rDUm: 0px;
     }
   }
   .anchored-bottom-left\/anchor-tooltip {
@@ -225,10 +223,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-pn1jEIjuSe: auto;
-      --toolwind-toggle-gii19Cft0L: transparent;
-      --toolwind-toggle-nWfYBdCCCH: inherit;
-      --toolwind-toggle-818nRZAZTV: 0px;
+      --toolwind-toggle-pSNRA4Txj0: auto;
+      --toolwind-toggle-ldQIUHazxV: transparent;
+      --toolwind-toggle-DLUuAsXeHU: inherit;
+      --toolwind-toggle-AN0uC2rDUm: 0px;
     }
   }
   .anchored-bottom-right\/anchor-tooltip {
@@ -237,10 +235,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-pn1jEIjuSe: auto;
-      --toolwind-toggle-gii19Cft0L: transparent;
-      --toolwind-toggle-nWfYBdCCCH: inherit;
-      --toolwind-toggle-818nRZAZTV: 0px;
+      --toolwind-toggle-pSNRA4Txj0: auto;
+      --toolwind-toggle-ldQIUHazxV: transparent;
+      --toolwind-toggle-DLUuAsXeHU: inherit;
+      --toolwind-toggle-AN0uC2rDUm: 0px;
     }
   }
   .anchored-bottom\/anchor-nav-bar-menu {
@@ -249,10 +247,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w333619322p3a192q2p3619312t3239;
-      --toolwind-toggle-pn1jEIjuSe: auto;
-      --toolwind-toggle-gii19Cft0L: transparent;
-      --toolwind-toggle-nWfYBdCCCH: inherit;
-      --toolwind-toggle-818nRZAZTV: 0px;
+      --toolwind-toggle-pSNRA4Txj0: auto;
+      --toolwind-toggle-ldQIUHazxV: transparent;
+      --toolwind-toggle-DLUuAsXeHU: inherit;
+      --toolwind-toggle-AN0uC2rDUm: 0px;
     }
   }
   .anchored-left-span-bottom\/anchor-nav-bar-menu {
@@ -261,10 +259,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w333619322p3a192q2p3619312t3239;
-      --toolwind-toggle-pn1jEIjuSe: auto;
-      --toolwind-toggle-gii19Cft0L: transparent;
-      --toolwind-toggle-nWfYBdCCCH: inherit;
-      --toolwind-toggle-818nRZAZTV: 0px;
+      --toolwind-toggle-pSNRA4Txj0: auto;
+      --toolwind-toggle-ldQIUHazxV: transparent;
+      --toolwind-toggle-DLUuAsXeHU: inherit;
+      --toolwind-toggle-AN0uC2rDUm: 0px;
     }
   }
   .anchored-left\/anchor-tooltip {
@@ -273,10 +271,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-pn1jEIjuSe: auto;
-      --toolwind-toggle-gii19Cft0L: transparent;
-      --toolwind-toggle-nWfYBdCCCH: inherit;
-      --toolwind-toggle-818nRZAZTV: 0px;
+      --toolwind-toggle-pSNRA4Txj0: auto;
+      --toolwind-toggle-ldQIUHazxV: transparent;
+      --toolwind-toggle-DLUuAsXeHU: inherit;
+      --toolwind-toggle-AN0uC2rDUm: 0px;
     }
   }
   .anchored-right-span-bottom\/anchor-nav-bar-menu {
@@ -285,10 +283,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w333619322p3a192q2p3619312t3239;
-      --toolwind-toggle-pn1jEIjuSe: auto;
-      --toolwind-toggle-gii19Cft0L: transparent;
-      --toolwind-toggle-nWfYBdCCCH: inherit;
-      --toolwind-toggle-818nRZAZTV: 0px;
+      --toolwind-toggle-pSNRA4Txj0: auto;
+      --toolwind-toggle-ldQIUHazxV: transparent;
+      --toolwind-toggle-DLUuAsXeHU: inherit;
+      --toolwind-toggle-AN0uC2rDUm: 0px;
     }
   }
   .anchored-right\/anchor-tooltip {
@@ -297,10 +295,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-pn1jEIjuSe: auto;
-      --toolwind-toggle-gii19Cft0L: transparent;
-      --toolwind-toggle-nWfYBdCCCH: inherit;
-      --toolwind-toggle-818nRZAZTV: 0px;
+      --toolwind-toggle-pSNRA4Txj0: auto;
+      --toolwind-toggle-ldQIUHazxV: transparent;
+      --toolwind-toggle-DLUuAsXeHU: inherit;
+      --toolwind-toggle-AN0uC2rDUm: 0px;
     }
   }
   .anchored-top-center\/anchor-tooltip {
@@ -309,10 +307,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-pn1jEIjuSe: auto;
-      --toolwind-toggle-gii19Cft0L: transparent;
-      --toolwind-toggle-nWfYBdCCCH: inherit;
-      --toolwind-toggle-818nRZAZTV: 0px;
+      --toolwind-toggle-pSNRA4Txj0: auto;
+      --toolwind-toggle-ldQIUHazxV: transparent;
+      --toolwind-toggle-DLUuAsXeHU: inherit;
+      --toolwind-toggle-AN0uC2rDUm: 0px;
     }
   }
   .anchored-top-left\/anchor-tooltip {
@@ -321,10 +319,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-pn1jEIjuSe: auto;
-      --toolwind-toggle-gii19Cft0L: transparent;
-      --toolwind-toggle-nWfYBdCCCH: inherit;
-      --toolwind-toggle-818nRZAZTV: 0px;
+      --toolwind-toggle-pSNRA4Txj0: auto;
+      --toolwind-toggle-ldQIUHazxV: transparent;
+      --toolwind-toggle-DLUuAsXeHU: inherit;
+      --toolwind-toggle-AN0uC2rDUm: 0px;
     }
   }
   .anchored-top-right\/anchor-tooltip {
@@ -333,10 +331,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-pn1jEIjuSe: auto;
-      --toolwind-toggle-gii19Cft0L: transparent;
-      --toolwind-toggle-nWfYBdCCCH: inherit;
-      --toolwind-toggle-818nRZAZTV: 0px;
+      --toolwind-toggle-pSNRA4Txj0: auto;
+      --toolwind-toggle-ldQIUHazxV: transparent;
+      --toolwind-toggle-DLUuAsXeHU: inherit;
+      --toolwind-toggle-AN0uC2rDUm: 0px;
     }
   }
   .anchored-top\/anchor-nav-bar-menu {
@@ -345,10 +343,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w333619322p3a192q2p3619312t3239;
-      --toolwind-toggle-pn1jEIjuSe: auto;
-      --toolwind-toggle-gii19Cft0L: transparent;
-      --toolwind-toggle-nWfYBdCCCH: inherit;
-      --toolwind-toggle-818nRZAZTV: 0px;
+      --toolwind-toggle-pSNRA4Txj0: auto;
+      --toolwind-toggle-ldQIUHazxV: transparent;
+      --toolwind-toggle-DLUuAsXeHU: inherit;
+      --toolwind-toggle-AN0uC2rDUm: 0px;
     }
   }
   .anchored\/anchor-tooltip {
@@ -356,10 +354,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-pn1jEIjuSe: auto;
-      --toolwind-toggle-gii19Cft0L: transparent;
-      --toolwind-toggle-nWfYBdCCCH: inherit;
-      --toolwind-toggle-818nRZAZTV: 0px;
+      --toolwind-toggle-pSNRA4Txj0: auto;
+      --toolwind-toggle-ldQIUHazxV: transparent;
+      --toolwind-toggle-DLUuAsXeHU: inherit;
+      --toolwind-toggle-AN0uC2rDUm: 0px;
     }
   }
   .absolute {
@@ -2670,10 +2668,10 @@
 @layer utilities;
 @layer base {
   [popover] {
-    inset: var(--toolwind-toggle-pn1jEIjuSe, 0px);
-    background-color: var(--toolwind-toggle-gii19Cft0L, canvas);
-    color: var(--toolwind-toggle-nWfYBdCCCH, canvastext);
-    margin: var(--toolwind-toggle-818nRZAZTV, auto);
+    inset: var(--toolwind-toggle-pSNRA4Txj0, 0px);
+    background-color: var(--toolwind-toggle-ldQIUHazxV, canvas);
+    color: var(--toolwind-toggle-DLUuAsXeHU, canvastext);
+    margin: var(--toolwind-toggle-AN0uC2rDUm, auto);
   }
 }
 @property --tw-translate-x {
