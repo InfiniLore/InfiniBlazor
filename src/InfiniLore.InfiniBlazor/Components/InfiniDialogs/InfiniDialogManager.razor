@@ -47,11 +47,11 @@
     protected override void OnInitialized() {
         base.OnInitialized();
         DialogContext.OnDialogExitAsync += RemoveDialogAsync;
-        DialogProvider.DialogOpenedAsync += OnDialogOpenedAsync;
+        DialogProvider.OnDialogOpenedAsync += OnDialogOpenedAsync;
     }
 
     public override ValueTask DisposeAsync() {
-        DialogProvider.DialogOpenedAsync -= OnDialogOpenedAsync;
+        DialogProvider.OnDialogOpenedAsync -= OnDialogOpenedAsync;
         DialogContext.OnDialogExitAsync -= RemoveDialogAsync;
         return base.DisposeAsync();
     }

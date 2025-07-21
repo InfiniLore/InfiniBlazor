@@ -13,8 +13,8 @@ namespace InfiniLore.InfiniBlazor.Toasting;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableScoped<IToastingProvider>]
 public class ToastingProvider(IToastingConfig toastingConfig, ILogger<ToastingProvider> logger) : IToastingProvider {
-    public event Func<Task>? OnToastPublished;
-    public event Func<Task>? OnToastUnpublished;
+    public event Func<Task>? OnToastPublishedAsync;
+    public event Func<Task>? OnToastUnpublishedAsync;
 
     private ConcurrentDictionary<Guid, ToastingEntry> Toasts { get; } = new();
     private ConcurrentQueue<Guid> ToastOrder { get; } = new();
@@ -54,7 +54,7 @@ public class ToastingProvider(IToastingConfig toastingConfig, ILogger<ToastingPr
 
         // 0 means: never auto-remove
         if (displayDuration == 0) {
-            if (OnToastPublished is not null) await OnToastPublished().ConfigureAwait(false);
+            if (OnToastPublishedAsync is not null) await OnToastPublishedAsync().ConfigureAwait(false);
             return;
         }
 
@@ -81,7 +81,7 @@ public class ToastingProvider(IToastingConfig toastingConfig, ILogger<ToastingPr
         RemovalTimers[data.Id] = timer;
         timer.Start();
 
-        if (OnToastPublished is not null) await OnToastPublished().ConfigureAwait(false);
+        if (OnToastPublishedAsync is not null) await OnToastPublishedAsync().ConfigureAwait(false);
     }
 
     public Task UnpublishToastAsync(Guid id) => UnpublishToastAsync(id, true);
@@ -104,8 +104,8 @@ public class ToastingProvider(IToastingConfig toastingConfig, ILogger<ToastingPr
             while (!ToastOrder.IsEmpty) ToastOrder.TryDequeue(out _);
             foreach (Guid remainingId in newQueue) ToastOrder.Enqueue(remainingId);
 
-            if (OnToastUnpublished is not null && publishEvent)
-                await OnToastUnpublished().ConfigureAwait(false);
+            if (OnToastUnpublishedAsync is not null && publishEvent)
+                await OnToastUnpublishedAsync().ConfigureAwait(false);
 
         }
         finally {
@@ -119,8 +119,8 @@ public class ToastingProvider(IToastingConfig toastingConfig, ILogger<ToastingPr
         await Task.WhenAll(ids.Select(id => UnpublishToastAsync(id, false) )).ConfigureAwait(false);
         
         // Only send the unpublished event ONCE.
-        if (OnToastUnpublished is not null)
-            await OnToastUnpublished().ConfigureAwait(false);
+        if (OnToastUnpublishedAsync is not null)
+            await OnToastUnpublishedAsync().ConfigureAwait(false);
     }
 
     public void AttachComponent(Guid id, IToastMessageBase component) {

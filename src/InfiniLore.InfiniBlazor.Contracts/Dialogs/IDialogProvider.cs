@@ -7,7 +7,7 @@ namespace InfiniLore.InfiniBlazor.Dialogs;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IDialogProvider {
-    event Func<Task>? DialogOpenedAsync;
+    event Func<Task>? OnDialogOpenedAsync;
 
     Task PushDialogAsync(IDialogData dialog);
     Task<IDialogData?> TryRemoveDialogAsync(Guid id);

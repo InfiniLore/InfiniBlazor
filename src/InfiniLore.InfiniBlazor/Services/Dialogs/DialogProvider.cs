@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.Dialogs;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableScoped<IDialogProvider>]
 public class DialogProvider(ILogger<DialogProvider> logger) : IDialogProvider {
-    public event Func<Task>? DialogOpenedAsync;
+    public event Func<Task>? OnDialogOpenedAsync;
     
     private ConcurrentDictionary<Guid, IDialogData> DialogsById { get; } = new();
     private int DialogCount { get; set; }
@@ -50,7 +50,7 @@ public class DialogProvider(ILogger<DialogProvider> logger) : IDialogProvider {
             DialogIds[Math.Max(0, DialogCount - 1)] = dialog.Id;
             SortDialogIdsByPriority();
             
-            _ = DialogOpenedAsync?.Invoke();
+            _ = OnDialogOpenedAsync?.Invoke();
             logger.Information("Dialog added: {dialog}", dialog);
         }
         finally {
