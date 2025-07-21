@@ -750,8 +750,14 @@
   .min-h-24 {
     min-height: calc(var(--spacing) * 24);
   }
+  .min-h-128 {
+    min-height: calc(var(--spacing) * 128);
+  }
   .min-h-\[1px\] {
     min-height: 1px;
+  }
+  .min-h-full {
+    min-height: 100%;
   }
   .w-0 {
     width: calc(var(--spacing) * 0);

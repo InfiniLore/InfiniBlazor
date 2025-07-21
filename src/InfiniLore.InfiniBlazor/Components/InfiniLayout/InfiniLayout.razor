@@ -12,11 +12,11 @@
 <InfiniThemeManager/>
 <InfiniDialogManager/>
 
-<div class="flex h-screen w-screen max-w-screen max-h-screen">
+<div class="flex h-screen w-screen max-w-screen max-h-screen overflow-hidden">
     @if (Layout.HasFastFlag(NavLayout.BarsPrimary)) {
         <div class="flex flex-col max-h-screen h-screen w-full max-w-full">
             @Top
-            <div class="flex flex-row max-w-full w-full max-h-full h-full">
+            <div class="flex flex-row max-w-full w-full max-h-full h-full overflow-hidden">
                 @Left
                 @BodyComponent
                 @Right
@@ -36,7 +36,7 @@
     else if (Layout.HasFastFlag(NavLayout.TopPrimary)) {
         <div class="flex max-h-screen h-screen w-full max-w-full flex-col">
             @Top
-            <div class="flex w-full h-full max-w-full max-h-full flex-row">
+            <div class="flex w-full h-full max-w-full max-h-full flex-row overflow-hidden">
                 @Left
                 <div class="flex w-full h-full max-w-full max-h-full flex-col overflow-hidden">
                     @BodyComponent
@@ -48,7 +48,7 @@
     }
     else if (Layout.HasFastFlag(NavLayout.BottomPrimary)) {
         <div class="flex max-h-screen h-screen w-full max-w-full flex-col">
-            <div class="flex w-full h-full max-w-full max-h-full flex-row">
+            <div class="flex w-full h-full max-w-full max-h-full flex-row overflow-hidden">
                 @Left
                 <div class="flex w-full h-full max-w-full max-h-full flex-col overflow-hidden">
                     @Top
@@ -63,7 +63,7 @@
         @Left
         <div class="flex max-h-screen h-screen w-full max-w-full flex-col overflow-hidden">
             @Top
-            <div class="flex w-full h-full max-w-full max-h-full ">
+            <div class="flex w-full h-full max-w-full max-h-full overflow-auto">
                 @BodyComponent
                 @Right
             </div>
@@ -74,7 +74,7 @@
     else if (Layout.HasFastFlag(NavLayout.RightPrimary)) {
         <div class="flex max-h-screen h-screen w-full max-w-full flex-col overflow-hidden">
             @Top
-            <div class="flex max-w-full w-full max-h-full h-full">
+            <div class="flex max-w-full w-full max-h-full h-full overflow-hidden">
                 @Left
                 @BodyComponent
             </div>
@@ -99,7 +99,7 @@
 
     // ReSharper disable once UnusedParameter.Local
     private RenderFragment BodyComponent => __builder => {
-        <div class="relative flex w-full h-full flex-col overflow-x-auto">
+        <div class="relative flex w-full h-full flex-col overflow-auto">
             <InfiniToastManager/>
             @Body
         </div>

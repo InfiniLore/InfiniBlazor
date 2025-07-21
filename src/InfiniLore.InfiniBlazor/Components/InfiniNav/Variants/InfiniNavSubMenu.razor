@@ -104,8 +104,8 @@
     private string TransitionClasses => ConcatClasses(
         "transition-all duration-300 ",
         IsMenuOpened
-            ? "opacity-100 scale-100"
-            : "opacity-0 scale-95");
+            ? "opacity-100 scale-100 pointer-events-auto"
+            : "opacity-0 scale-95 pointer-events-none");
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
