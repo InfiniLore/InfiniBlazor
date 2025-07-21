@@ -21,6 +21,7 @@ public class DialogProvider(ILogger<DialogProvider> logger) : IDialogProvider {
     
     private Comparer<Guid>? _comparer;
     private Comparer<Guid> Comparer => _comparer ??= Comparer<Guid>.Create(
+        // Could cause issues if used outside the semaphore lock thing, but is fine for now
         (x, y) => DialogsById[y].Priority.CompareTo(DialogsById[x].Priority)
     );
     
@@ -64,7 +65,7 @@ public class DialogProvider(ILogger<DialogProvider> logger) : IDialogProvider {
 
             Span<Guid> span = DialogIds.AsSpan(0, DialogCount);
             int foundIndex = span.IndexOf(dialog.Id);
-            if (foundIndex == -1) return null;  // TODO check if this is correct behaviour
+            if (foundIndex == -1) return null; // Removed by a separate thread possibly? Should not happen
         
             Guid[] newArray = ArrayPool<Guid>.Shared.Rent(DialogCount - 1);
             span[..foundIndex].CopyTo(newArray);
