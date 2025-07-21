@@ -14,7 +14,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@ContainerPositionClass @ZIndex.ToastMessageContainer fixed space-y-2 max-w-xs w-full max-h-screen overflow-y-auto infini-scrollbar-hidden">
+<div class="@ContainerPositionClass @ZIndex.ToastMessageContainer py-2 absolute inset-0 bg-transparent space-y-2 max-w-xs w-full h-full overflow-y-auto infini-scrollbar-hidden pointer-events-none">
     @foreach (IToastEntry toastEntry in ToastingProvider.GetToastEntries()) {
         <DynamicComponent
             @key="toastEntry.Data.Id" 
@@ -27,13 +27,13 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public ToastPosition Position { get; set; } = ToastPosition.BottomRight;
+    [Parameter] public ToastPosition Position { get; set; } = ToastPosition.TopRight;
 
     private string ContainerPositionClass => Position switch {
-        ToastPosition.TopRight => "top-1 right-1",
-        ToastPosition.TopLeft => "top-1 left-1",
-        ToastPosition.BottomLeft => "bottom-1 left-1",
-        _ => "bottom-1 right-1"
+        ToastPosition.TopRight => "top-0 right-0 justify-self-end pr-2",
+        ToastPosition.TopLeft => "top-0 left-0 justify-self-start pl-2",
+        ToastPosition.BottomLeft => "bottom-0 left-0 justify-self-start pl-2",
+        _ => "bottom-0 right-0 justify-self-end pr-2"
     };
 
     // -----------------------------------------------------------------------------------------------------------------

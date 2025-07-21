@@ -101,5 +101,6 @@
 *.cshtml    diff=html eol=crlf
 *.csx       diff=csharp eol=crlf
 *.sln       eol=crlf
+*.slnx       eol=crlf
 *.csproj    eol=crlf
 *.razor     diff=html eol=crlf

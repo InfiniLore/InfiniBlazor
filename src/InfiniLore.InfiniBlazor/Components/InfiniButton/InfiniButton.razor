@@ -53,8 +53,11 @@
 @code {
     [Parameter] public string? Href { get; set; }
     [Parameter] public string? IconName { get; set; }
+    [Parameter] public string? Text { get; set; }
     [Parameter] public bool StopPropagation { get; set; } = true;
     [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+    private EventCallbackDebouncer<MouseEventArgs>? OnClickDebounced { get; set; }
+    [Parameter] public int DebounceMs { get; set; }
 
     [Parameter] public string Type { get; set; } = "button";
     [Parameter] public string? AriaLabel { get; set; }
@@ -78,10 +81,13 @@
             @if (IconName.IsNotNullOrWhiteSpace()) {
                 <LucideIcon Name="@IconName" class="@IconSizeClass"/>
             }
+            @if (Text.IsNotNullOrWhiteSpace()) {
+                @Text
+            }
             @if (ChildContent is not null) {
                 @ChildContent
             }
-            @if (IconName.IsNullOrWhiteSpace() && ChildContent is null) {
+            @if (IconName.IsNullOrWhiteSpace() && ChildContent is null && Text.IsNullOrWhiteSpace()) {
                 <span class="@IconSizeClass"></span>
             }
         </span>
@@ -106,8 +112,8 @@
             ConcatClasses(
                 "cursor-pointer active:scale-95 hover:scale-105",
                 ContainerSizeClasses,
-                Color.ToBackgroundTailwind(),
-                Color.ToReadableTextColorTailwind()
+                Color.ToCssClassBackground(),
+                Color.ToCssClassTextColorReadableForeground()
             ),
 
         (ButtonVariant.Primary, Color.Default) =>
@@ -122,7 +128,7 @@
                 ContainerReaction,
                 ContainerSizeClasses,
                 "infini-bg-(--button-primary) hover:infini-bg-(--button-primary-hover)",
-                Color.ToTextTailwind()
+                Color.ToCssClassText()
             ),
 
         (ButtonVariant.Transparent, Color.Default) =>
@@ -137,7 +143,7 @@
                 ContainerReaction,
                 ContainerSizeClasses,
                 "infini-bg-(--button-transparent)  hover:infini-bg-(--button-transparent-hover)",
-                Color.ToTextTailwind()
+                Color.ToCssClassText()
             ),
 
         (ButtonVariant.Dark, Color.Default) =>
@@ -151,8 +157,8 @@
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                Color.ToTextTailwind(),
-                Color.ToHoverRingTailwind(),
+                Color.ToCssClassText(),
+                Color.ToCssClassRingHover(),
                 "infini-bg-(--button-dark) hover:infini-bg-(--button-dark-hover) hover:ring-2"
             ),
 
@@ -167,8 +173,8 @@
             ConcatClasses(
                 ContainerReaction,
                 ContainerSizeClasses,
-                Color.ToTextTailwind(),
-                Color.ToHoverRingTailwind(),
+                Color.ToCssClassText(),
+                Color.ToCssClassRingHover(),
                 "infini-bg-(--button-light) hover:infini-bg-(--button-light-hover) hover:ring-2"
             ),
 
@@ -184,8 +190,8 @@
                 ContainerReaction,
                 ContainerSizeClasses,
                 "infini-bg-(--button-outline) hover:infini-bg-(--button-outline-hover) ring-1",
-                Color.ToTextTailwind(),
-                Color.ToRingTailwind()
+                Color.ToCssClassText(),
+                Color.ToCssClassRing()
             ),
 
         (ButtonVariant.OutlineSolid, Color.Default) =>
@@ -200,8 +206,8 @@
                 ContainerReaction,
                 ContainerSizeClasses,
                 "infini-bg-(--button-outline-solid) hover:infini-bg-(--button-outline-solid-hover) ring-1",
-                Color.ToTextTailwind(),
-                Color.ToRingTailwind()
+                Color.ToCssClassText(),
+                Color.ToCssClassRing()
             ),
 
         _ => string.Empty
@@ -232,18 +238,28 @@
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        if (Href is not null && !DisableTrackedQueryParams) NavigationManager.LocationChanged += OnLocationChanged;
+        ComputeHref();
+    }
+
+    protected override async Task OnParametersSetAsync() {
+        base.OnParametersSet();
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+        if (OnClickDebounced is not null) await OnClickDebounced.DisposeAsync(); 
+        if (DebounceMs > 0) OnClickDebounced = OnClick.GetDebouncer(DebounceMs);
+    }
+
     private void ShowTooltip() => _showTooltip = true;
     private void HideTooltip() => _showTooltip = false;
-
+    
     private async Task OnClickAsync(MouseEventArgs args) {
         if (IsDisabled) return;
 
-        await OnClick.InvokeAsync(args);
-    }
-
-    protected override void OnInitialized() {
-        if (Href is not null && !DisableTrackedQueryParams) NavigationManager.LocationChanged += OnLocationChanged;
-        ComputeHref();
+        if (OnClickDebounced is not null) await OnClickDebounced.InvokeDebouncedAsync(args);
+        else await OnClick.InvokeAsync(args);
     }
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e) {
@@ -260,5 +276,6 @@
     public override async ValueTask DisposeAsync() {
         await base.DisposeAsync();
         if (Href is not null && !DisableTrackedQueryParams) NavigationManager.LocationChanged -= OnLocationChanged;
+        if (OnClickDebounced is not null) await OnClickDebounced.DisposeAsync();
     }
 }

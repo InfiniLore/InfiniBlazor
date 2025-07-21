@@ -137,7 +137,7 @@
         };
 
         string background = Color is not Color.Default
-            ? Color.ToBackgroundTailwind()
+            ? Color.ToCssClassBackground()
             : "bg-(--color-base-10)";
 
         return ConcatClasses(
@@ -163,7 +163,7 @@
         };
 
         string textColor = Color is not Color.Default
-            ? Color.ToReadableTextColorTailwind()
+            ? Color.ToCssClassTextColorReadableForeground()
             : "text-(--toggle-icon-on)";
         
         return ConcatClasses(

@@ -11,7 +11,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@BodyClasses flex flex-row gap-2 infini-bg-(--color-base-80) text-(--text) text-sm rounded-lg px-2 py-1 shadow-lg border border-(--border) transition-all duration-300 ease-in-out @(IsClosing ? "opacity-0 scale-95" : "opacity-100 scale-100")">
+<div class="@BodyClasses flex flex-row gap-2 infini-bg-(--color-base-80) text-(--text) text-sm rounded-lg px-2 py-1 shadow-lg border border-(--border) transition-all duration-300 ease-in-out pointer-events-auto @(IsClosing ? "opacity-0 scale-95" : "opacity-100 scale-100")">
     <!-- Icon -->
     <div class="@(ToastData.Body.IsNotNullOrWhiteSpace() ? "items-start mt-1" : "items-center") flex ">
         <LucideIcon Name="@IconName" Class="@(HeaderClasses)"/>

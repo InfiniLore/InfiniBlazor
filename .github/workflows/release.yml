@@ -21,20 +21,21 @@ jobs:
                   dotnet-version: '9.x'
 
             - name: Restore dependencies
-              run: dotnet restore InfiniLore.InfiniBlazor.sln
+              run: dotnet restore InfiniLore.InfiniBlazor.slnx
 
             - name: Build
-              run: dotnet build InfiniLore.InfiniBlazor.sln --configuration Release --no-restore
+              run: dotnet build InfiniLore.InfiniBlazor.slnx --configuration Release --no-restore
             
             # Ensure that the tests must pass 
             # The job will fail automatically if any test fails because `dotnet test` exits with a non-zero code
             - name: Run tests     
-              run: dotnet test InfiniLore.InfiniBlazor.sln --configuration Release --no-restore --no-build
+              run: dotnet test InfiniLore.InfiniBlazor.slnx --configuration Release --no-restore --no-build
 
             - name: Publish to NuGet
               env:
                   NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
               run: |
                   dotnet nuget push src/InfiniLore.InfiniBlazor/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                  dotnet nuget push src/InfiniLore.InfiniBlazor.ComponentsExtra/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
                   dotnet nuget push src/InfiniLore.InfiniBlazor.Contracts/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
                   dotnet nuget push src/InfiniLore.InfiniBlazor.SourceGenerators/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate

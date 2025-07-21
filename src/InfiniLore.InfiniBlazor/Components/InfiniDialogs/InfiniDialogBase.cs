@@ -1,20 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Debugger;
+using InfiniLore.InfiniBlazor.Dialogs;
+using Microsoft.AspNetCore.Components;
 
+namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IVisualDebuggerProvider {
-    event Action? OnChange;
-    event Func<Task>? OnChangeAsync;
-
-    bool IsEnabled();
-    Task ToggleStateAsync();
-    Task SetStateAsync(DebuggerState state);
-
-    void InitializeFromUrl();
-
-    string? WithEnabled(string? onTrue, string? onFalse);
+public abstract class InfiniDialogBase : InfiniComponentBase {
+    [CascadingParameter] public DialogManagerContext DialogManagerContext { get; set; } = null!;
+    [Parameter] public IDialogData DialogData { get; set; } = null!;
 }

@@ -13,7 +13,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.Italic)]
 public sealed class ItalicSyntaxHandler : IMdSyntaxHandler {
-    private static readonly int IId = MdRegexLib.GetGroupId(MdRegexGroupNames.ItalicContent);
+    private static readonly int ItalicId = MdRegexLib.GetGroupId(MdRegexGroupNames.ItalicContent);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.Italic;
     
     // -----------------------------------------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ public sealed class ItalicSyntaxHandler : IMdSyntaxHandler {
         Match entireMatch,
         MdSyntaxHandlerOrigin parentOrigin
     ) {
-        if (!entireMatch.Groups[IId].TryGetValue(out string? italicValue)) return ;
+        if (!entireMatch.Groups[ItalicId].TryGetValue(out string? italicValue)) return ;
 
         ItalicMdSyntaxNode node = ItalicMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);

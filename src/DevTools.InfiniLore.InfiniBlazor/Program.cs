@@ -22,6 +22,7 @@ public static class Program {
         //      Code is the true savior
         string projects = string.Join(";", 
             "InfiniLore.InfiniBlazor",
+            "InfiniLore.InfiniBlazor.ComponentsExtra",
             "InfiniLore.InfiniBlazor.Contracts",
             "InfiniLore.InfiniBlazor.SourceGenerators"
         );

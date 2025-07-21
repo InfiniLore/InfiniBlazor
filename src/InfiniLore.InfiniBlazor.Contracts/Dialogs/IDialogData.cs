@@ -1,9 +1,15 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.ExtraComponents;
+namespace InfiniLore.InfiniBlazor.Dialogs;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public record ThemeItem(string CssVarName, string CssData);
+public interface IDialogData {
+    Guid Id { get; }
+    Type ComponentType { get; }
+    int Priority { get; }
+    
+    IDictionary<string, object?>? AsDynamicParameters();
+}

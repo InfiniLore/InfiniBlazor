@@ -45,7 +45,7 @@ public static partial class MdRegexLib {
             ^>\ *(?:!\[(?<clType>[^\|]+)(?<clMod>\|[^\n]*)?\])\ *(?<clTitle>[^\n]*)
             (?:\n(?<clBody>>[^\n]*(?:\n>[^\n]*)*))?  
           )
-        | (?<blockQuote>^>\ *.+(?:\n>[^\n]*)*)
+        | (?<blockQuote>^>\ *.+(?:\n>[^\n]*)*)  
         | (?:
             (?<htmlPre>.+?)?
               (?<htmlBody>
