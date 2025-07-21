@@ -1,6 +1,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor
 @using InfiniLore.InfiniBlazor.Markdown
 @using InfiniLore.InfiniBlazor.MarkdownParser.Syntax
 @using System.Text.RegularExpressions
@@ -8,7 +9,7 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @page "/markdown-rolling"
-@rendermode InteractiveAuto
+@rendermode RenderModeProvider.InfiniRenderMode
 @inject IMdSyntaxParser Parser
 @inject IMdSyntaxTreeConverter Converter
 @inject IJSRuntime JsRuntime

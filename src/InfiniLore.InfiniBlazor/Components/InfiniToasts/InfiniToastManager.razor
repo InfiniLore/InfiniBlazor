@@ -10,7 +10,8 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inject IToastingProvider ToastingProvider
 @implements IDisposable
-@rendermode InteractiveAuto
+@rendermode RenderModeProvider.InfiniRenderMode
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -40,8 +41,8 @@
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected override void OnInitialized() {
-        ToastingProvider.OnToastPublished += HandleToastServiceChange;
-        ToastingProvider.OnToastUnpublished += HandleToastServiceChange;
+        ToastingProvider.OnToastPublishedAsync += HandleToastServiceChange;
+        ToastingProvider.OnToastUnpublishedAsync += HandleToastServiceChange;
     }
 
     private async Task HandleToastServiceChange() {
@@ -49,7 +50,7 @@
     }
 
     public void Dispose() {
-        ToastingProvider.OnToastPublished -= HandleToastServiceChange;
-        ToastingProvider.OnToastUnpublished -= HandleToastServiceChange;
+        ToastingProvider.OnToastPublishedAsync -= HandleToastServiceChange;
+        ToastingProvider.OnToastUnpublishedAsync -= HandleToastServiceChange;
     }
 }

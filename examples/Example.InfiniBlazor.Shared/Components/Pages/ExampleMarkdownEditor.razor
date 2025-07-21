@@ -1,17 +1,18 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor
 @using InfiniLore.InfiniBlazor.Markdown
 @using InfiniLore.InfiniBlazor.TextEditor
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @page "/markdown-dual"
-@rendermode InteractiveAuto
+@rendermode RenderModeProvider.InfiniRenderMode
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniPage Title="Markdown Editor" Class="py-4">
+<InfiniPage Title="Markdown Editor" Class="p-4">
     <InfiniSection Class="grow flex flex-col gap-2 overflow-auto infini-scrollbar h-128">
         <InfiniHeading1>Markdown Editor Example</InfiniHeading1>
         <InfiniMarkdownEditor @bind-Source="@TextSource0"/>

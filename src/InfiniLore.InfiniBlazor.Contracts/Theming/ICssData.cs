@@ -68,14 +68,20 @@ public interface ICssData {
     [CssData] string TextError { get; }
     [CssData] string Border { get; }
     
-    [CssData] string SidebarHamburger { get; }
-    [CssData] string SidebarNavText { get; }
-    [CssData] string SidebarNavTextHover { get; }
-    [CssData] string SidebarNavButton { get; }
-    [CssData] string SidebarNavButtonHover { get; }
-    [CssData] string SidebarNavBorder { get; }
-    [CssData] string SidebarNav { get; }
-    [CssData] string SidebarNavHover { get; }
+    [CssData] string NavHamburger { get; }
+    [CssData] string NavText { get; }
+    [CssData] string NavTextHover { get; }
+    [CssData] string NavButton { get; }
+    [CssData] string NavButtonHover { get; }
+    [CssData] string NavBorder { get; }
+    [CssData] string Nav { get; }
+    [CssData] string NavHorizontal { get; }
+    [CssData] string NavVertical { get; }
+    [CssData] string NavLeft { get; }
+    [CssData] string NavRight { get; }
+    [CssData] string NavBottom { get; }
+    [CssData] string NavTop { get; }
+    [CssData] string NavHover { get; }
     
     [CssData] string UsericonAlt { get; }
     [CssData] string UsericonAltHover { get; }

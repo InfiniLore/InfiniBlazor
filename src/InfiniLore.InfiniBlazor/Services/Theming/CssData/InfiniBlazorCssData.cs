@@ -81,14 +81,20 @@ public partial record InfiniBlazorCssData : ICssData {
     [CssData, InterpretAsVar(nameof(ColorRed))] public partial string TextError { get; init; }
     [CssData, InterpretAsVar(nameof(ColorBase40))] public partial string Border { get; init; }
     
-    [CssData, InterpretAsVar(nameof(Text))] public partial string SidebarHamburger{ get; init; }
-    [CssData, InterpretAsVar(nameof(ColorBase10))] public partial string SidebarNavText{ get; init; }
-    [CssData, InterpretAsVar(nameof(ColorAccent))] public partial string SidebarNavTextHover { get; init; }
-    [CssData, InterpretAsVar(nameof(Transparent))] public partial string SidebarNavButton{ get; init; }
-    [CssData, InterpretAsVar(nameof(ColorBase70))] public partial string SidebarNavButtonHover { get; init; }
-    [CssData, InterpretAsVar(nameof(Border))] public partial string SidebarNavBorder{ get; init; }
-    [CssData, InterpretAsVar(nameof(ColorBase90))] public partial string SidebarNav { get; init; }
-    [CssData, InterpretAsVar(nameof(ColorBase70))] public partial string SidebarNavHover { get; init; }
+    [CssData, InterpretAsVar(nameof(Text))] public partial string NavHamburger{ get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase10))] public partial string NavText{ get; init; }
+    [CssData, InterpretAsVar(nameof(ColorAccent))] public partial string NavTextHover { get; init; }
+    [CssData, InterpretAsVar(nameof(Transparent))] public partial string NavButton{ get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase70))] public partial string NavButtonHover { get; init; }
+    [CssData, InterpretAsVar(nameof(Border))] public partial string NavBorder{ get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase90))] public partial string Nav { get; init; }
+    [CssData, InterpretAsVar(nameof(Nav))] public partial string NavHorizontal { get; init; }
+    [CssData, InterpretAsVar(nameof(Nav))] public partial string NavVertical { get; init; }
+    [CssData, InterpretAsVar(nameof(NavVertical))] public partial string NavLeft { get; init; }
+    [CssData, InterpretAsVar(nameof(NavVertical))] public partial string NavRight { get; init; }
+    [CssData, InterpretAsVar(nameof(NavHorizontal))] public partial string NavBottom { get; init; }
+    [CssData, InterpretAsVar(nameof(NavHorizontal))] public partial string NavTop { get; init; }
+    [CssData, InterpretAsVar(nameof(ColorBase70))] public partial string NavHover { get; init; }
     
     [CssData, InterpretAsVar(nameof(ColorBase10))] public partial string UsericonAlt { get; init; }
     [CssData, InterpretAsVar(nameof(ColorAccent))] public partial string UsericonAltHover { get; init; }

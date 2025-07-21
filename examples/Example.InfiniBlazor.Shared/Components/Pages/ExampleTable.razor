@@ -6,12 +6,12 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @page "/table"
 @using InfiniLore.InfiniBlazor
-@rendermode InteractiveAuto
+@rendermode RenderModeProvider.InfiniRenderMode
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniPage Title="Table Example"  Class="py-4">
-    <InfiniSection Class="grow">
+<InfiniPage Title="Table Example" Class="p-4">
+    <InfiniSection Class="w-full">
         <InfiniHeading1>Table Example</InfiniHeading1>
         
         <InfiniTable TItem="Person" Items="@People">

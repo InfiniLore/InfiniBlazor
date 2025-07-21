@@ -1,14 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Components;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+
+namespace InfiniLore.InfiniBlazor;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class DialogManagerContext {
-    public event Func<Guid, Task>? OnDialogExitAsync;
-    public void InvokeDialogExit(Guid id) 
-        // Fire and forget
-        => OnDialogExitAsync?.Invoke(id);
+public static class RenderModeProvider {
+    public static IComponentRenderMode InfiniRenderMode { get; set; } = RenderMode.InteractiveServer;
 }
