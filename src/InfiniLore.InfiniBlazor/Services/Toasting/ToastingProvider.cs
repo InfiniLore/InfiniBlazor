@@ -111,6 +111,11 @@ public class ToastingProvider(IToastingConfig toastingConfig, ILogger<ToastingPr
         }
     }
 
+    public async Task UnpublishAllToastsAsync() {
+        Guid[] ids = ToastOrder.ToArray();
+        await Task.WhenAll(ids.Select(UnpublishToastAsync)).ConfigureAwait(false);
+    }
+
     public void AttachComponent(Guid id, IToastMessageBase component) {
         ToastMessageComponents.AddOrUpdate(
             id,

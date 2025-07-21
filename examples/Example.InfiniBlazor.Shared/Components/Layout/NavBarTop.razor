@@ -2,12 +2,14 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor
+@using InfiniLore.InfiniBlazor.Toasting
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@rendermode InteractiveAuto
+@rendermode RenderModeProvider.InfiniRenderMode
 @inherits InfiniNavBarBase
+@inject IToastingProvider ToastingProvider
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -20,6 +22,11 @@
     </InfiniNavSubMenu>
     <InfiniNavBreak/>
     <InfiniSpacer/>
+    <InfiniNavButton
+        Text="Remove All Toasts"
+        Icon="@LucideNames.Radiation"
+        OnClick="@ToastingProvider.UnpublishAllToastsAsync"
+    />
 </InfiniNavBar>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@

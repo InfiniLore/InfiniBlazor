@@ -14,6 +14,7 @@ public interface IToastingProvider {
     Task PublishToastAsync(IToastingData data, string appearanceName, int displayDuration = -1);
     
     Task UnpublishToastAsync(Guid id);
+    Task UnpublishAllToastsAsync();
     
     void AttachComponent(Guid id, IToastMessageBase component);
     void DetachComponent(Guid id);
