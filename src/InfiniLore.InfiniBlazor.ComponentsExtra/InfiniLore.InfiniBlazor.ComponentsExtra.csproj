@@ -35,9 +35,4 @@
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
         <ProjectReference Include="..\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <AdditionalFiles Include="InfiniThemeDisplays\InfiniThemeQuickBoxes.razor" />
-      <AdditionalFiles Include="InfiniThemeDisplays\InfiniThemeTable.razor" />
-    </ItemGroup>
 </Project>
