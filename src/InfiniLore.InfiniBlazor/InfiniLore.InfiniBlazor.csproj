@@ -29,6 +29,16 @@
         <None Include="../../LICENSE" Pack="true" PackagePath="" Visible="false" />
         <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
         <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
+        <None Include="wwwroot\TsLib\Contracts\CSharpTuple.ts" />
+        <None Include="wwwroot\TsLib\Contracts\IInputElement.ts" />
+        <None Include="wwwroot\TsLib\Contracts\KeyCondition.ts" />
+        <None Include="wwwroot\TsLib\Contracts\Window.ts" />
+        <None Include="wwwroot\TsLib\DocumentHelpers.ts" />
+        <None Include="wwwroot\TsLib\ElementHelpers.ts" />
+        <None Include="wwwroot\TsLib\HtmlElementHelpers.ts" />
+        <None Include="wwwroot\TsLib\InputSelection.ts" />
+        <None Include="wwwroot\TsLib\KeyDownListener.ts" />
+        <None Include="wwwroot\TsLib\Index.ts" />
     </ItemGroup>
     
     <ItemGroup>
@@ -63,9 +73,5 @@
     <ItemGroup>
       <EmbeddedResource Include="wwwroot\InfiniBlazor.css" />
       <EmbeddedResource Include="wwwroot\InfiniBlazor.js" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <Folder Include="ExtraComponents\" />
     </ItemGroup>
 </Project>
