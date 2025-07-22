@@ -20,7 +20,7 @@
             </div>
         </button>
 
-        <div class="@AnchoredClasses @ZIndex.NavSubMenuItem absolute" style="position-anchor:  @($"--{Id:N}")">
+        <div class="@AnchoredClasses @(IsMenuOpened ? ZIndex.NavSubMenuItem : ZIndex.Zero) absolute" style="position-anchor:  @($"--{Id:N}")">
             <CascadingValue Value="MenuContext" IsFixed="true">
                 <div
                     class="@ConcatClasses(TransitionClasses, BorderClasses) infini-bg-(--nav) border-(--border)">
@@ -91,7 +91,7 @@
     };
 
     private string TransitionClasses => ConcatClasses(
-        "transition-all duration-300 ",
+        "transition-all duration-300",
         IsMenuOpened
             ? "opacity-100 scale-100 pointer-events-auto"
             : "opacity-0 scale-95 pointer-events-none");
