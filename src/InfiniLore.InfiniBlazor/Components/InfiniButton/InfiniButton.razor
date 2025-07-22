@@ -79,7 +79,7 @@
     private RenderFragment ButtonContent => __builder => {
         <span class="inline-flex items-center gap-2">
             @if (IconName.IsNotNullOrWhiteSpace()) {
-                <LucideIcon Name="@IconName" class="@IconSizeClass"/>
+                <LucideIcon Name="@IconName" Class="@ConcatClasses(IconSizeClass, "pointer-events-none")"/>
             }
             @if (Text.IsNotNullOrWhiteSpace()) {
                 @Text
