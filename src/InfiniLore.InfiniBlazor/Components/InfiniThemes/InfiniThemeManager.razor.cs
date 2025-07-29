@@ -34,6 +34,7 @@ public partial class InfiniThemeManager(
 
         if (firstRender) {
             themeStateProvider.OnChangedAsync += OnThemeStateChanged;
+            await jsRuntimeHelper.AddOrUpdateStyleElementAtHead(BaseId, GetBaseThemeCss());
         }
     }
 
