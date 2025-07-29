@@ -27,14 +27,11 @@ public class ThemeSymbolsGenerator : IIncrementalGenerator {
         context.RegisterSourceOutput(context.CompilationProvider.Combine(data), GenerateSources);
     }
 
-    private static bool Predicate(SyntaxNode node, CancellationToken ct) {
-        return node switch {
-            ClassDeclarationSyntax classDeclaration => classDeclaration.AttributeLists.Count > 0,
-            RecordDeclarationSyntax recordDeclaration => recordDeclaration.AttributeLists.Count > 0,
-            _ => false
-        };
-
-    }
+    private static bool Predicate(SyntaxNode node, CancellationToken ct) => node switch {
+        ClassDeclarationSyntax classDeclaration => classDeclaration.AttributeLists.Count > 0,
+        RecordDeclarationSyntax recordDeclaration => recordDeclaration.AttributeLists.Count > 0,
+        _ => false
+    };
 
     private static ThemeSymbolsDto? Transform(GeneratorSyntaxContext context, CancellationToken ct) {
         SemanticModel semanticModel = context.SemanticModel;
@@ -60,7 +57,7 @@ public class ThemeSymbolsGenerator : IIncrementalGenerator {
 
     private static void GenerateSources(SourceProductionContext context, (Compilation Compilation, ImmutableArray<ThemeSymbolsDto> Data) tuple) {
         (Compilation compilation, ImmutableArray<ThemeSymbolsDto> data) = tuple;
-        
+
         var builder = new GeneratorStringBuilder();
         foreach (ThemeSymbolsDto dto in data) {
             ThemeSymbolsDtoWriter.WritePartialClass(dto, builder, compilation);
@@ -72,6 +69,6 @@ public class ThemeSymbolsGenerator : IIncrementalGenerator {
                 context.AddSource($"{dto.ClassName}VariableNames.g.cs", builder.ToStringAndClear());
             }
         }
-        
+
     }
 }
