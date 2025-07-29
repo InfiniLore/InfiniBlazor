@@ -38,12 +38,6 @@ public class InfiniBlazorConfig(IServiceCollection collection) {
         RenderModeProvider.InfiniRenderMode = renderMode;
         return this;
     }
-
-    public InfiniBlazorConfig SetRenderModeForMauiBlazorHybrid() {
-        // For MAUI this has to be set to null;
-        RenderModeProvider.InfiniRenderMode = null!;
-        return this;
-    }
     
     public InfiniBlazorConfig RegisterTheme<TTheme>() where TTheme : class, IThemeCollection, new() {
         var theme = new TTheme();

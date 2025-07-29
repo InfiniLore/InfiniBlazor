@@ -29,6 +29,9 @@
     <Project Path="src\InfiniLore.InfiniBlazor.SourceGenerators\InfiniLore.InfiniBlazor.SourceGenerators.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" Type="Classic C#" />
   </Folder>
+  <Folder Name="/src/extentions/">
+    <Project Path="src\InfiniLore.InfiniBlazor.Maui\InfiniLore.InfiniBlazor.Maui.csproj" Type="Classic C#" />
+  </Folder>
   <Folder Name="/tests/">
     <Project Path="tests\Benchmarks.InfiniLore.InfiniBlazor.Markdown\Benchmarks.InfiniLore.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
     <Project Path="tests\Tests.InfiniLore.InfiniBlazor\Tests.InfiniLore.InfiniBlazor.csproj" Type="Classic C#" />
