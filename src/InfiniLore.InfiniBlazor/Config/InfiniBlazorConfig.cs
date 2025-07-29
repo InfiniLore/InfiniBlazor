@@ -21,7 +21,7 @@ public class InfiniBlazorConfig(IServiceCollection collection) {
     internal string DefaultThemeCollectionName { get; private set; } = DefaultThemeCollection.Name;
     
     public int ToastDefaultDuration { get; set; } = 5000;
-    internal Dictionary<string, Type> ToastAppearanceComponentMappings { get; private set; } = new() {
+    internal Dictionary<string, Type> ToastAppearanceComponentMappings { get; } = new() {
         [ToastAppearance.Default.ToName()] = typeof(ToastMessageBase),
         [ToastAppearance.Info.ToName()] = typeof(InfoToastMessage),
         [ToastAppearance.Success.ToName()] = typeof(SuccessToastMessage),
