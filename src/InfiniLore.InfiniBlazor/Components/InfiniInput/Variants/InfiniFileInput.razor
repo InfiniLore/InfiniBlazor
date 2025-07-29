@@ -46,10 +46,10 @@
         OnClick="@OpenFileDialog"/>
 
 </InfiniInputLayout>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
     [Parameter] public string Accept { get; set; } = string.Empty;
     [Parameter] public bool AllowMultipleFiles { get; set; }
@@ -62,10 +62,8 @@
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private async Task OpenFileDialog() {
-        await Js.InvokeVoidAsync("document.getElementById", Id)
-            .AsTask()
-            .ContinueWith(async _ =>
-                await Js.InvokeVoidAsync("eval", $"document.getElementById('{Id}').click()"));
+        await Js.InvokeVoidAsync("document.getElementById", Id).AsTask()
+            .ContinueWith(async _ => await Js.InvokeVoidAsync("eval", $"document.getElementById('{Id}').click()"));
     }
 
     private async Task OnFileChangeAsync(InputFileChangeEventArgs e) {
@@ -78,10 +76,7 @@
         await OnFilesChanged.InvokeAsync(_selectedFiles);
     }
 
-    private string GetSelectedFilenames() {
-        // ReSharper disable once ConvertIfStatementToReturnStatement
-        if (!(_selectedFiles?.Count > 0)) return string.Empty;
-
-        return string.Join(", ", _selectedFiles.Select(f => f.Name));
-    }
+    private string GetSelectedFilenames() => _selectedFiles?.Count > 0
+        ? string.Join(", ", _selectedFiles.Select(f => f.Name))
+        : string.Empty;
 }
