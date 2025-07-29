@@ -34,6 +34,9 @@ public partial class InfiniThemeManager(
 
         if (firstRender) {
             themeStateProvider.OnChangedAsync += OnThemeStateChanged;
+            
+            // Fixes and issue when used in MAUI BlazorHybrid as there is not good HeadContent operations
+            // just need to add <style id="infiniThemeManager-base-css"></style> at the desired location in the index.html of a MAUI app
             await jsRuntimeHelper.AddOrUpdateStyleElementAtHead(BaseId, GetBaseThemeCss());
         }
     }
