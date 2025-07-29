@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using Example.InfiniBlazor.Shared.Themes;
 using InfiniLore.InfiniBlazor.Config;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -27,7 +28,11 @@ public static class MauiProgram {
 
         builder.Services.AddMauiBlazorWebView();
 
-        builder.AddInfiniBlazor();
+        builder.Services.AddHttpClient();
+        builder.AddInfiniBlazor(config => {
+            config.RegisterTheme<PrideThemeCollection>();
+            config.AddMarkdownLogic();
+        });
 
         builder.Logging.ClearProviders();
         builder.Logging.AddSerilog();

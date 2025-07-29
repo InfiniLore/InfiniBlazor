@@ -1,11 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <!--        <TargetFrameworks>net9.0-android</TargetFrameworks>-->
+        <!--suppress MsbuildTargetFrameworkTagInspection -->
+        <TargetFrameworks>net9.0-android</TargetFrameworks>
         <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
-        <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
-        <!-- <TargetFrameworks>$(TargetFrameworks);net9.0-tizen</TargetFrameworks> -->
-
+        
         <!-- Note for MacCatalyst:
             The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
             When specifying both architectures, use the plural <RuntimeIdentifiers> instead of the singular <RuntimeIdentifier>.
@@ -24,10 +23,10 @@
         <StaticWebAssetBasePath>_content/$(PackageId)</StaticWebAssetBasePath>
 
         <!-- Display name -->
-        <ApplicationTitle>InfiniLore.App</ApplicationTitle>
+        <ApplicationTitle>Example.InfiniBlazor.Maui</ApplicationTitle>
 
         <!-- App Identifier -->
-        <ApplicationId>com.companyname.infinilore.app</ApplicationId>
+        <ApplicationId>com.infinilore.infiniblazor.maui</ApplicationId>
 
         <!-- Versions -->
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -35,8 +34,8 @@
 
         <!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
         <WindowsPackageType>None</WindowsPackageType>
-
-        <!--        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>-->
+        
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
     </PropertyGroup>
@@ -65,6 +64,7 @@
     <ItemGroup>
       <PackageReference Include="CodeOfChaos.Extensions.Serilog" />
       <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" />
+      <PackageReference Include="Microsoft.Extensions.Http" />
       <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
       <PackageReference Include="Microsoft.Maui.Controls" />
       <PackageReference Include="Serilog" />
@@ -77,6 +77,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Extensions.Maui\InfiniLore.InfiniBlazor.Extensions.Maui.csproj" />
       <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" />
+      <ProjectReference Include="..\Example.InfiniBlazor.Shared\Example.InfiniBlazor.Shared.csproj" />
     </ItemGroup>
 
 </Project>

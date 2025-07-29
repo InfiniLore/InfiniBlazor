@@ -1,6 +1,18 @@
-﻿<Router AppAssembly="@typeof(MauiProgram).Assembly">
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using Example.InfiniBlazor.Shared
+@using Example.InfiniBlazor.Shared.Components.Layout
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<Router AppAssembly="@typeof(MauiProgram).Assembly" AdditionalAssemblies="@(new []{ISharedEntry.Assembly})">
     <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)"/>
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"/>
         <FocusOnNavigate RouteData="@routeData" Selector="h1"/>
     </Found>
 </Router>

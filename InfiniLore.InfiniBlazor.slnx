@@ -14,10 +14,11 @@
     <File Path="package.json" />
     <File Path="webpack.config.js" />
   </Folder>
-  <Folder Name="/example/" />
+  <Folder Name="/example/">
+    <Project Path="examples\Example.InfiniBlazor.Shared\Example.InfiniBlazor.Shared.csproj" Type="Classic C#" />
+  </Folder>
   <Folder Name="/example/blazor/">
     <Project Path="examples\Example.InfiniBlazor.Client\Example.InfiniBlazor.Client.csproj" Type="Classic C#" />
-    <Project Path="examples\Example.InfiniBlazor.Shared\Example.InfiniBlazor.Shared.csproj" Type="Classic C#" />
     <Project Path="examples\Example.InfiniBlazor\Example.InfiniBlazor.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/example/maui/">
