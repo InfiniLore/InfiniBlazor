@@ -27,10 +27,7 @@ public static class MauiProgram {
 
         builder.Services.AddMauiBlazorWebView();
 
-        // WTF why do I need to set this to null? https://learn.microsoft.com/en-us/aspnet/core/blazor/hybrid/tutorials/maui-blazor-web-app?view=aspnetcore-9.0
-        builder.Services.AddInfiniBlazor(static config => 
-            config.SetRenderModeForMauiBlazorHybrid()
-        );
+        builder.AddInfiniBlazor();
 
         builder.Logging.ClearProviders();
         builder.Logging.AddSerilog();
