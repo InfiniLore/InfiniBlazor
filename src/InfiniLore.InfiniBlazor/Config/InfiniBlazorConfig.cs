@@ -34,8 +34,13 @@ public class InfiniBlazorConfig(IServiceCollection collection) {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public InfiniBlazorConfig SetRenderMode(IComponentRenderMode renderMode) {
-        RenderModeProvider.InfiniRenderMode = renderMode;
+    public InfiniBlazorConfig SetRenderMode(IComponentRenderMode? renderMode) {
+        RenderModeProvider.InfiniRenderMode = renderMode!;
+        return this;
+    }
+
+    public InfiniBlazorConfig SetRenderModeForMauiBlazorHybrid() {
+        RenderModeProvider.InfiniRenderMode = null!;
         return this;
     }
     
