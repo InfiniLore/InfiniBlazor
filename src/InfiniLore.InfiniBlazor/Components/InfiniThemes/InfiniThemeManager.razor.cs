@@ -21,8 +21,8 @@ public partial class InfiniThemeManager(
     ILogger<InfiniThemeManager> logger
 ) : ComponentBase, IAsyncDisposable {
 
-    private const string BaseId = "infiniThemeManager-base-css";
-    private const string ThemeId = "infiniThemeManager-selected-css";
+    private const string BaseId = "infiniThemeManager-base";
+    private const string ThemeId = "infiniThemeManager-selected";
     private bool _isUpdatingTheme;
     private string? InitialCss { get; set; }
 
