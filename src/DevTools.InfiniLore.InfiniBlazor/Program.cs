@@ -22,9 +22,10 @@ public static class Program {
         //      Code is the true savior
         string projects = string.Join(";", 
             "InfiniLore.InfiniBlazor",
-            "InfiniLore.InfiniBlazor.ComponentsExtra",
             "InfiniLore.InfiniBlazor.Contracts",
-            "InfiniLore.InfiniBlazor.SourceGenerators"
+            "InfiniLore.InfiniBlazor.SourceGenerators",
+            "InfiniLore.InfiniBlazor.Extensions.ExtraComponents",
+            "InfiniLore.InfiniBlazor.Extensions.Maui"
         );
 
         string oneLineArgs = ArgsInputHelper.ToOneLine(args).Replace("%PROJECTS%", projects);

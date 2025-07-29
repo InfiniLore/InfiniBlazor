@@ -1,15 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
-        <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <DebugType>portable</DebugType>
-        <!--        <Optimize>false</Optimize>-->
 
         <!-- Package metadata -->
-        <PackageId>InfiniLore.InfiniBlazor.ComponentsExtra</PackageId>
+        <PackageId>InfiniLore.InfiniBlazor.Extensions.Maui</PackageId>
         <Version>0.1.0-preview.85</Version>
         <Authors>Anna Sas</Authors>
         <Description>InfiniLore's Component Library: Extra components</Description>
@@ -22,6 +19,7 @@
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageIcon>icon.png</PackageIcon>
+        <RootNamespace>InfiniLore.InfiniBlazor.Maui</RootNamespace>
     </PropertyGroup>
 
     <!-- Include external files -->
@@ -32,7 +30,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" />
+      <ProjectReference Include="..\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" />
     </ItemGroup>
+
 </Project>
