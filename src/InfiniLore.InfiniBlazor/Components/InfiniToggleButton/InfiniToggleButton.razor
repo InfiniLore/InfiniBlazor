@@ -59,6 +59,7 @@
     
     [Parameter] public bool Value { get; set; }
     [Parameter] public EventCallback<bool> ValueChanged { get; set; }
+    [Parameter] public EventCallback<bool> OnToggle { get; set; }
     
     [Parameter] public string Type { get; set; } = "button";
     [Parameter] public string? AriaLabel { get; set; }
@@ -179,5 +180,6 @@
 
         Value = !Value;
         await ValueChanged.InvokeAsync(Value);
+        await OnToggle.InvokeAsync(Value);
     }
 }

@@ -148,12 +148,9 @@
                 HrefUserProfile="/"/>
         </UserIcon>
         <AdditionalLinks>
-            <button @onclick="SwitchUserImage"
-                    class="@(InfiniNavUser.AdditionalLinkClasses)">
-                switch
-            </button>
+            <InfiniToggleButton OnToggle="@(_ => SwitchUserImage())" Size="Size.Xxs"/>
             <NavLink href="/"
-                     class="@(InfiniNavUser.AdditionalLinkClasses)">
+                     class="@ConcatClasses(InfiniNavUser.AdditionalLinkClasses, "text-red-500")">
                 logout
             </NavLink>
         </AdditionalLinks>

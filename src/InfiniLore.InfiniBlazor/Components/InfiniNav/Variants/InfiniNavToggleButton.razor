@@ -15,6 +15,7 @@
                 DebugColor="DebugColor"
                 Value="@Value"
                 ValueChanged="@ValueChanged"
+                OnToggle="@OnToggle"
                 Size="Size.Xxs"
                 StopPropagation="true"
                 Disabled="@Disabled"
@@ -37,6 +38,7 @@
             DebugColor="DebugColor"
             Value="@Value"
             ValueChanged="@ValueChanged"
+            OnToggle="@OnToggle"
             Size="Size.Xs"
             StopPropagation="true"
             Disabled="@Disabled"
@@ -57,5 +59,7 @@
     [Parameter] public string? OnIcon { get; set; }
     [Parameter] public string? OffIcon { get; set; }
     [Parameter] public Color Color { get; set; } = Color.Default;
+    [Parameter] public EventCallback<bool> OnToggle { get; set; }
+    
 }
 
