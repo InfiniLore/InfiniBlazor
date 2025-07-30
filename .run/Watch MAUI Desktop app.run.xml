@@ -1,12 +1,16 @@
 ﻿<component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Watch MAUI Desktop app" type="RunDotNetWatch" factoryName="RunDotNetWatch">
-    <option name="exePath" value="$PROJECT_DIR$/src/DevTools.InfiniLore.InfiniBlazor/bin/Debug/net9.0/DevTools.InfiniLore.InfiniBlazor.exe" />
+      <option name="envs">
+          <map>
+              <entry key="DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION" value="1" />
+          </map>
+      </option>
+      <option name="exePath" value="$PROJECT_DIR$/examples/Example.InfiniBlazor.Maui/bin/Debug/net9.0-windows10.0.19041.0/win10-x64/Example.InfiniBlazor.Maui.exe" />
     <option name="programParameters" value="--launch-profile &quot;Windows Machine&quot;" />
-    <option name="projectFilePath" value="$PROJECT_DIR$/src/DevTools.InfiniLore.InfiniBlazor/DevTools.InfiniLore.InfiniBlazor.csproj" />
-    <option name="projectTfm" value="net9.0" />
-    <option name="restartOnRudeEditEditor" value="true" />
+    <option name="projectFilePath" value="$PROJECT_DIR$/examples/Example.InfiniBlazor.Maui/Example.InfiniBlazor.Maui.csproj" />
+    <option name="projectTfm" value="net9.0-windows10.0.19041.0" />
     <option name="watchParameters" value="--framework net9.0-windows10.0.19041.0 " />
-    <option name="workingDirectory" value="$PROJECT_DIR$/src/DevTools.InfiniLore.InfiniBlazor/bin/Debug/net9.0" />
+    <option name="workingDirectory" value="$PROJECT_DIR$/examples/Example.InfiniBlazor.Maui/bin/Debug/net9.0-windows10.0.19041.0/win10-x64" />
     <method v="2" />
   </configuration>
 </component>
