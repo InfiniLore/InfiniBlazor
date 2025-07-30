@@ -6,13 +6,13 @@
         <entry key="TargetPlatformMinVersion" value="10.0.17763.0" />
       </map>
     </option>
-    <option name="exePath" value="$PROJECT_DIR$/examples/Example.InfiniBlazor.Maui/bin/Release/net9.0-windows10.0.19041.0/win10-x64/Example.InfiniBlazor.Maui.exe" />
+    <option name="exePath" value="$PROJECT_DIR$/examples/Example.InfiniBlazor.Maui/bin/Debug/net9.0-windows10.0.19041.0/win10-x64/Example.InfiniBlazor.Maui.exe" />
     <option name="programParameters" value="" />
     <option name="projectFilePath" value="$PROJECT_DIR$/examples/Example.InfiniBlazor.Maui/Example.InfiniBlazor.Maui.csproj" />
     <option name="projectTfm" value="net9.0-windows10.0.19041.0" />
     <option name="restartOnRudeEditEditor" value="true" />
     <option name="watchParameters" value="--framework net9.0-windows10.0.19041.0 " />
-    <option name="workingDirectory" value="$PROJECT_DIR$/examples/Example.InfiniBlazor.Maui/bin/Release/net9.0-windows10.0.19041.0/win10-x64" />
+    <option name="workingDirectory" value="$PROJECT_DIR$/examples/Example.InfiniBlazor.Maui/bin/Debug/net9.0-windows10.0.19041.0/win10-x64" />
     <method v="2">
       <option name="Build" default="false" projectName="Example.InfiniBlazor.Maui" projectPath="$PROJECT_DIR$/examples/Example.InfiniBlazor.Maui/Example.InfiniBlazor.Maui.csproj" />
     </method>
