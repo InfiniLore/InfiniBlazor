@@ -5,6 +5,7 @@ using Example.InfiniBlazor.Components;
 using Example.InfiniBlazor.Shared;
 using Example.InfiniBlazor.Shared.Themes;
 using InfiniLore.InfiniBlazor.Config;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace Example.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -17,6 +18,7 @@ public class Program {
         builder.Services.AddLogging();
 
         builder.Services.AddInfiniBlazor(config => {
+            config.SetRenderMode(RenderMode.InteractiveServer);
             config.RegisterTheme<PrideThemeCollection>();
             config.AddMarkdownLogic();
             // config.SetRenderMode(RenderMode.InteractiveAuto);

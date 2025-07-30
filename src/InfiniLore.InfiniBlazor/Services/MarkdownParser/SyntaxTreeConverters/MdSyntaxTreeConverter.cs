@@ -2,10 +2,11 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using CodeOfChaos.Extensions.ObjectPool;
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.MarkdownParser.SyntaxTreeConverters.Converters;
 using InfiniLore.InfiniBlazor.Pooling;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.ObjectPool;
 using System.Text;
 
@@ -14,10 +15,9 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.SyntaxTreeConverters;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public abstract class BaseMdSyntaxTreeConverter<TConverter> : IMdSyntaxTreeConverter where TConverter : class, IMdSyntaxNodeConverter, IResettable, new() {
+public abstract class BaseMdSyntaxTreeConverter(IMdSyntaxNodeConverter converter) : IMdSyntaxTreeConverter {
     private readonly Lock PoolLock = new();
-    private static readonly ObjectPool<TConverter> ConverterPool = 
-        PoolingHelpers.CreateResettablePool<TConverter>(PoolingHelpers.ParsersRetained);
+    private static readonly ObjectPool<Dictionary<int, IMdSyntaxNode>> DepthCachePool = new DefaultObjectPool<Dictionary<int, IMdSyntaxNode>>(new CollectionPoolPolicy<Dictionary<int, IMdSyntaxNode>, KeyValuePair<int, IMdSyntaxNode>>(), 2);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -27,32 +27,72 @@ public abstract class BaseMdSyntaxTreeConverter<TConverter> : IMdSyntaxTreeConve
     
     public string ConvertToString(IMdSyntaxTree tree) {
         StringBuilder builder;
-        TConverter converter;
+        Dictionary<int, IMdSyntaxNode> depthCache;
     
         // WTF why is a lock needed here? This makes no sense!
         //      Yes, it does, but poor Anna forgot why
         lock (PoolLock) {
             builder = GlobalPools.StringBuilder.Get();
-            converter = ConverterPool.Get();
+            depthCache = DepthCachePool.Get();
         }
     
         try {
-            converter.Sb = builder;
-            BaseMdSyntaxTreeConverter.ProcessNodeTree(tree, converter);
+            int lastKnownDepth = -1;
+
+            foreach (IMdSyntaxNode node in tree.VisitNodesBreadthFirst()) {
+                int depth = node.Depth;
+            
+                lock (depthCache) {
+                    if (lastKnownDepth + 1 > depth) 
+                        CloseOpenTags(depthCache, depth, builder);
+
+                    converter.HandleOpenTag(node, builder);
+                    converter.HandleContent(node, builder);
+                
+                    depthCache.AddOrUpdate(depth, node);
+                    lastKnownDepth = depth;
+                }
+            }
+
+            CloseOpenTags(depthCache, -1, builder);
             return builder.ToString();
         }
         finally {
+            builder.Clear();
+            depthCache.Clear();
             lock (PoolLock) {
-                builder.Clear();
                 GlobalPools.StringBuilder.Return(builder);
-                ConverterPool.Return(converter);
+                DepthCachePool.Return(depthCache);
             }
+        }
+    }
+    
+    private void CloseOpenTags(Dictionary<int, IMdSyntaxNode> depthCache, int depth, StringBuilder builder) {
+        if (depthCache.Count == 0) return;
+
+        Span<int> keysToRemove = stackalloc int[depthCache.Count];
+        int count = 0;
+
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+        foreach (int k in depthCache.Keys) {
+            if (k < depth) continue;
+            keysToRemove[count++] = k;
+        }
+
+        Span<int> slice = keysToRemove[..count];
+        slice.Sort();
+        for (int i = count - 1; i >= 0; i--) {
+            int key = slice[i];
+            IMdSyntaxNode closingNode = depthCache[key];
+            
+            converter.HandleCloseTag(closingNode, builder);
+            depthCache.Remove(key);
         }
     }
 }
 
 [InjectableSingleton<IMdSyntaxTreeConverter>]
-public sealed class MdSyntaxTreeConverter : BaseMdSyntaxTreeConverter<SimpleMdSyntaxNodeConverter>;
+public sealed class MdSyntaxTreeConverter(IMdSyntaxNodeConverter converter) : BaseMdSyntaxTreeConverter(converter);
 
 [InjectableSingleton<IMdSyntaxTreeConverter>("styled")]
-public sealed class StyledMdSyntaxTreeConverter : BaseMdSyntaxTreeConverter<StyledMdSyntaxNodeConverter>;
+public sealed class StyledMdSyntaxTreeConverter([FromKeyedServices("styled")] IMdSyntaxNodeConverter converter) : BaseMdSyntaxTreeConverter(converter);

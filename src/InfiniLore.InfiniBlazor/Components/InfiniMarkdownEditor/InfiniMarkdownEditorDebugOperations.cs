@@ -113,4 +113,27 @@ public static class InfiniMarkdownEditorDebugInserts {
         A paragraph with a #tag word in it.
 
         """;
+
+    public const string MarkdownCallout = """
+        > ![note] Title
+        > Body
+        
+        > ![warning] Title
+        > Body
+        
+        > ![tip] Title
+        > Body
+        
+        > ![danger] Title
+        > Body
+        
+        > ![info] Title
+        > Body
+        
+        > ![success] Title
+        > Body
+        
+        > ![unknown] Title
+        > Body
+        """;
 }

@@ -1,47 +1,47 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
-using Microsoft.Extensions.ObjectPool;
 using System.Text;
 
 namespace InfiniLore.InfiniBlazor.MarkdownParser.SyntaxTreeConverters.Converters;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class SimpleMdSyntaxNodeConverter : IMdSyntaxNodeConverter, IResettable {
-    public StringBuilder Sb { get; set; } = null!;
+[InjectableSingleton<IMdSyntaxNodeConverter>]
+public class SimpleMdSyntaxNodeConverter : IMdSyntaxNodeConverter {
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public virtual void HandleOpenTag(IMdSyntaxNode node) {
+    public virtual void HandleOpenTag(IMdSyntaxNode node, StringBuilder builder) {
         switch (node) {
             case BlockQuoteMdSyntaxNode: {
-                Sb.Append("<blockquote>");
+                builder.Append("<blockquote>");
                 break;
             }
 
             case BoldMdSyntaxNode: {
-                Sb.Append("<strong>");
+                builder.Append("<strong>");
                 break;
             }
 
             case CodeBlockMdSyntaxNode {Language: var lang} when lang.IsNotNullOrWhiteSpace(): {
-                Sb.Append("<pre><code class=\"language-");
-                Sb.Append(lang.AsSpan());
-                Sb.Append("\">");
+                builder.Append("<pre><code class=\"language-");
+                builder.Append(lang.AsSpan());
+                builder.Append("\">");
                 break;
             }
             case CodeBlockMdSyntaxNode: {
-                Sb.Append("<pre><code>");
+                builder.Append("<pre><code>");
                 break;
             }
 
             case CodeInlineMdSyntaxNode: {
-                Sb.Append("<code>");
+                builder.Append("<code>");
                 break;
             }
             
@@ -51,238 +51,238 @@ public class SimpleMdSyntaxNodeConverter : IMdSyntaxNodeConverter, IResettable {
             case EscapedCharacterMdSyntaxNode:break;
 
             case HeadingMdSyntaxNode { Level: var level and > 0 }: {
-                Sb.Append("<h");
-                Sb.Append(level);
-                Sb.Append('>');
+                builder.Append("<h");
+                builder.Append(level);
+                builder.Append('>');
                 break;
             }
             
             case HtmlSpanMdSyntaxNode { TagValue: var tagValue }: {
-                Sb.Append(tagValue.AsSpan());
+                builder.Append(tagValue.AsSpan());
                 break;
             }
             
             case HorizontalRuleMdSyntaxNode:break;
 
             case ImageMdSyntaxNode {AltText: var altText, Href: var href} imgNode: {
-                Sb.Append("<img class\"inline-block\" src=\"");
-                Sb.Append(href.AsSpan());
-                Sb.Append('"');
+                builder.Append("<img class\"inline-block\" src=\"");
+                builder.Append(href.AsSpan());
+                builder.Append('"');
                 if (altText.IsNotNullOrWhiteSpace()) {
-                    Sb.Append(" alt=\"");
-                    Sb.Append(altText.AsSpan());
-                    Sb.Append('"');
+                    builder.Append(" alt=\"");
+                    builder.Append(altText.AsSpan());
+                    builder.Append('"');
                 }
 
                 if (imgNode.ContainsModifiers) {
                     if (imgNode.Modifiers.TryGetTitle(out string? title)) {
-                        Sb.Append(" title=\"");
-                        Sb.Append(title.AsSpan());
-                        Sb.Append('"');
+                        builder.Append(" title=\"");
+                        builder.Append(title.AsSpan());
+                        builder.Append('"');
                     }
                     
                     if (imgNode.Modifiers.TryGetFit(out bool state) && state) {
-                        Sb.Append(" style=\"width:auto;height:2em;vertical-align:baseline;object-fit:contain;\"");
+                        builder.Append(" style=\"width:auto;height:2em;vertical-align:baseline;object-fit:contain;\"");
                     }
                     
                     else if (imgNode.Modifiers.TryGetSize(out (int Width, int Height) size)) {
-                        Sb.Append(" style=\"width: ");
-                        Sb.Append(size.Width);
-                        Sb.Append("px; height: ");
-                        Sb.Append(size.Height);
-                        Sb.Append("px;\"");
+                        builder.Append(" style=\"width: ");
+                        builder.Append(size.Width);
+                        builder.Append("px; height: ");
+                        builder.Append(size.Height);
+                        builder.Append("px;\"");
                     }
                 }
                 
-                Sb.Append("/>");
+                builder.Append("/>");
                 break;
             }
 
             case ItalicMdSyntaxNode: {
-                Sb.Append("<em>");
+                builder.Append("<em>");
                 break;
             }
 
             case LinkMdSyntaxNode {Href: var href}: {
-                Sb.Append("<a href=\"");
-                Sb.Append(href.AsSpan());
-                Sb.Append("\">");
+                builder.Append("<a href=\"");
+                builder.Append(href.AsSpan());
+                builder.Append("\">");
                 break;
             }
 
             case ListItemMdSyntaxNode {IsCheckable: true, IsChecked: var checkedState}: {
-                Sb.Append("<li>");
-                Sb.Append("<input type=\"checkbox\" disabled");
-                if (checkedState) Sb.Append(" checked");
-                Sb.Append("/>");
+                builder.Append("<li>");
+                builder.Append("<input type=\"checkbox\" disabled");
+                if (checkedState) builder.Append(" checked");
+                builder.Append("/>");
                 break;
             }
 
             case ListItemMdSyntaxNode: {
-                Sb.Append("<li>");
+                builder.Append("<li>");
                 break;
             }
 
             case ListMdSyntaxNode { IsOrdered: true }: {
-                Sb.Append("<ol>");
+                builder.Append("<ol>");
                 break;
             }
 
             case ListMdSyntaxNode { IsOrdered: false }: {
-                Sb.Append("<ul>");
+                builder.Append("<ul>");
                 break;
             }
 
             case ParagraphMdSyntaxNode: {
-                Sb.Append("<p>");
+                builder.Append("<p>");
                 break;
             }
             case RootMdSyntaxNode:break;
 
             case StrikeMdSyntaxNode: {
-                Sb.Append("<s>");
+                builder.Append("<s>");
                 break;
             }
 
             case SubScriptMdSyntaxNode: {
-                Sb.Append("<sub>");
+                builder.Append("<sub>");
                 break;
             }
 
             case SuperScriptMdSyntaxNode: {
-                Sb.Append("<sup>");
+                builder.Append("<sup>");
                 break;
             }
 
             case TableBodyMdSyntaxNode: {
-                Sb.Append("<tbody>");
+                builder.Append("<tbody>");
                 break;
             }
 
             case TableCellMdSyntaxNode: {
-                Sb.Append("<td>");
+                builder.Append("<td>");
                 break;
             }
             
             case TableHeadCellMdSyntaxNode: {
-                Sb.Append("<th>");
+                builder.Append("<th>");
                 break;
             }
 
             case TableHeadMdSyntaxNode: {
-                Sb.Append("<thead>");
+                builder.Append("<thead>");
                 break;
             }
 
             case TableMdSyntaxNode: {
-                Sb.Append("<table>");
+                builder.Append("<table>");
                 break;
             }
 
             case TableRowMdSyntaxNode: {
-                Sb.Append("<tr>");
+                builder.Append("<tr>");
                 break;
             }
 
             case TagMdSyntaxNode: {
-                Sb.Append("<span class=\"md-tag\">");
+                builder.Append("<span class=\"md-tag\">");
                 break;
             }
 
             case UnderlineMdSyntaxNode: {
-                Sb.Append("<u>");
+                builder.Append("<u>");
                 break;
             }
 
             case CalloutMdSyntaxNode {CalloutType: {} calloutType}: {
-                Sb.Append("<div class=\"md-callout md-callout-");
-                Sb.Append(calloutType);
-                Sb.Append("\">");
+                builder.Append("<div class=\"md-callout md-callout-");
+                builder.Append(calloutType);
+                builder.Append("\">");
                 break;
             }
 
             case CalloutMdSyntaxNode: {
-                Sb.Append("<div class=\"md-callout\">");
+                builder.Append("<div class=\"md-callout\">");
                 break;           
             }
 
             case CalloutTitleMdSyntaxNode: {
-                Sb.Append("<div class=\"md-callout-title\">");
+                builder.Append("<div class=\"md-callout-title\">");
                 break;
             }
 
             case CalloutBodyMdSyntaxNode: {
-                Sb.Append("<div class=\"md-callout-body\">");
+                builder.Append("<div class=\"md-callout-body\">");
                 break;
             }
         }
     }
     
-    public virtual void HandleContent(IMdSyntaxNode node) {
+    public virtual void HandleContent(IMdSyntaxNode node, StringBuilder builder) {
         switch (node) {
 
             case CodeBlockMdSyntaxNode { ContentCode: var code }: {
-                Sb.Append(code.AsSpan());
+                builder.Append(code.AsSpan());
                 break;
             }
 
             case CodeInlineMdSyntaxNode {ContentCode: var code }: {
-                Sb.Append(code.AsSpan());
+                builder.Append(code.AsSpan());
                 break;
             }
 
             case ContentHtmlMdSyntaxNode { ContentHtml: var content }: {
-                Sb.Append(content.AsSpan());
+                builder.Append(content.AsSpan());
                 break;
             }
 
             case ContentMdSyntaxNode { Content: var content }: {
-                Sb.Append(content.AsSpan());
+                builder.Append(content.AsSpan());
                 break;
             }
 
             case EmoteMdSyntaxNode { ContentEmote: var content }: {
-                Sb.Append(content.AsSpan());
+                builder.Append(content.AsSpan());
                 break;
             }
 
             case EscapedCharacterMdSyntaxNode { ContentChar: var contentChar }: {
-                Sb.Append(contentChar);
+                builder.Append(contentChar);
                 break;
             }
 
             case HorizontalRuleMdSyntaxNode: {
-                Sb.Append("<hr>");
+                builder.Append("<hr>");
                 break;
             }
 
             case TagMdSyntaxNode { ContentTag: var contentTag }: {
-                Sb.Append('#');
-                Sb.Append(contentTag.AsSpan());
+                builder.Append('#');
+                builder.Append(contentTag.AsSpan());
                 break;
             }
         }
     }
     
-    public virtual void HandleCloseTag(IMdSyntaxNode node) {
+    public virtual void HandleCloseTag(IMdSyntaxNode node, StringBuilder builder) {
         switch (node) {
             case BlockQuoteMdSyntaxNode: {
-                Sb.Append("</blockquote>");
+                builder.Append("</blockquote>");
                 break;
             }
 
             case BoldMdSyntaxNode: {
-                Sb.Append("</strong>");
+                builder.Append("</strong>");
                 break;
             }
 
             case CodeBlockMdSyntaxNode: {
-                Sb.Append("</code></pre>");
+                builder.Append("</code></pre>");
                 break;
             }
 
             case CodeInlineMdSyntaxNode: {
-                Sb.Append("</code>");
+                builder.Append("</code>");
                 break;
             }
             
@@ -292,119 +292,113 @@ public class SimpleMdSyntaxNodeConverter : IMdSyntaxNodeConverter, IResettable {
             case EscapedCharacterMdSyntaxNode:break;
 
             case HeadingMdSyntaxNode {Level: var level and > 0 }: {
-                Sb.Append("</h");
-                Sb.Append(level);
-                Sb.Append('>');
+                builder.Append("</h");
+                builder.Append(level);
+                builder.Append('>');
                 break;
             }
             
             case HorizontalRuleMdSyntaxNode: break;
 
             case HtmlSpanMdSyntaxNode: {
-                Sb.Append("</span>");
+                builder.Append("</span>");
                 break;
             }
             
             case ImageMdSyntaxNode:break;
 
             case ItalicMdSyntaxNode: {
-                Sb.Append("</em>");
+                builder.Append("</em>");
                 break;
             }
 
             case LinkMdSyntaxNode: {
-                Sb.Append("</a>");
+                builder.Append("</a>");
                 break;
             }
 
             case ListItemMdSyntaxNode: {
-                Sb.Append("</li>");
+                builder.Append("</li>");
                 break;
             }
 
             case ListMdSyntaxNode { IsOrdered: false }: {
-                Sb.Append("</ul>");
+                builder.Append("</ul>");
                 break;
             }
 
             case ListMdSyntaxNode { IsOrdered: true }: {
-                Sb.Append("</ol>");
+                builder.Append("</ol>");
                 break;
             }
 
             case ParagraphMdSyntaxNode: {
-                Sb.Append("</p>");
+                builder.Append("</p>");
                 break;
             }
             case RootMdSyntaxNode:break;
 
             case StrikeMdSyntaxNode: {
-                Sb.Append("</s>");
+                builder.Append("</s>");
                 break;
             }
 
             case SubScriptMdSyntaxNode: {
-                Sb.Append("</sub>");
+                builder.Append("</sub>");
                 break;
             }
 
             case SuperScriptMdSyntaxNode: {
-                Sb.Append("</sup>");
+                builder.Append("</sup>");
                 break;
             }
 
             case TableBodyMdSyntaxNode: {
-                Sb.Append("</tbody>");
+                builder.Append("</tbody>");
                 break;
             }
 
             case TableCellMdSyntaxNode: {
-                Sb.Append("</td>");
+                builder.Append("</td>");
                 break;
             }
             
             case TableHeadCellMdSyntaxNode: {
-                Sb.Append("</th>");
+                builder.Append("</th>");
                 break;
             }
 
             case TableHeadMdSyntaxNode: {
-                Sb.Append("</thead>");
+                builder.Append("</thead>");
                 break;
             }
 
             case TableMdSyntaxNode: {
-                Sb.Append("</table>");
+                builder.Append("</table>");
                 break;
             }
 
             case TableRowMdSyntaxNode: {
-                Sb.Append("</tr>");
+                builder.Append("</tr>");
                 break;
             }
 
             case TagMdSyntaxNode: {
-                Sb.Append("</span>");
+                builder.Append("</span>");
                 break;
             }
 
             case UnderlineMdSyntaxNode: {
-                Sb.Append("</u>");
+                builder.Append("</u>");
                 break;
             }
 
             case CalloutMdSyntaxNode:
             case CalloutTitleMdSyntaxNode:
             case CalloutBodyMdSyntaxNode: {
-                Sb.Append("</div>");
+                builder.Append("</div>");
                 break;
             }
         }
-    }
-    
-    public bool TryReset() {
-        Sb.Clear();
-        Sb = null!;
-        return true;
     }
 }
