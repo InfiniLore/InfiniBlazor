@@ -54,9 +54,9 @@
     [Parameter] public string Accept { get; set; } = string.Empty;
     [Parameter] public bool AllowMultipleFiles { get; set; }
     [Parameter] public string Placeholder { get; set; } = "Choose file(s)...";
-    [Parameter] public EventCallback<IReadOnlyList<IBrowserFile>?> OnFilesChanged { get; set; }
+    [Parameter] public EventCallback<IReadOnlyList<IBrowserFile>> OnFilesChanged { get; set; }
 
-    private List<IBrowserFile>? _selectedFiles;
+    private IReadOnlyList<IBrowserFile> _selectedFiles = Array.Empty<IBrowserFile>();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -67,16 +67,16 @@
     }
 
     private async Task OnFileChangeAsync(InputFileChangeEventArgs e) {
-        _selectedFiles = e.GetMultipleFiles(maximumFileCount: AllowMultipleFiles ? int.MaxValue : 1).ToList();
+        _selectedFiles = e.GetMultipleFiles(maximumFileCount: AllowMultipleFiles ? int.MaxValue : 1);
         await OnFilesChanged.InvokeAsync(_selectedFiles);
     }
 
     private async Task OnFilesClearedAsync() {
-        _selectedFiles?.Clear();
+        _selectedFiles = Array.Empty<IBrowserFile>();
         await OnFilesChanged.InvokeAsync(_selectedFiles);
     }
 
-    private string GetSelectedFilenames() => _selectedFiles?.Count > 0
+    private string GetSelectedFilenames() => _selectedFiles.Count > 0
         ? string.Join(", ", _selectedFiles.Select(f => f.Name))
         : string.Empty;
 }
