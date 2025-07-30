@@ -80,4 +80,7 @@
       <ProjectReference Include="..\Example.InfiniBlazor.Shared\Example.InfiniBlazor.Shared.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <None Include="Properties\**\*" />
+    </ItemGroup>
 </Project>
