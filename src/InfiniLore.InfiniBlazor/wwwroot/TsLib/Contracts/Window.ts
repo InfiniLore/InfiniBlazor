@@ -26,5 +26,7 @@ declare global {
         getBoundingClientRect : (element: Element) => DOMRect | null;
 
         addHorizontalScroll: (element: Element, i: number) => void;
+        
+        clickElementById: (elementId: string) => void;
     }
 }

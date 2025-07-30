@@ -144,4 +144,13 @@ public class JsRuntimeHelper(
             logger.Warning(e, "Error adding horizontal scroll");
         }
     }
+
+    public async Task ClickElementById(string id) {
+        try {
+            await jsRuntime.InvokeVoidAsync("window.clickElementById", id);
+        }
+        catch (Exception e) {
+            logger.Warning(e, "Error clicking element by id");
+        }
+    }
 }

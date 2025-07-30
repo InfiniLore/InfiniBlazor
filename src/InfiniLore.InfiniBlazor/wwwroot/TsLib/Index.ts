@@ -5,7 +5,7 @@ import {getInputSelectionStart, getInputSelectionEnd, setInputSelectionRange, ge
 import {addPreventDefaultListener, removePreventDefaultListener} from "./KeyDownListener";
 import {setTextContent, getTextContent} from "./HtmlElementHelpers";
 import {addOrUpdateStyleElementAtHead} from "./DocumentHelpers";
-import {addHorizontalScroll, getBoundingClientRect} from "./ElementHelpers";
+import {addHorizontalScroll, clickElementById, getBoundingClientRect} from "./ElementHelpers";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -24,3 +24,5 @@ window.addOrUpdateStyleElementAtHead = addOrUpdateStyleElementAtHead;
 
 window.getBoundingClientRect = getBoundingClientRect;
 window.addHorizontalScroll = addHorizontalScroll;
+
+window.clickElementById = clickElementById;

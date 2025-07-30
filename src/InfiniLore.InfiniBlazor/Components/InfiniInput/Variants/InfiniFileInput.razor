@@ -1,9 +1,9 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.JsRuntime
 @using InfiniLore.Lucide
 @using Microsoft.AspNetCore.Components.Forms
-@using Microsoft.JSInterop
 
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -11,7 +11,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniInputBase
 
-@inject IJSRuntime Js
+@inject IJsRuntimeHelper JsRuntimeHelper
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -61,10 +61,7 @@
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private async Task OpenFileDialog() {
-        await Js.InvokeVoidAsync("document.getElementById", Id).AsTask()
-            .ContinueWith(async _ => await Js.InvokeVoidAsync("eval", $"document.getElementById('{Id}').click()"));
-    }
+    private async Task OpenFileDialog() => await JsRuntimeHelper.ClickElementById(Id).ConfigureAwait(false);
 
     private async Task OnFileChangeAsync(InputFileChangeEventArgs e) {
         _selectedFiles = e.GetMultipleFiles(maximumFileCount: AllowMultipleFiles ? int.MaxValue : 1);

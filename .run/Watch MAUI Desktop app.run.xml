@@ -13,8 +13,6 @@
     <option name="restartOnRudeEditEditor" value="true" />
     <option name="watchParameters" value="--framework net9.0-windows10.0.19041.0 " />
     <option name="workingDirectory" value="$PROJECT_DIR$/examples/Example.InfiniBlazor.Maui/bin/Debug/net9.0-windows10.0.19041.0/win10-x64" />
-    <method v="2">
-      <option name="Build" default="false" projectName="Example.InfiniBlazor.Maui" projectPath="$PROJECT_DIR$/examples/Example.InfiniBlazor.Maui/Example.InfiniBlazor.Maui.csproj" />
-    </method>
+    <method v="2" />
   </configuration>
 </component>
