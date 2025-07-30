@@ -11,7 +11,7 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="@(Depth + 1)">
-    <div class="@OrientationClasses" style="anchor-name: @($"--{Id:N}")">
+    <div class="@OrientationClasses overflow-clip" style="anchor-name: @($"--{Id:N}")">
         <button @onclick="OnClick" class="flex w-full cursor-pointer">
             <div class="@ContainerClassesNoHover w-full grow">
                 <div class="flex grow w-full">
@@ -20,7 +20,7 @@
             </div>
         </button>
 
-        <div class="@AnchorContainerClasses absolute" style="position-anchor:  @($"--{Id:N}")">
+        <div class="@AnchorContainerClasses fixed" style="position-anchor:  @($"--{Id:N}")">
             <CascadingValue Value="MenuContext" IsFixed="true">
                 <div
                     class="@BoxClasses infini-bg-(--nav) border-(--border)">

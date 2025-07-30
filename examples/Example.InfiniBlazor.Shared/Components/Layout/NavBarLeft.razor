@@ -24,7 +24,7 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniNavBar Location="NavBarLocation.Left" Size="Size" Class="@Class" @bind-NavBarCollapsed="CollapsedState">
-    <div class="flex flex-row justify-between">
+    <div class="flex flex-row justify-between sticky top-0 z-10 infini-bg-(--nav-top) border-b-1 border-(--nav-border)">
         <InfiniNavLink
             Href="/"
             Text="InfiniBlazor"
@@ -34,8 +34,6 @@
 
         <InfiniNavCollapseButton @bind-State="CollapsedState" Class="h-10"/>
     </div>
-
-    <InfiniNavBreak/>
 
     <InfiniNavLink
         Href="/markdown-dual"
@@ -143,7 +141,7 @@
     }
 
     @* User *@
-    <InfiniNavUser UserName="InfiniLore">
+    <InfiniNavUser UserName="InfiniLore" Class="sticky bottom-0 z-10 infini-bg-(--nav-bottom) border-t-1 border-(--nav-border) rounded-none">
         <UserIcon>
             <InfiniUserIcon
                 ImageUrl="@_currentUserImage"
