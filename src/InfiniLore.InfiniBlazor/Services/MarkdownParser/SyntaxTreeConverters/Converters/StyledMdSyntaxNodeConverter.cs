@@ -18,9 +18,9 @@ public sealed class StyledMdSyntaxNodeConverter(ILucideService lucideService) : 
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region Lucide Helpers
-    private void AddLucideIconToBuilder(string iconName, StringBuilder builder) {
+    private static void AddLucideIconToBuilder(string svgData, StringBuilder builder) {
         builder.Append("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">");
-        builder.Append(lucideService.GetIconAsString(iconName));
+        builder.Append(svgData);
         builder.Append("</svg>");
     }
     #endregion
@@ -252,7 +252,7 @@ public sealed class StyledMdSyntaxNodeConverter(ILucideService lucideService) : 
                 break;
             }
 
-            case CalloutTitleMdSyntaxNode {Parent: CalloutMdSyntaxNode {CalloutType: {} calloutType}}: {
+            case CalloutTitleMdSyntaxNode {Parent: CalloutMdSyntaxNode {CalloutType: {} calloutType, Modifiers: var modifiers}}: {
                 string calloutName = calloutType.ToLowerInvariant();
                 string calloutClass = calloutName switch {
                     "note" => "text-neutral-300",
@@ -263,20 +263,29 @@ public sealed class StyledMdSyntaxNodeConverter(ILucideService lucideService) : 
                     "success" => "text-green-300",
                     _ => "text-white"
                 };
-                string lucideName = calloutName switch {
-                    "note" => LucideNames.Quote,
-                    "warning" => LucideNames.TriangleAlert,
-                    "tip" => LucideNames.Lightbulb,
-                    "danger" => LucideNames.Flame,
-                    "info" => LucideNames.Info,
-                    "success" => LucideNames.CircleCheck,
-                    _ => string.Empty
-                };
+
+                string? svgData = null;
+                if (modifiers?.TryGetIconName(out string? name) ?? false) {
+                    svgData = lucideService.GetIconAsString(name);
+                }
+                if (svgData.IsNullOrWhiteSpace()) {
+                    name = calloutName switch {
+                        "note" => LucideNames.Quote,
+                        "warning" => LucideNames.TriangleAlert,
+                        "tip" => LucideNames.Lightbulb,
+                        "danger" => LucideNames.Flame,
+                        "info" => LucideNames.Info,
+                        "success" => LucideNames.CircleCheck,
+                        _ => string.Empty
+                    };
+                    svgData = lucideService.GetIconAsString(name);
+                }
+
                 builder.Append("<div class=\"flex flex-row gap-2 pt-2 ");
                 builder.Append(calloutClass);
                 builder.Append("\">");
                 
-                AddLucideIconToBuilder(lucideName, builder);
+                AddLucideIconToBuilder(svgData, builder);
                 
                 builder.Append("<span>");
                 break;

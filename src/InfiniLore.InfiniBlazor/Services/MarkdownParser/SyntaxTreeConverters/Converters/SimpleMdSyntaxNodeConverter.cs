@@ -194,9 +194,13 @@ public class SimpleMdSyntaxNodeConverter : IMdSyntaxNodeConverter {
                 break;
             }
 
-            case CalloutMdSyntaxNode {CalloutType: {} calloutType}: {
+            case CalloutMdSyntaxNode {CalloutType: {} calloutType, Modifiers: var modifier}: {
                 builder.Append("<div class=\"md-callout md-callout-");
                 builder.Append(calloutType);
+                if (modifier is not null && modifier.TryGetIconName(out string? iconName)) {
+                    builder.Append(" icon-");
+                    builder.Append(iconName);
+                }
                 builder.Append("\">");
                 break;
             }

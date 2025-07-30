@@ -8,6 +8,9 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public static class MdSyntaxNodeModifierExtensions {
+    public static bool TryGetIconName(this MdSyntaxNodeModifier mod, [NotNullWhen(true)] out string? iconName) 
+        => mod.TryGetAttributeValue("icon", out iconName) && iconName.IsNotNullOrWhiteSpace();
+    
     public static bool TryGetTitle(this MdSyntaxNodeModifier mod, [NotNullWhen(true)] out string? title) 
         => mod.TryGetAttributeValue("title", out title);
 
