@@ -112,28 +112,30 @@ public static class InfiniMarkdownEditorDebugInserts {
         A paragraph with a ^^superscript^^ word in it.
         A paragraph with a #tag word in it.
 
-        """;
+        ---
+        
+        """ + MarkdownCallout;
 
     public const string MarkdownCallout = """
-        > ![note] Title
+        > [!note] Title
         > Body
         
-        > ![warning] Title
+        > [!warning] Title
         > Body
         
-        > ![tip] Title
+        > [!tip] Title
         > Body
         
-        > ![danger] Title
+        > [!danger] Title
         > Body
         
-        > ![info] Title
+        > [!info] Title
         > Body
         
-        > ![success] Title
+        > [!success] Title
         > Body
         
-        > ![unknown] Title
+        > [!unknown] Title
         > Body
         """;
 }

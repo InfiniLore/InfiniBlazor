@@ -14,7 +14,7 @@ public static class CalloutDataSources {
     public static IEnumerable<Func<MdTestData>> DataSources() {
         yield return static () => new MdTestData(SectionName,
             """
-            > ![note] **Do Something**
+            > [!note] **Do Something**
             > Body Content
             """,
             """
@@ -29,7 +29,7 @@ public static class CalloutDataSources {
         
         yield return static () => new MdTestData(SectionName,
             """
-            > ![note|icon=liSignature] **Do Something**
+            > [!note|icon=liSignature] **Do Something**
             > Body Content
             """,
             """
@@ -44,8 +44,8 @@ public static class CalloutDataSources {
         
         yield return static () => new MdTestData(SectionName,
             """
-            > ![note|icon=liSignature] **Do Something**
-            >> ![note|icon=liSignature] **Do Something**
+            > [!note|icon=liSignature] **Do Something**
+            >> [!note|icon=liSignature] **Do Something**
             >> Body Content
             """,
             """
@@ -65,7 +65,7 @@ public static class CalloutDataSources {
 
         yield return static () => new MdTestData(SectionName,
             """
-            > ![note] Title
+            > [!note] Title
             > Body
 
             [a]
