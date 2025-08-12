@@ -11,7 +11,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniInputBase
 
-@inject IJsRuntimeHelper JsRuntimeHelper
+@inject IJsInfiniBlazor JsInfiniBlazor
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -64,7 +64,7 @@
     // -----------------------------------------------------------------------------------------------------------------
     private async Task OpenFileDialog() {
         if (InputFileRef.Element is not { } reference) return;
-        await JsRuntimeHelper.ClickElement(reference).ConfigureAwait(false);
+        await JsInfiniBlazor.Element.ClickElement(reference).ConfigureAwait(false);
     }
 
     private async Task OnFileChangeAsync(InputFileChangeEventArgs e) {

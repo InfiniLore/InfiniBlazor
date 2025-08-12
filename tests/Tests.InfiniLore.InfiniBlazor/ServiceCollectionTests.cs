@@ -23,7 +23,7 @@ public class ServiceCollectionTests {
         services.AddInfiniBlazor();
 
         // Assert
-        await Assert.That(services).ContainsServiceType<IJsRuntimeHelper>();
+        await Assert.That(services).ContainsServiceType<IJsInfiniBlazor>();
     }
     [Test]
     public async Task ShouldAddServices_AddMarkdownLogic() {

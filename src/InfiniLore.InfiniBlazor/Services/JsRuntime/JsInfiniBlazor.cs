@@ -10,14 +10,21 @@ namespace InfiniLore.InfiniBlazor.JsRuntime;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableScoped<IJsRuntimeHelper>]
-public class JsRuntimeHelper(
+[InjectableScoped<IJsInfiniBlazor>]
+public class JsInfiniBlazor(
     IJSRuntime jsRuntime,
-    ILogger<JsRuntimeHelper> logger,
-    IJsLocalStorageHelper localStorageHelper
-) : IJsRuntimeHelper {
-    public IJsLocalStorageHelper LocalStorage { get; } = localStorageHelper;
+    ILogger<JsInfiniBlazor> logger,
     
+    IJsInfiniBlazorDocument documentService,
+    IJsInfiniBlazorElement elementService,
+    IJsInfiniBlazorTextSelection textSelectionService,
+    IJsInfiniBlazorKeyDownListener keyDownListenerService
+) : IJsInfiniBlazor {
+    public IJsInfiniBlazorDocument Document => documentService;
+    public IJsInfiniBlazorElement Element => elementService;
+    public IJsInfiniBlazorTextSelection TextSelection => textSelectionService;
+    public IJsInfiniBlazorKeyDownListener KeyDownListener => keyDownListenerService;
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

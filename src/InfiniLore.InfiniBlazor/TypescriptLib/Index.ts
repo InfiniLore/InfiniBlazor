@@ -5,8 +5,8 @@
 
 import {ElementLib} from "./Libs/ElementLib";
 import {DocumentLib} from "./Libs/DocumentLib";
-import {InputElementLib} from "./Libs/InputElementLib";
-import {KeyListenerLib} from "./Libs/KeyDownListener";
+import {TextSelectionLib} from "./Libs/TextSelectionLib";
+import {KeyListenerLib} from "./Libs/KeyListenerLib";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ import {KeyListenerLib} from "./Libs/KeyDownListener";
 export class InfiniBlazor {
     public document : DocumentLib = new DocumentLib();
     public element : ElementLib = new ElementLib();
-    public inputElement : InputElementLib = new InputElementLib();
+    public textSelection : TextSelectionLib = new TextSelectionLib();
     public keyListener : KeyListenerLib = new KeyListenerLib();
 }
 

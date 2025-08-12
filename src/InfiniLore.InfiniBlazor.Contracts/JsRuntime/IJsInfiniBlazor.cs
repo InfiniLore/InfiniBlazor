@@ -6,8 +6,11 @@ namespace InfiniLore.InfiniBlazor.JsRuntime;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IJsLocalStorageHelper {
-    Task<T?> TryGetValueAsync<T>(string key, CancellationToken ct = default);
-    Task<bool> TrySetValueAsync<T>(string key, T value, TimeSpan? expiresIn = null, CancellationToken ct = default);
-    Task<bool> TryRemoveValueAsync(string key, CancellationToken ct = default);
+public interface IJsInfiniBlazor {
+    IJsInfiniBlazorDocument Document { get; }
+    IJsInfiniBlazorElement Element { get; }
+    IJsInfiniBlazorTextSelection TextSelection { get; }
+    IJsInfiniBlazorKeyDownListener KeyDownListener { get; }
+    
+    Task CopyToClipboardAsync(string text);
 }

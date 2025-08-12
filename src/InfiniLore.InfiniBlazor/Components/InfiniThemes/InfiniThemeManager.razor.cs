@@ -17,7 +17,7 @@ namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class InfiniThemeManager(
     IThemeStateProvider themeStateProvider,
-    IJsRuntimeHelper jsRuntimeHelper,
+    IJsInfiniBlazor jsInfiniBlazor,
     ILogger<InfiniThemeManager> logger
 ) : ComponentBase, IAsyncDisposable {
 
@@ -37,7 +37,7 @@ public partial class InfiniThemeManager(
             
             // Fixes and issue when used in MAUI BlazorHybrid as there is not good HeadContent operations
             // just need to add <style id="infiniThemeManager-base-css"></style> at the desired location in the index.html of a MAUI app
-            await jsRuntimeHelper.AddOrUpdateStyleElementAtHead(BaseId, GetBaseThemeCss());
+            await jsInfiniBlazor.Document.AddOrUpdateElementAtHead(BaseId, GetBaseThemeCss());
         }
     }
 
@@ -80,7 +80,7 @@ public partial class InfiniThemeManager(
                 return;
             }
 
-            await jsRuntimeHelper.AddOrUpdateStyleElementAtHead(ThemeId, css);
+            await jsInfiniBlazor.Document.AddOrUpdateElementAtHead(ThemeId, css);
             InitialCss = null; // Forget the initial state to free up memory
         }
         finally {

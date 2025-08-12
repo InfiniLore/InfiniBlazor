@@ -8,7 +8,7 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits ComponentBase
-@inject IJsRuntimeHelper JsRuntimeHelper
+@inject IJsInfiniBlazor JsInfiniBlazor
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -17,7 +17,7 @@
         @foreach (ThemeItem item in ThemeItems) {
             <InfiniButton
                 Variant="ButtonVariant.Transparent"
-                OnClick="() => JsRuntimeHelper.CopyToClipboardAsync(item.CssVarName)">
+                OnClick="() => JsInfiniBlazor.CopyToClipboardAsync(item.CssVarName)">
                 <div class="w-12 h-12 shadow-md flex items-center justify-center leading-none rounded-xl"
                      style="background: var(@item.CssVarName)">
                 </div>

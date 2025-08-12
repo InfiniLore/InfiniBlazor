@@ -1,27 +1,30 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Microsoft.AspNetCore.Components.Web;
+using CodeOfChaos.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.JSInterop;
 
-namespace InfiniLore.InfiniBlazor.Components;
-
+namespace InfiniLore.InfiniBlazor.JsRuntime;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public record InfiniEditorKeyCombo(
-    bool CtrlKeyPressed,
-    string Key
-) {
-    public static InfiniEditorKeyCombo Empty { get; } = new(false, string.Empty);
-    public static InfiniEditorKeyCombo Bold { get; } = new(true, "b");
-    public static InfiniEditorKeyCombo Italic { get; } = new(true, "i");
-    public static InfiniEditorKeyCombo Underline { get; } = new(true, "u"); 
-    public static InfiniEditorKeyCombo SelectAll { get; } = new(true, "a");
-    
-    
+[InjectableScoped<IJsInfiniBlazorDocument>]
+public class JsInfiniBlazorDocument(
+    IJSRuntime jsRuntime,
+    ILogger<JsInfiniBlazorDocument> logger
+) : IJsInfiniBlazorDocument {
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static InfiniEditorKeyCombo From(KeyboardEventArgs args) 
-        => new(args.CtrlKey, args.Key.ToLowerInvariant());
+    public async Task AddOrUpdateElementAtHead(string id, string css) {
+        try {
+            await jsRuntime.InvokeVoidAsync("infiniBlazor.document.addOrUpdateElementAtHead", id, css);
+        }
+        catch (Exception e) {
+            logger.Warning(e, "Error adding or updating style element at head");
+        }
+    }
+    
 }

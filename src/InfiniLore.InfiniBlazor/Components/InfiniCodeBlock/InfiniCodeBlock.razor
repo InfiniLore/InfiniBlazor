@@ -8,7 +8,7 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniComponentBase
-@inject IJsRuntimeHelper JsRuntimeHelper
+@inject IJsInfiniBlazor JsInfiniBlazor
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -49,6 +49,6 @@
     private async Task CopyToClipboardAsync() {
         if (Content.IsNullOrWhiteSpace()) return;
 
-        await JsRuntimeHelper.CopyToClipboardAsync(Content);
+        await JsInfiniBlazor.CopyToClipboardAsync(Content);
     }
 }
