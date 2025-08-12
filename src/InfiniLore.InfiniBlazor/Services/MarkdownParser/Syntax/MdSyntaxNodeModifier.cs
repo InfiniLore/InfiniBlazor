@@ -26,6 +26,7 @@ public class MdSyntaxNodeModifier : IResettable {
         mod.OriginalInput = input;
         
         ReadOnlySpan<char> span = input.AsSpan();
+        Span<char> valueSpan = stackalloc char[span.Length]; // set it to the max possible
         
         int keyStart = 0;
         int keyEnd = -1;
@@ -37,11 +38,15 @@ public class MdSyntaxNodeModifier : IResettable {
                     if (pointer > keyStart) {
                         if (keyEnd == -1) {
                             // No '=' found, this is a flag attribute
-                            mod.Attributes.AddOrUpdate(span[keyStart..pointer].ToString().ToLowerInvariant(), new Range(pointer, pointer));
+                            int length = span[keyStart..pointer].ToLowerInvariant(valueSpan);
+                            string value = valueSpan[..length].ToString();
+                            mod.Attributes.AddOrUpdate(value, new Range(pointer, pointer));
                         }
                         else {
                             // Normal key=value attribute
-                            mod.Attributes.AddOrUpdate(span[keyStart..keyEnd].ToString().ToLowerInvariant(), new Range(valueStart, pointer));
+                            int length = span[keyStart..keyEnd].ToLowerInvariant(valueSpan);
+                            string value = valueSpan[..length].ToString();
+                            mod.Attributes.AddOrUpdate(value, new Range(valueStart, pointer));
                         }
                     }
                     keyStart = ++pointer;
@@ -61,16 +66,22 @@ public class MdSyntaxNodeModifier : IResettable {
                 }
             }
         }
-
+        
+        int spanLength = span.Length;
+        
         // Handle the last attribute if there is one
-        if (span.Length > keyStart) {
+        if (spanLength > keyStart) {
             if (keyEnd == -1) {
                 // Last attribute is a flag
-                mod.Attributes.AddOrUpdate(span[keyStart..].ToString().ToLowerInvariant(), new Range(span.Length, span.Length));
+                int length = span[keyStart..spanLength].ToLowerInvariant(valueSpan);
+                string value = valueSpan[..length].ToString();
+                mod.Attributes.AddOrUpdate(value, new Range(spanLength, spanLength));
             }
-            else if (valueStart < span.Length) {
+            else if (valueStart < spanLength) {
                 // Last attribute is key=value
-                mod.Attributes.AddOrUpdate(span[keyStart..keyEnd].ToString().ToLowerInvariant(), new Range(valueStart, span.Length));
+                int length = span[keyStart..keyEnd].ToLowerInvariant(valueSpan);
+                string value = valueSpan[..length].ToString();
+                mod.Attributes.AddOrUpdate(value, new Range(valueStart, spanLength));
             }
         }
         

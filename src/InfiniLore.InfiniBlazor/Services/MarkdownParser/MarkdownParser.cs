@@ -22,7 +22,7 @@ public class MarkdownParser(IMdSyntaxTreeConverter treeConverter, IMdSyntaxParse
         }
         catch (Exception ex) {
             logger.Error(ex, "Error parsing markdown");
-            return ex.Message;
+            return string.Empty;
         }
         finally {
             MdSyntaxTree.Pool.Return(tree);
@@ -37,7 +37,7 @@ public class MarkdownParser(IMdSyntaxTreeConverter treeConverter, IMdSyntaxParse
         }
         catch (Exception ex) {
             logger.Error(ex, "Error parsing markdown");
-            return new MarkupString(ex.Message);
+            return default;
         }
         finally {
             MdSyntaxTree.Pool.Return(tree);
