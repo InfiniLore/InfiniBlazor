@@ -23,7 +23,7 @@ public class JsRuntimeHelper(
     // -----------------------------------------------------------------------------------------------------------------
     public async Task<int> GetSelectionStartAsync(ElementReference element) {
         try {
-            return await jsRuntime.InvokeAsync<int>("getInputSelectionStart", element);
+            return await jsRuntime.InvokeAsync<int>("infiniBlazor.inputElement.getSelectionStart", element);
         }
         catch (Exception e) {
             logger.Warning(e, "Error getting selection start");
@@ -33,7 +33,7 @@ public class JsRuntimeHelper(
 
     public async Task<int> GetSelectionEndAsync(ElementReference element) {
         try {
-            return await jsRuntime.InvokeAsync<int>("getInputSelectionEnd", element);
+            return await jsRuntime.InvokeAsync<int>("infiniBlazor.inputElement.getSelectionEnd", element);
         }
         catch (Exception e) {
             logger.Warning(e, "Error getting selection end");
@@ -43,7 +43,7 @@ public class JsRuntimeHelper(
 
     public async Task<(int, int)> GetSelectionAsync(ElementReference element) {
         try {
-            var obj = await jsRuntime.InvokeAsync<Tuple<int, int>>("getInputSelection", element);
+            var obj = await jsRuntime.InvokeAsync<Tuple<int, int>>("infiniBlazor.inputElement.getSelection", element);
             return (Math.Max(0, obj.Item1), Math.Max(0, obj.Item2));
         }
         catch (Exception e) {
@@ -59,7 +59,7 @@ public class JsRuntimeHelper(
 
     public async Task SetSelectionRangeAsync(ElementReference element, int start, int end) {
         try {
-            await jsRuntime.InvokeVoidAsync("setInputSelectionRange", element, start, end);
+            await jsRuntime.InvokeVoidAsync("infiniBlazor.inputElement.setSelectionRange", element, start, end);
         }
         catch (Exception e) {
             logger.LogWarning(e, "Error setting selection range");
@@ -74,7 +74,7 @@ public class JsRuntimeHelper(
 
     public async Task AddPreventDefaultListenerAsync() {
         try {
-            await jsRuntime.InvokeVoidAsync("addPreventDefaultListener");
+            await jsRuntime.InvokeVoidAsync("infiniBlazor.keyListener.addPreventDefaultListener");
         }
         catch (JSDisconnectedException e) {
             logger.Debug(e, "Prevent default listener already added or the server is in static rendering mode, usually during a reconnection.");
@@ -86,7 +86,7 @@ public class JsRuntimeHelper(
 
     public async Task RemovePreventDefaultListenerAsync() {
         try {
-            await jsRuntime.InvokeVoidAsync("removePreventDefaultListener");
+            await jsRuntime.InvokeVoidAsync("infiniBlazor.keyListener.removePreventDefaultListener");
         }
         catch (JSDisconnectedException e) {
             logger.Debug(e, "Prevent default listener already removed or the server is in static rendering mode, usually during a reconnection.");
@@ -101,7 +101,7 @@ public class JsRuntimeHelper(
 
     public async Task SetTextContentAsync(ElementReference element, string text) {
         try {
-            await jsRuntime.InvokeVoidAsync("setTextContent", element, text);
+            await jsRuntime.InvokeVoidAsync("infiniBlazor.element.setTextContent", element, text);
         }
         catch (Exception e) {
             logger.Warning(e, "Error setting text content");
@@ -110,7 +110,7 @@ public class JsRuntimeHelper(
 
     public async Task<string> GetTextContentAsync(ElementReference element) {
         try {
-            return await jsRuntime.InvokeAsync<string>("getTextContent", element);
+            return await jsRuntime.InvokeAsync<string>("infiniBlazor.element.getTextContent", element);
         }
         catch (Exception e) {
             logger.Warning(e, "Error getting text content");
@@ -120,7 +120,7 @@ public class JsRuntimeHelper(
 
     public async Task AddOrUpdateStyleElementAtHead(string id, string css) {
         try {
-            await jsRuntime.InvokeVoidAsync("addOrUpdateStyleElementAtHead", id, css);
+            await jsRuntime.InvokeVoidAsync("infiniBlazor.document.addOrUpdateElementAtHead", id, css);
         }
         catch (Exception e) {
             logger.Warning(e, "Error adding or updating style element at head");
@@ -138,7 +138,7 @@ public class JsRuntimeHelper(
     
     public async Task AddHorizontalScroll(ElementReference element, double i) {
         try {
-            await jsRuntime.InvokeVoidAsync("window.addHorizontalScroll", element, i);
+            await jsRuntime.InvokeVoidAsync("infiniBlazor.element.addHorizontalScroll", element, i);
         }
         catch (Exception e) {
             logger.Warning(e, "Error adding horizontal scroll");
@@ -147,7 +147,16 @@ public class JsRuntimeHelper(
 
     public async Task ClickElementById(string id) {
         try {
-            await jsRuntime.InvokeVoidAsync("window.clickElementById", id);
+            await jsRuntime.InvokeVoidAsync("infiniBlazor.element.clickElementById", id);
+        }
+        catch (Exception e) {
+            logger.Warning(e, "Error clicking element by id");
+        }
+    }
+
+    public async Task ClickElement(ElementReference element) {
+        try {
+            await jsRuntime.InvokeVoidAsync("infiniBlazor.element.clickElement", element);
         }
         catch (Exception e) {
             logger.Warning(e, "Error clicking element by id");

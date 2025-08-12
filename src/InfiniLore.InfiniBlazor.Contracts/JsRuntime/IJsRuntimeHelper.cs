@@ -30,4 +30,5 @@ public interface IJsRuntimeHelper {
     Task CopyToClipboardAsync(string text);
     Task AddHorizontalScroll(ElementReference element, double i);
     Task ClickElementById(string id);
+    Task ClickElement(ElementReference element);
 }

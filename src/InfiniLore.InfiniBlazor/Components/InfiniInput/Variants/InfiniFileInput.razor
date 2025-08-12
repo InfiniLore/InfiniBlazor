@@ -18,7 +18,7 @@
 <InfiniInputLayout Component="@this">
     <InputFile
         OnChange="@OnFileChangeAsync"
-        id="@Id"
+        @ref="@InputFileRef"
         disabled="@IsDisabled"
         accept="@Accept"
         multiple="@AllowMultipleFiles"
@@ -57,11 +57,15 @@
     [Parameter] public EventCallback<IReadOnlyList<IBrowserFile>> OnFilesChanged { get; set; }
 
     private IReadOnlyList<IBrowserFile> _selectedFiles = Array.Empty<IBrowserFile>();
+    private InputFile InputFileRef { get; set; } = null!;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private async Task OpenFileDialog() => await JsRuntimeHelper.ClickElementById(Id).ConfigureAwait(false);
+    private async Task OpenFileDialog() {
+        if (InputFileRef.Element is not { } reference) return;
+        await JsRuntimeHelper.ClickElement(reference).ConfigureAwait(false);
+    }
 
     private async Task OnFileChangeAsync(InputFileChangeEventArgs e) {
         _selectedFiles = e.GetMultipleFiles(maximumFileCount: AllowMultipleFiles ? int.MaxValue : 1);
