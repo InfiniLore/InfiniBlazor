@@ -28,7 +28,7 @@ public sealed class MdSyntaxParser(IServiceProvider serviceProvider, ILogger<MdS
         for (int index = keyNames.Length - 1; index >= 0; index--) {
             string groupName = keyNames[index];
             if (serviceProvider.GetKeyedService<IMdSyntaxHandler>(groupName) is not {} service) {
-                logger.LogWarning("No MarkdownElementHandler service found for group name '{groupName}'", groupName);
+                logger.Warning("No MarkdownElementHandler service found for group name '{groupName}'", groupName);
                 continue;
             }
 

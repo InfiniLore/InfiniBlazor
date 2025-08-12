@@ -60,7 +60,7 @@ public class JsInfiniBlazorTextSelection(
             await jsRuntime.InvokeVoidAsync("infiniBlazor.textSelection.setRange", element, start, end);
         }
         catch (Exception e) {
-            logger.LogWarning(e, "Error setting selection range");
+            logger.Warning(e, "Error setting selection range");
         }
     }
 

@@ -41,7 +41,7 @@ public class JsInfiniBlazorKeyDownListener(
             logger.Debug(e, "Prevent default listener already removed or the server is in static rendering mode, usually during a reconnection.");
         }
         catch (Exception e) {
-            logger.LogWarning(e, "failed to remove prevent default listener");
+            logger.Warning(e, "failed to remove prevent default listener");
         }
     }
 }

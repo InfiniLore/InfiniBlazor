@@ -55,13 +55,13 @@ public partial class InfiniThemeManager(
 
             string? collectionName = state.CollectionName;
             if (collectionName.IsNullOrWhiteSpace()) {
-                logger.LogWarning("Could not find theme collection.");
+                logger.Warning("Could not find theme collection.");
                 return;
             }
 
             IThemeCollection? collection = await themeStateProvider.TryGetCollectionAsync(collectionName);
             if (collection is null) {
-                logger.LogWarning("Could not find theme collection.");
+                logger.Warning("Could not find theme collection.");
                 return;
             }
 
@@ -71,12 +71,12 @@ public partial class InfiniThemeManager(
             }
 
             if (!collection.TryGetCssData(mode, out ICssData? cssData)) {
-                logger.LogWarning("Could not find theme mode CSS data.");
+                logger.Warning("Could not find theme mode CSS data.");
                 return;
             }
 
             if (!TryGetCssString(cssData, out string? css)) {
-                logger.LogWarning("Could not create theme CSS.");
+                logger.Warning("Could not create theme CSS.");
                 return;
             }
 
@@ -110,7 +110,7 @@ public partial class InfiniThemeManager(
             }
         }
         catch (Exception ex) {
-            logger.LogError(ex, "Failed to preload theme CSS.");
+            logger.Error(ex, "Failed to preload theme CSS.");
         }
     }
     
@@ -141,7 +141,7 @@ public partial class InfiniThemeManager(
     private string GetBaseThemeCss() {
         if (TryGetCssString(InfiniBlazorCssData.Instance, out string? css)) return css;
 
-        logger.LogWarning("Could not create base theme CSS.");
+        logger.Warning("Could not create base theme CSS.");
         return string.Empty;
     }
 }

@@ -26,7 +26,7 @@ public abstract class SingleInstructionModifiers(ILogger logger) : ITextModifier
 
         // Validate range
         if (start < 0 || end > length || start > end) {
-            logger.LogWarning("Invalid range: start={start}, end={end}, length={length}", start, end, length);
+            logger.Warning("Invalid range: start={start}, end={end}, length={length}", start, end, length);
             return;
         }
 

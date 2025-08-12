@@ -78,7 +78,6 @@ public partial class InfiniMarkdownEditor(
 
             SourceHasChanged?.Invoke();
             StateHasChanged();
-
         }
         finally {
             MdSyntaxTree.Pool.Return(tree);
