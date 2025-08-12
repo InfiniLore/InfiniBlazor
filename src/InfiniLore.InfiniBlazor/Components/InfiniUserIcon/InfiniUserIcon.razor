@@ -12,7 +12,7 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="relative w-8 h-8">
-    <a href="@HrefUserProfile" @onclick:stopPropagation>
+    <a href="@Href" @onclick:stopPropagation>
         @if (!_imageLoadFailed) {
             <img src="@ImageUrl"
                  alt="Profile"
@@ -54,7 +54,7 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter][EditorRequired] public string HrefUserProfile { get; set; } = string.Empty;
+    [Parameter][EditorRequired] public string Href { get; set; } = string.Empty;
     [Parameter] public string? ImageUrl { get; set; }
     [Parameter] public bool ShowStatusIndicator { get; set; }
     [Parameter] public string? StatusEmoji { get; set; }

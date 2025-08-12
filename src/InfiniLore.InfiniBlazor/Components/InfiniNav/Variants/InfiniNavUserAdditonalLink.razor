@@ -9,21 +9,14 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<a href="@ComputedHref"
-   class="@ContainerClasses"
-   target="@(OpenInNewTab ? "_blank" : null)"
-   rel="noopener noreferrer"
-   hidden="@IsHidden"
-   @onclick="() => SubMenuContext?.OnSubItemPressed?.Invoke()"
-   >
-    <InfiniNavItem Text="@Text" Icon="@Icon" Class="@Class">
-        @ChildContent
-    </InfiniNavItem>
-</a>
+<InfiniButton Href="@Href" Class="@ConcatClasses(AdditionalLinkClasses, Class)" Variant="ButtonVariant.Transparent">
+    @ChildContent
+</InfiniButton>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public bool OpenInNewTab { get; set; }
+    public const string AdditionalLinkClasses = "text-sm text-(--color-base-10) whitespace-nowrap hover:text-(--color-accent)";
 }
 

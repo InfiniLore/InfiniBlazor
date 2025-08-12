@@ -64,6 +64,8 @@ public class QueryParameterManager(NavigationManager navigationManager) : IQuery
     }
 
     public string AddTrackedQueryParameters(string uri) {
+        if (uri.IsNullOrEmpty()) return uri;
+        
         // Extract query string manually without creating a Uri for relative URIs
         int qIdx = uri.IndexOf('?');
         string inputQueryString = qIdx >= 0 ? uri[(qIdx + 1)..] : string.Empty;
