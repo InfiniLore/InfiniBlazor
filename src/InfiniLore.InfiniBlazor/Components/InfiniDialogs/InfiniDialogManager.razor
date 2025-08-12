@@ -57,15 +57,8 @@
     }
 
     private async Task OnDialogOpenedAsync() {
-        if (Dialog is not null) {
-            Logger.Debug("A dialog has already been instantiated");
-            return;
-        }
-
-        if (await DialogProvider.TakeDialogAsync() is not {} data) {
-            Logger.Debug("No dialog in stack");
-            return;
-        }
+        if (Dialog is not null) return; // Dialog is already open
+        if (await DialogProvider.TakeDialogAsync() is not {} data) return; // Stack of dialogs is empty, could happen in rapid concurrent states
 
         Dialog = data;
         if (!HasDialog) {

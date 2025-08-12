@@ -30,7 +30,7 @@ public class DialogProvider(ILogger<DialogProvider> logger) : IDialogProvider {
     // -----------------------------------------------------------------------------------------------------------------
     public async Task PushDialogAsync(IDialogData dialog) {
         if (DialogsById.ContainsKey(dialog.Id)) {
-            logger.Warning("Dialog already exists: {dialog}", dialog);
+            logger.Debug("Dialog already exists: {dialog}", dialog);
             return;       
         }
         await DialogsSemaphore.WaitAsync();
@@ -50,8 +50,7 @@ public class DialogProvider(ILogger<DialogProvider> logger) : IDialogProvider {
             DialogIds[Math.Max(0, DialogCount - 1)] = dialog.Id;
             SortDialogIdsByPriority();
             
-            _ = OnDialogOpenedAsync?.Invoke();
-            logger.Information("Dialog added: {dialog}", dialog);
+            _ = OnDialogOpenedAsync?.Invoke().ConfigureAwait(false);
         }
         finally {
             DialogsSemaphore.Release();       
@@ -82,16 +81,8 @@ public class DialogProvider(ILogger<DialogProvider> logger) : IDialogProvider {
         }
     }
 
-    private void SortDialogIdsByPriority() {
-        
-        logger.Information("Before sort: {priorities}", string.Join(", ", 
-            DialogIds.Take(DialogCount).Select(id => DialogsById[id].Priority)));
-        
-        Array.Sort(DialogIds, 0, DialogCount, Comparer);
-    
-        logger.Information("After sort: {priorities}", string.Join(", ", 
-            DialogIds.Take(DialogCount).Select(id => DialogsById[id].Priority)));
-    }
+    private void SortDialogIdsByPriority() 
+        => Array.Sort(DialogIds, 0, DialogCount, Comparer);
 
     public async Task<IDialogData?> TakeDialogAsync() {
         await DialogsSemaphore.WaitAsync();
