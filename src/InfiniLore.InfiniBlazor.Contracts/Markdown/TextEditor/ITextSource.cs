@@ -11,4 +11,5 @@ public interface ITextSource {
 
     int Length { get; }
     IReadOnlyList<Range> Lines { get; }
+    bool IsEmpty { get; }
 }

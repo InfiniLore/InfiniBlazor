@@ -20,7 +20,6 @@
     <PackageVersion Include="CodeOfChaos.Extensions.Serilog" Version="0.70.1" />
     <PackageVersion Include="CodeOfChaos.GeneratorTools" Version="2.0.0" />
     <PackageVersion Include="CodeOfChaos.Testing.TUnit" Version="0.13.0" />
-    <PackageVersion Include="HtmlSanitizer" Version="9.0.886" />
     <PackageVersion Include="InfiniLore.Lucide" Version="0.32.539" />
     <PackageVersion Include="IsExternalInit" Version="1.0.3" />
     <PackageVersion Include="JetBrains.Annotations" Version="2025.2.0" />

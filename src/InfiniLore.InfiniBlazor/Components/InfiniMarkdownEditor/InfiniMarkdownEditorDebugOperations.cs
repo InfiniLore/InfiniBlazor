@@ -135,7 +135,7 @@ public static class InfiniMarkdownEditorDebugInserts {
         > [!success] Title
         > Body
         
-        > [!unknown] Title
+        > [!unknown|icon=signature] Title
         > Body
         """;
 }

@@ -22,7 +22,6 @@ public partial class InfiniMarkdownEditor(
     [FromKeyedServices("styled")] IMdSyntaxTreeConverter treeConverter,
     IVisualDebuggerProvider debuggerProvider,
     ILogger<InfiniMarkdownEditor> logger
-    // IHtmlSanitizer sanitizer
 ) : InfiniComponentBase {
     [Parameter, EditorRequired] public ITextSource Source { get; set; } = null!;
     [Parameter] public EventCallback<ITextSource> SourceChanged { get; set; }
@@ -95,7 +94,7 @@ public partial class InfiniMarkdownEditor(
 
     public async Task OnInputAsync(ChangeEventArgs e) {
         if (EditorIsLocked) return;
-
+        
         if (e.Value is string value) {
             Source.Text = value;
             await SourceChanged.InvokeAsync(Source);
@@ -138,15 +137,16 @@ public partial class InfiniMarkdownEditor(
     // -----------------------------------------------------------------------------------------------------------------
     private async Task HandleSelectAllAsync() {
         if (EditorIsLocked) return;
-        if (Source.Text.IsNullOrWhiteSpace()) return;
+        if (Source.IsEmpty) return;
 
+        // when ctrl+a has been pressed twice, select the full text
         if (LastPressedCombo == InfiniEditorKeyCombo.SelectAll) {
             Range fullRange = new(0, Source.Length);
             await jsInfiniBlazor.TextSelection.SetRangeAsync(InputRef, fullRange);
             return;
         }
         
-        // when we select "a" only once, we should get the current line
+        // when ctrl+a has been pressed only once, select the current line
         int caretIndex = await jsInfiniBlazor.TextSelection.GetStartIndexAsync(InputRef);
         if (!textEditor.TryGetCaretLine(Source, caretIndex, out Range lineRange)) return;
 
