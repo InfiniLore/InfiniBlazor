@@ -8,7 +8,5 @@ namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 public class DialogManagerContext {
     public event Func<Guid, Task>? OnDialogExitAsync;
-    public void InvokeDialogExit(Guid id) 
-        // Fire and forget
-        => OnDialogExitAsync?.Invoke(id);
+    public void InvokeDialogExit(Guid id) => OnDialogExitAsync?.Invoke(id); // Fire and forget
 }

@@ -21,7 +21,6 @@ public class Program {
             config.SetRenderMode(RenderMode.InteractiveServer);
             config.RegisterTheme<PrideThemeCollection>();
             config.AddMarkdownLogic();
-            // config.SetRenderMode(RenderMode.InteractiveAuto);
         });
         
         builder.Services.AddRazorComponents()

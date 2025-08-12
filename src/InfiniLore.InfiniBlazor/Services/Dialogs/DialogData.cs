@@ -8,8 +8,8 @@ namespace InfiniLore.InfiniBlazor.Dialogs;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public abstract record DialogData<T> : IDialogData where T : InfiniDialogBase {
-    public Type ComponentType { get; } = typeof(T);
+public abstract record DialogData<TComponent> : IDialogData where TComponent : InfiniDialogBase {
+    public Type ComponentType { get; } = typeof(TComponent);
     public Guid Id { get; } = Guid.CreateVersion7();
     
     private readonly int _priority;
