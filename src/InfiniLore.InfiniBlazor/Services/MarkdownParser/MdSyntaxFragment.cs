@@ -16,7 +16,6 @@ public sealed class MdSyntaxFragment : IResettable {
     private IMdSyntaxNode? _childNode;
     private Match? _match;
     private MdSyntaxHandlerOrigin _handlerOrigin;
-    private bool _isMatch;
 
     public static ObjectPool<MdSyntaxFragment> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxFragment>(32);
 
@@ -28,7 +27,6 @@ public sealed class MdSyntaxFragment : IResettable {
         fragment._parentNode = node;
         fragment._match = match;
         fragment._handlerOrigin = handlerOrigin;
-        fragment._isMatch = true;
         return fragment;
     }
 
@@ -36,27 +34,37 @@ public sealed class MdSyntaxFragment : IResettable {
         MdSyntaxFragment fragment = Pool.Get();
         fragment._parentNode = parentNode;
         fragment._childNode = childNode;
-        fragment._isMatch = false;
         return fragment;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public bool TryGetAsMatch([NotNullWhen(true)] out Match? match, [NotNullWhen(true)] out IMdSyntaxNode? parentNode, out MdSyntaxHandlerOrigin parentOrigin) {
+    public bool TryGetAsMatch(
+        [NotNullWhen(true)] out Match? match,
+        [NotNullWhen(true)] out IMdSyntaxNode? parentNode,
+        out MdSyntaxHandlerOrigin parentOrigin
+    ) {
         match = _match;
         parentNode = _parentNode;
         parentOrigin = _handlerOrigin;
-        return _isMatch;
+        return _match is not null;
     }
 
-    public bool TryGetAsProcessedNode([NotNullWhen(true)] out IMdSyntaxNode? parentNode, [NotNullWhen(true)] out IMdSyntaxNode? childNode) {
+    public bool TryGetAsProcessedNode(
+        [NotNullWhen(true)] out IMdSyntaxNode? parentNode,
+        [NotNullWhen(true)] out IMdSyntaxNode? childNode
+    ) {
         parentNode = _parentNode;
         childNode = _childNode;
-        return !_isMatch;
+        return _match is null;
     }
 
     public bool TryReset() {
+        _parentNode = null;
+        _childNode = null;
+        _match = null;
+        _handlerOrigin = default;
         return true;
     }
 

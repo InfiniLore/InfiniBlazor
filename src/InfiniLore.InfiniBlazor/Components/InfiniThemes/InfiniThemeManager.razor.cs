@@ -125,9 +125,11 @@ public partial class InfiniThemeManager(
         try {
             sb.Append(":root{");
             foreach ((string key, string value) in cssData.AsCssVariables()) {
-                sb.Append($"{key}:{value};");
+                sb.Append(key);
+                sb.Append(':');
+                sb.Append(value);
+                sb.Append(';');
             }
-
             sb.Append('}');
 
             css = sb.ToString();
