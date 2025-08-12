@@ -9,18 +9,24 @@ namespace Tests.InfiniLore.InfiniBlazor.MarkdownParser;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdSyntaxNodeModifierTests {
-    [Test]
-    [Arguments("|size=100x100",1)]
-    [Arguments("|size=100x100|",1, new[] {"size", "100x100"})]
-    [Arguments("|size=100x100|something=else",2, new[] {"size", "100x100"}, new[] {"something", "else"})]
-    [Arguments("|size=100x100|something=else|",2, new[] {"size", "100x100"}, new[] {"something", "else"})]
-    [Arguments("|size=100x100|something=else|flag",3, new[] {"size", "100x100"}, new[] {"something", "else"}, new[] {"flag"})]
-    [Arguments("|size=100x100|something=else|flag|",3, new[] {"size", "100x100"}, new[] {"something", "else"}, new[] {"flag"})]
+
+    public static IEnumerable<Func<(string Input, int Count, string[][] ExpectedOutput)>> DataSources() {
+        yield return () => ("|size=100x100", 1, []);
+        yield return () => ("|size=100x100|", 1, [["size", "100x100"]]);
+
+        yield return () => ("|size=100x100|something=else",2, [["size", "100x100"], ["something", "else"]]);
+        yield return () => ("|size=100x100|something=else|",2, [["size", "100x100"], ["something", "else"]]);
+        yield return () => ("|size=100x100|something=else|flag",3, [["size", "100x100"], ["something", "else"], ["flag"]]);
+        yield return () => ("|size=100x100|something=else|flag|",3, [["size", "100x100"], ["something", "else"], ["flag"]]);
+        
+        // On duplicate keys the default behavior should be to take the last one.
+        yield return () => ("|something=else|something=different",1, [["something", "different"]]);
+        yield return () => ("|something=else|something=different|",1, [["something", "different"]]);
+    }
     
-    // On duplicate keys the default behavior should be to take the last one.
-    [Arguments("|something=else|something=different",1, new[] {"something", "different"})]
-    [Arguments("|something=else|something=different|",1, new[] {"something", "different"})]
-    public async Task ShouldParseCorrectly(string input, int count, params string[][] expectedOutput) {
+    [Test]
+    [MethodDataSource(nameof(DataSources))]
+    public async Task ShouldParseCorrectly(string input, int count, string[][] expectedOutput) {
         // Arrange
         
         // Act

@@ -12,15 +12,18 @@ namespace InfiniLore.InfiniBlazor.QueryParameters;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableScoped<IQueryParameterManager>]
 public class QueryParameterManager(NavigationManager navigationManager) : IQueryParameterManager {
-    private static HashSet<string> TrackedQueryParameters { get; } = [
+    private HashSet<string> TrackedQueryParameters { get; } = [
         QueryParameterNames.Debug,
         QueryParameterNames.ThemeCollection,
-        QueryParameterNames.ThemeMode,
+        QueryParameterNames.ThemeMode
     ];
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public void RegisterTrackedQueryParameter(string key) 
+        => TrackedQueryParameters.Add(key);
+
     // Set a single query parameter
     public void SetParam<T>(string key, T value)
         => SetParams((key, value));
@@ -62,8 +65,8 @@ public class QueryParameterManager(NavigationManager navigationManager) : IQuery
             return default;
         }
     }
-
-    public string AddTrackedQueryParameters(string uri) {
+    
+    public string ApplyTrackedQueryParameters(string uri) {
         if (uri.IsNullOrEmpty()) return uri;
         
         // Extract query string manually without creating a Uri for relative URIs

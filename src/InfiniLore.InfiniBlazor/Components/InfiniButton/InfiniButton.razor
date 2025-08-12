@@ -269,7 +269,7 @@
 
     private void ComputeHref() {
         _computedHref = Href is not null && !DisableTrackedQueryParams
-            ? QueryParameterManager.AddTrackedQueryParameters(Href)
+            ? QueryParameterManager.ApplyTrackedQueryParameters(Href)
             : Href;
     }
 

@@ -31,7 +31,7 @@ public class InfiniNavLinkBase : InfiniNavItemBase, IDisposable {
 
     private void ComputeHref() {
         ComputedHref = !DisableTrackedQueryParams 
-            ? QueryParameterManager.AddTrackedQueryParameters(Href)
+            ? QueryParameterManager.ApplyTrackedQueryParameters(Href)
             : Href;
     }
 

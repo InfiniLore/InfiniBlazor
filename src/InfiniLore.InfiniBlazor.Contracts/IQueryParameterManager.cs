@@ -13,5 +13,5 @@ public interface IQueryParameterManager {
     void RemoveParams(params Span<string> keys);
     T? GetParam<T>(string key);
 
-    public string AddTrackedQueryParameters(string uri);
+    public string ApplyTrackedQueryParameters(string uri);
 }
