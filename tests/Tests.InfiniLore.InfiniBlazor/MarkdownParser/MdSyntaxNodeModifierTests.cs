@@ -11,6 +11,9 @@ namespace Tests.InfiniLore.InfiniBlazor.MarkdownParser;
 public class MdSyntaxNodeModifierTests {
 
     public static IEnumerable<Func<(string Input, int Count, string[][] ExpectedOutput)>> DataSources() {
+        yield return () => ("", 0, []);
+        yield return () => ("|", 0, []);
+        yield return () => ("|=", 0, []);
         yield return () => ("|size=100x100", 1, []);
         yield return () => ("|size=100x100|", 1, [["size", "100x100"]]);
 

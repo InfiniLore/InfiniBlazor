@@ -24,6 +24,10 @@
         <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="Tests.InfiniLore.InfiniBlazor" />
+    </ItemGroup>
+
     <!-- Include external files -->
     <ItemGroup>
         <None Include="../../LICENSE" Pack="true" PackagePath="" Visible="false" />
