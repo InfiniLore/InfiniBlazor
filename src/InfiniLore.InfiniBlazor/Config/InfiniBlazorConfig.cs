@@ -34,7 +34,7 @@ public class InfiniBlazorConfig(IServiceCollection collection) {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public InfiniBlazorConfig SetRenderMode(IComponentRenderMode renderMode) {
+    public InfiniBlazorConfig SetComponentRenderMode(IComponentRenderMode renderMode) {
         RenderModeProvider.InfiniRenderMode = renderMode;
         return this;
     }

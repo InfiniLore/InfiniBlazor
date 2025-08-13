@@ -13,7 +13,7 @@
     <div class="flex-1 overflow-y-auto infini-scrollbar">
         @if (!VisualDebugger.IsEnabled()) {
             <div class="px-4 max-w-none">
-                @ParentEditor.MarkdownOutput
+                @EditorState.MarkdownOutput
             </div>
         }
         else {

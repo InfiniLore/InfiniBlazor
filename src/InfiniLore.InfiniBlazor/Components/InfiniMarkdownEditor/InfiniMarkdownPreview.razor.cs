@@ -10,9 +10,9 @@ namespace InfiniLore.InfiniBlazor.Components;
 // Methods
 // -----------------------------------------------------------------------------------------------------------------
 public partial class InfiniMarkdownPreview : InfiniComponentBase {
-    [CascadingParameter] public InfiniMarkdownEditor ParentEditor { get; set; } = null!; 
+    [CascadingParameter] public MarkdownEditorState EditorState { get; set; } = null!; 
 
-    private string? MarkdownStringOutput => ParentEditor.MarkdownStringOutput;
+    private string? MarkdownStringOutput => EditorState.MarkdownStringOutput;
     private static readonly FrozenSet<string> BlockElements = [
         "<div", "<p", "<h1", "<h2", "<h3", "<h4", "<h5", "<h6",
         "<ul", "<ol", "<li", "<table", "<thead", "<tbody", "<tr",
@@ -27,13 +27,13 @@ public partial class InfiniMarkdownPreview : InfiniComponentBase {
     // -----------------------------------------------------------------------------------------------------------------
     protected override void OnInitialized() {
         base.OnInitialized();
-        ParentEditor.SourceHasChanged += StateHasChanged;
+        EditorState.OnOutputChange += StateHasChanged;
     }
 
     public override async ValueTask DisposeAsync() {
         await base.DisposeAsync();
         
-        ParentEditor.SourceHasChanged -= StateHasChanged;
+        EditorState.OnOutputChange -= StateHasChanged;
         GC.SuppressFinalize(this);
     }
 

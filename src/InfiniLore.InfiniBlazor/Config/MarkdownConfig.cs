@@ -16,8 +16,8 @@ public class MarkdownConfig(InfiniBlazorConfig infiniBlazorConfig) {
     public TextEditorConfig AddTextEditor(object? key = null) {
         var config = new TextEditorConfig(infiniBlazorConfig, key);
         
-        if (key is null) infiniBlazorConfig.Services.AddSingleton(TextEditorFactory.CreateTextEditor);
-        else infiniBlazorConfig.Services.AddKeyedSingleton(key, TextEditorFactory.CreateKeyedTextEditor);
+        if (key is null) infiniBlazorConfig.Services.AddTransient(TextEditorFactory.CreateTextEditor);
+        else infiniBlazorConfig.Services.AddKeyedTransient(key, TextEditorFactory.CreateKeyedTextEditor);
         return config;
     }
 }

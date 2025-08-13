@@ -15,7 +15,7 @@ public static class Program {
         var builder = WebAssemblyHostBuilder.CreateDefault(args);
         
         builder.Services.AddInfiniBlazor(config => {
-            config.SetRenderMode(RenderMode.InteractiveServer);
+            config.SetComponentRenderMode(RenderMode.InteractiveAuto);
             config.RegisterTheme<PrideThemeCollection>();
             config.AddMarkdownLogic();
         });
