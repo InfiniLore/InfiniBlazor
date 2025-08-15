@@ -1,22 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Markdown;
+namespace InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMdSyntaxNode {
-    IMdSyntaxNode? Parent { get; set; }
-    int ChildCount { get; }
-    int Depth { get; set; }
+public abstract class MdComponentBase {
 
-    ReadOnlySpan<IMdSyntaxNode> GetChildrenSpan();
-    IEnumerable<IMdSyntaxNode> GetChildren();
-
-    void AddChildNode(IMdSyntaxNode childNode);
-    TChild AddChildNode<TChild>(TChild childNode) where TChild : IMdSyntaxNode;
-
-    IMdSyntaxNode WithContent(string content);
-
-    void ReturnToPool();
+    public abstract IDictionary<string, object> GetDynamicParameters();
 }

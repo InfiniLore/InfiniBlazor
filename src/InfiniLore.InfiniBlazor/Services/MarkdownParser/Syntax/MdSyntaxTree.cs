@@ -20,6 +20,13 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region Visit Nodes
+    public IEnumerable<IMdSyntaxNode> VisitTopLevelNodes() {
+        int childCount = RootNode.ChildCount;
+        return childCount != 0 
+            ? RootNode.GetChildren() // Early exit for empty tree nodes
+            : Enumerable.Empty<IMdSyntaxNode>();
+    }
+    
     public IEnumerable<IMdSyntaxNode> VisitNodesBreadthFirst() {
         ReadOnlySpan<IMdSyntaxNode> rootNodeChildren = RootNode.GetChildrenSpan();
         int rootNodeChildCount = rootNodeChildren.Length;

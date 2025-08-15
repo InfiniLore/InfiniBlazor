@@ -42,6 +42,12 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
             ? ChildNodes.AsSpan(0, ChildCount)
             : ReadOnlySpan<IMdSyntaxNode>.Empty;
     }
+    
+    public IEnumerable<IMdSyntaxNode> GetChildren() {
+        for (int i = 0; i < ChildCount; i++) {
+            yield return ChildNodes[i];       
+        }    
+    }
 
     public void AddChildNode(IMdSyntaxNode childNode) {
         // Check if we need to resize

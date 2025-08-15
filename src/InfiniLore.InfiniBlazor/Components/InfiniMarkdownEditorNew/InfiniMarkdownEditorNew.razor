@@ -13,13 +13,11 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="@EditorContext">
-    <div class="mdEditor-container flex w-full flex-col">
+    <div class="mdEditor-container flex w-full flex-col h-full" >
         <div class="mdEditor-toolbarTop"></div>
-        <div class="mdEditor-content flex w-full">
-            <InfiniMdEditorContent/>
-        </div>
-        <div class="mdEditor-preview">
-            <InfiniMdEditorPreview/>
+        <div class="flex flex-row size-full h-full">
+            <InfiniMdEditorContent Class="max-w-1/2 min-w-1/2 w-1/2"/>
+            <InfiniMdEditorPreview Class="max-w-1/2 min-w-1/2 w-1/2"/>
         </div>
         <div class="mdEditor-toolbarBottom"></div>
     </div>

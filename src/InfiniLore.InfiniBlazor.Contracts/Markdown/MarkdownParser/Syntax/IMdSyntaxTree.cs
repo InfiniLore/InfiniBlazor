@@ -9,6 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 public interface IMdSyntaxTree {
     IMdSyntaxNode RootNode { get; }
 
+    IEnumerable<IMdSyntaxNode> VisitTopLevelNodes();
     IEnumerable<IMdSyntaxNode> VisitNodesBreadthFirst();
     IEnumerable<IMdSyntaxNode> VisitNodesDeepestFirst();
 }

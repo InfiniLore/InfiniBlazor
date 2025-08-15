@@ -2,24 +2,33 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Markdown
+@using InfiniLore.InfiniBlazor.MarkdownParser.Syntax
 
 @* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inject ITextEditor TextEditor
+@inject  IMdSyntaxParser SyntaxParser
 @inherits InfiniMdEditorComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="border-2 border-green-500 flex w-full">
-    @EditorContext.Output.MarkupPreview
+<div class="@Class flex min-h-0">
+    <div class="border-2 border-green-500 flex-1 overflow-y-auto infini-scrollbar">
+        @foreach (var node in Nodes) {
+            <DynamicComponent Type="typeof(DynamicMdComponentUnknown)" Parameters="@(new Dictionary<string, object>(){["Node"] = node})"></DynamicComponent>
+        }
+        
+    </div>
 </div>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
+    public IEnumerable<IMdSyntaxNode> Nodes = Enumerable.Empty<IMdSyntaxNode>();
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Component lifetime Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -40,7 +49,17 @@
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private async Task OnSourceChangedAsync() {
-        EditorContext.Output = new MdEditorOutput(null, EditorContext.TextSource.Text, new MarkupString(EditorContext.TextSource.Text));
+        MdSyntaxTree tree = MdSyntaxTree.Pool.Get();
+        SyntaxParser.ParseToTree(EditorContext.TextSource.Text, tree);
+        
+        EditorContext.Output = new MdEditorOutput(
+            tree,
+            null,
+            default
+        );
+
+        Nodes = tree.VisitTopLevelNodes();
+        
         await InvokeAsync(StateHasChanged).ConfigureAwait(false);
     }
 }

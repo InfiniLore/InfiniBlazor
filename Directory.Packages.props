@@ -7,17 +7,17 @@
     <PackageVersion Include="BenchmarkDotNet" Version="0.15.2" />
     <PackageVersion Include="Bogus" Version="35.6.3" />
     <PackageVersion Include="CodeOfChaos.CliArgsParser.Library" Version="5.0.0" />
-    <PackageVersion Include="CodeOfChaos.Extensions" Version="0.74.0" />
-    <PackageVersion Include="CodeOfChaos.Extensions.AspNetCore" Version="0.74.0" />
-    <PackageVersion Include="CodeOfChaos.Extensions.AspNetCore.Components" Version="0.74.0" />
-    <PackageVersion Include="CodeOfChaos.Extensions.DependencyInjection" Version="0.74.0" />
-    <PackageVersion Include="CodeOfChaos.Extensions.DependencyInjection.Generators" Version="0.74.0">
+    <PackageVersion Include="CodeOfChaos.Extensions" Version="0.77.3" />
+    <PackageVersion Include="CodeOfChaos.Extensions.AspNetCore" Version="0.77.3" />
+    <PackageVersion Include="CodeOfChaos.Extensions.AspNetCore.Components" Version="0.77.3" />
+    <PackageVersion Include="CodeOfChaos.Extensions.DependencyInjection" Version="0.77.3" />
+    <PackageVersion Include="CodeOfChaos.Extensions.DependencyInjection.Generators" Version="0.77.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
-    <PackageVersion Include="CodeOfChaos.Extensions.MicrosoftLogging" Version="0.74.0" />
-    <PackageVersion Include="CodeOfChaos.Extensions.ObjectPool" Version="0.74.0" />
-    <PackageVersion Include="CodeOfChaos.Extensions.Serilog" Version="0.74.0" />
+    <PackageVersion Include="CodeOfChaos.Extensions.MicrosoftLogging" Version="0.77.3" />
+    <PackageVersion Include="CodeOfChaos.Extensions.ObjectPool" Version="0.77.3" />
+    <PackageVersion Include="CodeOfChaos.Extensions.Serilog" Version="0.77.3" />
     <PackageVersion Include="CodeOfChaos.GeneratorTools" Version="2.0.0" />
     <PackageVersion Include="CodeOfChaos.Testing.TUnit" Version="0.13.0" />
     <PackageVersion Include="InfiniLore.Lucide" Version="0.32.539" />

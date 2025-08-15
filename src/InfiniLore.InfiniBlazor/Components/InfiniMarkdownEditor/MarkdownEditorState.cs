@@ -23,13 +23,13 @@ public sealed class MarkdownEditorState {
 
     public event Action? OnOutputChange;
     
-    private ActionDebouncer SourceChangedCallbackDebouncer { get; set; } = ((Action)(() => {})).GetDebouncer(100);
+    private Debouncer SourceChangedCallbackDebouncer { get; set; } = Debouncer.Empty;
     
     public void OutputHasChanged() => OnOutputChange?.Invoke();
     
     public void SetSourceChangedCallback(Action? callback) {
         if (callback is null) {
-            SourceChangedCallbackDebouncer = ((Action)(() => {})).GetDebouncer(100);
+            SourceChangedCallbackDebouncer = Debouncer.Empty;
             return;
         }
         SourceChangedCallbackDebouncer = callback.GetDebouncer(100);
