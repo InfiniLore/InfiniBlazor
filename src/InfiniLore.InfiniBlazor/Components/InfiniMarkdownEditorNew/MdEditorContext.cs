@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.Debouncers;
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.TextEditor;
 using Microsoft.AspNetCore.Components;
@@ -22,9 +21,19 @@ public class MdEditorContext {
     public static MdEditorContext Empty => new();
 
     // -----------------------------------------------------------------------------------------------------------------
+    // Constuctors
+    // -----------------------------------------------------------------------------------------------------------------
+    private MdEditorContext() { }
+    public MdEditorContext Initialize() {
+        
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void SetTextSource(ITextSource textSource) => TextSource = textSource;
+    public void SetTextSource(ITextSource textSource)
+        => TextSource = textSource;
+    
     public async Task UpdateSource(string value) {
         TextSource.Text = value;
         
