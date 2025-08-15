@@ -1,0 +1,29 @@
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor
+@using InfiniLore.InfiniBlazor.Markdown
+@using InfiniLore.InfiniBlazor.TextEditor
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@page "/markdown-editor/new"
+@rendermode RenderModeProvider.InfiniRenderMode
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniPage Title="Markdown Editor" Class="p-4 w-full">
+    <InfiniSection Class="grow flex flex-col gap-2 overflow-auto infini-scrollbar h-128 w-full">
+        <InfiniHeading1>Markdown Editor 2</InfiniHeading1>
+        <InfiniMarkdownEditorNew>
+            
+        </InfiniMarkdownEditorNew>
+    </InfiniSection>
+</InfiniPage>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    private ITextSource TextSource0 { get; set; } = new TextSource();
+}
+

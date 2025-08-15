@@ -1,0 +1,53 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using CodeOfChaos.Extensions.Debouncers
+@using InfiniLore.InfiniBlazor.Markdown
+
+@* ReSharper disable once CheckNamespace *@
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inject ITextEditor TextEditor
+@inherits InfiniMdEditorComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div>
+    <textarea 
+        value="@EditorContext.TextSource.Text"
+        @ref="EditorContext.ContentRef"
+        @oninput="async args => await OnInputAsyncDebounced.InvokeDebouncedAsync(args)"
+        @onkeydown="async args => await OnKeyDownAsyncDebounced.InvokeDebouncedAsync(args)"
+    >
+
+    </textarea>
+</div>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    protected TaskFuncDebouncer<ChangeEventArgs> OnInputAsyncDebounced { get; private set; } = new(_ => Task.CompletedTask);
+    protected TaskFuncDebouncer<KeyboardEventArgs> OnKeyDownAsyncDebounced { get; private set; } = new(_ => Task.CompletedTask);
+    // -----------------------------------------------------------------------------------------------------------------
+    // Component lifetime Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override void OnInitialized() {
+        base.OnInitialized();
+
+        OnInputAsyncDebounced = new TaskFuncDebouncer<ChangeEventArgs>(OnInputAsync);
+        OnKeyDownAsyncDebounced = new TaskFuncDebouncer<KeyboardEventArgs>(OnKeyDownAsync);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private Task OnInputAsync(ChangeEventArgs args) {
+        throw new NotImplementedException();
+    }
+    
+    private Task OnKeyDownAsync(KeyboardEventArgs args) {
+        throw new NotImplementedException();
+    }
+}
