@@ -29,7 +29,7 @@
     <Project Path="src\InfiniLore.InfiniBlazor.SourceGenerators\InfiniLore.InfiniBlazor.SourceGenerators.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" Type="Classic C#" />
   </Folder>
-  <Folder Name="/src/extentions/">
+  <Folder Name="/src/extensions/">
     <Project Path="src\InfiniLore.InfiniBlazor.Extensions.ExtraComponents\InfiniLore.InfiniBlazor.Extensions.ExtraComponents.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor.Extensions.Maui\InfiniLore.InfiniBlazor.Extensions.Maui.csproj" Type="Classic C#" />
   </Folder>

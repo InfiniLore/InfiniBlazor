@@ -28,7 +28,7 @@
     <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.8" />
     <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="9.0.8" />
     <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.8" />
-    <PackageVersion Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="9.0.90" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="9.0.100" />
     <PackageVersion Include="Microsoft.AspNetCore.WebUtilities" Version="9.0.8" />
     <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="4.14.0">
       <PrivateAssets>all</PrivateAssets>
@@ -42,7 +42,7 @@
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.6" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="9.0.8" />
     <PackageVersion Include="Microsoft.Extensions.ObjectPool" Version="9.0.8" />
-    <PackageVersion Include="Microsoft.Maui.Controls" Version="9.0.90" />
+    <PackageVersion Include="Microsoft.Maui.Controls" Version="9.0.100" />
     <PackageVersion Include="Microsoft.Maui.Controls.Core" Version="9.0.90" />
     <PackageVersion Include="Microsoft.Maui.Core" Version="9.0.90" />
     <PackageVersion Include="Moq" Version="4.20.72" />
@@ -52,6 +52,6 @@
     <PackageVersion Include="Serilog.Extensions.Logging" Version="9.0.2" />
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageVersion Include="Serilog.Sinks.Debug" Version="3.0.0" />
-    <PackageVersion Include="TUnit" Version="0.55.6" />
+    <PackageVersion Include="TUnit" Version="0.56.5" />
   </ItemGroup>
 </Project>
