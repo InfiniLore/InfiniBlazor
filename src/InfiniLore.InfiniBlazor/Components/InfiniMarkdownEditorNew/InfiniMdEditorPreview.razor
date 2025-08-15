@@ -1,7 +1,6 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using CodeOfChaos.Extensions.Debouncers
 @using InfiniLore.InfiniBlazor.Markdown
 
 @* ReSharper disable once CheckNamespace *@
@@ -14,44 +13,34 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="border-2 border-red-500 flex w-full">
-    <textarea 
-        class="w-full h-full"
-        value="@EditorContext.TextSource.Text"
-        @ref="EditorContext.ContentRef"
-        @oninput="async args => await OnInputAsyncDebounced.InvokeDebouncedAsync(args)"
-        @onkeydown="async args => await OnKeyDownAsyncDebounced.InvokeDebouncedAsync(args)"
-    >
-
-    </textarea>
+<div class="border-2 border-green-500 flex w-full">
+    @EditorContext.Output.MarkupPreview
 </div>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private TaskFuncDebouncer<ChangeEventArgs> OnInputAsyncDebounced { get; set; } = new(_ => Task.CompletedTask);
-    private TaskFuncDebouncer<KeyboardEventArgs> OnKeyDownAsyncDebounced { get; set; } = new(_ => Task.CompletedTask);
-    
     // -----------------------------------------------------------------------------------------------------------------
     // Component lifetime Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected override void OnInitialized() {
         base.OnInitialized();
 
-        OnInputAsyncDebounced = new TaskFuncDebouncer<ChangeEventArgs>(OnInputAsync);
-        OnKeyDownAsyncDebounced = new TaskFuncDebouncer<KeyboardEventArgs>(OnKeyDownAsync);
+        EditorContext.OnSourceChange += OnSourceChangedAsync;
     }
+
+    public override async ValueTask DisposeAsync() {
+        await base.DisposeAsync();
+
+        EditorContext.OnSourceChange -= OnSourceChangedAsync;
+    }
+
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private async Task OnInputAsync(ChangeEventArgs args) {
-        if (EditorContext.IsLocked) return;
-        if (args.Value is not string source) return;
-        await EditorContext.UpdateSource(source).ConfigureAwait(false);
-    }
-    
-    private async Task OnKeyDownAsync(KeyboardEventArgs args) {
-        if (EditorContext.IsLocked) return;
+    private async Task OnSourceChangedAsync() {
+        EditorContext.Output = new MdEditorOutput(null, EditorContext.TextSource.Text, new MarkupString(EditorContext.TextSource.Text));
+        await InvokeAsync(StateHasChanged).ConfigureAwait(false);
     }
 }

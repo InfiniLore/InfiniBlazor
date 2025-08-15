@@ -6,20 +6,23 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
+@using InfiniLore.InfiniBlazor.Markdown
+@using InfiniLore.InfiniBlazor.TextEditor
 @inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="@EditorContext">
-    <div class="mdEditor-container">
+    <div class="mdEditor-container flex w-full flex-col">
         <div class="mdEditor-toolbarTop"></div>
-        <div class="mdEditor-content">
+        <div class="mdEditor-content flex w-full">
             <InfiniMdEditorContent/>
         </div>
-        <div class="mdEditor-preview"></div>
+        <div class="mdEditor-preview">
+            <InfiniMdEditorPreview/>
+        </div>
         <div class="mdEditor-toolbarBottom"></div>
-    </div>s    
+    </div>
 </CascadingValue>
 
 
@@ -27,5 +30,11 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
+    [Parameter] public ITextSource Source { get; set; } = TextSource.Empty;
     private MdEditorContext EditorContext { get; set; } = new();
+
+    protected override void OnParametersSet() {
+        base.OnParametersSet();
+        EditorContext.SetTextSource(Source);
+    }
 }
