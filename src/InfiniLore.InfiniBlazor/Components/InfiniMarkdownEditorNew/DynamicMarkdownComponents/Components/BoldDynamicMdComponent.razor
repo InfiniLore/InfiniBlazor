@@ -1,28 +1,23 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.Markdown
+@using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 
 @namespace InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits DynamicMdComponentBase<IMdSyntaxNode>
+@inherits DynamicMdComponentBase<BoldMdSyntaxNode>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<span class="@GetDepthClass text-sm font-mono">&lt;@(SyntaxNode?.GetType().Name)#@(SyntaxNode?.Depth)&gt;</span>@ComponentConverter.RenderChildComponents(SyntaxNode)<span class="@GetDepthClass text-sm font-mono">&lt;/@(SyntaxNode?.GetType().Name)&gt;</span>
+<strong>
+    @ComponentConverter.RenderChildComponents(SyntaxNode)
+</strong>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private string GetDepthClass => (SyntaxNode?.Depth % 5) switch {
-        0 => "text-rose-300",
-        1 => "text-sky-300",
-        2 => "text-emerald-300", 
-        3 => "text-amber-300",
-        4 => "text-violet-300",
-        _ => "text-slate-300"
-    };
+    
 }

@@ -99,7 +99,7 @@ public static partial class MdRegexLib {
     public static partial Regex ListItemBodyRegex { get; }
 
     [GeneratedRegex("""
-        (?<spanTag><(?<spanHtmlTag>span)\b[^>]*>)
+        (?<spanTag><(?<spanHtmlTag>span)(?<spanTagAttrs>\b[^>]*)>)
         (?<spanBody>
           (?>
             [^<]+

@@ -17,6 +17,7 @@ public sealed class HtmlBodySyntaxHandler : IMdSyntaxHandler {
     private static readonly int HtmlBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlBody);
     private static readonly int HtmlPostId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlPost);
     private static readonly int SpanTagId = MdRegexLib.GetGroupId(MdRegexGroupNames.SpanTag);
+    private static readonly int SpanTagAttrsId = MdRegexLib.GetGroupId(MdRegexGroupNames.SpanTagAttrs);
     private static readonly int SpanBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.SpanBody);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.NotSkipped;
 
@@ -42,8 +43,14 @@ public sealed class HtmlBodySyntaxHandler : IMdSyntaxHandler {
             // Span should be the only special case allowed that allows for Markdown parsing within it
             Match match = MdRegexLib.FindSpanHtmlRegex.Match(htmlBody);
             if (match.Groups[SpanTagId].TryGetValue(out string? spanTag) && match.Groups[SpanBodyId].TryGetValue(out string? spanBody)) {
+                
+                
                 HtmlSpanMdSyntaxNode spanNode = HtmlSpanMdSyntaxNode.Pool.Get();
                 spanNode.TagValue = spanTag;
+                
+                string spanTagAttrs = match.Groups[SpanTagAttrsId].Value;
+                spanNode.Atrributes = spanTagAttrs;
+                
                 stack.PushMultiLineMatchesToStack(spanBody, spanNode, parentOrigin | MdSyntaxHandlerOrigin.Html);
                 stack.PushProcessedNodeToStack(parentNode, spanNode);
             }

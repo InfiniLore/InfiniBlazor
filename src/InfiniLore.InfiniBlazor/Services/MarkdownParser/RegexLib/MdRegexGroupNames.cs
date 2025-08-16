@@ -47,6 +47,7 @@ public static class MdRegexGroupNames {
     public const string ParagraphContent = "p";
     public const string SpanBody = "spanBody";
     public const string SpanTag = "spanTag";
+    public const string SpanTagAttrs = "spanTagAttrs";
     public const string Strike = "strike";
     public const string StrikeContent = "s";
     public const string SubScript = "subScript";

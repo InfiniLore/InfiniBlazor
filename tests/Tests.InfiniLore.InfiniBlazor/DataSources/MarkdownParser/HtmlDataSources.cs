@@ -126,5 +126,23 @@ public class HtmlDataSources {
             </div> <strong>bold this</strong> </p>
             """
         );
+        
+        yield return static () => new MdTestData(SectionName,
+            """
+            *test* <span> something </span> **bold this**
+            """,
+            """
+            <p> <em>test</em> <span> something </span> <strong>bold this</strong> </p>
+            """
+        );
+        
+        yield return static () => new MdTestData(SectionName,
+            """
+            *test* <span class="text-red-500"> something </span> **bold this**
+            """,
+            """
+            <p> <em>test</em> <span class="text-red-500"> something </span> <strong>bold this</strong> </p>
+            """
+        );
     }
 }

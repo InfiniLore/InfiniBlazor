@@ -8,12 +8,14 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class HtmlSpanMdSyntaxNode : MdSyntaxNode<HtmlSpanMdSyntaxNode> {
     public string TagValue { get; set; } = string.Empty;
+    public string Atrributes { get; set; } = string.Empty;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public override bool TryReset() {
         TagValue = string.Empty;
+        Atrributes = string.Empty;
         return base.TryReset();
     }
 }
