@@ -26,7 +26,7 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    public IEnumerable<IMdSyntaxNode> SyntaxNodes = Enumerable.Empty<IMdSyntaxNode>();
+    private IEnumerable<IMdSyntaxNode> SyntaxNodes { get; set; } = Enumerable.Empty<IMdSyntaxNode>();
     
     // -----------------------------------------------------------------------------------------------------------------
     // Component lifetime Methods
@@ -42,8 +42,7 @@
 
         EditorContext.OnSourceChange -= OnSourceChangedAsync;
     }
-
-
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -58,7 +57,7 @@
             null,
             default
         );
-
+        
         SyntaxNodes = tree.VisitTopLevelNodes();
         
         await InvokeAsync(StateHasChanged).ConfigureAwait(false);
