@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 using Microsoft.AspNetCore.Components;
 using System.Diagnostics.CodeAnalysis;
 
@@ -10,8 +11,8 @@ namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public readonly record struct MdEditorOutput(
-    IMdSyntaxTree? SyntaxTree,
+public record MdEditorOutput(
+    MdSyntaxTree? SyntaxTree,
     string? StringPreview,
     MarkupString MarkupPreview
 ) {

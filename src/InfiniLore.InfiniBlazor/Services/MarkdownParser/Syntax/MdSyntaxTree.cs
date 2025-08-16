@@ -20,11 +20,13 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region Visit Nodes
+    // ReSharper disable once ConvertIfStatementToReturnStatement
     public IEnumerable<IMdSyntaxNode> VisitTopLevelNodes() {
         int childCount = RootNode.ChildCount;
-        return childCount != 0 
-            ? RootNode.GetChildren() // Early exit for empty tree nodes
-            : Enumerable.Empty<IMdSyntaxNode>();
+        
+        if (childCount == 0) return Enumerable.Empty<IMdSyntaxNode>();
+        return RootNode.GetChildren();
+
     }
     
     public IEnumerable<IMdSyntaxNode> VisitNodesBreadthFirst() {
@@ -103,6 +105,10 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     }
     #endregion
 
+    public void ReturnToPool() {
+        Pool.Return(this);
+    }
+    
     public bool TryReset() {
         RootNode.Depth = 0;
         if (RootNode is not RootMdSyntaxNode rootNode) return false;

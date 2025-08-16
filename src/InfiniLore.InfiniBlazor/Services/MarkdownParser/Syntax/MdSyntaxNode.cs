@@ -21,6 +21,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
 
     public virtual int Depth { get; set; }
     public IMdSyntaxNode? Parent { get; set; }
+    public Type Type { get; } = typeof(T);
     
     [MemberNotNullWhen(true, nameof(Modifiers))] public bool ContainsModifiers => Modifiers is not null;
     public MdSyntaxNodeModifier? Modifiers { get; set; }
@@ -37,10 +38,10 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    // ReSharper disable once ConvertIfStatementToReturnStatement
     public ReadOnlySpan<IMdSyntaxNode> GetChildrenSpan() {
-        return ChildCount != 0
-            ? ChildNodes.AsSpan(0, ChildCount)
-            : ReadOnlySpan<IMdSyntaxNode>.Empty;
+        if (ChildCount == 0) return ReadOnlySpan<IMdSyntaxNode>.Empty;
+        return ChildNodes.AsSpan(0, ChildCount);
     }
     
     public IEnumerable<IMdSyntaxNode> GetChildren() {

@@ -18,7 +18,6 @@ public class Program {
         builder.Services.AddLogging();
 
         builder.Services.AddInfiniBlazor(config => {
-            config.SetComponentRenderMode(RenderMode.InteractiveAuto);
             config.RegisterTheme<PrideThemeCollection>();
             config.AddMarkdownLogic();
         });

@@ -1,12 +1,17 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents;
+using InfiniLore.InfiniBlazor.DynamicMdComponents;
+using InfiniLore.InfiniBlazor.Markdown;
+using Microsoft.AspNetCore.Components;
 
+namespace InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public abstract class MdComponentBase {
-
-    public abstract IDictionary<string, object> GetDynamicParameters();
+public abstract class DynamicMdComponentBase<T> : ComponentBase
+    where T : class, IMdSyntaxNode 
+{
+    [Parameter] public T? SyntaxNode { get; set; }
+    [Inject] public IDynamicMdComponentConverter ComponentConverter { get; set; } = null!;
 }

@@ -170,3 +170,13 @@
 @utility bg-stripes-direction-* {
     --stripe-angle: --value(number)deg;
 }
+
+/* ------------------------------------------------------------------------------------------------------------------ */
+/* Markdown Compatibility                                                                                             */
+/* ------------------------------------------------------------------------------------------------------------------ */
+.infini-md-heading1 {@apply text-6xl font-semibold mb-6;}
+.infini-md-heading2 {@apply text-5xl font-semibold mb-4;}
+.infini-md-heading3 {@apply text-4xl font-semibold mb-3;}
+.infini-md-heading4 {@apply text-3xl font-semibold mb-2;}
+.infini-md-heading5 {@apply text-2xl font-semibold mb-1;}
+.infini-md-heading6 {@apply text-xl font-semibold mb-1;}
