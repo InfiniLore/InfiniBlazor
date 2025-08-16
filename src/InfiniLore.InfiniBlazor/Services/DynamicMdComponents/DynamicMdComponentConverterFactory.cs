@@ -19,7 +19,12 @@ public static class DynamicMdComponentConverterFactory {
             [typeof(CodeInlineMdSyntaxNode)] = DynamicMdComponentRecord.FromType<CodeInlineDynamicMdComponent, CodeInlineMdSyntaxNode>(),
             [typeof(HeadingMdSyntaxNode)] = DynamicMdComponentRecord.FromType<HeadingDynamicMdComponent, HeadingMdSyntaxNode>(),
             [typeof(HtmlSpanMdSyntaxNode)] = DynamicMdComponentRecord.FromType<HtmlSpanDynamicMdComponent, HtmlSpanMdSyntaxNode>(),
-            [typeof(ContentMdSyntaxNode)] = DynamicMdComponentRecord.FromType<ContentDynamicMdComponent, ContentMdSyntaxNode>()
+            [typeof(ContentMdSyntaxNode)] = DynamicMdComponentRecord.FromType<ContentDynamicMdComponent, ContentMdSyntaxNode>(),
+            [typeof(ImageMdSyntaxNode)] = DynamicMdComponentRecord.FromType<ImageDynamicMdComponent, ImageMdSyntaxNode>(),
+            [typeof(ItalicMdSyntaxNode)] = DynamicMdComponentRecord.FromType<ItalicDynamicMdComponent, ItalicMdSyntaxNode>(),
+            [typeof(LinkMdSyntaxNode)] = DynamicMdComponentRecord.FromType<LinkDynamicMdComponent, LinkMdSyntaxNode>(),
+            
+            // TODO Continue : src/InfiniLore.InfiniBlazor/Services/MarkdownParser/SyntaxTreeConverters/Converters/StyledMdSyntaxNodeConverter.cs:140 (ListItemMdSyntaxNode)
         };
         
         return new DynamicMdComponentConverter {

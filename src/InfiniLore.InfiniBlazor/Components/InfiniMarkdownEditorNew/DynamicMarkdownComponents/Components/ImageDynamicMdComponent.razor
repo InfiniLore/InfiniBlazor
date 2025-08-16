@@ -1,0 +1,40 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.MarkdownParser.Syntax
+@using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
+
+@namespace InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits DynamicMdComponentBase<ImageMdSyntaxNode>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<img src="@SyntaxNode?.Href" alt="@SyntaxNode?.AltText" @attributes="GetExtraModifiers()">
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    private List<KeyValuePair<string, object>> GetExtraModifiers() {
+        var list = new List<KeyValuePair<string, object>>();
+        if (SyntaxNode is null || !SyntaxNode.ContainsModifiers) return list;
+
+        if (SyntaxNode.Modifiers.TryGetTitle(out string? title)) {
+            list.Add(new KeyValuePair<string, object>("title", title));
+        }
+                    
+        if (SyntaxNode.Modifiers.TryGetFit(out bool state) && state) {
+            list.Add(new KeyValuePair<string, object>("style", "width:auto;height:1em;vertical-align:text-top;object-fit:contain;transform:translate(0,0.15em);"));
+        }
+                    
+        else if (SyntaxNode.Modifiers.TryGetSize(out (int Width, int Height) size)) {
+            list.Add( new KeyValuePair<string, object>("style", $"width:{size.Width}px;height:{size.Height}px;"));
+        }
+
+        return list;
+    }
+
+}
