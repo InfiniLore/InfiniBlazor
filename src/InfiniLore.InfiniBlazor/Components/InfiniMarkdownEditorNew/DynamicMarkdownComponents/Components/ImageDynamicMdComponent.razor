@@ -12,7 +12,11 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<img src="@SyntaxNode.Href" alt="@SyntaxNode.AltText" @attributes="GetExtraModifiers()">
+<img 
+    src="@SyntaxNode.Href"
+    class="inline-block rounded-lg shadow-lg h-full w-auto object-contain" 
+    alt="@SyntaxNode.AltText"
+    @attributes="GetExtraModifiers()">
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
