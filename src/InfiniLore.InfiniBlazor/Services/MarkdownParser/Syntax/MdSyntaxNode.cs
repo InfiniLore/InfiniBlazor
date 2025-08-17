@@ -16,8 +16,8 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
     where T : MdSyntaxNode<T>, new() 
 {
     private const int ChildrenMinimumCapacity = 2;
-    public int ChildCount { get; private set; }
-    protected virtual IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(ChildrenMinimumCapacity);
+    public int ChildCount { get; protected set; }
+    internal protected virtual IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(ChildrenMinimumCapacity);
 
     public virtual int Depth { get; set; }
     public IMdSyntaxNode? Parent { get; set; }
@@ -57,6 +57,32 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
             yield return casted;
         }
     }
+    
+    public IMdSyntaxNode GetChildAt(int index) 
+        => ChildNodes[index];
+    
+    public TChild GetChildAt<TChild>(int index) where TChild : IMdSyntaxNode 
+        => (TChild)ChildNodes[index];
+
+    public bool TryGetChildAt(int index, [NotNullWhen(true)] out IMdSyntaxNode? childNode) {
+        if (index < 0 || index >= ChildCount) {
+            childNode = null;
+            return false;
+        }
+        
+        childNode = ChildNodes[index];
+        return true;
+    } 
+    
+    public bool TryGetChildAt<TChild>(int index, [NotNullWhen(true)] out TChild? childNode) where TChild : IMdSyntaxNode {
+        if (index < 0 || index >= ChildCount || ChildNodes[index] is not TChild casted) {
+            childNode = default;
+            return false;
+        }
+        
+        childNode = casted;
+        return true;   
+    }
 
     public void AddChildNode(IMdSyntaxNode childNode) {
         // Check if we need to resize
@@ -94,7 +120,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
         }
     }
 
-    private void SetParent<TChild>(TChild childNode) where TChild : IMdSyntaxNode {
+    protected void SetParent<TChild>(TChild childNode) where TChild : IMdSyntaxNode {
         childNode.Parent = this;
         childNode.Depth = Depth + 1;
     }
@@ -153,5 +179,5 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
 // Quick Generic Alternatives 
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class EmptyMdSyntaxNode<T> : MdSyntaxNode<T> where T : MdSyntaxNode<T>, new() {
-    protected override IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(0);// Will never have children so don't initialize
+    internal protected override IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(0);// Will never have children so don't initialize
 }

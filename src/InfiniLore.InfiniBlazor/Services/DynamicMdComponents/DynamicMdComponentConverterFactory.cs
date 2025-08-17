@@ -33,6 +33,7 @@ public static class DynamicMdComponentConverterFactory {
         mapBuilder.Register<StrikeDynamicMdComponent, StrikeMdSyntaxNode>();
         mapBuilder.Register<SubScriptDynamicMdComponent, SubScriptMdSyntaxNode>();
         mapBuilder.Register<SuperScriptDynamicMdComponent, SuperScriptMdSyntaxNode>();
+        mapBuilder.Register<TableDynamicMdComponent, TableMdSyntaxNode>();
         mapBuilder.Register<TagDynamicMdComponent, TagMdSyntaxNode>();
         mapBuilder.Register<UnderlineDynamicMdComponent, UnderlineMdSyntaxNode>();
         

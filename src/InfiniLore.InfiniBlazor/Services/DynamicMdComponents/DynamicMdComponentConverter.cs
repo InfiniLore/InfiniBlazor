@@ -33,6 +33,20 @@ public class DynamicMdComponentConverter : IDynamicMdComponentConverter {
     }
     
     // ReSharper disable once InconsistentNaming
+    public RenderFragment RenderComponent(IMdSyntaxNode node) 
+        => __builder => RenderComponent(__builder, node);
+    
+    // ReSharper disable once InconsistentNaming
+    public RenderFragment RenderComponentDebug(IMdSyntaxNode node) => __builder => {
+        var data = DynamicMdComponentRecord.Empty;
+        int sequence = 0;
+        
+        __builder.OpenComponent(sequence++, data.ComponentType);
+        data.Builder(__builder, sequence, node); // newSequence is not used so far
+        __builder.CloseComponent();
+    };
+    
+    // ReSharper disable once InconsistentNaming
     public RenderFragment RenderChildComponents(IMdSyntaxNode node) => __builder => {
         int childCount = node.ChildCount;
         if (childCount == 0) return;
