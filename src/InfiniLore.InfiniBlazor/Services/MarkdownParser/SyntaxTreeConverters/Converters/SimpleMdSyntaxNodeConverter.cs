@@ -123,12 +123,12 @@ public class SimpleMdSyntaxNodeConverter : IMdSyntaxNodeConverter {
                 break;
             }
 
-            case ListMdSyntaxNode { IsOrdered: true }: {
+            case ListOrderedMdSyntaxNode: {
                 builder.Append("<ol>");
                 break;
             }
 
-            case ListMdSyntaxNode { IsOrdered: false }: {
+            case ListUnOrderedMdSyntaxNode: {
                 builder.Append("<ul>");
                 break;
             }
@@ -326,13 +326,13 @@ public class SimpleMdSyntaxNodeConverter : IMdSyntaxNodeConverter {
                 break;
             }
 
-            case ListMdSyntaxNode { IsOrdered: false }: {
-                builder.Append("</ul>");
+            case ListOrderedMdSyntaxNode: {
+                builder.Append("</ol>");
                 break;
             }
 
-            case ListMdSyntaxNode { IsOrdered: true }: {
-                builder.Append("</ol>");
+            case ListUnOrderedMdSyntaxNode: {
+                builder.Append("</ul>");
                 break;
             }
 

@@ -150,12 +150,12 @@ public sealed class StyledMdSyntaxNodeConverter(ILucideService lucideService) : 
                 break;
             }
 
-            case ListMdSyntaxNode { IsOrdered: true }: {
+            case ListOrderedMdSyntaxNode: {
                 builder.Append("<ol class=\"list-decimal pl-8 my-4\">");
                 break;
             }
 
-            case ListMdSyntaxNode { IsOrdered: false }: {
+            case ListUnOrderedMdSyntaxNode: {
                 builder.Append("<ul class=\"list-disc pl-8 my-4\">");
                 break;
             }
@@ -393,13 +393,13 @@ public sealed class StyledMdSyntaxNodeConverter(ILucideService lucideService) : 
                 break;
             }
 
-            case ListMdSyntaxNode { IsOrdered: false }: {
-                builder.Append("</ul>");
+            case ListOrderedMdSyntaxNode: {
+                builder.Append("</ol>");
                 break;
             }
 
-            case ListMdSyntaxNode { IsOrdered: true }: {
-                builder.Append("</ol>");
+            case ListUnOrderedMdSyntaxNode: {
+                builder.Append("</ul>");
                 break;
             }
 

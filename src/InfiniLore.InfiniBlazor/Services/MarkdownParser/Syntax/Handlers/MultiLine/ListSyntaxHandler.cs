@@ -40,8 +40,9 @@ public sealed class BaseListSyntaxHandler : IMdSyntaxHandler {
         try {
             matchCollection.CopyTo(matchArray, 0);
 
-            ListMdSyntaxNode listNode = ListMdSyntaxNode.Pool.Get();
-            listNode.IsOrdered = isOrdered;
+            IMdSyntaxNode listNode = isOrdered
+                ? ListOrderedMdSyntaxNode.Pool.Get()
+                : ListUnOrderedMdSyntaxNode.Pool.Get();
             parentNode.AddChildNode(listNode);
             
             for (int i = 0; i < matchCount; i++) {
