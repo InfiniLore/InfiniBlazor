@@ -14,4 +14,6 @@ public abstract class DynamicMdComponentBase<T> : ComponentBase
 {
     [Parameter] public required T SyntaxNode { get; set; }
     [Inject] public IDynamicMdComponentConverter ComponentConverter { get; set; } = null!;
+    
+    protected RenderFragment RenderChildContent() => ComponentConverter.RenderChildComponents(SyntaxNode);
 }

@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents;
+using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 using System.Collections.Frozen;
 
@@ -12,23 +13,39 @@ namespace InfiniLore.InfiniBlazor.DynamicMdComponents;
 // ---------------------------------------------------------------------------------------------------------------------
 public static class DynamicMdComponentConverterFactory {
     public static IDynamicMdComponentConverter Create(IServiceProvider serviceProvider) {
-        var mapBuilder = new Dictionary<Type, DynamicMdComponentRecord> {
-            [typeof(BlockQuoteMdSyntaxNode)] = DynamicMdComponentRecord.FromType<BlockQuoteDynamicMdComponent, BlockQuoteMdSyntaxNode>(),
-            [typeof(BoldMdSyntaxNode)] = DynamicMdComponentRecord.FromType<BoldDynamicMdComponent, BoldMdSyntaxNode>(),
-            [typeof(CodeBlockMdSyntaxNode)] = DynamicMdComponentRecord.FromType<CodeBlockDynamicMdComponent, CodeBlockMdSyntaxNode>(),
-            [typeof(CodeInlineMdSyntaxNode)] = DynamicMdComponentRecord.FromType<CodeInlineDynamicMdComponent, CodeInlineMdSyntaxNode>(),
-            [typeof(HeadingMdSyntaxNode)] = DynamicMdComponentRecord.FromType<HeadingDynamicMdComponent, HeadingMdSyntaxNode>(),
-            [typeof(HtmlSpanMdSyntaxNode)] = DynamicMdComponentRecord.FromType<HtmlSpanDynamicMdComponent, HtmlSpanMdSyntaxNode>(),
-            [typeof(ContentMdSyntaxNode)] = DynamicMdComponentRecord.FromType<ContentDynamicMdComponent, ContentMdSyntaxNode>(),
-            [typeof(ImageMdSyntaxNode)] = DynamicMdComponentRecord.FromType<ImageDynamicMdComponent, ImageMdSyntaxNode>(),
-            [typeof(ItalicMdSyntaxNode)] = DynamicMdComponentRecord.FromType<ItalicDynamicMdComponent, ItalicMdSyntaxNode>(),
-            [typeof(LinkMdSyntaxNode)] = DynamicMdComponentRecord.FromType<LinkDynamicMdComponent, LinkMdSyntaxNode>(),
-            
-            // TODO Continue : src/InfiniLore.InfiniBlazor/Services/MarkdownParser/SyntaxTreeConverters/Converters/StyledMdSyntaxNodeConverter.cs:140 (ListItemMdSyntaxNode)
-        };
+        var mapBuilder = new Dictionary<Type, DynamicMdComponentRecord>(32);
+
+        mapBuilder.Register<BlockQuoteDynamicMdComponent, BlockQuoteMdSyntaxNode>();
+        mapBuilder.Register<BoldDynamicMdComponent, BoldMdSyntaxNode>();
+        mapBuilder.Register<CodeBlockDynamicMdComponent, CodeBlockMdSyntaxNode>();
+        mapBuilder.Register<CodeInlineDynamicMdComponent, CodeInlineMdSyntaxNode>();
+        mapBuilder.Register<EmoteDynamicMdComponent, EmoteMdSyntaxNode>();
+        mapBuilder.Register<HeadingDynamicMdComponent, HeadingMdSyntaxNode>();
+        mapBuilder.Register<HorizontalRuleDynamicMdComponent, HorizontalRuleMdSyntaxNode>();
+        mapBuilder.Register<HtmlSpanDynamicMdComponent, HtmlSpanMdSyntaxNode>();
+        mapBuilder.Register<ContentDynamicMdComponent, ContentMdSyntaxNode>();
+        mapBuilder.Register<ImageDynamicMdComponent, ImageMdSyntaxNode>();
+        mapBuilder.Register<ItalicDynamicMdComponent, ItalicMdSyntaxNode>();
+        mapBuilder.Register<LinkDynamicMdComponent, LinkMdSyntaxNode>();
+        mapBuilder.Register<ListOrderedDynamicMdComponent, ListOrderedMdSyntaxNode>();
+        mapBuilder.Register<ListUnOrderedDynamicMdComponent, ListUnOrderedMdSyntaxNode>();
+        mapBuilder.Register<ParagraphDynamicMdComponent, ParagraphMdSyntaxNode>();
+        mapBuilder.Register<StrikeDynamicMdComponent, StrikeMdSyntaxNode>();
+        mapBuilder.Register<SubScriptDynamicMdComponent, SubScriptMdSyntaxNode>();
+        mapBuilder.Register<SuperScriptDynamicMdComponent, SuperScriptMdSyntaxNode>();
+        mapBuilder.Register<TagDynamicMdComponent, TagMdSyntaxNode>();
+        mapBuilder.Register<UnderlineDynamicMdComponent, UnderlineMdSyntaxNode>();
         
+        mapBuilder.TrimExcess();
         return new DynamicMdComponentConverter {
             NodeToComponentMap =  mapBuilder.ToFrozenDictionary()
         };
+    }
+
+    private static void Register<TComponent, TNode>(this Dictionary<Type, DynamicMdComponentRecord> dictionary) where TComponent : DynamicMdComponentBase<TNode> where TNode : class, IMdSyntaxNode {
+        int count = dictionary.Count;
+        if (dictionary.Capacity < count + 1) dictionary.EnsureCapacity(count * 2);
+        
+        dictionary.Add(typeof(TNode), DynamicMdComponentRecord.FromType<TComponent, TNode>());   
     }
 }

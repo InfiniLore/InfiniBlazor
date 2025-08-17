@@ -50,6 +50,14 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
         }    
     }
 
+    public IEnumerable<TChild> GetChildrenByType<TChild>() where TChild : IMdSyntaxNode {
+        for (int i = 0; i < ChildCount; i++) {
+            IMdSyntaxNode child = ChildNodes[i];
+            if (child is not TChild casted) continue;
+            yield return casted;
+        }
+    }
+
     public void AddChildNode(IMdSyntaxNode childNode) {
         // Check if we need to resize
         EnsureChildNodeCapacity();

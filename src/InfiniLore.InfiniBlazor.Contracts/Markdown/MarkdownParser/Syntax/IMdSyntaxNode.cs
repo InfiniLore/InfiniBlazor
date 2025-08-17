@@ -13,6 +13,7 @@ public interface IMdSyntaxNode {
 
     ReadOnlySpan<IMdSyntaxNode> GetChildrenSpan();
     IEnumerable<IMdSyntaxNode> GetChildren();
+    IEnumerable<TChild> GetChildrenByType<TChild>() where TChild : IMdSyntaxNode;
 
     void AddChildNode(IMdSyntaxNode childNode);
     TChild AddChildNode<TChild>(TChild childNode) where TChild : IMdSyntaxNode;
