@@ -39,8 +39,8 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* ReSharper disable once UnusedParameter.Local UnusedMethodReturnValue.Local *@
 
+@* ReSharper disable once UnusedParameter.Local UnusedMethodReturnValue.Local *@
 @code {
     [Parameter] public IEnumerable<TItem> Items { get; set; } = Array.Empty<TItem>();
     [Parameter] public Func<ReadOnlySpan<TItem>>? ItemsBySpan { get; set; }
@@ -50,7 +50,7 @@
     [Parameter] public string EmptyMessage { get; set; } = "No entries found";
 
     private RenderFragment RenderItem(TItem item, int index) => __builder => {
-        int seq = 0;// Sequence for RenderTreeBuilder
+        int seq = 0; // Sequence for RenderTreeBuilder
         __builder.OpenElement(seq++, "tr");
         __builder.AddAttribute(seq++, "class", "group infini-bg-(--table-row) p hover:infini-bg-(--table-row-hover) transition h-4");
 
@@ -64,13 +64,13 @@
     };
 
     private RenderFragment RenderEmptyMessage() => __builder => {
-        int seq = 0;// Sequence for RenderTreeBuilder
+        int seq = 0; // Sequence for RenderTreeBuilder
         __builder.OpenElement(seq++, "tr");
         __builder.OpenElement(seq++, "td");
         __builder.AddAttribute(seq++, "colspan", "100%");
         __builder.AddAttribute(seq++, "class", "text-center py-4");
         __builder.AddContent(seq, EmptyMessage);
-        __builder.CloseElement();// Close <td>
-        __builder.CloseElement();// Close <tr>
+        __builder.CloseElement(); // Close <td>
+        __builder.CloseElement(); // Close <tr>
     };
 }
