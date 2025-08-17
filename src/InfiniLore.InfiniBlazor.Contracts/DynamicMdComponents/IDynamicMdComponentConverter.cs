@@ -10,6 +10,6 @@ namespace InfiniLore.InfiniBlazor.DynamicMdComponents;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IDynamicMdComponentConverter {
-    RenderFragment RenderChildComponents(IMdSyntaxNode? node);
+    RenderFragment RenderChildComponents(IMdSyntaxNode node);
     RenderFragment RenderRootComponents(IEnumerable<IMdSyntaxNode> nodes);
 }

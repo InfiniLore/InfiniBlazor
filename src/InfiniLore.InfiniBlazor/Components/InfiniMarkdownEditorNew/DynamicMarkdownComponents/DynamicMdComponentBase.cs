@@ -12,6 +12,6 @@ namespace InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents;
 public abstract class DynamicMdComponentBase<T> : ComponentBase
     where T : class, IMdSyntaxNode 
 {
-    [Parameter] public T? SyntaxNode { get; set; }
+    [Parameter] public required T SyntaxNode { get; set; }
     [Inject] public IDynamicMdComponentConverter ComponentConverter { get; set; } = null!;
 }

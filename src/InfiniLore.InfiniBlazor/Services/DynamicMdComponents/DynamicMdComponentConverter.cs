@@ -33,9 +33,9 @@ public class DynamicMdComponentConverter : IDynamicMdComponentConverter {
     }
     
     // ReSharper disable once InconsistentNaming
-    public RenderFragment RenderChildComponents(IMdSyntaxNode? node) => __builder => {
-        int childCount = node?.ChildCount ?? 0;
-        if (node is null || childCount == 0) return;
+    public RenderFragment RenderChildComponents(IMdSyntaxNode node) => __builder => {
+        int childCount = node.ChildCount;
+        if (childCount == 0) return;
         
         ReadOnlySpan<IMdSyntaxNode> childSpan = node.GetChildrenSpan();
         for (int i = 0; i < childCount; i++) {

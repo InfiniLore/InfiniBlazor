@@ -16,7 +16,7 @@ public record MdEditorOutput(
     string? StringPreview,
     MarkupString MarkupPreview
 ) {
-    public static MdEditorOutput Empty { get; } =  new(null, null, default);
+    public static MdEditorOutput Empty => new(null, null, default);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

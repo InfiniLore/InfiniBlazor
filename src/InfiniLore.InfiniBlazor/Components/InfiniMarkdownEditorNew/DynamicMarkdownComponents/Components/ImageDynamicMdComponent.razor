@@ -12,7 +12,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<img src="@SyntaxNode?.Href" alt="@SyntaxNode?.AltText" @attributes="GetExtraModifiers()">
+<img src="@SyntaxNode.Href" alt="@SyntaxNode.AltText" @attributes="GetExtraModifiers()">
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
@@ -20,7 +20,7 @@
 @code {
     private List<KeyValuePair<string, object>> GetExtraModifiers() {
         var list = new List<KeyValuePair<string, object>>();
-        if (SyntaxNode is null || !SyntaxNode.ContainsModifiers) return list;
+        if (!SyntaxNode.ContainsModifiers) return list;
 
         if (SyntaxNode.Modifiers.TryGetTitle(out string? title)) {
             list.Add(new KeyValuePair<string, object>("title", title));
