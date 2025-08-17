@@ -2,14 +2,12 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using CodeOfChaos.Extensions.Debouncers
-@using InfiniLore.InfiniBlazor.Markdown
 
 @* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inject ITextEditor TextEditor
 @inherits InfiniMdEditorComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
@@ -39,7 +37,7 @@
     protected override void OnInitialized() {
         base.OnInitialized();
 
-        OnInputAsyncDebounced = ThrottledDebouncer<ChangeEventArgs>.FromDelegate(OnInputAsync, 100, 100);
+        OnInputAsyncDebounced = ThrottledDebouncer<ChangeEventArgs>.FromDelegate(OnInputAsync, 100, 300);
         OnKeyDownAsyncDebounced = Debouncer<KeyboardEventArgs>.FromDelegate(OnKeyDownAsync);
     }
 
@@ -58,7 +56,7 @@
         await EditorContext.UpdateSource(source).ConfigureAwait(false);
     }
     
-    private async Task OnKeyDownAsync(KeyboardEventArgs args) {
-        if (EditorContext.IsLocked) return;
+    private Task OnKeyDownAsync(KeyboardEventArgs args) {
+        return Task.CompletedTask;
     }
 }

@@ -16,6 +16,11 @@ public record MdEditorOutput(
     string? StringPreview,
     MarkupString MarkupPreview
 ) {
+    public static MdEditorOutput Empty { get; } =  new(null, null, default);
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
     public bool TryGetSyntaxTree([NotNullWhen(true)] out IMdSyntaxTree? syntaxTree) {
         syntaxTree = SyntaxTree;
         return syntaxTree != null;

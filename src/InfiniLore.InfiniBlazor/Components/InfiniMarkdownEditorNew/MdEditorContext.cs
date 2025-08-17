@@ -14,16 +14,11 @@ public class MdEditorContext {
     public bool IsLocked { get; set; }
     public ITextSource TextSource { get; private set; } = new TextSource();
     public ElementReference ContentRef { get; set; }
-    public MdEditorOutput Output { get; set; }
+    public MdEditorOutput Output { get; set; } = MdEditorOutput.Empty;
     
     public event Func<Task>? OnSourceChange; 
     
     public static MdEditorContext Empty => new();
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // Constructors
-    // -----------------------------------------------------------------------------------------------------------------
-    public MdEditorContext() { }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
