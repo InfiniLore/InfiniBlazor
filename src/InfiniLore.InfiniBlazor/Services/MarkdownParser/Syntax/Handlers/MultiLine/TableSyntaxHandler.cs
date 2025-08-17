@@ -48,13 +48,11 @@ public sealed class TableSyntaxHandler : IMdSyntaxHandler {
         parentNode.AddChildNode(tableNode);
 
         // Add headers
-        TableHeadMdSyntaxNode tableHead = TableHeadMdSyntaxNode.Pool.Get();
-        tableNode.AddChildNode(tableHead);
         TableRowMdSyntaxNode tableHeadRow = TableRowMdSyntaxNode.Pool.Get();
-        tableHead.AddChildNode(tableHeadRow);
+        tableNode.TrySetHeader(tableHeadRow);
         
         for (int index = 0; index < headerColumnCount; index++) {
-            TableHeadCellMdSyntaxNode tableHeadCellNode = TableHeadCellMdSyntaxNode.Pool.Get();
+            TableCellMdSyntaxNode tableHeadCellNode = TableCellMdSyntaxNode.Pool.Get();
             tableHeadRow.AddChildNode(tableHeadCellNode);
             
             ReadOnlySpan<char> column = header[headerColumns[index]];
@@ -62,9 +60,6 @@ public sealed class TableSyntaxHandler : IMdSyntaxHandler {
         }
 
         // Add rows
-        TableBodyMdSyntaxNode tableBody = TableBodyMdSyntaxNode.Pool.Get();
-        tableNode.AddChildNode(tableBody);
-
         Range[]? rowColumnRanges = null;
         Span<Range> columnBuffer = headerColumnCount <= StackAllocThreshold 
             ? stackalloc Range[StackAllocThreshold]
@@ -78,7 +73,8 @@ public sealed class TableSyntaxHandler : IMdSyntaxHandler {
                 int rowColumnCount = row.Split(columnBuffer, '|', StringSplitOptions.RemoveEmptyEntries);
 
                 TableRowMdSyntaxNode tableRow = TableRowMdSyntaxNode.Pool.Get();
-                tableBody.AddChildNode(tableRow);
+                tableNode.AddRow(tableRow);
+                
                 for (int columnIndex = 0; columnIndex < rowColumnCount; columnIndex++) {
                     TableCellMdSyntaxNode tableCell = TableCellMdSyntaxNode.Pool.Get();
                     tableRow.AddChildNode(tableCell);

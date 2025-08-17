@@ -154,33 +154,33 @@ public class SimpleMdSyntaxNodeConverter : IMdSyntaxNodeConverter {
                 break;
             }
 
-            case TableBodyMdSyntaxNode: {
-                builder.Append("<tbody>");
-                break;
-            }
-
-            case TableCellMdSyntaxNode: {
-                builder.Append("<td>");
-                break;
-            }
-            
-            case TableHeadCellMdSyntaxNode: {
-                builder.Append("<th>");
-                break;
-            }
-
-            case TableHeadMdSyntaxNode: {
-                builder.Append("<thead>");
-                break;
-            }
-
             case TableMdSyntaxNode: {
                 builder.Append("<table>");
                 break;
             }
 
+            case TableRowMdSyntaxNode when node.Parent is TableMdSyntaxNode tableNode && tableNode.GetChildAt(0) == node: {
+                builder.Append("<thead><tr>");
+                break;
+            }
+
+            case TableRowMdSyntaxNode when node.Parent is TableMdSyntaxNode tableNode && tableNode.GetChildAt(1) == node: {
+                builder.Append("<tbody><tr>");
+                break;
+            }
+
             case TableRowMdSyntaxNode: {
                 builder.Append("<tr>");
+                break;
+            }
+
+            case TableCellMdSyntaxNode when node.Parent is TableRowMdSyntaxNode { Parent: TableMdSyntaxNode tableNode } rowNode && tableNode.GetChildAt(0) == rowNode: {
+                builder.Append("<th>");
+                break;
+            }
+
+            case TableCellMdSyntaxNode: {
+                builder.Append("<td>");
                 break;
             }
 
@@ -357,33 +357,28 @@ public class SimpleMdSyntaxNodeConverter : IMdSyntaxNodeConverter {
                 break;
             }
 
-            case TableBodyMdSyntaxNode: {
-                builder.Append("</tbody>");
-                break;
-            }
-
-            case TableCellMdSyntaxNode: {
-                builder.Append("</td>");
-                break;
-            }
-            
-            case TableHeadCellMdSyntaxNode: {
-                builder.Append("</th>");
-                break;
-            }
-
-            case TableHeadMdSyntaxNode: {
-                builder.Append("</thead>");
-                break;
-            }
-
             case TableMdSyntaxNode: {
-                builder.Append("</table>");
+                builder.Append("</tbody></table>");
+                break;
+            }
+
+            case TableRowMdSyntaxNode when node.Parent is TableMdSyntaxNode tableNode && tableNode.GetChildAt(0) == node: {
+                builder.Append("</tr></thead>");
                 break;
             }
 
             case TableRowMdSyntaxNode: {
                 builder.Append("</tr>");
+                break;
+            }
+
+            case TableCellMdSyntaxNode when node.Parent is TableRowMdSyntaxNode { Parent: TableMdSyntaxNode tableNode } rowNode && tableNode.GetChildAt(0) == rowNode: {
+                builder.Append("</th>");
+                break;
+            }
+
+            case TableCellMdSyntaxNode: {
+                builder.Append("</td>");
                 break;
             }
 

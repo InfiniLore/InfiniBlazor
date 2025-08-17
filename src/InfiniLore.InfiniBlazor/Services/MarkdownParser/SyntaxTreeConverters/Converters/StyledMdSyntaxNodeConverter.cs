@@ -184,40 +184,35 @@ public sealed class StyledMdSyntaxNodeConverter(ILucideService lucideService) : 
                 builder.Append("<sup>");
                 break;
             }
-
-            case TableBodyMdSyntaxNode: {
-                builder.Append("<tbody>");
-                break;
-            }
-
-            case TableCellMdSyntaxNode: {
-                builder.Append("<td class=\"p-4\">");
-                break;
-            }
             
-            case TableHeadCellMdSyntaxNode: {
-                builder.Append("<th class=\"p-4\">");
-                break;
-            }
-
-            case TableHeadMdSyntaxNode: {
-                builder.Append("<thead class=\"sticky top-0 infini-bg-(--table-header) border-(--border) z-10 border-b\">");
-                break;
-            }
-
             case TableMdSyntaxNode: {
                 builder.Append("<div class=\"rounded-2xl border border-(--border) flex flex-col overflow-hidden\">");
                 builder.Append("<table class=\"w-full h-full table-auto shadow-sm rounded-2xl overflow-hidden\">");
                 break;
             }
 
-            case TableRowMdSyntaxNode { Parent: TableHeadMdSyntaxNode}: {
-                builder.Append("<tr>");
+            case TableRowMdSyntaxNode when node.Parent is TableMdSyntaxNode tableNode && tableNode.GetChildAt(0) == node: {
+                builder.Append("<thead class=\"sticky top-0 infini-bg-(--table-header) border-(--border) z-10 border-b\"><tr>");
                 break;
             }
-            
-            case TableRowMdSyntaxNode { Parent: not TableHeadMdSyntaxNode}: {
+
+            case TableRowMdSyntaxNode when node.Parent is TableMdSyntaxNode tableNode && tableNode.GetChildAt(1) == node: {
+                builder.Append("<tbody><tr class=\"group infini-bg-(--table-row) hover:infini-bg-(--table-row-hover) transition h-4\">");
+                break;
+            }
+
+            case TableRowMdSyntaxNode: {
                 builder.Append("<tr class=\"group infini-bg-(--table-row) hover:infini-bg-(--table-row-hover) transition h-4\">");
+                break;
+            }
+
+            case TableCellMdSyntaxNode when node.Parent is TableRowMdSyntaxNode { Parent: TableMdSyntaxNode tableNode } rowNode && tableNode.GetChildAt(0) == rowNode: {
+                builder.Append("<th class=\"p-4\">");
+                break;
+            }
+
+            case TableCellMdSyntaxNode: {
+                builder.Append("<td class=\"p-4\">");
                 break;
             }
 
@@ -423,33 +418,28 @@ public sealed class StyledMdSyntaxNodeConverter(ILucideService lucideService) : 
                 break;
             }
 
-            case TableBodyMdSyntaxNode: {
-                builder.Append("</tbody>");
-                break;
-            }
-
-            case TableCellMdSyntaxNode: {
-                builder.Append("</td>");
-                break;
-            }
-            
-            case TableHeadCellMdSyntaxNode: {
-                builder.Append("</th>");
-                break;
-            }
-
-            case TableHeadMdSyntaxNode: {
-                builder.Append("</thead>");
-                break;
-            }
-
             case TableMdSyntaxNode: {
-                builder.Append("</table></div>");
+                builder.Append("</tbody></table></div>");
+                break;
+            }
+
+            case TableRowMdSyntaxNode when node.Parent is TableMdSyntaxNode tableNode && tableNode.GetChildAt(0) == node: {
+                builder.Append("</tr></thead>");
                 break;
             }
 
             case TableRowMdSyntaxNode: {
                 builder.Append("</tr>");
+                break;
+            }
+
+            case TableCellMdSyntaxNode when node.Parent is TableRowMdSyntaxNode { Parent: TableMdSyntaxNode tableNode } rowNode && tableNode.GetChildAt(0) == rowNode: {
+                builder.Append("</th>");
+                break;
+            }
+
+            case TableCellMdSyntaxNode: {
+                builder.Append("</td>");
                 break;
             }
 

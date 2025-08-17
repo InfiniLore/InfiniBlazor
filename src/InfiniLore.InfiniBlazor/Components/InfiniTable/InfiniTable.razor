@@ -19,24 +19,44 @@
                 </tr>
             </thead>
             <tbody>
-                @if (!Items.Any()) {
+            @if (ItemsBySpan is not null) {
+                ReadOnlySpan<TItem> span = ItemsBySpan();
+                if (span.Length is 0) {
                     <tr>
                         <td colspan="100%" class="text-center py-4">
                             @EmptyMessage
                         </td>
                     </tr>
-                } else {
-                    int i = 0;
-                    foreach (TItem item in Items) {
-                        <tr class="group infini-bg-(--table-row) p hover:infini-bg-(--table-row-hover) transition h-4">
-                            @if (Content is not null) {
-                                @Content(item)
-                            } else if (ContentWithIndex is not null) {
-                                @ContentWithIndex((item, i++))
-                            }
-                        </tr>
-                    }
                 }
+                for (int i = 0; i < span.Length; i++) {
+                    TItem item = span[i];
+                    <tr class="group infini-bg-(--table-row) p hover:infini-bg-(--table-row-hover) transition h-4">
+                        @if (Content is not null) {
+                            @Content(item)
+                        } else if (ContentWithIndex is not null) {
+                            @ContentWithIndex((item, i++))
+                        }
+                    </tr>
+                }
+            }
+            else if (!Items.Any()) {
+                <tr>
+                    <td colspan="100%" class="text-center py-4">
+                        @EmptyMessage
+                    </td>
+                </tr>
+            } else {
+                int i = 0;
+                foreach (TItem item in Items) {
+                    <tr class="group infini-bg-(--table-row) p hover:infini-bg-(--table-row-hover) transition h-4">
+                        @if (Content is not null) {
+                            @Content(item)
+                        } else if (ContentWithIndex is not null) {
+                            @ContentWithIndex((item, i++))
+                        }
+                    </tr>
+                }
+            }
             </tbody>
         </table>
     </div>
@@ -44,8 +64,10 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@* ReSharper disable once UnusedParameter.Local UnusedMethodReturnValue.Local *@
 @code {
-    [Parameter, EditorRequired] public IEnumerable<TItem> Items { get; set; } = Array.Empty<TItem>();
+    [Parameter] public IEnumerable<TItem> Items { get; set; } = Array.Empty<TItem>();
+    [Parameter] public Func<ReadOnlySpan<TItem>>? ItemsBySpan { get; set; } 
     [Parameter, EditorRequired] public RenderFragment Header { get; set; } = null!;
     [Parameter] public RenderFragment<TItem>? Content { get; set; }
     [Parameter] public RenderFragment<(TItem, int)>? ContentWithIndex { get; set; }

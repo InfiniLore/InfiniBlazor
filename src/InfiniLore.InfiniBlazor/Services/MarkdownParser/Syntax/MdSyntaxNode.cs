@@ -104,7 +104,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
     }
 
     // ReSharper disable once InvertIf
-    private void EnsureChildNodeCapacity() {
+    protected void EnsureChildNodeCapacity() {
         if (ChildCount == 0) {
             IMdSyntaxNode[] newArray = GetInitialChildNodes(ChildrenMinimumCapacity);
             ChildNodes = newArray;

@@ -11,9 +11,9 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniTable TItem="TableRowMdSyntaxNode" Items="GetBodyRows()">
+<InfiniTable TItem="TableRowMdSyntaxNode" ItemsBySpan="SyntaxNode.GetRows">
     <Header>
-        @foreach (TableHeadCellMdSyntaxNode headerItem in SyntaxNode.Header.HeadCells) {
+        @foreach (TableCellMdSyntaxNode headerItem in SyntaxNode.GetHeaderCells()) {
             <InfiniTableHeader>@ComponentConverter.RenderChildComponents(headerItem)</InfiniTableHeader>
         }
     </Header>
@@ -27,7 +27,4 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@code {
-    private IEnumerable<TableRowMdSyntaxNode> GetBodyRows()
-        => SyntaxNode.Body.GetChildrenByType<TableRowMdSyntaxNode>();
-}
+
