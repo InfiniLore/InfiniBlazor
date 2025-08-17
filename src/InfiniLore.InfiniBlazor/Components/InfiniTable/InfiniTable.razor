@@ -14,48 +14,23 @@
     <div class="w-full h-full overflow-auto relative infini-scrollbar">
         <table class="w-full h-full table-auto">
             <thead class="sticky top-0 infini-bg-(--table-header) border-(--border) border-b p-4 @ZIndex.TableHeader">
-                <tr>
-                    @Header
-                </tr>
+            <tr>
+                @Header
+            </tr>
             </thead>
             <tbody>
-            @if (ItemsBySpan is not null) {
-                ReadOnlySpan<TItem> span = ItemsBySpan();
-                if (span.Length is 0) {
-                    <tr>
-                        <td colspan="100%" class="text-center py-4">
-                            @EmptyMessage
-                        </td>
-                    </tr>
-                }
+            @if (ItemsBySpan is not null && ItemsBySpan() is {Length: > 0} span) {
                 for (int i = 0; i < span.Length; i++) {
                     TItem item = span[i];
-                    <tr class="group infini-bg-(--table-row) p hover:infini-bg-(--table-row-hover) transition h-4">
-                        @if (Content is not null) {
-                            @Content(item)
-                        } else if (ContentWithIndex is not null) {
-                            @ContentWithIndex((item, i++))
-                        }
-                    </tr>
+                    @RenderItem(item, i++)
                 }
-            }
-            else if (!Items.Any()) {
-                <tr>
-                    <td colspan="100%" class="text-center py-4">
-                        @EmptyMessage
-                    </td>
-                </tr>
-            } else {
+            } else if (Items.Any()) {
                 int i = 0;
                 foreach (TItem item in Items) {
-                    <tr class="group infini-bg-(--table-row) p hover:infini-bg-(--table-row-hover) transition h-4">
-                        @if (Content is not null) {
-                            @Content(item)
-                        } else if (ContentWithIndex is not null) {
-                            @ContentWithIndex((item, i++))
-                        }
-                    </tr>
+                    @RenderItem(item, i++)
                 }
+            } else {
+                @RenderEmptyMessage()
             }
             </tbody>
         </table>
@@ -65,11 +40,37 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* ReSharper disable once UnusedParameter.Local UnusedMethodReturnValue.Local *@
+
 @code {
     [Parameter] public IEnumerable<TItem> Items { get; set; } = Array.Empty<TItem>();
-    [Parameter] public Func<ReadOnlySpan<TItem>>? ItemsBySpan { get; set; } 
-    [Parameter, EditorRequired] public RenderFragment Header { get; set; } = null!;
+    [Parameter] public Func<ReadOnlySpan<TItem>>? ItemsBySpan { get; set; }
+    [Parameter] [EditorRequired] public RenderFragment Header { get; set; } = null!;
     [Parameter] public RenderFragment<TItem>? Content { get; set; }
     [Parameter] public RenderFragment<(TItem, int)>? ContentWithIndex { get; set; }
     [Parameter] public string EmptyMessage { get; set; } = "No entries found";
+
+    private RenderFragment RenderItem(TItem item, int index) => __builder => {
+        int seq = 0;// Sequence for RenderTreeBuilder
+        __builder.OpenElement(seq++, "tr");
+        __builder.AddAttribute(seq++, "class", "group infini-bg-(--table-row) p hover:infini-bg-(--table-row-hover) transition h-4");
+
+        if (Content is not null) {
+            __builder.AddContent(seq, Content(item));
+        } else if (ContentWithIndex is not null) {
+            __builder.AddContent(seq, ContentWithIndex((item, index)));
+        }
+
+        __builder.CloseElement(); // Close <tr>
+    };
+
+    private RenderFragment RenderEmptyMessage() => __builder => {
+        int seq = 0;// Sequence for RenderTreeBuilder
+        __builder.OpenElement(seq++, "tr");
+        __builder.OpenElement(seq++, "td");
+        __builder.AddAttribute(seq++, "colspan", "100%");
+        __builder.AddAttribute(seq++, "class", "text-center py-4");
+        __builder.AddContent(seq, EmptyMessage);
+        __builder.CloseElement();// Close <td>
+        __builder.CloseElement();// Close <tr>
+    };
 }
