@@ -14,6 +14,7 @@ public static class MdRegexGroupNames {
     public const string CalloutMod = "clMod";
     public const string CalloutTitle = "clTitle";
     public const string CalloutType = "clType";
+    public const string CalloutOption = "clOption";
     public const string CodeBlock = "codeBlock";
     public const string CodeBlockContent = "cBody";
     public const string CodeBlockLang = "cLang";

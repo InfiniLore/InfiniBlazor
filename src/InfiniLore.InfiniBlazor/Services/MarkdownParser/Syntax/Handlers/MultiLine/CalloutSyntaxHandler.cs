@@ -19,6 +19,7 @@ public sealed class CalloutSyntaxHandler : IMdSyntaxHandler {
     private static readonly int CalloutModId = MdRegexLib.GetGroupId(MdRegexGroupNames.CalloutMod);
     private static readonly int CalloutTitleId = MdRegexLib.GetGroupId(MdRegexGroupNames.CalloutTitle);
     private static readonly int CalloutBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.CalloutBody);
+    private static readonly int CalloutOptionId = MdRegexLib.GetGroupId(MdRegexGroupNames.CalloutOption);
     
     
     // -----------------------------------------------------------------------------------------------------------------
@@ -32,6 +33,10 @@ public sealed class CalloutSyntaxHandler : IMdSyntaxHandler {
     ) {
         CalloutMdSyntaxNode node = CalloutMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
+
+        if (entireMatch.Groups[CalloutOptionId] is { Success: true, ValueSpan: {Length: > 0} option }) {
+            node.WithExpandOption(option);
+        }
 
         if (entireMatch.Groups[CalloutTypeId] is { Success: true, Value: {} typeName }) {
             node.CalloutType = typeName;
