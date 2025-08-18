@@ -1,6 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.MarkdownParser.Syntax
 @using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 
 @namespace InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents
@@ -14,10 +15,9 @@
 <InfiniCallout
     AllowCollapsing="@NodeAllowsCollapsing"
     IsCollapsed="@NodeIsCollapsed"
+    StyleId="@SyntaxNode.CalloutType"
+    IconName="@GetIconNameFromModifer()"
 >
-    <Icon>
-        
-    </Icon>
     <Title>
         @if (SyntaxNode.TryGetTitleNode(out CalloutTitleMdSyntaxNode? titleNode)) {
             @ComponentConverter.RenderChildComponents(titleNode)
@@ -43,4 +43,10 @@
         CalloutMdSyntaxNode.CollapseStateOptions.Closed => true,
         _ => throw new ArgumentOutOfRangeException()
     };
+
+    private string? GetIconNameFromModifer() {
+        if (SyntaxNode.Modifiers is not {} modifiers) return null;
+        if (!modifiers.TryGetIconName(out string? name)) return null;
+        return name;
+    }
 }
