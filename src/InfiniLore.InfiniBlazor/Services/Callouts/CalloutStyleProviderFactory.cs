@@ -40,8 +40,28 @@ public static class CalloutStyleProviderFactory {
             )
         };
 
+        var aliasMap = new Dictionary<string, string>() {
+            ["note"] = "note",
+            
+            ["warning"] = "warning",
+            
+            ["warn"] = "warning",
+            
+            ["tip"] = "tip",
+            
+            ["danger"] = "danger",
+            ["false"] = "danger",
+            
+            ["info"] = "info",
+            
+            ["success"] = "success",
+            ["true"] = "success",
+        };
+
         return new CalloutStyleProvider {
             CalloutMakeup = map.ToFrozenDictionary(),
+            AliasMap = aliasMap.ToFrozenDictionary(),
+            
             DefaultCssClasses = "border-(--border) bg-(--color-base-90) text-(--color-base-20)",
             DefaultBodyClasses = "border-(--color-base-50) text-(--color-base-30)",
             DefaultLucideIconName = LucideNames.Info
