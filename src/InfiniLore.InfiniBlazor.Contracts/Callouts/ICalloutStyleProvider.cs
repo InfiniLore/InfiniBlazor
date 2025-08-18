@@ -9,9 +9,7 @@ namespace InfiniLore.InfiniBlazor.Callouts;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface ICalloutStyleProvider {
-    string DefaultLucideIconName { get; }
-    string DefaultCssClasses { get; }
-    string DefaultBodyClasses { get; }
+    ICalloutStyle DefaultStyle { get; }
 
     bool TryGetCalloutStyle(string id, [NotNullWhen(true)] out ICalloutStyle? style);
 }

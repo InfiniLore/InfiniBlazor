@@ -60,7 +60,7 @@ public static class CalloutStyleProviderFactory {
                 "border-green-700 text-green-400"
             ))
         ;
-        
+
         var aliasMap = new Dictionary<string, string>();
         foreach (CalloutStyle style in map.Values) {
             foreach (string alternateKey in style.AlternateKeys) {
@@ -69,12 +69,16 @@ public static class CalloutStyleProviderFactory {
         }
 
         return new CalloutStyleProvider {
-            CalloutStyles = map.ToFrozenDictionary(pair => pair.Key, ICalloutStyle (pair) => pair.Value),
+            CalloutStyles = map.ToFrozenDictionary(keySelector: pair => pair.Key, elementSelector: ICalloutStyle (pair) => pair.Value),
             AliasMap = aliasMap.ToFrozenDictionary(),
-            
-            DefaultCssClasses = "border-(--border) bg-(--color-base-90) text-(--color-base-20)",
-            DefaultBodyClasses = "border-(--color-base-50) text-(--color-base-30)",
-            DefaultLucideIconName = LucideNames.Info
+            DefaultStyle = new CalloutStyle(
+                string.Empty,
+                [],
+                LucideNames.Info,
+                "border-(--border) bg-(--color-base-90)",
+                "text-(--color-base-20)",
+                "border-(--color-base-50) text-(--color-base-30)"
+            )
         };
     }
 

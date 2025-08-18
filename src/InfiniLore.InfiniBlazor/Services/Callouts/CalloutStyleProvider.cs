@@ -10,12 +10,10 @@ namespace InfiniLore.InfiniBlazor.Callouts;
 // ---------------------------------------------------------------------------------------------------------------------
 public class CalloutStyleProvider : ICalloutStyleProvider {
     public required FrozenDictionary<string, ICalloutStyle> CalloutStyles { private get; init; }
-    public required FrozenDictionary<string, string> AliasMap {private get; init;}
-    
-    public string DefaultLucideIconName { get; init; } = string.Empty;
-    public string DefaultCssClasses { get; init; } = string.Empty;
-    public string DefaultBodyClasses { get; init; } = string.Empty;
+    public required FrozenDictionary<string, string> AliasMap { private get; init; }
 
+    public required ICalloutStyle DefaultStyle { get; init; }
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -24,4 +22,3 @@ public class CalloutStyleProvider : ICalloutStyleProvider {
         return CalloutStyles.TryGetValue(id, out style);
     }
 }
-

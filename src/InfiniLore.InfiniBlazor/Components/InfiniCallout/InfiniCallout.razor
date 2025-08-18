@@ -65,7 +65,7 @@
         base.OnParametersSet();
 
         if (StyleId.IsNullOrWhiteSpace() || !CalloutStyleProvider.TryGetCalloutStyle(StyleId, out ICalloutStyle? style)) {
-            Style = CalloutStyle.Empty;
+            Style = CalloutStyleProvider.DefaultStyle;
             return;
         }
         Style = style;
@@ -85,7 +85,7 @@
             return true;
         }
 
-        iconName = CalloutStyleProvider.DefaultLucideIconName;
+        iconName = CalloutStyleProvider.DefaultStyle.IconName;
         return iconName.IsNotNullOrWhiteSpace();
     }
 }
