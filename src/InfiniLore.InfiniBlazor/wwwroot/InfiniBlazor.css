@@ -1313,6 +1313,9 @@
   .border-\(--color-base-20\) {
     border-color: var(--color-base-20);
   }
+  .border-\(--color-base-50\) {
+    border-color: var(--color-base-50);
+  }
   .border-\(--color-black\) {
     border-color: var(--color-black);
   }
@@ -1835,6 +1838,9 @@
   }
   .text-\(--color-base-20\) {
     color: var(--color-base-20);
+  }
+  .text-\(--color-base-30\) {
+    color: var(--color-base-30);
   }
   .text-\(--color-base-40\) {
     color: var(--color-base-40);

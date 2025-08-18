@@ -64,7 +64,7 @@
     private string GetCalloutStyle(out string? bodyStyle) {
         if (StyleId.IsNotNullOrWhiteSpace() && CalloutStyleProvider.TryGetCalloutMakeup(StyleId, out string? classes, out bodyStyle)) return classes;
 
-        bodyStyle = null;
+        bodyStyle = CalloutStyleProvider.DefaultBodyClasses;
         return CalloutStyleProvider.DefaultCssClasses;
     }
 
