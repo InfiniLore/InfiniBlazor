@@ -1,0 +1,46 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
+
+@namespace InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits DynamicMdComponentBase<CalloutMdSyntaxNode>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniCallout
+    AllowCollapsing="@NodeAllowsCollapsing"
+    IsCollapsed="@NodeIsCollapsed"
+>
+    <Icon>
+        
+    </Icon>
+    <Title>
+        @if (SyntaxNode.TryGetTitleNode(out CalloutTitleMdSyntaxNode? titleNode)) {
+            @ComponentConverter.RenderChildComponents(titleNode)
+        } else {
+            <span>Callout</span>
+        }
+    </Title>
+    <Content>
+        @if (SyntaxNode.TryGetBodyNode(out CalloutBodyMdSyntaxNode? bodyNode)) {
+            @ComponentConverter.RenderChildComponents(bodyNode)
+        }
+    </Content>
+</InfiniCallout>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    private bool NodeAllowsCollapsing => SyntaxNode.CollapsedState != CalloutMdSyntaxNode.CollapseStateOptions.None;
+    private bool NodeIsCollapsed => SyntaxNode.CollapsedState switch {
+        CalloutMdSyntaxNode.CollapseStateOptions.None => false,
+        CalloutMdSyntaxNode.CollapseStateOptions.Open => false,
+        CalloutMdSyntaxNode.CollapseStateOptions.Closed => true,
+        _ => throw new ArgumentOutOfRangeException()
+    };
+}

@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor;
+using InfiniLore.InfiniBlazor.Callouts;
 using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.DynamicMdComponents;
 using InfiniLore.InfiniBlazor.Theming;
@@ -23,6 +24,7 @@ public static class ServiceCollectionExtensions {
         config.RegisterTheme<DefaultThemeCollection>();
         
         services.AddSingleton(DynamicMdComponentConverterFactory.Create);
+        services.AddSingleton(CalloutStyleProviderFactory.Create);
         
         configure?.Invoke(config);
         

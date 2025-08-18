@@ -1,0 +1,82 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Callouts
+@using InfiniLore.Lucide
+@using System.Diagnostics.CodeAnalysis
+
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inject ICalloutStyleProvider CalloutStyleProvider
+@inherits InfiniComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="@ConcatClasses(Class, GetCalloutStyle() ) flex flex-col min-w-full min-h-lh pt-2 pb-3 px-3 border-l-4 border-y-1 border-r-1 rounded-r-xl">
+    @* Top Banner *@
+    <div class="flex flex-row w-full gap-2 items-center">
+        <div class="flex shrink">
+            @if (Icon is not null) {
+              @Icon  
+            } else if (TryGetIconName(out string? iconName)) {
+                <LucideIcon Name="@iconName"/>
+            } 
+        </div>
+        
+        <div class="flex grow w-full text-xl">
+            @Title
+        </div>
+        
+        @if (AllowCollapsing) {
+            <InfiniButton
+                Class="flex shrink "
+                Size="Size.S"
+                TooltipAnchor="Anchor.Left"
+                Tooltip="@(IsCollapsed ? "Open Callout" : "Close Callout")"
+                Variant="ButtonVariant.Transparent"
+                OnClick="@(() => IsCollapsed = !IsCollapsed)"
+                IconName="@(IsCollapsed ? LucideNames.ChevronDown : LucideNames.ChevronUp)"/>
+        }
+    </div>
+    
+    @* Body *@
+    <div class="flex flex-col transition-all duration-300 ease-in-out @(IsCollapsed ? "h-0 overflow-hidden opacity-0 pointer-events-none border-none" : "h-auto opacity-100 border-t-1 border-(--border) pt-2 mt-1")">
+        @Content
+    </div>
+</div>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter, EditorRequired] public RenderFragment Title { get; set; } = RenderFragmentHelper.Empty();
+    [Parameter] public RenderFragment? Content { get; set; }
+    [Parameter] public bool AllowCollapsing { get; set; } 
+    [Parameter] public bool IsCollapsed { get; set; }
+    [Parameter] public RenderFragment? Icon { get; set; }
+    [Parameter] public string? IconName { get; set; }
+    [Parameter] public string? StyleId { get; set; }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private string GetCalloutStyle() {
+        if (StyleId.IsNotNullOrWhiteSpace() && CalloutStyleProvider.TryGetCalloutMakeup(StyleId, out string? classes)) return classes;
+        return CalloutStyleProvider.DefaultCssClasses;
+    }
+
+    private bool TryGetIconName([NotNullWhen(true)] out string? iconName) {
+        if (IconName.IsNotNullOrWhiteSpace()) {
+            iconName = IconName;
+            return true;
+        }
+        if (StyleId.IsNotNullOrWhiteSpace()) {
+            if (CalloutStyleProvider.TryGetLucideIcon(StyleId, out iconName)) return true;
+        }
+
+        iconName = CalloutStyleProvider.DefaultLucideIconName;
+        return iconName.IsNotNullOrWhiteSpace();
+    }
+}
+    

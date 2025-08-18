@@ -17,13 +17,14 @@ public static class DynamicMdComponentConverterFactory {
 
         mapBuilder.Register<BlockQuoteDynamicMdComponent, BlockQuoteMdSyntaxNode>();
         mapBuilder.Register<BoldDynamicMdComponent, BoldMdSyntaxNode>();
+        mapBuilder.Register<CalloutDynamicMdComponent, CalloutMdSyntaxNode>();
         mapBuilder.Register<CodeBlockDynamicMdComponent, CodeBlockMdSyntaxNode>();
         mapBuilder.Register<CodeInlineDynamicMdComponent, CodeInlineMdSyntaxNode>();
+        mapBuilder.Register<ContentDynamicMdComponent, ContentMdSyntaxNode>();
         mapBuilder.Register<EmoteDynamicMdComponent, EmoteMdSyntaxNode>();
         mapBuilder.Register<HeadingDynamicMdComponent, HeadingMdSyntaxNode>();
         mapBuilder.Register<HorizontalRuleDynamicMdComponent, HorizontalRuleMdSyntaxNode>();
         mapBuilder.Register<HtmlSpanDynamicMdComponent, HtmlSpanMdSyntaxNode>();
-        mapBuilder.Register<ContentDynamicMdComponent, ContentMdSyntaxNode>();
         mapBuilder.Register<ImageDynamicMdComponent, ImageMdSyntaxNode>();
         mapBuilder.Register<ItalicDynamicMdComponent, ItalicMdSyntaxNode>();
         mapBuilder.Register<LinkDynamicMdComponent, LinkMdSyntaxNode>();
