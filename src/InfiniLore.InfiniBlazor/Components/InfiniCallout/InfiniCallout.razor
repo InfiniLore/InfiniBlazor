@@ -14,9 +14,9 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@ConcatClasses(Class, GetCalloutStyle(out string? bodyStyle)) my-2 flex flex-col min-w-full min-h-lh pt-2 pb-3 px-3 border-l-4 border-y-1 border-r-1 rounded-r-xl">
+<div class="@ConcatClasses(Class, Style.CssContainer) my-2 flex flex-col min-w-full min-h-lh pt-2 pb-3 px-3 border-l-4 border-y-1 border-r-1 rounded-r-xl">
     @* Top Banner *@
-    <div class="flex flex-row w-full gap-2 items-center">
+    <div class="@Style.CssTitle flex flex-row w-full gap-2 items-center">
         <div class="flex shrink">
             @if (Icon is not null) {
               @Icon  
@@ -42,7 +42,7 @@
     </div>
     
     @* Body *@
-    <div class="@ConcatClasses(bodyStyle,IsCollapsed ? "h-0 overflow-hidden opacity-0 pointer-events-none border-none" : "h-auto opacity-100 border-t-1 pt-2 mt-1" ) flex flex-col transition-all duration-300 ease-in-out">
+    <div class="@ConcatClasses(Style.CssBody ,IsCollapsed ? "h-0 overflow-hidden opacity-0 pointer-events-none border-none" : "h-auto opacity-100 border-t-1 pt-2 mt-1" ) flex flex-col transition-all duration-300 ease-in-out">
         @Content
     </div>
 </div>
@@ -58,22 +58,32 @@
     [Parameter] public string? IconName { get; set; }
     [Parameter] public string? StyleId { get; set; }
 
+    private ICalloutStyle Style { get; set; } = CalloutStyle.Empty;
+
+
+    protected override void OnParametersSet() {
+        base.OnParametersSet();
+
+        if (StyleId.IsNullOrWhiteSpace() || !CalloutStyleProvider.TryGetCalloutStyle(StyleId, out ICalloutStyle? style)) {
+            Style = CalloutStyle.Empty;
+            return;
+        }
+        Style = style;
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private string GetCalloutStyle(out string? bodyStyle) {
-        if (StyleId.IsNotNullOrWhiteSpace() && CalloutStyleProvider.TryGetCalloutMakeup(StyleId, out string? classes, out bodyStyle)) return classes;
-
-        bodyStyle = CalloutStyleProvider.DefaultBodyClasses;
-        return CalloutStyleProvider.DefaultCssClasses;
-    }
-
     private bool TryGetIconName([NotNullWhen(true)] out string? iconName) {
         if (IconName.IsNotNullOrWhiteSpace()) {
             iconName = IconName;
             return true;
         }
-        if (StyleId.IsNotNullOrWhiteSpace() && CalloutStyleProvider.TryGetLucideIcon(StyleId, out iconName)) return true;
+
+        if (Style.IconName.IsNotNullOrWhiteSpace()) {
+            iconName = Style.IconName;
+            return true;
+        }
 
         iconName = CalloutStyleProvider.DefaultLucideIconName;
         return iconName.IsNotNullOrWhiteSpace();

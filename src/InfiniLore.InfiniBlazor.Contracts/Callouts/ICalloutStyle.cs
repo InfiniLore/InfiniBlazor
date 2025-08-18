@@ -1,17 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Diagnostics.CodeAnalysis;
-
 namespace InfiniLore.InfiniBlazor.Callouts;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface ICalloutStyleProvider {
-    string DefaultLucideIconName { get; }
-    string DefaultCssClasses { get; }
-    string DefaultBodyClasses { get; }
-
-    bool TryGetCalloutStyle(string id, [NotNullWhen(true)] out ICalloutStyle? style);
+public interface ICalloutStyle {
+    string IconName { get; }
+    string CssContainer { get; }
+    string CssTitle { get; }
+    string CssBody { get; }
 }
