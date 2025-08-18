@@ -40,11 +40,11 @@ public static class CalloutStyleProviderFactory {
             )
         };
 
-        var aliasMap = new Dictionary<string, string>() {
+        var aliasMap = new Dictionary<string, string> {
             ["note"] = "note",
+            ["quote"] = "note",
             
             ["warning"] = "warning",
-            
             ["warn"] = "warning",
             
             ["tip"] = "tip",

@@ -33,6 +33,7 @@ public class CalloutStyleProvider : ICalloutStyleProvider {
     }
 
     public bool TryGetLucideIcon(string id, [NotNullWhen(true)] out string? iconName) {
+        if (AliasMap.TryGetValue(id, out string? correctName)) id = correctName;
         if (!CalloutMakeup.TryGetValue(id, out (string LucideIcon, string CssClasses, string bodyClasses) box)) {
             iconName = null;
             return false;
