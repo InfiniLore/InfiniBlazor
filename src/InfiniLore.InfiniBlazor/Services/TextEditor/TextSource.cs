@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.TextEditor;
