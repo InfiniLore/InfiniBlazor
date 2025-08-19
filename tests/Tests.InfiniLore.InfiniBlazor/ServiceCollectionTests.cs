@@ -4,7 +4,7 @@
 using CodeOfChaos.Testing.TUnit;
 using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.JsRuntime;
-using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.SyntaxSerializer;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Tests.InfiniLore.InfiniBlazor;
@@ -33,6 +33,6 @@ public class ServiceCollectionTests {
         services.AddInfiniBlazor(config => config.AddMarkdownLogic());
 
         // Assert
-        await Assert.That(services).ContainsServiceImplementation(typeof(IMdSyntaxParser), typeof(MdSyntaxParser));
+        await Assert.That(services).ContainsServiceImplementation(typeof(IMdSyntaxSerializer), typeof(MdSyntaxSerializer));
     }
 }

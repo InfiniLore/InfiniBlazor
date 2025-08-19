@@ -26,7 +26,7 @@
             </a>
         }
         else {
-            <button @onclick="OnClickAsync"
+            <button @onclick="@OnClickAsync"
                     @onclick:stopPropagation="@StopPropagation"
                     type="@Type"
                     disabled="@IsDisabled"

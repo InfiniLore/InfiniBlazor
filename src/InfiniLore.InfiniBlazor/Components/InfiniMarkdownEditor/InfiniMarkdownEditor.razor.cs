@@ -5,6 +5,8 @@ using InfiniLore.InfiniBlazor.Debugger;
 using InfiniLore.InfiniBlazor.JsRuntime;
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
+using InfiniLore.InfiniBlazor.Markdown.SyntaxDeserializer;
+using InfiniLore.InfiniBlazor.Markdown.SyntaxSerializer;
 using InfiniLore.InfiniBlazor.TextEditor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,8 +20,8 @@ namespace InfiniLore.InfiniBlazor.Components;
 public partial class InfiniMarkdownEditor(
     ITextEditor textEditor,
     IJsInfiniBlazor jsInfiniBlazor,
-    IMdSyntaxParser syntaxParser,
-    [FromKeyedServices("styled")] IMdSyntaxTreeConverter treeConverter,
+    IMdSyntaxSerializer syntaxParser,
+    [FromKeyedServices("styled")] IMdSyntaxDeserializer treeConverter,
     IVisualDebuggerProvider debuggerProvider,
     ILogger<InfiniMarkdownEditor> logger
 ) : InfiniComponentBase {

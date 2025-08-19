@@ -3,6 +3,8 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
+using InfiniLore.InfiniBlazor.Markdown.SyntaxDeserializer;
+using InfiniLore.InfiniBlazor.Markdown.SyntaxSerializer;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -12,7 +14,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMarkdownParser>]
-public class MarkdownParser(IMdSyntaxTreeConverter treeConverter, IMdSyntaxParser syntaxParser, ILogger<MarkdownParser> logger) : IMarkdownParser {
+public class MarkdownParser(IMdSyntaxDeserializer treeConverter, IMdSyntaxSerializer syntaxParser, ILogger<MarkdownParser> logger) : IMarkdownParser {
     public string ParseToString(string input) {
         MdSyntaxTree tree = MdSyntaxTree.Pool.Get();
         try {
@@ -46,7 +48,7 @@ public class MarkdownParser(IMdSyntaxTreeConverter treeConverter, IMdSyntaxParse
 
 [InjectableSingleton<IMarkdownParser>("styled")]
 public class StyledMarkdownParser(
-    [FromKeyedServices("styled")] IMdSyntaxTreeConverter treeConverter,
-    IMdSyntaxParser syntaxParser,
+    [FromKeyedServices("styled")] IMdSyntaxDeserializer treeConverter,
+    IMdSyntaxSerializer syntaxParser,
     ILogger<StyledMarkdownParser> logger
 ) : MarkdownParser(treeConverter, syntaxParser, logger);

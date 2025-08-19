@@ -5,6 +5,8 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
 using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.SyntaxDeserializer;
+using InfiniLore.InfiniBlazor.Markdown.SyntaxSerializer;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Benchmarks.InfiniLore.InfiniBlazor.Markdown;
@@ -14,8 +16,8 @@ namespace Benchmarks.InfiniLore.InfiniBlazor.Markdown;
 [MemoryDiagnoser]
 [Orderer(SummaryOrderPolicy.Declared)]
 public class IndividualMarkdownBenchmarks {
-    private IMdSyntaxParser Parser { get; set; } = null!;
-    private IMdSyntaxTreeConverter Converter { get; set; } = null!;
+    private IMdSyntaxSerializer Parser { get; set; } = null!;
+    private IMdSyntaxDeserializer Converter { get; set; } = null!;
 
     [GlobalSetup]
     public void Setup() {
@@ -24,8 +26,8 @@ public class IndividualMarkdownBenchmarks {
         serviceCollection.AddLogging();
         ServiceProvider provider = serviceCollection.BuildServiceProvider();
         
-        Parser = provider.GetRequiredService<IMdSyntaxParser>();
-        Converter = provider.GetRequiredService<IMdSyntaxTreeConverter>();
+        Parser = provider.GetRequiredService<IMdSyntaxSerializer>();
+        Converter = provider.GetRequiredService<IMdSyntaxDeserializer>();
     }
 
     // -----------------------------------------------------------------------------------------------------------------
