@@ -1,48 +1,50 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace Tests.InfiniLore.InfiniBlazor.DataSources.MarkdownParser;
+namespace Tests.InfiniLore.InfiniBlazor.Markdown._DataSources.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class TagDataSources {
-    private static readonly string SectionName = nameof(TagDataSources)[..^nameof(DataSources).Length];
+public static class BoldDataSources {
+    private static readonly string SectionName = nameof(BoldDataSources)[..^nameof(DataSources).Length];
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static IEnumerable<Func<MdTestData>> DataSources() {
         yield return static () => new MdTestData(SectionName,
-            "#tag",
-            "<p><span class=\"md-tag\">#tag</span></p>"
+            "**bold**",
+            "<p><strong>bold</strong></p>");
+
+        yield return static () => new MdTestData(SectionName,
+            @"**\*bold**",
+            "<p><strong>*bold</strong></p>");
+
+        yield return static () => new MdTestData(SectionName,
+            @"**bold\***",
+            "<p><strong>bold*</strong></p>"// Escaped char
         );
 
         yield return static () => new MdTestData(SectionName,
-            "#不",
-            "<p><span class=\"md-tag\">#不</span></p>"
+            "**bold *nested italic***",
+            "<p><strong>bold <em>nested italic</em></strong></p>");
+
+        yield return static () => new MdTestData(SectionName,
+            "***nested italic* bold**",
+            "<p><strong><em>nested italic</em> bold</strong></p>"
         );
 
         yield return static () => new MdTestData(SectionName,
-            "#öäüÖÄÜß",
-            "<p><span class=\"md-tag\">#öäüÖÄÜß</span></p>"
-        );
+            "** \\* **",
+            "<p><strong> * </strong></p>");
 
         yield return static () => new MdTestData(SectionName,
-            "**#tag**",
-            "<p><strong><span class=\"md-tag\">#tag</span></strong></p>"
-        );
+            "**bold *nested \\* italic***",
+            "<p><strong>bold <em>nested * italic</em></strong></p>");
 
         yield return static () => new MdTestData(SectionName,
-            "*#tag*",
-            "<p><em><span class=\"md-tag\">#tag</span></em></p>"
+            "some text *****",// to exclude the <hr> tag being triggered
+            "<p>some text <strong>*</strong></p>"
         );
-
-        yield return static () => new MdTestData(SectionName,
-            "#this is not a valid tag",
-            "<p><span class=\"md-tag\">#this</span> is not a valid tag</p>");
-        
-        yield return static () => new MdTestData(SectionName,
-            "#[link](https://www.transgenderinfo.be)",
-            "<p>#<a href=\"https://www.transgenderinfo.be\">link</a></p>");
     }
 }

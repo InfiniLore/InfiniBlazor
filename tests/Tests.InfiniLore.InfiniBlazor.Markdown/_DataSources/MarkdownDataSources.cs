@@ -1,10 +1,9 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Tests.InfiniLore.InfiniBlazor.DataSources.MarkdownParser;
+using Tests.InfiniLore.InfiniBlazor.Markdown._DataSources.MarkdownParser;
 
-namespace Tests.InfiniLore.InfiniBlazor.DataSources;
-
+namespace Tests.InfiniLore.InfiniBlazor.Markdown._DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

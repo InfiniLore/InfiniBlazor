@@ -6,7 +6,7 @@ using InfiniLore.InfiniBlazor.Emotes;
 using InfiniLore.InfiniBlazor.TextEditor.TextModifiers;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Tests.InfiniLore.InfiniBlazor.DataSources;
+namespace Tests.Shared.Infinilore.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

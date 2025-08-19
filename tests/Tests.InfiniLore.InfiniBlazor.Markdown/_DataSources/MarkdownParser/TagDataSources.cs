@@ -1,35 +1,48 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace Tests.InfiniLore.InfiniBlazor.DataSources.MarkdownParser;
+namespace Tests.InfiniLore.InfiniBlazor.Markdown._DataSources.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class BoldAndItalicDataSources {
-    private static readonly string SectionName = nameof(BoldAndItalicDataSources)[..^nameof(DataSources).Length];
+public static class TagDataSources {
+    private static readonly string SectionName = nameof(TagDataSources)[..^nameof(DataSources).Length];
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static IEnumerable<Func<MdTestData>> DataSources() {
         yield return static () => new MdTestData(SectionName,
-            "***bold and italic***",
-            "<p><strong><em>bold and italic</em></strong></p>"
+            "#tag",
+            "<p><span class=\"md-tag\">#tag</span></p>"
         );
 
         yield return static () => new MdTestData(SectionName,
-            @"***\*bold and italic***",
-            "<p><strong><em>*bold and italic</em></strong></p>"
+            "#不",
+            "<p><span class=\"md-tag\">#不</span></p>"
         );
 
         yield return static () => new MdTestData(SectionName,
-            @"***bold and italic\****",
-            "<p><strong><em>bold and italic*</em></strong></p>"
+            "#öäüÖÄÜß",
+            "<p><span class=\"md-tag\">#öäüÖÄÜß</span></p>"
         );
 
         yield return static () => new MdTestData(SectionName,
-            @"*** \* \* \* ***",
-            "<p><strong><em> * * * </em></strong></p>"
+            "**#tag**",
+            "<p><strong><span class=\"md-tag\">#tag</span></strong></p>"
         );
+
+        yield return static () => new MdTestData(SectionName,
+            "*#tag*",
+            "<p><em><span class=\"md-tag\">#tag</span></em></p>"
+        );
+
+        yield return static () => new MdTestData(SectionName,
+            "#this is not a valid tag",
+            "<p><span class=\"md-tag\">#this</span> is not a valid tag</p>");
+        
+        yield return static () => new MdTestData(SectionName,
+            "#[link](https://www.transgenderinfo.be)",
+            "<p>#<a href=\"https://www.transgenderinfo.be\">link</a></p>");
     }
 }

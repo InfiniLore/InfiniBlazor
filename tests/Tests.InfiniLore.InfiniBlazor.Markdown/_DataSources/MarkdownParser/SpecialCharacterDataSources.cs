@@ -1,50 +1,50 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace Tests.InfiniLore.InfiniBlazor.DataSources.MarkdownParser;
+namespace Tests.InfiniLore.InfiniBlazor.Markdown._DataSources.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class BoldDataSources {
-    private static readonly string SectionName = nameof(BoldDataSources)[..^nameof(DataSources).Length];
+public static class SpecialCharacterDataSources {
+    private static readonly string SectionName = nameof(SpecialCharacterDataSources)[..^nameof(DataSources).Length];
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static IEnumerable<Func<MdTestData>> DataSources() {
         yield return static () => new MdTestData(SectionName,
-            "**bold**",
-            "<p><strong>bold</strong></p>");
-
-        yield return static () => new MdTestData(SectionName,
-            @"**\*bold**",
-            "<p><strong>*bold</strong></p>");
-
-        yield return static () => new MdTestData(SectionName,
-            @"**bold\***",
-            "<p><strong>bold*</strong></p>"// Escaped char
+            "&",
+            "<p>&</p>"
         );
 
         yield return static () => new MdTestData(SectionName,
-            "**bold *nested italic***",
-            "<p><strong>bold <em>nested italic</em></strong></p>");
-
-        yield return static () => new MdTestData(SectionName,
-            "***nested italic* bold**",
-            "<p><strong><em>nested italic</em> bold</strong></p>"
+            "<",
+            "<p><</p>"
         );
 
         yield return static () => new MdTestData(SectionName,
-            "** \\* **",
-            "<p><strong> * </strong></p>");
+            ">",
+            "<p>></p>"
+        );
 
         yield return static () => new MdTestData(SectionName,
-            "**bold *nested \\* italic***",
-            "<p><strong>bold <em>nested * italic</em></strong></p>");
+            "&copy;",
+            "<p>&copy;</p>"
+        );
 
         yield return static () => new MdTestData(SectionName,
-            "some text *****",// to exclude the <hr> tag being triggered
-            "<p>some text <strong>*</strong></p>"
+            "This contains an emoji: 😀",
+            "<p>This contains an emoji: 😀</p>"
+        );
+
+        yield return static () => new MdTestData(SectionName,
+            "@username mentions",
+            "<p>@username mentions</p>"
+        );
+
+        yield return static () => new MdTestData(SectionName,
+            "test <br/> test",
+            "<p>test <br/> test</p>"
         );
     }
 }

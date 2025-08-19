@@ -1,50 +1,42 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace Tests.InfiniLore.InfiniBlazor.DataSources.MarkdownParser;
+namespace Tests.InfiniLore.InfiniBlazor.Markdown._DataSources.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class SpecialCharacterDataSources {
-    private static readonly string SectionName = nameof(SpecialCharacterDataSources)[..^nameof(DataSources).Length];
+// ReSharper disable once InconsistentNaming
+public static class XSSDataSources {
+    private static readonly string SectionName = nameof(XSSDataSources)[..^nameof(DataSources).Length];
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static IEnumerable<Func<MdTestData>> DataSources() {
         yield return static () => new MdTestData(SectionName,
-            "&",
-            "<p>&</p>"
+            "<a href=\"javascript:alert('XSS')\">Click Me</a>",
+            "<p><a href=\"javascript:alert('XSS')\">Click Me</a></p>"
+        );
+
+        // Some tests based on https://github.com/cujanovic/Markdown-XSS-Payloads/blob/master/Markdown-XSS-Payloads.txt
+        yield return static () => new MdTestData(SectionName,
+            "![Uh oh...](\"onerror=\"alert('XSS'))",
+            "<p>![Uhoh...](\"onerror=\"alert('XSS'))</p>"
         );
 
         yield return static () => new MdTestData(SectionName,
-            "<",
-            "<p><</p>"
+            "[a](javascript:prompt(document.cookie))",
+            "<p>[a](javascript:prompt(document.cookie))</p>"
         );
 
         yield return static () => new MdTestData(SectionName,
-            ">",
-            "<p>></p>"
+            "![a](javascript:prompt(document.cookie))\\",
+            "<p>![a](javascript:prompt(document.cookie))\\</p>"
         );
 
         yield return static () => new MdTestData(SectionName,
-            "&copy;",
-            "<p>&copy;</p>"
-        );
-
-        yield return static () => new MdTestData(SectionName,
-            "This contains an emoji: 😀",
-            "<p>This contains an emoji: 😀</p>"
-        );
-
-        yield return static () => new MdTestData(SectionName,
-            "@username mentions",
-            "<p>@username mentions</p>"
-        );
-
-        yield return static () => new MdTestData(SectionName,
-            "test <br/> test",
-            "<p>test <br/> test</p>"
+            "<javascript:prompt(document.cookie)>",
+            "<p><javascript:prompt(document.cookie)></p>"
         );
     }
 }

@@ -2,12 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
-        <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-
-        <IsPackable>false</IsPackable>
-        <IsTestProject>true</IsTestProject>
     </PropertyGroup>
 
     <ItemGroup>
@@ -17,13 +13,11 @@
         <PackageReference Include="JetBrains.Annotations"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
         <PackageReference Include="NSubstitute" />
-        <PackageReference Include="TUnit" />
-        <PackageReference Include="Bogus" />
+        <PackageReference Include="TUnit.Core" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" />
-        <ProjectReference Include="..\Tests.Shared.Infinilore.InfiniBlazor\Tests.Shared.Infinilore.InfiniBlazor.csproj" />
     </ItemGroup>
 
 </Project>
