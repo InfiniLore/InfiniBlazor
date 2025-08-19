@@ -75,18 +75,18 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                     builder.Append('"');
                 }
 
-                if (imgNode.ContainsModifiers) {
-                    if (imgNode.Modifiers.TryGetTitle(out string? title)) {
+                if (imgNode.TryGetModifier(out IMdSyntaxNodeModifier? modifier)) {
+                    if (modifier.TryGetTitle(out string? title)) {
                         builder.Append(" title=\"");
                         builder.Append(title.AsSpan());
                         builder.Append('"');
                     }
                     
-                    if (imgNode.Modifiers.TryGetFit(out bool state) && state) {
+                    if (modifier.TryGetFit(out bool state) && state) {
                         builder.Append(" style=\"width:auto;height:2em;vertical-align:baseline;object-fit:contain;\"");
                     }
                     
-                    else if (imgNode.Modifiers.TryGetSize(out (int Width, int Height) size)) {
+                    else if (modifier.TryGetSize(out (int Width, int Height) size)) {
                         builder.Append(" style=\"width: ");
                         builder.Append(size.Width);
                         builder.Append("px; height: ");
@@ -195,10 +195,10 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 break;
             }
 
-            case CalloutMdSyntaxNode {CalloutType: {} calloutType, Modifiers: var modifier}: {
+            case CalloutMdSyntaxNode {CalloutType: {} calloutType} calloutNode: {
                 builder.Append("<div class=\"md-callout md-callout-");
                 builder.Append(calloutType);
-                if (modifier is not null && modifier.TryGetIconName(out string? iconName)) {
+                if (calloutNode.TryGetModifier(out IMdSyntaxNodeModifier? modifier) && modifier.TryGetIconName(out string? iconName)) {
                     builder.Append(" icon-");
                     builder.Append(iconName);
                 }

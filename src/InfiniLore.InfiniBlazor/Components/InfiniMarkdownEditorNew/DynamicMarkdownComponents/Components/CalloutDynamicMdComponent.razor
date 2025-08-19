@@ -1,6 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Markdown
 @using InfiniLore.InfiniBlazor.Markdown.Syntax
 @using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
 
@@ -45,8 +46,8 @@
     };
 
     private string? GetIconNameFromModifer() {
-        if (SyntaxNode.Modifiers is not {} modifiers) return null;
-        if (!modifiers.TryGetIconName(out string? name)) return null;
+        if (!SyntaxNode.TryGetModifier(out IMdSyntaxNodeModifier? modifier)) return null;
+        if (!modifier.TryGetIconName(out string? name)) return null;
         return name;
     }
 }

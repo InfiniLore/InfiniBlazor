@@ -47,7 +47,6 @@ public sealed class MdSyntaxSerializer(IServiceProvider serviceProvider, ILogger
     }
 
     public void SerializeToTree(string markdown, IMdSyntaxTree nodeTree) {
-        nodeTree.RootNode.Depth = 0;
         MdSyntaxSerializerStack runningSerializer = MdSyntaxSerializerStack.Pool.Get();
 
         MdSyntaxFragment? fragment = null;

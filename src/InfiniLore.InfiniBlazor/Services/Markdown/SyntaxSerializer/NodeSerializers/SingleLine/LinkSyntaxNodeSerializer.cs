@@ -40,8 +40,10 @@ public sealed partial class LinkSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
             ImageMdSyntaxNode imgNode = ImageMdSyntaxNode.Pool.Get();
             imgNode.Href = linkHref;
             imgNode.AltText = NormalizeAltText.Replace(linkText, string.Empty);
-            
-            if (mods.IsNotNullOrWhiteSpace()) imgNode.Modifiers = MdSyntaxNodeModifier.FromString(mods);
+
+            if (mods.IsNotNullOrWhiteSpace()) {
+                imgNode.WithModifier(MdSyntaxNodeModifier.FromString(mods));
+            }
             
             parentNode.AddChildNode(imgNode);
             return ;

@@ -23,8 +23,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
     public IMdSyntaxNode? Parent { get; set; }
     public Type Type { get; } = typeof(T);
     
-    [MemberNotNullWhen(true, nameof(Modifiers))] public bool ContainsModifiers => Modifiers is not null;
-    public IMdSyntaxNodeModifier? Modifiers { get; set; }
+    private IMdSyntaxNodeModifier? Modifier { get; set; }
 
     public static ObjectPool<T> Pool { get; } = PoolingHelpers.CreateResettablePool<T>(PoolingHelpers.VisitorPerParserRetained);
     // -----------------------------------------------------------------------------------------------------------------
@@ -83,12 +82,16 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
         childNode = casted;
         return true;   
     }
+    
+    public bool TryGetModifier([NotNullWhen(true)] out IMdSyntaxNodeModifier? mdSyntaxNodeModifier) {
+        mdSyntaxNodeModifier = Modifier;
+        return mdSyntaxNodeModifier is not null;
+    }
 
     public void AddChildNode(IMdSyntaxNode childNode) {
         // Check if we need to resize
         EnsureChildNodeCapacity();
         childNode.WithParent(this);
-        childNode.WithDepth(Depth + 1);
 
         // ReSharper disable once HeapView.PossibleBoxingAllocation
         ChildNodes[ChildCount++] = childNode;
@@ -98,7 +101,6 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
         // Check if we need to resize
         EnsureChildNodeCapacity();
         childNode.WithParent(this);
-        childNode.WithDepth(Depth + 1);
 
         // ReSharper disable once HeapView.PossibleBoxingAllocation
         ChildNodes[ChildCount++] = childNode;
@@ -145,14 +147,18 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
         return this;
     }
     
-    public IMdSyntaxNode WithDepth(int depth) {
-        Depth = depth;
-        return this;   
-    }
-    
     public IMdSyntaxNode WithParent(IMdSyntaxNode parent) {
         Parent = parent;
+        Depth = parent.Depth + 1;
         return this;
+    }
+    
+    public IMdSyntaxNode WithModifier(IMdSyntaxNodeModifier modifier) {
+        if (Modifier is MdSyntaxNodeModifier mod) {
+            MdSyntaxNodeModifier.Pool.Return(mod);
+        }
+        Modifier = modifier;
+        return this;   
     }
 
     public void ReturnToPool() {
@@ -173,9 +179,9 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
         Parent = null;
         
         // ReSharper disable once InvertIf
-        if (Modifiers is not null) {
-            MdSyntaxNodeModifier.Pool.Return(Unsafe.As<MdSyntaxNodeModifier>(Modifiers));
-            Modifiers = null;
+        if (Modifier is not null) {
+            MdSyntaxNodeModifier.Pool.Return(Unsafe.As<MdSyntaxNodeModifier>(Modifier));
+            Modifier = null;
         }
         
         return true;

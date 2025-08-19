@@ -104,18 +104,18 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                     builder.Append('"');
                 }
 
-                if (imgNode.ContainsModifiers) {
-                    if (imgNode.Modifiers.TryGetTitle(out string? title)) {
+                if (imgNode.TryGetModifier(out IMdSyntaxNodeModifier? modifier)) {
+                    if (modifier.TryGetTitle(out string? title)) {
                         builder.Append(" title=\"");
                         builder.Append(title.AsSpan());
                         builder.Append('"');
                     }
                     
-                    if (imgNode.Modifiers.TryGetFit(out bool state) && state) {
+                    if (modifier.TryGetFit(out bool state) && state) {
                         builder.Append(" style=\"width:auto;height:1em;vertical-align:text-top;object-fit:contain;transform:translate(0,0.15em);\"");
                     }
                     
-                    else if (imgNode.Modifiers.TryGetSize(out (int Width, int Height) size)) {
+                    else if (modifier.TryGetSize(out (int Width, int Height) size)) {
                         builder.Append(" style=\"width: ");
                         builder.Append(size.Width);
                         builder.Append("px; height: ");
@@ -250,7 +250,7 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 break;
             }
 
-            case CalloutTitleMdSyntaxNode {Parent: CalloutMdSyntaxNode {CalloutType: {} calloutType, Modifiers: var modifiers}}: {
+            case CalloutTitleMdSyntaxNode {Parent: CalloutMdSyntaxNode {CalloutType: {} calloutType} parentNode}: {
                 string calloutName = calloutType.ToLowerInvariant();
                 string calloutClass = calloutName switch {
                     "note" => "text-neutral-300",
@@ -263,7 +263,7 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 };
 
                 string? svgData = null;
-                if (modifiers?.TryGetIconName(out string? name) ?? false) {
+                if (parentNode.TryGetModifier(out IMdSyntaxNodeModifier? modifiers) && modifiers.TryGetIconName(out string? name)) {
                     svgData = _lucideService.GetIconAsString(name);
                 }
                 if (svgData.IsNullOrWhiteSpace()) {

@@ -43,7 +43,7 @@ public sealed class CalloutSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         }
         
         if (entireMatch.Groups[CalloutModId] is { Success: true, Value: {} mods }) {
-            node.Modifiers = MdSyntaxNodeModifier.FromString(mods);
+            node.WithModifier(MdSyntaxNodeModifier.FromString(mods));
         }
 
         if (entireMatch.Groups[CalloutTitleId] is { Success: true, Value: {} title }) {

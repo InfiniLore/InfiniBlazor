@@ -41,8 +41,8 @@ public class MdSyntaxNodeXmlParser {
     private XElement ToXmlInternal(IMdSyntaxNode node) {
         var element = new XElement(
             node.GetType().Name, // Use the type name as the XML element name
-            node is { ContainsModifiers: true, Modifiers: not null }
-                ? new XElement("Modifiers", SerializeModifiers(node.Modifiers))
+            node.TryGetModifier(out IMdSyntaxNodeModifier? modifier)
+                ? new XElement("Modifiers", SerializeModifiers(modifier))
                 : null
         );
 
@@ -116,7 +116,7 @@ public class MdSyntaxNodeXmlParser {
                 int end = int.Parse(attr.Attribute("End")?.Value ?? "0");
                 modifiers.Attributes[key] = new Range(start, end);
             }
-            node.Modifiers = modifiers;
+            node.WithModifier(modifiers);
         }
 
         // Deserialize children
