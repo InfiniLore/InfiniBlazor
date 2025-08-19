@@ -2,7 +2,6 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Emotes
-@using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 @using InfiniLore.Lucide
 
 @namespace InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents
@@ -11,7 +10,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inject IEmoteProvider EmoteProvider
 
-@inherits DynamicMdComponentBase<EmoteMdSyntaxNode>
+@inherits DynamicMdComponentBase<InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes.EmoteMdSyntaxNode>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@

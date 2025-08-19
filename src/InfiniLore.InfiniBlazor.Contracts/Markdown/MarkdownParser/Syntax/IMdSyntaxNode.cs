@@ -12,6 +12,8 @@ public interface IMdSyntaxNode {
     int ChildCount { get; }
     int Depth { get; set; }
     Type Type { get; }
+    [MemberNotNullWhen(true, nameof(Modifiers))] bool ContainsModifiers { get; }
+    IMdSyntaxNodeModifier? Modifiers { get; set; }
 
     ReadOnlySpan<IMdSyntaxNode> GetChildrenSpan();
     IEnumerable<IMdSyntaxNode> GetChildren();

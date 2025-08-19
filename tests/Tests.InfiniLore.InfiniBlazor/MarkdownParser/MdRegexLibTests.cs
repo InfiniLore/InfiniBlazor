@@ -1,7 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.MarkdownParser.RegexLib;
+using InfiniLore.InfiniBlazor.Markdown.RegexLib;
 using System.Text.RegularExpressions;
 
 namespace Tests.InfiniLore.InfiniBlazor.MarkdownParser;

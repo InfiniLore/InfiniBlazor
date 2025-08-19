@@ -1,7 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 
 namespace Tests.InfiniLore.InfiniBlazor.MarkdownParser;
 

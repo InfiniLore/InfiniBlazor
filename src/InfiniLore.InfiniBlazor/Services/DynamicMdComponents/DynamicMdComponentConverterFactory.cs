@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents;
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Collections.Frozen;
 
 namespace InfiniLore.InfiniBlazor.DynamicMdComponents;

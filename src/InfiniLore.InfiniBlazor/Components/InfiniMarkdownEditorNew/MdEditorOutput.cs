@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Microsoft.AspNetCore.Components;
 using System.Diagnostics.CodeAnalysis;
 
