@@ -9,7 +9,8 @@
             "src/InfiniLore.InfiniBlazor.SourceGenerators/InfiniLore.InfiniBlazor.SourceGenerators.csproj",
             "src/InfiniLore.InfiniBlazor/InfiniLore.InfiniBlazor.csproj",
             "tests/Benchmarks.InfiniLore.InfiniBlazor.Markdown/Benchmarks.InfiniLore.InfiniBlazor.Markdown.csproj",
-            "tests/Tests.InfiniLore.InfiniBlazor/Tests.InfiniLore.InfiniBlazor.csproj"
+            "tests/Tests.InfiniLore.InfiniBlazor/Tests.InfiniLore.InfiniBlazor.csproj",
+            "tests/Tests.InfiniLore.InfiniBlazor.Markdown/Tests.InfiniLore.InfiniBlazor.Markdown.csproj"
         ]
     }
 }
