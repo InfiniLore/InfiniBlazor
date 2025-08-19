@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Emotes;
 using Microsoft.Extensions.Logging;
-using Moq;
+using NSubstitute;
 
 namespace Tests.InfiniLore.InfiniBlazor.Emotes;
 
@@ -14,8 +14,8 @@ public class EmoteProviderTests {
     private static EmoteProvider _initializedProvider = null!;
     
     private static EmoteProvider GetEmoteProvider() {
-        var logger = new Mock<ILogger<EmoteProvider>>();
-        return new EmoteProvider(logger.Object);
+        var logger = Substitute.For<ILogger<EmoteProvider>>();
+        return new EmoteProvider(logger);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

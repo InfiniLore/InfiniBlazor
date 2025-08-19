@@ -16,7 +16,7 @@
         <PackageReference Include="CodeOfChaos.Testing.TUnit" />
         <PackageReference Include="JetBrains.Annotations"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
-        <PackageReference Include="Moq"/>
+        <PackageReference Include="NSubstitute" />
         <PackageReference Include="TUnit" />
         <PackageReference Include="Bogus" />
     </ItemGroup>
