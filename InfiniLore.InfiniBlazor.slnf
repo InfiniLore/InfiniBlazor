@@ -1,6 +1,6 @@
 ﻿{
     "solution": {
-        "path": "../../../InfiniLore.InfiniBlazor.slnx",
+        "path": "InfiniLore.InfiniBlazor.slnx",
         "projects": [
             "src/DevTools.InfiniLore.InfiniBlazor/DevTools.InfiniLore.InfiniBlazor.csproj",
             "src/InfiniLore.InfiniBlazor.Contracts/InfiniLore.InfiniBlazor.Contracts.csproj",
