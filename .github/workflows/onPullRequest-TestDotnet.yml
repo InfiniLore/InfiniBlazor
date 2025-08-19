@@ -18,10 +18,10 @@ jobs:
                   dotnet-version: '9.x'
 
             - name: Restore dependencies
-              run: dotnet restore InfiniLore.InfiniBlazor.slnf 
+              run: dotnet restore onPullRequest-TestDotnet.slnf 
 
             - name: Build
-              run: dotnet build InfiniLore.InfiniBlazor.slnf --configuration Release --no-restore
+              run: dotnet build onPullRequest-TestDotnet.slnf --configuration Release --no-restore
             
             - name: Run tests
-              run: dotnet test InfiniLore.InfiniBlazor.slnf --configuration Release --no-restore --no-build
+              run: dotnet test onPullRequest-TestDotnet.slnf --configuration Release --no-restore --no-build
