@@ -2,7 +2,9 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor;
+using InfiniLore.InfiniBlazor.Callouts;
 using InfiniLore.InfiniBlazor.Config;
+using InfiniLore.InfiniBlazor.DynamicMdComponents;
 using InfiniLore.InfiniBlazor.Theming;
 using InfiniLore.InfiniBlazor.Theming.Collections;
 using InfiniLore.InfiniBlazor.Toasting;
@@ -20,7 +22,10 @@ public static class ServiceCollectionExtensions {
         services.AddLucideIcons();
 
         config.RegisterTheme<DefaultThemeCollection>();
-
+        
+        services.AddSingleton(DynamicMdComponentConverterFactory.Create);
+        services.AddSingleton(CalloutStyleProviderFactory.Create);
+        
         configure?.Invoke(config);
         
         // Add all added stuff after the config is done

@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Config;
+using InfiniLore.InfiniBlazor.Emotes;
 using InfiniLore.InfiniBlazor.TextEditor.TextModifiers;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -30,6 +31,11 @@ public class DiDataSourceAttribute : DependencyInjectionDataSourceAttribute<ISer
                 config.AddTextEditor("boldOnly").AddModifier<BoldModifier>();
             }));
 
-        return services.BuildServiceProvider();
+        ServiceProvider provider = services.BuildServiceProvider();
+
+        // Todo: Remove this with a better emote provider for testing that doesnt require initialization
+        provider.GetRequiredService<IEmoteProvider>().InitializeAsync().GetAwaiter().GetResult();
+        
+        return provider;
     }
 }

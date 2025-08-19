@@ -5,6 +5,8 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
 using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.SyntaxDeserializer;
+using InfiniLore.InfiniBlazor.Markdown.SyntaxSerializer;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Benchmarks.InfiniLore.InfiniBlazor.Markdown;
@@ -14,8 +16,8 @@ namespace Benchmarks.InfiniLore.InfiniBlazor.Markdown;
 [MemoryDiagnoser]
 [Orderer(SummaryOrderPolicy.Declared)]
 public class IndividualMarkdownBenchmarks {
-    private IMdSyntaxParser Parser { get; set; } = null!;
-    private IMdSyntaxTreeConverter Converter { get; set; } = null!;
+    private IMdSyntaxSerializer Parser { get; set; } = null!;
+    private IMdSyntaxDeserializer Converter { get; set; } = null!;
 
     [GlobalSetup]
     public void Setup() {
@@ -24,8 +26,8 @@ public class IndividualMarkdownBenchmarks {
         serviceCollection.AddLogging();
         ServiceProvider provider = serviceCollection.BuildServiceProvider();
         
-        Parser = provider.GetRequiredService<IMdSyntaxParser>();
-        Converter = provider.GetRequiredService<IMdSyntaxTreeConverter>();
+        Parser = provider.GetRequiredService<IMdSyntaxSerializer>();
+        Converter = provider.GetRequiredService<IMdSyntaxDeserializer>();
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -35,8 +37,8 @@ public class IndividualMarkdownBenchmarks {
     public string EscapedCharacters() {
         const string input = @"\*escaped text\*";
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -45,8 +47,8 @@ public class IndividualMarkdownBenchmarks {
     public string BoldAndItalic() {
         const string input = "***bold and italic***";
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -55,8 +57,8 @@ public class IndividualMarkdownBenchmarks {
     public string BoldOnly() {
         const string input = "**bold**";
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -65,8 +67,8 @@ public class IndividualMarkdownBenchmarks {
     public string ItalicOnly() {
         const string input = "*italic*";
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -75,8 +77,8 @@ public class IndividualMarkdownBenchmarks {
     public string Superscript() {
         const string input = "^^sup-script^^";
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -85,8 +87,8 @@ public class IndividualMarkdownBenchmarks {
     public string Subscript() {
         const string input = "^^sub-script^^";
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -95,8 +97,8 @@ public class IndividualMarkdownBenchmarks {
     public string Strikethrough() {
         const string input = "~~strikethrough~~";
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -105,8 +107,8 @@ public class IndividualMarkdownBenchmarks {
     public string Underline() {
         const string input = "_underline_";
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -115,8 +117,8 @@ public class IndividualMarkdownBenchmarks {
     public string InlineCode() {
         const string input = "`inline code`";
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -125,8 +127,8 @@ public class IndividualMarkdownBenchmarks {
     public string Emotes() {
         const string input = ":flag-trans:";
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -135,8 +137,8 @@ public class IndividualMarkdownBenchmarks {
     public string NestedLinks() {
         const string input = "[![nested link](image_url)](outer_url)";
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -145,8 +147,8 @@ public class IndividualMarkdownBenchmarks {
     public string RegularLinks() {
         const string input = "[Regular Link](https://example.com)";
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -155,8 +157,8 @@ public class IndividualMarkdownBenchmarks {
     public string Tags() {
         const string input = "#tag";
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -165,8 +167,8 @@ public class IndividualMarkdownBenchmarks {
     public string HtmlSpecialCharacters() {
         const string input = "&copy; & < >";
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -183,8 +185,8 @@ public class IndividualMarkdownBenchmarks {
             ### Header 3
             """;
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -197,8 +199,8 @@ public class IndividualMarkdownBenchmarks {
             ```
             """;
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -210,8 +212,8 @@ public class IndividualMarkdownBenchmarks {
             ---
             """;
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -224,8 +226,8 @@ public class IndividualMarkdownBenchmarks {
               - Nested Item
             """;
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -238,8 +240,8 @@ public class IndividualMarkdownBenchmarks {
               - Nested Item
             """;
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -253,8 +255,8 @@ public class IndividualMarkdownBenchmarks {
             | Value 1  | Value 2  |
             """;
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -266,8 +268,8 @@ public class IndividualMarkdownBenchmarks {
             > with multiple lines.
             """;
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -276,8 +278,8 @@ public class IndividualMarkdownBenchmarks {
     public string HtmlBlocks() {
         const string input = "<div><p>HTML content</p></div>";
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -292,8 +294,8 @@ public class IndividualMarkdownBenchmarks {
             ___
             """;
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }
@@ -302,8 +304,8 @@ public class IndividualMarkdownBenchmarks {
     public string RemainderText() {
         const string input = "This is normal text left over.";
         
-        IMdSyntaxTree tree = Parser.ParseToTree(input);
-        string? output = Converter.ConvertToString(tree);
+        IMdSyntaxTree tree = Parser.SerializeToTree(input);
+        string? output = Converter.DeserializeToString(tree);
         if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
         return output;
     }

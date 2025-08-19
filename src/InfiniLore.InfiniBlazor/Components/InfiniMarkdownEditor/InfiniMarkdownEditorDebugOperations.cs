@@ -106,7 +106,7 @@ public static class InfiniMarkdownEditorDebugInserts {
         A paragraph with a ~strikethrough~ word in it.
         A paragraph with a `code` word in it.
         A paragraph with a [link](https://google.com) in it.
-        A paragraph with a ![image](https://localhost:7210/icon.png) in it.
+        A paragraph with a ![image](https://localhost:7210/icon.png|size=100x100) in it.
         A paragraph with an :flag-trans: emote in it.
         A paragraph with a ^subscript^ word in it.
         A paragraph with a ^^superscript^^ word in it.

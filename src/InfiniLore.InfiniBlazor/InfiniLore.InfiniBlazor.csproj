@@ -62,9 +62,7 @@
     <ItemGroup>
       <EmbeddedResource Include="wwwroot\InfiniBlazor.css" />
       <EmbeddedResource Include="wwwroot\InfiniBlazor.js" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <Folder Include="Components\InfiniMarkdownEditor\ToolbarComponents\" />
+      <EmbeddedResource Include="wwwroot\libs\emotes\emotes_lucide.json" />
+      <EmbeddedResource Include="wwwroot\libs\emotes\emotes_standard.json" />
     </ItemGroup>
 </Project>

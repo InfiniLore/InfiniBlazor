@@ -1,6 +1,8 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using CodeOfChaos.Extensions.Debouncers
+@using InfiniLore.InfiniBlazor.QueryParameters
 @using InfiniLore.Lucide
 @using Microsoft.AspNetCore.Components.Routing
 
@@ -25,7 +27,7 @@
             </a>
         }
         else {
-            <button @onclick="OnClickAsync"
+            <button @onclick="@OnClickAsync"
                     @onclick:stopPropagation="@StopPropagation"
                     type="@Type"
                     disabled="@IsDisabled"
@@ -56,7 +58,7 @@
     [Parameter] public string? Text { get; set; }
     [Parameter] public bool StopPropagation { get; set; } = true;
     [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
-    private EventCallbackDebouncer<MouseEventArgs>? OnClickDebounced { get; set; }
+    private EventCallbackDebouncer<MouseEventArgs> OnClickDebounced { get; set; } = EventCallbackDebouncer<MouseEventArgs>.Empty;
     [Parameter] public int DebounceMs { get; set; }
 
     [Parameter] public string Type { get; set; } = "button";
@@ -248,8 +250,10 @@
     protected override async Task OnParametersSetAsync() {
         base.OnParametersSet();
         // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-        if (OnClickDebounced is not null) await OnClickDebounced.DisposeAsync(); 
-        if (DebounceMs > 0) OnClickDebounced = OnClick.GetDebouncer(DebounceMs);
+        if (OnClickDebounced is not null) await OnClickDebounced.DisposeAsync();
+        OnClickDebounced = DebounceMs > 0 
+            ? OnClick.GetDebouncer(DebounceMs)
+            : EventCallbackDebouncer<MouseEventArgs>.Empty;
     }
 
     private void ShowTooltip() => _showTooltip = true;
@@ -258,7 +262,7 @@
     private async Task OnClickAsync(MouseEventArgs args) {
         if (IsDisabled) return;
 
-        if (OnClickDebounced is not null) await OnClickDebounced.InvokeDebouncedAsync(args);
+        if (!OnClickDebounced.IsEmpty) await OnClickDebounced.InvokeDebouncedAsync(args);
         else await OnClick.InvokeAsync(args);
     }
 
@@ -276,6 +280,6 @@
     public override async ValueTask DisposeAsync() {
         await base.DisposeAsync();
         if (Href is not null && !DisableTrackedQueryParams) NavigationManager.LocationChanged -= OnLocationChanged;
-        if (OnClickDebounced is not null) await OnClickDebounced.DisposeAsync();
+        if (!OnClickDebounced.IsEmpty) await OnClickDebounced.DisposeAsync();
     }
 }

@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.TextEditor;
@@ -25,6 +24,8 @@ public class TextSource : ITextSource {
     private List<Range> LinesCache { get; } = new(16);
     public IReadOnlyList<Range> Lines => LinesCache.AsReadOnly();
     public bool IsEmpty => _text.Length == 0;
+    
+    public static TextSource Empty => new();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

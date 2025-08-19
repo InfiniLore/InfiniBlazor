@@ -1,0 +1,30 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@namespace InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
+@inherits DynamicMdComponentBase<InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes.TableMdSyntaxNode>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniTable TItem="TableRowMdSyntaxNode" ItemsBySpan="SyntaxNode.GetRows">
+    <Header>
+        @foreach (TableCellMdSyntaxNode headerItem in SyntaxNode.GetHeaderCells()) {
+            <InfiniTableHeader>@ComponentConverter.RenderChildComponents(headerItem)</InfiniTableHeader>
+        }
+    </Header>
+    <Content Context="rowNode">
+        @* The cell itself doesnt hold data, but the content of the cell does *@
+        @foreach (TableCellMdSyntaxNode node in rowNode.GetChildrenByType<TableCellMdSyntaxNode>()) {
+            <InfiniTableCell>@ComponentConverter.RenderChildComponents(node)</InfiniTableCell>
+        }
+    </Content>
+</InfiniTable>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+

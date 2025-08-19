@@ -3,8 +3,9 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Debugger;
 using InfiniLore.InfiniBlazor.JsRuntime;
-using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
+using InfiniLore.InfiniBlazor.Markdown.SyntaxDeserializer;
+using InfiniLore.InfiniBlazor.Markdown.SyntaxSerializer;
 using InfiniLore.InfiniBlazor.TextEditor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,8 +19,8 @@ namespace InfiniLore.InfiniBlazor.Components;
 public partial class InfiniMarkdownEditor(
     ITextEditor textEditor,
     IJsInfiniBlazor jsInfiniBlazor,
-    IMdSyntaxParser syntaxParser,
-    [FromKeyedServices("styled")] IMdSyntaxTreeConverter treeConverter,
+    IMdSyntaxSerializer syntaxParser,
+    [FromKeyedServices("styled")] IMdSyntaxDeserializer treeConverter,
     IVisualDebuggerProvider debuggerProvider,
     ILogger<InfiniMarkdownEditor> logger
 ) : InfiniComponentBase {
@@ -62,8 +63,8 @@ public partial class InfiniMarkdownEditor(
         InvokeAsync(() => {
             MdSyntaxTree tree = MdSyntaxTree.Pool.Get();
             try {
-                syntaxParser.ParseToTree(EditorState.Source.Text, tree);
-                EditorState.MarkdownOutput = treeConverter.ConvertToMarkupString(tree);
+                syntaxParser.SerializeToTree(EditorState.Source.Text, tree);
+                EditorState.MarkdownOutput = treeConverter.DeserializeToMarkupString(tree);
                 if (debuggerProvider.IsEnabled()) EditorState.MarkdownStringOutput = EditorState.MarkdownOutput.ToString();
 
                 EditorState.OutputHasChanged();

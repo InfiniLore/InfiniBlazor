@@ -11,13 +11,13 @@
   "description": "",
   "devDependencies": {
     "@toolwind/anchors": "^1.0.10",
-    "tailwindcss": "^4.1.11",
+    "tailwindcss": "^4.1.12",
     "ts-loader": "^9.5.2",
-    "typescript": "^5.8.3",
-    "webpack": "^5.100.2",
+    "typescript": "^5.9.2",
+    "webpack": "^5.101.2",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
-    "@tailwindcss/cli": "^4.1.11"
+    "@tailwindcss/cli": "^4.1.12"
   }
 }

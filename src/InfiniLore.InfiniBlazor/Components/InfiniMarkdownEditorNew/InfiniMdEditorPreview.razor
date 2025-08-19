@@ -1,0 +1,66 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.DynamicMdComponents
+@using InfiniLore.InfiniBlazor.Markdown
+@using InfiniLore.InfiniBlazor.Markdown.Syntax
+@using InfiniLore.InfiniBlazor.Markdown.SyntaxSerializer
+
+@* ReSharper disable once CheckNamespace *@
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inject IDynamicMdComponentConverter ComponentConverter
+@inject  IMdSyntaxSerializer SyntaxParser
+@inherits InfiniMdEditorComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="@Class flex min-h-0">
+    <div class="border-2 border-green-500 flex-1 overflow-y-auto infini-scrollbar">
+        @ComponentConverter.RenderRootComponents(SyntaxNodes)
+    </div>
+</div>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    private IEnumerable<IMdSyntaxNode> SyntaxNodes { get; set; } = Enumerable.Empty<IMdSyntaxNode>();
+    
+    // -----------------------------------------------------------------------------------------------------------------
+    // Component lifetime Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override void OnInitialized() {
+        base.OnInitialized();
+
+        EditorContext.OnSourceChange += OnSourceChangedAsync;
+    }
+
+    public override async ValueTask DisposeAsync() {
+        await base.DisposeAsync();
+
+        EditorContext.OnSourceChange -= OnSourceChangedAsync;
+    }
+    
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private async Task OnSourceChangedAsync() {
+        MdSyntaxTree tree = MdSyntaxTree.Pool.Get();
+        SyntaxParser.SerializeToTree(EditorContext.TextSource.Text, tree);
+
+        // TODO add a cleanup to the old output
+        
+        EditorContext.Output = new MdEditorOutput(
+            tree,
+            null,
+            default
+        );
+        
+        SyntaxNodes = tree.VisitTopLevelNodes();
+        
+        await InvokeAsync(StateHasChanged).ConfigureAwait(false);
+    }
+}

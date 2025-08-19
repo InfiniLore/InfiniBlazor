@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Pooling;
 using System.Collections.Frozen;
 using System.Text.RegularExpressions;

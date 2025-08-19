@@ -30,6 +30,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="InfiniLore.Lucide" />
       <PackageReference Include="JetBrains.Annotations" />
       <PackageReference Include="Microsoft.AspNetCore.Components" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />

@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using Example.InfiniBlazor.Shared.Themes;
 using InfiniLore.InfiniBlazor.Config;
-using Microsoft.AspNetCore.Components.Web;
+using InfiniLore.InfiniBlazor.Emotes;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace Example.InfiniBlazor.Client;
@@ -15,7 +15,6 @@ public static class Program {
         var builder = WebAssemblyHostBuilder.CreateDefault(args);
         
         builder.Services.AddInfiniBlazor(config => {
-            config.SetComponentRenderMode(RenderMode.InteractiveAuto);
             config.RegisterTheme<PrideThemeCollection>();
             config.AddMarkdownLogic();
         });
@@ -27,6 +26,7 @@ public static class Program {
         builder.Services.AddAuthenticationStateDeserialization();
 
         WebAssemblyHost app = builder.Build();
+        await app.Services.GetRequiredService<IEmoteProvider>().InitializeAsync();
         
         await app.RunAsync();
     }
