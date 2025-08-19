@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text;
@@ -11,119 +12,132 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdSyntaxNodeXmlParser {
-    private static readonly Dictionary<string, Type> NodeTypeMap = new() {
-        { nameof(LinkMdSyntaxNode), typeof(LinkMdSyntaxNode) },
-        { nameof(ContentMdSyntaxNode), typeof(ContentMdSyntaxNode) },
-        { nameof(ImageMdSyntaxNode), typeof(ImageMdSyntaxNode) }
-        // Add mappings for other syntax node types here
-    };
+    private readonly Dictionary<Type, IXmlMdSyntaxNodeVisitor> _visitors = new();
 
-    // -----------------------------------------------------------------------------------------------------------------
-    // Method
-    // -----------------------------------------------------------------------------------------------------------------
-    public async Task ToXmlAsync(Stream stream, IMdSyntaxNode node, CancellationToken ct = default) {
-        ArgumentNullException.ThrowIfNull(node);
-
-        XElement xml = ToXmlInternal(node);
-        await using StreamWriter writer = new(stream, Encoding.UTF8, leaveOpen: true);
-        await writer.WriteAsync(xml.ToString().AsMemory(), ct);
-        await writer.FlushAsync(ct);
+    public MdSyntaxNodeXmlParser() {
+        // Register visitors
+        RegisterVisitor<BlockQuoteMdSyntaxNode, BlockQuoteXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<BoldMdSyntaxNode, BoldXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<CalloutBodyMdSyntaxNode, CalloutBodyXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<CalloutTitleMdSyntaxNode, CalloutTitleXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<CalloutMdSyntaxNode, CalloutXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<CodeBlockMdSyntaxNode, CodeBlockXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<CodeInlineMdSyntaxNode, CodeInlineXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<ContentHtmlMdSyntaxNode, ContentHtmlXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<ContentMdSyntaxNode, ContentXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<EmoteMdSyntaxNode, EmoteXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<EscapedCharacterMdSyntaxNode, EscapedCharacterXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<HeadingMdSyntaxNode, HeadingXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<HorizontalRuleMdSyntaxNode, HorizontalRuleXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<HtmlSpanMdSyntaxNode, HtmlSpanXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<ImageMdSyntaxNode, ImageXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<ItalicMdSyntaxNode, ItalicXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<LinkMdSyntaxNode, LinkXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<ListItemMdSyntaxNode, ListItemXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<ListOrderedMdSyntaxNode, ListOrderedXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<ListUnOrderedMdSyntaxNode, ListUnOrderedXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<ParagraphMdSyntaxNode, ParagraphXmlMdSyntaxNodeVisitor>();
+        // RegisterVisitor<RootMdSyntaxNode, RootXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<StrikeMdSyntaxNode, StrikeXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<SubScriptMdSyntaxNode, SubScriptXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<SuperScriptMdSyntaxNode, SuperScriptXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<TableCellMdSyntaxNode, TableCellXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<TableRowMdSyntaxNode, TableRowXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<TableMdSyntaxNode, TableXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<TagMdSyntaxNode, TagXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<UnderlineMdSyntaxNode, UnderlineXmlMdSyntaxNodeVisitor>();
     }
 
-    public async Task ToXmlFileAsync(string filePath, IMdSyntaxNode node, CancellationToken ct = default) {
-        if (string.IsNullOrWhiteSpace(filePath)) throw new ArgumentException("File path cannot be null or whitespace.", nameof(filePath));
-        ArgumentNullException.ThrowIfNull(node);
-
-        await using FileStream fileStream = new(filePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 4096, useAsync: true);
-        await ToXmlAsync(fileStream, node, ct);
+    private void RegisterVisitor<TNode, TVisitor>() where TNode : IMdSyntaxNode where TVisitor : IXmlMdSyntaxNodeVisitor, new() {
+        _visitors[typeof(TNode)] = new TVisitor();
     }
 
-    private XElement ToXmlInternal(IMdSyntaxNode node) {
-        var element = new XElement(
-            node.GetType().Name, // Use the type name as the XML element name
-            node.TryGetModifier(out IMdSyntaxNodeModifier? modifier)
-                ? new XElement("Modifiers", SerializeModifiers(modifier))
-                : null
-        );
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    public XElement Serialize(IMdSyntaxTree tree) {
+        var rootElement = new XElement("MdSyntaxTree");
 
-        // Add type-specific attributes or elements
-        if (node is LinkMdSyntaxNode linkNode) {
-            element.Add(new XAttribute("Href", linkNode.Href));
-        } else if (node is ContentMdSyntaxNode contentNode) {
-            element.Add(new XElement("Content", contentNode.Content));
+        foreach (IMdSyntaxNode child in tree.RootNode.GetChildren()) {
+            SerializeNode(child, rootElement);           
         }
 
-        // Serialize children recursively
-        foreach (var child in node.GetChildren()) {
-            element.Add(ToXmlInternal(child));
-        }
-
-        return element;
+        return rootElement;
     }
 
-    private XElement SerializeModifiers(IMdSyntaxNodeModifier modifiers) {
-        return new XElement("Attributes",
-            modifiers.Attributes.Select(attr => new XElement(
-                attr.Key,
-                new XAttribute("Start", attr.Value.Start.Value),
-                new XAttribute("End", attr.Value.End.Value)
-            ))
-        );
-    }
+    public async Task SerializeToStreamAsync(Stream stream, IMdSyntaxTree tree, CancellationToken ct = default) {
+        ArgumentNullException.ThrowIfNull(stream);
+        ArgumentNullException.ThrowIfNull(tree);
 
-    // -----------------------------------------------------------------------------------------------------------------
-    // Async Deserialization
-    // -----------------------------------------------------------------------------------------------------------------
-    public async Task<IMdSyntaxNode> FromXmlAsync(Stream stream, CancellationToken ct = default) {
-        if (stream == null) throw new ArgumentNullException(nameof(stream));
+        XElement rootElement = Serialize(tree);
 
-        using StreamReader reader = new(stream, Encoding.UTF8, leaveOpen: true);
-        string xmlContent = await reader.ReadToEndAsync(ct);
-        XElement root = XElement.Parse(xmlContent);
-
-        return DeserializeNode(root);
-    }
-
-    public async Task<IMdSyntaxNode> FromXmlFileAsync(string filePath, CancellationToken ct = default) {
-        if (string.IsNullOrWhiteSpace(filePath)) throw new ArgumentException("File path cannot be null or whitespace.", nameof(filePath));
-
-        using FileStream fileStream = new(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 4096, useAsync: true);
-        return await FromXmlAsync(fileStream, ct);
-    }
-
-    private IMdSyntaxNode DeserializeNode(XElement element) {
-        if (!NodeTypeMap.TryGetValue(element.Name.LocalName, out Type? nodeType)) {
-            throw new InvalidOperationException($"Unknown node type: {element.Name.LocalName}");
-        }
-
-        // Create an instance of the node
-        IMdSyntaxNode node = (IMdSyntaxNode)Activator.CreateInstance(nodeType)!;
+        await using var writer = new StreamWriter(stream, Encoding.UTF8, leaveOpen: true);
         
-        // Set specific properties
-        if (node is LinkMdSyntaxNode linkNode && element.Attribute("Href")?.Value is not null) {
-            linkNode.Href = element.Attribute("Href")!.Value;
-        } else if (node is ContentMdSyntaxNode contentNode && element.Element("Content") is not null) {
-            contentNode.Content = element.Element("Content")?.Value ?? string.Empty;
+        // Convert the string to ReadOnlyMemory<char> using AsMemory().
+        await writer.WriteAsync(rootElement.ToString().AsMemory(), ct);
+        await writer.FlushAsync(ct);
+
+    }
+
+    public async Task SerializeToFileAsync(string filePath, IMdSyntaxTree tree, CancellationToken ct = default) {
+        if (string.IsNullOrWhiteSpace(filePath))
+            throw new ArgumentException("File path cannot be null or whitespace.", nameof(filePath));
+
+        ArgumentNullException.ThrowIfNull(tree);
+
+        await using FileStream fileStream = new(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, true);
+        await SerializeToStreamAsync(fileStream, tree, ct);
+    }
+
+    private void SerializeNode(IMdSyntaxNode node, XElement parentElement) {
+        if (_visitors.TryGetValue(node.GetType(), out IXmlMdSyntaxNodeVisitor? visitor)) {
+            parentElement = visitor.SerializeNode(node, parentElement);
         }
 
-        // Deserialize modifiers if present
-        XElement? modifiersElement = element.Element("Modifiers");
-        if (modifiersElement != null) {
-            MdSyntaxNodeModifier modifiers = new();
-            foreach (XElement attr in modifiersElement.Elements()) {
-                string key = attr.Name.LocalName;
-                int start = int.Parse(attr.Attribute("Start")?.Value ?? "0");
-                int end = int.Parse(attr.Attribute("End")?.Value ?? "0");
-                modifiers.Attributes[key] = new Range(start, end);
-            }
-            node.WithModifier(modifiers);
+        foreach (IMdSyntaxNode child in node.GetChildren()) {
+            SerializeNode(child, parentElement);
+        }
+    }
+
+    public IMdSyntaxTree Deserialize(XElement element) {
+        if (element.Name != "MdSyntaxTree") throw new InvalidOperationException("Invalid XML root element");
+
+        MdSyntaxTree tree = new();
+
+        foreach (XElement child in element.Elements()) {
+            DeserializeNode(child, tree.RootNode);
         }
 
-        // Deserialize children
-        foreach (XElement childElement in element.Elements().Where(e => NodeTypeMap.ContainsKey(e.Name.LocalName))) {
-            node.AddChildNode(DeserializeNode(childElement));
+        return tree;
+    }
+
+    public async Task<IMdSyntaxTree> DeserializeFromStreamAsync(Stream stream, CancellationToken ct = default) {
+        ArgumentNullException.ThrowIfNull(stream);
+
+        using var reader = new StreamReader(stream, Encoding.UTF8, leaveOpen: true);
+        string xmlContent = await reader.ReadToEndAsync(ct);
+        XElement rootElement = XElement.Parse(xmlContent);
+
+        return Deserialize(rootElement);
+    }
+
+    public async Task<IMdSyntaxTree> DeserializeFromFileAsync(string filePath, CancellationToken ct = default) {
+        if (string.IsNullOrWhiteSpace(filePath))
+            throw new ArgumentException("File path cannot be null or whitespace.", nameof(filePath));
+
+        await using FileStream fileStream = new(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true);
+        return await DeserializeFromStreamAsync(fileStream, ct);
+    }
+
+    private void DeserializeNode(XElement element, IMdSyntaxNode parentNode) {
+        var nodeType = Type.GetType($"InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes.{element.Name}");
+        if (nodeType == null || !_visitors.TryGetValue(nodeType, out IXmlMdSyntaxNodeVisitor? visitor)) return;
+
+        parentNode = visitor.DeserializeNode(element, parentNode);
+        
+        foreach (XElement child in element.Elements()) {
+            DeserializeNode(child, parentNode);
         }
 
-        return node;
     }
 }

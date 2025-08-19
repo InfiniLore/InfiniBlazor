@@ -1,14 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Xml.Linq;
+using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IXmlMdSyntaxNodeVisitor {
-    XElement SerializeNode(IMdSyntaxNode node, XElement parentElement);
-    IMdSyntaxNode DeserializeNode(XElement element, IMdSyntaxNode parentNode);
-}
+public sealed class UnderlineXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<UnderlineMdSyntaxNode>;

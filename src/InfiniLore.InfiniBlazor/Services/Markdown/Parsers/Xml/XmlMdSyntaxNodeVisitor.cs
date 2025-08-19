@@ -20,13 +20,11 @@ public abstract class XmlMdSyntaxNodeVisitor<TNode> : IXmlMdSyntaxNodeVisitor wh
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void SerializeNode(IMdSyntaxNode node, XElement parentElement) {
-        if (node.TryGetModifier(out IMdSyntaxNodeModifier? modifier)) parentElement.Add(SerializeModifiers(modifier));
-        
+    public XElement SerializeNode(IMdSyntaxNode node, XElement parentElement) {
         var nodeElement = new XElement(node.Type.Name);
         parentElement.Add(nodeElement);
-        
         SerializeDetails(Unsafe.As<TNode>(node), nodeElement);
+        return nodeElement;   
     }
     
     private static XElement SerializeModifiers(IMdSyntaxNodeModifier modifiers) {
@@ -42,15 +40,17 @@ public abstract class XmlMdSyntaxNodeVisitor<TNode> : IXmlMdSyntaxNodeVisitor wh
         });
         return modifierElement;
     }
+    
+    protected virtual void SerializeDetails(TNode node, XElement targetElement) {
+        if (node.TryGetModifier(out IMdSyntaxNodeModifier? modifier)) targetElement.Add(SerializeModifiers(modifier));
+    }
 
-    protected virtual void SerializeDetails(TNode node, XElement targetElement){}
-
-    public void DeserializeNode(XElement element, IMdSyntaxNode parentNode) {
+    public IMdSyntaxNode DeserializeNode(XElement element, IMdSyntaxNode parentNode) {
         TNode node = MdSyntaxNode<TNode>.Pool.Get();
         parentNode.AddChildNode(node);
         
-        if (element.Element(Modifiers) is {} modifiersElement) node.WithModifier(DeserializeModifiers(modifiersElement));
         DeserializeDetails(element, node);
+        return node;  
     }
 
     private static IMdSyntaxNodeModifier DeserializeModifiers(XElement element) {
@@ -66,6 +66,8 @@ public abstract class XmlMdSyntaxNodeVisitor<TNode> : IXmlMdSyntaxNodeVisitor wh
         modifier.OriginalInput = element.Element(OriginalInput)!.Value;
         return modifier;   
     }
-    
-    protected virtual void DeserializeDetails(XElement element, TNode targetNode){}
+
+    protected virtual void DeserializeDetails(XElement element, TNode targetNode) {
+        if (element.Element(Modifiers) is {} modifiersElement) targetNode.WithModifier(DeserializeModifiers(modifiersElement));
+    }
 }

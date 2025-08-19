@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class TableMdSyntaxNode : MdSyntaxNode<TableMdSyntaxNode> {
-    private int HeaderIndex { get; set; } = -1;
+    public int HeaderIndex { get; set; } = -1;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

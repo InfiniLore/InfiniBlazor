@@ -48,7 +48,7 @@ public sealed class HtmlBodySyntaxNodeSerializer : IMdSyntaxNodeSerializer {
                 spanNode.TagValue = spanTag;
                 
                 string spanTagAttrs = match.Groups[SpanTagAttrsId].Value;
-                spanNode.Atrributes = spanTagAttrs;
+                spanNode.Attributes = spanTagAttrs;
                 
                 stack.PushMultiLineMatchesToStack(spanBody, spanNode, parentOrigin | MdSyntaxSerializerOrigin.Html);
                 stack.PushProcessedNodeToStack(parentNode, spanNode);

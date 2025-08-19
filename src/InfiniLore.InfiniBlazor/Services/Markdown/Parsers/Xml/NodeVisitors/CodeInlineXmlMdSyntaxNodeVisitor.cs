@@ -1,21 +1,25 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
+using System.Xml.Linq;
 
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class HtmlSpanMdSyntaxNode : MdSyntaxNode<HtmlSpanMdSyntaxNode> {
-    public string TagValue { get; set; } = string.Empty;
-    public string Attributes { get; set; } = string.Empty;
+public sealed class CodeInlineXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<CodeInlineMdSyntaxNode> {
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public override bool TryReset() {
-        TagValue = string.Empty;
-        Attributes = string.Empty;
-        return base.TryReset();
+    protected override void SerializeDetails(CodeInlineMdSyntaxNode node, XElement targetElement) {
+        base.SerializeDetails(node, targetElement);
+        targetElement.Value = node.ContentCode;
+    }
+
+    protected override void DeserializeDetails(XElement element, CodeInlineMdSyntaxNode targetNode) {
+        base.DeserializeDetails(element, targetNode);
+        targetNode.ContentCode = element.Value;   
     }
 }

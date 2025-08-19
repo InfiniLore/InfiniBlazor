@@ -28,7 +28,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Parsers\" />
       <Folder Include="SyntaxDeserializer\" />
       <Folder Include="SyntaxSerializer\" />
     </ItemGroup>
