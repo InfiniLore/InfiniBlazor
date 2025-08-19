@@ -4,7 +4,7 @@
 using InfiniLore.InfiniBlazor.Theming;
 using InfiniLore.InfiniBlazor.Theming.Collections;
 
-namespace Tests.InfiniLore.InfiniBlazor.Theming;
+namespace Tests.InfiniLore.InfiniBlazor.Services.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

@@ -4,7 +4,7 @@
 using InfiniLore.InfiniBlazor.QueryParameters;
 using Microsoft.AspNetCore.Components;
 
-namespace Tests.InfiniLore.InfiniBlazor;
+namespace Tests.InfiniLore.InfiniBlazor.Services.QueryParameters;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

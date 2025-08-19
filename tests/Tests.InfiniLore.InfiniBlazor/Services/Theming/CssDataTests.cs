@@ -6,7 +6,7 @@ using InfiniLore.InfiniBlazor.Theming.CssData;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace Tests.InfiniLore.InfiniBlazor.Theming;
+namespace Tests.InfiniLore.InfiniBlazor.Services.Theming;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

@@ -5,7 +5,7 @@ using InfiniLore.InfiniBlazor.Emotes;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 
-namespace Tests.InfiniLore.InfiniBlazor.Emotes;
+namespace Tests.InfiniLore.InfiniBlazor.Services.Emotes;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

@@ -5,7 +5,7 @@ using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.TextEditor;
 using Tests.InfiniLore.InfiniBlazor.DataSources;
 
-namespace Tests.InfiniLore.InfiniBlazor.MarkdownParser;
+namespace Tests.InfiniLore.InfiniBlazor.Services.MarkdownParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

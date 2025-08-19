@@ -37,8 +37,4 @@
       <PackageReference Include="Microsoft.Extensions.ObjectPool" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Services\" />
-    </ItemGroup>
-
 </Project>

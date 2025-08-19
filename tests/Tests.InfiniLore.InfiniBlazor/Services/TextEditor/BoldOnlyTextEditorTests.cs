@@ -3,21 +3,23 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor;
 using InfiniLore.InfiniBlazor.TextEditor;
+using Microsoft.Extensions.DependencyInjection;
 using Tests.InfiniLore.InfiniBlazor.DataSources;
 using Tests.InfiniLore.InfiniBlazor.DataSources.TextEditor;
 
-namespace Tests.InfiniLore.InfiniBlazor.TextEditor;
+namespace Tests.InfiniLore.InfiniBlazor.Services.TextEditor;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [DiDataSource]
-public class TextEditorTests(ITextEditor textEditor) {
+public class BoldOnlyTextEditorTests(IServiceProvider provider) {
+    private readonly ITextEditor textEditor = provider.GetRequiredKeyedService<ITextEditor>("boldOnly");
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     [Test]
     [MethodDataSource(typeof(ModifyBoldMultiLineDataSources), nameof(ModifyBoldMultiLineDataSources.HelloWoldDataSource))]
-    [MethodDataSource(typeof(ModifyItalicMultiLineDataSources), nameof(ModifyItalicMultiLineDataSources.HelloWoldDataSource))]
     public async Task Modify_SpecificRange(string sectionName, int start, int end, string expected) {
         // Arrange
         var source = new TextSource { Text = "Hello World!" };
@@ -33,11 +35,25 @@ public class TextEditorTests(ITextEditor textEditor) {
 
     [Test]
     [MethodDataSource(typeof(ModifyBoldMultiLineDataSources), nameof(ModifyBoldMultiLineDataSources.DataSources))]
-    [MethodDataSource(typeof(ModifyItalicMultiLineDataSources), nameof(ModifyItalicMultiLineDataSources.DataSources))]
     public async Task Modify_WholeRange(string sectionName, string input, string expected) {
         // Arrange
         var source = new TextSource { Text = input };
         var expectedSource = new TextSource { Text = expected };
+        Range range = ..input.Length;
+
+        // Act
+        textEditor.Modify(source, sectionName, range);
+
+        // Assert
+        await Assert.That(source.Text).IsEqualTo(expectedSource.Text);
+    }
+
+    [Test]
+    [MethodDataSource(typeof(ModifyItalicMultiLineDataSources), nameof(ModifyItalicMultiLineDataSources.DataSources))]
+    public async Task Italic_DoesNotWork(string sectionName, string input, string _) {
+        // Arrange
+        var source = new TextSource { Text = input };
+        var expectedSource = new TextSource { Text = input };
         Range range = ..input.Length;
 
         // Act

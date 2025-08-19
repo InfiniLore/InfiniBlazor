@@ -4,7 +4,7 @@
 using InfiniLore.InfiniBlazor.Markdown.RegexLib;
 using System.Text.RegularExpressions;
 
-namespace Tests.InfiniLore.InfiniBlazor.MarkdownParser;
+namespace Tests.InfiniLore.InfiniBlazor.Services.MarkdownParser;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
