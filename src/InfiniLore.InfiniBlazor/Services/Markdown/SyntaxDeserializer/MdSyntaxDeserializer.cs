@@ -13,17 +13,17 @@ namespace InfiniLore.InfiniBlazor.Markdown.SyntaxDeserializer;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public abstract class BaseMdSyntaxDeserializer(IMdSyntaxDeserializerConverter converter) : IMdSyntaxDeserializer {
+public abstract class BaseMdSyntaxDeserializer(IMdSyntaxNodeVisitor nodeVisitor) : IMdSyntaxDeserializer {
     private readonly Lock PoolLock = new();
     private static readonly ObjectPool<Dictionary<int, IMdSyntaxNode>> DepthCachePool = new DefaultObjectPool<Dictionary<int, IMdSyntaxNode>>(new CollectionPoolPolicy<Dictionary<int, IMdSyntaxNode>, KeyValuePair<int, IMdSyntaxNode>>(), 2);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public MarkupString ConvertToMarkupString(IMdSyntaxTree tree) 
-        => new(ConvertToString(tree));
+    public MarkupString DeserializeToMarkupString(IMdSyntaxTree tree) 
+        => new(DeserializeToString(tree));
     
-    public string ConvertToString(IMdSyntaxTree tree) {
+    public string DeserializeToString(IMdSyntaxTree tree) {
         StringBuilder builder;
         Dictionary<int, IMdSyntaxNode> depthCache;
     
@@ -44,8 +44,8 @@ public abstract class BaseMdSyntaxDeserializer(IMdSyntaxDeserializerConverter co
                     if (lastKnownDepth + 1 > depth) 
                         CloseOpenTags(depthCache, depth, builder);
 
-                    converter.HandleOpenTag(node, builder);
-                    converter.HandleContent(node, builder);
+                    nodeVisitor.HandleOpenTag(node, builder);
+                    nodeVisitor.HandleContent(node, builder);
                 
                     depthCache.AddOrUpdate(depth, node);
                     lastKnownDepth = depth;
@@ -83,14 +83,14 @@ public abstract class BaseMdSyntaxDeserializer(IMdSyntaxDeserializerConverter co
             int key = slice[i];
             IMdSyntaxNode closingNode = depthCache[key];
             
-            converter.HandleCloseTag(closingNode, builder);
+            nodeVisitor.HandleCloseTag(closingNode, builder);
             depthCache.Remove(key);
         }
     }
 }
 
 [InjectableSingleton<IMdSyntaxDeserializer>]
-public sealed class MdSyntaxDeserializer(IMdSyntaxDeserializerConverter converter) : BaseMdSyntaxDeserializer(converter);
+public sealed class MdSyntaxDeserializer(IMdSyntaxNodeVisitor nodeVisitor) : BaseMdSyntaxDeserializer(nodeVisitor);
 
 [InjectableSingleton<IMdSyntaxDeserializer>("styled")]
-public sealed class StyledMdSyntaxDeserializer([FromKeyedServices("styled")] IMdSyntaxDeserializerConverter converter) : BaseMdSyntaxDeserializer(converter);
+public sealed class StyledMdSyntaxDeserializer([FromKeyedServices("styled")] IMdSyntaxNodeVisitor nodeVisitor) : BaseMdSyntaxDeserializer(nodeVisitor);

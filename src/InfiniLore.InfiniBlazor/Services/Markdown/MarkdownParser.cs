@@ -14,12 +14,12 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMarkdownParser>]
-public class MarkdownParser(IMdSyntaxDeserializer treeConverter, IMdSyntaxSerializer syntaxParser, ILogger<MarkdownParser> logger) : IMarkdownParser {
+public class MarkdownParser(IMdSyntaxDeserializer deserializer, IMdSyntaxSerializer serializer, ILogger<MarkdownParser> logger) : IMarkdownParser {
     public string ParseToString(string input) {
         MdSyntaxTree tree = MdSyntaxTree.Pool.Get();
         try {
-            syntaxParser.ParseToTree(input, tree);
-            return treeConverter.ConvertToString(tree);
+            serializer.SerializeToTree(input, tree);
+            return deserializer.DeserializeToString(tree);
         }
         catch (Exception ex) {
             logger.Error(ex, "Error parsing markdown");
@@ -33,8 +33,8 @@ public class MarkdownParser(IMdSyntaxDeserializer treeConverter, IMdSyntaxSerial
     public MarkupString ParseToMarkupString(string input) {
         MdSyntaxTree tree = MdSyntaxTree.Pool.Get();
         try {
-            syntaxParser.ParseToTree(input, tree);
-            return treeConverter.ConvertToMarkupString(tree);
+            serializer.SerializeToTree(input, tree);
+            return deserializer.DeserializeToMarkupString(tree);
         }
         catch (Exception ex) {
             logger.Error(ex, "Error parsing markdown");

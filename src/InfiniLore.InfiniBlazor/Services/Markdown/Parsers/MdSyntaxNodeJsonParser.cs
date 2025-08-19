@@ -4,7 +4,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Parsers;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

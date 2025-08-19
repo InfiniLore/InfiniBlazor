@@ -40,13 +40,13 @@ public sealed class MdSyntaxSerializer(IServiceProvider serviceProvider, ILogger
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public IMdSyntaxTree ParseToTree(string markdown) {
+    public IMdSyntaxTree SerializeToTree(string markdown) {
         var nodeTree = new MdSyntaxTree();
-        ParseToTree(markdown, nodeTree);
+        SerializeToTree(markdown, nodeTree);
         return nodeTree;
     }
 
-    public void ParseToTree(string markdown, IMdSyntaxTree nodeTree) {
+    public void SerializeToTree(string markdown, IMdSyntaxTree nodeTree) {
         nodeTree.RootNode.Depth = 0;
         MdSyntaxSerializerStack runningSerializer = MdSyntaxSerializerStack.Pool.Get();
 

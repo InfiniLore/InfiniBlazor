@@ -49,7 +49,7 @@
     // -----------------------------------------------------------------------------------------------------------------
     private async Task OnSourceChangedAsync() {
         MdSyntaxTree tree = MdSyntaxTree.Pool.Get();
-        SyntaxParser.ParseToTree(EditorContext.TextSource.Text, tree);
+        SyntaxParser.SerializeToTree(EditorContext.TextSource.Text, tree);
 
         // TODO add a cleanup to the old output
         

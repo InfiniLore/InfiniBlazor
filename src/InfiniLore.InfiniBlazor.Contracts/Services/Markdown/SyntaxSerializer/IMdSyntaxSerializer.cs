@@ -6,6 +6,6 @@ namespace InfiniLore.InfiniBlazor.Markdown.SyntaxSerializer;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMdSyntaxSerializer {
-    IMdSyntaxTree ParseToTree(string markdown);
-    void ParseToTree(string markdown, IMdSyntaxTree nodeTree);
+    IMdSyntaxTree SerializeToTree(string markdown);
+    void SerializeToTree(string markdown, IMdSyntaxTree nodeTree);
 }

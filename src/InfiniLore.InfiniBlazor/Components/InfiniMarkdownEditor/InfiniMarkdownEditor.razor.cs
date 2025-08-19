@@ -63,8 +63,8 @@ public partial class InfiniMarkdownEditor(
         InvokeAsync(() => {
             MdSyntaxTree tree = MdSyntaxTree.Pool.Get();
             try {
-                syntaxParser.ParseToTree(EditorState.Source.Text, tree);
-                EditorState.MarkdownOutput = treeConverter.ConvertToMarkupString(tree);
+                syntaxParser.SerializeToTree(EditorState.Source.Text, tree);
+                EditorState.MarkdownOutput = treeConverter.DeserializeToMarkupString(tree);
                 if (debuggerProvider.IsEnabled()) EditorState.MarkdownStringOutput = EditorState.MarkdownOutput.ToString();
 
                 EditorState.OutputHasChanged();
