@@ -5,13 +5,14 @@ using Example.InfiniBlazor.Components;
 using Example.InfiniBlazor.Shared;
 using Example.InfiniBlazor.Shared.Themes;
 using InfiniLore.InfiniBlazor.Config;
+using InfiniLore.InfiniBlazor.Emotes;
 
 namespace Example.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class Program {
-    public static void Main(string[] args) {
+    public static async Task Main(string[] args) {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
         
         builder.Services.AddLogging();
@@ -51,7 +52,8 @@ public class Program {
             .AddInteractiveServerRenderMode()
             .AddInteractiveWebAssemblyRenderMode()
             .AddAdditionalAssemblies(typeof(Client._Imports).Assembly, ISharedEntry.Assembly);
-
-        app.Run();
+        
+        await app.Services.GetRequiredService<IEmoteProvider>().InitializeAsync();
+        await app.RunAsync();
     }
 }

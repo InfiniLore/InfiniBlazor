@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using Example.InfiniBlazor.Shared.Themes;
 using InfiniLore.InfiniBlazor.Config;
+using InfiniLore.InfiniBlazor.Emotes;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace Example.InfiniBlazor.Client;
@@ -25,6 +26,7 @@ public static class Program {
         builder.Services.AddAuthenticationStateDeserialization();
 
         WebAssemblyHost app = builder.Build();
+        await app.Services.GetRequiredService<IEmoteProvider>().InitializeAsync();
         
         await app.RunAsync();
     }

@@ -6,13 +6,15 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class EmoteMdSyntaxNode : EmptyMdSyntaxNode<EmoteMdSyntaxNode> {
-    public string ContentEmote { get; set; } = string.Empty;
+    public string EmoteKey { get; set; } = string.Empty;
+    public string OriginalEmote { get; set; } = string.Empty;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public override bool TryReset() {
-        ContentEmote = string.Empty;
+        EmoteKey = string.Empty;
+        OriginalEmote = string.Empty;
         return base.TryReset();
     }
 }

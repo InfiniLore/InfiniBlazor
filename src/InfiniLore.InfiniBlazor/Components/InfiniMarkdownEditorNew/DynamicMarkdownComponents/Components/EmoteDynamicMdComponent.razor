@@ -1,18 +1,42 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Emotes
 @using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
+@using InfiniLore.Lucide
 
 @namespace InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@inject IEmoteProvider EmoteProvider
+
 @inherits DynamicMdComponentBase<EmoteMdSyntaxNode>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@SyntaxNode.ContentEmote
+@if (!EmoteProvider.TryGetEntry(SyntaxNode.EmoteKey, out IEmoteEntry? entry) || entry.Data is null) {
+    @SyntaxNode.OriginalEmote
+} else {
+    switch (entry.ContentType) {
+        case EmoteContentType.Emoji: {
+            @entry.Data
+            break;
+        }
 
+        case EmoteContentType.LucideIconName: {
+            <LucideIcon Name="@entry.Data"></LucideIcon>
+            break;
+        }
+
+        case EmoteContentType.SvgData: {
+            @(new MarkupString(entry.Data))
+            break;
+        }
+
+        default: throw new ArgumentOutOfRangeException();
+    }
+}
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code

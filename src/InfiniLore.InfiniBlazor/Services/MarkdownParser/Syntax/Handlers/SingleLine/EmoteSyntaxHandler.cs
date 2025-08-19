@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Handlers.SingleLine;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxHandler>(MdRegexGroupNames.Emote)]
-public sealed class EmoteSyntaxHandler(IMdEmoteProvider mdEmoteProvider) : IMdSyntaxHandler {
+public sealed class EmoteSyntaxHandler : IMdSyntaxHandler {
     private static readonly int EmoteBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.EmoteContent);
     private static readonly int EmoteId = MdRegexLib.GetGroupId(MdRegexGroupNames.Emote);
     public MdSyntaxHandlerOrigin SkipOnOrigin => MdSyntaxHandlerOrigin.Emote;
@@ -26,14 +26,12 @@ public sealed class EmoteSyntaxHandler(IMdEmoteProvider mdEmoteProvider) : IMdSy
         Match entireMatch,
         MdSyntaxHandlerOrigin parentOrigin
     ) {
-        if (entireMatch.Groups[EmoteBodyId] is not {Success: true, ValueSpan: var span}) return ;
-        if (!mdEmoteProvider.TryGetValue(span, out string? value)) {
-            parentNode.WithContent(entireMatch.Groups[EmoteId].Value);
-            return ;
-        }
-
+        if (entireMatch.Groups[EmoteId] is not {Success: true, Value: var originalEmote}) return ;
+        if (entireMatch.Groups[EmoteBodyId] is not {Success: true, Value: var emoteBody}) return ;
+        
         EmoteMdSyntaxNode node = EmoteMdSyntaxNode.Pool.Get();
-        node.ContentEmote = value;
+        node.OriginalEmote = originalEmote;
+        node.EmoteKey = emoteBody;
         parentNode.AddChildNode(node);
     }
 }

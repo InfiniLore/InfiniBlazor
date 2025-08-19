@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.Emotes;
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
@@ -13,7 +14,10 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.SyntaxTreeConverters.Converters
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxNodeConverter>("styled")]
-public sealed class StyledMdSyntaxNodeConverter(ILucideService lucideService) : SimpleMdSyntaxNodeConverter {
+public sealed class StyledMdSyntaxNodeConverter(IEmoteProvider emoteProvider, ILucideService lucideService) : SimpleMdSyntaxNodeConverter(emoteProvider, lucideService) {
+    private readonly ILucideService _lucideService = lucideService;
+    private readonly IEmoteProvider _emoteProvider = emoteProvider;
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -261,7 +265,7 @@ public sealed class StyledMdSyntaxNodeConverter(ILucideService lucideService) : 
 
                 string? svgData = null;
                 if (modifiers?.TryGetIconName(out string? name) ?? false) {
-                    svgData = lucideService.GetIconAsString(name);
+                    svgData = _lucideService.GetIconAsString(name);
                 }
                 if (svgData.IsNullOrWhiteSpace()) {
                     name = calloutName switch {
@@ -273,7 +277,7 @@ public sealed class StyledMdSyntaxNodeConverter(ILucideService lucideService) : 
                         "success" => LucideNames.CircleCheck,
                         _ => string.Empty
                     };
-                    svgData = lucideService.GetIconAsString(name);
+                    svgData = _lucideService.GetIconAsString(name);
                 }
 
                 builder.Append("<div class=\"flex flex-row gap-2 pt-2 ");
@@ -315,8 +319,31 @@ public sealed class StyledMdSyntaxNodeConverter(ILucideService lucideService) : 
                 break;
             }
 
-            case EmoteMdSyntaxNode { ContentEmote: var content }: {
-                builder.Append(content);
+            case EmoteMdSyntaxNode emoteNode: {
+                if (_emoteProvider.TryGetEntry(emoteNode.EmoteKey, out IEmoteEntry? entry)) {
+                    switch (entry.ContentType) {
+                        case EmoteContentType.Emoji: {
+                            builder.Append(entry.Data);
+                            break;
+                        }
+
+                        case EmoteContentType.LucideIconName when entry.Data is not null: {
+                            string lucideIconSvg = _lucideService.GetIconAsString(entry.Data);
+                            if (lucideIconSvg.IsNullOrWhiteSpace()) break;
+                            builder.Append(lucideIconSvg);
+                            break;
+                        }
+
+                        case EmoteContentType.SvgData when entry.Data is not null: {
+                            builder.Append(entry.Data);
+                            break;
+                        }
+
+                        default: throw new ArgumentOutOfRangeException();
+                    }
+                    return;
+                }
+                builder.Append(emoteNode.OriginalEmote);
                 break;
             }
 

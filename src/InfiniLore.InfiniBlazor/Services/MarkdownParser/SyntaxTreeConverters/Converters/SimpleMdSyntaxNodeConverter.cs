@@ -2,9 +2,11 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.Emotes;
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax;
 using InfiniLore.InfiniBlazor.MarkdownParser.Syntax.Nodes;
+using InfiniLore.Lucide;
 using System.Text;
 
 namespace InfiniLore.InfiniBlazor.MarkdownParser.SyntaxTreeConverters.Converters;
@@ -12,7 +14,7 @@ namespace InfiniLore.InfiniBlazor.MarkdownParser.SyntaxTreeConverters.Converters
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxNodeConverter>]
-public class SimpleMdSyntaxNodeConverter : IMdSyntaxNodeConverter {
+public class SimpleMdSyntaxNodeConverter(IEmoteProvider emoteProvider, ILucideService lucideService) : IMdSyntaxNodeConverter {
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -245,8 +247,31 @@ public class SimpleMdSyntaxNodeConverter : IMdSyntaxNodeConverter {
                 break;
             }
 
-            case EmoteMdSyntaxNode { ContentEmote: var content }: {
-                builder.Append(content.AsSpan());
+            case EmoteMdSyntaxNode emoteNode: {
+                if (emoteProvider.TryGetEntry(emoteNode.EmoteKey, out IEmoteEntry? entry)) {
+                    switch (entry.ContentType) {
+                        case EmoteContentType.Emoji: {
+                            builder.Append(entry.Data);
+                            break;
+                        }
+
+                        case EmoteContentType.LucideIconName when entry.Data is not null: {
+                            string lucideIconSvg = lucideService.GetIconAsString(entry.Data);
+                            if (lucideIconSvg.IsNullOrWhiteSpace()) break;
+                            builder.Append(lucideIconSvg);
+                            break;
+                        }
+
+                        case EmoteContentType.SvgData when entry.Data is not null: {
+                            builder.Append(entry.Data);
+                            break;
+                        }
+
+                        default: throw new ArgumentOutOfRangeException();
+                    }
+                    return;
+                }
+                builder.Append(emoteNode.OriginalEmote);
                 break;
             }
 
