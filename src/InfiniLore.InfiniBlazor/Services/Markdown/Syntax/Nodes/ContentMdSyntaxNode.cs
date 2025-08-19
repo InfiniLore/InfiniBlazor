@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class ContentMdSyntaxNode : MdSyntaxNode<ContentMdSyntaxNode> {
     public string Content { get; set; } = string.Empty;
-    internal protected override IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(0); // Will never have children so don't initialize
+    protected override IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(0); // Will never have children so don't initialize
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

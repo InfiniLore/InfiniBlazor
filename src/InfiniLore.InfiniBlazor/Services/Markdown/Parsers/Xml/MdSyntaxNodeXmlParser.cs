@@ -6,7 +6,7 @@ using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text;
 using System.Xml.Linq;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

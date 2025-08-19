@@ -17,7 +17,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
 {
     private const int ChildrenMinimumCapacity = 2;
     public int ChildCount { get; protected set; }
-    internal protected virtual IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(ChildrenMinimumCapacity);
+    protected virtual IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(ChildrenMinimumCapacity);
 
     public virtual int Depth { get; set; }
     public IMdSyntaxNode? Parent { get; set; }
@@ -87,7 +87,8 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
     public void AddChildNode(IMdSyntaxNode childNode) {
         // Check if we need to resize
         EnsureChildNodeCapacity();
-        SetParent(childNode);
+        childNode.WithParent(this);
+        childNode.WithDepth(Depth + 1);
 
         // ReSharper disable once HeapView.PossibleBoxingAllocation
         ChildNodes[ChildCount++] = childNode;
@@ -96,7 +97,8 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
     public TChild AddChildNode<TChild>(TChild childNode) where TChild : IMdSyntaxNode {
         // Check if we need to resize
         EnsureChildNodeCapacity();
-        SetParent(childNode);
+        childNode.WithParent(this);
+        childNode.WithDepth(Depth + 1);
 
         // ReSharper disable once HeapView.PossibleBoxingAllocation
         ChildNodes[ChildCount++] = childNode;
@@ -120,11 +122,6 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
         }
     }
 
-    protected void SetParent<TChild>(TChild childNode) where TChild : IMdSyntaxNode {
-        childNode.Parent = this;
-        childNode.Depth = Depth + 1;
-    }
-
     public IMdSyntaxNode WithContent(string content) {
         if (content.IsNullOrWhiteSpace()) return this;
 
@@ -145,6 +142,16 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
                 state.NewContent.AsSpan().CopyTo(span[state.contentLength..]);
             });
 
+        return this;
+    }
+    
+    public IMdSyntaxNode WithDepth(int depth) {
+        Depth = depth;
+        return this;   
+    }
+    
+    public IMdSyntaxNode WithParent(IMdSyntaxNode parent) {
+        Parent = parent;
         return this;
     }
 
@@ -179,5 +186,5 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
 // Quick Generic Alternatives 
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class EmptyMdSyntaxNode<T> : MdSyntaxNode<T> where T : MdSyntaxNode<T>, new() {
-    internal protected override IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(0);// Will never have children so don't initialize
+    protected override IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(0);// Will never have children so don't initialize
 }

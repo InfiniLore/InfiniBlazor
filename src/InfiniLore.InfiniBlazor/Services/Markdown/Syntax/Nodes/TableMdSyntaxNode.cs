@@ -27,7 +27,9 @@ public sealed class TableMdSyntaxNode : MdSyntaxNode<TableMdSyntaxNode> {
         
         // There are other children, so we need to insert it at the first location
         EnsureChildNodeCapacity();
-        SetParent(headerRow);
+        headerRow.WithParent(this);
+        headerRow.WithDepth(Depth + 1);
+        
         ChildCount++;
         for (int i = ChildCount - 1; i > 0; i--) ChildNodes[i] = ChildNodes[i - 1];
         

@@ -8,9 +8,9 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMdSyntaxNode {
-    IMdSyntaxNode? Parent { get; set; }
+    IMdSyntaxNode? Parent { get; }
     int ChildCount { get; }
-    int Depth { get; set; }
+    int Depth { get; }
     Type Type { get; }
     [MemberNotNullWhen(true, nameof(Modifiers))] bool ContainsModifiers { get; }
     IMdSyntaxNodeModifier? Modifiers { get; set; }
@@ -28,6 +28,8 @@ public interface IMdSyntaxNode {
     TChild AddChildNode<TChild>(TChild childNode) where TChild : IMdSyntaxNode;
 
     IMdSyntaxNode WithContent(string content);
+    IMdSyntaxNode WithDepth(int depth);
+    IMdSyntaxNode WithParent(IMdSyntaxNode parent);
 
     void ReturnToPool();
 }

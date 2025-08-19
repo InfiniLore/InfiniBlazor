@@ -109,9 +109,8 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     }
     
     public bool TryReset() {
-        RootNode.Depth = 0;
         if (RootNode is not RootMdSyntaxNode rootNode) return false;
-
+        
         // Using depth-first traversal with a single stack
         Stack<IMdSyntaxNode> stack = MdSyntaxNodeStackPool.Get();
         try {
@@ -132,15 +131,20 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
                 for (int i = 0; i < childCount; i++) {
                     stack.Push(children[i]);
                 }
+
                 node.ReturnToPool();
             }
 
             // Finally, reset and replace the root node
             RootNode.ReturnToPool();
             RootNode = RootMdSyntaxNode.Pool.Get();
-            RootNode.Depth = 0;
             return true;
         }
+        
+        catch (Exception) {
+            return false;
+        }
+        
         finally {
             MdSyntaxNodeStackPool.Return(stack);
         }
