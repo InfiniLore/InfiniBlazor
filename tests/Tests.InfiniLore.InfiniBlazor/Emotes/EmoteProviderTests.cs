@@ -18,6 +18,9 @@ public class EmoteProviderTests {
         return new EmoteProvider(logger.Object);
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Test Methods
+    // -----------------------------------------------------------------------------------------------------------------
     [Before(Class)]
     public static async Task SetupAsync() {
         EmoteProvider provider = GetEmoteProvider();
