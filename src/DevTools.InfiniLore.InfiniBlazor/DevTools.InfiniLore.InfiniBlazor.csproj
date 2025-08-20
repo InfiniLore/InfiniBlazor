@@ -12,4 +12,8 @@
         <PackageReference Include="CodeOfChaos.CliArgsParser.Library"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Commands\AddMdXmlDataTestCommand\" />
+    </ItemGroup>
+
 </Project>

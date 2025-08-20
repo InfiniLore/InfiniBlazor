@@ -13,9 +13,11 @@ namespace Tests.InfiniLore.InfiniBlazor.Markdown._DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MdTestXmlData : IXmlSerializable {
+public class XmlMdTestData : IXmlSerializable {
+    public string Id { get; set; } = string.Empty;
     public string? MarkdownString { get; set; }
     public IMdSyntaxTree? SyntaxTree { get; set; }
+    public string? SimplifiedHtmlString { get; set; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -26,12 +28,20 @@ public class MdTestXmlData : IXmlSerializable {
         ArgumentNullException.ThrowIfNull(reader);
 
         reader.MoveToContent(); // <MdTestXmlData>
+        
+        Id = reader.GetAttribute(nameof(Id)) ?? string.Empty;
+        
         reader.ReadStartElement(); // move into it
 
         while (reader.NodeType == XmlNodeType.Element) {
             switch (reader.Name) {
                 case nameof(MarkdownString): {
                     MarkdownString = reader.ReadElementContentAsString();
+                    break;
+                }
+
+                case nameof(SimplifiedHtmlString): {
+                    SimplifiedHtmlString = reader.ReadElementContentAsString();
                     break;
                 }
 
@@ -59,7 +69,11 @@ public class MdTestXmlData : IXmlSerializable {
         ArgumentNullException.ThrowIfNull(MarkdownString);
         ArgumentNullException.ThrowIfNull(SyntaxTree);
 
+        writer.WriteAttributeString(nameof(Id), Id);
         writer.WriteElementString(nameof(MarkdownString), MarkdownString ?? string.Empty);
+        if (SimplifiedHtmlString.IsNotNullOrWhiteSpace()) {
+            writer.WriteElementString(nameof(SimplifiedHtmlString), SimplifiedHtmlString ?? string.Empty);       
+        }
 
         XElement syntaxTreeElement = MdSyntaxTreeXmlParser.Instance.SerializeToElement(SyntaxTree);
         syntaxTreeElement.WriteTo(writer);

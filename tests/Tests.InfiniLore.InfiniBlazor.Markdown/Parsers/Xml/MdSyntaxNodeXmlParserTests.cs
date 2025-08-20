@@ -39,9 +39,9 @@ public class MdSyntaxTreeXmlParserTests {
     // -----------------------------------------------------------------------------------------------------------------
     // Test Methods
     // -----------------------------------------------------------------------------------------------------------------
-    [Before(Test)]
-    [After(Test)]
-    public void FileSetup() {
+    [Before(Class)]
+    [After(Class)]
+    public static void FileSetup() {
         if (File.Exists(FilePathOutput)) File.Delete(FilePathOutput);
         if (File.Exists(FilePathInput)) File.Delete(FilePathInput);   
     }

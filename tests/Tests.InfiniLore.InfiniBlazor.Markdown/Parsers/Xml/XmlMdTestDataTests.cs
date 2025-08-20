@@ -10,10 +10,11 @@ namespace Tests.InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MdTestXmlDataTests {
+public class XmlMdTestDataTests {
     private static readonly string FileName = $"{Guid.NewGuid():N}.xml";
     private static readonly string FileNameArray = $"{Guid.NewGuid():N}.xml";
-    private static MdTestXmlData TestEntry => new() {
+    private static XmlMdTestData TestEntry => new() {
+        Id = nameof(TestEntry),
         MarkdownString = "Sample **Markdown**",
         SyntaxTree = new MdSyntaxTree {
             RootNode = new RootMdSyntaxNode()
@@ -27,9 +28,9 @@ public class MdTestXmlDataTests {
     // -----------------------------------------------------------------------------------------------------------------
     // Test Methods
     // -----------------------------------------------------------------------------------------------------------------
-    [Before(Test)]
-    [After(Test)]
-    public void FileSetup() {
+    [Before(Class)]
+    [After(Class)]
+    public static void FileSetup() {
         if (File.Exists(FileName)) File.Delete(FileName);
         if (File.Exists(FileNameArray)) File.Delete(FileNameArray);
     }
@@ -37,43 +38,45 @@ public class MdTestXmlDataTests {
     [Test]
     public async Task SerializeDeserializeTest() {
         // Arrange
-        MdTestXmlData testEntry = TestEntry;
+        XmlMdTestData testEntry = TestEntry;
 
         // Act
-        var serializer = new XmlSerializer(typeof(MdTestXmlData));
+        var serializer = new XmlSerializer(typeof(XmlMdTestData));
         await using (StreamWriter writer = new(FileName)) {
             serializer.Serialize(writer, testEntry);
         }
 
-        MdTestXmlData? deserializedData;
+        XmlMdTestData? deserializedData;
         using (StreamReader reader = new(FileName)) {
-            deserializedData = (MdTestXmlData?)serializer.Deserialize(reader);
+            deserializedData = (XmlMdTestData?)serializer.Deserialize(reader);
         }
         
         // Assert
         await Assert.That(deserializedData)
             .IsNotNull()
             .IsEquivalentTo(testEntry);
+        
+        await Assert.That(deserializedData?.Id).IsEqualTo(nameof(TestEntry));
     }
 
     [Test]
     public async Task SerializeDeserializeTest_IntoArray() {
         // Arrange
-        MdTestXmlData[] testEntry = [
+        XmlMdTestData[] testEntry = [
             TestEntry,
             TestEntry,
             TestEntry
         ];
 
         // Act
-        var serializer = new XmlSerializer(typeof(MdTestXmlData[]));
+        var serializer = new XmlSerializer(typeof(XmlMdTestData[]));
         await using (StreamWriter writer = new(FileNameArray)) {
             serializer.Serialize(writer, testEntry);
         }
 
-        MdTestXmlData[]? deserializedData;
+        XmlMdTestData[]? deserializedData;
         using (StreamReader reader = new(FileNameArray)) {
-            deserializedData = (MdTestXmlData[]?)serializer.Deserialize(reader);
+            deserializedData = (XmlMdTestData[]?)serializer.Deserialize(reader);
         }
         
         // Assert
