@@ -11,8 +11,8 @@ namespace Tests.InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdTestXmlDataTests {
-    private const string FileName = "testData.xml";
-    private const string FileNameArray = "testDataArray.xml";
+    private static readonly string FileName = $"{Guid.NewGuid():N}.xml";
+    private static readonly string FileNameArray = $"{Guid.NewGuid():N}.xml";
     private static MdTestXmlData TestEntry => new() {
         MarkdownString = "Sample **Markdown**",
         SyntaxTree = new MdSyntaxTree {

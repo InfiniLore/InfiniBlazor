@@ -31,6 +31,9 @@ public class MdSyntaxTreeXmlParserTests {
             </LinkMdSyntaxNode>
         </MdSyntaxTree>
         """;
+    
+    private static readonly string FilePathOutput = $"{Guid.NewGuid():N}.xml";
+    private static readonly string FilePathInput = $"{Guid.NewGuid():N}.xml";
 
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -57,14 +60,13 @@ public class MdSyntaxTreeXmlParserTests {
     [Test]
     public async Task SerializeToFileAsync_ShouldCreateFileWithCorrectXml() {
         // Arrange
-        string filePath = "output.xml";
 
         // Act
-        await _parser.SerializeToFileAsync(filePath, TestTree);
+        await _parser.SerializeToFileAsync(FilePathOutput, TestTree);
 
         // Assert
-        await Assert.That(File.Exists(filePath)).IsTrue();
-        string result = await File.ReadAllTextAsync(filePath);
+        await Assert.That(File.Exists(FilePathOutput)).IsTrue();
+        string result = await File.ReadAllTextAsync(FilePathOutput);
 
         XElement expected = XElement.Parse(Xml);
 
@@ -72,7 +74,7 @@ public class MdSyntaxTreeXmlParserTests {
         await Assert.That(resultXml.ToString(SaveOptions.DisableFormatting)).IsEqualTo(expected.ToString(SaveOptions.DisableFormatting));
 
         // Cleanup
-        File.Delete(filePath);
+        File.Delete(FilePathOutput);
     }
 
     [Test]
@@ -109,11 +111,10 @@ public class MdSyntaxTreeXmlParserTests {
     [Test]
     public async Task DeserializeFromFileAsync_ShouldBuildCorrectTree() {
         // Arrange
-        string filePath = "input.xml";
-        await File.WriteAllTextAsync(filePath, Xml);
+        await File.WriteAllTextAsync(FilePathInput, Xml);
 
         // Act
-        IMdSyntaxTree tree = await _parser.DeserializeFromFileAsync(filePath);
+        IMdSyntaxTree tree = await _parser.DeserializeFromFileAsync(FilePathInput);
 
         // Assert
         await Assert.That(tree.RootNode).IsNotNull();
@@ -138,7 +139,7 @@ public class MdSyntaxTreeXmlParserTests {
         await Assert.That(imageNode.AltText).IsEqualTo("Example Image");
 
         // Cleanup
-        File.Delete(filePath);
+        File.Delete(FilePathInput);
     }
 
     [Test]
