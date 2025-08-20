@@ -17,8 +17,10 @@ public class MdSyntaxNodeXmlParser : IMdSyntaxNodeXmlParser {
     private readonly Dictionary<Type, IXmlMdSyntaxNodeVisitor> _visitors = new();
     private readonly Dictionary<string, Type> _nodeTypes = new();
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Constructors
+    // -----------------------------------------------------------------------------------------------------------------
     public MdSyntaxNodeXmlParser() {
-        // Register visitors
         RegisterVisitor<BlockQuoteMdSyntaxNode, BlockQuoteXmlMdSyntaxNodeVisitor>();
         RegisterVisitor<BoldMdSyntaxNode, BoldXmlMdSyntaxNodeVisitor>();
         RegisterVisitor<CalloutBodyMdSyntaxNode, CalloutBodyXmlMdSyntaxNodeVisitor>();
@@ -59,6 +61,7 @@ public class MdSyntaxNodeXmlParser : IMdSyntaxNodeXmlParser {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    #region Serialize
     public XElement SerializeToElement(IMdSyntaxTree tree) {
         var rootElement = new XElement("MdSyntaxTree");
 
@@ -101,7 +104,9 @@ public class MdSyntaxNodeXmlParser : IMdSyntaxNodeXmlParser {
             SerializeNode(child, parentElement);
         }
     }
+    #endregion
 
+    #region Deserialize
     public IMdSyntaxTree DeserializeFromElement(XElement element) {
         if (element.Name != "MdSyntaxTree") throw new InvalidOperationException("Invalid XML root element");
 
@@ -144,4 +149,5 @@ public class MdSyntaxNodeXmlParser : IMdSyntaxNodeXmlParser {
         }
 
     }
+    #endregion
 }
