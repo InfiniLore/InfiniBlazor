@@ -22,7 +22,6 @@ public class MdTestXmlDataTests {
                     new BoldMdSyntaxNode().WithContent("Markdown")
                 )
         }
-
     };
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -76,8 +75,7 @@ public class MdTestXmlDataTests {
         using (StreamReader reader = new(FileNameArray)) {
             deserializedData = (MdTestXmlData[]?)serializer.Deserialize(reader);
         }
-
-
+        
         // Assert
         await Assert.That(deserializedData)
             .IsNotNull()

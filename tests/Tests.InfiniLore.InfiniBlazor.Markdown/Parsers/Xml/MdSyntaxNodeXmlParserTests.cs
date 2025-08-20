@@ -15,19 +15,12 @@ namespace Tests.InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
 public class MdSyntaxTreeXmlParserTests {
     private readonly MdSyntaxTreeXmlParser _parser = new();
     private static IMdSyntaxTree TestTree => new MdSyntaxTree {
-        RootNode = new RootMdSyntaxNode {
-            ChildCount = 1,
-            ChildNodes = [
-                new LinkMdSyntaxNode {
-                    Href = "https://example.com",
-                    ChildCount = 2,
-                    ChildNodes = [
-                        new ContentMdSyntaxNode { Content = "Example Content" },
-                        new ImageMdSyntaxNode { Href = "https://example.com/image.png", AltText = "Example Image" }
-                    ]
-                }
-            ]
-        }
+        RootNode = new RootMdSyntaxNode()
+            .WithChild(
+                new LinkMdSyntaxNode { Href = "https://example.com" }
+                    .WithContent("Example Content")
+                    .WithChild(new ImageMdSyntaxNode { Href = "https://example.com/image.png", AltText = "Example Image" })
+            )
     };
 
     private const string Xml = """
