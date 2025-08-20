@@ -12,8 +12,8 @@ namespace Tests.InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MdSyntaxNodeXmlParserTests {
-    private readonly MdSyntaxNodeXmlParser _parser = new();
+public class MdSyntaxTreeXmlParserTests {
+    private readonly MdSyntaxTreeXmlParser _parser = new();
     private static IMdSyntaxTree TestTree => new MdSyntaxTree {
         RootNode = new RootMdSyntaxNode {
             ChildCount = 1,
@@ -151,7 +151,7 @@ public class MdSyntaxNodeXmlParserTests {
     [Test]
     public async Task SerializeDeserialize_ShouldPreserveTreeStructure() {
         // Arrange
-        var parser = new MdSyntaxNodeXmlParser();
+        var parser = new MdSyntaxTreeXmlParser();
 
         // Create a sample syntax tree
         IMdSyntaxTree originalTree = TestTree;

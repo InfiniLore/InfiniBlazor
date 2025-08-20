@@ -103,7 +103,7 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
         }
     }
     #endregion
-
+    
     public void ReturnToPool() {
         Pool.Return(this);
     }

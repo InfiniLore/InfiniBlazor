@@ -160,6 +160,11 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
         Modifier = modifier;
         return this;   
     }
+    
+    public IMdSyntaxNode WithChild<TChild>(TChild child) where TChild : IMdSyntaxNode {
+        AddChildNode(child);
+        return this;  
+    }
 
     public void ReturnToPool() {
         if (this is not T casted) throw new InvalidOperationException($"Cannot return {GetType()} to shared pool. Expected {typeof(T)}");

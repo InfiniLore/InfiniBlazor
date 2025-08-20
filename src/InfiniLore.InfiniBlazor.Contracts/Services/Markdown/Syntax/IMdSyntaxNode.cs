@@ -30,6 +30,7 @@ public interface IMdSyntaxNode {
     IMdSyntaxNode WithContent(string content);
     IMdSyntaxNode WithParent(IMdSyntaxNode parent);
     IMdSyntaxNode WithModifier(IMdSyntaxNodeModifier modifier);
+    IMdSyntaxNode WithChild<TChild>(TChild child) where TChild : IMdSyntaxNode;
 
     void ReturnToPool();
 }

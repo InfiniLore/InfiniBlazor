@@ -13,14 +13,15 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdSyntaxNodeXmlParser>]
-public class MdSyntaxNodeXmlParser : IMdSyntaxNodeXmlParser {
+public class MdSyntaxTreeXmlParser : IMdSyntaxNodeXmlParser {
     private readonly Dictionary<Type, IXmlMdSyntaxNodeVisitor> _visitors = new();
     private readonly Dictionary<string, Type> _nodeTypes = new();
-
+    
+    public static IMdSyntaxNodeXmlParser Instance { get; } = new MdSyntaxTreeXmlParser();
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
-    public MdSyntaxNodeXmlParser() {
+    public MdSyntaxTreeXmlParser() {
         RegisterVisitor<BlockQuoteMdSyntaxNode, BlockQuoteXmlMdSyntaxNodeVisitor>();
         RegisterVisitor<BoldMdSyntaxNode, BoldXmlMdSyntaxNodeVisitor>();
         RegisterVisitor<CalloutBodyMdSyntaxNode, CalloutBodyXmlMdSyntaxNodeVisitor>();
@@ -83,7 +84,6 @@ public class MdSyntaxNodeXmlParser : IMdSyntaxNodeXmlParser {
         // Convert the string to ReadOnlyMemory<char> using AsMemory().
         await writer.WriteAsync(rootElement.ToString().AsMemory(), ct);
         await writer.FlushAsync(ct);
-
     }
 
     public async Task SerializeToFileAsync(string filePath, IMdSyntaxTree tree, CancellationToken ct = default) {
@@ -111,7 +111,7 @@ public class MdSyntaxNodeXmlParser : IMdSyntaxNodeXmlParser {
         if (element.Name != "MdSyntaxTree") throw new InvalidOperationException("Invalid XML root element");
 
         MdSyntaxTree tree = new();
-        
+
         foreach (XElement child in element.Elements()) {
             DeserializeNode(child, tree.RootNode);
         }
@@ -147,7 +147,6 @@ public class MdSyntaxNodeXmlParser : IMdSyntaxNodeXmlParser {
         foreach (XElement child in element.Elements()) {
             DeserializeNode(child, parentNode);
         }
-
     }
     #endregion
 }
