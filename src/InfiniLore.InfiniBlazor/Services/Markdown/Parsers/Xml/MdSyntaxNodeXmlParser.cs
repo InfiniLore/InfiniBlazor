@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
@@ -11,8 +12,10 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MdSyntaxNodeXmlParser {
+[InjectableSingleton<IMdSyntaxNodeXmlParser>]
+public class MdSyntaxNodeXmlParser : IMdSyntaxNodeXmlParser {
     private readonly Dictionary<Type, IXmlMdSyntaxNodeVisitor> _visitors = new();
+    private readonly Dictionary<string, Type> _nodeTypes = new();
 
     public MdSyntaxNodeXmlParser() {
         // Register visitors
@@ -50,16 +53,17 @@ public class MdSyntaxNodeXmlParser {
 
     private void RegisterVisitor<TNode, TVisitor>() where TNode : IMdSyntaxNode where TVisitor : IXmlMdSyntaxNodeVisitor, new() {
         _visitors[typeof(TNode)] = new TVisitor();
+        _nodeTypes[typeof(TNode).Name] = typeof(TNode);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public XElement Serialize(IMdSyntaxTree tree) {
+    public XElement SerializeToElement(IMdSyntaxTree tree) {
         var rootElement = new XElement("MdSyntaxTree");
 
         foreach (IMdSyntaxNode child in tree.RootNode.GetChildren()) {
-            SerializeNode(child, rootElement);           
+            SerializeNode(child, rootElement);
         }
 
         return rootElement;
@@ -69,10 +73,10 @@ public class MdSyntaxNodeXmlParser {
         ArgumentNullException.ThrowIfNull(stream);
         ArgumentNullException.ThrowIfNull(tree);
 
-        XElement rootElement = Serialize(tree);
+        XElement rootElement = SerializeToElement(tree);
 
         await using var writer = new StreamWriter(stream, Encoding.UTF8, leaveOpen: true);
-        
+
         // Convert the string to ReadOnlyMemory<char> using AsMemory().
         await writer.WriteAsync(rootElement.ToString().AsMemory(), ct);
         await writer.FlushAsync(ct);
@@ -80,8 +84,7 @@ public class MdSyntaxNodeXmlParser {
     }
 
     public async Task SerializeToFileAsync(string filePath, IMdSyntaxTree tree, CancellationToken ct = default) {
-        if (string.IsNullOrWhiteSpace(filePath))
-            throw new ArgumentException("File path cannot be null or whitespace.", nameof(filePath));
+        if (string.IsNullOrWhiteSpace(filePath)) throw new ArgumentException("File path cannot be null or whitespace.", nameof(filePath));
 
         ArgumentNullException.ThrowIfNull(tree);
 
@@ -99,11 +102,11 @@ public class MdSyntaxNodeXmlParser {
         }
     }
 
-    public IMdSyntaxTree Deserialize(XElement element) {
+    public IMdSyntaxTree DeserializeFromElement(XElement element) {
         if (element.Name != "MdSyntaxTree") throw new InvalidOperationException("Invalid XML root element");
 
         MdSyntaxTree tree = new();
-
+        
         foreach (XElement child in element.Elements()) {
             DeserializeNode(child, tree.RootNode);
         }
@@ -118,7 +121,7 @@ public class MdSyntaxNodeXmlParser {
         string xmlContent = await reader.ReadToEndAsync(ct);
         XElement rootElement = XElement.Parse(xmlContent);
 
-        return Deserialize(rootElement);
+        return DeserializeFromElement(rootElement);
     }
 
     public async Task<IMdSyntaxTree> DeserializeFromFileAsync(string filePath, CancellationToken ct = default) {
@@ -130,11 +133,12 @@ public class MdSyntaxNodeXmlParser {
     }
 
     private void DeserializeNode(XElement element, IMdSyntaxNode parentNode) {
-        var nodeType = Type.GetType($"InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes.{element.Name}");
-        if (nodeType == null || !_visitors.TryGetValue(nodeType, out IXmlMdSyntaxNodeVisitor? visitor)) return;
+        if (element.Name.LocalName.IsNotNullOrWhiteSpace()
+            && _nodeTypes.TryGetValue(element.Name.LocalName, out Type? nodeType)
+            && _visitors.TryGetValue(nodeType, out IXmlMdSyntaxNodeVisitor? visitor)) {
+            parentNode = visitor.DeserializeNode(element, parentNode);
+        }
 
-        parentNode = visitor.DeserializeNode(element, parentNode);
-        
         foreach (XElement child in element.Elements()) {
             DeserializeNode(child, parentNode);
         }
