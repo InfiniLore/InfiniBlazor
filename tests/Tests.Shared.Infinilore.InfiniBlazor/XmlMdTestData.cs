@@ -9,7 +9,7 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace Tests.InfiniLore.InfiniBlazor.Markdown._DataSources;
+namespace Tests.Shared.Infinilore.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -45,7 +45,7 @@ public class XmlMdTestData : IXmlSerializable {
                     break;
                 }
 
-                case "MdSyntaxTree": {
+                case nameof(MdSyntaxTree): {
                     var syntaxTreeXml = (XElement)XNode.ReadFrom(reader);
                     SyntaxTree = MdSyntaxTreeXmlParser.Instance.DeserializeFromElement(syntaxTreeXml) as MdSyntaxTree;
                     break;
@@ -61,9 +61,7 @@ public class XmlMdTestData : IXmlSerializable {
 
         reader.ReadEndElement();
     }
-
-
-
+    
     public void WriteXml(XmlWriter writer) {
         ArgumentNullException.ThrowIfNull(writer);
         ArgumentNullException.ThrowIfNull(MarkdownString);
@@ -71,9 +69,7 @@ public class XmlMdTestData : IXmlSerializable {
 
         writer.WriteAttributeString(nameof(Id), Id);
         writer.WriteElementString(nameof(MarkdownString), MarkdownString ?? string.Empty);
-        if (SimplifiedHtmlString.IsNotNullOrWhiteSpace()) {
-            writer.WriteElementString(nameof(SimplifiedHtmlString), SimplifiedHtmlString ?? string.Empty);       
-        }
+        if (SimplifiedHtmlString.IsNotNullOrWhiteSpace()) writer.WriteElementString(nameof(SimplifiedHtmlString), SimplifiedHtmlString);
 
         XElement syntaxTreeElement = MdSyntaxTreeXmlParser.Instance.SerializeToElement(SyntaxTree);
         syntaxTreeElement.WriteTo(writer);

@@ -6,6 +6,7 @@
   <ItemGroup>
     <PackageVersion Include="BenchmarkDotNet" Version="0.15.2" />
     <PackageVersion Include="Bogus" Version="35.6.3" />
+    <PackageVersion Include="CodeOfChaos.CliArgsParser.Generators" Version="5.0.0" />
     <PackageVersion Include="CodeOfChaos.CliArgsParser.Library" Version="5.0.0" />
     <PackageVersion Include="CodeOfChaos.Extensions" Version="0.79.1" />
     <PackageVersion Include="CodeOfChaos.Extensions.AspNetCore" Version="0.79.1" />

@@ -4,7 +4,7 @@
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Xml.Serialization;
-using Tests.InfiniLore.InfiniBlazor.Markdown._DataSources;
+using Tests.Shared.Infinilore.InfiniBlazor;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
 // ---------------------------------------------------------------------------------------------------------------------
