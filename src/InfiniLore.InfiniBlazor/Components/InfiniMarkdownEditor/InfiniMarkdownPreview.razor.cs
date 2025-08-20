@@ -20,7 +20,7 @@ public partial class InfiniMarkdownPreview : InfiniComponentBase {
     ];
 
     [GeneratedRegex(@"\s+")]
-    private partial Regex EmptySpacesRegex();
+    private partial Regex EmptySpacesRegex { get; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -41,7 +41,6 @@ public partial class InfiniMarkdownPreview : InfiniComponentBase {
         if (string.IsNullOrWhiteSpace(html)) return string.Empty;
 
         StringBuilder sb = GlobalPools.StringBuilder.Get();
-        Regex emptySpaces = EmptySpacesRegex();
 
         try {
             int indentLevel = 0;
@@ -73,7 +72,7 @@ public partial class InfiniMarkdownPreview : InfiniComponentBase {
                 
                 sb.Append(new string(' ', indentLevel * 2));
 
-                string cleanedLine = emptySpaces.Replace(fullLine, " ").Trim();
+                string cleanedLine = EmptySpacesRegex.Replace(fullLine, " ").Trim();
                 sb.AppendLine(cleanedLine);
 
                 if (!fullLine.StartsWith("</")
