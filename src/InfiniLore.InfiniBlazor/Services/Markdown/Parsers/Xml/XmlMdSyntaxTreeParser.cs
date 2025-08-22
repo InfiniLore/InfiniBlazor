@@ -12,16 +12,16 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSyntaxNodeXmlParser>]
-public class MdSyntaxTreeXmlParser : IMdSyntaxNodeXmlParser {
+[InjectableSingleton<IXmlMdSyntaxTreeParser>]
+public class XmlMdSyntaxTreeParser : IXmlMdSyntaxTreeParser {
     private readonly Dictionary<Type, IXmlMdSyntaxNodeVisitor> _visitors = new();
     private readonly Dictionary<string, Type> _nodeTypes = new();
     
-    public static IMdSyntaxNodeXmlParser Instance { get; } = new MdSyntaxTreeXmlParser();
+    public static IXmlMdSyntaxTreeParser Instance { get; } = new XmlMdSyntaxTreeParser();
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
-    public MdSyntaxTreeXmlParser() {
+    public XmlMdSyntaxTreeParser() {
         RegisterVisitor<BlockQuoteMdSyntaxNode, BlockQuoteXmlMdSyntaxNodeVisitor>();
         RegisterVisitor<BoldMdSyntaxNode, BoldXmlMdSyntaxNodeVisitor>();
         RegisterVisitor<CalloutBodyMdSyntaxNode, CalloutBodyXmlMdSyntaxNodeVisitor>();

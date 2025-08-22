@@ -40,7 +40,10 @@ public static class DynamicMdComponentConverterFactory {
         
         mapBuilder.TrimExcess();
         return new DynamicMdComponentConverter {
-            NodeToComponentMap =  mapBuilder.ToFrozenDictionary()
+            NodeToComponentMap =  mapBuilder.ToFrozenDictionary(),
+            SkippedComponentTypes = [
+                typeof(EmptyLineMdSyntaxNode)
+            ]
         };
     }
 

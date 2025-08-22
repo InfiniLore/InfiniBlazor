@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMdSyntaxNodeXmlParser {
+public interface IXmlMdSyntaxTreeParser {
     XElement SerializeToElement(IMdSyntaxTree tree);
     Task SerializeToStreamAsync(Stream stream, IMdSyntaxTree tree, CancellationToken ct = default);
     Task SerializeToFileAsync(string filePath, IMdSyntaxTree tree, CancellationToken ct = default);

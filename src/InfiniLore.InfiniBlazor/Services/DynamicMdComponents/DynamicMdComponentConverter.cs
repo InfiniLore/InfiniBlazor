@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using System.Collections.Frozen;
@@ -12,6 +13,7 @@ namespace InfiniLore.InfiniBlazor.DynamicMdComponents;
 // ---------------------------------------------------------------------------------------------------------------------
 public class DynamicMdComponentConverter : IDynamicMdComponentConverter {
     public required FrozenDictionary<Type, DynamicMdComponentRecord> NodeToComponentMap { get; init; }
+    public required FrozenSet<Type> SkippedComponentTypes { get; init; }
     private bool RenderUnknownComponents { get; set; } = true;
     
     // -----------------------------------------------------------------------------------------------------------------
@@ -20,6 +22,8 @@ public class DynamicMdComponentConverter : IDynamicMdComponentConverter {
 
     // ReSharper disable once UnusedVariable
     private void RenderComponent(RenderTreeBuilder builder, IMdSyntaxNode node) {
+        if (SkippedComponentTypes.Contains(node.Type)) return;
+        
         if (!NodeToComponentMap.TryGetValue(node.Type, out DynamicMdComponentRecord? data)){
             if (!RenderUnknownComponents) return;
             data = DynamicMdComponentRecord.Empty;
