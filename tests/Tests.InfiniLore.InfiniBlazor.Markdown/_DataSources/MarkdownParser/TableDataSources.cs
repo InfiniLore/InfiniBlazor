@@ -36,9 +36,9 @@ public class TableDataSources {
         
         yield return static () => new MdTestData(SectionName,
             """
-            | Column 1      | Column 2     | Column 3      |
-            | --------------| ------------ |-------------- |
-            | Row 2 col 1   | Row 2 col 2  | Row 2 col 3   |
+            | Column 1    | Column 2    | Column 3    |
+            | ----------- | ----------- | ----------- |
+            | Row 2 col 1 | Row 2 col 2 | Row 2 col 3 |
             """,
             """
             <table>
@@ -62,9 +62,9 @@ public class TableDataSources {
         
         yield return static () => new MdTestData(SectionName,
             """
-            | Column 1      | Column 2     | Column 3      |
-            | --------------| ------------ |-------------- |
-            | Row 2 col 1   |              | Row 2 col 3   |
+            | Column 1    | Column 2 | Column 3    |
+            | ----------- | -------- | ----------- |
+            | Row 2 col 1 |          | Row 2 col 3 |
             """,
             """
             <table>
@@ -88,9 +88,9 @@ public class TableDataSources {
         
         yield return static () => new MdTestData(SectionName,
             """
-            | Column 1      | Column 2     | Column 3      |
-            | --------------| ------------ |-------------- |
-            | Row 2 col 1   |              |               |
+            | Column 1    | Column 2 | Column 3 |
+            | ----------- | -------- | -------- |
+            | Row 2 col 1 |          |          |
             """,
             """
             <table>
@@ -117,14 +117,14 @@ public class TableDataSources {
             | Tables        | Are           | Cool  |
             | ------------- | ------------- | ----- |
             | col 3 is      | right-aligned | $1600 |
-            | col 2 is      | centered      |   $12 |
-            | zebra stripes | are neat      |    $1 |
-
+            | col 2 is      | centered      | $12   |
+            | zebra stripes | are neat      | $1    |
+            
             | Tables        | Are           | Cool  |
             | ------------- | ------------- | ----- |
             | col 3 is      | right-aligned | $1600 |
-            | col 2 is      | centered      |   $12 |
-            | zebra stripes | are neat      |    $1 |
+            | col 2 is      | centered      | $12   |
+            | zebra stripes | are neat      | $1    |
 
             """,
             """

@@ -39,8 +39,8 @@ public static partial class MdRegexLib {
         | (?<list>^[^\S\n]*(?<lsId>-|\d+\.)\s+.*(?:\n[^\S\n]+[^\n]+)*(?:\n[^\S\n]*(?:-|\d+\.)\s+.*(?:\n[^\S\n]+[^\n]+)*)*)
         | (?<table>
             ^\|(?<tHead>.+)\|\ *\n
-            ^\|(?<tSep>[:\-|\ ]+?)\|\ *\n
-            (?<tBody>(?:(?:^\|.*\|$)\n?)+)
+            ^\|(?<tSep>[:\-|\ ]+?)\|\ *
+            (?<tBody>(?:\n(?:^\|.*\|$))+)
           )
         | (?<callout>
             ^>\ *(?:\[!(?<clType>[^\|\n]+)(?<clMod>\|[^\n]*)?\](?<clOption>\+|\-)?)\ *(?<clTitle>[^\n]*)
