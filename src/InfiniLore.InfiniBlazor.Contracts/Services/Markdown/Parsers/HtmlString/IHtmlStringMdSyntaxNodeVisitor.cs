@@ -1,16 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString;
-using InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
+using System.Text;
 
-namespace InfiniLore.InfiniBlazor.Markdown;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.HtmlString;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMarkdownParser {
-    IHtmlStringMdSyntaxTreeParser HtmlString { get; }
-    IHtmlStringMdSyntaxTreeParser StyledHtmlString { get; }
-    IMarkdownStringMdSyntaxTreeParser MarkdownString { get; }
-    IXmlMdSyntaxTreeParser Xml { get; }
+public interface IHtmlStringMdSyntaxNodeVisitor {
+    void HandleOpenTag(IMdSyntaxNode node, StringBuilder builder);
+    void HandleContent(IMdSyntaxNode node, StringBuilder builder);
+    void HandleCloseTag(IMdSyntaxNode node, StringBuilder builder);
 }

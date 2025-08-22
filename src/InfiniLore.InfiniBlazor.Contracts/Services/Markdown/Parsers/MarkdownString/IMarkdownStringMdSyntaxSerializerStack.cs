@@ -1,16 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString;
-using InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
-
-namespace InfiniLore.InfiniBlazor.Markdown;
+namespace InfiniLore.InfiniBlazor.Markdown.SyntaxSerializer;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMarkdownParser {
-    IHtmlStringMdSyntaxTreeParser HtmlString { get; }
-    IHtmlStringMdSyntaxTreeParser StyledHtmlString { get; }
-    IMarkdownStringMdSyntaxTreeParser MarkdownString { get; }
-    IXmlMdSyntaxTreeParser Xml { get; }
+public interface IMarkdownStringMdSyntaxSerializerStack {
+    void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node, MarkdownStringMdSyntaxSerializerOrigin origin);
+    void PushSingleLineMatchesToStack(string input, IMdSyntaxNode node, MarkdownStringMdSyntaxSerializerOrigin origin);
+    
+    void PushProcessedNodeToStack(IMdSyntaxNode parentNode, IMdSyntaxNode childNode);
 }

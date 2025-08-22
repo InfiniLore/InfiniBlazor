@@ -52,7 +52,7 @@ public class MdSyntaxTreeXmlParserTests {
         MemoryStream memoryStream = new();
 
         // Act
-        await _parser.DeserializeToStreamAsync(memoryStream, TestTree);
+        await _parser.DeserializeToXmlStreamAsync(memoryStream, TestTree);
 
         // Assert
         memoryStream.Position = 0;
@@ -69,7 +69,7 @@ public class MdSyntaxTreeXmlParserTests {
         // Arrange
 
         // Act
-        await _parser.DeserializeToFileAsync(FilePathOutput, TestTree);
+        await _parser.DeserializeToXmlFileAsync(FilePathOutput, TestTree);
 
         // Assert
         await Assert.That(File.Exists(FilePathOutput)).IsTrue();
@@ -90,7 +90,7 @@ public class MdSyntaxTreeXmlParserTests {
         using MemoryStream stream = new(Encoding.UTF8.GetBytes(Xml));
 
         // Act
-        IMdSyntaxTree tree = await _parser.SerializeFromStreamAsync(stream);
+        IMdSyntaxTree tree = await _parser.SerializeToSyntaxTreeAsync(stream);
 
         // Assert
         await Assert.That(tree.RootNode).IsNotNull();
@@ -121,7 +121,7 @@ public class MdSyntaxTreeXmlParserTests {
         await File.WriteAllTextAsync(FilePathInput, Xml);
 
         // Act
-        IMdSyntaxTree tree = await _parser.SerializeFromFileAsync(FilePathInput);
+        IMdSyntaxTree tree = await _parser.SerializeToSyntaxTreeAsync(FilePathInput);
 
         // Assert
         await Assert.That(tree.RootNode).IsNotNull();
@@ -159,13 +159,13 @@ public class MdSyntaxTreeXmlParserTests {
 
         // Serialize to memory stream
         await using var memoryStream = new MemoryStream();
-        await parser.DeserializeToStreamAsync(memoryStream, originalTree);
+        await parser.DeserializeToXmlStreamAsync(memoryStream, originalTree);
 
         // Reset the memory stream for reading
         memoryStream.Position = 0;
 
         // Deserialize back into a syntax tree
-        IMdSyntaxTree deserializedTree = await parser.SerializeFromStreamAsync(memoryStream);
+        IMdSyntaxTree deserializedTree = await parser.SerializeToSyntaxTreeAsync(memoryStream);
 
         // Assert: Ensure the structure and content remain identical
         await Assert.That(originalTree).IsEquivalentTo(deserializedTree);

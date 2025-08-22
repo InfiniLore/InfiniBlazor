@@ -47,7 +47,7 @@ public class XmlMdTestData : IXmlSerializable {
 
                 case nameof(MdSyntaxTree): {
                     var syntaxTreeXml = (XElement)XNode.ReadFrom(reader);
-                    SyntaxTree = XmlMdSyntaxTreeParser.Instance.SerializeFromElement(syntaxTreeXml) as MdSyntaxTree;
+                    SyntaxTree = XmlMdSyntaxTreeParser.Instance.SerializeToSyntaxTree(syntaxTreeXml) as MdSyntaxTree;
                     break;
                 }
 
@@ -71,7 +71,7 @@ public class XmlMdTestData : IXmlSerializable {
         writer.WriteElementString(nameof(MarkdownString), MarkdownString ?? string.Empty);
         if (SimplifiedHtmlString.IsNotNullOrWhiteSpace()) writer.WriteElementString(nameof(SimplifiedHtmlString), SimplifiedHtmlString);
 
-        XElement syntaxTreeElement = XmlMdSyntaxTreeParser.Instance.DeserializeToElement(SyntaxTree);
+        XElement syntaxTreeElement = XmlMdSyntaxTreeParser.Instance.DeserializeToXmlElement(SyntaxTree);
         syntaxTreeElement.WriteTo(writer);
     }
 }

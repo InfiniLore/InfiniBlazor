@@ -20,7 +20,7 @@ public abstract class XmlMdSyntaxNodeVisitor<TNode> : IXmlMdSyntaxNodeVisitor wh
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public XElement DeserializeFromNode(IMdSyntaxNode node, XElement parentElement) {
+    public XElement DeserializeToXml(IMdSyntaxNode node, XElement parentElement) {
         var nodeElement = new XElement(node.Type.Name);
         parentElement.Add(nodeElement);
         DeserializeDetails(Unsafe.As<TNode>(node), nodeElement);

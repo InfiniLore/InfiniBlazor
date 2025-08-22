@@ -63,7 +63,7 @@ public class XmlMdSyntaxTreeParser : IXmlMdSyntaxTreeParser {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region Deserialize
-    public XElement DeserializeToElement(IMdSyntaxTree tree) {
+    public XElement DeserializeToXmlElement(IMdSyntaxTree tree) {
         var rootElement = new XElement("MdSyntaxTree");
 
         foreach (IMdSyntaxNode child in tree.RootNode.GetChildren()) {
@@ -73,11 +73,11 @@ public class XmlMdSyntaxTreeParser : IXmlMdSyntaxTreeParser {
         return rootElement;
     }
 
-    public async Task DeserializeToStreamAsync(Stream stream, IMdSyntaxTree tree, CancellationToken ct = default) {
+    public async Task DeserializeToXmlStreamAsync(Stream stream, IMdSyntaxTree tree, CancellationToken ct = default) {
         ArgumentNullException.ThrowIfNull(stream);
         ArgumentNullException.ThrowIfNull(tree);
 
-        XElement rootElement = DeserializeToElement(tree);
+        XElement rootElement = DeserializeToXmlElement(tree);
 
         await using var writer = new StreamWriter(stream, Encoding.UTF8, leaveOpen: true);
 
@@ -86,18 +86,18 @@ public class XmlMdSyntaxTreeParser : IXmlMdSyntaxTreeParser {
         await writer.FlushAsync(ct);
     }
 
-    public async Task DeserializeToFileAsync(string filePath, IMdSyntaxTree tree, CancellationToken ct = default) {
+    public async Task DeserializeToXmlFileAsync(string filePath, IMdSyntaxTree tree, CancellationToken ct = default) {
         if (string.IsNullOrWhiteSpace(filePath)) throw new ArgumentException("File path cannot be null or whitespace.", nameof(filePath));
 
         ArgumentNullException.ThrowIfNull(tree);
 
         await using FileStream fileStream = new(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, true);
-        await DeserializeToStreamAsync(fileStream, tree, ct);
+        await DeserializeToXmlStreamAsync(fileStream, tree, ct);
     }
 
     private void DeserializeNode(IMdSyntaxNode node, XElement parentElement) {
         if (_visitors.TryGetValue(node.GetType(), out IXmlMdSyntaxNodeVisitor? visitor)) {
-            parentElement = visitor.DeserializeFromNode(node, parentElement);
+            parentElement = visitor.DeserializeToXml(node, parentElement);
         }
 
         foreach (IMdSyntaxNode child in node.GetChildren()) {
@@ -107,7 +107,7 @@ public class XmlMdSyntaxTreeParser : IXmlMdSyntaxTreeParser {
     #endregion
 
     #region Serialize
-    public IMdSyntaxTree SerializeFromElement(XElement element) {
+    public IMdSyntaxTree SerializeToSyntaxTree(XElement element) {
         if (element.Name != "MdSyntaxTree") throw new InvalidOperationException("Invalid XML root element");
 
         MdSyntaxTree tree = new();
@@ -119,22 +119,22 @@ public class XmlMdSyntaxTreeParser : IXmlMdSyntaxTreeParser {
         return tree;
     }
 
-    public async Task<IMdSyntaxTree> SerializeFromStreamAsync(Stream stream, CancellationToken ct = default) {
+    public async Task<IMdSyntaxTree> SerializeToSyntaxTreeAsync(Stream stream, CancellationToken ct = default) {
         ArgumentNullException.ThrowIfNull(stream);
 
         using var reader = new StreamReader(stream, Encoding.UTF8, leaveOpen: true);
         string xmlContent = await reader.ReadToEndAsync(ct);
         XElement rootElement = XElement.Parse(xmlContent);
 
-        return SerializeFromElement(rootElement);
+        return SerializeToSyntaxTree(rootElement);
     }
 
-    public async Task<IMdSyntaxTree> SerializeFromFileAsync(string filePath, CancellationToken ct = default) {
+    public async Task<IMdSyntaxTree> SerializeToSyntaxTreeAsync(string filePath, CancellationToken ct = default) {
         if (string.IsNullOrWhiteSpace(filePath))
             throw new ArgumentException("File path cannot be null or whitespace.", nameof(filePath));
 
         await using FileStream fileStream = new(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true);
-        return await SerializeFromStreamAsync(fileStream, ct);
+        return await SerializeToSyntaxTreeAsync(fileStream, ct);
     }
 
     private void SerializeNode(XElement element, IMdSyntaxNode parentNode) {

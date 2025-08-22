@@ -6,7 +6,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMdSyntaxTree {
+public interface IMdSyntaxTree : IDisposable {
     IMdSyntaxNode RootNode { get; }
 
     IEnumerable<IMdSyntaxNode> VisitTopLevelNodes();

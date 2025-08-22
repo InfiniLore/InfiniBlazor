@@ -19,7 +19,7 @@ public class MarkdownParserTests(IMarkdownParser simpleParser) {
         // Arrange
         
         // Act
-        var output = simpleParser.ParseToString(data.Markdown);
+        var output = simpleParser.FromMarkdownStringToHtmlString(data.Markdown);
 
         // Assert;
         await Assert.That(output)
@@ -36,7 +36,7 @@ public class MarkdownParserTests(IMarkdownParser simpleParser) {
         };
 
         // Act
-        var output = simpleParser.ParseToString(textSource.Text);
+        var output = simpleParser.FromMarkdownStringToHtmlString(textSource.Text);
 
         // Assert
         await Assert.That(output)

@@ -9,6 +9,6 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IXmlMdSyntaxNodeVisitor {
-    XElement DeserializeFromNode(IMdSyntaxNode node, XElement parentElement);
+    XElement DeserializeToXml(IMdSyntaxNode node, XElement parentElement);
     IMdSyntaxNode SerializeToNode(XElement element, IMdSyntaxNode parentNode);
 }

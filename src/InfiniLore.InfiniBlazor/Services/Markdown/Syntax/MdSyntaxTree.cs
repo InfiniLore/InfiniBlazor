@@ -149,4 +149,8 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
             MdSyntaxNodeStackPool.Return(stack);
         }
     }
+    
+    public void Dispose() {
+        ReturnToPool();
+    }
 }

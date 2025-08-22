@@ -7,5 +7,6 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMarkdownStringMdSyntaxTreeParser {
-    
+    IMdSyntaxTree SerializeToSyntaxTree(string input);
+    string DeserializeToString(IMdSyntaxTree tree);
 }
