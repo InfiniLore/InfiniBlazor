@@ -36,7 +36,9 @@ public class MarkdownStringMdSyntaxDeserializer(ILogger<MarkdownStringMdSyntaxDe
     
     // ReSharper disable once ConvertIfStatementToReturnStatement
     public bool TryGetNodeDeserializer(IMdSyntaxNode node, [NotNullWhen(true)] out IMarkdownStringMdSyntaxNodeDeserializer? deserializer) {
-        if (!Deserializers.TryGetValue(node.Type, out deserializer)) throw new InvalidOperationException($"No deserializer found for node type {node.Type}");
-        return true;
+        if (Deserializers.TryGetValue(node.Type, out deserializer)) return true;
+
+        logger.Error("No deserializer found for node type {NodeType}", node.Type);
+        throw new InvalidOperationException($"No deserializer found for node type {node.Type}"); // TODO dont treat as an exception
     }
 }

@@ -42,8 +42,6 @@ public sealed class HtmlBodySyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSe
             // Span should be the only special case allowed that allows for Markdown parsing within it
             Match match = MdRegexLib.FindSpanHtmlRegex.Match(htmlBody);
             if (match.Groups[SpanTagId].TryGetValue(out string? spanTag) && match.Groups[SpanBodyId].TryGetValue(out string? spanBody)) {
-                
-                
                 HtmlSpanMdSyntaxNode spanNode = HtmlSpanMdSyntaxNode.Pool.Get();
                 spanNode.TagValue = spanTag;
                 

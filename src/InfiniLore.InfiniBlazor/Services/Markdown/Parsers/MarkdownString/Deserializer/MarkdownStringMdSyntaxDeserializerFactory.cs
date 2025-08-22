@@ -31,7 +31,7 @@ public static class MarkdownStringMdSyntaxDeserializerFactory {
             .Register<HeadingMdSyntaxNode, HeadingSyntaxNodeDeserializer>(instance)
             .Register<HeadingSimpleMdSyntaxNode, HeadingSimpleSyntaxNodeDeserializer>(instance)
             .Register<HorizontalRuleMdSyntaxNode, HorizontalRuleSyntaxNodeDeserializer>(instance)
-            // .Register<HtmlSpanMdSyntaxNode, HtmlSpanSyntaxNodeDeserializer>(instance)
+            .Register<HtmlSpanMdSyntaxNode, HtmlSpanSyntaxNodeDeserializer>(instance)
             .Register<ImageMdSyntaxNode, ImageSyntaxNodeDeserializer>(instance)
             .Register<ItalicMdSyntaxNode, ItalicSyntaxNodeDeserializer>(instance)
             .Register<LinkMdSyntaxNode, LinkSyntaxNodeDeserializer>(instance)
@@ -39,7 +39,7 @@ public static class MarkdownStringMdSyntaxDeserializerFactory {
             .Register<ListOrderedMdSyntaxNode, ListOrderedSyntaxNodeDeserializer>(instance)
             .Register<ListUnOrderedMdSyntaxNode, ListUnOrderedSyntaxNodeDeserializer>(instance)
             .Register<ParagraphMdSyntaxNode, ParagraphSyntaxNodeDeserializer>(instance)
-            // Register<RootMdSyntaxNode, RootSyntaxNodeDeserializer>(instance)
+            // Register<RootMdSyntaxNode, RootSyntaxNodeDeserializer>(instance) // Is a semantic node and cannot be processed
             .Register<StrikeMdSyntaxNode, StrikeSyntaxNodeDeserializer>(instance)
             .Register<SubScriptMdSyntaxNode, SubScriptSyntaxNodeDeserializer>(instance)
             .Register<SuperScriptMdSyntaxNode, SuperScriptSyntaxNodeDeserializer>(instance)

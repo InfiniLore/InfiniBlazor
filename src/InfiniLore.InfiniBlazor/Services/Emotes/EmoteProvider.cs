@@ -53,7 +53,11 @@ public class EmoteProvider(ILogger<EmoteProvider> logger) : IEmoteProvider {
     public bool TryGetEntry(string? key, [NotNullWhen(true)] out IEmoteEntry? entry) {
         entry = null;
         if (key is null) return false;
-        if (!Entries.TryGetValue(key, out EmoteEntry? value)) return false;
+        Span<char> lowered = stackalloc char[key.Length];
+        key.AsSpan().ToLowerInvariant(lowered);
+        
+        if (!Entries.TryGetAlternateLookup(out ConcurrentDictionary<string, EmoteEntry>.AlternateLookup<ReadOnlySpan<char>> lookup)) return false;
+        if (!lookup.TryGetValue(lowered, out EmoteEntry? value)) return false;
 
         entry = value;
         return true;
@@ -62,7 +66,11 @@ public class EmoteProvider(ILogger<EmoteProvider> logger) : IEmoteProvider {
     public bool TryGetEntry(ReadOnlySpan<char> key, [NotNullWhen(true)] out IEmoteEntry? entry) {
         entry = null;
         if (!Entries.TryGetAlternateLookup(out ConcurrentDictionary<string, EmoteEntry>.AlternateLookup<ReadOnlySpan<char>> lookup)) return false;
-        if (!lookup.TryGetValue(key, out EmoteEntry? value)) return false;
+        
+        Span<char> lowered = stackalloc char[key.Length];
+        key.ToLowerInvariant(lowered);
+        
+        if (!lookup.TryGetValue(lowered, out EmoteEntry? value)) return false;
 
         entry = value;
         return true;
