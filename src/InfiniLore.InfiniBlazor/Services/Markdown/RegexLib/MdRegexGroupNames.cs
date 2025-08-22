@@ -22,6 +22,7 @@ public static class MdRegexGroupNames {
     public const string CodeInlineContent = "c";
     public const string Emote = "emote";
     public const string EmoteContent = "e";
+    public const string EmptyLine = "emptyLine";
     public const string Escaped = "escaped";
     public const string Heading = "heading";
     public const string HeadingLevel = "hLevel";

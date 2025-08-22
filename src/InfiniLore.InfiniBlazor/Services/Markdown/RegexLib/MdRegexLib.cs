@@ -64,6 +64,7 @@ public static partial class MdRegexLib {
           )
         | (?<horizontalRule>^[\-=]{3,64}\s*$)
         | (?<paragraph>(?<p>.+?)(?:\n|$))
+        | (?<emptyLine>\n)
 
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex MultilineStructuresRegex { get; }
@@ -80,6 +81,7 @@ public static partial class MdRegexLib {
         MdRegexGroupNames.Callout,
         MdRegexGroupNames.HtmlBody,
         MdRegexGroupNames.HorizontalRule,
+        MdRegexGroupNames.EmptyLine,
 
         // Singleline
         MdRegexGroupNames.Escaped,
