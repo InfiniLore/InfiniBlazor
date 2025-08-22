@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class ImageXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<ImageMdSyntaxNode> {
     private const string Href = nameof(ImageMdSyntaxNode.Href);
-    private const string AltText = nameof(ImageMdSyntaxNode.NormalizedAltText);
+    private const string AltText = nameof(AltText);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
