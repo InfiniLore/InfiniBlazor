@@ -12,8 +12,10 @@ public sealed class HtmlSpanSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxN
 
     protected override void Deserialize(HtmlSpanMdSyntaxNode node, StringBuilder builder) {
         builder.Append(node.TagValue);
-        
-        DeserializeChildren(node, builder);
+        if (node.ChildCount != 0) {
+            builder.Append(' ');
+            DeserializeChildren(node, builder);
+        }
         
         builder.Append("</span>");
     }

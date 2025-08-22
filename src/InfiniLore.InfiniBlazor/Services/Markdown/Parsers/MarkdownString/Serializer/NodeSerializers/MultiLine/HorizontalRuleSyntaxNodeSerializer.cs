@@ -28,7 +28,6 @@ public sealed class HorizontalRuleSyntaxNodeSerializer : IMarkdownStringMdSyntax
         
         HorizontalRuleMdSyntaxNode node = HorizontalRuleMdSyntaxNode.Pool.Get();
         node.Identifier = hrContent;
-        
-        parentNode.AddChildNode(HorizontalRuleMdSyntaxNode.Pool.Get());
+        parentNode.AddChildNode(node);
     }
 }
