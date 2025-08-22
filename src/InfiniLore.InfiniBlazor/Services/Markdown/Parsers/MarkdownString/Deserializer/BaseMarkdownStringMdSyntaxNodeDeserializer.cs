@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer;
 public abstract class BaseMarkdownStringMdSyntaxNodeDeserializer<TNode> : IMarkdownStringMdSyntaxNodeDeserializer
     where TNode : IMdSyntaxNode
 {
-    public required IMarkdownStringMdSyntaxDeserializer Deserializer { get; init; } = null!;
+    public IMarkdownStringMdSyntaxDeserializer Deserializer { get; internal set; } = null!;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

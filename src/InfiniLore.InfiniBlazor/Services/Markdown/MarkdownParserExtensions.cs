@@ -10,4 +10,9 @@ public static class MarkdownParserExtensions {
         using IMdSyntaxTree tree = parser.MarkdownString.SerializeToSyntaxTree(input);
         return parser.HtmlString.DeserializeToString(tree);
     }
+    
+    public static string FromMarkdownStringToMarkdownString(this IMarkdownParser parser, string input) {
+        using IMdSyntaxTree tree = parser.MarkdownString.SerializeToSyntaxTree(input);
+        return parser.MarkdownString.DeserializeToString(tree);
+    }
 }

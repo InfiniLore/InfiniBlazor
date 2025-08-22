@@ -19,7 +19,7 @@ public class MdSyntaxTreeXmlParserTests {
             .WithChild(
                 new LinkMdSyntaxNode { Href = "https://example.com" }
                     .WithContent("Example Content")
-                    .WithChild(new ImageMdSyntaxNode { Href = "https://example.com/image.png", AltText = "Example Image" })
+                    .WithChild(new ImageMdSyntaxNode { Href = "https://example.com/image.png", OriginalAltText = "Example Image" })
             )
     };
 
@@ -112,7 +112,7 @@ public class MdSyntaxTreeXmlParserTests {
         await Assert.That(secondChild).IsTypeOf<ImageMdSyntaxNode>();
         var imageNode = (ImageMdSyntaxNode)secondChild;
         await Assert.That(imageNode.Href).IsEqualTo("https://example.com/image.png");
-        await Assert.That(imageNode.AltText).IsEqualTo("Example Image");
+        await Assert.That(imageNode.NormalizedAltText).IsEqualTo("Example Image");
     }
 
     [Test]
@@ -143,7 +143,7 @@ public class MdSyntaxTreeXmlParserTests {
         await Assert.That(secondChild).IsTypeOf<ImageMdSyntaxNode>();
         var imageNode = (ImageMdSyntaxNode)secondChild;
         await Assert.That(imageNode.Href).IsEqualTo("https://example.com/image.png");
-        await Assert.That(imageNode.AltText).IsEqualTo("Example Image");
+        await Assert.That(imageNode.NormalizedAltText).IsEqualTo("Example Image");
 
         // Cleanup
         File.Delete(FilePathInput);

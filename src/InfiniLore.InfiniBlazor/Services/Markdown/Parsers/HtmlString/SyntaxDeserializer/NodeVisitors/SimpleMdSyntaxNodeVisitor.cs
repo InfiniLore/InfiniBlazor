@@ -70,7 +70,7 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
             
             case HorizontalRuleMdSyntaxNode:break;
 
-            case ImageMdSyntaxNode {AltText: var altText, Href: var href} imgNode: {
+            case ImageMdSyntaxNode {NormalizedAltText: var altText, Href: var href} imgNode: {
                 builder.Append("<img class\"inline-block\" src=\"");
                 builder.Append(href.AsSpan());
                 builder.Append('"');

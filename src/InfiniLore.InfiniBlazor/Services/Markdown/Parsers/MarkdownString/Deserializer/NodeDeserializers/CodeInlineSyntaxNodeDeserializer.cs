@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 public sealed class CodeInlineSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNodeDeserializer<CodeInlineMdSyntaxNode> {
     protected override void Deserialize(CodeInlineMdSyntaxNode node, StringBuilder builder) {
         builder.Append('`', node.BackTickCount);
-        builder.Append(node.ContentCode);
+        builder.Append(node.OriginalContentCode);
         builder.Append('`', node.BackTickCount);
     }
 }

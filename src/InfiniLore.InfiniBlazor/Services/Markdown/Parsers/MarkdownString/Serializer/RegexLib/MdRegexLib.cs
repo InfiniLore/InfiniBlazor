@@ -35,7 +35,7 @@ public static partial class MdRegexLib {
     [GeneratedRegex("""
           (?<heading>^(?<hLevel>\#{1,6})[\ ]+(?<hText>[^\n]+)\n?)
         | (?<codeBlock>`{3}(?<cLang>.*?)?\n(?<cBody>[\s\S]*?)`{3})
-        | (?<headingSimple>^(?<hsText>.+?)\n[\ ]*(?<hsIdentifier>[-=]{3,}))
+        | (?<headingSimple>^(?<hsText>.+?)\n(?<hsIdentifier>[\ ]*[-=]{3,}))
         | (?<list>^[^\S\n]*(?<lsId>-|\d+\.)\s+.*(?:\n[^\S\n]+[^\n]+)*(?:\n[^\S\n]*(?:-|\d+\.)\s+.*(?:\n[^\S\n]+[^\n]+)*)*)
         | (?<table>
             ^\|(?<tHead>.+)\|\ *\n

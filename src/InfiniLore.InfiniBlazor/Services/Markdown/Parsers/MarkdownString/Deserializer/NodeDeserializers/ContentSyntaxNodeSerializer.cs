@@ -8,9 +8,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class ParagraphSyntaxNodeDeserializer :  BaseMarkdownStringMdSyntaxNodeDeserializer<ParagraphMdSyntaxNode> {
-    protected override void Deserialize(ParagraphMdSyntaxNode node, StringBuilder builder) {
-        DeserializeChildren(node, builder);
-        if (node.HasNextSibling()) builder.Append('\n');
+public sealed class ContentSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNodeDeserializer<ContentMdSyntaxNode> {
+    protected override void Deserialize(ContentMdSyntaxNode node, StringBuilder builder) {
+        builder.Append(node.Content);
     }
 }

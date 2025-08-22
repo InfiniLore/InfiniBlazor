@@ -87,6 +87,35 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
         mdSyntaxNodeModifier = Modifier;
         return mdSyntaxNodeModifier is not null;
     }
+    
+    public bool TryGetNextSibling([NotNullWhen(true)] out IMdSyntaxNode? mdSyntaxNode) {
+        mdSyntaxNode = null;
+        if (Parent is null) return false;
+        
+        ReadOnlySpan<IMdSyntaxNode> span = Parent.GetChildrenSpan();
+        for (int i = 0; i < span.Length; i++) {
+            if (span[i] != this) continue;
+            if (i + 1 >= span.Length) return false;
+            mdSyntaxNode = span[i + 1];
+            return true;
+        }
+        
+        // We should never get here because we are within our own parent
+        return false;
+    }
+
+    public bool HasNextSibling() {
+        if (Parent is null) return false;
+        ReadOnlySpan<IMdSyntaxNode> span = Parent.GetChildrenSpan();
+        for (int i = 0; i < span.Length; i++) {
+            if (span[i] != this) continue;
+            return i + 1 < span.Length;
+        }
+        
+        // We should never get here because we are within our own parent
+        return false;   
+    }
+
 
     public void AddChildNode(IMdSyntaxNode childNode) {
         // Check if we need to resize

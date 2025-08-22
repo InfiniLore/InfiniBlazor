@@ -14,6 +14,6 @@ public sealed class HeadingSimpleSyntaxNodeDeserializer : BaseMarkdownStringMdSy
         DeserializeChildren(node, builder);
         builder.Append('\n');
         builder.Append(node.ContentIdentifier);
-        builder.Append('\n');
+        if (node.HasNextSibling()) builder.Append('\n');
     }
 }

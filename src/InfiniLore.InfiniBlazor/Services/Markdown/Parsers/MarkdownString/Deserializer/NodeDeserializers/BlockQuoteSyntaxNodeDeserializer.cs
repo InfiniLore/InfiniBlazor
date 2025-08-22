@@ -23,6 +23,7 @@ public sealed class BlockQuoteSyntaxNodeDeserializer : BaseMarkdownStringMdSynta
             
             localBuilder.Replace("\n", "\n> "); // Prepend every line with "> "
             builder.Append(localBuilder);
+            if (node.HasNextSibling()) builder.Append('\n');
         }
         finally {
             GlobalPools.StringBuilder.Return(localBuilder);

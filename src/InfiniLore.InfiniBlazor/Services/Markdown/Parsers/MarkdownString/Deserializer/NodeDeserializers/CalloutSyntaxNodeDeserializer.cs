@@ -27,22 +27,26 @@ public sealed class CalloutSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNo
             }
         }
 
-        builder.Append('\n');
         
         // Body contains multiline structure, so we need to deserialize it separately
-        if (!node.TryGetBodyNode(out CalloutBodyMdSyntaxNode? bodyNode)) return;
-        StringBuilder localBuilder = GlobalPools.StringBuilder.Get();
-        try {
-            foreach (IMdSyntaxNode child in bodyNode.GetChildrenSpan()) {
-                if (!Deserializer.TryGetNodeDeserializer(child, out IMarkdownStringMdSyntaxNodeDeserializer? deserializer)) continue;
-                deserializer.Deserialize(child, localBuilder);
+        if (node.TryGetBodyNode(out CalloutBodyMdSyntaxNode? bodyNode)) {
+            builder.Append('\n');
+            StringBuilder localBuilder = GlobalPools.StringBuilder.Get();
+            try {
+                foreach (IMdSyntaxNode child in bodyNode.GetChildrenSpan()) {
+                    if (!Deserializer.TryGetNodeDeserializer(child, out IMarkdownStringMdSyntaxNodeDeserializer? deserializer)) continue;
+
+                    deserializer.Deserialize(child, localBuilder);
+                }
+
+                localBuilder.Replace("\n", "\n> ");// Prepend every line with "> "
+                builder.Append(localBuilder);
             }
-            
-            localBuilder.Replace("\n", "\n> "); // Prepend every line with "> "
-            builder.Append(localBuilder);
+            finally {
+                GlobalPools.StringBuilder.Return(localBuilder);
+            }
         }
-        finally {
-            GlobalPools.StringBuilder.Return(localBuilder);
-        }
+        
+        if (node.HasNextSibling()) builder.Append('\n');
     }
 }

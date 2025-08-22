@@ -13,6 +13,6 @@ public sealed class HeadingSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNo
         builder.Append('#', node.Level);
         builder.Append(' ');
         DeserializeChildren(node, builder);
-        builder.Append('\n');
+        if (node.HasNextSibling()) builder.Append('\n');
     }
 }

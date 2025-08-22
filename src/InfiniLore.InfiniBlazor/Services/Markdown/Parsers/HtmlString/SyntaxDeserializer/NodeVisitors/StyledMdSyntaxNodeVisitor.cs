@@ -94,7 +94,7 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 break;
             }
 
-            case ImageMdSyntaxNode {AltText: var altText, Href: var href} imgNode: {
+            case ImageMdSyntaxNode {NormalizedAltText: var altText, Href: var href} imgNode: {
                 builder.Append("<img class=\"inline-block rounded-lg shadow-lg h-full w-auto object-contain\" src=\"");
                 builder.Append(href.AsSpan());
                 builder.Append('"');

@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class EscapedSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNodeDeserializer<EscapedCharacterMdSyntaxNode> {
+public sealed class EscapedCharacterSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNodeDeserializer<EscapedCharacterMdSyntaxNode> {
 
     protected override void Deserialize(EscapedCharacterMdSyntaxNode node, StringBuilder builder) {
         builder.Append('\\');

@@ -12,15 +12,12 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Link)]
-public sealed partial class LinkSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+public sealed class LinkSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
     private static readonly int LnTextId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkText);
     private static readonly int LnHrefId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkHref);
     private static readonly int LnModsId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkModifiers);
     private static readonly int LnBangId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkBang);
     public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
-    
-    [GeneratedRegex(@"\\(?!\\)")]
-    private static partial Regex NormalizeAltText { get; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -39,11 +36,9 @@ public sealed partial class LinkSyntaxNodeSerializer : IMarkdownStringMdSyntaxNo
         if (entireMatch.Groups[LnBangId].Success) {
             ImageMdSyntaxNode imgNode = ImageMdSyntaxNode.Pool.Get();
             imgNode.Href = linkHref;
-            imgNode.AltText = NormalizeAltText.Replace(linkText, string.Empty);
-
-            if (mods.IsNotNullOrWhiteSpace()) {
-                imgNode.WithModifier(MdSyntaxNodeModifier.FromString(mods));
-            }
+            imgNode.OriginalAltText = linkText;
+            
+            if (mods.IsNotNullOrWhiteSpace()) imgNode.WithModifier(MdSyntaxNodeModifier.FromString(mods));
             
             parentNode.AddChildNode(imgNode);
             return ;

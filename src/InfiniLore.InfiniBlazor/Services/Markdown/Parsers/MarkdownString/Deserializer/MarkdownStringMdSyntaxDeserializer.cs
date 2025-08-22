@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Pooling;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
@@ -13,9 +12,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxDeserializer>]
 public class MarkdownStringMdSyntaxDeserializer(ILogger<MarkdownStringMdSyntaxDeserializer> logger) : IMarkdownStringMdSyntaxDeserializer {
-    private readonly FrozenDictionary<Type, IMarkdownStringMdSyntaxNodeDeserializer> _deserializers = FrozenDictionary<Type, IMarkdownStringMdSyntaxNodeDeserializer>.Empty;
+    public FrozenDictionary<Type, IMarkdownStringMdSyntaxNodeDeserializer> Deserializers { get; internal set; } = null!;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -36,10 +34,9 @@ public class MarkdownStringMdSyntaxDeserializer(ILogger<MarkdownStringMdSyntaxDe
         }
     }
     
+    // ReSharper disable once ConvertIfStatementToReturnStatement
     public bool TryGetNodeDeserializer(IMdSyntaxNode node, [NotNullWhen(true)] out IMarkdownStringMdSyntaxNodeDeserializer? deserializer) {
-        if (_deserializers.TryGetValue(node.Type, out deserializer)) return true;
-
-        logger.Warning("No deserializer found for node type {NodeType}", node.Type);
-        return false;
+        if (!Deserializers.TryGetValue(node.Type, out deserializer)) throw new InvalidOperationException($"No deserializer found for node type {node.Type}");
+        return true;
     }
 }
