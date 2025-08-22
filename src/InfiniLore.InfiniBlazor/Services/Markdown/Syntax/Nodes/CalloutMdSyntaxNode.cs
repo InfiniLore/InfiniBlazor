@@ -11,6 +11,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 public sealed class CalloutMdSyntaxNode : MdSyntaxNode<CalloutMdSyntaxNode> {
     public string? CalloutType { get; set; }
     public CollapseStateOptions CollapsedState { get; set; }
+    public int LeadingSpaces { get; set; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -36,6 +37,7 @@ public sealed class CalloutMdSyntaxNode : MdSyntaxNode<CalloutMdSyntaxNode> {
     }
     
     public override bool TryReset() {
+        LeadingSpaces = 0;
         CalloutType = null;
         CollapsedState = CollapseStateOptions.None;
         return base.TryReset();
