@@ -14,13 +14,13 @@ public sealed class HeadingXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Headi
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override void SerializeDetails(HeadingMdSyntaxNode node, XElement targetElement) {
-        base.SerializeDetails(node, targetElement);
+    protected override void DeserializeDetails(HeadingMdSyntaxNode node, XElement targetElement) {
+        base.DeserializeDetails(node, targetElement);
         targetElement.SetAttributeValue(Level, node.Level);
     }
 
-    protected override void DeserializeDetails(XElement element, HeadingMdSyntaxNode targetNode) {
-        base.DeserializeDetails(element, targetNode);
+    protected override void SerializeDetails(XElement element, HeadingMdSyntaxNode targetNode) {
+        base.SerializeDetails(element, targetNode);
         targetNode.Level = int.Parse(element.Attribute(Level)?.Value ?? "0");   
     }
 }

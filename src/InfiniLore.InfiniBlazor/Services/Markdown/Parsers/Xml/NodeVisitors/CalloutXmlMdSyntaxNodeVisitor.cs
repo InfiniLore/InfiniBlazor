@@ -16,14 +16,14 @@ public sealed class CalloutXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Callo
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override void SerializeDetails(CalloutMdSyntaxNode node, XElement targetElement) {
-        base.SerializeDetails(node, targetElement);
+    protected override void DeserializeDetails(CalloutMdSyntaxNode node, XElement targetElement) {
+        base.DeserializeDetails(node, targetElement);
         targetElement.SetAttributeValue(CalloutType, node.CalloutType);
         targetElement.SetAttributeValue(CollapsedState, node.CollapsedState);
     }
 
-    protected override void DeserializeDetails(XElement element, CalloutMdSyntaxNode targetNode) {
-        base.DeserializeDetails(element, targetNode);
+    protected override void SerializeDetails(XElement element, CalloutMdSyntaxNode targetNode) {
+        base.SerializeDetails(element, targetNode);
         targetNode.CalloutType = element.Attribute(CalloutType)?.Value ?? string.Empty;
         targetNode.CollapsedState = (CalloutMdSyntaxNode.CollapseStateOptions)int.Parse(element.Attribute(CollapsedState)?.Value ?? "0");   
     }

@@ -12,13 +12,13 @@ public sealed class EscapedCharacterXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisi
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override void SerializeDetails(EscapedCharacterMdSyntaxNode node, XElement targetElement) {
-        base.SerializeDetails(node, targetElement);
+    protected override void DeserializeDetails(EscapedCharacterMdSyntaxNode node, XElement targetElement) {
+        base.DeserializeDetails(node, targetElement);
         targetElement.Value = node.ContentChar.ToString();
     }
 
-    protected override void DeserializeDetails(XElement element, EscapedCharacterMdSyntaxNode targetNode) {
-        base.DeserializeDetails(element, targetNode);
+    protected override void SerializeDetails(XElement element, EscapedCharacterMdSyntaxNode targetNode) {
+        base.SerializeDetails(element, targetNode);
         targetNode.ContentChar = element.Value.ElementAtOrDefault(0);   
     }
 }

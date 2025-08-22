@@ -23,7 +23,7 @@ public abstract class XmlMdSyntaxNodeVisitor<TNode> : IXmlMdSyntaxNodeVisitor wh
     public XElement DeserializeFromNode(IMdSyntaxNode node, XElement parentElement) {
         var nodeElement = new XElement(node.Type.Name);
         parentElement.Add(nodeElement);
-        SerializeDetails(Unsafe.As<TNode>(node), nodeElement);
+        DeserializeDetails(Unsafe.As<TNode>(node), nodeElement);
         return nodeElement;   
     }
     
@@ -41,7 +41,7 @@ public abstract class XmlMdSyntaxNodeVisitor<TNode> : IXmlMdSyntaxNodeVisitor wh
         return modifierElement;
     }
     
-    protected virtual void SerializeDetails(TNode node, XElement targetElement) {
+    protected virtual void DeserializeDetails(TNode node, XElement targetElement) {
         if (node.TryGetModifier(out IMdSyntaxNodeModifier? modifier)) targetElement.Add(SerializeModifiers(modifier));
     }
 
@@ -49,7 +49,7 @@ public abstract class XmlMdSyntaxNodeVisitor<TNode> : IXmlMdSyntaxNodeVisitor wh
         TNode node = MdSyntaxNode<TNode>.Pool.Get();
         parentNode.AddChildNode(node);
         
-        DeserializeDetails(element, node);
+        SerializeDetails(element, node);
         return node;  
     }
 
@@ -67,7 +67,7 @@ public abstract class XmlMdSyntaxNodeVisitor<TNode> : IXmlMdSyntaxNodeVisitor wh
         return modifier;   
     }
 
-    protected virtual void DeserializeDetails(XElement element, TNode targetNode) {
+    protected virtual void SerializeDetails(XElement element, TNode targetNode) {
         if (element.Element(Modifiers) is {} modifiersElement) targetNode.WithModifier(DeserializeModifiers(modifiersElement));
     }
 }

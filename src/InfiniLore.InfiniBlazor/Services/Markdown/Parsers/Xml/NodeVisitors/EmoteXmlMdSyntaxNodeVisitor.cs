@@ -15,14 +15,14 @@ public sealed class EmoteXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<EmoteMd
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override void SerializeDetails(EmoteMdSyntaxNode node, XElement targetElement) {
-        base.SerializeDetails(node, targetElement);
+    protected override void DeserializeDetails(EmoteMdSyntaxNode node, XElement targetElement) {
+        base.DeserializeDetails(node, targetElement);
         targetElement.SetAttributeValue(EmoteKey, node.EmoteKey);
         targetElement.SetAttributeValue(OriginalEmote, node.OriginalEmote);
     }
 
-    protected override void DeserializeDetails(XElement element, EmoteMdSyntaxNode targetNode) {
-        base.DeserializeDetails(element, targetNode);
+    protected override void SerializeDetails(XElement element, EmoteMdSyntaxNode targetNode) {
+        base.SerializeDetails(element, targetNode);
         targetNode.EmoteKey = element.Attribute(EmoteKey)?.Value ?? string.Empty;
         targetNode.OriginalEmote = element.Attribute(OriginalEmote)?.Value ?? string.Empty;
     }

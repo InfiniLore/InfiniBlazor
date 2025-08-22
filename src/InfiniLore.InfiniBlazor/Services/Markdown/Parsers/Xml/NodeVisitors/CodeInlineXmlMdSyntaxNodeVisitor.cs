@@ -13,13 +13,13 @@ public sealed class CodeInlineXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Co
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override void SerializeDetails(CodeInlineMdSyntaxNode node, XElement targetElement) {
-        base.SerializeDetails(node, targetElement);
+    protected override void DeserializeDetails(CodeInlineMdSyntaxNode node, XElement targetElement) {
+        base.DeserializeDetails(node, targetElement);
         targetElement.Value = node.ContentCode;
     }
 
-    protected override void DeserializeDetails(XElement element, CodeInlineMdSyntaxNode targetNode) {
-        base.DeserializeDetails(element, targetNode);
+    protected override void SerializeDetails(XElement element, CodeInlineMdSyntaxNode targetNode) {
+        base.SerializeDetails(element, targetNode);
         targetNode.ContentCode = element.Value;   
     }
 }

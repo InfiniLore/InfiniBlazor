@@ -15,14 +15,14 @@ public sealed class ImageXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<ImageMd
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override void SerializeDetails(ImageMdSyntaxNode node, XElement targetElement) {
-        base.SerializeDetails(node, targetElement);
+    protected override void DeserializeDetails(ImageMdSyntaxNode node, XElement targetElement) {
+        base.DeserializeDetails(node, targetElement);
         targetElement.SetAttributeValue(Href, node.Href);
         targetElement.SetAttributeValue(AltText, node.AltText);
     }
 
-    protected override void DeserializeDetails(XElement element, ImageMdSyntaxNode targetNode) {
-        base.DeserializeDetails(element, targetNode);
+    protected override void SerializeDetails(XElement element, ImageMdSyntaxNode targetNode) {
+        base.SerializeDetails(element, targetNode);
         targetNode.Href = element.Attribute(Href)?.Value ?? string.Empty;
         targetNode.AltText = element.Attribute(AltText)?.Value ?? string.Empty;
     }

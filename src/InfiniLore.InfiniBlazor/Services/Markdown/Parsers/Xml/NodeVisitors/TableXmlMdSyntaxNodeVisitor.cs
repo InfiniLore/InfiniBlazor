@@ -15,13 +15,13 @@ public sealed class TableXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<TableMd
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override void SerializeDetails(TableMdSyntaxNode node, XElement targetElement) {
-        base.SerializeDetails(node, targetElement);
+    protected override void DeserializeDetails(TableMdSyntaxNode node, XElement targetElement) {
+        base.DeserializeDetails(node, targetElement);
         targetElement.SetAttributeValue(HeaderIndex, node.HeaderIndex);
     }
 
-    protected override void DeserializeDetails(XElement element, TableMdSyntaxNode targetNode) {
-        base.DeserializeDetails(element, targetNode);
+    protected override void SerializeDetails(XElement element, TableMdSyntaxNode targetNode) {
+        base.SerializeDetails(element, targetNode);
         targetNode.HeaderIndex = int.Parse(element.Attribute(HeaderIndex)?.Value ?? "0");   
     }
 }

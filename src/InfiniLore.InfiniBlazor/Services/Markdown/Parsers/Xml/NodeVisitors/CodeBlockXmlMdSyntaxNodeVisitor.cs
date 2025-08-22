@@ -14,14 +14,14 @@ public sealed class CodeBlockXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Cod
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override void SerializeDetails(CodeBlockMdSyntaxNode node, XElement targetElement) {
-        base.SerializeDetails(node, targetElement);
+    protected override void DeserializeDetails(CodeBlockMdSyntaxNode node, XElement targetElement) {
+        base.DeserializeDetails(node, targetElement);
         targetElement.SetAttributeValue(Language, node.Language);
         targetElement.Value = node.ContentCode;
     }
 
-    protected override void DeserializeDetails(XElement element, CodeBlockMdSyntaxNode targetNode) {
-        base.DeserializeDetails(element, targetNode);
+    protected override void SerializeDetails(XElement element, CodeBlockMdSyntaxNode targetNode) {
+        base.SerializeDetails(element, targetNode);
         targetNode.Language = element.Attribute(Language)?.Value ?? string.Empty;
         targetNode.ContentCode = element.Value;   
     }

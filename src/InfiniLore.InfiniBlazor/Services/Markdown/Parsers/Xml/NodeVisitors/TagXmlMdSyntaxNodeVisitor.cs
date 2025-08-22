@@ -13,13 +13,13 @@ public sealed class TagXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<TagMdSynt
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override void SerializeDetails(TagMdSyntaxNode node, XElement targetElement) {
-        base.SerializeDetails(node, targetElement);
+    protected override void DeserializeDetails(TagMdSyntaxNode node, XElement targetElement) {
+        base.DeserializeDetails(node, targetElement);
         targetElement.Value = node.ContentTag;
     }
 
-    protected override void DeserializeDetails(XElement element, TagMdSyntaxNode targetNode) {
-        base.DeserializeDetails(element, targetNode);
+    protected override void SerializeDetails(XElement element, TagMdSyntaxNode targetNode) {
+        base.SerializeDetails(element, targetNode);
         targetNode.ContentTag = element.Value;   
     }
 }

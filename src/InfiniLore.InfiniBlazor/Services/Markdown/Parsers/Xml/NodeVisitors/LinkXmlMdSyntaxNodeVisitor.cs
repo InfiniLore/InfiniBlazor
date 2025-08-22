@@ -14,13 +14,13 @@ public sealed class LinkXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<LinkMdSy
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override void SerializeDetails(LinkMdSyntaxNode node, XElement targetElement) {
-        base.SerializeDetails(node, targetElement);
+    protected override void DeserializeDetails(LinkMdSyntaxNode node, XElement targetElement) {
+        base.DeserializeDetails(node, targetElement);
         targetElement.SetAttributeValue(Href, node.Href);
     }
 
-    protected override void DeserializeDetails(XElement element, LinkMdSyntaxNode targetNode) {
-        base.DeserializeDetails(element, targetNode);
+    protected override void SerializeDetails(XElement element, LinkMdSyntaxNode targetNode) {
+        base.SerializeDetails(element, targetNode);
         targetNode.Href = element.Attribute(Href)?.Value ?? string.Empty;
     }
 }

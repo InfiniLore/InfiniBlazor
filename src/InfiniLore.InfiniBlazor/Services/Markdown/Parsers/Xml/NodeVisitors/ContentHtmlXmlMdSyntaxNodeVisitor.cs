@@ -14,13 +14,13 @@ public sealed class ContentHtmlXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<C
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override void SerializeDetails(ContentHtmlMdSyntaxNode node, XElement targetElement) {
-        base.SerializeDetails(node, targetElement);
+    protected override void DeserializeDetails(ContentHtmlMdSyntaxNode node, XElement targetElement) {
+        base.DeserializeDetails(node, targetElement);
         targetElement.Value = node.ContentHtml;
     }
 
-    protected override void DeserializeDetails(XElement element, ContentHtmlMdSyntaxNode targetNode) {
-        base.DeserializeDetails(element, targetNode);
+    protected override void SerializeDetails(XElement element, ContentHtmlMdSyntaxNode targetNode) {
+        base.SerializeDetails(element, targetNode);
         targetNode.ContentHtml = element.Value;   
     }
 }
