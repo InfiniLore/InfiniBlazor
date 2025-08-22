@@ -15,11 +15,11 @@ public sealed class CodeInlineXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Co
     // -----------------------------------------------------------------------------------------------------------------
     protected override void DeserializeDetails(CodeInlineMdSyntaxNode node, XElement targetElement) {
         base.DeserializeDetails(node, targetElement);
-        targetElement.Value = node.ContentCode;
+        targetElement.Value = node.OriginalContentCode;
     }
 
     protected override void SerializeDetails(XElement element, CodeInlineMdSyntaxNode targetNode) {
         base.SerializeDetails(element, targetNode);
-        targetNode.ContentCode = element.Value;   
+        targetNode.OriginalContentCode = element.Value;   
     }
 }

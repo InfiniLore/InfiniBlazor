@@ -12,17 +12,23 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.HorizontalRule)]
 public sealed class HorizontalRuleSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.NotSkipped;
+    private static readonly int HrId = MdRegexLib.GetGroupId(MdRegexGroupNames.HorizontalRuleContent);
+    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMarkdownStringMdSyntaxSerializerStack stack,
+        IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        MarkdownStringMdSyntaxSerializerOrigin parentOrigin
+        MdSyntaxSerializerOrigin parentOrigin
     ) {
+        if (!entireMatch.Groups[HrId].TryGetValue(out string? hrContent)) return;
+        
+        HorizontalRuleMdSyntaxNode node = HorizontalRuleMdSyntaxNode.Pool.Get();
+        node.Identifier = hrContent;
+        
         parentNode.AddChildNode(HorizontalRuleMdSyntaxNode.Pool.Get());
     }
 }

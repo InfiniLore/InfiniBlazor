@@ -14,15 +14,15 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 public sealed class HeadingSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
     private static readonly int HLevelId = MdRegexLib.GetGroupId(MdRegexGroupNames.HeadingLevel);
     private static readonly int HTextId = MdRegexLib.GetGroupId(MdRegexGroupNames.HeadingText);
-    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.NotSkipped;
+    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMarkdownStringMdSyntaxSerializerStack stack,
+        IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        MarkdownStringMdSyntaxSerializerOrigin parentOrigin
+        MdSyntaxSerializerOrigin parentOrigin
     ) {
         // ReSharper disable once DuplicatedSequentialIfBodies
         if (!entireMatch.Groups[HLevelId].TryGetLength(out int headingLevel)) return;

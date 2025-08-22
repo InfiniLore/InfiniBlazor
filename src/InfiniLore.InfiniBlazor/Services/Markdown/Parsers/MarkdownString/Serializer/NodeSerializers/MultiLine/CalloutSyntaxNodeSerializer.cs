@@ -13,7 +13,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Callout)]
 public sealed class CalloutSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.NotSkipped;
+    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
     // private static readonly int CalloutId = MdRegexLib.GetGroupId(MdRegexGroupNames.Callout);
     private static readonly int CalloutTypeId = MdRegexLib.GetGroupId(MdRegexGroupNames.CalloutType);
     private static readonly int CalloutModId = MdRegexLib.GetGroupId(MdRegexGroupNames.CalloutMod);
@@ -25,10 +25,10 @@ public sealed class CalloutSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSer
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMarkdownStringMdSyntaxSerializerStack stack,
+        IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        MarkdownStringMdSyntaxSerializerOrigin parentOrigin
+        MdSyntaxSerializerOrigin parentOrigin
     ) {
         CalloutMdSyntaxNode node = CalloutMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
@@ -60,7 +60,7 @@ public sealed class CalloutSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSer
             stack.PushMultiLineMatchesToStack(
                 LineNormalization.NormalizeBlockQuote(calloutBody),
                 bodyNode,
-                parentOrigin | MarkdownStringMdSyntaxSerializerOrigin.PreserveHtml
+                parentOrigin | MdSyntaxSerializerOrigin.PreserveHtml
             );
         }
     }

@@ -12,17 +12,17 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.BlockQuote)]
 public sealed class BlockQuoteSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.NotSkipped;
+    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
     private static readonly int BlockQuoteId = MdRegexLib.GetGroupId(MdRegexGroupNames.BlockQuote);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMarkdownStringMdSyntaxSerializerStack stack,
+        IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        MarkdownStringMdSyntaxSerializerOrigin parentOrigin
+        MdSyntaxSerializerOrigin parentOrigin
     ) {
         Group group = entireMatch.Groups[BlockQuoteId];
         if (!group.TryGetValueSpan(out ReadOnlySpan<char> blockQuoteBody)) return;
@@ -32,6 +32,6 @@ public sealed class BlockQuoteSyntaxNodeSerializer : IMarkdownStringMdSyntaxNode
 
         BlockQuoteMdSyntaxNode blockQuoteNode = BlockQuoteMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(blockQuoteNode);
-        stack.PushMultiLineMatchesToStack(adjustedBlockquote, blockQuoteNode, parentOrigin | MarkdownStringMdSyntaxSerializerOrigin.PreserveHtml);
+        stack.PushMultiLineMatchesToStack(adjustedBlockquote, blockQuoteNode, parentOrigin | MdSyntaxSerializerOrigin.PreserveHtml);
     }
 }

@@ -13,16 +13,16 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 [InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Underline)]
 public sealed class UnderlineSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
     private static readonly int UId = MdRegexLib.GetGroupId(MdRegexGroupNames.UnderlineContent);
-    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.Underline;
+    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.Underline;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMarkdownStringMdSyntaxSerializerStack stack,
+        IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        MarkdownStringMdSyntaxSerializerOrigin parentOrigin
+        MdSyntaxSerializerOrigin parentOrigin
     ) {
         if (!entireMatch.Groups[UId].TryGetValue(out string? underlineValue)) return ;
         

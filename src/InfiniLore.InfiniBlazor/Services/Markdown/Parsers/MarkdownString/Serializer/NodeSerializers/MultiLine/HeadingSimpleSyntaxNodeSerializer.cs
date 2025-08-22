@@ -13,20 +13,23 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 [InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.HeadingSimple)]
 public sealed class HeadingSimpleSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
     private static readonly int HsTextId = MdRegexLib.GetGroupId(MdRegexGroupNames.HeadingSimpleText);
-    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.NotSkipped;
+    private static readonly int HsIdentifierId = MdRegexLib.GetGroupId(MdRegexGroupNames.HeadingSimpleIdentifier);
+    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMarkdownStringMdSyntaxSerializerStack stack,
+        IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        MarkdownStringMdSyntaxSerializerOrigin parentOrigin
+        MdSyntaxSerializerOrigin parentOrigin
     ) {
         if (!entireMatch.Groups[HsTextId].TryGetValue(out string? headerSimpleText)) return;
+        if (!entireMatch.Groups[HsIdentifierId].TryGetValue(out string? headerIdentifierText)) return;
 
-        HeadingMdSyntaxNode headingNode = HeadingMdSyntaxNode.Pool.Get();
-        headingNode.Level = 1;
+        HeadingSimpleMdSyntaxNode headingNode = HeadingSimpleMdSyntaxNode.Pool.Get();
+        headingNode.ContentIdentifier = headerIdentifierText;
+        
         parentNode.AddChildNode(headingNode);
         
         stack.PushSingleLineMatchesToStack(headerSimpleText, headingNode, parentOrigin);

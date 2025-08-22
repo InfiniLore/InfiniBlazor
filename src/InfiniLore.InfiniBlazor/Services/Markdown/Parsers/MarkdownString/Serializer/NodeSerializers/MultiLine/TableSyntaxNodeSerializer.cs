@@ -18,16 +18,16 @@ public sealed class TableSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSeria
     private static readonly int BodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.TableBody);
     private static readonly int HeadId = MdRegexLib.GetGroupId(MdRegexGroupNames.TableHead);
     private static readonly int SepId = MdRegexLib.GetGroupId(MdRegexGroupNames.TableSeparator);
-    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.NotSkipped;
+    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMarkdownStringMdSyntaxSerializerStack stack,
+        IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        MarkdownStringMdSyntaxSerializerOrigin parentOrigin
+        MdSyntaxSerializerOrigin parentOrigin
     ) {
         // Extract header, separator, and rows
         ReadOnlySpan<char> header = entireMatch.Groups[HeadId].ValueSpan;

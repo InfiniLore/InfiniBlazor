@@ -1,12 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [Flags]
-public enum MarkdownStringMdSyntaxSerializerOrigin {
+public enum MdSyntaxSerializerOrigin {
     Undefined = 0,
 
     Bold = 1 << 0,
@@ -26,7 +26,7 @@ public enum MarkdownStringMdSyntaxSerializerOrigin {
 }
 
 public static class MdSyntaxSerializerOriginExtensions {
-    public static bool HasFlagFast(this MarkdownStringMdSyntaxSerializerOrigin value, MarkdownStringMdSyntaxSerializerOrigin flag) {
+    public static bool HasFlagFast(this MdSyntaxSerializerOrigin value, MdSyntaxSerializerOrigin flag) {
         return (value & flag) != 0;
     }
 }

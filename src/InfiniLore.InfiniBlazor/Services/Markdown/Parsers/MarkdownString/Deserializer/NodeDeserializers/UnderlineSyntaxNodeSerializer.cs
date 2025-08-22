@@ -1,14 +1,18 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Text.RegularExpressions;
+using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
+using System.Text;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.NodeDeserializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMarkdownStringMdSyntaxNodeSerializer{
-    MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin { get; }
-
-    void HandleMatch(IMarkdownStringMdSyntaxSerializerStack engine, IMdSyntaxNode parentNode, Match entireMatch, MarkdownStringMdSyntaxSerializerOrigin parentOrigin);
+public sealed class UnderlineSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNodeDeserializer<UnderlineMdSyntaxNode> {
+    protected override void Deserialize(UnderlineMdSyntaxNode node, StringBuilder builder) {
+        builder.Append('_');
+        DeserializeChildren(node, builder);
+        builder.Append('_');
+    }
 }
+

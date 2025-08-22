@@ -16,11 +16,11 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
     where T : MdSyntaxNode<T>, new() 
 {
     private const int ChildrenMinimumCapacity = 2;
-    public int ChildCount { get; internal protected set; }
-    internal protected virtual IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(ChildrenMinimumCapacity);
+    public int ChildCount { get; protected set; }
+    protected virtual IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(ChildrenMinimumCapacity);
 
-    public virtual int Depth { get; set; }
-    public IMdSyntaxNode? Parent { get; set; }
+    public virtual int Depth { get; private set; }
+    public IMdSyntaxNode? Parent { get; private set; }
     public Type Type { get; } = typeof(T);
     
     private IMdSyntaxNodeModifier? Modifier { get; set; }
@@ -197,5 +197,5 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
 // Quick Generic Alternatives 
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class EmptyMdSyntaxNode<T> : MdSyntaxNode<T> where T : MdSyntaxNode<T>, new() {
-    internal protected override IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(0); // Will never have children so don't initialize
+    protected override IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(0); // Will never have children so don't initialize
 }

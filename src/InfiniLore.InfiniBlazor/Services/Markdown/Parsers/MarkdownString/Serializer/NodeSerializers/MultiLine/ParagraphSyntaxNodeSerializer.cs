@@ -14,20 +14,20 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 public sealed class ParagraphSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
 
     private static readonly int PId = MdRegexLib.GetGroupId(MdRegexGroupNames.ParagraphContent);
-    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.NotSkipped;
+    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMarkdownStringMdSyntaxSerializerStack stack,
+        IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        MarkdownStringMdSyntaxSerializerOrigin parentOrigin
+        MdSyntaxSerializerOrigin parentOrigin
     ) {
         if (!entireMatch.Groups[PId].TryGetValue(out string? paragraph)) return;
         if (paragraph.IsNullOrWhiteSpace()) return;
 
-        bool writeParagraph = !parentOrigin.HasFlag(MarkdownStringMdSyntaxSerializerOrigin.Html);
+        bool writeParagraph = !parentOrigin.HasFlag(MdSyntaxSerializerOrigin.Html);
         
         if (writeParagraph) {
             ParagraphMdSyntaxNode node = ParagraphMdSyntaxNode.Pool.Get();

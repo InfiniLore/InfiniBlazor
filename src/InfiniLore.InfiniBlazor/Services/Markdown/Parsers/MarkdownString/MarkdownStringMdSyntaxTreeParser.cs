@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString;
 

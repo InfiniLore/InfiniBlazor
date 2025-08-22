@@ -14,14 +14,14 @@ public sealed class MdSyntaxFragment : IResettable {
     private IMdSyntaxNode? _parentNode;
     private IMdSyntaxNode? _childNode;
     private Match? _match;
-    private MarkdownStringMdSyntaxSerializerOrigin _handlerOrigin;
+    private MdSyntaxSerializerOrigin _handlerOrigin;
 
     public static ObjectPool<MdSyntaxFragment> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxFragment>(32);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
-    public static MdSyntaxFragment AsUnhandledMatch(Match match, IMdSyntaxNode node, MarkdownStringMdSyntaxSerializerOrigin handlerOrigin) {
+    public static MdSyntaxFragment AsUnhandledMatch(Match match, IMdSyntaxNode node, MdSyntaxSerializerOrigin handlerOrigin) {
         MdSyntaxFragment fragment = Pool.Get();
         fragment._parentNode = node;
         fragment._match = match;
@@ -42,7 +42,7 @@ public sealed class MdSyntaxFragment : IResettable {
     public bool TryGetAsMatch(
         [NotNullWhen(true)] out Match? match,
         [NotNullWhen(true)] out IMdSyntaxNode? parentNode,
-        out MarkdownStringMdSyntaxSerializerOrigin parentOrigin
+        out MdSyntaxSerializerOrigin parentOrigin
     ) {
         match = _match;
         parentNode = _parentNode;

@@ -18,18 +18,18 @@ public sealed class HtmlBodySyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSe
     private static readonly int SpanTagId = MdRegexLib.GetGroupId(MdRegexGroupNames.SpanTag);
     private static readonly int SpanTagAttrsId = MdRegexLib.GetGroupId(MdRegexGroupNames.SpanTagAttrs);
     private static readonly int SpanBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.SpanBody);
-    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.NotSkipped;
+    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMarkdownStringMdSyntaxSerializerStack stack,
+        IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        MarkdownStringMdSyntaxSerializerOrigin parentOrigin
+        MdSyntaxSerializerOrigin parentOrigin
     ) {
-        if (!parentOrigin.HasFlag(MarkdownStringMdSyntaxSerializerOrigin.PreserveHtml)) {
+        if (!parentOrigin.HasFlag(MdSyntaxSerializerOrigin.PreserveHtml)) {
             
             parentNode = parentNode.AddChildNode(ParagraphMdSyntaxNode.Pool.Get());
         }
@@ -50,7 +50,7 @@ public sealed class HtmlBodySyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSe
                 string spanTagAttrs = match.Groups[SpanTagAttrsId].Value;
                 spanNode.Attributes = spanTagAttrs;
                 
-                stack.PushMultiLineMatchesToStack(spanBody, spanNode, parentOrigin | MarkdownStringMdSyntaxSerializerOrigin.Html);
+                stack.PushMultiLineMatchesToStack(spanBody, spanNode, parentOrigin | MdSyntaxSerializerOrigin.Html);
                 stack.PushProcessedNodeToStack(parentNode, spanNode);
             }
             else {

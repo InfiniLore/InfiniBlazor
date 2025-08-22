@@ -12,15 +12,15 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class MdSyntaxSerializerStack : IMarkdownStringMdSyntaxSerializerStack, IResettable {
+public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable {
     private readonly Stack<MdSyntaxFragment> _stack = new();
-    public static ObjectPool<MdSyntaxSerializerStack> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxSerializerStack>(PoolingHelpers.ParsersRetained);
+    public static ObjectPool<MdSyntaxFragmentStack> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxFragmentStack>(PoolingHelpers.ParsersRetained);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region PushToStack
-    public void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node, MarkdownStringMdSyntaxSerializerOrigin handlerOrigin) {
+    public void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node, MdSyntaxSerializerOrigin handlerOrigin) {
         MatchCollection matches = MdRegexLib.MultilineStructuresRegex.Matches(input);
         int count = matches.Count;
         _stack.EnsureCapacity(_stack.Count + count);
@@ -30,7 +30,7 @@ public sealed class MdSyntaxSerializerStack : IMarkdownStringMdSyntaxSerializerS
         }
     }
 
-    public void PushSingleLineMatchesToStack(string input, IMdSyntaxNode node, MarkdownStringMdSyntaxSerializerOrigin handlerOrigin) {
+    public void PushSingleLineMatchesToStack(string input, IMdSyntaxNode node, MdSyntaxSerializerOrigin handlerOrigin) {
         MatchCollection matches = MdRegexLib.SinglelineStructuresRegex.Matches(input);
         int count = matches.Count;
         _stack.EnsureCapacity(_stack.Count + count);
@@ -64,7 +64,7 @@ public sealed class MdSyntaxSerializerStack : IMarkdownStringMdSyntaxSerializerS
     public void PushProcessedNodeToStack(IMdSyntaxNode parentNode, IMdSyntaxNode childNode) 
         => _stack.Push(MdSyntaxFragment.AsProcessedNode(parentNode, childNode));
 
-    private void PushMatchToStack(Match match, IMdSyntaxNode currentNode, MarkdownStringMdSyntaxSerializerOrigin handlerOrigin) 
+    private void PushMatchToStack(Match match, IMdSyntaxNode currentNode, MdSyntaxSerializerOrigin handlerOrigin) 
         => _stack.Push(MdSyntaxFragment.AsUnhandledMatch(match, currentNode, handlerOrigin));
     #endregion
     

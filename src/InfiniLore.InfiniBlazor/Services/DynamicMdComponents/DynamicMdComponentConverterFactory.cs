@@ -23,6 +23,7 @@ public static class DynamicMdComponentConverterFactory {
         mapBuilder.Register<ContentDynamicMdComponent, ContentMdSyntaxNode>();
         mapBuilder.Register<EmoteDynamicMdComponent, EmoteMdSyntaxNode>();
         mapBuilder.Register<HeadingDynamicMdComponent, HeadingMdSyntaxNode>();
+        mapBuilder.Register<HeadingSimpleDynamicMdComponent, HeadingSimpleMdSyntaxNode>();
         mapBuilder.Register<HorizontalRuleDynamicMdComponent, HorizontalRuleMdSyntaxNode>();
         mapBuilder.Register<HtmlSpanDynamicMdComponent, HtmlSpanMdSyntaxNode>();
         mapBuilder.Register<ImageDynamicMdComponent, ImageMdSyntaxNode>();

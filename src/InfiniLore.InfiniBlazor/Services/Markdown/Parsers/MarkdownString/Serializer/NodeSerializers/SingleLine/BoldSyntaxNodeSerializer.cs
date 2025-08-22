@@ -13,12 +13,12 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 [InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.BoldContent)]
 public sealed class BoldSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
     private static readonly int BId = MdRegexLib.GetGroupId(MdRegexGroupNames.Bold);
-    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.Bold;
+    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.Bold;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMarkdownStringMdSyntaxSerializerStack stack, IMdSyntaxNode parentNode, Match entireMatch, MarkdownStringMdSyntaxSerializerOrigin parentOrigin) {
+    public void HandleMatch(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match entireMatch, MdSyntaxSerializerOrigin parentOrigin) {
         if (!entireMatch.Groups[BId].TryGetValue(out string? boldValue)) return;
 
         BoldMdSyntaxNode node = BoldMdSyntaxNode.Pool.Get();

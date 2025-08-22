@@ -14,7 +14,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMarkdownStringMdSyntaxSerializer>]
-public sealed class MdSyntaxSerializer(IServiceProvider serviceProvider, ILogger<MdSyntaxSerializer> logger) : IMarkdownStringMdSyntaxSerializer {
+public sealed class MarkdownStringMdSyntaxSerializer(IServiceProvider serviceProvider, ILogger<MarkdownStringMdSyntaxSerializer> logger) : IMarkdownStringMdSyntaxSerializer {
     private readonly FrozenDictionary<string, IMarkdownStringMdSyntaxNodeSerializer> _elementHandlers = ToFrozenDictionary(logger, serviceProvider);
     
     // -----------------------------------------------------------------------------------------------------------------
@@ -41,26 +41,26 @@ public sealed class MdSyntaxSerializer(IServiceProvider serviceProvider, ILogger
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public IMdSyntaxTree SerializeToTree(string markdown) {
-        var nodeTree = new MdSyntaxTree();
+        MdSyntaxTree nodeTree = MdSyntaxTree.Pool.Get();
         SerializeToTree(markdown, nodeTree);
         return nodeTree;
     }
 
     public void SerializeToTree(string markdown, IMdSyntaxTree nodeTree) {
-        MdSyntaxSerializerStack runningSerializer = MdSyntaxSerializerStack.Pool.Get();
+        MdSyntaxFragmentStack runningSerializer = MdSyntaxFragmentStack.Pool.Get();
 
         MdSyntaxFragment? fragment = null;
         string normalized = markdown.ReplaceLineEndings("\n");
 
         try {
-            runningSerializer.PushMultiLineMatchesToStack(normalized, nodeTree.RootNode, MarkdownStringMdSyntaxSerializerOrigin.Undefined);
+            runningSerializer.PushMultiLineMatchesToStack(normalized, nodeTree.RootNode, MdSyntaxSerializerOrigin.Undefined);
 
             while (runningSerializer.TryPopDto(out fragment)) {
-                if (fragment.TryGetAsMatch(out Match? match, out IMdSyntaxNode? parentNode, out MarkdownStringMdSyntaxSerializerOrigin handlerOrigin)) {
-                    ProcessMatch(match, parentNode, handlerOrigin, runningSerializer);
-                }
-                else if (fragment.TryGetAsProcessedNode(out parentNode, out IMdSyntaxNode? childNode)) {
+                if (fragment.TryGetAsProcessedNode(out IMdSyntaxNode? parentNode, out IMdSyntaxNode? childNode)) {
                     parentNode.AddChildNode(childNode);
+                }
+                else if (fragment.TryGetAsMatch(out Match? match, out parentNode, out MdSyntaxSerializerOrigin handlerOrigin)) {
+                    ProcessMatch(match, parentNode, handlerOrigin, runningSerializer);
                 }
 
                 MdSyntaxFragment.Pool.Return(fragment);
@@ -74,11 +74,11 @@ public sealed class MdSyntaxSerializer(IServiceProvider serviceProvider, ILogger
         finally {
             // makes it so we don't have to have a nested try catch
             if (fragment is not null) MdSyntaxFragment.Pool.Return(fragment);
-            MdSyntaxSerializerStack.Pool.Return(runningSerializer);
+            MdSyntaxFragmentStack.Pool.Return(runningSerializer);
         }
     }
 
-    private void ProcessMatch(Match match, IMdSyntaxNode parentNode, MarkdownStringMdSyntaxSerializerOrigin parentOrigin, IMarkdownStringMdSyntaxSerializerStack runningParser) {
+    private void ProcessMatch(Match match, IMdSyntaxNode parentNode, MdSyntaxSerializerOrigin parentOrigin, IMdSyntaxFragmentStack runningParser) {
         GroupCollection groups = match.Groups;
         int length = groups.Count;
         if (length == 0) return;
@@ -88,8 +88,8 @@ public sealed class MdSyntaxSerializer(IServiceProvider serviceProvider, ILogger
             if (!group.Success) continue;
             if (!_elementHandlers.TryGetValue(group.Name, out IMarkdownStringMdSyntaxNodeSerializer? handler)) continue;
 
-            MarkdownStringMdSyntaxSerializerOrigin handlerOrigin = handler.SkipOnOrigin;
-            if (handlerOrigin is not MarkdownStringMdSyntaxSerializerOrigin.NotSkipped && parentOrigin.HasFlagFast(handlerOrigin)) continue;
+            MdSyntaxSerializerOrigin handlerOrigin = handler.SkipOnOrigin;
+            if (handlerOrigin is not MdSyntaxSerializerOrigin.NotSkipped && parentOrigin.HasFlagFast(handlerOrigin)) continue;
 
             handler.HandleMatch(runningParser, parentNode, match, parentOrigin);
         }

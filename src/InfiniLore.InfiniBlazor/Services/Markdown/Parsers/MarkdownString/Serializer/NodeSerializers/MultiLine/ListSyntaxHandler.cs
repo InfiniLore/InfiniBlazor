@@ -18,16 +18,16 @@ public sealed class BaseListSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSe
     private static readonly int LHeadId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListHead);
     private static readonly int LBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListBody);
     
-    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.NotSkipped;
+    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMarkdownStringMdSyntaxSerializerStack stack,
+        IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        MarkdownStringMdSyntaxSerializerOrigin parentOrigin
+        MdSyntaxSerializerOrigin parentOrigin
     ) {
         if (!entireMatch.TryGetValue(out string? listBody)) return;
         bool isOrdered = !entireMatch.Groups[LsId].ValueSpan.Contains('-');
@@ -52,7 +52,7 @@ public sealed class BaseListSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSe
             
                 if (groups[LBodyId].TryGetValueSpan(out ReadOnlySpan<char> itemBody) && !itemBody.IsEmpty) {
                     string normalizedBody = LineNormalization.NormalizeLineIndentation(itemBody);
-                    stack.PushMultiLineMatchesToStack(normalizedBody, listItemNode, parentOrigin | MarkdownStringMdSyntaxSerializerOrigin.PreserveHtml);
+                    stack.PushMultiLineMatchesToStack(normalizedBody, listItemNode, parentOrigin | MdSyntaxSerializerOrigin.PreserveHtml);
                 }
 
                 if (groups[LHeadId].TryGetValue(out string? listHeader)) {

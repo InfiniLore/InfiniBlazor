@@ -1,0 +1,26 @@
+﻿// ---------------------------------------------------------------------------------------------------------------------
+// Imports
+// ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
+using System.Xml.Linq;
+
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
+// ---------------------------------------------------------------------------------------------------------------------
+// Code
+// ---------------------------------------------------------------------------------------------------------------------
+public sealed class HeadingSimpleXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<HeadingSimpleMdSyntaxNode> {
+    private const string Identifier = nameof(HeadingSimpleMdSyntaxNode.ContentIdentifier);
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override void DeserializeDetails(HeadingSimpleMdSyntaxNode node, XElement targetElement) {
+        base.DeserializeDetails(node, targetElement);
+        targetElement.SetAttributeValue(Identifier, node.ContentIdentifier);
+    }
+
+    protected override void SerializeDetails(XElement element, HeadingSimpleMdSyntaxNode targetNode) {
+        base.SerializeDetails(element, targetNode);
+        targetNode.ContentIdentifier = element.Attribute(Identifier)?.Value ?? string.Empty;  
+    }
+}

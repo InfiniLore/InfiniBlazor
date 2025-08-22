@@ -17,7 +17,7 @@ public sealed partial class LinkSyntaxNodeSerializer : IMarkdownStringMdSyntaxNo
     private static readonly int LnHrefId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkHref);
     private static readonly int LnModsId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkModifiers);
     private static readonly int LnBangId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkBang);
-    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.NotSkipped;
+    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
     
     [GeneratedRegex(@"\\(?!\\)")]
     private static partial Regex NormalizeAltText { get; }
@@ -26,10 +26,10 @@ public sealed partial class LinkSyntaxNodeSerializer : IMarkdownStringMdSyntaxNo
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
-        IMarkdownStringMdSyntaxSerializerStack stack,
+        IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match entireMatch,
-        MarkdownStringMdSyntaxSerializerOrigin parentOrigin
+        MdSyntaxSerializerOrigin parentOrigin
     ) {
         // ReSharper disable once DuplicatedSequentialIfBodies
         if (!entireMatch.Groups[LnTextId].TryGetValue(out string? linkText)) return ;

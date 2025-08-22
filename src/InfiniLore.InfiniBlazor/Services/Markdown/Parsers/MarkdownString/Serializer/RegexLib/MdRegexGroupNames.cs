@@ -28,8 +28,10 @@ public static class MdRegexGroupNames {
     public const string HeadingLevel = "hLevel";
     public const string HeadingSimple = "headingSimple";
     public const string HeadingSimpleText = "hsText";
+    public const string HeadingSimpleIdentifier = "hsIdentifier";
     public const string HeadingText = "hText";
     public const string HorizontalRule = "horizontalRule";
+    public const string HorizontalRuleContent = "hr";
     public const string HtmlBody = "htmlBody";
     public const string HtmlPost = "htmlPost";
     public const string HtmlPre = "htmlPre";
