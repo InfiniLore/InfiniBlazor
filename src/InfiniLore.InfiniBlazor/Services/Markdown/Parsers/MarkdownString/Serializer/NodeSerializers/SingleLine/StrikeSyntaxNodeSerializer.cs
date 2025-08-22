@@ -6,14 +6,14 @@ using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.SyntaxSerializer.NodeSerializers.MultiLine;
-
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.EmptyLine)]
-public sealed class EmptyLineSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.NotSkipped;
+[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Strike)]
+public sealed class StrikeSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+    private static readonly int SId = MdRegexLib.GetGroupId(MdRegexGroupNames.StrikeContent);
+    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.Strike;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -23,5 +23,11 @@ public sealed class EmptyLineSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeS
         IMdSyntaxNode parentNode,
         Match entireMatch,
         MarkdownStringMdSyntaxSerializerOrigin parentOrigin
-    ) => parentNode.AddChildNode(EmptyLineMdSyntaxNode.Pool.Get());
+    ) {
+        if (!entireMatch.Groups[SId].TryGetValue(out string? strikeValue)) return ;
+
+        StrikeMdSyntaxNode node = StrikeMdSyntaxNode.Pool.Get();
+        parentNode.AddChildNode(node);
+        stack.PushSingleLineMatchesToStack(strikeValue, node, parentOrigin | SkipOnOrigin);
+    }
 }

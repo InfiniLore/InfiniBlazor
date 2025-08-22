@@ -6,15 +6,14 @@ using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.SyntaxSerializer.NodeSerializers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.SubScript)]
-public sealed class SubScriptSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-    private static readonly int SbId = MdRegexLib.GetGroupId(MdRegexGroupNames.SubScriptContent);
-    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.SubScript;
-    
+[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.HeadingSimple)]
+public sealed class HeadingSimpleSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+    private static readonly int HsTextId = MdRegexLib.GetGroupId(MdRegexGroupNames.HeadingSimpleText);
+    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.NotSkipped;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -24,10 +23,12 @@ public sealed class SubScriptSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeS
         Match entireMatch,
         MarkdownStringMdSyntaxSerializerOrigin parentOrigin
     ) {
-        if (!entireMatch.Groups[SbId].TryGetValue(out string? subValue)) return ;
+        if (!entireMatch.Groups[HsTextId].TryGetValue(out string? headerSimpleText)) return;
 
-        SubScriptMdSyntaxNode node = SubScriptMdSyntaxNode.Pool.Get();
-        parentNode.AddChildNode(node);
-        stack.PushSingleLineMatchesToStack(subValue, node, parentOrigin | SkipOnOrigin);
+        HeadingMdSyntaxNode headingNode = HeadingMdSyntaxNode.Pool.Get();
+        headingNode.Level = 1;
+        parentNode.AddChildNode(headingNode);
+        
+        stack.PushSingleLineMatchesToStack(headerSimpleText, headingNode, parentOrigin);
     }
 }

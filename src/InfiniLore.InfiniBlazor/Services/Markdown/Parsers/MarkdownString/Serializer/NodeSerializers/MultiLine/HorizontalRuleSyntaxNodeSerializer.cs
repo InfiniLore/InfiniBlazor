@@ -6,15 +6,14 @@ using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.SyntaxSerializer.NodeSerializers.MultiLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Paragraph)]
-public sealed class ParagraphSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-
-    private static readonly int PId = MdRegexLib.GetGroupId(MdRegexGroupNames.ParagraphContent);
+[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.HorizontalRule)]
+public sealed class HorizontalRuleSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
     public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.NotSkipped;
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -24,15 +23,6 @@ public sealed class ParagraphSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeS
         Match entireMatch,
         MarkdownStringMdSyntaxSerializerOrigin parentOrigin
     ) {
-        if (!entireMatch.Groups[PId].TryGetValue(out string? paragraph)) return;
-        if (paragraph.IsNullOrWhiteSpace()) return;
-
-        bool writeParagraph = !parentOrigin.HasFlag(MarkdownStringMdSyntaxSerializerOrigin.Html);
-        
-        if (writeParagraph) {
-            ParagraphMdSyntaxNode node = ParagraphMdSyntaxNode.Pool.Get();
-            parentNode = parentNode.AddChildNode(node);
-        }
-        stack.PushSingleLineMatchesToStack(paragraph.TrimStart(), parentNode, parentOrigin);
+        parentNode.AddChildNode(HorizontalRuleMdSyntaxNode.Pool.Get());
     }
 }

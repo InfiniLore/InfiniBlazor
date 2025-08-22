@@ -6,15 +6,15 @@ using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.SyntaxSerializer.NodeSerializers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Escaped)]
-public sealed class EscapedSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.NotSkipped;
-    private static readonly int EscapedId = MdRegexLib.GetGroupId(MdRegexGroupNames.Escaped);
-
+[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Underline)]
+public sealed class UnderlineSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+    private static readonly int UId = MdRegexLib.GetGroupId(MdRegexGroupNames.UnderlineContent);
+    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.Underline;
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -24,9 +24,10 @@ public sealed class EscapedSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSer
         Match entireMatch,
         MarkdownStringMdSyntaxSerializerOrigin parentOrigin
     ) {
-        char value = entireMatch.Groups[EscapedId].ValueSpan[1];
-        EscapedCharacterMdSyntaxNode node = EscapedCharacterMdSyntaxNode.Pool.Get();
-        node.ContentChar = value;
+        if (!entireMatch.Groups[UId].TryGetValue(out string? underlineValue)) return ;
+        
+        UnderlineMdSyntaxNode node = UnderlineMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
+        stack.PushSingleLineMatchesToStack(underlineValue, node, parentOrigin | SkipOnOrigin);
     }
 }

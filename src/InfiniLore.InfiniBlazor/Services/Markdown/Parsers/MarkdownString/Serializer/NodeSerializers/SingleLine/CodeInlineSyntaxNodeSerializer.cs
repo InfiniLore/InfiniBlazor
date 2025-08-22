@@ -6,28 +6,24 @@ using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.SyntaxSerializer.NodeSerializers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Strike)]
-public sealed class StrikeSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-    private static readonly int SId = MdRegexLib.GetGroupId(MdRegexGroupNames.StrikeContent);
-    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.Strike;
+[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.CodeInline)]
+public sealed class CodeInlineSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+    private static readonly int CId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeInlineContent);
+    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.Code;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(
-        IMarkdownStringMdSyntaxSerializerStack stack,
-        IMdSyntaxNode parentNode,
-        Match entireMatch,
-        MarkdownStringMdSyntaxSerializerOrigin parentOrigin
-    ) {
-        if (!entireMatch.Groups[SId].TryGetValue(out string? strikeValue)) return ;
+    public void HandleMatch(IMarkdownStringMdSyntaxSerializerStack stack, IMdSyntaxNode parentNode, Match entireMatch, MarkdownStringMdSyntaxSerializerOrigin parentOrigin) {
+        if (!entireMatch.Groups[CId].TryGetValue(out string? codeValue)) return ;
 
-        StrikeMdSyntaxNode node = StrikeMdSyntaxNode.Pool.Get();
+        string normalizedBackticks = codeValue.Replace("\\`", "`");
+        CodeInlineMdSyntaxNode node = CodeInlineMdSyntaxNode.Pool.Get();
+        node.ContentCode = normalizedBackticks;
         parentNode.AddChildNode(node);
-        stack.PushSingleLineMatchesToStack(strikeValue, node, parentOrigin | SkipOnOrigin);
     }
 }

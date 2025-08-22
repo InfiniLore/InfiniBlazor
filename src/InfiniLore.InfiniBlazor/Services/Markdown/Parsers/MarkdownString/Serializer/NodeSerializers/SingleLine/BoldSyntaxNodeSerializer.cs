@@ -6,28 +6,23 @@ using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.SyntaxSerializer.NodeSerializers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Underline)]
-public sealed class UnderlineSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-    private static readonly int UId = MdRegexLib.GetGroupId(MdRegexGroupNames.UnderlineContent);
-    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.Underline;
+[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.BoldContent)]
+public sealed class BoldSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+    private static readonly int BId = MdRegexLib.GetGroupId(MdRegexGroupNames.Bold);
+    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.Bold;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(
-        IMarkdownStringMdSyntaxSerializerStack stack,
-        IMdSyntaxNode parentNode,
-        Match entireMatch,
-        MarkdownStringMdSyntaxSerializerOrigin parentOrigin
-    ) {
-        if (!entireMatch.Groups[UId].TryGetValue(out string? underlineValue)) return ;
-        
-        UnderlineMdSyntaxNode node = UnderlineMdSyntaxNode.Pool.Get();
+    public void HandleMatch(IMarkdownStringMdSyntaxSerializerStack stack, IMdSyntaxNode parentNode, Match entireMatch, MarkdownStringMdSyntaxSerializerOrigin parentOrigin) {
+        if (!entireMatch.Groups[BId].TryGetValue(out string? boldValue)) return;
+
+        BoldMdSyntaxNode node = BoldMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
-        stack.PushSingleLineMatchesToStack(underlineValue, node, parentOrigin | SkipOnOrigin);
+        stack.PushSingleLineMatchesToStack(boldValue, node, parentOrigin | SkipOnOrigin);
     }
 }

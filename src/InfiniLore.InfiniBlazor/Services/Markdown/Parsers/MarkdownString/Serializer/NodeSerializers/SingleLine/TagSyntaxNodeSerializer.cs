@@ -6,14 +6,14 @@ using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.SyntaxSerializer.NodeSerializers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.SingleLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Italic)]
-public sealed class ItalicSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-    private static readonly int ItalicId = MdRegexLib.GetGroupId(MdRegexGroupNames.ItalicContent);
-    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.Italic;
+[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Tag)]
+public sealed class TagSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+    private static readonly int TextId = MdRegexLib.GetGroupId(MdRegexGroupNames.TagText);
+    public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.NotSkipped;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -24,10 +24,10 @@ public sealed class ItalicSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSeri
         Match entireMatch,
         MarkdownStringMdSyntaxSerializerOrigin parentOrigin
     ) {
-        if (!entireMatch.Groups[ItalicId].TryGetValue(out string? italicValue)) return ;
+        if (!entireMatch.Groups[TextId].TryGetValue(out string? tagValue)) return ;
 
-        ItalicMdSyntaxNode node = ItalicMdSyntaxNode.Pool.Get();
+        TagMdSyntaxNode node = TagMdSyntaxNode.Pool.Get();
+        node.ContentTag = tagValue;
         parentNode.AddChildNode(node);
-        stack.PushSingleLineMatchesToStack(italicValue, node, parentOrigin | SkipOnOrigin);
     }
 }

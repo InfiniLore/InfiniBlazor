@@ -6,15 +6,15 @@ using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.SyntaxSerializer.NodeSerializers.MultiLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.MultiLine;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.BlockQuote)]
-public sealed class BlockQuoteSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Paragraph)]
+public sealed class ParagraphSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+
+    private static readonly int PId = MdRegexLib.GetGroupId(MdRegexGroupNames.ParagraphContent);
     public MarkdownStringMdSyntaxSerializerOrigin SkipOnOrigin => MarkdownStringMdSyntaxSerializerOrigin.NotSkipped;
-    private static readonly int BlockQuoteId = MdRegexLib.GetGroupId(MdRegexGroupNames.BlockQuote);
-    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -24,14 +24,15 @@ public sealed class BlockQuoteSyntaxNodeSerializer : IMarkdownStringMdSyntaxNode
         Match entireMatch,
         MarkdownStringMdSyntaxSerializerOrigin parentOrigin
     ) {
-        Group group = entireMatch.Groups[BlockQuoteId];
-        if (!group.TryGetValueSpan(out ReadOnlySpan<char> blockQuoteBody)) return;
+        if (!entireMatch.Groups[PId].TryGetValue(out string? paragraph)) return;
+        if (paragraph.IsNullOrWhiteSpace()) return;
 
-        // Replace Regex usage with span-based logic:
-        string adjustedBlockquote = LineNormalization.NormalizeBlockQuote(blockQuoteBody);
-
-        BlockQuoteMdSyntaxNode blockQuoteNode = BlockQuoteMdSyntaxNode.Pool.Get();
-        parentNode.AddChildNode(blockQuoteNode);
-        stack.PushMultiLineMatchesToStack(adjustedBlockquote, blockQuoteNode, parentOrigin | MarkdownStringMdSyntaxSerializerOrigin.PreserveHtml);
+        bool writeParagraph = !parentOrigin.HasFlag(MarkdownStringMdSyntaxSerializerOrigin.Html);
+        
+        if (writeParagraph) {
+            ParagraphMdSyntaxNode node = ParagraphMdSyntaxNode.Pool.Get();
+            parentNode = parentNode.AddChildNode(node);
+        }
+        stack.PushSingleLineMatchesToStack(paragraph.TrimStart(), parentNode, parentOrigin);
     }
 }
