@@ -18,12 +18,12 @@ public static class MarkdownStringMdSyntaxDeserializerFactory {
         Dictionary<Type, IMarkdownStringMdSyntaxNodeDeserializer> deserializers = new Dictionary<Type, IMarkdownStringMdSyntaxNodeDeserializer>()
             .Register<BlockQuoteMdSyntaxNode, BlockQuoteSyntaxNodeDeserializer>(instance)
             .Register<BoldMdSyntaxNode, BoldSyntaxNodeDeserializer>(instance)
-            // .Register<CalloutBodyMdSyntaxNode, CalloutBodySyntaxNodeDeserializer>(instance)
-            // .Register<CalloutTitleMdSyntaxNode, CalloutTitleSyntaxNodeDeserializer>(instance)
+            // .Register<CalloutBodyMdSyntaxNode, CalloutBodySyntaxNodeDeserializer>(instance) // Not implemented due to the CalloutSyntaxNodeDeserializer handling them directly
+            // .Register<CalloutTitleMdSyntaxNode, CalloutTitleSyntaxNodeDeserializer>(instance) // Not implemented due to the CalloutSyntaxNodeDeserializer handling them directly
             .Register<CalloutMdSyntaxNode, CalloutSyntaxNodeDeserializer>(instance)
             .Register<CodeBlockMdSyntaxNode, CodeBlockSyntaxNodeDeserializer>(instance)
             .Register<CodeInlineMdSyntaxNode, CodeInlineSyntaxNodeDeserializer>(instance)
-            // .Register<ContentHtmlMdSyntaxNode, ContentHtmlSyntaxNodeDeserializer>(instance)
+            .Register<ContentHtmlMdSyntaxNode, ContentHtmlSyntaxNodeDeserializer>(instance)
             .Register<ContentMdSyntaxNode, ContentSyntaxNodeDeserializer>(instance)
             .Register<EmoteMdSyntaxNode, EmoteSyntaxNodeDeserializer>(instance)
             .Register<EmptyLineMdSyntaxNode, EmptyLineSyntaxNodeDeserializer>(instance)
