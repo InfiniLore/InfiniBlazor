@@ -45,6 +45,7 @@ public static class MdRegexGroupNames {
     public const string List = "list";
     public const string ListBody = "lBody";
     public const string ListHead = "lHead";
+    public const string ListIndex = "lIndex";
     public const string ListIdentifier = "lsId";
     public const string ListTask = "lTask";
     public const string Paragraph = "paragraph";

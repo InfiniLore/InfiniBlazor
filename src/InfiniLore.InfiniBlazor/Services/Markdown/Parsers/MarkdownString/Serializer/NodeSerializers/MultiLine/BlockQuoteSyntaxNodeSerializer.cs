@@ -28,9 +28,11 @@ public sealed class BlockQuoteSyntaxNodeSerializer : IMarkdownStringMdSyntaxNode
         if (!group.TryGetValueSpan(out ReadOnlySpan<char> blockQuoteBody)) return;
 
         // Replace Regex usage with span-based logic:
-        string adjustedBlockquote = LineNormalization.NormalizeBlockQuote(blockQuoteBody);
+        string adjustedBlockquote = LineNormalization.NormalizeBlockQuote(blockQuoteBody, out int leadingSpaces);
 
         BlockQuoteMdSyntaxNode blockQuoteNode = BlockQuoteMdSyntaxNode.Pool.Get();
+        blockQuoteNode.LeadingSpaces = leadingSpaces;
+        
         parentNode.AddChildNode(blockQuoteNode);
         stack.PushMultiLineMatchesToStack(adjustedBlockquote, blockQuoteNode, parentOrigin | MdSyntaxSerializerOrigin.PreserveHtml);
     }

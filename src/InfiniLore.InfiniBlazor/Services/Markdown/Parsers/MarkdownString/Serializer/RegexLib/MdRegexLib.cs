@@ -97,7 +97,7 @@ public static partial class MdRegexLib {
         MdRegexGroupNames.Tag
     ];
 
-    [GeneratedRegex(@"^ *(?:-|\d*\.)\s+(?:\[(?<lTask>[ xX])] )?(?<lHead>[^\n]+)(?<lBody>(?:\n +.+)*)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"^ *(?:-|(?<lIndex>\d*)\.)\s+(?:\[(?<lTask>[ xX])] )?(?<lHead>[^\n]+)(?<lBody>(?:\n +.+)*)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex ListItemBodyRegex { get; }
 
     [GeneratedRegex("""

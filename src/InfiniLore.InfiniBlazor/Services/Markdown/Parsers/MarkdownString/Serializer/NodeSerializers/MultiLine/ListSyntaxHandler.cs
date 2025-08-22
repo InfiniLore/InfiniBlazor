@@ -17,6 +17,7 @@ public sealed class BaseListSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSe
     private static readonly int LTaskId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListTask);
     private static readonly int LHeadId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListHead);
     private static readonly int LBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListBody);
+    private static readonly int LIndexId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListIndex);
     
     public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
 
@@ -51,18 +52,22 @@ public sealed class BaseListSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSe
                 listNode.AddChildNode(listItemNode);
             
                 if (groups[LBodyId].TryGetValueSpan(out ReadOnlySpan<char> itemBody) && !itemBody.IsEmpty) {
-                    string normalizedBody = LineNormalization.NormalizeLineIndentation(itemBody);
+                    string normalizedBody = LineNormalization.NormalizeLineIndentation(itemBody, out _);
                     stack.PushMultiLineMatchesToStack(normalizedBody, listItemNode, parentOrigin | MdSyntaxSerializerOrigin.PreserveHtml);
                 }
 
                 if (groups[LHeadId].TryGetValue(out string? listHeader)) {
                     stack.PushSingleLineMatchesToStack(listHeader, listItemNode, parentOrigin);
                 }
+                
+                if (groups[LIndexId].TryGetValue(out string? listIndex)) {
+                    listItemNode.Index = listIndex;
+                }
 
                 // ReSharper disable once InvertIf
                 if (groups[LTaskId].TryGetValue(out string? taskMarker)) {
                     listItemNode.IsCheckable = true;
-                    listItemNode.IsChecked = taskMarker.ToLowerInvariant().Contains('x');
+                    listItemNode.OriginalCheckMarker = taskMarker;
                 }
             }
         }

@@ -16,10 +16,11 @@ public static class LineNormalization {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static string NormalizeLineIndentation(ReadOnlySpan<char> input) {
+    public static string NormalizeLineIndentation(ReadOnlySpan<char> input, out int leadingSpaces) {
         int matchCount = input.Count('\n');
         int splitCount = matchCount + 1;
-
+        leadingSpaces = -1;
+        
         // Estimate initial capacity to avoid reallocations
         StringBuilder stringBuilder = GlobalPools.StringBuilder.Get();
         Range[]? rentedArray = null;
@@ -44,6 +45,7 @@ public static class LineNormalization {
                 int currentIndent = CountLeadingWhitespace(line);
                 if (line.Length > currentIndent) {
                     minIndent = Math.Min(minIndent, currentIndent);
+                    leadingSpaces = minIndent;
                 }
             }
 
@@ -84,9 +86,9 @@ public static class LineNormalization {
         return count;
     }
     
-    public static string NormalizeBlockQuote(ReadOnlySpan<char> span) {
+    public static string NormalizeBlockQuote(ReadOnlySpan<char> span, out int leadingSpaces) {
         ReadOnlySpan<char> normalized = NormalizeLinePrefixes(span, ">");
-        string adjusted = NormalizeLineIndentation(normalized);
+        string adjusted = NormalizeLineIndentation(normalized, out leadingSpaces);
         return adjusted;
     }
 
