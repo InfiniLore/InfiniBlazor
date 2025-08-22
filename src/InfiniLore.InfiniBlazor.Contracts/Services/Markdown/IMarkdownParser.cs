@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown.Parsers.HtmlString;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
 

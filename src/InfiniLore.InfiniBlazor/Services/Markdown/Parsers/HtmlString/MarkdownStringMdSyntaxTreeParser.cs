@@ -2,8 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using InfiniLore.InfiniBlazor.Markdown.Parsers.HtmlString.SyntaxDeserializer;
-using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.HtmlString;

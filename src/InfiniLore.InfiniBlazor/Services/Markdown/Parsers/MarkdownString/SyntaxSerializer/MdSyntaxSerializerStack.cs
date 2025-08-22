@@ -1,13 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
-using InfiniLore.InfiniBlazor.Markdown.SyntaxSerializer;
 using InfiniLore.InfiniBlazor.Pooling;
 using Microsoft.Extensions.ObjectPool;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
+using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.RegexLib;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.SyntaxSerializer;
 // ---------------------------------------------------------------------------------------------------------------------

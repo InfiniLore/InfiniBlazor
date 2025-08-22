@@ -2,13 +2,11 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.Markdown.Parsers.HtmlString;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
-using InfiniLore.InfiniBlazor.Markdown.Syntax;
-using InfiniLore.InfiniBlazor.Markdown.SyntaxSerializer;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------

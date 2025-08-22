@@ -5,7 +5,7 @@ using CodeOfChaos.SpanLINQ;
 using System.Collections.Frozen;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.RegexLib;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.RegexLib;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
