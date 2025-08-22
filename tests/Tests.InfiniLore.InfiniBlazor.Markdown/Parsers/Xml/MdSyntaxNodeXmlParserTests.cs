@@ -47,12 +47,12 @@ public class MdSyntaxTreeXmlParserTests {
     }
     
     [Test]
-    public async Task SerializeToStreamAsync_ShouldWriteXmlCorrectly() {
+    public async Task DeserializeToStreamAsync_ShouldWriteXmlCorrectly() {
         // Arrange
         MemoryStream memoryStream = new();
 
         // Act
-        await _parser.SerializeToStreamAsync(memoryStream, TestTree);
+        await _parser.DeserializeToStreamAsync(memoryStream, TestTree);
 
         // Assert
         memoryStream.Position = 0;
@@ -65,11 +65,11 @@ public class MdSyntaxTreeXmlParserTests {
     }
 
     [Test]
-    public async Task SerializeToFileAsync_ShouldCreateFileWithCorrectXml() {
+    public async Task DeserializeToFileAsync_ShouldCreateFileWithCorrectXml() {
         // Arrange
 
         // Act
-        await _parser.SerializeToFileAsync(FilePathOutput, TestTree);
+        await _parser.DeserializeToFileAsync(FilePathOutput, TestTree);
 
         // Assert
         await Assert.That(File.Exists(FilePathOutput)).IsTrue();
@@ -90,7 +90,7 @@ public class MdSyntaxTreeXmlParserTests {
         using MemoryStream stream = new(Encoding.UTF8.GetBytes(Xml));
 
         // Act
-        IMdSyntaxTree tree = await _parser.DeserializeFromStreamAsync(stream);
+        IMdSyntaxTree tree = await _parser.SerializeFromStreamAsync(stream);
 
         // Assert
         await Assert.That(tree.RootNode).IsNotNull();
@@ -121,7 +121,7 @@ public class MdSyntaxTreeXmlParserTests {
         await File.WriteAllTextAsync(FilePathInput, Xml);
 
         // Act
-        IMdSyntaxTree tree = await _parser.DeserializeFromFileAsync(FilePathInput);
+        IMdSyntaxTree tree = await _parser.SerializeFromFileAsync(FilePathInput);
 
         // Assert
         await Assert.That(tree.RootNode).IsNotNull();
@@ -150,7 +150,7 @@ public class MdSyntaxTreeXmlParserTests {
     }
 
     [Test]
-    public async Task SerializeDeserialize_ShouldPreserveTreeStructure() {
+    public async Task DeserializeSerialize_ShouldPreserveTreeStructure() {
         // Arrange
         var parser = new XmlMdSyntaxTreeParser();
 
@@ -159,13 +159,13 @@ public class MdSyntaxTreeXmlParserTests {
 
         // Serialize to memory stream
         await using var memoryStream = new MemoryStream();
-        await parser.SerializeToStreamAsync(memoryStream, originalTree);
+        await parser.DeserializeToStreamAsync(memoryStream, originalTree);
 
         // Reset the memory stream for reading
         memoryStream.Position = 0;
 
         // Deserialize back into a syntax tree
-        IMdSyntaxTree deserializedTree = await parser.DeserializeFromStreamAsync(memoryStream);
+        IMdSyntaxTree deserializedTree = await parser.SerializeFromStreamAsync(memoryStream);
 
         // Assert: Ensure the structure and content remain identical
         await Assert.That(originalTree).IsEquivalentTo(deserializedTree);

@@ -27,9 +27,4 @@
         <ProjectReference Include="..\Tests.Shared.Infinilore.InfiniBlazor\Tests.Shared.Infinilore.InfiniBlazor.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="SyntaxDeserializer\" />
-      <Folder Include="SyntaxSerializer\" />
-    </ItemGroup>
-
 </Project>
