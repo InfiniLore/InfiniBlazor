@@ -12,7 +12,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
 public sealed class CalloutXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<CalloutMdSyntaxNode> {
     private const string CalloutType = nameof(CalloutMdSyntaxNode.CalloutType);
     private const string CollapsedState = nameof(CalloutMdSyntaxNode.CollapsedState);
-
+    private const string LeadingSpaces = nameof(CalloutMdSyntaxNode.LeadingSpaces);
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -20,11 +21,13 @@ public sealed class CalloutXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Callo
         base.DeserializeDetails(node, targetElement);
         targetElement.SetAttributeValue(CalloutType, node.CalloutType);
         targetElement.SetAttributeValue(CollapsedState, node.CollapsedState);
+        targetElement.SetAttributeValue(LeadingSpaces, node.LeadingSpaces);
     }
 
     protected override void SerializeDetails(XElement element, CalloutMdSyntaxNode targetNode) {
         base.SerializeDetails(element, targetNode);
         targetNode.CalloutType = element.Attribute(CalloutType)?.Value ?? string.Empty;
         targetNode.CollapsedState = (CalloutMdSyntaxNode.CollapseStateOptions)int.Parse(element.Attribute(CollapsedState)?.Value ?? "0");   
+        targetNode.LeadingSpaces = int.Parse(element.Attribute(LeadingSpaces)?.Value ?? "0"); 
     }
 }
