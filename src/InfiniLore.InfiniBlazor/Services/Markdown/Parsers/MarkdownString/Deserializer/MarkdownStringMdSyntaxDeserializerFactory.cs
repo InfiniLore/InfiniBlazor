@@ -43,9 +43,9 @@ public static class MarkdownStringMdSyntaxDeserializerFactory {
             .Register<StrikeMdSyntaxNode, StrikeSyntaxNodeDeserializer>(instance)
             .Register<SubScriptMdSyntaxNode, SubScriptSyntaxNodeDeserializer>(instance)
             .Register<SuperScriptMdSyntaxNode, SuperScriptSyntaxNodeDeserializer>(instance)
-            // .Register<TableCellMdSyntaxNode, TableCellSyntaxNodeDeserializer>(instance)
-            // .Register<TableRowMdSyntaxNode, TableRowSyntaxNodeDeserializer>(instance)
-            // .Register<TableMdSyntaxNode, TableSyntaxNodeDeserializer>(instance)
+            // .Register<TableCellMdSyntaxNode, TableCellSyntaxNodeDeserializer>(instance) // Not implemented due to the TableSyntaxNodeDeserializer handling them directly
+            // .Register<TableRowMdSyntaxNode, TableRowSyntaxNodeDeserializer>(instance) // Not implemented due to the TableSyntaxNodeDeserializer handling them directly
+            .Register<TableMdSyntaxNode, TableSyntaxNodeDeserializer>(instance)
             .Register<TagMdSyntaxNode, TagSyntaxNodeDeserializer>(instance)
             .Register<UnderlineMdSyntaxNode, UnderlineSyntaxNodeDeserializer>(instance);
         
