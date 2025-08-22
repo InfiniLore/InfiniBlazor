@@ -2,13 +2,12 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.RegexLib;
-using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.SyntaxSerializer;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
 using System.Text.RegularExpressions;
+using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLib;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer;
 // ---------------------------------------------------------------------------------------------------------------------
