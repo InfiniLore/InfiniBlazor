@@ -6,4 +6,14 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class ListUnOrderedMdSyntaxNode : MdSyntaxNode<ListUnOrderedMdSyntaxNode>;
+public sealed class ListUnOrderedMdSyntaxNode : MdSyntaxNode<ListUnOrderedMdSyntaxNode> {
+    public int LeadingSpaces { get; set; } = 0;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    public override bool TryReset() {
+        LeadingSpaces = 0;
+        return base.TryReset();
+    }
+}

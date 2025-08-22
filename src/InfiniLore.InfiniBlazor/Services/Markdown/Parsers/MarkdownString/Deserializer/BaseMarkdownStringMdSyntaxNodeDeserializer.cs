@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer;
@@ -26,6 +27,10 @@ public abstract class BaseMarkdownStringMdSyntaxNodeDeserializer<TNode> : IMarkd
             if (!Deserializer.TryGetNodeDeserializer(child, out IMarkdownStringMdSyntaxNodeDeserializer? deserializer)) continue;
             deserializer.Deserialize(child, builder);
         }
+    }
+    
+    protected void AppendLastNewLineCorrectly(TNode node, StringBuilder builder) {
+        if (node.TryGetNextSibling(out IMdSyntaxNode? syntaxNode) && syntaxNode is not EmptyLineMdSyntaxNode) builder.Append('\n');
     }
     
     protected abstract void Deserialize(TNode node, StringBuilder builder);

@@ -12,7 +12,9 @@ public sealed class HeadingSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNo
     protected override void Deserialize(HeadingMdSyntaxNode node, StringBuilder builder) {
         builder.Append('#', node.Level);
         builder.Append(' ');
+        
         DeserializeChildren(node, builder);
+        
         if (node.HasNextSibling()) builder.Append('\n');
     }
 }

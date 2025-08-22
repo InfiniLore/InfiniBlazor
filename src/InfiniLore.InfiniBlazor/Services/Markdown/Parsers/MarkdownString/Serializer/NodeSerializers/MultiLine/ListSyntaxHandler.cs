@@ -52,8 +52,16 @@ public sealed class BaseListSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSe
                 listNode.AddChildNode(listItemNode);
             
                 if (groups[LBodyId].TryGetValueSpan(out ReadOnlySpan<char> itemBody) && !itemBody.IsEmpty) {
-                    string normalizedBody = LineNormalization.NormalizeLineIndentation(itemBody, out _);
+                    string normalizedBody = LineNormalization.NormalizeLineIndentation(itemBody, out int leadingSpaces);
                     stack.PushMultiLineMatchesToStack(normalizedBody, listItemNode, parentOrigin | MdSyntaxSerializerOrigin.PreserveHtml);
+                    switch (listNode) {
+                        case ListOrderedMdSyntaxNode ordered:
+                            ordered.LeadingSpaces = leadingSpaces;
+                            break;
+                        case ListUnOrderedMdSyntaxNode unordered:
+                            unordered.LeadingSpaces = leadingSpaces;
+                            break;
+                    }
                 }
 
                 if (groups[LHeadId].TryGetValue(out string? listHeader)) {

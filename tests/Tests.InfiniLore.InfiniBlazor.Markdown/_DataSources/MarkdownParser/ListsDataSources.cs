@@ -12,6 +12,18 @@ public static class ListsDataSources {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static IEnumerable<Func<MdTestData>> DataSources() {
+        yield return static () => new MdTestData(SectionName,
+            """
+            - Item 1
+            - Item 2
+            """,
+            """
+            <ul>
+                <li>Item 1</li>
+                <li>Item 2</li>
+            </ul>
+            """
+        );
 
         yield return static () => new MdTestData(SectionName,
             """

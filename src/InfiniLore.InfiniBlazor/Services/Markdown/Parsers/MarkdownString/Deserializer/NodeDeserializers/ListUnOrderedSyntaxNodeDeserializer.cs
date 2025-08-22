@@ -17,14 +17,18 @@ public sealed class ListUnOrderedSyntaxNodeDeserializer : BaseMarkdownStringMdSy
             try { 
                 deserializer.Deserialize(child, localBuilder);
                 
-                localBuilder.Replace("\n", "\n  ");
+                localBuilder.Replace("\n", node.LeadingSpaces > 0 
+                    ? $"\n{new string(' ', node.LeadingSpaces)}" 
+                    : "\n"
+                );
                 builder.Append(localBuilder);
             }
             finally {
                 GlobalPools.StringBuilder.Return(localBuilder);
             }
+            if (child.HasNextSibling()) builder.Append('\n');
         }
         
-        if (node.HasNextSibling()) builder.Append('\n');
+        AppendLastNewLineCorrectly(node, builder);
     }
 }

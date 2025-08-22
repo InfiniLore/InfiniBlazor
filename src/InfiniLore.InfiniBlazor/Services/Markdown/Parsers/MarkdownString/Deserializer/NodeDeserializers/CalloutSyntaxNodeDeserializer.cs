@@ -65,7 +65,7 @@ public sealed class CalloutSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNo
                 }
             }
         }
-        
-        if (node.TryGetNextSibling(out IMdSyntaxNode? syntaxNode) && syntaxNode.Type != typeof(EmptyLineMdSyntaxNode)) builder.Append('\n');
+
+        AppendLastNewLineCorrectly(node, builder);
     }
 }

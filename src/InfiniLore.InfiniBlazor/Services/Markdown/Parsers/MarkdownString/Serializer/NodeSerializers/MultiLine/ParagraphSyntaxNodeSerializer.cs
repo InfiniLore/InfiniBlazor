@@ -33,6 +33,6 @@ public sealed class ParagraphSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeS
             ParagraphMdSyntaxNode node = ParagraphMdSyntaxNode.Pool.Get();
             parentNode = parentNode.AddChildNode(node);
         }
-        stack.PushSingleLineMatchesToStack(paragraph.TrimStart(), parentNode, parentOrigin);
+        stack.PushSingleLineMatchesToStack(paragraph, parentNode, parentOrigin);
     }
 }
