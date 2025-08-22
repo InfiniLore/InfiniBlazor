@@ -51,6 +51,11 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
             case EmoteMdSyntaxNode:break;
             case EscapedCharacterMdSyntaxNode:break;
 
+            case HeadingSimpleMdSyntaxNode: {
+                builder.Append("<h1>");
+                break;
+            }
+            
             case HeadingMdSyntaxNode { Level: var level and > 0 }: {
                 builder.Append("<h");
                 builder.Append(level);
@@ -319,6 +324,12 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
             case EmoteMdSyntaxNode:
             case EscapedCharacterMdSyntaxNode:break;
 
+            
+            case HeadingSimpleMdSyntaxNode: {
+                builder.Append("</h1>");
+                break;
+            }
+            
             case HeadingMdSyntaxNode {Level: var level and > 0 }: {
                 builder.Append("</h");
                 builder.Append(level);
