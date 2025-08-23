@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using DevTools.MdTestHelper.Components;
+using InfiniLore.InfiniBlazor.Config;
 
 namespace DevTools.MdTestHelper;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -9,14 +10,21 @@ namespace DevTools.MdTestHelper;
 // ---------------------------------------------------------------------------------------------------------------------
 public class Program {
     public static void Main(string[] args) {
+        // -------------------------------------------------------------------------------------------------------------
+        // App
+        // -------------------------------------------------------------------------------------------------------------
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
 
+        builder.Services.AddInfiniBlazor(config => 
+            config.AddMarkdownLogic()
+        );
+
         // -----------------------------------------------------------------------------------------------------------------
-        // Methods
+        // App
         // -----------------------------------------------------------------------------------------------------------------
         var app = builder.Build();
 

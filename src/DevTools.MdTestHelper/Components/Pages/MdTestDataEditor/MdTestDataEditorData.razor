@@ -1,0 +1,122 @@
+﻿@using InfiniLore.InfiniBlazor
+@using InfiniLore.InfiniBlazor.Markdown
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inject IMarkdownParser MarkdownParser
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniHeading3>Markdown Test Data Editor</InfiniHeading3>
+
+<div class="flex flex-col size-full ">
+    @* Test Data Section *@
+    <div class=" flex flex-col gap-2">
+        @* file name (required) *@
+        <InfiniTextInput Label="FileName" @bind-Value="FileName"/>
+
+        @* test id (required, unique within file) *@
+        <InfiniTextInput Label="Test Id" @bind-Value="TestId"/>
+
+        @* note (optional) *@
+        <InfiniTextAreaInput Label="Added Note" @bind-Value="TestNote" class="h-24"/>
+
+        <div class="w-full flex justify-center">
+            <InfiniButton Variant="ButtonVariant.Primary">Save</InfiniButton>
+        </div>
+    </div>
+
+    <InfiniDivider></InfiniDivider>
+
+    @* Test Editors section *@
+    <div class="h-full grid grid-cols-[1fr_auto_1fr] gap-0">
+        <div class="h-full w-full flex flex-col gap-2 justify-between">
+            <InfiniHeading4>Original Markdown Input</InfiniHeading4>
+
+            <InfiniTextAreaInput @bind-Value="@OriginalMarkdownInput" Rows="20" Class="font-mono"></InfiniTextAreaInput>
+
+            <div class="w-full flex justify-center">
+                <InfiniButton Variant="ButtonVariant.Primary" OnClick="@OnGenerateClickAsync">Generate Outputs</InfiniButton>
+            </div>
+        </div>
+        
+        <InfiniDivider Orientation="@Orientation.Vertical"/>
+        
+        <div class="h-full w-full overflow-auto">
+            <InfiniTabContainer>
+                @* Expected Syntax Tree Editor (required) *@
+                <InfiniTabPage TabName="Syntax Tree">
+                    <InfiniTextAreaInput @bind-Value="@ExpectedSyntaxTreeString" Rows="20" Class="font-mono"></InfiniTextAreaInput>
+                </InfiniTabPage>
+
+                @* Simplified HTML output editor (optional) *@
+                <InfiniTabPage TabName="Simplified HTML">
+                    <InfiniTextAreaInput @bind-Value="@ExpectedSimpleHtmlString" Rows="20" Class="font-mono"></InfiniTextAreaInput>
+                </InfiniTabPage>
+
+                @* Markdown Output Editor (optional) *@
+                <InfiniTabPage TabName="Markdown">
+                    <InfiniTextAreaInput @bind-Value="@ExpectedMarkdownString" Rows="20" Class="font-mono"></InfiniTextAreaInput>
+                </InfiniTabPage>
+            </InfiniTabContainer>
+        </div>
+
+    </div>
+</div>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    public string FileName { get; set; } = string.Empty;
+    public string TestId { get; set; } = string.Empty;
+    public string TestNote { get; set; } = string.Empty;
+
+    public string OriginalMarkdownInput { get; set; } = string.Empty;
+
+    public string ExpectedSyntaxTreeString { get; set; } = string.Empty;
+    public string ExpectedSimpleHtmlString { get; set; } = string.Empty;
+    public string ExpectedMarkdownString { get; set; } = string.Empty;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private async Task OnGenerateClickAsync() {
+        var tree = MarkdownParser.MarkdownString.SerializeToSyntaxTree(OriginalMarkdownInput);
+
+        await Task.WhenAll(
+            GenerateXmlString(tree),
+            GenerateSimpleHtmlString(tree),
+            GenerateMarkdownString(tree)
+        );
+        
+        await GenerateXmlString(tree);
+        
+        
+        await InvokeAsync(StateHasChanged);
+    }
+    
+    private async Task GenerateXmlString(IMdSyntaxTree tree) {
+        using MemoryStream memoryStream = new();
+        await MarkdownParser.Xml.DeserializeToXmlStreamAsync(memoryStream, tree);
+        
+        memoryStream.Position = 0;
+        string result = await new StreamReader(memoryStream).ReadToEndAsync();
+        ExpectedSyntaxTreeString = result;
+    }
+
+    private Task GenerateSimpleHtmlString(IMdSyntaxTree tree) {
+        string originalHtmlString = MarkdownParser.HtmlString.DeserializeToString(tree);
+        ExpectedSimpleHtmlString = HtmlStringUtilities.PrettifyHtml(originalHtmlString);
+        return Task.CompletedTask;
+    }
+
+    private Task GenerateMarkdownString(IMdSyntaxTree tree) {
+        ExpectedMarkdownString = MarkdownParser.MarkdownString.DeserializeToString(tree);
+        return Task.CompletedTask;
+    }
+}

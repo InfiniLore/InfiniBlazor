@@ -8,12 +8,11 @@ namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public abstract class InfiniComponentBase : ComponentBase, IAsyncDisposable {
+public abstract class InfiniComponentCoreBase : ComponentBase, IAsyncDisposable {
     [Inject] protected NavigationManager NavigationManager { get; set; } = null!;
     [Inject] protected IVisualDebuggerProvider VisualDebugger { get; set; } = null!;
-    
+
     [Parameter] public string Class { get; set; } = string.Empty;
-    [Parameter] public RenderFragment? ChildContent { get; set; }
 
     [Parameter] public virtual Color DebugColor { get; set; } = Color.Red;
 
@@ -32,13 +31,13 @@ public abstract class InfiniComponentBase : ComponentBase, IAsyncDisposable {
         GC.SuppressFinalize(this);
         return ValueTask.CompletedTask;
     }
-    
+
     protected static string ConcatClasses(params ReadOnlySpan<string?> classes)
         => string.Join(' ', classes);
-    
-    protected static string HiddenIf(bool condition) 
+
+    protected static string HiddenIf(bool condition)
         => condition ? "hidden" : string.Empty;
-    
-    protected static string HiddenIfNot(bool condition) 
+
+    protected static string HiddenIfNot(bool condition)
         => HiddenIf(!condition);
 }

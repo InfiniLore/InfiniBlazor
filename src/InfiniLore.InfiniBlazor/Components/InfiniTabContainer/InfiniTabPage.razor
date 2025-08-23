@@ -1,38 +1,32 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor
-
+@namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@rendermode RenderModeProvider.InfiniRenderMode
-@inherits InfiniNavBarBase
+@inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniNavBar Location="NavBarLocation.Left" Size="Size" Class="@Class" @bind-NavBarCollapsed="CollapsedState">
-    <div class="flex flex-row justify-between sticky top-0 z-10 infini-bg-(--nav-top) border-b-1 border-(--nav-border)">
-        <InfiniNavLink
-            Href="/"
-            Text="InfiniBlazor Testing"
-            Class="@ConcatClasses(HiddenIf(CollapsedState), "font-bold")"
-            HiddenOnCollapsed
-        />
+@if (Context.SelectedTab == TabName) {
+    @ChildContent
+}
 
-        <InfiniNavCollapseButton @bind-State="CollapsedState" Class="h-10"/>
-    </div>
-
-    <InfiniNavLink
-        Href="/mdtestdata/editor"
-        Text="MdTestDataEditor"
-        Icon="@LucideNames.TestTubeDiagonal"
-    />
-</InfiniNavBar>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
-    [Parameter] public bool CollapsedState { get; set; }
+    [EditorRequired, Parameter] public string TabName { get; set; } = string.Empty;
+    [CascadingParameter] public InfiniTabContainerContext Context { get; set; } = null!;
+    
+    protected override void OnInitialized() {
+        Context.RegisterPage(TabName);
+        Context.OnTabSelected += StateHasChanged;
+    }
+
+    public override async ValueTask DisposeAsync() {
+        await base.DisposeAsync();
+        Context.OnTabSelected -= StateHasChanged;
+    }
 }

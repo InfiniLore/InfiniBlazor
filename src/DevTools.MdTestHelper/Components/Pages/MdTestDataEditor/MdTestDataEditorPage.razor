@@ -5,20 +5,25 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@page "/"
+@page "/mdtestdata/editor"
+@rendermode InteractiveServer
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniPage Title="Test Data Editor">
-    <InfiniSection Class="w-full h-full">
-        
-    </InfiniSection>
+<InfiniPage Title="Test Data Editor" Class="pl-4 py-4">
+    <div class="grid grid-cols-[2fr_1fr] w-full h-full gap-4">
+        <InfiniSection Class="h-full">
+            <MdTestDataEditorData/>
+        </InfiniSection>
+        <InfiniSection Class="h-full" Location="SectionLocation.Right">
+            <MdTestDataEditorFileSelector/>
+        </InfiniSection>
+    </div>
 </InfiniPage>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
     
 }
