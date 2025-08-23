@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfXmlMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <XmlMdTestData Id="withBold" FileName="italic.xml">
+    <MdString>*italic **bold***</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ItalicMdSyntaxNode>
+          <ContentMdSyntaxNode>italic </ContentMdSyntaxNode>
+          <BoldMdSyntaxNode>
+            <ContentMdSyntaxNode>bold</ContentMdSyntaxNode>
+          </BoldMdSyntaxNode>
+        </ItalicMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;em&gt;italic &lt;strong&gt;bold&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>*italic **bold***</ExpectedMarkdownString>
+  </XmlMdTestData>
+</ArrayOfXmlMdTestData>
