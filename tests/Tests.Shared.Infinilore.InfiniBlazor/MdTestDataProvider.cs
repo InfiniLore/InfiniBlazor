@@ -31,7 +31,11 @@ public class MdTestDataProvider(ILogger<MdTestDataProvider> logger) {
         }
 
         try {
-            return Directory.GetFiles(TestFolder);
+            string[] array = Directory.GetFiles(TestFolder);
+            for (int i = 0; i < array.Length; i++) {
+                array[i] = Path.GetFileName(array[i]);
+            }
+            return array;
         }
         catch (Exception ex) {
             logger.Error(ex, "Error getting files from directory {Directory}", TestFolder);

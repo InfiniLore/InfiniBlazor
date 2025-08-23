@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using Tests.Shared.Infinilore.InfiniBlazor;
 
-namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
+namespace Tests.InfiniLore.InfiniBlazor.Markdown;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
