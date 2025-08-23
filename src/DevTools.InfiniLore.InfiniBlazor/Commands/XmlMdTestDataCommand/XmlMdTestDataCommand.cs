@@ -45,10 +45,11 @@ public partial class XmlMdTestDataCommand : ICliCommand<XmlMdTestDataParameters>
         var syntaxTree = new MdSyntaxTree();// Assuming this is implemented elsewhere
 
         // Create the new XML test data
-        var newTestData = new XmlMdTestData {
+        var newTestData = new MdTestData {
             Id = testId,
             MdString = markdownString,
-            MdSyntaxTree = syntaxTree
+            MdSyntaxTree = syntaxTree,
+            FileName = string.Empty
         };
 
         // Append to file
@@ -65,10 +66,10 @@ public partial class XmlMdTestDataCommand : ICliCommand<XmlMdTestDataParameters>
         if (string.IsNullOrWhiteSpace(testId)) throw new ArgumentException("Test ID cannot be empty.");
 
         // Load existing data
-        List<XmlMdTestData> testDataList = await LoadTestDataFromFile(fileName, ct) ?? new List<XmlMdTestData>();
+        List<MdTestData> testDataList = await LoadTestDataFromFile(fileName) ?? new List<MdTestData>();
 
         // Find the record to update
-        XmlMdTestData? existingTestData = testDataList.FirstOrDefault(data => data.Id == testId);
+        MdTestData? existingTestData = testDataList.FirstOrDefault(data => data.Id == testId);
         if (existingTestData == null) {
             Console.WriteLine($"No test data found with ID {testId} in file {fileName}.");
             return;
@@ -83,31 +84,31 @@ public partial class XmlMdTestDataCommand : ICliCommand<XmlMdTestDataParameters>
         }
 
         // Save the updated list back to the file
-        await SaveTestDataToFile(fileName, testDataList, ct);
+        await SaveTestDataToFile(fileName, testDataList);
     }
 
-    private async Task AppendTestToFile(string fileName, XmlMdTestData newTestData, CancellationToken ct) {
-        List<XmlMdTestData> testDataList = await LoadTestDataFromFile(fileName, ct) ?? new List<XmlMdTestData>();
+    private async Task AppendTestToFile(string fileName, MdTestData newTestData, CancellationToken ct) {
+        List<MdTestData> testDataList = await LoadTestDataFromFile(fileName) ?? new List<MdTestData>();
         testDataList.Add(newTestData);
 
-        await SaveTestDataToFile(fileName, testDataList, ct);
+        await SaveTestDataToFile(fileName, testDataList);
     }
 
-    private static async Task<List<XmlMdTestData>?> LoadTestDataFromFile(string fileName, CancellationToken ct = default) {
-        if (!File.Exists(fileName)) return new List<XmlMdTestData>();
+    private static async Task<List<MdTestData>?> LoadTestDataFromFile(string fileName) {
+        if (!File.Exists(fileName)) return new List<MdTestData>();
 
         await using var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true);
         using var reader = XmlReader.Create(stream);
 
-        var serializer = new XmlSerializer(typeof(List<XmlMdTestData>));
-        return serializer.Deserialize(reader) as List<XmlMdTestData>;
+        var serializer = new XmlSerializer(typeof(List<MdTestData>));
+        return serializer.Deserialize(reader) as List<MdTestData>;
     }
 
-    private async Task SaveTestDataToFile(string fileName, List<XmlMdTestData> testDataList, CancellationToken ct = default) {
+    private async Task SaveTestDataToFile(string fileName, List<MdTestData> testDataList) {
         await using var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None, 4096, true);
         await using var writer = XmlWriter.Create(stream, new XmlWriterSettings { Indent = true });
 
-        var serializer = new XmlSerializer(typeof(List<XmlMdTestData>));
+        var serializer = new XmlSerializer(typeof(List<MdTestData>));
         serializer.Serialize(writer, testDataList);
     }
 }

@@ -130,7 +130,7 @@
     }
 
     private async Task OnFetchClicked() {
-        List<XmlMdTestData>? dataList = await MdTestDataProvider.TryGetXmlMdTestDataAsync(FileName);
+        List<MdTestData>? dataList = await MdTestDataProvider.TryGetXmlMdTestDataAsync(FileName);
         if (dataList is null) {
             await ToastingProvider.PublishToastAsync(
                 new ToastingData("File could not be found", FileName),
@@ -174,7 +174,7 @@
             return;
         }
 
-        var xmlData = new XmlMdTestData {
+        var xmlData = new MdTestData {
             FileName = FileName,
             Id = TestId,
             DeveloperNote = DeveloperNote,

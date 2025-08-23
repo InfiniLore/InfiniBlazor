@@ -28,7 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="_DataSources\Files\" />
+      <Folder Include="DataSources\Files\" />
     </ItemGroup>
 
 </Project>
