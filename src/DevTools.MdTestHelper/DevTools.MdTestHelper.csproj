@@ -61,5 +61,12 @@
       <ProjectReference Include="..\..\tests\Tests.Shared.Infinilore.InfiniBlazor\Tests.Shared.Infinilore.InfiniBlazor.csproj" />
       <ProjectReference Include="..\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
     
 </Project>

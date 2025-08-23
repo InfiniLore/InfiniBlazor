@@ -1,9 +1,9 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using DevTools.MdTestHelper.Services
 @using InfiniLore.InfiniBlazor.Markdown
 @using InfiniLore.InfiniBlazor.Toasting
-@using System.Xml.Serialization
 @using Tests.Shared.Infinilore.InfiniBlazor
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -11,7 +11,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inject IMarkdownParser MarkdownParser
 @inject IToastingProvider ToastingProvider
-@inject ILogger<MdTestDataEditorData> Logger
+@inject MdTestDataProvider MdTestDataProvider
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
@@ -21,18 +21,14 @@
 <div class="flex flex-col size-full ">
     @* Test Data Section *@
     <div class=" flex flex-col gap-2">
-        @* file name (required) *@
         <InfiniTextInput Label="FileName" @bind-Value="FileName"/>
-
-        @* test id (required, unique within file) *@
         <InfiniTextInput Label="Test Id" @bind-Value="TestId"/>
-
-        @* note (optional) *@
-        <InfiniTextAreaInput Label="Added Note" @bind-Value="TestNote" class="h-24"/>
+        <InfiniTextAreaInput Label="Added Note" @bind-Value="DeveloperNote" class="h-24"/>
 
         <div class="w-full flex justify-center gap-2">
-            <InfiniButton Variant="ButtonVariant.Primary" OnClick="@OnFetchClicked">Fetch</InfiniButton>
-            <InfiniButton Variant="ButtonVariant.Primary" OnClick="@OnSaveClicked">Save</InfiniButton>
+            <InfiniButton Variant="ButtonVariant.Default" OnClick="@OnFetchClicked">Fetch</InfiniButton>
+            <InfiniButton Variant="ButtonVariant.Default" Color="Color.Green" OnClick="@OnSaveClicked">Save</InfiniButton>
+            <InfiniButton Variant="ButtonVariant.Default" Color="Color.Red" OnClick="@OnDeleteClicked">Delete</InfiniButton>
         </div>
     </div>
 
@@ -43,31 +39,38 @@
         <div class="h-full w-full flex flex-col gap-2">
             <InfiniHeading4 Class="min-h-6">Markdown Input</InfiniHeading4>
 
-            <InfiniTextAreaInput @bind-Value="@OriginalMarkdownInput" Rows="22" Class="font-mono"></InfiniTextAreaInput>
+            <InfiniTextAreaInput @bind-Value="@MdString" Rows="22" Class="font-mono"></InfiniTextAreaInput>
 
             <InfiniSpacer/>
             <div class="w-full flex justify-center">
-                <InfiniButton Variant="ButtonVariant.Primary" OnClick="@OnGenerateClickAsync">Generate Outputs</InfiniButton>
+                <InfiniButton Variant="ButtonVariant.Primary" OnClick="@OnGenerateClickAsync">Generate Outputs
+                </InfiniButton>
             </div>
         </div>
-        
+
         <InfiniDivider Orientation="@Orientation.Vertical"/>
-        
+
         <div class="h-full w-full mt-3">
             <InfiniTabContainer>
-                @* Expected Syntax Tree Editor (required) *@
                 <InfiniTabPage TabName="Syntax Tree">
-                    <InfiniTextAreaInput @bind-Value="@ExpectedSyntaxTreeString" Rows="22" Class="font-mono w-full"></InfiniTextAreaInput>
+                    <InfiniTextAreaInput
+                        @bind-Value="@ExpectedSyntaxTreeString"
+                        Rows="22"
+                        Class="font-mono w-full"/>
                 </InfiniTabPage>
 
-                @* Simplified HTML output editor (optional) *@
                 <InfiniTabPage TabName="Simplified HTML">
-                    <InfiniTextAreaInput @bind-Value="@ExpectedSimpleHtmlString" Rows="22" Class="font-mono w-full"></InfiniTextAreaInput>
+                    <InfiniTextAreaInput
+                        @bind-Value="@ExpectedHtmlStringSimplified"
+                        Rows="22"
+                        Class="font-mono w-full"/>
                 </InfiniTabPage>
 
-                @* Markdown Output Editor (optional) *@
                 <InfiniTabPage TabName="Markdown">
-                    <InfiniTextAreaInput @bind-Value="@ExpectedMarkdownString" Rows="22" Class="font-mono w-full"></InfiniTextAreaInput>
+                    <InfiniTextAreaInput
+                        @bind-Value="@ExpectedMarkdownString"
+                        Rows="22"
+                        Class="font-mono w-full"/>
                 </InfiniTabPage>
             </InfiniTabContainer>
         </div>
@@ -77,49 +80,47 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
-    private const string RootFilePath = "../../";
-    private const string TestFolderFromRootPath = "tests/Tests.InfiniLore.InfiniBlazor.Markdown/_DataSources/Files";
-    
     public string FileName { get; set; } = string.Empty;
     public string TestId { get; set; } = string.Empty;
-    public string TestNote { get; set; } = string.Empty;
+    public string? DeveloperNote { get; set; } = string.Empty;
 
-    public string OriginalMarkdownInput { get; set; } = string.Empty;
+    public string MdString { get; set; } = string.Empty;
 
     public string ExpectedSyntaxTreeString { get; set; } = string.Empty;
-    public string ExpectedSimpleHtmlString { get; set; } = string.Empty;
-    public string ExpectedMarkdownString { get; set; } = string.Empty;
+    public string? ExpectedHtmlStringSimplified { get; set; } = string.Empty;
+    public string? ExpectedMarkdownString { get; set; } = string.Empty;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private async Task OnGenerateClickAsync() {
-        var tree = MarkdownParser.MarkdownString.SerializeToSyntaxTree(OriginalMarkdownInput);
+        IMdSyntaxTree tree = MarkdownParser.MarkdownString.SerializeToSyntaxTree(MdString);
 
         await Task.WhenAll(
             GenerateXmlString(tree),
             GenerateSimpleHtmlString(tree),
             GenerateMarkdownString(tree)
         );
-        
+
         await GenerateXmlString(tree);
-        
-        
+
+
         await InvokeAsync(StateHasChanged);
     }
-    
+
     private async Task GenerateXmlString(IMdSyntaxTree tree) {
         using MemoryStream memoryStream = new();
         await MarkdownParser.Xml.DeserializeToXmlStreamAsync(memoryStream, tree);
-        
+
         memoryStream.Position = 0;
         string result = await new StreamReader(memoryStream).ReadToEndAsync();
         ExpectedSyntaxTreeString = result;
     }
 
     private Task GenerateSimpleHtmlString(IMdSyntaxTree tree) {
-        ExpectedSimpleHtmlString =MarkdownParser.HtmlString.DeserializeToString(tree);
+        ExpectedHtmlStringSimplified = MarkdownParser.HtmlString.DeserializeToString(tree);
         return Task.CompletedTask;
     }
 
@@ -127,77 +128,43 @@
         ExpectedMarkdownString = MarkdownParser.MarkdownString.DeserializeToString(tree);
         return Task.CompletedTask;
     }
-    
+
     private async Task OnFetchClicked() {
-        string fullFilePath = await EnsureTestFolderExists();
-        if (!File.Exists(fullFilePath)) {
-            var toastData = new ToastingData("File could not be found", fullFilePath);
-            await ToastingProvider.PublishToastAsync(toastData, ToastAppearance.Warning);
+        List<XmlMdTestData>? dataList = await MdTestDataProvider.TryGetXmlMdTestDataAsync(FileName);
+        if (dataList is null) {
+            await ToastingProvider.PublishToastAsync(
+                new ToastingData("File could not be found", FileName),
+                ToastAppearance.Warning
+            );
+            return;
         }
 
-        if (TestId.IsNullOrWhiteSpace()) {
+        if (dataList.FirstOrDefault(data => data.Id == TestId) is not {} testData) {
             var toastData = new ToastingData("Test Id was not valid", TestId);
             await ToastingProvider.PublishToastAsync(toastData, ToastAppearance.Warning);
             return;
         }
-        
-        try {
-            XmlMdTestData[]? deserializedData = await DeserializeXmlMdTestData(fullFilePath);
 
-            if (deserializedData?.FirstOrDefault(data => data.Id == TestId) is not {} xmlMdTestData) {
-                var toastData = new ToastingData("File could did contain test with expected Id", fullFilePath);
-                await ToastingProvider.PublishToastAsync(toastData, ToastAppearance.Warning);
-                return;
-            }
+        FileName = testData.FileName;
+        TestId = testData.Id;
+        DeveloperNote = testData.DeveloperNote;
 
-            OriginalMarkdownInput = xmlMdTestData.MdString ?? string.Empty;
-            ExpectedSimpleHtmlString = xmlMdTestData.SimplifiedHtmlString ?? string.Empty;
-            TestNote = xmlMdTestData.DeveloperNote ?? string.Empty;
-            // TestId = xmlMdTestData.Id; // Not needed due to this being a fetch 
-            
-            if (xmlMdTestData.MdSyntaxTree is {} tree) {
-                using MemoryStream memoryStream = new();
-                await MarkdownParser.Xml.DeserializeToXmlStreamAsync(memoryStream, tree);
-        
-                memoryStream.Position = 0;
-                ExpectedSyntaxTreeString = await new StreamReader(memoryStream).ReadToEndAsync();
-            }
-            
-            var successData =  new ToastingData("File loaded successfully", fullFilePath);
-            await ToastingProvider.PublishToastAsync(successData, ToastAppearance.Success);
-        }
-        catch (Exception e) {
-            var toastData = new ToastingData("File parser raised an exception", "see server logs");
-            await ToastingProvider.PublishToastAsync(toastData, ToastAppearance.Error);
-            Logger.Error(e, "File parsing of {path} threw an exception", fullFilePath);
-        }
-    }
-    
-    private async Task<XmlMdTestData[]?> DeserializeXmlMdTestData(string fullFilePath) {
-        var serializer = new XmlSerializer(typeof(XmlMdTestData[]));
-        using StreamReader reader = new(fullFilePath);
+        MdString = testData.MdString;
 
-        if (serializer.Deserialize(reader) is XmlMdTestData[] deserializedData) return deserializedData;
+        if (testData.MdSyntaxTree is {} tree) {
+            using MemoryStream memoryStream = new();
+            await MarkdownParser.Xml.DeserializeToXmlStreamAsync(memoryStream, tree);
 
-        var toastData = new ToastingData("File could not be read correctly", fullFilePath);
-        await ToastingProvider.PublishToastAsync(toastData, ToastAppearance.Error);
-        return null;
-
-    }
-
-    private async Task<string> EnsureTestFolderExists() {
-        string testFolder = Path.Join(RootFilePath, TestFolderFromRootPath);
-        if (!Directory.Exists(testFolder)) {
-            Directory.CreateDirectory(testFolder);
-
-            var toastData = new ToastingData("Directory Created", Path.GetFullPath(testFolder));
-            await ToastingProvider.PublishToastAsync(toastData, ToastAppearance.Info);
+            memoryStream.Position = 0;
+            ExpectedSyntaxTreeString = await new StreamReader(memoryStream).ReadToEndAsync();
         }
 
-        FileName = Path.ChangeExtension(FileName, ".xml");
-        string fullFilePath = Path.GetFullPath(Path.Join(testFolder, FileName));
+        ExpectedHtmlStringSimplified = testData.ExpectedHtmlStringSimplified;
+        ExpectedMarkdownString = testData.ExpectedMarkdownString;
 
-        return fullFilePath;
+
+        var successData = new ToastingData("File loaded successfully", FileName);
+        await ToastingProvider.PublishToastAsync(successData, ToastAppearance.Success);
     }
 
     private async Task OnSaveClicked() {
@@ -206,60 +173,48 @@
             await ToastingProvider.PublishToastAsync(toastData, ToastAppearance.Warning);
             return;
         }
-        
-        string fullFilePath = await EnsureTestFolderExists();
-        var serializer = new XmlSerializer(typeof(XmlMdTestData[]));
-        
+
         var xmlData = new XmlMdTestData {
+            FileName = FileName,
             Id = TestId,
-            MdString = OriginalMarkdownInput,
-            SimplifiedHtmlString = ExpectedSimpleHtmlString,
-            MdSyntaxTree = MarkdownParser.MarkdownString.SerializeToSyntaxTree(OriginalMarkdownInput),
-            DeveloperNote = TestNote
+            DeveloperNote = DeveloperNote,
+            MdString = MdString,
+            MdSyntaxTree = MarkdownParser.MarkdownString.SerializeToSyntaxTree(MdString),
+            ExpectedHtmlStringSimplified = ExpectedHtmlStringSimplified,
+            ExpectedMarkdownString = ExpectedMarkdownString
         };
 
-        if (!File.Exists(fullFilePath)) {
-            await using StreamWriter writer = new(fullFilePath);
-            serializer.Serialize(writer, new[] {xmlData});
-            
-            var successData =  new ToastingData("File written successfully", fullFilePath);
-            await ToastingProvider.PublishToastAsync(successData, ToastAppearance.Success);
+        if (!await MdTestDataProvider.TryAddOrUpdateAsync(xmlData.FileName, xmlData)) {
+            var toastData = new ToastingData("Test could not be saved", TestId);
+            await ToastingProvider.PublishToastAsync(toastData, ToastAppearance.Error);
+            return;
         }
-        
-        XmlMdTestData[]? deserializedData = await DeserializeXmlMdTestData(fullFilePath);
-        if (deserializedData is null) return; // TODO something I guess
-        
-        if (deserializedData.Index().FirstOrDefault(box => box.Item.Id == TestId) is not (var foundIndex, not null)) {
-            var newArray = new XmlMdTestData[deserializedData.Length + 1];
-            deserializedData.CopyTo(newArray, 0);
-            deserializedData = newArray;
-            deserializedData[^1] = xmlData;
-        }
-        else {
-            deserializedData[foundIndex] = xmlData;
-        }
-        
-        await using StreamWriter newWriter = new(fullFilePath);
-        serializer.Serialize(newWriter, deserializedData);
-            
-        await ToastingProvider.PublishToastAsync(new ToastingData("File written successfully", fullFilePath), ToastAppearance.Success);
+
+        await ToastingProvider.PublishToastAsync(
+            new ToastingData("Test was saved", TestId),
+            ToastAppearance.Success
+        );
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    private async Task OnDeleteClicked() {
+        
+        if (!await MdTestDataProvider.TryDeleteAsync(FileName, TestId)) {
+            var toastData = new ToastingData("Could not delete Test", TestId);
+            await ToastingProvider.PublishToastAsync(toastData, ToastAppearance.Warning);
+            return;
+        }
+
+        FileName = string.Empty;
+        TestId = string.Empty;
+        DeveloperNote = string.Empty;
+        MdString = string.Empty;
+        ExpectedHtmlStringSimplified = string.Empty;
+        ExpectedMarkdownString = string.Empty;
+        ExpectedSyntaxTreeString = string.Empty;
+        
+        await ToastingProvider.PublishToastAsync(
+            new ToastingData("Test was Deleted", TestId),
+            ToastAppearance.Success
+        );
+    }
 }

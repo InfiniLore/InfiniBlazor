@@ -1,14 +1,2 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ArrayOfXmlMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <XmlMdTestData Id="simple">
-    <MdString>**bold something**</MdString>
-    <SimplifiedHtmlString>&lt;p&gt;&lt;strong&gt;bold something&lt;/strong&gt;&lt;/p&gt;</SimplifiedHtmlString>
-    <MdSyntaxTree>
-      <ParagraphMdSyntaxNode>
-        <BoldMdSyntaxNode>
-          <ContentMdSyntaxNode>bold something</ContentMdSyntaxNode>
-        </BoldMdSyntaxNode>
-      </ParagraphMdSyntaxNode>
-    </MdSyntaxTree>
-  </XmlMdTestData>
-</ArrayOfXmlMdTestData>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfXmlMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />

@@ -14,11 +14,13 @@ namespace Tests.Shared.Infinilore.InfiniBlazor;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class XmlMdTestData : IXmlSerializable {
+    public string FileName { get; set; } = string.Empty;
     public string Id { get; set; } = string.Empty;
-    public string? MdString { get; set; }
-    public IMdSyntaxTree? MdSyntaxTree { get; set; }
-    public string? SimplifiedHtmlString { get; set; }
     public string? DeveloperNote { get; set; }
+    public string MdString { get; set; } = string.Empty;
+    public IMdSyntaxTree? MdSyntaxTree { get; set; }
+    public string? ExpectedHtmlStringSimplified { get; set; }
+    public string? ExpectedMarkdownString { get; set; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -31,6 +33,7 @@ public class XmlMdTestData : IXmlSerializable {
         reader.MoveToContent(); // <MdTestXmlData>
         
         Id = reader.GetAttribute(nameof(Id)) ?? string.Empty;
+        FileName = reader.GetAttribute(nameof(FileName)) ?? string.Empty;
         
         reader.ReadStartElement(); // move into it
 
@@ -46,14 +49,19 @@ public class XmlMdTestData : IXmlSerializable {
                     break;
                 }
 
-                case nameof(SimplifiedHtmlString): {
-                    SimplifiedHtmlString = reader.ReadElementContentAsString();
+                case nameof(ExpectedHtmlStringSimplified): {
+                    ExpectedHtmlStringSimplified = reader.ReadElementContentAsString();
                     break;
                 }
 
                 case nameof(MdSyntaxTree): {
                     var syntaxTreeXml = (XElement)XNode.ReadFrom(reader);
                     MdSyntaxTree = XmlMdSyntaxTreeParser.Instance.SerializeToSyntaxTree(syntaxTreeXml) as MdSyntaxTree;
+                    break;
+                }
+                
+                case nameof(ExpectedMarkdownString): {
+                    ExpectedMarkdownString = reader.ReadElementContentAsString();
                     break;
                 }
 
@@ -74,12 +82,15 @@ public class XmlMdTestData : IXmlSerializable {
         ArgumentNullException.ThrowIfNull(MdSyntaxTree);
 
         writer.WriteAttributeString(nameof(Id), Id);
-        writer.WriteElementString(nameof(MdString), MdString ?? string.Empty);
-        if (SimplifiedHtmlString.IsNotNullOrWhiteSpace()) writer.WriteElementString(nameof(SimplifiedHtmlString), SimplifiedHtmlString);
+        writer.WriteAttributeString(nameof(FileName), FileName);
         if (DeveloperNote.IsNotNullOrWhiteSpace()) writer.WriteElementString(nameof(DeveloperNote), DeveloperNote);
+        writer.WriteElementString(nameof(MdString), MdString);
         
         // Writes as "MdSyntaxTree"
         XElement syntaxTreeElement = XmlMdSyntaxTreeParser.Instance.DeserializeToXmlElement(MdSyntaxTree);
         syntaxTreeElement.WriteTo(writer);
+        
+        if (ExpectedHtmlStringSimplified.IsNotNullOrWhiteSpace()) writer.WriteElementString(nameof(ExpectedHtmlStringSimplified), ExpectedHtmlStringSimplified);
+        if (ExpectedMarkdownString.IsNotNullOrWhiteSpace()) writer.WriteElementString(nameof(ExpectedMarkdownString), ExpectedMarkdownString);
     }
 }
