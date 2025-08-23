@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Components;
 using System.Diagnostics.CodeAnalysis;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
@@ -47,4 +48,11 @@ public static class MdSyntaxNodeModifierExtensions {
     
     public static bool TryGetFit(this IMdSyntaxNodeModifier mod, out bool state) 
         => mod.TryGetAttributeFlag("fit", out state);
+
+    public static bool TryGetAlign(this IMdSyntaxNodeModifier mod,[NotNullWhen(true)] out string? align) {
+        align = null;
+        if (!mod.TryGetAttributeValue("align", out  align)) return false;
+        return VerticalAlignImageUtilities.TryGetFromString(align, out _) || align.IsNotNullOrWhiteSpace();
+    }
+    
 }

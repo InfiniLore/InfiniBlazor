@@ -12,33 +12,68 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<img 
+<img
     src="@SyntaxNode.Href"
-    class="inline-block rounded-lg shadow-lg h-full w-auto object-contain" 
+    class="inline-block rounded-lg shadow-lg h-full w-auto object-contain"
     alt="@SyntaxNode.NormalizedAltText"
-    @attributes="GetExtraModifiers()">
+    @attributes="GetExtraModifiers()"
+>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
-    private List<KeyValuePair<string, object>> GetExtraModifiers() {
-        var list = new List<KeyValuePair<string, object>>();
-        if (!SyntaxNode.TryGetModifier(out IMdSyntaxNodeModifier? modifier)) return list;
+    private const string FitStyling = "width:auto;height:1em;vertical-align:text-top;object-fit:contain;transform:translate(0,0.15em);";
+
+    private static string GetVerticalAlign(string alignValue) => $"vertical-align:{alignValue};";
+    private static string GetWithOldValue(object oldValue, string newValue, char sep = ';') => oldValue is string oldString
+        ? $"{oldString}{sep}{newValue}"
+        : newValue;
+    private static string GetSize((int Width, int Height) size) => $"width:{size.Width}px;height:{size.Height}px;";
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+
+    // ReSharper disable UnusedParameter.Local
+    private Dictionary<string, object> GetExtraModifiers() {
+        var dict = new Dictionary<string, object>();
+        if (!SyntaxNode.TryGetModifier(out IMdSyntaxNodeModifier? modifier)) return dict;
 
         if (modifier.TryGetTitle(out string? title)) {
-            list.Add(new KeyValuePair<string, object>("title", title));
-        }
-                    
-        if (modifier.TryGetFit(out bool state) && state) {
-            list.Add(new KeyValuePair<string, object>("style", "width:auto;height:1em;vertical-align:text-top;object-fit:contain;transform:translate(0,0.15em);"));
-        }
-                    
-        else if (modifier.TryGetSize(out (int Width, int Height) size)) {
-            list.Add( new KeyValuePair<string, object>("style", $"width:{size.Width}px;height:{size.Height}px;"));
+            dict.AddOrUpdate(
+                "title", 
+                title
+            );
         }
 
-        return list;
+        if (modifier.TryGetAlign(out string? align)) {
+            dict.AddOrUpdate(
+                "style",
+                key => GetVerticalAlign(align),
+                (key, oldValue) => GetWithOldValue(oldValue, GetVerticalAlign(align))
+            );
+        }
+
+        if (modifier.TryGetFit(out bool state) && state) {
+            dict.AddOrUpdate(
+                "style",
+                key => FitStyling,
+                (key, oldValue) => GetWithOldValue(oldValue, FitStyling)
+            );
+        }
+
+        if (modifier.TryGetSize(out (int Width, int Height) size)) {
+            dict.AddOrUpdate(
+                "style",
+                key => GetSize(size),
+                (key, oldValue) => GetWithOldValue(oldValue, GetSize(size))
+            );
+        }
+
+        return dict;
     }
+    // ReSharper enable UnusedParameter.Local
 
 }
