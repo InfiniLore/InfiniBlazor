@@ -24,7 +24,7 @@ public class MdTestDataProviderTests {
         await Assert.That(fileNames)
             .IsNotNull()
             .HasCount().GreaterThanOrEqualTo(2)
-            .Contains(filePath => Path.GetFileName(filePath) == "bold.xml");
+            .Contains(filePath => filePath == "bold.xml");
     }
 
     [Test]
