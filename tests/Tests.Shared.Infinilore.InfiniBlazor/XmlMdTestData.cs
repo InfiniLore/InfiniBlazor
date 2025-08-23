@@ -15,9 +15,10 @@ namespace Tests.Shared.Infinilore.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
 public class XmlMdTestData : IXmlSerializable {
     public string Id { get; set; } = string.Empty;
-    public string? MarkdownString { get; set; }
-    public IMdSyntaxTree? SyntaxTree { get; set; }
+    public string? MdString { get; set; }
+    public IMdSyntaxTree? MdSyntaxTree { get; set; }
     public string? SimplifiedHtmlString { get; set; }
+    public string? DeveloperNote { get; set; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -35,8 +36,13 @@ public class XmlMdTestData : IXmlSerializable {
 
         while (reader.NodeType == XmlNodeType.Element) {
             switch (reader.Name) {
-                case nameof(MarkdownString): {
-                    MarkdownString = reader.ReadElementContentAsString();
+                case nameof(DeveloperNote): {
+                    DeveloperNote = reader.ReadElementContentAsString();
+                    break;
+                }
+                
+                case nameof(MdString): {
+                    MdString = reader.ReadElementContentAsString();
                     break;
                 }
 
@@ -47,7 +53,7 @@ public class XmlMdTestData : IXmlSerializable {
 
                 case nameof(MdSyntaxTree): {
                     var syntaxTreeXml = (XElement)XNode.ReadFrom(reader);
-                    SyntaxTree = XmlMdSyntaxTreeParser.Instance.SerializeToSyntaxTree(syntaxTreeXml) as MdSyntaxTree;
+                    MdSyntaxTree = XmlMdSyntaxTreeParser.Instance.SerializeToSyntaxTree(syntaxTreeXml) as MdSyntaxTree;
                     break;
                 }
 
@@ -64,14 +70,16 @@ public class XmlMdTestData : IXmlSerializable {
     
     public void WriteXml(XmlWriter writer) {
         ArgumentNullException.ThrowIfNull(writer);
-        ArgumentNullException.ThrowIfNull(MarkdownString);
-        ArgumentNullException.ThrowIfNull(SyntaxTree);
+        ArgumentNullException.ThrowIfNull(MdString);
+        ArgumentNullException.ThrowIfNull(MdSyntaxTree);
 
         writer.WriteAttributeString(nameof(Id), Id);
-        writer.WriteElementString(nameof(MarkdownString), MarkdownString ?? string.Empty);
+        writer.WriteElementString(nameof(MdString), MdString ?? string.Empty);
         if (SimplifiedHtmlString.IsNotNullOrWhiteSpace()) writer.WriteElementString(nameof(SimplifiedHtmlString), SimplifiedHtmlString);
-
-        XElement syntaxTreeElement = XmlMdSyntaxTreeParser.Instance.DeserializeToXmlElement(SyntaxTree);
+        if (DeveloperNote.IsNotNullOrWhiteSpace()) writer.WriteElementString(nameof(DeveloperNote), DeveloperNote);
+        
+        // Writes as "MdSyntaxTree"
+        XElement syntaxTreeElement = XmlMdSyntaxTreeParser.Instance.DeserializeToXmlElement(MdSyntaxTree);
         syntaxTreeElement.WriteTo(writer);
     }
 }

@@ -27,4 +27,8 @@
         <ProjectReference Include="..\Tests.Shared.Infinilore.InfiniBlazor\Tests.Shared.Infinilore.InfiniBlazor.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="_DataSources\Files\" />
+    </ItemGroup>
+
 </Project>

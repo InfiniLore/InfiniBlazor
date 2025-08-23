@@ -1,11 +1,10 @@
-﻿@using InfiniLore.InfiniBlazor
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Markdown
 @using InfiniLore.InfiniBlazor.Toasting
 @using System.Xml.Serialization
 @using Tests.Shared.Infinilore.InfiniBlazor
-@* ------------------------------------------------------------------------------------------------------------------ *@
-@* Imports
-@* ------------------------------------------------------------------------------------------------------------------ *@
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
@@ -44,7 +43,7 @@
         <div class="h-full w-full flex flex-col gap-2">
             <InfiniHeading4 Class="min-h-6">Markdown Input</InfiniHeading4>
 
-            <InfiniTextAreaInput @bind-Value="@OriginalMarkdownInput" Rows="20" Class="font-mono"></InfiniTextAreaInput>
+            <InfiniTextAreaInput @bind-Value="@OriginalMarkdownInput" Rows="22" Class="font-mono"></InfiniTextAreaInput>
 
             <InfiniSpacer/>
             <div class="w-full flex justify-center">
@@ -54,21 +53,21 @@
         
         <InfiniDivider Orientation="@Orientation.Vertical"/>
         
-        <div class="h-full w-full">
+        <div class="h-full w-full mt-3">
             <InfiniTabContainer>
                 @* Expected Syntax Tree Editor (required) *@
                 <InfiniTabPage TabName="Syntax Tree">
-                    <InfiniTextAreaInput @bind-Value="@ExpectedSyntaxTreeString" Rows="20" Class="font-mono w-full"></InfiniTextAreaInput>
+                    <InfiniTextAreaInput @bind-Value="@ExpectedSyntaxTreeString" Rows="22" Class="font-mono w-full"></InfiniTextAreaInput>
                 </InfiniTabPage>
 
                 @* Simplified HTML output editor (optional) *@
                 <InfiniTabPage TabName="Simplified HTML">
-                    <InfiniTextAreaInput @bind-Value="@ExpectedSimpleHtmlString" Rows="20" Class="font-mono w-full"></InfiniTextAreaInput>
+                    <InfiniTextAreaInput @bind-Value="@ExpectedSimpleHtmlString" Rows="22" Class="font-mono w-full"></InfiniTextAreaInput>
                 </InfiniTabPage>
 
                 @* Markdown Output Editor (optional) *@
                 <InfiniTabPage TabName="Markdown">
-                    <InfiniTextAreaInput @bind-Value="@ExpectedMarkdownString" Rows="20" Class="font-mono w-full"></InfiniTextAreaInput>
+                    <InfiniTextAreaInput @bind-Value="@ExpectedMarkdownString" Rows="22" Class="font-mono w-full"></InfiniTextAreaInput>
                 </InfiniTabPage>
             </InfiniTabContainer>
         </div>
@@ -78,7 +77,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
     private const string RootFilePath = "../../";
     private const string TestFolderFromRootPath = "tests/Tests.InfiniLore.InfiniBlazor.Markdown/_DataSources/Files";
@@ -152,11 +150,12 @@
                 return;
             }
 
-            OriginalMarkdownInput = xmlMdTestData.MarkdownString ?? string.Empty;
+            OriginalMarkdownInput = xmlMdTestData.MdString ?? string.Empty;
             ExpectedSimpleHtmlString = xmlMdTestData.SimplifiedHtmlString ?? string.Empty;
+            TestNote = xmlMdTestData.DeveloperNote ?? string.Empty;
             // TestId = xmlMdTestData.Id; // Not needed due to this being a fetch 
             
-            if (xmlMdTestData.SyntaxTree is {} tree) {
+            if (xmlMdTestData.MdSyntaxTree is {} tree) {
                 using MemoryStream memoryStream = new();
                 await MarkdownParser.Xml.DeserializeToXmlStreamAsync(memoryStream, tree);
         
@@ -213,9 +212,10 @@
         
         var xmlData = new XmlMdTestData {
             Id = TestId,
-            MarkdownString = OriginalMarkdownInput,
+            MdString = OriginalMarkdownInput,
             SimplifiedHtmlString = ExpectedSimpleHtmlString,
-            SyntaxTree = MarkdownParser.MarkdownString.SerializeToSyntaxTree(OriginalMarkdownInput)
+            MdSyntaxTree = MarkdownParser.MarkdownString.SerializeToSyntaxTree(OriginalMarkdownInput),
+            DeveloperNote = TestNote
         };
 
         if (!File.Exists(fullFilePath)) {

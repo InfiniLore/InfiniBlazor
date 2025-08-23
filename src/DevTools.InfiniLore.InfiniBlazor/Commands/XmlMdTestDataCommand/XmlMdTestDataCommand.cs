@@ -47,8 +47,8 @@ public partial class XmlMdTestDataCommand : ICliCommand<XmlMdTestDataParameters>
         // Create the new XML test data
         var newTestData = new XmlMdTestData {
             Id = testId,
-            MarkdownString = markdownString,
-            SyntaxTree = syntaxTree
+            MdString = markdownString,
+            MdSyntaxTree = syntaxTree
         };
 
         // Append to file
@@ -75,11 +75,11 @@ public partial class XmlMdTestDataCommand : ICliCommand<XmlMdTestDataParameters>
         }
 
         // Ask for updated information
-        Console.WriteLine($"Existing Markdown: {existingTestData.MarkdownString}");
+        Console.WriteLine($"Existing Markdown: {existingTestData.MdString}");
         Console.Write("Enter new Markdown string (leave empty to keep existing): ");
         string? newMarkdown = Console.ReadLine()?.Trim();
         if (!string.IsNullOrWhiteSpace(newMarkdown)) {
-            existingTestData.MarkdownString = newMarkdown;
+            existingTestData.MdString = newMarkdown;
         }
 
         // Save the updated list back to the file

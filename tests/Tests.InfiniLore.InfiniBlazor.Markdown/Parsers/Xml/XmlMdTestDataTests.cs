@@ -15,8 +15,8 @@ public class XmlMdTestDataTests {
     private static readonly string FileNameArray = $"{Guid.NewGuid():N}.xml";
     private static XmlMdTestData TestEntry => new() {
         Id = nameof(TestEntry),
-        MarkdownString = "Sample **Markdown**",
-        SyntaxTree = new MdSyntaxTree {
+        MdString = "Sample **Markdown**",
+        MdSyntaxTree = new MdSyntaxTree {
             RootNode = new RootMdSyntaxNode()
                 .WithContent("Sample ")
                 .WithChild(
