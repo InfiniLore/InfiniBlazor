@@ -1,9 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
+using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
+
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class EmptyLineMdSyntaxNode : EmptyMdSyntaxNode<EmptyLineMdSyntaxNode>;
+public sealed class NewLineXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<NewLineMdSyntaxNode>;

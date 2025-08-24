@@ -23,7 +23,7 @@ public class MarkdownDataSources {
             HeadingDataSources.DataSources(),
             HorizontalLineDataSources.DataSources(),
             HtmlDataSources.DataSources(),
-            ItalicDataSources.DataSources(),
+            // ItalicDataSources.DataSources(),
             LinkDataSources.DataSources(),
             ListsDataSources.DataSources(),
             SpecialCharacterDataSources.DataSources(),
@@ -41,3 +41,4 @@ public class MarkdownDataSources {
         return sourcesCombined;
     }
 }
+

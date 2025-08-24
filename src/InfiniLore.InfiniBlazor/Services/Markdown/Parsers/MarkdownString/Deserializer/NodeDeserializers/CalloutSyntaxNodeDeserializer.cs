@@ -41,7 +41,7 @@ public sealed class CalloutSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNo
             for (int index = 0; index < span.Length; index++) {
                 if (index > 0) {
                     builder.Append('>');
-                    if (span[index] is not EmptyLineMdSyntaxNode) builder.Append(' ', node.LeadingSpaces);
+                    if (span[index] is not NewLineMdSyntaxNode) builder.Append(' ', node.LeadingSpaces);
                 }
 
                 IMdSyntaxNode child = span[index];

@@ -15,7 +15,5 @@ public sealed class CodeBlockSyntaxNodeDeserializer : BaseMarkdownStringMdSyntax
         builder.Append('\n');
         builder.Append(node.ContentCode);
         builder.Append("```");
-        
-        if (node.HasNextSibling()) builder.Append('\n');
     }
 }

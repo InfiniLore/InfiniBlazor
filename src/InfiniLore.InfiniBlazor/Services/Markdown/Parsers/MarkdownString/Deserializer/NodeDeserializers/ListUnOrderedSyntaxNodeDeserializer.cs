@@ -26,7 +26,6 @@ public sealed class ListUnOrderedSyntaxNodeDeserializer : BaseMarkdownStringMdSy
             finally {
                 GlobalPools.StringBuilder.Return(localBuilder);
             }
-            if (child.HasNextSibling()) builder.Append('\n');
         }
         
         AppendLastNewLineCorrectly(node, builder);

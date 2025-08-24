@@ -43,7 +43,7 @@ public static class DynamicMdComponentConverterFactory {
         return new DynamicMdComponentConverter {
             NodeToComponentMap =  mapBuilder.ToFrozenDictionary(),
             SkippedComponentTypes = [
-                typeof(EmptyLineMdSyntaxNode)
+                typeof(NewLineMdSyntaxNode)
             ]
         };
     }

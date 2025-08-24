@@ -26,7 +26,7 @@ public static class MarkdownStringMdSyntaxDeserializerFactory {
             .Register<ContentHtmlMdSyntaxNode, ContentHtmlSyntaxNodeDeserializer>(instance)
             .Register<ContentMdSyntaxNode, ContentSyntaxNodeDeserializer>(instance)
             .Register<EmoteMdSyntaxNode, EmoteSyntaxNodeDeserializer>(instance)
-            .Register<EmptyLineMdSyntaxNode, EmptyLineSyntaxNodeDeserializer>(instance)
+            .Register<NewLineMdSyntaxNode, NewLineSyntaxNodeDeserializer>(instance)
             .Register<EscapedCharacterMdSyntaxNode, EscapedCharacterSyntaxNodeDeserializer>(instance)
             .Register<HeadingMdSyntaxNode, HeadingSyntaxNodeDeserializer>(instance)
             .Register<HeadingSimpleMdSyntaxNode, HeadingSimpleSyntaxNodeDeserializer>(instance)

@@ -11,8 +11,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.EmptyLine)]
-public sealed class EmptyLineSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.NewLine)]
+public sealed class NewLineSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
     public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
     
     // -----------------------------------------------------------------------------------------------------------------
@@ -23,5 +23,5 @@ public sealed class EmptyLineSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeS
         IMdSyntaxNode parentNode,
         Match entireMatch,
         MdSyntaxSerializerOrigin parentOrigin
-    ) => parentNode.AddChildNode(EmptyLineMdSyntaxNode.Pool.Get());
+    ) => parentNode.AddChildNode(NewLineMdSyntaxNode.Pool.Get());
 }

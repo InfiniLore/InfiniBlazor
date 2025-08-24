@@ -33,7 +33,7 @@ public static partial class MdRegexLib {
     public static partial Regex SinglelineStructuresRegex { get; }
 
     [GeneratedRegex("""
-          (?<heading>^(?<hLevel>\#{1,6})[\ ]+(?<hText>[^\n]+)\n?)
+          (?<heading>^(?<hLevel>\#{1,6})[\ ]+(?<hText>[^\n]+)$)
         | (?<codeBlock>`{3}(?<cLang>.*?)?\n(?<cBody>[\s\S]*?)`{3})
         | (?<headingSimple>^(?<hsText>.+?)\n(?<hsIdentifier>[\ ]*[-=]{3,}))
         | (?<list>^[^\S\n]*(?<lsId>-|\d+\.)\s+.*(?:\n[^\S\n]+[^\n]+)*(?:\n[^\S\n]*(?:-|\d+\.)\s+.*(?:\n[^\S\n]+[^\n]+)*)*)
@@ -43,10 +43,10 @@ public static partial class MdRegexLib {
             (?<tBody>(?:\n(?:^\|.*\|$))+)
           )
         | (?<callout>
-            ^>\ *(?:\[!(?<clType>[^\|\n]+)(?<clMod>\|[^\n]*)?\](?<clOption>\+|\-)?)\ *(?<clTitle>[^\n]*)
-            (?:\n(?<clBody>>[^\n]*(?:\n>[^\n]*)*))?  
+            ^>\ *(?:\[!(?<clType>[^\|\n]+)(?<clMod>\|[^\n]*)?\](?<clOption>\+|\-)?)\ *(?<clTitle>[^\n]*)$
+            (?:\n(?<clBody>>[^\n]*(?:\n>[^\n]*)*)$)?  
           )
-        | (?<blockQuote>^>\ *(?<bqBody>.+(?:\n>[^\n]*)*))  
+        | (?<blockQuote>^>\ *(?<bqBody>.+(?:\n>[^\n]*)*)$)  
         | (?:
             (?<htmlPre>.+?)?
               (?<htmlBody>
@@ -63,8 +63,8 @@ public static partial class MdRegexLib {
             (?<htmlPost>.+)?
           )
         | (?<horizontalRule>^(?<hr>[\-=]{3,64})\s*$)
-        | (?<paragraph>(?<p>.+?)(?:\n|$))
-        | (?<emptyLine>\n)
+        | (?<paragraph>(?<p>.+?)$)
+        | (?<newLine>\n)
 
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex MultilineStructuresRegex { get; }
@@ -81,7 +81,7 @@ public static partial class MdRegexLib {
         MdRegexGroupNames.Callout,
         MdRegexGroupNames.HtmlBody,
         MdRegexGroupNames.HorizontalRule,
-        MdRegexGroupNames.EmptyLine,
+        MdRegexGroupNames.NewLine,
 
         // Singleline
         MdRegexGroupNames.Escaped,

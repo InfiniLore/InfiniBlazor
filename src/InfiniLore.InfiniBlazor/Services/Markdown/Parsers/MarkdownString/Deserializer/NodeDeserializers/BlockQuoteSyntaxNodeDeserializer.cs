@@ -30,7 +30,7 @@ public sealed class BlockQuoteSyntaxNodeDeserializer : BaseMarkdownStringMdSynta
 
                 // Always emit a blockquote prefix for the next child
                 builder.Append('>');
-                if (child is not EmptyLineMdSyntaxNode) builder.Append(' ', node.LeadingSpaces);
+                if (child is not NewLineMdSyntaxNode) builder.Append(' ', node.LeadingSpaces);
                 justPrefixed = true;
             }
 

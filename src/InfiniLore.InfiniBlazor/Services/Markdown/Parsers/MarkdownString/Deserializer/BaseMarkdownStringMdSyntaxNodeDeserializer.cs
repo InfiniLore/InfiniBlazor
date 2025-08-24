@@ -30,9 +30,8 @@ public abstract class BaseMarkdownStringMdSyntaxNodeDeserializer<TNode> : IMarkd
     }
     
     protected void AppendLastNewLineCorrectly(TNode node, StringBuilder builder) {
-        if (node.TryGetNextSibling(out IMdSyntaxNode? syntaxNode) && syntaxNode is not EmptyLineMdSyntaxNode) builder.Append('\n');
+        if (node.TryGetNextSibling(out IMdSyntaxNode? syntaxNode) && syntaxNode is not NewLineMdSyntaxNode) builder.Append('\n');
     }
     
     protected abstract void Deserialize(TNode node, StringBuilder builder);
-    
 }

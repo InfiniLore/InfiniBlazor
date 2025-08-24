@@ -105,6 +105,6 @@ public sealed class TableSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNode
             builder.Append('|');
         }
         
-        if (node.TryGetNextSibling(out IMdSyntaxNode? syntaxNode) && syntaxNode.Type != typeof(EmptyLineMdSyntaxNode)){ builder.Append('\n');}
+        if (node.TryGetNextSibling(out IMdSyntaxNode? syntaxNode) && syntaxNode.Type != typeof(NewLineMdSyntaxNode)){ builder.Append('\n');}
     }
 }
