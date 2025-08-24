@@ -57,9 +57,9 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <BoldMdSyntaxNode>
-          <ContentMdSyntaxNode></ContentMdSyntaxNode>
+          <ContentMdSyntaxNode>&#032;</ContentMdSyntaxNode>
           <EscapedCharacterMdSyntaxNode>*</EscapedCharacterMdSyntaxNode>
-          <ContentMdSyntaxNode></ContentMdSyntaxNode>
+          <ContentMdSyntaxNode>&#032;</ContentMdSyntaxNode>
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -71,7 +71,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <BoldMdSyntaxNode>
-          <ContentMdSyntaxNode>bold </ContentMdSyntaxNode>
+          <ContentMdSyntaxNode>bold&#032;</ContentMdSyntaxNode>
           <ItalicMdSyntaxNode>
             <ContentMdSyntaxNode>italic</ContentMdSyntaxNode>
           </ItalicMdSyntaxNode>

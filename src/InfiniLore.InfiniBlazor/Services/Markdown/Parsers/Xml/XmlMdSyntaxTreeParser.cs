@@ -6,6 +6,7 @@ using InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
@@ -18,6 +19,14 @@ public class XmlMdSyntaxTreeParser : IXmlMdSyntaxTreeParser {
     private readonly Dictionary<string, Type> _nodeTypes = new();
     
     public static IXmlMdSyntaxTreeParser Instance { get; } = new XmlMdSyntaxTreeParser();
+
+    private static readonly XmlWriterSettings WriterSettings = new() {
+        Encoding = Encoding.UTF8,
+        Indent = true,
+        OmitXmlDeclaration = false,
+        Async = true,
+    };
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
@@ -55,7 +64,7 @@ public class XmlMdSyntaxTreeParser : IXmlMdSyntaxTreeParser {
         RegisterVisitor<UnderlineMdSyntaxNode, UnderlineXmlMdSyntaxNodeVisitor>();
     }
 
-    private void RegisterVisitor<TNode, TVisitor>() where TNode : IMdSyntaxNode where TVisitor : IXmlMdSyntaxNodeVisitor, new() {
+    private void RegisterVisitor<TNode, TVisitor>() where TNode : IMdSyntaxNode where TVisitor : class, IXmlMdSyntaxNodeVisitor, new() {
         _visitors[typeof(TNode)] = new TVisitor();
         _nodeTypes[typeof(TNode).Name] = typeof(TNode);
     }
@@ -81,9 +90,9 @@ public class XmlMdSyntaxTreeParser : IXmlMdSyntaxTreeParser {
         XElement rootElement = DeserializeToXmlElement(tree);
 
         await using var writer = new StreamWriter(stream, Encoding.UTF8, leaveOpen: true);
-
-        // Convert the string to ReadOnlyMemory<char> using AsMemory().
-        await writer.WriteAsync(rootElement.ToString().AsMemory(), ct);
+        await using var xmlWriter = XmlWriter.Create(writer, WriterSettings);
+        await rootElement.WriteToAsync(xmlWriter, ct);
+        await xmlWriter.FlushAsync();
         await writer.FlushAsync(ct);
     }
 

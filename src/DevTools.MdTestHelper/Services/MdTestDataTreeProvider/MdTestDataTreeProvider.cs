@@ -12,7 +12,7 @@ namespace DevTools.MdTestHelper.Services;
 [InjectableSingleton<MdTestDataTreeProvider>]
 public class MdTestDataTreeProvider : IInfiniDataTreeProvider<MdTestDataTree> {
     
-    public async ValueTask<MdTestDataTree?> TryGetDataTreeAsync(object? id = null) {
+    public ValueTask<MdTestDataTree?> TryGetDataTreeAsync(object? id = null) {
         throw new NotImplementedException();
     }
 }
