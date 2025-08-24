@@ -24,6 +24,9 @@ public sealed class BlockQuoteSyntaxNodeDeserializer : BaseMarkdownStringMdSynta
         [9] = "         "
     };
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
     protected override void Deserialize(BlockQuoteMdSyntaxNode node, StringBuilder builder) {
         StringBuilder contentBuilder = GlobalPools.StringBuilder.Get();
         try {

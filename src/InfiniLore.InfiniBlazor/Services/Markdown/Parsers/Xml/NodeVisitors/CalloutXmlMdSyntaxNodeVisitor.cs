@@ -27,7 +27,9 @@ public sealed class CalloutXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Callo
     protected override void SerializeDetails(XElement element, CalloutMdSyntaxNode targetNode) {
         base.SerializeDetails(element, targetNode);
         targetNode.CalloutType = element.Attribute(CalloutType)?.Value ?? string.Empty;
-        targetNode.CollapsedState = (CalloutMdSyntaxNode.CollapseStateOptions)int.Parse(element.Attribute(CollapsedState)?.Value ?? "0");   
+        if (Enum.TryParse(element.Attribute(CollapsedState)?.Value, out CalloutMdSyntaxNode.CollapseStateOptions value)) {
+            targetNode.CollapsedState = value;
+        }
         targetNode.LeadingSpaces = int.Parse(element.Attribute(LeadingSpaces)?.Value ?? "0"); 
     }
 }

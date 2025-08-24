@@ -70,9 +70,13 @@ public class MdTestDataProviderTests {
             .HasCount().GreaterThanOrEqualTo(2)
             .Contains(filePath => filePath == "bold.xml");
     }
-
+    
     [Test]
+    [Arguments("blockquote.xml", 1)]
     [Arguments("bold.xml", 1)]
+    [Arguments("callout.xml", 1)]
+    [Arguments("code_inline.xml", 1)]
+    [Arguments("heading.xml", 1)]
     [Arguments("italic.xml", 1)]
     public async Task TryGetXmlMdTestDataAsync_ReturnsDataSet(string fileName, int minimumExpectedCount) {
         // Arrange

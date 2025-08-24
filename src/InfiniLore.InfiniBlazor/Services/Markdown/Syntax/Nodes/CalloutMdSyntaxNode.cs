@@ -44,8 +44,8 @@ public sealed class CalloutMdSyntaxNode : MdSyntaxNode<CalloutMdSyntaxNode> {
     }
 
     public enum CollapseStateOptions {
-        None,
-        Open,
-        Closed
+        None = 0,
+        Open = 1,
+        Closed = 2
     }
 }
