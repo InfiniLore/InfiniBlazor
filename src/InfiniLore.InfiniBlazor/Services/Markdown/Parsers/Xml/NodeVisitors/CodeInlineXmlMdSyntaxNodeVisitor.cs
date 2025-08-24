@@ -17,7 +17,7 @@ public sealed class CodeInlineXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Co
         base.DeserializeDetails(node, targetElement);
         AddXmlPreserveSpace(targetElement);
         targetElement.SetAttributeValue(nameof(CodeInlineMdSyntaxNode.BackTickCount), node.BackTickCount);
-        targetElement.Value = node.OriginalContentCode;
+        if (node.OriginalContentCode.IsNotNullOrWhiteSpace()) targetElement.Value = node.OriginalContentCode;
     }
 
     protected override void SerializeDetails(XElement element, CodeInlineMdSyntaxNode targetNode) {

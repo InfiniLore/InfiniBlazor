@@ -4,20 +4,145 @@
     <MdString>`code`</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <CodeInlineMdSyntaxNode xml:space="preserve">code</CodeInlineMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">code</CodeInlineMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;code&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>`code`</ExpectedMarkdownString>
   </MdTestData>
-  <MdTestData Id="empty" FileName="code_inline.xml">
+  <MdTestData Id="empty_2" FileName="code_inline.xml">
     <MdString>``</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <CodeInlineMdSyntaxNode xml:space="preserve"></CodeInlineMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1" />
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>``</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="empty_3" FileName="code_inline.xml">
+    <MdString>```</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1" />
+        <ContentMdSyntaxNode xml:space="preserve">`</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;&lt;/code&gt;`&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>```</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="empty_4" FileName="code_inline.xml">
+    <MdString>````</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="2" />
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>````</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="empty_5" FileName="code_inline.xml">
+    <MdString>`````</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="2" />
+        <ContentMdSyntaxNode xml:space="preserve">`</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;&lt;/code&gt;`&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>`````</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="multiple_2" FileName="code_inline.xml">
+    <MdString>Backticks inside inline code: ``Code with `backticks` inside``.</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">Backticks inside inline code: </ContentMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="2">Code with `backticks` inside</CodeInlineMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">.</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;Backticks inside inline code: &lt;code&gt;Code with `backticks` inside&lt;/code&gt;.&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Backticks inside inline code: ``Code with `backticks` inside``.</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="multiple_3" FileName="code_inline.xml">
+    <MdString>Backticks inside inline code: ```Code with `backticks` inside```.</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">Backticks inside inline code: </ContentMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="3">Code with `backticks` inside</CodeInlineMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">.</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;Backticks inside inline code: &lt;code&gt;Code with `backticks` inside&lt;/code&gt;.&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Backticks inside inline code: ```Code with `backticks` inside```.</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="multiple_3offset" FileName="code_inline.xml">
+    <MdString>```outer `inner` outer``</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="2">`outer `inner` outer</CodeInlineMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;`outer `inner` outer&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>```outer `inner` outer``</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="paragraph" FileName="code_inline.xml">
+    <MdString>This is an `example` of some inline code.</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">This is an </ContentMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">example</CodeInlineMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve"> of some inline code.</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;This is an &lt;code&gt;example&lt;/code&gt; of some inline code.&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>This is an `example` of some inline code.</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="paragraph_end" FileName="code_inline.xml">
+    <MdString>This is the `last example`.</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">This is the </ContentMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">last example</CodeInlineMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">.</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;This is the &lt;code&gt;last example&lt;/code&gt;.&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>This is the `last example`.</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="paragraph_multiple" FileName="code_inline.xml">
+    <MdString>"Multiple `inline` `code` segments.</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">"Multiple </ContentMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">inline</CodeInlineMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">code</CodeInlineMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve"> segments.</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;"Multiple &lt;code&gt;inline&lt;/code&gt; &lt;code&gt;code&lt;/code&gt; segments.&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>"Multiple `inline` `code` segments.</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="paragraph_start" FileName="code_inline.xml">
+    <MdString>`code` at the start of the line.</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">code</CodeInlineMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve"> at the start of the line.</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;code&lt;/code&gt; at the start of the line.&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>`code` at the start of the line.</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withEscapedBacktick" FileName="code_inline.xml">
+    <MdString>`\``</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">\`</CodeInlineMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;`&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>`\``</ExpectedMarkdownString>
   </MdTestData>
 </ArrayOfMdTestData>

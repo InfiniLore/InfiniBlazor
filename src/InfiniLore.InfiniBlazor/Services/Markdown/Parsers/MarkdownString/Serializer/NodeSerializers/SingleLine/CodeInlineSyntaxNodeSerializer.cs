@@ -26,12 +26,12 @@ public sealed class CodeInlineSyntaxNodeSerializer : IMarkdownStringMdSyntaxNode
         CodeInlineMdSyntaxNode node = CodeInlineMdSyntaxNode.Pool.Get();
         node.OriginalContentCode = codeValue;
         
-        int backtickCount = 0;
-        foreach (char currentChar in fullOriginalString) {
-            if (currentChar != '`') break;
-            backtickCount++;
-        }
-
+        // Calculate backtick count by comparing full string length to content length
+        int totalLength = fullOriginalString.Length;
+        int contentLength = codeValue?.Length ?? 0;
+        int totalBackticks = totalLength - contentLength;
+        int backtickCount = totalBackticks / 2; // Backticks on one side
+        
         node.BackTickCount = backtickCount;
         parentNode.AddChildNode(node);
     }

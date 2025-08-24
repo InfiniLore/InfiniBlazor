@@ -13,20 +13,15 @@ public static class CodeInlineDataSources {
     // -----------------------------------------------------------------------------------------------------------------
     public static IEnumerable<Func<OldMdTestData>> DataSources() {
 
-        yield return static () => new OldMdTestData(SectionName,
-            "This is an `example` of some inline code.",
-            "<p>This is an <code>example</code> of some inline code.</p>"
-        );
-
-        yield return static () => new OldMdTestData(SectionName,
-            "`\\``",
-            "<p><code>`</code></p>"
-        );
-
-        yield return static () => new OldMdTestData(SectionName,
-            "Here is some `inline code` inside a sentence.",
-            "<p>Here is some <code>inline code</code> inside a sentence.</p>"
-        );
+        // yield return static () => new OldMdTestData(SectionName,
+        //     "This is an `example` of some inline code.",
+        //     "<p>This is an <code>example</code> of some inline code.</p>"
+        // );
+        //
+        // yield return static () => new OldMdTestData(SectionName,
+        //     "`\\``",
+        //     "<p><code>`</code></p>"
+        // );
 
         yield return static () => new OldMdTestData(SectionName,
             "`code` at the start of the line.",
