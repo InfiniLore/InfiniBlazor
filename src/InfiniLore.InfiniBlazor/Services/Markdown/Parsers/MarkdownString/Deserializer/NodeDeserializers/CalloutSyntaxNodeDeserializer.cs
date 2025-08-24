@@ -65,7 +65,5 @@ public sealed class CalloutSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNo
                 }
             }
         }
-
-        AppendLastNewLineCorrectly(node, builder);
     }
 }

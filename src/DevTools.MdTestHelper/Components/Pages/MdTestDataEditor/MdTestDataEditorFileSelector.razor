@@ -24,8 +24,8 @@
     else {
         <div class="text-(--text) text-lg font-semibold mb-2">Test Data Files</div>
 
-        <div class="flex flex-col gap-2 overflow-y-auto infini-scrollbar">
-            @foreach (var fileName in _fileNames) {
+        <div class="flex flex-col gap-2 overflow-y-auto infini-scrollbar pr-1">
+            @foreach (string fileName in _fileNames) {
                 <div class="rounded-lg border border-(--border)">
                     <!-- File Header -->
                     <div class="p-3 border-b border-(--border) hover:bg-slate-750 transition-colors">

@@ -27,7 +27,5 @@ public sealed class ListOrderedSyntaxNodeDeserializer : BaseMarkdownStringMdSynt
                 GlobalPools.StringBuilder.Return(localBuilder);
             }
         }
-        
-        AppendLastNewLineCorrectly(node, builder);
     }
 }
