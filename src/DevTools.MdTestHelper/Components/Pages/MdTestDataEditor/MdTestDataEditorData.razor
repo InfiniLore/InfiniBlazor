@@ -27,9 +27,11 @@
         <InfiniTextAreaInput Label="Added Note" @bind-Value="DeveloperNote" class="h-24"/>
 
         <div class="w-full flex justify-center gap-2">
-            <InfiniButton Variant="ButtonVariant.Default" OnClick="@OnFetchClicked">Fetch</InfiniButton>
-            <InfiniButton Variant="ButtonVariant.Default" Color="Color.Green" OnClick="@OnSaveClicked">Save</InfiniButton>
-            <InfiniButton Variant="ButtonVariant.Default" Color="Color.Red" OnClick="@OnDeleteClicked">Delete</InfiniButton>
+            <InfiniButton IconName="@LucideNames.BrushCleaning" Variant="ButtonVariant.Default" OnClick="@OnClearAsync">Clear</InfiniButton>
+            <InfiniButton IconName="@LucideNames.Search" Variant="ButtonVariant.Default" OnClick="@OnFetchAsync">Fetch</InfiniButton>
+            <InfiniSpacer/>
+            <InfiniButton IconName="@LucideNames.Save" Variant="ButtonVariant.Default" Color="Color.Green" OnClick="@OnSaveAsync">Save</InfiniButton>
+            <InfiniButton IconName="@LucideNames.Trash2" Variant="ButtonVariant.Default" Color="Color.Red" OnClick="@OnDeleteAsync">Delete</InfiniButton>
         </div>
     </div>
 
@@ -149,7 +151,7 @@
         return Task.CompletedTask;
     }
 
-    private async Task OnFetchClicked() {
+    private async Task OnFetchAsync() {
         List<MdTestData>? dataList = await MdTestDataProvider.TryGetXmlMdTestDataAsync(FileName);
         if (dataList is null) {
             await ToastingProvider.PublishToastAsync(
@@ -188,7 +190,7 @@
         await ToastingProvider.PublishToastAsync(successData, ToastAppearance.Success);
     }
 
-    private async Task OnSaveClicked() {
+    private async Task OnSaveAsync() {
         if (TestId.IsNullOrWhiteSpace()) {
             var toastData = new ToastingData("Test Id was not valid", TestId);
             await ToastingProvider.PublishToastAsync(toastData, ToastAppearance.Warning);
@@ -217,7 +219,7 @@
         );
     }
     
-    private async Task OnDeleteClicked() {
+    private async Task OnDeleteAsync() {
         
         if (!await MdTestDataProvider.TryDeleteAsync(FileName, TestId)) {
             var toastData = new ToastingData("Could not delete Test", TestId);
@@ -259,7 +261,23 @@
         );
 
         // Re-fetch data
-        await OnFetchClicked();
+        await OnFetchAsync();
+    }
+
+    private async Task OnClearAsync() {
+        FileName = string.Empty;
+        TestId = string.Empty;
+        DeveloperNote = string.Empty;
+        MdString = string.Empty;
+        ExpectedHtmlStringSimplified = string.Empty;
+        ExpectedMarkdownString = string.Empty;
+        ExpectedSyntaxTreeString = string.Empty;
+        TestDataOrigin = null;
+        
+        await ToastingProvider.PublishToastAsync(
+            new ToastingData("Test Cleared"),
+            ToastAppearance.Info
+        );
     }
     
 }
