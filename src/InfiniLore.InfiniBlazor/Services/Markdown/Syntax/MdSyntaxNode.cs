@@ -226,10 +226,9 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable, IEquatable<T
     // ReSharper disable once NonReadonlyMemberInGetHashCode
     public override int GetHashCode() => HashCode.Combine(_id, ChildCount);
 
-    public override bool Equals(object? obj) {
-        if (obj is not T casted) return false;
-        return Equals(casted);   
-    }
+    public bool Equals(IMdSyntaxNode? other) =>  Equals(other as T);
+    public override bool Equals(object? other) => Equals(other as T);
+    
     public virtual bool Equals(T? other) {
         if (other is null) return false;
         if (ChildCount != other.ChildCount) return false;
