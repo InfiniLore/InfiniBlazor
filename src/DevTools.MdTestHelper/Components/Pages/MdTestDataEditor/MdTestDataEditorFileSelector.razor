@@ -24,17 +24,16 @@
     else {
         <div class="text-(--text) text-lg font-semibold mb-2">Test Data Files</div>
 
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2 overflow-y-auto infini-scrollbar">
             @foreach (var fileName in _fileNames) {
                 <div class="rounded-lg border border-(--border)">
                     <!-- File Header -->
-                    <div class="p-3 border-b border-(--border) cursor-pointer hover:bg-slate-750 transition-colors"
-                         @onclick="() => OnFileClick(fileName)">
+                    <div class="p-3 border-b border-(--border) hover:bg-slate-750 transition-colors">
                         <div class="flex items-center justify-between">
                             <span class="text-(--text) font-medium">@fileName</span>
-                        <InfiniButton
-                            IconName="@(IsFileExpanded(fileName) ? LucideNames.ChevronDown : LucideNames.ChevronRight)"
-                            OnClick="@(() => ToggleFileExpanded(fileName))"/>
+                            <InfiniButton
+                                IconName="@(IsFileExpanded(fileName) ? LucideNames.ChevronDown : LucideNames.ChevronRight)"
+                                OnClick="@(() => ToggleFileExpanded(fileName))"/>
                         </div>
                     </div>
 
@@ -104,6 +103,40 @@
         }
     }
 
+    public async Task RefreshFileData(string? specificFileName = null) {
+        if (specificFileName != null) {
+            // Refresh specific file data
+            if (!fileTestData.Remove(specificFileName)) return;
+            if (IsFileExpanded(specificFileName)) await LoadFileTestData(specificFileName);
+            return;
+        }
+
+        // Refresh all files
+        try {
+            _isLoading = true;
+            StateHasChanged();
+
+            _fileNames = MdTestDataProvider.TryGetFileNames();
+            fileTestData.Clear();
+
+            // Reload expanded files
+            List<string> expandedFilesCopy = expandedFiles.ToList();
+            foreach (string fileName in expandedFilesCopy) {
+                if (_fileNames?.Contains(fileName) == true) {
+                    await LoadFileTestData(fileName);
+                }
+                else {
+                    expandedFiles.Remove(fileName);
+                }
+            }
+        }
+        finally {
+            _isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+
     private bool IsFileExpanded(string fileName) => expandedFiles.Contains(fileName);
 
     private async Task ToggleFileExpanded(string fileName) {
@@ -135,11 +168,6 @@
             loadingFiles.Remove(fileName);
             StateHasChanged();
         }
-    }
-
-    private async Task OnFileClick(string fileName) {
-        Logger.Information("file {fileName} clicked", fileName);
-        await OnFileSelected.InvokeAsync(fileName);
     }
 
     private async Task OnTestClick(string fileName, MdTestData testData) {

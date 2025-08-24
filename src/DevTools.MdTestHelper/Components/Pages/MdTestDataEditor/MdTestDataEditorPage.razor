@@ -14,12 +14,13 @@
 <InfiniPage Title="Test Data Editor" Class="px-4 py-4">
     <div class="grid grid-cols-[2fr_1fr] w-full h-full gap-4">
         <InfiniSection Class="h-full">
-            <MdTestDataEditorData @ref="_editorDataComponent"
-                                  FileName="@_selectedFileName"
-                                  TestId="@_selectedTestId"/>
+            <MdTestDataEditorData
+                @ref="_editorDataComponent"
+                OnSave="@HandleOnSave"/>
         </InfiniSection>
         <InfiniSection Class="h-full" Location="SectionLocation.Right">
             <MdTestDataEditorFileSelector
+                @ref="_fileSelectorComponent"
                 OnFileSelected="@HandleFileSelected"
                 OnTestSelected="@HandleTestSelected"/>
         </InfiniSection>
@@ -32,28 +33,33 @@
 
 @code {
     private MdTestDataEditorData? _editorDataComponent;
-    private string _selectedFileName = string.Empty;
-    private string _selectedTestId = string.Empty;
+    private MdTestDataEditorFileSelector? _fileSelectorComponent;
 
     private void HandleFileSelected(string fileName) {
-        _selectedFileName = fileName;
-        _selectedTestId = string.Empty;// Clear test selection when file changes
+        // _selectedFileName = fileName;
+        // _selectedTestId = string.Empty;// Clear test selection when file changes
 
         // Trigger the editor to update
-        StateHasChanged();
+        // StateHasChanged();
     }
 
     private async Task HandleTestSelected((string fileName, string testId) selection) {
-        _selectedFileName = selection.fileName;
-        _selectedTestId = selection.testId;
-
         // Trigger the editor to update and fetch the selected test
         StateHasChanged();
 
         // Automatically fetch the test data
         if (_editorDataComponent != null) {
-            await _editorDataComponent.LoadTestData();
+            await _editorDataComponent.LoadTestData(selection.fileName, selection.testId);
         }
+    }
+
+    private async Task HandleOnSave() {
+        // Refresh the file selector to show updated data
+        if (_fileSelectorComponent != null) {
+            await _fileSelectorComponent.RefreshFileData();
+        }
+
+        await InvokeAsync(StateHasChanged);
     }
 }
 

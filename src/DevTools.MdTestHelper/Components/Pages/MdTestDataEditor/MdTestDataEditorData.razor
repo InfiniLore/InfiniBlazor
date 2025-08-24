@@ -111,6 +111,8 @@
 @code {
     [Parameter] public string FileName { get; set; } = string.Empty;
     [Parameter] public string TestId { get; set; } = string.Empty;
+    [Parameter] public EventCallback OnSave { get; set; }
+    
     public string? DeveloperNote { get; set; } = string.Empty;
 
     private string MdString { get; set; } = string.Empty;
@@ -122,21 +124,15 @@
     private string? ExpectedMarkdownString { get; set; } = string.Empty;
 
     public bool FreezeAutoUpdates { get; set; }
-
-
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public async Task LoadTestData() {
+    public async Task LoadTestData(string fileName, string testId) {
+        FileName = fileName;
+        TestId = testId;
+        
         if (!FileName.IsNullOrWhiteSpace() && !TestId.IsNullOrWhiteSpace()) {
             await OnFetchAsync();
-        }
-    }
-
-    protected override async Task OnParametersSetAsync() {
-        // Auto-load when parameters change from external source
-        if (!FileName.IsNullOrWhiteSpace() && !TestId.IsNullOrWhiteSpace()) {
-            await LoadTestData();
         }
     }
 
@@ -208,9 +204,6 @@
         ExpectedMarkdownString = testData.ExpectedMarkdownString;
 
         TestDataOrigin = testData;
-
-        var successData = new ToastingData("File loaded successfully", FileName);
-        await ToastingProvider.PublishToastAsync(successData, ToastAppearance.Success);
     }
 
     private async Task OnSaveAsync() {
@@ -240,6 +233,9 @@
             new ToastingData("Test was saved", TestId),
             ToastAppearance.Success
         );
+        
+        // Notify parent component about the rename
+        await OnSave.InvokeAsync();
     }
 
     private async Task OnDeleteAsync() {
@@ -263,6 +259,9 @@
             new ToastingData("Test was Deleted", TestId),
             ToastAppearance.Success
         );
+        
+        // Notify parent component about the rename
+        await OnSave.InvokeAsync();
     }
 
     private async Task OnRenameClickedAsync() {
@@ -285,6 +284,9 @@
 
         // Re-fetch data
         await OnFetchAsync();
+        
+        // Notify parent component about the rename
+        await OnSave.InvokeAsync();
     }
 
     private async Task OnClearAsync() {
