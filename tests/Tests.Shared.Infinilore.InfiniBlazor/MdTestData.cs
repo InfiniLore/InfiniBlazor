@@ -24,6 +24,8 @@ public class MdTestData : IXmlSerializable {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public override string ToString() => $"{FileName}/{Id}{(DeveloperNote.IsNotNullOrWhiteSpace() ? $" - '{DeveloperNote}'" : string.Empty)}"; 
+    
     public XmlSchema? GetSchema() => null;
 
     public void ReadXml(XmlReader reader) {

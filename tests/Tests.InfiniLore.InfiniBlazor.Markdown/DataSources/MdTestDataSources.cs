@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using System.Runtime.CompilerServices;
 using Tests.Shared.Infinilore.InfiniBlazor;
 
@@ -9,7 +10,19 @@ namespace Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdTestDataSources {
-    public static async IAsyncEnumerable<Func<MdTestData>> GetAsyncTestData([EnumeratorCancellation] CancellationToken ct = default) {
+    public static IEnumerable<Func<MdTestData>> GetBlankTest() {
+        yield return () => new MdTestData {
+            FileName = "_",
+            Id = "_",
+            MdString = "",
+            MdSyntaxTree = new MdSyntaxTree(),
+            DeveloperNote = "Ensure Test is at least ran once to exist in the view",
+            ExpectedHtmlStringSimplified = "",
+            ExpectedMarkdownString = ""       
+        };
+    }
+    
+    public static async IAsyncEnumerable<Func<MdTestData>> GetTestDataAsync([EnumeratorCancellation] CancellationToken ct = default) {
         string[]? allFiles = MdTestDataProvider.TestInstance.TryGetFileNames();
         if (allFiles is null) {
             Assert.Fail("Could not get file names");
@@ -29,4 +42,26 @@ public class MdTestDataSources {
 
         }
     }
+
+    public static IEnumerable<Func<MdTestData>> GetTestData() {
+        string[]? allFiles = MdTestDataProvider.TestInstance.TryGetFileNames();
+        if (allFiles is null) {
+            Assert.Fail("Could not get file names");
+            yield break;
+        }
+        
+        foreach (string file in allFiles) {
+            List<MdTestData>? dataEntries = MdTestDataProvider.TestInstance.TryGetXmlMdTestData(file);
+            if (dataEntries is null) {
+                Assert.Fail($"Could not get data for file {file}");
+                yield break;
+            }
+
+            foreach (MdTestData dataEntry in dataEntries) {
+                yield return () => dataEntry;
+            }
+
+        }
+    }
+    
 }

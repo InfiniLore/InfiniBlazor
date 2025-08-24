@@ -18,7 +18,7 @@ public class MdTestDataProvider(ILogger<MdTestDataProvider> logger) {
     private const string RootFilePath = "../../";
     private const string TestFolderFromRootPath = "tests/Tests.InfiniLore.InfiniBlazor.Markdown/DataSources/Files";
 
-    private string TestFolder { get; init; } = Path.GetFullPath(Path.Combine(RootFilePath, TestFolderFromRootPath));
+    internal string TestFolder { get; init; } = Path.GetFullPath(Path.Combine(RootFilePath, TestFolderFromRootPath));
 
     public static readonly MdTestDataProvider TestInstance = new(Substitute.For<ILogger<MdTestDataProvider>>()) {
         TestFolder = Path.GetFullPath(Path.Combine("../../../../../", TestFolderFromRootPath))
