@@ -15,4 +15,7 @@ public sealed class HeadingMdSyntaxNode : MdSyntaxNode<HeadingMdSyntaxNode> {
         Level = 0;
         return base.TryReset();
     }
+    
+    public override bool Equals(HeadingMdSyntaxNode? other) => base.Equals(other)
+        && Level == other.Level;
 }

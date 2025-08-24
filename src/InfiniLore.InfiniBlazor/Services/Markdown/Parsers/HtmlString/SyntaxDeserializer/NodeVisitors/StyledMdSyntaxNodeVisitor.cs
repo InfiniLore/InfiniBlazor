@@ -194,12 +194,12 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 break;
             }
 
-            case TableRowMdSyntaxNode when node.Parent is TableMdSyntaxNode tableNode && tableNode.GetChildAt(0) == node: {
+            case TableRowMdSyntaxNode when node.Parent is TableMdSyntaxNode tableNode && Equals(tableNode.GetChildAt(0), node): {
                 builder.Append("<thead class=\"sticky top-0 infini-bg-(--table-header) border-(--border) z-10 border-b\"><tr>");
                 break;
             }
 
-            case TableRowMdSyntaxNode when node.Parent is TableMdSyntaxNode tableNode && tableNode.GetChildAt(1) == node: {
+            case TableRowMdSyntaxNode when node.Parent is TableMdSyntaxNode tableNode && Equals(tableNode.GetChildAt(1), node): {
                 builder.Append("<tbody><tr class=\"group infini-bg-(--table-row) hover:infini-bg-(--table-row-hover) transition h-4\">");
                 break;
             }
@@ -209,7 +209,7 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 break;
             }
 
-            case TableCellMdSyntaxNode when node.Parent is TableRowMdSyntaxNode { Parent: TableMdSyntaxNode tableNode } rowNode && tableNode.GetChildAt(0) == rowNode: {
+            case TableCellMdSyntaxNode when node.Parent is TableRowMdSyntaxNode { Parent: TableMdSyntaxNode tableNode } rowNode && Equals(tableNode.GetChildAt(0), rowNode): {
                 builder.Append("<th class=\"p-4\">");
                 break;
             }
@@ -449,7 +449,7 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 break;
             }
 
-            case TableRowMdSyntaxNode when node.Parent is TableMdSyntaxNode tableNode && tableNode.GetChildAt(0) == node: {
+            case TableRowMdSyntaxNode when node.Parent is TableMdSyntaxNode tableNode && Equals(tableNode.GetChildAt(0), node): {
                 builder.Append("</tr></thead>");
                 break;
             }
@@ -459,7 +459,7 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 break;
             }
 
-            case TableCellMdSyntaxNode when node.Parent is TableRowMdSyntaxNode { Parent: TableMdSyntaxNode tableNode } rowNode && tableNode.GetChildAt(0) == rowNode: {
+            case TableCellMdSyntaxNode when node.Parent is TableRowMdSyntaxNode { Parent: TableMdSyntaxNode tableNode } rowNode && Equals(tableNode.GetChildAt(0), rowNode): {
                 builder.Append("</th>");
                 break;
             }

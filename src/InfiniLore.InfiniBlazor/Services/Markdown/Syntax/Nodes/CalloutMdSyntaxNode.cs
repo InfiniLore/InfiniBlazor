@@ -43,6 +43,11 @@ public sealed class CalloutMdSyntaxNode : MdSyntaxNode<CalloutMdSyntaxNode> {
         return base.TryReset();
     }
 
+    public override bool Equals(CalloutMdSyntaxNode? other) => base.Equals(other)
+        && LeadingSpaces == other.LeadingSpaces
+        && CollapsedState == other.CollapsedState
+        && CalloutType == other.CalloutType;
+
     public enum CollapseStateOptions {
         None = 0,
         Open = 1,

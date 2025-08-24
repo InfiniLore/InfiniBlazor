@@ -15,4 +15,7 @@ public sealed class HeadingSimpleMdSyntaxNode : MdSyntaxNode<HeadingSimpleMdSynt
         ContentIdentifier = string.Empty;
         return base.TryReset();
     }
+    
+    public override bool Equals(HeadingSimpleMdSyntaxNode? other) => base.Equals(other)
+        && ContentIdentifier == other.ContentIdentifier;
 }

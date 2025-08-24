@@ -1,15 +1,25 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
+
+namespace Tests.InfiniLore.InfiniBlazor.Markdown.Syntax;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMdSyntaxTree : IDisposable, IEquatable<IMdSyntaxTree> {
-    IMdSyntaxNode RootNode { get; }
-
-    IEnumerable<IMdSyntaxNode> VisitTopLevelNodes();
-    IEnumerable<IMdSyntaxNode> VisitNodesBreadthFirst();
-    IEnumerable<IMdSyntaxNode> VisitNodesDeepestFirst();
+public class MdSyntaxNodeEqualityTests {
+    
+    [Test]
+    public async Task Empty_ShouldBeEqual() {
+        // Arrange
+        var paragraph1 = new ParagraphMdSyntaxNode();
+        var paragraph2 = new ParagraphMdSyntaxNode();
+        
+        // Act
+        bool result = paragraph1.Equals(paragraph2);
+        
+        // Assert
+        await Assert.That(result).IsTrue();
+    }
 }

@@ -12,9 +12,11 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
+public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable, IEquatable<T>
     where T : MdSyntaxNode<T>, new() 
 {
+    private readonly Guid _id = Guid.CreateVersion7();
+    
     private const int ChildrenMinimumCapacity = 2;
     public int ChildCount { get; protected set; }
     protected virtual IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(ChildrenMinimumCapacity);
@@ -94,7 +96,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
         
         ReadOnlySpan<IMdSyntaxNode> span = Parent.GetChildrenSpan();
         for (int i = 0; i < span.Length; i++) {
-            if (span[i] != this) continue;
+            if (!Equals(span[i], this)) continue;
             if (i + 1 >= span.Length) return false;
             mdSyntaxNode = span[i + 1];
             return true;
@@ -108,7 +110,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
         if (Parent is null) return false;
         ReadOnlySpan<IMdSyntaxNode> span = Parent.GetChildrenSpan();
         for (int i = 0; i < span.Length; i++) {
-            if (span[i] != this) continue;
+            if (!Equals(span[i], this)) continue;
             return i + 1 < span.Length;
         }
         
@@ -219,6 +221,31 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable
         }
         
         return true;
+    }
+
+    // ReSharper disable once NonReadonlyMemberInGetHashCode
+    public override int GetHashCode() => HashCode.Combine(_id, ChildCount);
+
+    public override bool Equals(object? obj) {
+        if (obj is not T casted) return false;
+        return Equals(casted);   
+    }
+    public virtual bool Equals(T? other) {
+        if (other is null) return false;
+        if (ChildCount != other.ChildCount) return false;
+
+        ReadOnlySpan<IMdSyntaxNode> span = other.GetChildrenSpan();
+        for (int i = 0; i < ChildCount; i++) {
+            if (!ChildNodes[i].Equals(span[i])) return false; 
+        }
+        
+        if (Depth != other.Depth) return false;
+        
+        if (Parent is null && other.Parent is not null) return false;
+        if (Parent is not null && other.Parent is null) return false;
+        
+        if (Type != other.Type) return false;
+        return Equals(Modifier, other.Modifier);
     }
 }
 

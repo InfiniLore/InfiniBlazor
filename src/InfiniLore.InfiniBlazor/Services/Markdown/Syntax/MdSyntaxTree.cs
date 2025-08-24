@@ -170,4 +170,14 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     public void Dispose() {
         ReturnToPool();
     }
+    
+    public override int GetHashCode() => HashCode.Combine(RootNode);
+    public override bool Equals(object? obj) {
+        if (obj is not MdSyntaxTree casted) return false;
+        return Equals(casted);   
+    }
+    public bool Equals(IMdSyntaxTree? other) {
+        if (other is null) return false;
+        return RootNode.Equals(other.RootNode);
+    }
 }

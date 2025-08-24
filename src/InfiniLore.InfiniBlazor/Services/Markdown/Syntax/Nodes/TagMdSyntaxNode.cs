@@ -15,4 +15,7 @@ public sealed class TagMdSyntaxNode : EmptyMdSyntaxNode<TagMdSyntaxNode> {
         ContentTag = string.Empty;
         return base.TryReset();
     }
+    
+    public override bool Equals(TagMdSyntaxNode? other) => base.Equals(other)
+        && ContentTag == other.ContentTag;
 }

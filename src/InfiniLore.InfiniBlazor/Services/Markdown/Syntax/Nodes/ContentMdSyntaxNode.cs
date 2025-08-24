@@ -16,4 +16,7 @@ public sealed class ContentMdSyntaxNode : EmptyMdSyntaxNode<ContentMdSyntaxNode>
         Content = string.Empty;
         return base.TryReset();
     }
+    
+    public override bool Equals(ContentMdSyntaxNode? other) => base.Equals(other)
+        && Content == other.Content;
 }

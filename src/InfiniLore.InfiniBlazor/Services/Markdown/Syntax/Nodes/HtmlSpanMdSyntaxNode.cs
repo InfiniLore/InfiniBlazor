@@ -18,4 +18,8 @@ public sealed class HtmlSpanMdSyntaxNode : MdSyntaxNode<HtmlSpanMdSyntaxNode> {
         Attributes = string.Empty;
         return base.TryReset();
     }
+    
+    public override bool Equals(HtmlSpanMdSyntaxNode? other) => base.Equals(other)
+        && TagValue == other.TagValue
+        && Attributes == other.Attributes;
 }

@@ -165,12 +165,12 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 break;
             }
 
-            case TableRowMdSyntaxNode when node.Parent is TableMdSyntaxNode tableNode && tableNode.GetChildAt(0) == node: {
+            case TableRowMdSyntaxNode when node.Parent is TableMdSyntaxNode tableNode && Equals(tableNode.GetChildAt(0), node): {
                 builder.Append("<thead><tr>");
                 break;
             }
 
-            case TableRowMdSyntaxNode when node.Parent is TableMdSyntaxNode tableNode && tableNode.GetChildAt(1) == node: {
+            case TableRowMdSyntaxNode when node.Parent is TableMdSyntaxNode tableNode && Equals(tableNode.GetChildAt(1), node): {
                 builder.Append("<tbody><tr>");
                 break;
             }
@@ -180,7 +180,7 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 break;
             }
 
-            case TableCellMdSyntaxNode when node.Parent is TableRowMdSyntaxNode { Parent: TableMdSyntaxNode tableNode } rowNode && tableNode.GetChildAt(0) == rowNode: {
+            case TableCellMdSyntaxNode when node.Parent is TableRowMdSyntaxNode { Parent: TableMdSyntaxNode tableNode } rowNode && Equals(tableNode.GetChildAt(0), rowNode): {
                 builder.Append("<th>");
                 break;
             }
@@ -397,7 +397,7 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 break;
             }
 
-            case TableRowMdSyntaxNode when node.Parent is TableMdSyntaxNode tableNode && tableNode.GetChildAt(0) == node: {
+            case TableRowMdSyntaxNode when node.Parent is TableMdSyntaxNode tableNode && Equals(tableNode.GetChildAt(0), node): {
                 builder.Append("</tr></thead>");
                 break;
             }
@@ -407,7 +407,7 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 break;
             }
 
-            case TableCellMdSyntaxNode when node.Parent is TableRowMdSyntaxNode { Parent: TableMdSyntaxNode tableNode } rowNode && tableNode.GetChildAt(0) == rowNode: {
+            case TableCellMdSyntaxNode when node.Parent is TableRowMdSyntaxNode { Parent: TableMdSyntaxNode tableNode } rowNode && Equals(tableNode.GetChildAt(0), rowNode): {
                 builder.Append("</th>");
                 break;
             }

@@ -4,6 +4,7 @@
 using InfiniLore.InfiniBlazor;
 using InfiniLore.InfiniBlazor.TextEditor;
 using Tests.InfiniLore.InfiniBlazor.DataSources.TextEditor;
+using Tests.Shared.Infinilore.InfiniBlazor;
 
 namespace Tests.InfiniLore.InfiniBlazor.Services.TextEditor;
 // ---------------------------------------------------------------------------------------------------------------------

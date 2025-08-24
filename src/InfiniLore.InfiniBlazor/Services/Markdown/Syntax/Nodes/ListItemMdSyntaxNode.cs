@@ -20,4 +20,9 @@ public sealed class ListItemMdSyntaxNode : MdSyntaxNode<ListItemMdSyntaxNode> {
         OriginalCheckMarker = string.Empty;
         return base.TryReset();
     }
+    
+    public override bool Equals(ListItemMdSyntaxNode? other) => base.Equals(other)
+        && IsCheckable == other.IsCheckable
+        && Index == other.Index
+        && OriginalCheckMarker == other.OriginalCheckMarker;
 }

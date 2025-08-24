@@ -19,4 +19,8 @@ public sealed class CodeInlineMdSyntaxNode : EmptyMdSyntaxNode<CodeInlineMdSynta
         BackTickCount = 0;
         return base.TryReset();
     }
+
+    public override bool Equals(CodeInlineMdSyntaxNode? other) => base.Equals(other)
+        && OriginalContentCode == other.OriginalContentCode
+        && BackTickCount == other.BackTickCount;
 }

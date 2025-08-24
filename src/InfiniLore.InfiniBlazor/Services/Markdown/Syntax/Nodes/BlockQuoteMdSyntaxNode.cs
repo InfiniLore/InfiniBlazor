@@ -16,4 +16,7 @@ public sealed class BlockQuoteMdSyntaxNode : MdSyntaxNode<BlockQuoteMdSyntaxNode
         LeadingSpaces = 0;
         return base.TryReset();
     }
+
+    public override bool Equals(BlockQuoteMdSyntaxNode? other) => base.Equals(other) 
+        && LeadingSpaces == other.LeadingSpaces ;
 }

@@ -27,7 +27,7 @@ public class MarkdownStringTests(IMarkdownParser parser) {
         // Assert
         await Assert.That(foundTree)
             .IsNotNull()
-            .IsEquivalentTo(expectedOutput);
+            .IsEqualTo(expectedOutput);
     }
     
     [Test]
@@ -46,6 +46,6 @@ public class MarkdownStringTests(IMarkdownParser parser) {
         // Assert
         await Assert.That(foundOutput)
             .IsNotNull()
-            .IsEquivalentTo(expectedOutput);
+            .IsEqualTo(expectedOutput);
     }
 }

@@ -8,7 +8,11 @@
 
 &gt; three lines
 &gt; three lines
-&gt; three lines</MdString>
+&gt; three lines
+
+&gt; four lines
+&gt; four lines
+&gt; four lines</MdString>
     <MdSyntaxTree>
       <BlockQuoteMdSyntaxNode LeadingSpaces="1">
         <ParagraphMdSyntaxNode>
@@ -41,8 +45,23 @@
           <ContentMdSyntaxNode xml:space="preserve">three lines</ContentMdSyntaxNode>
         </ParagraphMdSyntaxNode>
       </BlockQuoteMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <BlockQuoteMdSyntaxNode LeadingSpaces="1">
+        <ParagraphMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">four lines</ContentMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+        <NewLineMdSyntaxNode />
+        <ParagraphMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">four lines</ContentMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+        <NewLineMdSyntaxNode />
+        <ParagraphMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">four lines</ContentMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+      </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;One line&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;two lines&lt;/p&gt;&lt;p&gt;two lines&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;three lines&lt;/p&gt;&lt;p&gt;three lines&lt;/p&gt;&lt;p&gt;three lines&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;One line&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;two lines&lt;/p&gt;&lt;p&gt;two lines&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;three lines&lt;/p&gt;&lt;p&gt;three lines&lt;/p&gt;&lt;p&gt;three lines&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;four lines&lt;/p&gt;&lt;p&gt;four lines&lt;/p&gt;&lt;p&gt;four lines&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>&gt; One line
 
 &gt; two lines
@@ -50,6 +69,142 @@
 
 &gt; three lines
 &gt; three lines
-&gt; three lines</ExpectedMarkdownString>
+&gt; three lines
+
+&gt; four lines
+&gt; four lines
+&gt; four lines</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="edgecase_emptyParagraphAfterText" FileName="blockquote.xml">
+    <MdString>&gt; text
+&gt;</MdString>
+    <MdSyntaxTree>
+      <BlockQuoteMdSyntaxNode LeadingSpaces="1">
+        <ParagraphMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">text</ContentMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+        <NewLineMdSyntaxNode />
+      </BlockQuoteMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;text&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&gt; text
+&gt;</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="edgecase_UnMatchedSpaces" FileName="blockquote.xml">
+    <MdString>&gt; 1
+&gt;&gt; 2
+&gt;&gt;&gt; 3
+
+&gt; 1
+&gt; &gt; 2
+&gt;&gt;&gt; 3
+
+&gt; 1
+&gt; &gt; 2
+&gt;&gt; &gt; 3
+
+&gt; 1
+&gt; &gt; 2
+&gt; &gt; &gt; 3</MdString>
+    <MdSyntaxTree>
+      <BlockQuoteMdSyntaxNode LeadingSpaces="0">
+        <ParagraphMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve"> 1</ContentMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+        <NewLineMdSyntaxNode />
+        <BlockQuoteMdSyntaxNode LeadingSpaces="0">
+          <ParagraphMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve"> 2</ContentMdSyntaxNode>
+          </ParagraphMdSyntaxNode>
+          <NewLineMdSyntaxNode />
+          <BlockQuoteMdSyntaxNode LeadingSpaces="1">
+            <ParagraphMdSyntaxNode>
+              <ContentMdSyntaxNode xml:space="preserve">3</ContentMdSyntaxNode>
+            </ParagraphMdSyntaxNode>
+          </BlockQuoteMdSyntaxNode>
+        </BlockQuoteMdSyntaxNode>
+      </BlockQuoteMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <BlockQuoteMdSyntaxNode LeadingSpaces="0">
+        <ParagraphMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve"> 1</ContentMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+        <NewLineMdSyntaxNode />
+        <ParagraphMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve"> &gt; 2</ContentMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+        <NewLineMdSyntaxNode />
+        <BlockQuoteMdSyntaxNode LeadingSpaces="0">
+          <BlockQuoteMdSyntaxNode LeadingSpaces="1">
+            <ParagraphMdSyntaxNode>
+              <ContentMdSyntaxNode xml:space="preserve">3</ContentMdSyntaxNode>
+            </ParagraphMdSyntaxNode>
+          </BlockQuoteMdSyntaxNode>
+        </BlockQuoteMdSyntaxNode>
+      </BlockQuoteMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <BlockQuoteMdSyntaxNode LeadingSpaces="0">
+        <ParagraphMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve"> 1</ContentMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+        <NewLineMdSyntaxNode />
+        <ParagraphMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve"> &gt; 2</ContentMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+        <NewLineMdSyntaxNode />
+        <BlockQuoteMdSyntaxNode LeadingSpaces="1">
+          <BlockQuoteMdSyntaxNode LeadingSpaces="1">
+            <ParagraphMdSyntaxNode>
+              <ContentMdSyntaxNode xml:space="preserve">3</ContentMdSyntaxNode>
+            </ParagraphMdSyntaxNode>
+          </BlockQuoteMdSyntaxNode>
+        </BlockQuoteMdSyntaxNode>
+      </BlockQuoteMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <BlockQuoteMdSyntaxNode LeadingSpaces="1">
+        <ParagraphMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">1</ContentMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+        <NewLineMdSyntaxNode />
+        <BlockQuoteMdSyntaxNode LeadingSpaces="1">
+          <ParagraphMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">2</ContentMdSyntaxNode>
+          </ParagraphMdSyntaxNode>
+          <NewLineMdSyntaxNode />
+          <BlockQuoteMdSyntaxNode LeadingSpaces="1">
+            <ParagraphMdSyntaxNode>
+              <ContentMdSyntaxNode xml:space="preserve">3</ContentMdSyntaxNode>
+            </ParagraphMdSyntaxNode>
+          </BlockQuoteMdSyntaxNode>
+        </BlockQuoteMdSyntaxNode>
+      </BlockQuoteMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt; 1&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt; 2&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt; 1&lt;/p&gt;&lt;p&gt; &gt; 2&lt;/p&gt;&lt;blockquote&gt;&lt;blockquote&gt;&lt;p&gt;3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt; 1&lt;/p&gt;&lt;p&gt; &gt; 2&lt;/p&gt;&lt;blockquote&gt;&lt;blockquote&gt;&lt;p&gt;3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;1&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;2&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&gt; 1
+&gt;&gt; 2
+&gt;&gt;&gt; 3
+
+&gt; 1
+&gt; &gt; 2
+&gt;&gt;&gt; 3
+
+&gt; 1
+&gt; &gt; 2
+&gt;&gt; &gt; 3
+
+&gt; 1
+&gt; &gt; 2
+&gt; &gt; &gt; 3</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="empty" FileName="blockquote.xml">
+    <MdString>&gt; </MdString>
+    <MdSyntaxTree>
+      <BlockQuoteMdSyntaxNode LeadingSpaces="-1" />
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&gt; </ExpectedMarkdownString>
   </MdTestData>
 </ArrayOfMdTestData>

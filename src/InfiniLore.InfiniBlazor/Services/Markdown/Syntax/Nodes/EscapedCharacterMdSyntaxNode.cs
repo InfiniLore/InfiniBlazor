@@ -15,4 +15,7 @@ public sealed class EscapedCharacterMdSyntaxNode : EmptyMdSyntaxNode<EscapedChar
         ContentChar = char.MinValue;
         return base.TryReset();
     }
+    
+    public override bool Equals(EscapedCharacterMdSyntaxNode? other) => base.Equals(other)
+        && ContentChar == other.ContentChar;
 }

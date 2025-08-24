@@ -30,6 +30,12 @@ public sealed class BlockQuoteSyntaxNodeDeserializer : BaseMarkdownStringMdSynta
     protected override void Deserialize(BlockQuoteMdSyntaxNode node, StringBuilder builder) {
         StringBuilder contentBuilder = GlobalPools.StringBuilder.Get();
         try {
+            if (node.ChildCount == 0) {
+                builder.Append('>');
+                builder.Append(' ');
+                return;           
+            }
+            
             // First, deserialize all children to get the raw content
             DeserializeChildren(node, contentBuilder);
 
@@ -39,7 +45,7 @@ public sealed class BlockQuoteSyntaxNodeDeserializer : BaseMarkdownStringMdSynta
             ReadOnlySpan<char> content = contentBuilder.ToString().AsSpan();
             int lineStart = 0;
             bool isFirstLine = true;
-            string leadingSpaces = LeadingSpacesCache.GetOrAdd(node.LeadingSpaces, static i => new string(' ', i));
+            string leadingSpaces = LeadingSpacesCache.GetOrAdd(Math.Max(node.LeadingSpaces, 0), static i => new string(' ', i));
 
             for (int i = 0; i <= content.Length; i++) {
                 if (i != content.Length && content[i] != '\n') continue;
@@ -48,7 +54,9 @@ public sealed class BlockQuoteSyntaxNodeDeserializer : BaseMarkdownStringMdSynta
                 if (!isFirstLine) builder.Append('\n');
                 builder.Append('>');
                 builder.Append(leadingSpaces);
-                builder.Append(line);
+
+                if (line.IsEmpty) builder.Append(' ');
+                else builder.Append(line);
 
                 // Move to the next line
                 lineStart = i+1;

@@ -3,12 +3,14 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using DevTools.MdTestHelper.Components;
 using InfiniLore.InfiniBlazor.Config;
+using System.Diagnostics.CodeAnalysis;
 using Tests.Shared.Infinilore.InfiniBlazor;
 
 namespace DevTools.MdTestHelper;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
+[SuppressMessage("Usage", "TUnit0034:Do not declare a main method")]
 public class Program {
     public static void Main(string[] args) {
         // -------------------------------------------------------------------------------------------------------------

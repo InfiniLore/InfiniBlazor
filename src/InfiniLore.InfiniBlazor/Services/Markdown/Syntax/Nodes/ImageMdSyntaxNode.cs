@@ -24,4 +24,8 @@ public sealed partial class ImageMdSyntaxNode : MdSyntaxNode<ImageMdSyntaxNode> 
         
         return base.TryReset();
     }
+    
+    public override bool Equals(ImageMdSyntaxNode? other) => base.Equals(other)
+        && Href == other.Href
+        && OriginalAltText == other.OriginalAltText;
 }

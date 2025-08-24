@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -16,4 +15,7 @@ public sealed class ContentHtmlMdSyntaxNode : MdSyntaxNode<ContentHtmlMdSyntaxNo
         ContentHtml = string.Empty;
         return base.TryReset();
     }
+
+    public override bool Equals(ContentHtmlMdSyntaxNode? other) => base.Equals(other)
+        && ContentHtml == other.ContentHtml;
 }

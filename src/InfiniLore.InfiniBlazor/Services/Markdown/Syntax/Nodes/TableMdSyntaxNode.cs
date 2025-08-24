@@ -67,4 +67,7 @@ public sealed class TableMdSyntaxNode : MdSyntaxNode<TableMdSyntaxNode> {
         HeaderIndex = -1;
         return true;
     }
+    
+    public override bool Equals(TableMdSyntaxNode? other) => base.Equals(other)
+        && HeaderIndex == other.HeaderIndex;
 }
