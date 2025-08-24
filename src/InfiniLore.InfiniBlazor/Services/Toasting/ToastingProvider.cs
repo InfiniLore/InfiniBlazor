@@ -66,7 +66,8 @@ public class ToastingProvider(IToastingConfig toastingConfig, ILogger<ToastingPr
             timer.Elapsed -= handler;
             _ = Task.Run(async () => {
                 try {
-                    await UnpublishToastAsync(data.Id);
+                    // Pass true for isTimerInitiated to avoid calling RequestCloseAsync
+                    await UnpublishToastAsync(data.Id, true);
                 }
                 catch {
                     // optionally log
@@ -76,7 +77,7 @@ public class ToastingProvider(IToastingConfig toastingConfig, ILogger<ToastingPr
                 }
             });
         };
-
+        
         timer.Elapsed += handler;
         RemovalTimers[data.Id] = timer;
         timer.Start();
@@ -88,12 +89,23 @@ public class ToastingProvider(IToastingConfig toastingConfig, ILogger<ToastingPr
 
     private async Task UnpublishToastAsync(Guid id, bool publishEvent) {
         // Attempt to mark this toast as closing; if already closing, skip
-        if (!_closingToasts.TryAdd(id, true)) return;// Already closing, no need to continue
+        if (!_closingToasts.TryAdd(id, true)) {
+            logger.Debug("Toast is already closing: {id}", id);
+            return;
+        }
 
         try {
             if (RemovalTimers.TryRemove(id, out Timer? timer)) timer.Dispose();
-            if (ToastMessageComponents.TryGetValue(id, out IToastMessageBase? component)) await component.RequestCloseAsync().ConfigureAwait(false);
-            if (!Toasts.TryRemove(id, out _)) return; // Already removed, no need to continue
+        
+            // Only call RequestCloseAsync for user-initiated closes, not timer-initiated
+            if (ToastMessageComponents.TryGetValue(id, out IToastMessageBase? component)) {
+                await component.RequestCloseFromProviderAsync().ConfigureAwait(false);
+            }
+        
+            if (!Toasts.TryRemove(id, out _)) {
+                logger.Warning("Could not remove toast: {id}", id);
+                return;           
+            }
 
             var newQueue = new ConcurrentQueue<Guid>();
             foreach (Guid existingId in ToastOrder) {
@@ -113,6 +125,7 @@ public class ToastingProvider(IToastingConfig toastingConfig, ILogger<ToastingPr
             _closingToasts.TryRemove(id, out _);
         }
     }
+
 
     public async Task UnpublishAllToastsAsync() {
         Guid[] ids = ToastOrder.ToArray();

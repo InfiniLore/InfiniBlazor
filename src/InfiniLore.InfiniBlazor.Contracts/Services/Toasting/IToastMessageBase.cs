@@ -7,5 +7,5 @@ namespace InfiniLore.InfiniBlazor.Toasting;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IToastMessageBase {
-    Task RequestCloseAsync();
+    Task RequestCloseFromProviderAsync();
 }
