@@ -12,22 +12,48 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniPage Title="Test Data Editor" Class="px-4 py-4">
-    <InfiniSection Class="h-full w-full">
-        <MdTestDataEditorData/>
-    </InfiniSection>
-    
-    @* <div class="grid grid-cols-[2fr_1fr] w-full h-full gap-4"> *@
-    @*     <InfiniSection Class="h-full"> *@
-    @*         <MdTestDataEditorData/> *@
-    @*     </InfiniSection> *@
-    @*     <InfiniSection Class="h-full" Location="SectionLocation.Right"> *@
-    @*         <MdTestDataEditorFileSelector/> *@
-    @*     </InfiniSection> *@
-    @* </div> *@
+    <div class="grid grid-cols-[2fr_1fr] w-full h-full gap-4">
+        <InfiniSection Class="h-full">
+            <MdTestDataEditorData @ref="_editorDataComponent"
+                                  FileName="@_selectedFileName"
+                                  TestId="@_selectedTestId"/>
+        </InfiniSection>
+        <InfiniSection Class="h-full" Location="SectionLocation.Right">
+            <MdTestDataEditorFileSelector
+                OnFileSelected="@HandleFileSelected"
+                OnTestSelected="@HandleTestSelected"/>
+        </InfiniSection>
+    </div>
 </InfiniPage>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
-    
+    private MdTestDataEditorData? _editorDataComponent;
+    private string _selectedFileName = string.Empty;
+    private string _selectedTestId = string.Empty;
+
+    private void HandleFileSelected(string fileName) {
+        _selectedFileName = fileName;
+        _selectedTestId = string.Empty;// Clear test selection when file changes
+
+        // Trigger the editor to update
+        StateHasChanged();
+    }
+
+    private async Task HandleTestSelected((string fileName, string testId) selection) {
+        _selectedFileName = selection.fileName;
+        _selectedTestId = selection.testId;
+
+        // Trigger the editor to update and fetch the selected test
+        StateHasChanged();
+
+        // Automatically fetch the test data
+        if (_editorDataComponent != null) {
+            await _editorDataComponent.LoadTestData();
+        }
+    }
 }
+

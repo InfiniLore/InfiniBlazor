@@ -22,16 +22,23 @@
     <div class=" flex flex-col gap-2">
         <InfiniTextInput Label="FileName" @bind-Value="FileName"/>
         <InfiniTextInput Label="Test Id" @bind-Value="TestId">
-            <InfiniButton OnClick="@OnRenameClickedAsync" >Rename</InfiniButton>
+            <InfiniButton OnClick="@OnRenameClickedAsync">Rename</InfiniButton>
         </InfiniTextInput>
         <InfiniTextAreaInput Label="Added Note" @bind-Value="DeveloperNote" class="h-24"/>
 
         <div class="w-full flex justify-center gap-2">
-            <InfiniButton IconName="@LucideNames.BrushCleaning" Variant="ButtonVariant.Default" OnClick="@OnClearAsync">Clear</InfiniButton>
-            <InfiniButton IconName="@LucideNames.Search" Variant="ButtonVariant.Default" OnClick="@OnFetchAsync">Fetch</InfiniButton>
+            <InfiniButton IconName="@LucideNames.BrushCleaning" Variant="ButtonVariant.Default" OnClick="@OnClearAsync">
+                Clear
+            </InfiniButton>
+            <InfiniButton IconName="@LucideNames.Search" Variant="ButtonVariant.Default" OnClick="@OnFetchAsync">Fetch
+            </InfiniButton>
             <InfiniSpacer/>
-            <InfiniButton IconName="@LucideNames.Save" Variant="ButtonVariant.Default" Color="Color.Green" OnClick="@OnSaveAsync">Save</InfiniButton>
-            <InfiniButton IconName="@LucideNames.Trash2" Variant="ButtonVariant.Default" Color="Color.Red" OnClick="@OnDeleteAsync">Delete</InfiniButton>
+            <InfiniButton IconName="@LucideNames.Save" Variant="ButtonVariant.Default" Color="Color.Green"
+                          OnClick="@OnSaveAsync">Save
+            </InfiniButton>
+            <InfiniButton IconName="@LucideNames.Trash2" Variant="ButtonVariant.Default" Color="Color.Red"
+                          OnClick="@OnDeleteAsync">Delete
+            </InfiniButton>
         </div>
     </div>
 
@@ -42,9 +49,11 @@
         <div class="h-full w-full flex flex-col gap-1">
             <InfiniHeading4 Class="min-h-6">Markdown Input</InfiniHeading4>
 
-            <InfiniTextAreaInput 
+            <InfiniTextAreaInput
                 @bind-Value="@MdString"
-                OnInput="@(async () => { if (!FreezeAutoUpdates) await OnGenerateAsync(); })"
+                OnInput="@(async () => {
+                             if (!FreezeAutoUpdates) await OnGenerateAsync();
+                         })"
                 Rows="22"
                 Class="font-mono"/>
 
@@ -53,7 +62,8 @@
                 <InfiniToggleButton Label="Freeze Auto Updates" @bind-Value="FreezeAutoUpdates"/>
                 @if (FreezeAutoUpdates) {
                     <InfiniSpacer/>
-                    <InfiniButton Variant="ButtonVariant.Default" OnClick="@OnGenerateAsync">Generate Outputs</InfiniButton>
+                    <InfiniButton Variant="ButtonVariant.Default" OnClick="@OnGenerateAsync">Generate Outputs
+                    </InfiniButton>
                 }
             </div>
         </div>
@@ -83,7 +93,7 @@
                         Class="font-mono w-full"/>
                 </InfiniTabPage>
             </InfiniTabContainer>
-            
+
             @if (ExpectedMarkdownString.IsNotNullOrWhiteSpace() && !string.Equals(MdString, ExpectedMarkdownString)) {
                 <div class="text-red-500 text-center">
                     Markdown does not match expected output.
@@ -99,24 +109,37 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
-    public string FileName { get; set; } = string.Empty;
-    public string TestId { get; set; } = string.Empty;
+    [Parameter] public string FileName { get; set; } = string.Empty;
+    [Parameter] public string TestId { get; set; } = string.Empty;
     public string? DeveloperNote { get; set; } = string.Empty;
 
     private string MdString { get; set; } = string.Empty;
 
     private MdTestData? TestDataOrigin { get; set; }
-    
+
     private string ExpectedSyntaxTreeString { get; set; } = string.Empty;
     private string? ExpectedHtmlStringSimplified { get; set; } = string.Empty;
     private string? ExpectedMarkdownString { get; set; } = string.Empty;
-    
+
     public bool FreezeAutoUpdates { get; set; }
-     
+
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public async Task LoadTestData() {
+        if (!FileName.IsNullOrWhiteSpace() && !TestId.IsNullOrWhiteSpace()) {
+            await OnFetchAsync();
+        }
+    }
+
+    protected override async Task OnParametersSetAsync() {
+        // Auto-load when parameters change from external source
+        if (!FileName.IsNullOrWhiteSpace() && !TestId.IsNullOrWhiteSpace()) {
+            await LoadTestData();
+        }
+    }
+
     private async Task OnGenerateAsync() {
         IMdSyntaxTree tree = MarkdownParser.MarkdownString.SerializeToSyntaxTree(MdString);
 
@@ -218,9 +241,9 @@
             ToastAppearance.Success
         );
     }
-    
+
     private async Task OnDeleteAsync() {
-        
+
         if (!await MdTestDataProvider.TryDeleteAsync(FileName, TestId)) {
             var toastData = new ToastingData("Could not delete Test", TestId);
             await ToastingProvider.PublishToastAsync(toastData, ToastAppearance.Warning);
@@ -235,13 +258,13 @@
         ExpectedMarkdownString = string.Empty;
         ExpectedSyntaxTreeString = string.Empty;
         TestDataOrigin = null;
-        
+
         await ToastingProvider.PublishToastAsync(
             new ToastingData("Test was Deleted", TestId),
             ToastAppearance.Success
         );
     }
-    
+
     private async Task OnRenameClickedAsync() {
         if (TestDataOrigin is null) {
             var toastData = new ToastingData("Could not not rename Test", "Did not come from a valid data source");
@@ -254,7 +277,7 @@
             await ToastingProvider.PublishToastAsync(toastData, ToastAppearance.Warning);
             return;
         }
-        
+
         await ToastingProvider.PublishToastAsync(
             new ToastingData("Test was Renamed", TestId),
             ToastAppearance.Success
@@ -273,11 +296,11 @@
         ExpectedMarkdownString = string.Empty;
         ExpectedSyntaxTreeString = string.Empty;
         TestDataOrigin = null;
-        
+
         await ToastingProvider.PublishToastAsync(
             new ToastingData("Test Cleared"),
             ToastAppearance.Info
         );
     }
-    
+
 }
