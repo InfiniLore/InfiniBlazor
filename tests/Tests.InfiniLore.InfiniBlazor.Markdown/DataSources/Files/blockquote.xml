@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="blockquote.xml">
+    <MdString>&gt; One line
+
+&gt; two lines
+&gt; two lines
+
+&gt; three lines
+&gt; three lines
+&gt; three lines</MdString>
+    <MdSyntaxTree>
+      <BlockQuoteMdSyntaxNode LeadingSpaces="1">
+        <ParagraphMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">One line</ContentMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+      </BlockQuoteMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <BlockQuoteMdSyntaxNode LeadingSpaces="1">
+        <ParagraphMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">two lines</ContentMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+        <NewLineMdSyntaxNode />
+        <ParagraphMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">two lines</ContentMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+      </BlockQuoteMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <BlockQuoteMdSyntaxNode LeadingSpaces="1">
+        <ParagraphMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">three lines</ContentMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+        <NewLineMdSyntaxNode />
+        <ParagraphMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">three lines</ContentMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+        <NewLineMdSyntaxNode />
+        <ParagraphMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">three lines</ContentMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+      </BlockQuoteMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;One line&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;two lines&lt;/p&gt;&lt;p&gt;two lines&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;three lines&lt;/p&gt;&lt;p&gt;three lines&lt;/p&gt;&lt;p&gt;three lines&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&gt; One line
+
+&gt; two lines
+&gt; two lines
+
+&gt; three lines
+&gt; three lines
+&gt; three lines</ExpectedMarkdownString>
+  </MdTestData>
+</ArrayOfMdTestData>

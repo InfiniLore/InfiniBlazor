@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="callout.xml">
+    <MdString>&gt;[!note] Title
+&gt; Body</MdString>
+    <MdSyntaxTree>
+      <CalloutMdSyntaxNode CalloutType="note" CollapsedState="None" LeadingSpaces="0">
+        <CalloutTitleMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">Title</ContentMdSyntaxNode>
+        </CalloutTitleMdSyntaxNode>
+        <CalloutBodyMdSyntaxNode>
+          <ParagraphMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">Body</ContentMdSyntaxNode>
+          </ParagraphMdSyntaxNode>
+        </CalloutBodyMdSyntaxNode>
+      </CalloutMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;div class="md-callout md-callout-note"&gt;&lt;div class="md-callout-title"&gt;Title&lt;/div&gt;&lt;div class="md-callout-body"&gt;&lt;p&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&gt;[!note] Title
+&gt; Body</ExpectedMarkdownString>
+  </MdTestData>
+</ArrayOfMdTestData>
