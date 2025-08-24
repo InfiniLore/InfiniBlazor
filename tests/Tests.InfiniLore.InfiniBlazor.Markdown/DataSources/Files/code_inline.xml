@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="code_inline.xml">
+    <MdString>`code`</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve">code</CodeInlineMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;code&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>`code`</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="empty" FileName="code_inline.xml">
+    <MdString>``</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve"></CodeInlineMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>``</ExpectedMarkdownString>
+  </MdTestData>
+</ArrayOfMdTestData>
