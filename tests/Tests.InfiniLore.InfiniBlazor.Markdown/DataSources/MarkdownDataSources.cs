@@ -13,7 +13,7 @@ public class MarkdownDataSources {
             AggregateDataSources.DataSources(),
             BlockQuoteDataSources.DataSources(),
             BoldAndItalicDataSources.DataSources(),
-            BoldDataSources.DataSources(),
+            // BoldDataSources.DataSources(),
             CalloutDataSources.DataSources(),
             CodeDataSources.DataSources(),
             CodeInlineDataSources.DataSources(),

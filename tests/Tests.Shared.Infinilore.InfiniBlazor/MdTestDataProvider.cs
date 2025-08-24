@@ -67,6 +67,9 @@ public class MdTestDataProvider(ILogger<MdTestDataProvider> logger) {
                 return false;
             }
         }
+        
+        // sorted by ID
+        data.Sort((a, b) => string.Compare(a.Id, b.Id, StringComparison.InvariantCultureIgnoreCase));
 
         return true;
     }
