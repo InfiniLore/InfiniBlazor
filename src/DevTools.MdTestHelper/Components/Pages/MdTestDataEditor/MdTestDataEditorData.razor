@@ -252,6 +252,14 @@
             await ToastingProvider.PublishToastAsync(toastData, ToastAppearance.Warning);
             return;
         }
+        
+        await ToastingProvider.PublishToastAsync(
+            new ToastingData("Test was Renamed", TestId),
+            ToastAppearance.Success
+        );
+
+        // Re-fetch data
+        await OnFetchClicked();
     }
     
 }
