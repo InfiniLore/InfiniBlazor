@@ -12,7 +12,7 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;bold&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>**bold**</ExpectedMarkdownString>
   </MdTestData>
-  <MdTestData Id="edgecase_HrTagPossibility" FileName="bold.xml">
+  <MdTestData Id="edgeCase_HrTagPossibility" FileName="bold.xml">
     <DeveloperNote>to exclude the &lt;hr&gt; tag being triggered</DeveloperNote>
     <MdString>some text *****</MdString>
     <MdSyntaxTree>

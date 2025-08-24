@@ -17,7 +17,7 @@
         <div class="w-full grid auto-cols-max grid-flow-col gap-2 overflow-y-hidden overflow-x-auto infini-scrollbar">
             @foreach (string tab in Context.Tabs) {
                 <InfiniButton
-                    Variant="@(Context.SelectedTab == tab ? ButtonVariant.Primary : ButtonVariant.Default)"
+                    Variant="@(Context.SelectedTab == tab ? ButtonVariant.Default : ButtonVariant.Dark)"
                     OnClick="@(() => Context.SelectPage(tab))">@tab</InfiniButton>
             }
         </div>

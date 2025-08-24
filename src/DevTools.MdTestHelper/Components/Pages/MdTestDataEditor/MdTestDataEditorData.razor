@@ -38,18 +38,25 @@
         <div class="h-full w-full flex flex-col gap-1">
             <InfiniHeading4 Class="min-h-6">Markdown Input</InfiniHeading4>
 
-            <InfiniTextAreaInput @bind-Value="@MdString" Rows="22" Class="font-mono"></InfiniTextAreaInput>
+            <InfiniTextAreaInput 
+                @bind-Value="@MdString"
+                OnInput="@(async () => { if (!FreezeAutoUpdates) await OnGenerateClickAsync(); })"
+                Rows="22"
+                Class="font-mono"/>
 
             <InfiniSpacer/>
-            <div class="w-full flex justify-center">
-                <InfiniButton Variant="ButtonVariant.Primary" OnClick="@OnGenerateClickAsync">Generate Outputs
-                </InfiniButton>
+            <div class="w-full flex justify-center items-center h-16">
+                <InfiniToggleButton Label="Freeze Auto Updates" @bind-Value="FreezeAutoUpdates"/>
+                @if (FreezeAutoUpdates) {
+                    <InfiniSpacer/>
+                    <InfiniButton Variant="ButtonVariant.Default" OnClick="@OnGenerateClickAsync">Generate Outputs</InfiniButton>
+                }
             </div>
         </div>
 
         <InfiniDivider Orientation="@Orientation.Vertical"/>
 
-        <div class="h-full w-full flex flex-col gap-1 mt-3">
+        <div class="h-full w-full flex flex-col gap-1 mt-2">
             <InfiniTabContainer>
                 <InfiniTabPage TabName="Syntax Tree">
                     <InfiniTextAreaInput
@@ -97,6 +104,8 @@
     public string ExpectedSyntaxTreeString { get; set; } = string.Empty;
     public string? ExpectedHtmlStringSimplified { get; set; } = string.Empty;
     public string? ExpectedMarkdownString { get; set; } = string.Empty;
+    
+    public bool FreezeAutoUpdates { get; set; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
