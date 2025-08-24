@@ -14,6 +14,7 @@ public sealed class EscapedCharacterXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisi
     // -----------------------------------------------------------------------------------------------------------------
     protected override void DeserializeDetails(EscapedCharacterMdSyntaxNode node, XElement targetElement) {
         base.DeserializeDetails(node, targetElement);
+        AddXmlPreserveSpace(targetElement);
         targetElement.Value = node.ContentChar.ToString();
     }
 

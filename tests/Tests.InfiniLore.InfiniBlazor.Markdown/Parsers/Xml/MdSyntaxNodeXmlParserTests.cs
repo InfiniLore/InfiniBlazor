@@ -26,7 +26,7 @@ public class MdSyntaxTreeXmlParserTests {
     private const string Xml = """
         <MdSyntaxTree>
             <LinkMdSyntaxNode Href="https://example.com">
-                <ContentMdSyntaxNode>Example Content</ContentMdSyntaxNode>
+                <ContentMdSyntaxNode xml:space="preserve">Example Content</ContentMdSyntaxNode>
                 <ImageMdSyntaxNode Href="https://example.com/image.png" AltText="Example Image" />
             </LinkMdSyntaxNode>
         </MdSyntaxTree>

@@ -16,7 +16,7 @@ public sealed class CodeBlockXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Cod
     // -----------------------------------------------------------------------------------------------------------------
     protected override void DeserializeDetails(CodeBlockMdSyntaxNode node, XElement targetElement) {
         base.DeserializeDetails(node, targetElement);
-        targetElement.SetAttributeValue(Language, node.Language);
+        AddXmlPreserveSpace(targetElement);
         targetElement.Value = node.ContentCode;
     }
 

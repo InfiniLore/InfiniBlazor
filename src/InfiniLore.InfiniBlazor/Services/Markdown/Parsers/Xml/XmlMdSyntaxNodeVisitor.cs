@@ -45,6 +45,7 @@ public abstract class XmlMdSyntaxNodeVisitor<TNode> : IXmlMdSyntaxNodeVisitor wh
         if (node.TryGetModifier(out IMdSyntaxNodeModifier? modifier)) targetElement.Add(SerializeModifiers(modifier));
     }
     
+    protected void AddXmlPreserveSpace(XElement element) => element.SetAttributeValue(XNamespace.Xml + "space", "preserve");
     protected string EncodeSpaces(string input) => input.Replace(" ", "&#032;");
     protected string DecodeSpaces(string input) => input.Replace("&#032;", " ");
         

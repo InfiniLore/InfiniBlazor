@@ -15,6 +15,7 @@ public sealed class TagXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<TagMdSynt
     // -----------------------------------------------------------------------------------------------------------------
     protected override void DeserializeDetails(TagMdSyntaxNode node, XElement targetElement) {
         base.DeserializeDetails(node, targetElement);
+        AddXmlPreserveSpace(targetElement);
         targetElement.Value = node.ContentTag;
     }
 

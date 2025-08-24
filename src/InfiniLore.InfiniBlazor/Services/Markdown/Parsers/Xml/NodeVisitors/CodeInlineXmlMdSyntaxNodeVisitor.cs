@@ -15,6 +15,7 @@ public sealed class CodeInlineXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Co
     // -----------------------------------------------------------------------------------------------------------------
     protected override void DeserializeDetails(CodeInlineMdSyntaxNode node, XElement targetElement) {
         base.DeserializeDetails(node, targetElement);
+        AddXmlPreserveSpace(targetElement);
         targetElement.Value = node.OriginalContentCode;
     }
 

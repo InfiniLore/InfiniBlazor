@@ -16,7 +16,9 @@ public sealed class ContentXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Conte
     // -----------------------------------------------------------------------------------------------------------------
     protected override void DeserializeDetails(ContentMdSyntaxNode node, XElement targetElement) {
         base.DeserializeDetails(node, targetElement);
+        AddXmlPreserveSpace(targetElement);
         targetElement.Value = node.Content;
+
     }
 
     protected override void SerializeDetails(XElement element, ContentMdSyntaxNode targetNode) {
