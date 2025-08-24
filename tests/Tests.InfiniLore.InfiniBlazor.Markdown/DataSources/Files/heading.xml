@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="all_1-7" FileName="heading.xml">
+    <MdString># Heading 1
+## Heading 2
+### Heading 3
+#### Heading 4
+##### Heading 5
+###### Heading 6
+####### Not A Heading</MdString>
+    <MdSyntaxTree>
+      <HeadingMdSyntaxNode Level="1">
+        <ContentMdSyntaxNode xml:space="preserve">Heading 1</ContentMdSyntaxNode>
+      </HeadingMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <HeadingMdSyntaxNode Level="2">
+        <ContentMdSyntaxNode xml:space="preserve">Heading 2</ContentMdSyntaxNode>
+      </HeadingMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <HeadingMdSyntaxNode Level="3">
+        <ContentMdSyntaxNode xml:space="preserve">Heading 3</ContentMdSyntaxNode>
+      </HeadingMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <HeadingMdSyntaxNode Level="4">
+        <ContentMdSyntaxNode xml:space="preserve">Heading 4</ContentMdSyntaxNode>
+      </HeadingMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <HeadingMdSyntaxNode Level="5">
+        <ContentMdSyntaxNode xml:space="preserve">Heading 5</ContentMdSyntaxNode>
+      </HeadingMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <HeadingMdSyntaxNode Level="6">
+        <ContentMdSyntaxNode xml:space="preserve">Heading 6</ContentMdSyntaxNode>
+      </HeadingMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">####### Not A Heading</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading 1&lt;/h1&gt;&lt;h2&gt;Heading 2&lt;/h2&gt;&lt;h3&gt;Heading 3&lt;/h3&gt;&lt;h4&gt;Heading 4&lt;/h4&gt;&lt;h5&gt;Heading 5&lt;/h5&gt;&lt;h6&gt;Heading 6&lt;/h6&gt;&lt;p&gt;####### Not A Heading&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString># Heading 1
+## Heading 2
+### Heading 3
+#### Heading 4
+##### Heading 5
+###### Heading 6
+####### Not A Heading</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="edgeCase_EmptyLine" FileName="heading.xml">
+    <MdString>#
+Something</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">#</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">Something</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;#&lt;/p&gt;&lt;p&gt;Something&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>#
+Something</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="edgeCase_TrailingNewLine" FileName="heading.xml">
+    <MdString># Heading
+</MdString>
+    <MdSyntaxTree>
+      <HeadingMdSyntaxNode Level="1">
+        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      </HeadingMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString># Heading
+</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="simple_Equals1" FileName="heading.xml">
+    <MdString>Not A Heading
+=</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">Not A Heading</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">=</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;Not A Heading&lt;/p&gt;&lt;p&gt;=&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Not A Heading
+=</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="simple_Equals2" FileName="heading.xml">
+    <MdString>Not A Heading
+==</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">Not A Heading</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">==</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;Not A Heading&lt;/p&gt;&lt;p&gt;==&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Not A Heading
+==</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="simple_Equals3" FileName="heading.xml">
+    <MdString>Heading
+===</MdString>
+    <MdSyntaxTree>
+      <HeadingSimpleMdSyntaxNode ContentIdentifier="===">
+        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      </HeadingSimpleMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Heading
+===</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="simple_Equals4" FileName="heading.xml">
+    <MdString>Heading
+====</MdString>
+    <MdSyntaxTree>
+      <HeadingSimpleMdSyntaxNode ContentIdentifier="====">
+        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      </HeadingSimpleMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Heading
+====</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="simple_Equals5" FileName="heading.xml">
+    <MdString>Heading
+=====</MdString>
+    <MdSyntaxTree>
+      <HeadingSimpleMdSyntaxNode ContentIdentifier="=====">
+        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      </HeadingSimpleMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Heading
+=====</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="simple_Equals6" FileName="heading.xml">
+    <MdString>Heading
+======</MdString>
+    <MdSyntaxTree>
+      <HeadingSimpleMdSyntaxNode ContentIdentifier="======">
+        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      </HeadingSimpleMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Heading
+======</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="simple_Equals7" FileName="heading.xml">
+    <MdString>Heading
+=======</MdString>
+    <MdSyntaxTree>
+      <HeadingSimpleMdSyntaxNode ContentIdentifier="=======">
+        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      </HeadingSimpleMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Heading
+=======</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="simple_Minus1" FileName="heading.xml">
+    <MdString>Not A Heading
+-</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">Not A Heading</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">-</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;Not A Heading&lt;/p&gt;&lt;p&gt;-&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Not A Heading
+-</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="simple_Minus2" FileName="heading.xml">
+    <MdString>Not A Heading
+--</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">Not A Heading</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">--</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;Not A Heading&lt;/p&gt;&lt;p&gt;--&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Not A Heading
+--</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="simple_Minus3" FileName="heading.xml">
+    <MdString>Heading
+---</MdString>
+    <MdSyntaxTree>
+      <HeadingSimpleMdSyntaxNode ContentIdentifier="---">
+        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      </HeadingSimpleMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Heading
+---</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="simple_Minus4" FileName="heading.xml">
+    <MdString>Heading
+----</MdString>
+    <MdSyntaxTree>
+      <HeadingSimpleMdSyntaxNode ContentIdentifier="----">
+        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      </HeadingSimpleMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Heading
+----</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="simple_Minus5" FileName="heading.xml">
+    <MdString>Heading
+-----</MdString>
+    <MdSyntaxTree>
+      <HeadingSimpleMdSyntaxNode ContentIdentifier="-----">
+        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      </HeadingSimpleMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Heading
+-----</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="simple_Minus6" FileName="heading.xml">
+    <MdString>Heading
+------</MdString>
+    <MdSyntaxTree>
+      <HeadingSimpleMdSyntaxNode ContentIdentifier="------">
+        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      </HeadingSimpleMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Heading
+------</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="simple_Minus7" FileName="heading.xml">
+    <MdString>Heading
+-------</MdString>
+    <MdSyntaxTree>
+      <HeadingSimpleMdSyntaxNode ContentIdentifier="-------">
+        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      </HeadingSimpleMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Heading
+-------</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withSpacing" FileName="heading.xml">
+    <MdString>Heading
+                ========</MdString>
+    <MdSyntaxTree>
+      <HeadingSimpleMdSyntaxNode ContentIdentifier="                ========">
+        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      </HeadingSimpleMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Heading
+                ========</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withSpacing_Equals" FileName="heading.xml">
+    <MdString>Heading
+                ========</MdString>
+    <MdSyntaxTree>
+      <HeadingSimpleMdSyntaxNode ContentIdentifier="                ========">
+        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      </HeadingSimpleMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Heading
+                ========</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withSpacing_Minus" FileName="heading.xml">
+    <MdString>Heading
+                --------</MdString>
+    <MdSyntaxTree>
+      <HeadingSimpleMdSyntaxNode ContentIdentifier="                --------">
+        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      </HeadingSimpleMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Heading
+                --------</ExpectedMarkdownString>
+  </MdTestData>
+</ArrayOfMdTestData>
