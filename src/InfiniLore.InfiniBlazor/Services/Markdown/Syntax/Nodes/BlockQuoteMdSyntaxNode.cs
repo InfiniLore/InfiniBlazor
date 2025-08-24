@@ -7,7 +7,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class BlockQuoteMdSyntaxNode : MdSyntaxNode<BlockQuoteMdSyntaxNode> {
-    public int LeadingSpaces { get; set; } = 0;
+    public int LeadingSpaces { get; set; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

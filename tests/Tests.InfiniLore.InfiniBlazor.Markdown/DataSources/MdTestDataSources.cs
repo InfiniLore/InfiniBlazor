@@ -24,18 +24,12 @@ public class MdTestDataSources {
     
     public static async IAsyncEnumerable<Func<MdTestData>> GetTestDataAsync([EnumeratorCancellation] CancellationToken ct = default) {
         string[]? allFiles = MdTestDataProvider.TestInstance.TryGetFileNames();
-        if (allFiles is null) {
-            Assert.Fail("Could not get file names");
-            yield break;
-        }
+        if (allFiles is null) throw new Exception("Could not get file names");
 
         foreach (string file in allFiles) {
             List<MdTestData>? dataEntries = await MdTestDataProvider.TestInstance.TryGetXmlMdTestDataAsync(file, ct);
-            if (dataEntries is null) {
-                Assert.Fail($"Could not get data for file {file}");
-                yield break;
-            }
-
+            if (dataEntries is null) throw new Exception($"Could not get data for file {file}");
+            
             foreach (MdTestData dataEntry in dataEntries) {
                 yield return () => dataEntry;
             }

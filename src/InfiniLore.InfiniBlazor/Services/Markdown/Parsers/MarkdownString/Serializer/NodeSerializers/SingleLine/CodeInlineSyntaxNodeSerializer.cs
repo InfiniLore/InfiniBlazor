@@ -28,7 +28,7 @@ public sealed class CodeInlineSyntaxNodeSerializer : IMarkdownStringMdSyntaxNode
         
         // Calculate backtick count by comparing full string length to content length
         int totalLength = fullOriginalString.Length;
-        int contentLength = codeValue?.Length ?? 0;
+        int contentLength = codeValue.Length;
         int totalBackticks = totalLength - contentLength;
         int backtickCount = totalBackticks / 2; // Backticks on one side
         

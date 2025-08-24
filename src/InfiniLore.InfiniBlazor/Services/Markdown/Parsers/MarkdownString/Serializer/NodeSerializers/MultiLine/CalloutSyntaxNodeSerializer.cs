@@ -58,7 +58,7 @@ public sealed class CalloutSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSer
             node.AddChildNode(bodyNode);
             
             stack.PushMultiLineMatchesToStack(
-                LineNormalization.NormalizeBlockQuote(calloutBody, out int leadingSpaces),
+                LineNormalization.NormalizeBlockQuote(calloutBody, out _),
                 bodyNode,
                 parentOrigin | MdSyntaxSerializerOrigin.PreserveHtml
             );
