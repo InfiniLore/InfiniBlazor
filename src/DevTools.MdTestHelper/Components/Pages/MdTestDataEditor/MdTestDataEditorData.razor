@@ -21,7 +21,9 @@
     @* Test Data Section *@
     <div class=" flex flex-col gap-2">
         <InfiniTextInput Label="FileName" @bind-Value="FileName"/>
-        <InfiniTextInput Label="Test Id" @bind-Value="TestId"/>
+        <InfiniTextInput Label="Test Id" @bind-Value="TestId">
+            <InfiniButton OnClick="@OnRenameClickedAsync" >Rename</InfiniButton>
+        </InfiniTextInput>
         <InfiniTextAreaInput Label="Added Note" @bind-Value="DeveloperNote" class="h-24"/>
 
         <div class="w-full flex justify-center gap-2">
@@ -40,7 +42,7 @@
 
             <InfiniTextAreaInput 
                 @bind-Value="@MdString"
-                OnInput="@(async () => { if (!FreezeAutoUpdates) await OnGenerateClickAsync(); })"
+                OnInput="@(async () => { if (!FreezeAutoUpdates) await OnGenerateAsync(); })"
                 Rows="22"
                 Class="font-mono"/>
 
@@ -49,7 +51,7 @@
                 <InfiniToggleButton Label="Freeze Auto Updates" @bind-Value="FreezeAutoUpdates"/>
                 @if (FreezeAutoUpdates) {
                     <InfiniSpacer/>
-                    <InfiniButton Variant="ButtonVariant.Default" OnClick="@OnGenerateClickAsync">Generate Outputs</InfiniButton>
+                    <InfiniButton Variant="ButtonVariant.Default" OnClick="@OnGenerateAsync">Generate Outputs</InfiniButton>
                 }
             </div>
         </div>
@@ -99,18 +101,21 @@
     public string TestId { get; set; } = string.Empty;
     public string? DeveloperNote { get; set; } = string.Empty;
 
-    public string MdString { get; set; } = string.Empty;
+    private string MdString { get; set; } = string.Empty;
 
-    public string ExpectedSyntaxTreeString { get; set; } = string.Empty;
-    public string? ExpectedHtmlStringSimplified { get; set; } = string.Empty;
-    public string? ExpectedMarkdownString { get; set; } = string.Empty;
+    private MdTestData? TestDataOrigin { get; set; }
+    
+    private string ExpectedSyntaxTreeString { get; set; } = string.Empty;
+    private string? ExpectedHtmlStringSimplified { get; set; } = string.Empty;
+    private string? ExpectedMarkdownString { get; set; } = string.Empty;
     
     public bool FreezeAutoUpdates { get; set; }
+     
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private async Task OnGenerateClickAsync() {
+    private async Task OnGenerateAsync() {
         IMdSyntaxTree tree = MarkdownParser.MarkdownString.SerializeToSyntaxTree(MdString);
 
         await Task.WhenAll(
@@ -177,6 +182,7 @@
         ExpectedHtmlStringSimplified = testData.ExpectedHtmlStringSimplified;
         ExpectedMarkdownString = testData.ExpectedMarkdownString;
 
+        TestDataOrigin = testData;
 
         var successData = new ToastingData("File loaded successfully", FileName);
         await ToastingProvider.PublishToastAsync(successData, ToastAppearance.Success);
@@ -226,10 +232,26 @@
         ExpectedHtmlStringSimplified = string.Empty;
         ExpectedMarkdownString = string.Empty;
         ExpectedSyntaxTreeString = string.Empty;
+        TestDataOrigin = null;
         
         await ToastingProvider.PublishToastAsync(
             new ToastingData("Test was Deleted", TestId),
             ToastAppearance.Success
         );
     }
+    
+    private async Task OnRenameClickedAsync() {
+        if (TestDataOrigin is null) {
+            var toastData = new ToastingData("Could not not rename Test", "Did not come from a valid data source");
+            await ToastingProvider.PublishToastAsync(toastData, ToastAppearance.Warning);
+            return;
+        }
+
+        if (!await MdTestDataProvider.TryRenameTest(FileName, TestDataOrigin.Id, TestId)) {
+            var toastData = new ToastingData("Could not not rename Test");
+            await ToastingProvider.PublishToastAsync(toastData, ToastAppearance.Warning);
+            return;
+        }
+    }
+    
 }

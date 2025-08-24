@@ -169,6 +169,13 @@ public class MdTestDataProvider(ILogger<MdTestDataProvider> logger) {
         AddOrUpdateTestData(dataArray, testData);
         return await TryWriteXmlMdTestDataAsync(fileName, dataArray, ct);
     }
+    
+    public async Task<bool> TryRenameTest(string fileName, string oldTestId, string newTestId, CancellationToken ct = default) {
+        List<MdTestData> dataArray = await TryGetXmlMdTestDataAsync(fileName, ct) ?? new List<MdTestData>();
+        if (dataArray.FindIndex(data => data.Id == oldTestId) is not (var index and not -1)) return false;
+        dataArray[index].Id = newTestId;
+        return await TryWriteXmlMdTestDataAsync(fileName, dataArray, ct);
+    }
 
     public async Task<bool> TryDeleteAsync(string fileName, string testId, CancellationToken ct = default) {
         List<MdTestData> dataArray = await TryGetXmlMdTestDataAsync(fileName, ct) ?? new List<MdTestData>();
