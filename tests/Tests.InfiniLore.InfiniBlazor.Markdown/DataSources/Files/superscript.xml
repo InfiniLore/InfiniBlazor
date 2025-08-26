@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="superscript.xml">
+    <MdString>^^superscript^^</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <SuperScriptMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">superscript</ContentMdSyntaxNode>
+        </SuperScriptMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sup&gt;superscript&lt;/sup&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>^^superscript^^</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="edgecaseUnbound" FileName="superscript.xml">
+    <MdString>^^superscript</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">^^superscript</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;^^superscript&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>^^superscript</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="empty" FileName="superscript.xml">
+    <MdString>^^^^</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <SubScriptMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">^^</ContentMdSyntaxNode>
+        </SubScriptMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sub&gt;^^&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>^^^^</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withBold" FileName="superscript.xml">
+    <MdString>^^something **bold** in superscript^^</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <SuperScriptMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">something </ContentMdSyntaxNode>
+          <BoldMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">bold</ContentMdSyntaxNode>
+          </BoldMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve"> in superscript</ContentMdSyntaxNode>
+        </SuperScriptMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sup&gt;something &lt;strong&gt;bold&lt;/strong&gt; in superscript&lt;/sup&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>^^something **bold** in superscript^^</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withBoldAndEscapedObelix_1" FileName="superscript.xml">
+    <MdString>^^superscript **nested \^^ bold**^^</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <SuperScriptMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">superscript **nested </ContentMdSyntaxNode>
+          <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">^ bold**</ContentMdSyntaxNode>
+        </SuperScriptMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sup&gt;superscript **nested ^^ bold**&lt;/sup&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>^^superscript **nested \^^ bold**^^</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withEscapedObelix_1" FileName="superscript.xml">
+    <MdString>^\^superscript^^</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <SubScriptMdSyntaxNode>
+          <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">superscript</ContentMdSyntaxNode>
+        </SubScriptMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">^</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sub&gt;^superscript&lt;/sub&gt;^&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>^\^superscript^^</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withEscapedObelix_2" FileName="superscript.xml">
+    <MdString>^^superscript\^^</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">^</ContentMdSyntaxNode>
+        <SubScriptMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">superscript</ContentMdSyntaxNode>
+          <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
+        </SubScriptMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;^&lt;sub&gt;superscript^&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>^^superscript\^^</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withEscapedObelix_3" FileName="superscript.xml">
+    <MdString>^^ \^ ^^</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <SuperScriptMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+          <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+        </SuperScriptMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sup&gt; ^ &lt;/sup&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>^^ \^ ^^</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withEscapedObelix_4" FileName="superscript.xml">
+    <MdString>\^\^literal little hats\^\^</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
+        <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">literal little hats</ContentMdSyntaxNode>
+        <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
+        <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;^^literal little hats^^&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>\^\^literal little hats\^\^</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withTag" FileName="superscript.xml">
+    <MdString>^^#tag^^</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <SuperScriptMdSyntaxNode>
+          <TagMdSyntaxNode xml:space="preserve">tag</TagMdSyntaxNode>
+        </SuperScriptMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sup&gt;&lt;span class="md-tag"&gt;#tag&lt;/span&gt;&lt;/sup&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>^^#tag^^</ExpectedMarkdownString>
+  </MdTestData>
+</ArrayOfMdTestData>
