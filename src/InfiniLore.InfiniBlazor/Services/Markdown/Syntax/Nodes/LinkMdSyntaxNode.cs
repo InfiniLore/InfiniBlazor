@@ -15,4 +15,7 @@ public sealed class LinkMdSyntaxNode : MdSyntaxNode<LinkMdSyntaxNode> {
         Href = string.Empty;
         return base.TryReset();
     }
+    
+    public override bool Equals(LinkMdSyntaxNode? other) => base.Equals(other)
+        && Href == other.Href;
 }

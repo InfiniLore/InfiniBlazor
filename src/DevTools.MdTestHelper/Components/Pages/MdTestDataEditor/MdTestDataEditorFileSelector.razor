@@ -1,0 +1,176 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using Tests.Shared.InfiniLore.InfiniBlazor.Markdown
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inject MdTestDataProvider MdTestDataProvider
+@inject ILogger<MdTestDataEditorFileSelector> Logger
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="h-full w-full flex flex-col gap-1 p-4">
+    @if (_isLoading) {
+        <div class="text-(--text)">Loading files...</div>
+    }
+    else if (_fileNames == null) {
+        <div class="text-red-500">Failed to load files</div>
+    }
+    else if (_fileNames.Length == 0) {
+        <div class="text-(--border)">No files found</div>
+    }
+    else {
+        <div class="text-(--text) text-lg font-semibold mb-2">Test Data Files</div>
+
+        <div class="flex flex-col gap-2 overflow-y-auto infini-scrollbar pr-1">
+            @foreach (string fileName in _fileNames) {
+                <div class="rounded-lg border border-(--border)">
+                    <!-- File Header -->
+                    <div class="p-3 border-b border-(--border) hover:bg-slate-750 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <span class="text-(--text) font-medium">@fileName</span>
+                            <InfiniButton
+                                IconName="@(IsFileExpanded(fileName) ? LucideNames.ChevronDown : LucideNames.ChevronRight)"
+                                OnClick="@(() => ToggleFileExpanded(fileName))"/>
+                        </div>
+                    </div>
+
+                    <!-- Tests List (expanded) -->
+                    @if (IsFileExpanded(fileName)) {
+                        <div class="p-2">
+                            @if (fileTestData.TryGetValue(fileName, out List<MdTestData>? tests)) {
+                                if (tests?.Any() != true) {
+                                    <div class="text-slate-400 text-sm p-2">No tests found in this file</div>
+                                }
+                                else {
+                                    <div class="text-sm text-(--color-base-20) mb-2">Tests (@tests.Count):</div>
+                                    <div class="flex flex-col gap-1">
+                                        @foreach (MdTestData test in tests) {
+                                            <div
+                                                class="rounded p-2 cursor-pointer hover:bg-(--color-base-50) transition-colors"
+                                                onclick="@(() => OnTestClick(fileName, test))">
+                                                <div class="text-white text-sm font-medium">@test.Id</div>
+                                                @if (!string.IsNullOrWhiteSpace(test.MdString)) {
+                                                    <div class="text-(--color-base-30) text-xs mt-1 whitespace-break-spaces overflow-hidden line-clamp-3">
+                                                        @test.MdString
+                                                    </div>
+                                                }
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            }
+                            else if (loadingFiles.Contains(fileName)) {
+                                <div class="text-slate-400 text-sm p-2">Loading tests...</div>
+                            }
+                            else {
+                                <div class="text-red-400 text-sm p-2">Failed to load tests</div>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [Parameter] public EventCallback<string> OnFileSelected { get; set; }
+    [Parameter] public EventCallback<(string fileName, string testId)> OnTestSelected { get; set; }
+
+    private string[]? _fileNames;
+    private readonly Dictionary<string, List<MdTestData>?> fileTestData = new();
+    private readonly HashSet<string> expandedFiles = new();
+    private readonly HashSet<string> loadingFiles = new();
+    private bool _isLoading = true;
+
+    protected override void OnInitialized() {
+        try {
+            _fileNames = MdTestDataProvider.TryGetFileNames();
+        }
+        catch (Exception ex) {
+            Logger.LogError(ex, "Error loading file names");
+            _fileNames = null;
+        }
+        finally {
+            _isLoading = false;
+        }
+    }
+
+    public async Task RefreshFileData(string? specificFileName = null) {
+        if (specificFileName != null) {
+            // Refresh specific file data
+            if (!fileTestData.Remove(specificFileName)) return;
+            if (IsFileExpanded(specificFileName)) await LoadFileTestData(specificFileName);
+            return;
+        }
+
+        // Refresh all files
+        try {
+            _isLoading = true;
+            StateHasChanged();
+
+            _fileNames = MdTestDataProvider.TryGetFileNames();
+            fileTestData.Clear();
+
+            // Reload expanded files
+            List<string> expandedFilesCopy = expandedFiles.ToList();
+            foreach (string fileName in expandedFilesCopy) {
+                if (_fileNames?.Contains(fileName) == true) {
+                    await LoadFileTestData(fileName);
+                }
+                else {
+                    expandedFiles.Remove(fileName);
+                }
+            }
+        }
+        finally {
+            _isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+
+    private bool IsFileExpanded(string fileName) => expandedFiles.Contains(fileName);
+
+    private async Task ToggleFileExpanded(string fileName) {
+        if (IsFileExpanded(fileName)) {
+            expandedFiles.Remove(fileName);
+        }
+        else {
+            expandedFiles.Add(fileName);
+            await LoadFileTestData(fileName);
+        }
+    }
+
+    private async Task LoadFileTestData(string fileName) {
+        if (fileTestData.ContainsKey(fileName) || loadingFiles.Contains(fileName))
+            return;
+
+        try {
+            loadingFiles.Add(fileName);
+            StateHasChanged();
+
+            List<MdTestData>? testData = await MdTestDataProvider.TryGetXmlMdTestDataAsync(fileName);
+            fileTestData[fileName] = testData;
+        }
+        catch (Exception ex) {
+            Logger.LogError(ex, "Error loading test data for file {FileName}", fileName);
+            fileTestData[fileName] = null;
+        }
+        finally {
+            loadingFiles.Remove(fileName);
+            StateHasChanged();
+        }
+    }
+
+    private async Task OnTestClick(string fileName, MdTestData testData) {
+        Logger.Information("test {testID} clicked", testData.Id);
+        await OnTestSelected.InvokeAsync((fileName, testData.Id));
+    }
+}

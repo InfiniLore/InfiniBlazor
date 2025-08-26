@@ -5,7 +5,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class HeadingMdSyntaxNode : EmptyMdSyntaxNode<HeadingMdSyntaxNode> {
+public sealed class HeadingMdSyntaxNode : MdSyntaxNode<HeadingMdSyntaxNode> {
     public int Level { get; set; } 
     
     // -----------------------------------------------------------------------------------------------------------------
@@ -15,4 +15,7 @@ public sealed class HeadingMdSyntaxNode : EmptyMdSyntaxNode<HeadingMdSyntaxNode>
         Level = 0;
         return base.TryReset();
     }
+    
+    public override bool Equals(HeadingMdSyntaxNode? other) => base.Equals(other)
+        && Level == other.Level;
 }

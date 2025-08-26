@@ -10,17 +10,29 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
-    public IMdSyntaxNode RootNode { get; private set; } = RootMdSyntaxNode.Pool.Get();
-    
+    private Lazy<IMdSyntaxNode> LazyRootNode { get; set; } = new(static () => RootMdSyntaxNode.Pool.Get());
+    public IMdSyntaxNode RootNode {
+        get => LazyRootNode.Value;
+        init {
+            ArgumentNullException.ThrowIfNull(value);
+            
+            // This check is kind of dumb, but it's a good sanity check
+            if (IsInitialized) throw new InvalidOperationException("Cannot set the root node once the tree has been initialized.");
+            LazyRootNode = new Lazy<IMdSyntaxNode>(() => value);
+        }
+    }
+
     public static ObjectPool<MdSyntaxTree> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxTree>(16);
     private static ObjectPool<Stack<IMdSyntaxNode>> MdSyntaxNodeStackPool { get; } = PoolingHelpers.CreateStackPool<IMdSyntaxNode>(PoolingHelpers.ParsersRetained);
     
+    private bool IsInitialized => LazyRootNode.IsValueCreated;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region Visit Nodes
     // ReSharper disable once ConvertIfStatementToReturnStatement
     public IEnumerable<IMdSyntaxNode> VisitTopLevelNodes() {
+        if (!IsInitialized) return Enumerable.Empty<IMdSyntaxNode>();
         int childCount = RootNode.ChildCount;
         
         if (childCount == 0) return Enumerable.Empty<IMdSyntaxNode>();
@@ -29,6 +41,8 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     }
     
     public IEnumerable<IMdSyntaxNode> VisitNodesBreadthFirst() {
+        if (!IsInitialized) yield break;
+        
         ReadOnlySpan<IMdSyntaxNode> rootNodeChildren = RootNode.GetChildrenSpan();
         int rootNodeChildCount = rootNodeChildren.Length;
         if (rootNodeChildCount == 0) yield break;// Early exit for empty tree nodes
@@ -60,6 +74,8 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     }
 
     public IEnumerable<IMdSyntaxNode> VisitNodesDeepestFirst() {
+        if (!IsInitialized) yield break;
+        
         ReadOnlySpan<IMdSyntaxNode> rootNodeChildren = RootNode.GetChildrenSpan();
         int rootNodeChildCount = rootNodeChildren.Length;
         if (rootNodeChildCount == 0) yield break; // Early exit for empty trees
@@ -103,15 +119,15 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
         }
     }
     #endregion
-
+    
     public void ReturnToPool() {
         Pool.Return(this);
     }
     
     public bool TryReset() {
-        RootNode.Depth = 0;
-        if (RootNode is not RootMdSyntaxNode rootNode) return false;
-
+        if (!IsInitialized) return true; // Nothing to reset
+        if (RootNode is not RootMdSyntaxNode rootNode) return false; // Cannot reset a non-root node
+        
         // Using depth-first traversal with a single stack
         Stack<IMdSyntaxNode> stack = MdSyntaxNodeStackPool.Get();
         try {
@@ -132,17 +148,36 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
                 for (int i = 0; i < childCount; i++) {
                     stack.Push(children[i]);
                 }
+
                 node.ReturnToPool();
             }
 
             // Finally, reset and replace the root node
             RootNode.ReturnToPool();
-            RootNode = RootMdSyntaxNode.Pool.Get();
-            RootNode.Depth = 0;
+            LazyRootNode = new Lazy<IMdSyntaxNode>(() => RootMdSyntaxNode.Pool.Get());
             return true;
         }
+        
+        catch (Exception) {
+            return false;
+        }
+        
         finally {
             MdSyntaxNodeStackPool.Return(stack);
         }
+    }
+    
+    public void Dispose() {
+        ReturnToPool();
+    }
+    
+    public override int GetHashCode() => HashCode.Combine(RootNode);
+    public override bool Equals(object? obj) {
+        if (obj is not MdSyntaxTree casted) return false;
+        return Equals(casted);   
+    }
+    public bool Equals(IMdSyntaxTree? other) {
+        if (other is null) return false;
+        return RootNode.Equals(other.RootNode);
     }
 }

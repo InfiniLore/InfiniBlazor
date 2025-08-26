@@ -10,7 +10,9 @@ namespace DevTools.InfiniLore.InfiniBlazor;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public static class Program {
+    #pragma warning disable TUnit0034
     public static async Task Main(string[] args) {
+    #pragma warning restore TUnit0034
         // Register & Build the parser
         //      Don't forget to add the current assembly if you built more tools for the current project
         ICliParser parser = CliParser.CreateBuilder()

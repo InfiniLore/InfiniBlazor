@@ -18,7 +18,7 @@
                 OnToggle="@OnToggle"
                 Size="Size.Xxs"
                 StopPropagation="true"
-                Disabled="@Disabled"
+                IsDisabled="@IsDisabled"
                 OnIcon="@OnIcon"
                 OffIcon="@OffIcon"
                 Class="@ConcatClasses(Class, "transform")"
@@ -41,7 +41,7 @@
             OnToggle="@OnToggle"
             Size="Size.Xs"
             StopPropagation="true"
-            Disabled="@Disabled"
+            IsDisabled="@IsDisabled"
             OnIcon="@OnIcon"
             OffIcon="@OffIcon"
             Class="@ConcatClasses(Class, "ml-2")"
@@ -55,7 +55,6 @@
 @code {
     [Parameter] public bool Value { get; set; }
     [Parameter] public EventCallback<bool> ValueChanged { get; set; }
-    [Parameter] public bool Disabled { get; set; }
     [Parameter] public string? OnIcon { get; set; }
     [Parameter] public string? OffIcon { get; set; }
     [Parameter] public Color Color { get; set; } = Color.Default;

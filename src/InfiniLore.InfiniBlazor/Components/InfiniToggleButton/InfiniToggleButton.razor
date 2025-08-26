@@ -11,42 +11,26 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@GetLabelContainerClasses()">
-    @if (IsLabelValid(LabelPosition.Top)) {
-        <InfiniLabel class="mb-2">@Label</InfiniLabel>
-    }
-    <div class="@GetToggleContainerClasses()">
-        @if (IsLabelValid(LabelPosition.Left)) {
-            <InfiniLabel class="mr-2">@Label</InfiniLabel>
-        }
-        <button @onclick="OnClickAsync"
-                @onclick:stopPropagation="@StopPropagation"
-                type="@Type"
-                disabled="@IsDisabled"
-                aria-label="@AriaLabel"
-                aria-checked="@Value"
-                class="@(IsDisabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer")">
-            <div class="@GetToggleInnerContainerClasses()">
-                <div class="relative">
-                    <div class="@GetSliderClasses()">
-                        @if (OnIcon.IsNotNullOrWhiteSpace()) {
-                            <LucideIcon Name="@OnIcon" class="@WithValue(GetIconClasses(), "opacity-0")"/>
-                        }
-                        @if (OffIcon.IsNotNullOrWhiteSpace()) {
-                            <LucideIcon Name="@OffIcon" class="@WithValue("opacity-0", GetIconClasses())"/>
-                        }
-                    </div>
-                </div>
+<button @onclick="OnClickAsync"
+        @onclick:stopPropagation="@StopPropagation"
+        type="@Type"
+        disabled="@IsDisabled"
+        aria-label="@AriaLabel"
+        aria-checked="@Value"
+        class="@(IsDisabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer")">
+    <div class="@GetToggleInnerContainerClasses()">
+        <div class="relative">
+            <div class="@GetSliderClasses()">
+                @if (OnIcon.IsNotNullOrWhiteSpace()) {
+                    <LucideIcon Name="@OnIcon" class="@WithValue(GetIconClasses(), "opacity-0")"/>
+                }
+                @if (OffIcon.IsNotNullOrWhiteSpace()) {
+                    <LucideIcon Name="@OffIcon" class="@WithValue("opacity-0", GetIconClasses())"/>
+                }
             </div>
-        </button>
-        @if (IsLabelValid(LabelPosition.Right)) {
-            <InfiniLabel class="ml-2">@Label</InfiniLabel>
-        }
+        </div>
     </div>
-    @if (IsLabelValid(LabelPosition.Bottom)) {
-        <InfiniLabel class="mt-2">@Label</InfiniLabel>
-    }
-</div>
+</button>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
@@ -69,32 +53,11 @@
     [Parameter] public string? Label { get; set; }
     [Parameter] public LabelPosition LabelPos { get; set; } = LabelPosition.Left;
     
-    
-    
-    [Parameter] public bool Disabled { get; set; }
-    protected override bool IsDisabled => Disabled || base.IsDisabled;
-
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private string GetLabelContainerClasses()
-        => ConcatClasses(
-            Class, 
-            LabelPos is LabelPosition.Top or LabelPosition.Bottom
-                ? "flex flex-col items-center"
-                : "flex"
-        );
-
-    private string? GetToggleContainerClasses()
-        => LabelPos is LabelPosition.Left or LabelPosition.Right
-            ? "flex items-center"
-            : null;
-
     private string? WithValue(string? onTrue = null, string? onFalse = null)
         => Value ? onTrue : onFalse;
-
-    private bool IsLabelValid(LabelPosition position)
-        => Label.IsNotNullOrWhiteSpace() && LabelPos == position;
 
     private string GetToggleInnerContainerClasses() {
         string sizeClasses = Size switch {

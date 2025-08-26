@@ -7,7 +7,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMdSyntaxNodeModifier {
+public interface IMdSyntaxNodeModifier : IEquatable<IMdSyntaxNodeModifier> {
     Dictionary<string, Range> Attributes { get; }
     string OriginalInput { get;}
     ReadOnlySpan<char> OriginalInputSpan { get; }

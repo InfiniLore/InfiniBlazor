@@ -5,6 +5,7 @@ using InfiniLore.InfiniBlazor;
 using InfiniLore.InfiniBlazor.Callouts;
 using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.DynamicMdComponents;
+using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer;
 using InfiniLore.InfiniBlazor.Theming;
 using InfiniLore.InfiniBlazor.Theming.Collections;
 using InfiniLore.InfiniBlazor.Toasting;
@@ -25,6 +26,7 @@ public static class ServiceCollectionExtensions {
         
         services.AddSingleton(DynamicMdComponentConverterFactory.Create);
         services.AddSingleton(CalloutStyleProviderFactory.Create);
+        services.AddSingleton(MarkdownStringMdSyntaxDeserializerFactory.Create);
         
         configure?.Invoke(config);
         

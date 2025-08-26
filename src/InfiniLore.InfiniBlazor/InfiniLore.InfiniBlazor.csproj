@@ -26,6 +26,7 @@
 
     <ItemGroup>
         <InternalsVisibleTo Include="Tests.InfiniLore.InfiniBlazor" />
+        <InternalsVisibleTo Include="Tests.InfiniLore.InfiniBlazor.Markdown" />
     </ItemGroup>
 
     <!-- Include external files -->

@@ -42,9 +42,9 @@ public class MarkdownBenchmarks {
 
     [Benchmark(Baseline = true)]
     public string RenderMarkdown() {
-        string? output = Parser.ParseToString(Markdown);
-        if(output is null) throw new InvalidOperationException("The Markdown input should not be empty.");
-        return output;
+        IMdSyntaxTree tree = Parser.MarkdownString.SerializeToSyntaxTree(Markdown);
+        string? output = Parser.HtmlString.DeserializeToString(tree);
+        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
     }
     
     // [Benchmark()]

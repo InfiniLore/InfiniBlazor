@@ -9,7 +9,15 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="CodeOfChaos.CliArgsParser.Generators">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="CodeOfChaos.CliArgsParser.Library"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\tests\Tests.Shared.Infinilore.InfiniBlazor\Tests.Shared.Infinilore.InfiniBlazor.csproj" />
     </ItemGroup>
 
 </Project>

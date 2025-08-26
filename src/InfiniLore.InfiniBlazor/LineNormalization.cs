@@ -16,10 +16,12 @@ public static class LineNormalization {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static string NormalizeLineIndentation(ReadOnlySpan<char> input) {
+    public static string NormalizeLineIndentation(ReadOnlySpan<char> input, out int leadingSpaces) {
         int matchCount = input.Count('\n');
         int splitCount = matchCount + 1;
-
+        leadingSpaces = -1;
+        int newLineCountFromEnd = NewLineCountFromEnd(input);
+        
         // Estimate initial capacity to avoid reallocations
         StringBuilder stringBuilder = GlobalPools.StringBuilder.Get();
         Range[]? rentedArray = null;
@@ -44,6 +46,7 @@ public static class LineNormalization {
                 int currentIndent = CountLeadingWhitespace(line);
                 if (line.Length > currentIndent) {
                     minIndent = Math.Min(minIndent, currentIndent);
+                    leadingSpaces = minIndent;
                 }
             }
 
@@ -64,7 +67,13 @@ public static class LineNormalization {
             if (stringBuilder.Length > 0 && !input.EndsWith('\n')) {
                 stringBuilder.Length--;
             }
-
+            
+            // Remove the last newlines if they weren't in the original input
+            while (stringBuilder.Length > 0 && newLineCountFromEnd > 0 && stringBuilder[^1] == '\n') {
+                stringBuilder.Length--;
+                newLineCountFromEnd--;
+            }
+            
             return stringBuilder.ToString();
         }
         finally {
@@ -72,6 +81,21 @@ public static class LineNormalization {
             if (rentedArray is not null) ArrayPool<Range>.Shared.Return(rentedArray);
         }
     }
+    
+    private  static int NewLineCountFromEnd(ReadOnlySpan<char> input) {
+        int count = 0;
+
+        for (int i = input.Length - 1; i >= 0; i--) {
+            if (input[i] == '\n') {
+                count++;
+            } else {
+                break;
+            }
+        }
+
+        return count;
+    }
+
 
     private static int CountLeadingWhitespace(ReadOnlySpan<char> line) {
         int count = 0;
@@ -84,9 +108,9 @@ public static class LineNormalization {
         return count;
     }
     
-    public static string NormalizeBlockQuote(ReadOnlySpan<char> span) {
+    public static string NormalizeBlockQuote(ReadOnlySpan<char> span, out int leadingSpaces) {
         ReadOnlySpan<char> normalized = NormalizeLinePrefixes(span, ">");
-        string adjusted = NormalizeLineIndentation(normalized);
+        string adjusted = NormalizeLineIndentation(normalized, out leadingSpaces);
         return adjusted;
     }
 

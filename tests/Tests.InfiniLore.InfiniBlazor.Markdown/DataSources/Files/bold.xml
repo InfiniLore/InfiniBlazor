@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="bold.xml">
+    <MdString>**bold**</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">bold</ContentMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;bold&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>**bold**</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="edgeCase_HrTagPossibility" FileName="bold.xml">
+    <DeveloperNote>to exclude the &lt;hr&gt; tag being triggered</DeveloperNote>
+    <MdString>some text *****</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">some text </ContentMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">*</ContentMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;some text &lt;strong&gt;*&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>some text *****</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="edgecaseUnbound" FileName="bold.xml">
+    <MdString>**bold</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">**bold</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;**bold&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>**bold</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withEscapedAsterix_1" FileName="bold.xml">
+    <MdString>**\*bold**</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">bold</ContentMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;*bold&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>**\*bold**</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withEscapedAsterix_2" FileName="bold.xml">
+    <MdString>**bold\***</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">bold</ContentMdSyntaxNode>
+          <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;bold*&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>**bold\***</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withEscapedAsterix_3" FileName="bold.xml">
+    <MdString>** \* **</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+          <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt; * &lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>** \* **</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withItalic_1" FileName="bold.xml">
+    <MdString>**bold *italic***</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">bold </ContentMdSyntaxNode>
+          <ItalicMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">italic</ContentMdSyntaxNode>
+          </ItalicMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;bold &lt;em&gt;italic&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>**bold *italic***</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withItalic_2" FileName="bold.xml">
+    <MdString>***italic* bold**</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <ItalicMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">italic</ContentMdSyntaxNode>
+          </ItalicMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve"> bold</ContentMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;&lt;em&gt;italic&lt;/em&gt; bold&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>***italic* bold**</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withItalicAndEscapedAsterix_1" FileName="bold.xml">
+    <MdString>**bold *nested \* italic***</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">bold </ContentMdSyntaxNode>
+          <ItalicMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">nested </ContentMdSyntaxNode>
+            <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve"> italic</ContentMdSyntaxNode>
+          </ItalicMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;bold &lt;em&gt;nested * italic&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>**bold *nested \* italic***</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withLink" FileName="bold.xml">
+    <MdString>**[transgenderinfo](https://www.transgenderinfo.be)**</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
+            <ContentMdSyntaxNode xml:space="preserve">transgenderinfo</ContentMdSyntaxNode>
+          </LinkMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;&lt;a href="https://www.transgenderinfo.be"&gt;transgenderinfo&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>**[transgenderinfo](https://www.transgenderinfo.be)**</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withTag" FileName="bold.xml">
+    <MdString>**#tag**</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <TagMdSyntaxNode xml:space="preserve">tag</TagMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;&lt;span class="md-tag"&gt;#tag&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>**#tag**</ExpectedMarkdownString>
+  </MdTestData>
+</ArrayOfMdTestData>

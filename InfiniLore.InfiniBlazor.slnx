@@ -1,8 +1,10 @@
 ﻿<Solution>
   <Folder Name="/.dev-tools/">
     <Project Path="src\DevTools.InfiniLore.InfiniBlazor\DevTools.InfiniLore.InfiniBlazor.csproj" Type="Classic C#" />
+    <Project Path="src\DevTools.MdTestHelper\DevTools.MdTestHelper.csproj" Type="Classic C#" />
     <File Path="README.md" />
     <File Path="Directory.Packages.props" />
+    <File Path="InfiniLore.InfiniBlazor.GitHubActions.slnf" />
   </Folder>
   <Folder Name="/.dev-tools/github/">
     <File Path=".github\workflows\release.yml" />
@@ -35,6 +37,9 @@
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests\Benchmarks.InfiniLore.InfiniBlazor.Markdown\Benchmarks.InfiniLore.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
+    <Project Path="tests\Tests.InfiniLore.InfiniBlazor.Markdown\Tests.InfiniLore.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
     <Project Path="tests\Tests.InfiniLore.InfiniBlazor\Tests.InfiniLore.InfiniBlazor.csproj" Type="Classic C#" />
+    <Project Path="tests\Tests.Shared.InfiniLore.InfiniBlazor.Markdown\Tests.Shared.InfiniLore.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
+    <Project Path="tests\Tests.Shared.Infinilore.InfiniBlazor\Tests.Shared.Infinilore.InfiniBlazor.csproj" Type="Classic C#" />
   </Folder>
 </Solution>

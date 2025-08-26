@@ -2,6 +2,7 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Toasting
+@using Microsoft.Extensions.Logging
 
 @* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
@@ -9,16 +10,20 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inject IToastingProvider ToastingProvider
+@inject ILogger<InfiniToastManager> Logger
+
 @implements IDisposable
 @rendermode RenderModeProvider.InfiniRenderMode
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@ContainerPositionClass @ZIndex.ToastMessageContainer py-2 absolute inset-0 bg-transparent space-y-2 max-w-xs w-full h-full overflow-y-auto infini-scrollbar-hidden pointer-events-none">
+<div
+    class="@ContainerPositionClass @ZIndex.ToastMessageContainer py-2 absolute inset-0 bg-transparent space-y-2 max-w-xs w-full h-full overflow-y-auto infini-scrollbar-hidden pointer-events-none">
     @foreach (IToastEntry toastEntry in ToastingProvider.GetToastEntries()) {
         <DynamicComponent
-            @key="toastEntry.Data.Id" 
+            @key="@($"{toastEntry.Data.Id:N}")"
+
             Type="@toastEntry.ComponentType"
             Parameters="@ToastMessageBase.GetAsDynamicParameters(toastEntry.Data)"
         />
@@ -27,6 +32,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     [Parameter] public ToastPosition Position { get; set; } = ToastPosition.TopRight;
 
@@ -37,6 +43,8 @@
         _ => "bottom-0 right-0 justify-self-end pr-2"
     };
 
+    private HashSet<Guid> _previousToastIds = new();
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -46,7 +54,17 @@
     }
 
     private async Task HandleToastServiceChange() {
+        HashSet<Guid> currentToastIds = ToastingProvider.GetToastEntries().Select(t => t.Data.Id).ToHashSet();
+        IEnumerable<Guid> removedToasts = _previousToastIds.Except(currentToastIds);
+
+        // Log for debugging
+        foreach (Guid removedId in removedToasts) {
+            Logger.Debug("Toast {removedId} should be removed from DOM", removedId);
+        }
+
+        _previousToastIds = currentToastIds;
         await InvokeAsync(StateHasChanged);
+
     }
 
     public void Dispose() {

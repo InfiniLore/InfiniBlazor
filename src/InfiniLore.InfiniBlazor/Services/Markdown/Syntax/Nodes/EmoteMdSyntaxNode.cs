@@ -17,4 +17,7 @@ public sealed class EmoteMdSyntaxNode : EmptyMdSyntaxNode<EmoteMdSyntaxNode> {
         OriginalEmote = string.Empty;
         return base.TryReset();
     }
+    
+    public override bool Equals(EmoteMdSyntaxNode? other) => base.Equals(other)
+        && EmoteKey == other.EmoteKey;
 }

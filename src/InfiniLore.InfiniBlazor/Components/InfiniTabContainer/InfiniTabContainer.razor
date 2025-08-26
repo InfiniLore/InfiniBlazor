@@ -1,0 +1,49 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniChildlessComponentBase
+@* @rendermode RenderModeProvider.InfiniRenderMode *@
+
+@inject InfiniTabContainerContext Context
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<CascadingValue Value="@Context">
+    <div class="h-full grid grid-cols-1 grid-rows-[auto_1fr] gap-2">
+        <div class="w-full grid auto-cols-max grid-flow-col gap-2 overflow-y-hidden overflow-x-auto infini-scrollbar">
+            @foreach (string tab in Context.Tabs) {
+                <InfiniButton
+                    Variant="@(Context.SelectedTab == tab ? ButtonVariant.Default : ButtonVariant.Dark)"
+                    OnClick="@(() => Context.SelectPage(tab))">@tab</InfiniButton>
+            }
+        </div>
+        <div class="w-full h-full">
+            @ChildContent
+        </div>
+    </div>
+</CascadingValue>
+
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        Context.OnTabRegisterChange += StateHasChanged;
+        Context.OnTabSelected += StateHasChanged;
+    }
+
+    public override async ValueTask DisposeAsync() {
+        await base.DisposeAsync();
+        Context.OnTabRegisterChange -= StateHasChanged;
+        Context.OnTabSelected -= StateHasChanged;
+    }
+}

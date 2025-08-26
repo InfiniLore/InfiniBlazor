@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="link.xml">
+    <MdString>[transgenderinfo](https://www.transgenderinfo.be)</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
+          <ContentMdSyntaxNode xml:space="preserve">transgenderinfo</ContentMdSyntaxNode>
+        </LinkMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;a href="https://www.transgenderinfo.be"&gt;transgenderinfo&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>[transgenderinfo](https://www.transgenderinfo.be)</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="edgecaseUnbound" FileName="link.xml">
+    <MdString>[link](https://example.com</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">[link](https://example.com</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;[link](https://example.com&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>[link](https://example.com</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="empty" FileName="link.xml">
+    <MdString>[]()</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">[]()</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;[]()&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>[]()</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withBold" FileName="link.xml">
+    <MdString>[**transgenderinfo**](https://www.transgenderinfo.be)</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
+          <BoldMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">transgenderinfo</ContentMdSyntaxNode>
+          </BoldMdSyntaxNode>
+        </LinkMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;a href="https://www.transgenderinfo.be"&gt;&lt;strong&gt;transgenderinfo&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>[**transgenderinfo**](https://www.transgenderinfo.be)</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withEmote" FileName="link.xml">
+    <MdString>[:flag-transgender:](https://www.twitch.tv/annasasdev)</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <LinkMdSyntaxNode Href="https://www.twitch.tv/annasasdev">
+          <EmoteMdSyntaxNode EmoteKey="flag-transgender" OriginalEmote=":flag-transgender:" />
+        </LinkMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;a href="https://www.twitch.tv/annasasdev"&gt;:flag-transgender:&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>[:flag-transgender:](https://www.twitch.tv/annasasdev)</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withEscapedBracket" FileName="link.xml">
+    <MdString>[\]](https://localhost:7210/icon.png)
+
+[\[](https://localhost:7210/icon.png)</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <LinkMdSyntaxNode Href="https://localhost:7210/icon.png">
+          <EscapedCharacterMdSyntaxNode xml:space="preserve">]</EscapedCharacterMdSyntaxNode>
+        </LinkMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <LinkMdSyntaxNode Href="https://localhost:7210/icon.png">
+          <EscapedCharacterMdSyntaxNode xml:space="preserve">[</EscapedCharacterMdSyntaxNode>
+        </LinkMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;a href="https://localhost:7210/icon.png"&gt;]&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://localhost:7210/icon.png"&gt;[&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>[\]](https://localhost:7210/icon.png)
+
+[\[](https://localhost:7210/icon.png)</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withItalic" FileName="link.xml">
+    <MdString>[*transgenderinfo*](https://www.transgenderinfo.be)</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
+          <ItalicMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">transgenderinfo</ContentMdSyntaxNode>
+          </ItalicMdSyntaxNode>
+        </LinkMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;a href="https://www.transgenderinfo.be"&gt;&lt;em&gt;transgenderinfo&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>[*transgenderinfo*](https://www.transgenderinfo.be)</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withSubscript" FileName="link.xml">
+    <MdString>[^transgenderinfo^](https://www.transgenderinfo.be)</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
+          <SubScriptMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">transgenderinfo</ContentMdSyntaxNode>
+          </SubScriptMdSyntaxNode>
+        </LinkMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;a href="https://www.transgenderinfo.be"&gt;&lt;sub&gt;transgenderinfo&lt;/sub&gt;&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>[^transgenderinfo^](https://www.transgenderinfo.be)</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withSuperscript" FileName="link.xml">
+    <MdString>[^^transgenderinfo^^](https://www.transgenderinfo.be)</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
+          <SuperScriptMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">transgenderinfo</ContentMdSyntaxNode>
+          </SuperScriptMdSyntaxNode>
+        </LinkMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;a href="https://www.transgenderinfo.be"&gt;&lt;sup&gt;transgenderinfo&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>[^^transgenderinfo^^](https://www.transgenderinfo.be)</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+</ArrayOfMdTestData>

@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="combo_bold_italic.xml">
+    <MdString>***bold and italic***</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <ItalicMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">bold and italic</ContentMdSyntaxNode>
+          </ItalicMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;&lt;em&gt;bold and italic&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>***bold and italic***</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="empty" FileName="combo_bold_italic.xml">
+    <MdString>******</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">**</ContentMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;**&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>******</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withEscapedCharMultiple" FileName="combo_bold_italic.xml">
+    <MdString>*** \* \* \* ***</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <ItalicMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+            <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+            <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+            <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+          </ItalicMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;&lt;em&gt; * * * &lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>*** \* \* \* ***</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withEscapedCharStart" FileName="combo_bold_italic.xml">
+    <MdString>"***\*bold and italic***</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">"</ContentMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <ItalicMdSyntaxNode>
+            <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">bold and italic</ContentMdSyntaxNode>
+          </ItalicMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;"&lt;strong&gt;&lt;em&gt;*bold and italic&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>"***\*bold and italic***</ExpectedMarkdownString>
+  </MdTestData>
+</ArrayOfMdTestData>

@@ -70,9 +70,6 @@
     [Parameter] public Anchor TooltipAnchor { get; set; } = Anchor.Center | Anchor.Bottom;
     [Parameter] public bool DisableTrackedQueryParams { get; set; }
 
-    [Parameter] public bool Disabled { get; set; }
-    protected override bool IsDisabled => Disabled || base.IsDisabled;
-
     private string? _computedHref;
 
     private bool _showTooltip;

@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class TableMdSyntaxNode : MdSyntaxNode<TableMdSyntaxNode> {
-    private int HeaderIndex { get; set; } = -1;
+    public int HeaderIndex { get; set; } = -1;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -27,7 +27,8 @@ public sealed class TableMdSyntaxNode : MdSyntaxNode<TableMdSyntaxNode> {
         
         // There are other children, so we need to insert it at the first location
         EnsureChildNodeCapacity();
-        SetParent(headerRow);
+        headerRow.WithParent(this);
+        
         ChildCount++;
         for (int i = ChildCount - 1; i > 0; i--) ChildNodes[i] = ChildNodes[i - 1];
         
@@ -66,4 +67,7 @@ public sealed class TableMdSyntaxNode : MdSyntaxNode<TableMdSyntaxNode> {
         HeaderIndex = -1;
         return true;
     }
+    
+    public override bool Equals(TableMdSyntaxNode? other) => base.Equals(other)
+        && HeaderIndex == other.HeaderIndex;
 }

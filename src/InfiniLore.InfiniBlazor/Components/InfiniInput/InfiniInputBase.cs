@@ -14,15 +14,4 @@ public abstract class InfiniInputBase : InfiniComponentBase {
     [Parameter] public LabelLocation LabelLocation { get; set; } = LabelLocation.Left;
 
     [Parameter] public string? ValidationMessage { get; set; }
-
-    [Parameter] public bool Disabled { get; set; }
-    protected override bool IsDisabled => Disabled || base.IsDisabled;
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
-    protected override void OnParametersSet() {
-        base.OnParametersSet();
-        CascadedDisabled = Disabled;
-    }
 }

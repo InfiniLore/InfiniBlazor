@@ -1,13 +1,17 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Microsoft.AspNetCore.Components;
+using InfiniLore.InfiniBlazor.Markdown.Parsers.HtmlString;
+using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString;
+using InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
 
 namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMarkdownParser {
-    string ParseToString(string input);
-    MarkupString ParseToMarkupString(string input);
+    IHtmlStringMdSyntaxTreeParser HtmlString { get; }
+    IHtmlStringMdSyntaxTreeParser StyledHtmlString { get; }
+    IMarkdownStringMdSyntaxTreeParser MarkdownString { get; }
+    IXmlMdSyntaxTreeParser Xml { get; }
 }

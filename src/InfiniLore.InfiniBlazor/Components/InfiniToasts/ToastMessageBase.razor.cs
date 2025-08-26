@@ -34,12 +34,20 @@ public partial class ToastMessageBase : InfiniComponentBase, IToastMessageBase, 
         ToastingProvider.AttachComponent(ToastData.Id, this);
     }
 
-    public virtual async Task RequestCloseAsync() {
+    protected virtual async Task RequestCloseAsync() {
         if (IsClosing) return;
         IsClosing = true;
-        StateHasChanged();
+        await InvokeAsync(StateHasChanged);
         await Task.Delay(300); // match Tailwind animation
         await ToastingProvider.UnpublishToastAsync(ToastData.Id);
+    }
+
+    public virtual async Task RequestCloseFromProviderAsync() {
+        if (IsClosing) return;
+        IsClosing = true;
+        await InvokeAsync(StateHasChanged);
+        await Task.Delay(300); // match Tailwind animation
+        await InvokeAsync(StateHasChanged);
     }
 
     public void Dispose() {

@@ -34,6 +34,7 @@
     [Parameter, EditorRequired] public string? Value { get; set; }
     [Parameter] public EventCallback<string?> ValueChanged { get; set; }
     [Parameter] public EventCallback<ChangeEventArgs> OnChange { get; set; }
+    [Parameter] public EventCallback<ChangeEventArgs> OnInput { get; set; }
     [Parameter] public string Placeholder { get; set; } = string.Empty;
     [Parameter] public bool AutoFocus { get; set; }
     [Parameter] public int? MaxLength { get; set; }
@@ -51,5 +52,7 @@
         if (args.Value is string value) {
             await ValueChanged.InvokeAsync(value);
         }
+        await OnInput.InvokeAsync(args);
+
     }
 }

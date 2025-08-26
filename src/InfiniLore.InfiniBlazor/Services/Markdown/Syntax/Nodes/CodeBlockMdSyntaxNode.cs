@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 public sealed class CodeBlockMdSyntaxNode : EmptyMdSyntaxNode<CodeBlockMdSyntaxNode> {
     public string ContentCode { get; set; } = string.Empty;
     public string Language { get; set; } = string.Empty;
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -17,4 +17,8 @@ public sealed class CodeBlockMdSyntaxNode : EmptyMdSyntaxNode<CodeBlockMdSyntaxN
         Language = string.Empty;
         return base.TryReset();
     }
+    
+    public override bool Equals(CodeBlockMdSyntaxNode? other) => base.Equals(other)
+        && ContentCode == other.ContentCode
+        && Language == other.Language;
 }
