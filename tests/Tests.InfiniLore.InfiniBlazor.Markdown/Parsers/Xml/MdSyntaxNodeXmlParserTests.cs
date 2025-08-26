@@ -49,18 +49,17 @@ public class MdSyntaxTreeXmlParserTests {
     [Test]
     public async Task DeserializeToStreamAsync_ShouldWriteXmlCorrectly() {
         // Arrange
-        MemoryStream memoryStream = new();
-
-        // Act
-        await _parser.DeserializeToXmlStreamAsync(memoryStream, TestTree);
-
-        // Assert
-        memoryStream.Position = 0;
-        string result = await new StreamReader(memoryStream).ReadToEndAsync();
-
         XElement expected = XElement.Parse(Xml);
 
+        // Act
+        MemoryStream memoryStream = new();
+        await _parser.DeserializeToXmlStreamAsync(memoryStream, TestTree);
+        memoryStream.Position = 0;
+        string result = await new StreamReader(memoryStream).ReadToEndAsync();
         XElement resultXml = XElement.Parse(result);
+        // Assert
+
+
         await Assert.That(resultXml.ToString(SaveOptions.DisableFormatting)).IsEqualTo(expected.ToString(SaveOptions.DisableFormatting));
     }
 
