@@ -4,6 +4,7 @@
 using InfiniLore.InfiniBlazor.Markdown;
 using Tests.InfiniLore.InfiniBlazor.Markdown.DataSources;
 using Tests.Shared.Infinilore.InfiniBlazor;
+using Tests.Shared.InfiniLore.InfiniBlazor.Markdown;
 
 namespace Tests.InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString;
 // ---------------------------------------------------------------------------------------------------------------------

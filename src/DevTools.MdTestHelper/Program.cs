@@ -4,7 +4,7 @@
 using DevTools.MdTestHelper.Components;
 using InfiniLore.InfiniBlazor.Config;
 using System.Diagnostics.CodeAnalysis;
-using Tests.Shared.Infinilore.InfiniBlazor;
+using Tests.Shared.InfiniLore.InfiniBlazor.Markdown;
 
 namespace DevTools.MdTestHelper;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -27,7 +27,7 @@ public class Program {
         );
 
         builder.Services.RegisterServicesFromDevToolsMdTestHelper();
-        builder.Services.RegisterServicesFromTestsSharedInfiniloreInfiniBlazor();
+        builder.Services.RegisterServicesFromTestsSharedInfiniLoreInfiniBlazorMarkdown();
 
         // -----------------------------------------------------------------------------------------------------------------
         // App
