@@ -19,6 +19,7 @@ public sealed class BaseListSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSe
     private static readonly int LBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListBody);
     private static readonly int LIndexId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListIndex);
     private static readonly int ListItemLeadingSpaces = MdRegexLib.GetGroupId(MdRegexGroupNames.ListItemLeadingSpaces);
+    private static readonly int ListTaskItemLeadingSpaces = MdRegexLib.GetGroupId(MdRegexGroupNames.ListTaskItemLeadingSpaces);
     
     public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
 
@@ -51,9 +52,13 @@ public sealed class BaseListSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSe
 
                 ListItemMdSyntaxNode listItemNode = ListItemMdSyntaxNode.Pool.Get();
                 listNode.AddChildNode(listItemNode);
+                
                 groups[ListItemLeadingSpaces].TryGetLength(out int listItemLeadingSpaces);
                 listItemNode.WithLeadingSpaces(Math.Max(listItemLeadingSpaces, 0));
-            
+                
+                groups[ListTaskItemLeadingSpaces].TryGetLength(out int listTaskItemLeadingSpaces);
+                listItemNode.WithCheckLeadingSpaces(Math.Max(listTaskItemLeadingSpaces, 0));
+                
                 if (groups[LBodyId].TryGetValueSpan(out ReadOnlySpan<char> itemBody) && !itemBody.IsEmpty) {
                     string normalizedBody = LineNormalization.NormalizeLineIndentation(itemBody, out int leadingSpaces);
                     stack.PushMultiLineMatchesToStack(normalizedBody, listItemNode, parentOrigin | MdSyntaxSerializerOrigin.PreserveHtml);

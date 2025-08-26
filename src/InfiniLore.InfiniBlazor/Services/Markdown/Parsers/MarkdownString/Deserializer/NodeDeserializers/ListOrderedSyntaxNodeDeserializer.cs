@@ -22,10 +22,14 @@ public sealed class ListOrderedSyntaxNodeDeserializer : BaseMarkdownStringMdSynt
                     : "\n"
                 );
                 builder.Append(localBuilder);
+                builder.Append('\n');
             }
             finally {
                 GlobalPools.StringBuilder.Return(localBuilder);
             }
         }
+        
+        if (builder.Length == 0) return;
+        builder.Remove(builder.Length - 1, 1);
     }
 }

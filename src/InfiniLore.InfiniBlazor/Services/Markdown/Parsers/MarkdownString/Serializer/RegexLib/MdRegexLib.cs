@@ -36,7 +36,7 @@ public static partial class MdRegexLib {
           (?<heading>^(?<hLevel>\#{1,6})[\ ]+(?<hText>[^\n]+)$)
         | (?<codeBlock>`{3}(?<cLang>.*?)?\n(?<cBody>[\s\S]*?)`{3})
         | (?<headingSimple>^(?<hsText>.+?)\n(?<hsIdentifier>[\ ]*[-=]{3,}))
-        | (?<list>^[^\S\n]*(?<lsId>-|\d+\.)\ +.*(?:\n[^\S\n]+[^\n]+)*(?:\n[^\S\n]*(?:-|\d+\.)\s+.*(?:\n[^\S\n]+[^\n]+)*)*)
+        | (?<list>^\ *(?<lsId>-|\d+\.)[\ \[]+.+(?:\n\ *\S+[^\n]+)*)
         | (?<table>
             ^\|(?<tHead>.+)\|\ *\n
             ^\|(?<tSep>[:\-|\ ]+?)\|\ *
@@ -97,7 +97,7 @@ public static partial class MdRegexLib {
         MdRegexGroupNames.Tag
     ];
 
-    [GeneratedRegex(@"^ *(?:-|(?<lIndex>\d*)\.)(?:\[(?<lTask>[ xX])])?(?:(?<lSpace> +)(?<lHead>[^\n]+)|(?<lHead> )|(?<lHead>))(?<lBody>(?:\n +.*)*)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"^ *(?:-|(?<lIndex>\d*)\.)(?:(?<lTaskSpace> *)\[(?<lTask>[ xX])])?(?:(?<lSpace> +)(?<lHead>[^\n]+)|(?<lHead> )|(?<lHead>))(?<lBody>(?:\n +.*)*)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex ListItemBodyRegex { get; }
 
     [GeneratedRegex("""

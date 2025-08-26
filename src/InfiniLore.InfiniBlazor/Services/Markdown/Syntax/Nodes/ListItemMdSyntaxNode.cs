@@ -11,6 +11,7 @@ public sealed class ListItemMdSyntaxNode : MdSyntaxNode<ListItemMdSyntaxNode> {
     public string Index { get; set; } = string.Empty;
     public string OriginalCheckMarker { get; set; } = string.Empty;
     public int LeadingSpaces { get; private set; }
+    public int CheckLeadingSpaces { get; private set; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -20,11 +21,17 @@ public sealed class ListItemMdSyntaxNode : MdSyntaxNode<ListItemMdSyntaxNode> {
         return this;
     }
     
+    public ListItemMdSyntaxNode WithCheckLeadingSpaces(int checkLeadingSpaces) {
+        CheckLeadingSpaces = checkLeadingSpaces;
+        return this;
+    }
+    
     public override bool TryReset() {
         IsCheckable = false;
         Index = string.Empty;
         OriginalCheckMarker = string.Empty;
         LeadingSpaces = 0;
+        CheckLeadingSpaces = 0;
         return base.TryReset();
     }
     

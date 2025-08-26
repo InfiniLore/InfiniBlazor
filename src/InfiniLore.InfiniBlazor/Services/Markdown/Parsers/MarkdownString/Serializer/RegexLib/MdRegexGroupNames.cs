@@ -50,6 +50,7 @@ public static class MdRegexGroupNames {
     public const string ListIdentifier = "lsId";
     public const string ListTask = "lTask";
     public const string ListItemLeadingSpaces = "lSpace";
+    public const string ListTaskItemLeadingSpaces = "lTaskSpace";
     public const string Paragraph = "paragraph";
     public const string ParagraphContent = "p";
     public const string SpanBody = "spanBody";

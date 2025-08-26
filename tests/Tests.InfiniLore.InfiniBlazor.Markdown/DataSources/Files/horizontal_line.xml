@@ -77,4 +77,27 @@
     <ExpectedMarkdownString>-----
 =====</ExpectedMarkdownString>
   </MdTestData>
+  <MdTestData Id="edgecaseUnknown" FileName="horizontal_line.xml">
+    <DeveloperNote>This is an older test that was once related to horizontal lines</DeveloperNote>
+    <MdString>1234
+1234
+123</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">1234</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">1234</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">123</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;1234&lt;/p&gt;&lt;p&gt;1234&lt;/p&gt;&lt;p&gt;123&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>1234
+1234
+123</ExpectedMarkdownString>
+  </MdTestData>
 </ArrayOfMdTestData>
