@@ -10,14 +10,21 @@ public sealed class ListItemMdSyntaxNode : MdSyntaxNode<ListItemMdSyntaxNode> {
     public bool IsChecked => OriginalCheckMarker.ToLowerInvariant().ElementAtOrDefault(0) == 'x';
     public string Index { get; set; } = string.Empty;
     public string OriginalCheckMarker { get; set; } = string.Empty;
+    public int LeadingSpaces { get; private set; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public ListItemMdSyntaxNode WithLeadingSpaces(int leadingSpaces) {
+        LeadingSpaces = leadingSpaces;
+        return this;
+    }
+    
     public override bool TryReset() {
         IsCheckable = false;
         Index = string.Empty;
         OriginalCheckMarker = string.Empty;
+        LeadingSpaces = 0;
         return base.TryReset();
     }
     

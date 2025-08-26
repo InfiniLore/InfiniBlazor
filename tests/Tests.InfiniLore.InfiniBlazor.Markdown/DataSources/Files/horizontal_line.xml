@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="1" FileName="horizontal_line.xml">
+    <MdString>-
+
+=</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">-</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">=</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;-&lt;/p&gt;&lt;p&gt;=&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>-
+
+=</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="2" FileName="horizontal_line.xml">
+    <MdString>--
+
+==</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">--</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">==</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;--&lt;/p&gt;&lt;p&gt;==&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>--
+
+==</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="3" FileName="horizontal_line.xml">
+    <MdString>---
+
+===</MdString>
+    <MdSyntaxTree>
+      <HorizontalRuleMdSyntaxNode Identifier="---" />
+      <NewLineMdSyntaxNode />
+      <HorizontalRuleMdSyntaxNode Identifier="===" />
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;hr&gt;&lt;hr&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>---
+===</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="4" FileName="horizontal_line.xml">
+    <MdString>----
+
+====</MdString>
+    <MdSyntaxTree>
+      <HorizontalRuleMdSyntaxNode Identifier="----" />
+      <NewLineMdSyntaxNode />
+      <HorizontalRuleMdSyntaxNode Identifier="====" />
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;hr&gt;&lt;hr&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>----
+====</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="5" FileName="horizontal_line.xml">
+    <MdString>-----
+
+=====</MdString>
+    <MdSyntaxTree>
+      <HorizontalRuleMdSyntaxNode Identifier="-----" />
+      <NewLineMdSyntaxNode />
+      <HorizontalRuleMdSyntaxNode Identifier="=====" />
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;hr&gt;&lt;hr&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>-----
+=====</ExpectedMarkdownString>
+  </MdTestData>
+</ArrayOfMdTestData>

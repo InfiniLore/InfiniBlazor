@@ -155,14 +155,23 @@
     <ExpectedMarkdownString>`code` at the start of the line.</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="withEscapedBacktick" FileName="code_inline.xml">
-    <MdString>`\``</MdString>
+    <MdString>`\``
+
+``code with \`escaped backticks\```</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">\`</CodeInlineMdSyntaxNode>
       </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="2">code with \`escaped backticks\`</CodeInlineMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;`&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>`\``</ExpectedMarkdownString>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;`&lt;/code&gt;&lt;/p&gt;&lt;p&gt;&lt;code&gt;code with `escaped backticks`&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>`\``
+
+``code with \`escaped backticks\```</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="withSpecialCharacters" FileName="code_inline.xml">
     <MdString>`inline code with special characters !@#$%^&amp;*()`</MdString>

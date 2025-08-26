@@ -12,7 +12,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Strike)]
 public sealed class StrikeSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-    private static readonly int SId = MdRegexLib.GetGroupId(MdRegexGroupNames.StrikeContent);
+    private static readonly int StrikeContentId = MdRegexLib.GetGroupId(MdRegexGroupNames.StrikeContent);
+    private static readonly int StrikeId = MdRegexLib.GetGroupId(MdRegexGroupNames.Strike);
     public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.Strike;
     
     // -----------------------------------------------------------------------------------------------------------------
@@ -24,10 +25,11 @@ public sealed class StrikeSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSeri
         Match entireMatch,
         MdSyntaxSerializerOrigin parentOrigin
     ) {
-        if (!entireMatch.Groups[SId].TryGetValue(out string? strikeValue)) return ;
-
+        if (!entireMatch.Groups[StrikeContentId].TryGetValue(out string? strikeValue)) return ;
+        
         StrikeMdSyntaxNode node = StrikeMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
+        
         stack.PushSingleLineMatchesToStack(strikeValue, node, parentOrigin | SkipOnOrigin);
     }
 }

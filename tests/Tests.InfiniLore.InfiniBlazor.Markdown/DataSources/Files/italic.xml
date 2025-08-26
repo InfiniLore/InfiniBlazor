@@ -128,6 +128,18 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt; * &lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>** \* **</ExpectedMarkdownString>
   </MdTestData>
+  <MdTestData Id="withEscapedAsterix_4" FileName="italic.xml">
+    <MdString>\*literal asterisks\*</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">literal asterisks</ContentMdSyntaxNode>
+        <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;*literal asterisks*&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>\*literal asterisks\*</ExpectedMarkdownString>
+  </MdTestData>
   <MdTestData Id="withTag" FileName="italic.xml">
     <MdString>*#tag*</MdString>
     <MdSyntaxTree>

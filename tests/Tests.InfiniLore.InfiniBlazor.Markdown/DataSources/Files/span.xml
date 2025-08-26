@@ -13,14 +13,65 @@
     <ExpectedMarkdownString>&lt;span style=\"color: red\"&gt;sometext&lt;/span&gt;</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="empty" FileName="span.xml">
-    <MdString>&lt;span style=\"color: red\"&gt;&lt;/span&gt;</MdString>
+    <MdString>&lt;span style=\"color: red\"&gt;&lt;/span&gt;
+
+&lt;span style=\"color: red\"&gt; &lt;/span&gt;</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <HtmlSpanMdSyntaxNode TagValue="&lt;span style=\&quot;color: red\&quot;&gt;" Attributes=" style=\&quot;color: red\&quot;" />
       </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <HtmlSpanMdSyntaxNode TagValue="&lt;span style=\&quot;color: red\&quot;&gt;" Attributes=" style=\&quot;color: red\&quot;">
+          <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+        </HtmlSpanMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span style=\"color: red\"&gt;&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>&lt;span style=\"color: red\"&gt;&lt;/span&gt;</ExpectedMarkdownString>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span style=\"color: red\"&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=\"color: red\"&gt; &lt;/span&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&lt;span style=\"color: red\"&gt;&lt;/span&gt;
+
+&lt;span style=\"color: red\"&gt; &lt;/span&gt;</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="inlineEmpty" FileName="span.xml">
+    <MdString>*test* &lt;span&gt; something &lt;/span&gt; **bold this**</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ItalicMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">test</ContentMdSyntaxNode>
+        </ItalicMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+        <HtmlSpanMdSyntaxNode TagValue="&lt;span&gt;" Attributes="">
+          <ContentMdSyntaxNode xml:space="preserve"> something </ContentMdSyntaxNode>
+        </HtmlSpanMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">bold this</ContentMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;em&gt;test&lt;/em&gt; &lt;span&gt; something &lt;/span&gt; &lt;strong&gt;bold this&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>*test* &lt;span&gt; something &lt;/span&gt; **bold this**</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="inlineWithMarkdown" FileName="span.xml">
+    <MdString>*test* &lt;span class="text-red-500"&gt; something &lt;/span&gt; **bold this**</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ItalicMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">test</ContentMdSyntaxNode>
+        </ItalicMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+        <HtmlSpanMdSyntaxNode TagValue="&lt;span class=&quot;text-red-500&quot;&gt;" Attributes=" class=&quot;text-red-500&quot;">
+          <ContentMdSyntaxNode xml:space="preserve"> something </ContentMdSyntaxNode>
+        </HtmlSpanMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">bold this</ContentMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;em&gt;test&lt;/em&gt; &lt;span class="text-red-500"&gt; something &lt;/span&gt; &lt;strong&gt;bold this&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>*test* &lt;span class="text-red-500"&gt; something &lt;/span&gt; **bold this**</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="withBold" FileName="span.xml">
     <MdString>&lt;span style=\"color: red\"&gt;**red bold?**&lt;/span&gt;</MdString>

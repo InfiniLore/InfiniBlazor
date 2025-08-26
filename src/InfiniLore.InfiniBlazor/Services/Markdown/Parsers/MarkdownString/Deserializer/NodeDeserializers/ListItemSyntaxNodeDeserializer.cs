@@ -13,12 +13,12 @@ public sealed class ListItemSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxN
         switch (node.Parent) {
             case ListUnOrderedMdSyntaxNode:
                 builder.Append('-');
-                builder.Append(' ');
+                builder.Append(' ', node.LeadingSpaces);
                 break;
             case ListOrderedMdSyntaxNode:
                 builder.Append(node.Index);
                 builder.Append('.');
-                builder.Append(' ');
+                builder.Append(' ', node.LeadingSpaces);
                 break;
         }
         

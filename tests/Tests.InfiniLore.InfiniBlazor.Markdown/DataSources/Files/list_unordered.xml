@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="list_unordered.xml">
+    <MdString>- list item
+
+- list item
+- list item
+
+- list item
+- list item
+- list item
+
+- list item
+- list item
+- list item</MdString>
+    <MdSyntaxTree>
+      <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
+        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" LeadingSpaces="1">
+          <ContentMdSyntaxNode xml:space="preserve">list item</ContentMdSyntaxNode>
+        </ListItemMdSyntaxNode>
+      </ListUnOrderedMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
+        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" LeadingSpaces="1">
+          <ContentMdSyntaxNode xml:space="preserve">list item</ContentMdSyntaxNode>
+        </ListItemMdSyntaxNode>
+        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" LeadingSpaces="1">
+          <ContentMdSyntaxNode xml:space="preserve">list item</ContentMdSyntaxNode>
+        </ListItemMdSyntaxNode>
+      </ListUnOrderedMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
+        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" LeadingSpaces="1">
+          <ContentMdSyntaxNode xml:space="preserve">list item</ContentMdSyntaxNode>
+        </ListItemMdSyntaxNode>
+        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" LeadingSpaces="1">
+          <ContentMdSyntaxNode xml:space="preserve">list item</ContentMdSyntaxNode>
+        </ListItemMdSyntaxNode>
+        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" LeadingSpaces="1">
+          <ContentMdSyntaxNode xml:space="preserve">list item</ContentMdSyntaxNode>
+        </ListItemMdSyntaxNode>
+      </ListUnOrderedMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
+        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" LeadingSpaces="1">
+          <ContentMdSyntaxNode xml:space="preserve">list item</ContentMdSyntaxNode>
+        </ListItemMdSyntaxNode>
+        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" LeadingSpaces="1">
+          <ContentMdSyntaxNode xml:space="preserve">list item</ContentMdSyntaxNode>
+        </ListItemMdSyntaxNode>
+        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" LeadingSpaces="1">
+          <ContentMdSyntaxNode xml:space="preserve">list item</ContentMdSyntaxNode>
+        </ListItemMdSyntaxNode>
+      </ListUnOrderedMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;ul&gt;&lt;li&gt;list item&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;/ul&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>- list item
+
+- list item
+- list item
+
+- list item
+- list item
+- list item
+
+- list item
+- list item
+- list item</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="empty" FileName="list_unordered.xml">
+    <MdString>-
+
+- </MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">-</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
+        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" LeadingSpaces="0">
+          <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+        </ListItemMdSyntaxNode>
+      </ListUnOrderedMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;-&lt;/p&gt;&lt;ul&gt;&lt;li&gt; &lt;/li&gt;&lt;/ul&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>-
+
+- </ExpectedMarkdownString>
+  </MdTestData>
+</ArrayOfMdTestData>

@@ -10,4 +10,217 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;br/&gt; test&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>test &lt;br/&gt; test</ExpectedMarkdownString>
   </MdTestData>
+  <MdTestData Id="default" FileName="html.xml">
+    <MdString>&lt;div&gt;&lt;/div&gt;</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentHtmlMdSyntaxNode xml:space="preserve">&lt;div&gt;&lt;/div&gt;</ContentHtmlMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;div&gt;&lt;/div&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&lt;div&gt;&lt;/div&gt;</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="empty" FileName="html.xml">
+    <MdString>&lt;&gt;&lt;/&gt;</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">&lt;&gt;&lt;/&gt;</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;&gt;&lt;/&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&lt;&gt;&lt;/&gt;</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="inline" FileName="html.xml">
+    <MdString>external &lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt; external</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">external </ContentMdSyntaxNode>
+        <ContentHtmlMdSyntaxNode xml:space="preserve">&lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt;</ContentHtmlMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve"> external</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;external &lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt; external&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>external &lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt; external</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="inlineAndMultipleLines" FileName="html.xml">
+    <MdString>test &lt;div&gt;
+&lt;strong&gt;something&lt;/strong&gt;
+&lt;/div&gt;</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">test </ContentMdSyntaxNode>
+        <ContentHtmlMdSyntaxNode xml:space="preserve">&lt;div&gt;
+&lt;strong&gt;something&lt;/strong&gt;
+&lt;/div&gt;</ContentHtmlMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;div&gt;
+&lt;strong&gt;something&lt;/strong&gt;
+&lt;/div&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>test &lt;div&gt;
+&lt;strong&gt;something&lt;/strong&gt;
+&lt;/div&gt;</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="inlineWithMarkdown" FileName="html.xml">
+    <MdString>*test* &lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt; **bold this**</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ItalicMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">test</ContentMdSyntaxNode>
+        </ItalicMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+        <ContentHtmlMdSyntaxNode xml:space="preserve">&lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt;</ContentHtmlMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">bold this</ContentMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;em&gt;test&lt;/em&gt; &lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt; &lt;strong&gt;bold this&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>*test* &lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt; **bold this**</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="inlineWithMultipleLinesAndMarkdown" FileName="html.xml">
+    <MdString>*test* &lt;div&gt;
+&lt;strong&gt;something&lt;/strong&gt;
+&lt;/div&gt; **bold this**</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ItalicMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">test</ContentMdSyntaxNode>
+        </ItalicMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+        <ContentHtmlMdSyntaxNode xml:space="preserve">&lt;div&gt;
+&lt;strong&gt;something&lt;/strong&gt;
+&lt;/div&gt;</ContentHtmlMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">bold this</ContentMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;em&gt;test&lt;/em&gt; &lt;div&gt;
+&lt;strong&gt;something&lt;/strong&gt;
+&lt;/div&gt; &lt;strong&gt;bold this&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>*test* &lt;div&gt;
+&lt;strong&gt;something&lt;/strong&gt;
+&lt;/div&gt; **bold this**</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="longInput" FileName="html.xml">
+    <MdString>&lt;pre&gt;
+Buffalo Bill ’s
+defunct
+       who used to
+       ride a watersmooth-silver
+                                stallion
+and break onetwothreefourfive pigeonsjustlikethat
+                                                 Jesus
+he was a handsome man
+                     and what i want to know is
+how do you like your blueeyed boy
+Mister Death
+&lt;/pre&gt;</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentHtmlMdSyntaxNode xml:space="preserve">&lt;pre&gt;
+Buffalo Bill ’s
+defunct
+       who used to
+       ride a watersmooth-silver
+                                stallion
+and break onetwothreefourfive pigeonsjustlikethat
+                                                 Jesus
+he was a handsome man
+                     and what i want to know is
+how do you like your blueeyed boy
+Mister Death
+&lt;/pre&gt;</ContentHtmlMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;pre&gt;
+Buffalo Bill ’s
+defunct
+       who used to
+       ride a watersmooth-silver
+                                stallion
+and break onetwothreefourfive pigeonsjustlikethat
+                                                 Jesus
+he was a handsome man
+                     and what i want to know is
+how do you like your blueeyed boy
+Mister Death
+&lt;/pre&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&lt;pre&gt;
+Buffalo Bill ’s
+defunct
+       who used to
+       ride a watersmooth-silver
+                                stallion
+and break onetwothreefourfive pigeonsjustlikethat
+                                                 Jesus
+he was a handsome man
+                     and what i want to know is
+how do you like your blueeyed boy
+Mister Death
+&lt;/pre&gt;</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="longInputTable" FileName="html.xml">
+    <MdString>Unrelated previous paragraph followed by a blank line
+&lt;table&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Table cell&lt;/td&gt;
+        &lt;td&gt;
+            &lt;table&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;*Tables in tables*&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/table&gt;
+        &lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">Unrelated previous paragraph followed by a blank line</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <ContentHtmlMdSyntaxNode xml:space="preserve">&lt;table&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Table cell&lt;/td&gt;
+        &lt;td&gt;
+            &lt;table&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;*Tables in tables*&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/table&gt;
+        &lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;</ContentHtmlMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;Unrelated previous paragraph followed by a blank line&lt;/p&gt;&lt;p&gt;&lt;table&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Table cell&lt;/td&gt;
+        &lt;td&gt;
+            &lt;table&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;*Tables in tables*&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/table&gt;
+        &lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Unrelated previous paragraph followed by a blank line
+&lt;table&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Table cell&lt;/td&gt;
+        &lt;td&gt;
+            &lt;table&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;*Tables in tables*&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/table&gt;
+        &lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;</ExpectedMarkdownString>
+  </MdTestData>
 </ArrayOfMdTestData>
