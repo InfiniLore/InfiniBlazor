@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="tag.xml">
+    <MdString>#tag</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <TagMdSyntaxNode xml:space="preserve">tag</TagMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span class="md-tag"&gt;#tag&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>#tag</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="invalid" FileName="tag.xml">
+    <MdString>#this is not a valid tag
+
+#[link](https://www.transgenderinfo.be)</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <TagMdSyntaxNode xml:space="preserve">this</TagMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve"> is not a valid tag</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">#</ContentMdSyntaxNode>
+        <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
+          <ContentMdSyntaxNode xml:space="preserve">link</ContentMdSyntaxNode>
+        </LinkMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span class="md-tag"&gt;#this&lt;/span&gt; is not a valid tag&lt;/p&gt;&lt;p&gt;#&lt;a href="https://www.transgenderinfo.be"&gt;link&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>#this is not a valid tag
+
+#[link](https://www.transgenderinfo.be)</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="unicode" FileName="tag.xml">
+    <MdString>#不
+
+#öäüÖÄÜß</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <TagMdSyntaxNode xml:space="preserve">不</TagMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <TagMdSyntaxNode xml:space="preserve">öäüÖÄÜß</TagMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span class="md-tag"&gt;#不&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span class="md-tag"&gt;#öäüÖÄÜß&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>#不
+
+#öäüÖÄÜß</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withSubTags" FileName="tag.xml">
+    <MdString>#tag/subtag</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <TagMdSyntaxNode xml:space="preserve">tag/subtag</TagMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span class="md-tag"&gt;#tag/subtag&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>#tag/subtag</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+</ArrayOfMdTestData>

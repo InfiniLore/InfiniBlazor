@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="ampersand" FileName="special_char.xml">
+    <MdString>$</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">$</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;$&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>$</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="emoji" FileName="special_char.xml">
+    <MdString>This contains an emoji: 😀</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">This contains an emoji: 😀</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;This contains an emoji: 😀&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>This contains an emoji: 😀</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="greaterthan" FileName="special_char.xml">
+    <MdString>&gt;</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">&gt;</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&gt;</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="lessthan" FileName="special_char.xml">
+    <MdString>&lt;</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">&lt;</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&lt;</ExpectedMarkdownString>
+  </MdTestData>
+</ArrayOfMdTestData>

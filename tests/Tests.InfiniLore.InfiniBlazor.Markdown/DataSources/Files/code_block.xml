@@ -9,11 +9,11 @@ const code = sample();
 const code = sample();
 ```</MdString>
     <MdSyntaxTree>
-      <CodeBlockMdSyntaxNode xml:space="preserve">const code = sample();
+      <CodeBlockMdSyntaxNode xml:space="preserve" Language="">const code = sample();
 </CodeBlockMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
-      <CodeBlockMdSyntaxNode xml:space="preserve">const code = sample();
+      <CodeBlockMdSyntaxNode xml:space="preserve" Language="javascript">const code = sample();
 </CodeBlockMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;pre&gt;&lt;code&gt;const code = sample();
@@ -32,7 +32,7 @@ const code = sample();
 
 ```</MdString>
     <MdSyntaxTree>
-      <CodeBlockMdSyntaxNode xml:space="preserve">
+      <CodeBlockMdSyntaxNode xml:space="preserve" Language="">
 </CodeBlockMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;pre&gt;&lt;code&gt;
@@ -58,19 +58,19 @@ content
 content
 ```</MdString>
     <MdSyntaxTree>
-      <CodeBlockMdSyntaxNode xml:space="preserve">content
+      <CodeBlockMdSyntaxNode xml:space="preserve" Language="javascript">content
 </CodeBlockMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
-      <CodeBlockMdSyntaxNode xml:space="preserve">content
+      <CodeBlockMdSyntaxNode xml:space="preserve" Language="typescript">content
 </CodeBlockMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
-      <CodeBlockMdSyntaxNode xml:space="preserve">content
+      <CodeBlockMdSyntaxNode xml:space="preserve" Language="python">content
 </CodeBlockMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
-      <CodeBlockMdSyntaxNode xml:space="preserve">content
+      <CodeBlockMdSyntaxNode xml:space="preserve" Language="csharp">content
 </CodeBlockMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;pre&gt;&lt;code class="language-javascript"&gt;content
@@ -99,7 +99,7 @@ content
 **some valid markdown**
 ```</MdString>
     <MdSyntaxTree>
-      <CodeBlockMdSyntaxNode xml:space="preserve">**some valid markdown**
+      <CodeBlockMdSyntaxNode xml:space="preserve" Language="">**some valid markdown**
 </CodeBlockMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;pre&gt;&lt;code&gt;**some valid markdown**
@@ -115,7 +115,7 @@ tell application "Foo"
 end tell
 ```</MdString>
     <MdSyntaxTree>
-      <CodeBlockMdSyntaxNode xml:space="preserve">tell application "Foo"
+      <CodeBlockMdSyntaxNode xml:space="preserve" Language="">tell application "Foo"
     beep
 end tell
 </CodeBlockMdSyntaxNode>

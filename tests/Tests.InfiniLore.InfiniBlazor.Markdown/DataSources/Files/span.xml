@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="span.xml">
+    <MdString>&lt;span style=\"color: red\"&gt;sometext&lt;/span&gt;</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <HtmlSpanMdSyntaxNode TagValue="&lt;span style=\&quot;color: red\&quot;&gt;" Attributes=" style=\&quot;color: red\&quot;">
+          <ContentMdSyntaxNode xml:space="preserve">sometext</ContentMdSyntaxNode>
+        </HtmlSpanMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span style=\"color: red\"&gt;sometext&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&lt;span style=\"color: red\"&gt;sometext&lt;/span&gt;</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="empty" FileName="span.xml">
+    <MdString>&lt;span style=\"color: red\"&gt;&lt;/span&gt;</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <HtmlSpanMdSyntaxNode TagValue="&lt;span style=\&quot;color: red\&quot;&gt;" Attributes=" style=\&quot;color: red\&quot;" />
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span style=\"color: red\"&gt;&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&lt;span style=\"color: red\"&gt;&lt;/span&gt;</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withBold" FileName="span.xml">
+    <MdString>&lt;span style=\"color: red\"&gt;**red bold?**&lt;/span&gt;</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <HtmlSpanMdSyntaxNode TagValue="&lt;span style=\&quot;color: red\&quot;&gt;" Attributes=" style=\&quot;color: red\&quot;">
+          <BoldMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">red bold?</ContentMdSyntaxNode>
+          </BoldMdSyntaxNode>
+        </HtmlSpanMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span style=\"color: red\"&gt;&lt;strong&gt;red bold?&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&lt;span style=\"color: red\"&gt;**red bold?**&lt;/span&gt;</ExpectedMarkdownString>
+  </MdTestData>
+</ArrayOfMdTestData>

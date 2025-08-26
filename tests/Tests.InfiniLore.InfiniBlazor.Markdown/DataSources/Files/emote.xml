@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="emote.xml">
+    <MdString>:flag-transgender:</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <EmoteMdSyntaxNode EmoteKey="flag-transgender" OriginalEmote=":flag-transgender:" />
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;:flag-transgender:&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>:flag-transgender:</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="empty" FileName="emote.xml">
+    <MdString>::</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">::</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;::&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>::</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="notValid" FileName="emote.xml">
+    <MdString>:not/an/emote:</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">:not/an/emote:</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;:not/an/emote:&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>:not/an/emote:</ExpectedMarkdownString>
+  </MdTestData>
+</ArrayOfMdTestData>

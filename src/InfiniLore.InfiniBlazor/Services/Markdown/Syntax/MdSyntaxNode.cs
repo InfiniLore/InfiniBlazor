@@ -244,7 +244,8 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable, IEquatable<T
         if (Parent is not null && other.Parent is null) return false;
         
         if (Type != other.Type) return false;
-        return Equals(Modifier, other.Modifier);
+        if (Modifier is null && other.Modifier is null) return true;
+        return Modifier != null && Modifier.Equals(other.Modifier);
     }
 }
 

@@ -25,7 +25,6 @@ public sealed class ParagraphSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeS
         MdSyntaxSerializerOrigin parentOrigin
     ) {
         if (!entireMatch.Groups[PId].TryGetValue(out string? paragraph)) return;
-        if (paragraph.IsNullOrWhiteSpace()) return;
 
         bool writeParagraph = !parentOrigin.HasFlag(MdSyntaxSerializerOrigin.Html);
         

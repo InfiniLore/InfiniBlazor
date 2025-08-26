@@ -16,6 +16,8 @@ public abstract class XmlMdSyntaxNodeVisitor<TNode> : IXmlMdSyntaxNodeVisitor wh
     private const string Attributes = nameof(Attributes);
     private const string Start = nameof(Start);
     private const string End = nameof(End);
+    private const string Key = nameof(Key);
+    private const string Entry = nameof(Entry);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -31,7 +33,8 @@ public abstract class XmlMdSyntaxNodeVisitor<TNode> : IXmlMdSyntaxNodeVisitor wh
         var modifierElement = new XElement(Modifiers);
         modifierElement.Add(new XElement(Attributes,
             modifiers.Attributes.Select(attr => new XElement(
-                attr.Key,
+                Entry,
+                new XAttribute(Key, attr.Key),
                 new XAttribute(Start, attr.Value.Start.Value),
                 new XAttribute(End, attr.Value.End.Value)
             ))));
@@ -64,7 +67,7 @@ public abstract class XmlMdSyntaxNodeVisitor<TNode> : IXmlMdSyntaxNodeVisitor wh
             // TODO - Validate that the attributes are valid
             int start = int.Parse(attr.Attribute(Start)!.Value);
             int end = int.Parse(attr.Attribute(End)!.Value);
-            modifier.Attributes[attr.Name.LocalName] = new Range(start, end);
+            modifier.Attributes[attr.Attribute(Key)!.Value] = new Range(start, end);
         }
         
         modifier.OriginalInput = element.Element(OriginalInput)!.Value;

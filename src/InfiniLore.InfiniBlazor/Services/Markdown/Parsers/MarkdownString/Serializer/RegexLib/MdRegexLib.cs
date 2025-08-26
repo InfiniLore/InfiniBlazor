@@ -16,9 +16,9 @@ public static partial class MdRegexLib {
         | (?<italic>\*(?<i>(?>[^\\\*]+|\\\*|\*\*|(?<open>\*)|(?<-open>\*))+)(?(open)(?!))\*)
         | (?<supScript>\^\^(?<sp>(?>[^\\\^]+|\\\^|\^|(?<open>\^\^)|(?<-open>\^\^))+?\^?)(?(open)(?!))\^\^)
         | (?<subScript>\^(?<sb>(?>[^\\\^]+|\\\^|\^\^|(?<open>\^)|(?<-open>\^))+)(?(open)(?!))\^)
-        | (?<strike>~(?<s>.+?)(?<!\\)~)
-        | (?<underline>_(?<u>.+?)(?<!\\)_)
-        | (?<code>(?<open>`+)(?<c>(?>[^`\\]+|\\.|`(?!\k<open>))*?)\k<open>)
+        | (?<strike>(?<open>~+)(?<s>(?>[^~\\]+|\\.|~(?!\k<open>))+?)\k<open>)
+        | (?<underline>(?<open>_+)(?<u>(?>[^_\\]+|\\.|_(?!\k<open>))+?)\k<open>)
+        | (?<code>(?<open>`+)(?<c>(?>[^`\\]+|\\.|`(?!\k<open>))+?)\k<open>)
         | (?<emote>:(?<e>[\p{L}\p{N}\-_]+):)
         | (?<link>
             (?<lnBang>!)?

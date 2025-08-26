@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="table.xml">
+    <MdString>| Test  |
+| ----- |
+| Value |
+
+| Column 1    | Column 2    | Column 3    |
+| ----------- | ----------- | ----------- |
+| Row 2 col 1 | Row 2 col 2 | Row 2 col 3 |</MdString>
+    <MdSyntaxTree>
+      <TableMdSyntaxNode HeaderIndex="0">
+        <TableRowMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">Test</ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+        </TableRowMdSyntaxNode>
+        <TableRowMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve"> Value </ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+        </TableRowMdSyntaxNode>
+      </TableMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <TableMdSyntaxNode HeaderIndex="0">
+        <TableRowMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">Column 1</ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">Column 2</ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">Column 3</ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+        </TableRowMdSyntaxNode>
+        <TableRowMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve"> Row 2 col 1 </ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve"> Row 2 col 2 </ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve"> Row 2 col 3 </ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+        </TableRowMdSyntaxNode>
+      </TableMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Test&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt; Value &lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Column 1&lt;/th&gt;&lt;th&gt;Column 2&lt;/th&gt;&lt;th&gt;Column 3&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt; Row 2 col 1 &lt;/td&gt;&lt;td&gt; Row 2 col 2 &lt;/td&gt;&lt;td&gt; Row 2 col 3 &lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>| Test  |
+| ----- |
+| Value |
+
+| Column 1    | Column 2    | Column 3    |
+| ----------- | ----------- | ----------- |
+| Row 2 col 1 | Row 2 col 2 | Row 2 col 3 |</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withBoldHeader" FileName="table.xml">
+    <MdString>| **Test** |
+| -------- |
+| Value    |
+
+
+| **Test** | nothing |
+| -------- | ------- |
+| Value    | Value   |</MdString>
+    <MdSyntaxTree>
+      <TableMdSyntaxNode HeaderIndex="0">
+        <TableRowMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <BoldMdSyntaxNode>
+              <ContentMdSyntaxNode xml:space="preserve">Test</ContentMdSyntaxNode>
+            </BoldMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+        </TableRowMdSyntaxNode>
+        <TableRowMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve"> Value    </ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+        </TableRowMdSyntaxNode>
+      </TableMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <TableMdSyntaxNode HeaderIndex="0">
+        <TableRowMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <BoldMdSyntaxNode>
+              <ContentMdSyntaxNode xml:space="preserve">Test</ContentMdSyntaxNode>
+            </BoldMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">nothing</ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+        </TableRowMdSyntaxNode>
+        <TableRowMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve"> Value    </ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve"> Value   </ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+        </TableRowMdSyntaxNode>
+      </TableMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt;Test&lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt; Value    &lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt;Test&lt;/strong&gt;&lt;/th&gt;&lt;th&gt;nothing&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt; Value    &lt;/td&gt;&lt;td&gt; Value   &lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>| **Test** |
+| -------- |
+| Value    |
+
+
+| **Test** | nothing |
+| -------- | ------- |
+| Value    | Value   |</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withItalicHeader" FileName="table.xml">
+    <MdString>| *Test* |
+| ------ |
+| Value  |
+
+
+| *Test* | nothing |
+| ------ | ------- |
+| Value  | Value   |</MdString>
+    <MdSyntaxTree>
+      <TableMdSyntaxNode HeaderIndex="0">
+        <TableRowMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ItalicMdSyntaxNode>
+              <ContentMdSyntaxNode xml:space="preserve">Test</ContentMdSyntaxNode>
+            </ItalicMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+        </TableRowMdSyntaxNode>
+        <TableRowMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve"> Value  </ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+        </TableRowMdSyntaxNode>
+      </TableMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <TableMdSyntaxNode HeaderIndex="0">
+        <TableRowMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ItalicMdSyntaxNode>
+              <ContentMdSyntaxNode xml:space="preserve">Test</ContentMdSyntaxNode>
+            </ItalicMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">nothing</ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+        </TableRowMdSyntaxNode>
+        <TableRowMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve"> Value  </ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve"> Value   </ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+        </TableRowMdSyntaxNode>
+      </TableMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;em&gt;Test&lt;/em&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt; Value  &lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;em&gt;Test&lt;/em&gt;&lt;/th&gt;&lt;th&gt;nothing&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt; Value  &lt;/td&gt;&lt;td&gt; Value   &lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>| *Test* |
+| ------ |
+| Value  |
+
+
+| *Test* | nothing |
+| ------ | ------- |
+| Value  | Value   |</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withMissingColumnData" FileName="table.xml">
+    <MdString>| Column 1    | Column 2 | Column 3    |
+| ----------- | -------- | ----------- |
+| Row 2 col 1 |          | Row 2 col 3 |
+
+| Column 1    | Column 2 | Column 3 |
+| ----------- | -------- | -------- |
+| Row 2 col 1 |          |          |</MdString>
+    <MdSyntaxTree>
+      <TableMdSyntaxNode HeaderIndex="0">
+        <TableRowMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">Column 1</ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">Column 2</ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">Column 3</ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+        </TableRowMdSyntaxNode>
+        <TableRowMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve"> Row 2 col 1 </ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+          <TableCellMdSyntaxNode />
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve"> Row 2 col 3 </ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+        </TableRowMdSyntaxNode>
+      </TableMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <TableMdSyntaxNode HeaderIndex="0">
+        <TableRowMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">Column 1</ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">Column 2</ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">Column 3</ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+        </TableRowMdSyntaxNode>
+        <TableRowMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve"> Row 2 col 1 </ContentMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+          <TableCellMdSyntaxNode />
+          <TableCellMdSyntaxNode />
+        </TableRowMdSyntaxNode>
+      </TableMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Column 1&lt;/th&gt;&lt;th&gt;Column 2&lt;/th&gt;&lt;th&gt;Column 3&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt; Row 2 col 1 &lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt; Row 2 col 3 &lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Column 1&lt;/th&gt;&lt;th&gt;Column 2&lt;/th&gt;&lt;th&gt;Column 3&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt; Row 2 col 1 &lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>| Column 1    | Column 2 | Column 3    |
+| ----------- | -------- | ----------- |
+| Row 2 col 1 |          | Row 2 col 3 |
+
+| Column 1    | Column 2 | Column 3 |
+| ----------- | -------- | -------- |
+| Row 2 col 1 |          |          |</ExpectedMarkdownString>
+  </MdTestData>
+</ArrayOfMdTestData>

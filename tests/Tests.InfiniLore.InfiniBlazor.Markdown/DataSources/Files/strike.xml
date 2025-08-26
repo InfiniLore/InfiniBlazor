@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="strike.xml">
+    <MdString>~something~</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <StrikeMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">something</ContentMdSyntaxNode>
+        </StrikeMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;s&gt;something&lt;/s&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>~something~</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="empty" FileName="strike.xml">
+    <MdString>~~</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">~~</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;~~&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>~~</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="nestedInvalid" FileName="strike.xml">
+    <MdString>~nested ~strikethrough~ does not work~</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <StrikeMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">nested </ContentMdSyntaxNode>
+        </StrikeMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">strikethrough</ContentMdSyntaxNode>
+        <StrikeMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve"> does not work</ContentMdSyntaxNode>
+        </StrikeMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;s&gt;nested &lt;/s&gt;strikethrough&lt;s&gt; does not work&lt;/s&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>~nested ~strikethrough~ does not work~</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withEscapedEnd" FileName="strike.xml">
+    <MdString>~escaped\~</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">~escaped</ContentMdSyntaxNode>
+        <EscapedCharacterMdSyntaxNode xml:space="preserve">~</EscapedCharacterMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;~escaped~&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>~escaped\~</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withEscapedFront" FileName="strike.xml">
+    <MdString>\~escaped~</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <EscapedCharacterMdSyntaxNode xml:space="preserve">~</EscapedCharacterMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">escaped~</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;~escaped~&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>\~escaped~</ExpectedMarkdownString>
+  </MdTestData>
+</ArrayOfMdTestData>

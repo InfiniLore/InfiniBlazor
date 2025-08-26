@@ -26,6 +26,16 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;some text &lt;strong&gt;*&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>some text *****</ExpectedMarkdownString>
   </MdTestData>
+  <MdTestData Id="edgecaseUnbound" FileName="bold.xml">
+    <MdString>**bold</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">**bold</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;**bold&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>**bold</ExpectedMarkdownString>
+  </MdTestData>
   <MdTestData Id="withEscapedAsterix_1" FileName="bold.xml">
     <MdString>**\*bold**</MdString>
     <MdSyntaxTree>
@@ -127,5 +137,17 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;&lt;a href="https://www.transgenderinfo.be"&gt;transgenderinfo&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>**[transgenderinfo](https://www.transgenderinfo.be)**</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withTag" FileName="bold.xml">
+    <MdString>**#tag**</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <TagMdSyntaxNode xml:space="preserve">tag</TagMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;&lt;span class="md-tag"&gt;#tag&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>**#tag**</ExpectedMarkdownString>
   </MdTestData>
 </ArrayOfMdTestData>

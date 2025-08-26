@@ -10,46 +10,65 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;code&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>`code`</ExpectedMarkdownString>
   </MdTestData>
+  <MdTestData Id="edgecaseNestedInvalid" FileName="code_inline.xml">
+    <MdString>`Nested ` is not valid syntax.`</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">Nested </CodeInlineMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve"> is not valid syntax.`</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;Nested &lt;/code&gt; is not valid syntax.`&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>`Nested ` is not valid syntax.`</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="edgecaseNestedValid" FileName="code_inline.xml">
+    <MdString>``Nested ` is not valid syntax.``</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="2">Nested ` is not valid syntax.</CodeInlineMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;Nested ` is not valid syntax.&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>``Nested ` is not valid syntax.``</ExpectedMarkdownString>
+  </MdTestData>
   <MdTestData Id="empty_2" FileName="code_inline.xml">
     <MdString>``</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1" />
+        <ContentMdSyntaxNode xml:space="preserve">``</ContentMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;``&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>``</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="empty_3" FileName="code_inline.xml">
     <MdString>```</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1" />
-        <ContentMdSyntaxNode xml:space="preserve">`</ContentMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">```</ContentMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;&lt;/code&gt;`&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;```&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>```</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="empty_4" FileName="code_inline.xml">
     <MdString>````</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="2" />
+        <ContentMdSyntaxNode xml:space="preserve">````</ContentMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;````&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>````</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="empty_5" FileName="code_inline.xml">
     <MdString>`````</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="2" />
-        <ContentMdSyntaxNode xml:space="preserve">`</ContentMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">`````</ContentMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;&lt;/code&gt;`&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;`````&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>`````</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="multiple_2" FileName="code_inline.xml">
@@ -144,5 +163,15 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;`&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>`\``</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withSpecialCharacters" FileName="code_inline.xml">
+    <MdString>`inline code with special characters !@#$%^&amp;*()`</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">inline code with special characters !@#$%^&amp;*()</CodeInlineMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;inline code with special characters !@#$%^&amp;*()&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>`inline code with special characters !@#$%^&amp;*()`</ExpectedMarkdownString>
   </MdTestData>
 </ArrayOfMdTestData>

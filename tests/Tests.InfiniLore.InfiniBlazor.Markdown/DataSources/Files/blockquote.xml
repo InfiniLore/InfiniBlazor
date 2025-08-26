@@ -203,9 +203,13 @@
   <MdTestData Id="empty" FileName="blockquote.xml">
     <MdString>&gt; </MdString>
     <MdSyntaxTree>
-      <BlockQuoteMdSyntaxNode LeadingSpaces="-1" />
+      <BlockQuoteMdSyntaxNode LeadingSpaces="-1">
+        <ParagraphMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+      </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt; &lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>&gt; </ExpectedMarkdownString>
   </MdTestData>
 </ArrayOfMdTestData>

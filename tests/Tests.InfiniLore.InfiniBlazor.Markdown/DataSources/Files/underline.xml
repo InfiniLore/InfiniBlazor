@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="underline.xml">
+    <MdString>_underline_</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <UnderlineMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">underline</ContentMdSyntaxNode>
+        </UnderlineMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;u&gt;underline&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>_underline_</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="empty" FileName="underline.xml">
+    <MdString>__</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">__</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;__&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>__</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withBold" FileName="underline.xml">
+    <MdString>_**bold and underlined**_</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <UnderlineMdSyntaxNode>
+          <BoldMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">bold and underlined</ContentMdSyntaxNode>
+          </BoldMdSyntaxNode>
+        </UnderlineMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;u&gt;&lt;strong&gt;bold and underlined&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>_**bold and underlined**_</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withBoldAndItalic" FileName="underline.xml">
+    <MdString>_***bold, italic, and underlined***_</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <UnderlineMdSyntaxNode>
+          <BoldMdSyntaxNode>
+            <ItalicMdSyntaxNode>
+              <ContentMdSyntaxNode xml:space="preserve">bold, italic, and underlined</ContentMdSyntaxNode>
+            </ItalicMdSyntaxNode>
+          </BoldMdSyntaxNode>
+        </UnderlineMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;em&gt;bold, italic, and underlined&lt;/em&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>_***bold, italic, and underlined***_</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withBoldAndLink" FileName="underline.xml">
+    <MdString>_**[bold link](https://example.com)**_</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <UnderlineMdSyntaxNode>
+          <BoldMdSyntaxNode>
+            <LinkMdSyntaxNode Href="https://example.com">
+              <ContentMdSyntaxNode xml:space="preserve">bold link</ContentMdSyntaxNode>
+            </LinkMdSyntaxNode>
+          </BoldMdSyntaxNode>
+        </UnderlineMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a href="https://example.com"&gt;bold link&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>_**[bold link](https://example.com)**_</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withEscaped" FileName="underline.xml">
+    <MdString>_underlined with an \_ escaped_</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <UnderlineMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">underlined with an </ContentMdSyntaxNode>
+          <EscapedCharacterMdSyntaxNode xml:space="preserve">_</EscapedCharacterMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve"> escaped</ContentMdSyntaxNode>
+        </UnderlineMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;u&gt;underlined with an _ escaped&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>_underlined with an \_ escaped_</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withEscapedEnd" FileName="underline.xml">
+    <MdString>_escaped\_</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">_escaped</ContentMdSyntaxNode>
+        <EscapedCharacterMdSyntaxNode xml:space="preserve">_</EscapedCharacterMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;_escaped_&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>_escaped\_</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withEscapedStart" FileName="underline.xml">
+    <MdString>\_escaped_</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <EscapedCharacterMdSyntaxNode xml:space="preserve">_</EscapedCharacterMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">escaped_</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;_escaped_&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>\_escaped_</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withEscapedStartAndEnd" FileName="underline.xml">
+    <MdString>\_escaped\_</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <EscapedCharacterMdSyntaxNode xml:space="preserve">_</EscapedCharacterMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">escaped</ContentMdSyntaxNode>
+        <EscapedCharacterMdSyntaxNode xml:space="preserve">_</EscapedCharacterMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;_escaped_&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>\_escaped\_</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withItalic" FileName="underline.xml">
+    <MdString>_*italic and underlined*_</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <UnderlineMdSyntaxNode>
+          <ItalicMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">italic and underlined</ContentMdSyntaxNode>
+          </ItalicMdSyntaxNode>
+        </UnderlineMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;u&gt;&lt;em&gt;italic and underlined&lt;/em&gt;&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>_*italic and underlined*_</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withMultipleMarkdownSections" FileName="underline.xml">
+    <MdString>_**multiple** elements to *underline*_</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <UnderlineMdSyntaxNode>
+          <BoldMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">multiple</ContentMdSyntaxNode>
+          </BoldMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve"> elements to </ContentMdSyntaxNode>
+          <ItalicMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">underline</ContentMdSyntaxNode>
+          </ItalicMdSyntaxNode>
+        </UnderlineMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;u&gt;&lt;strong&gt;multiple&lt;/strong&gt; elements to &lt;em&gt;underline&lt;/em&gt;&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>_**multiple** elements to *underline*_</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+</ArrayOfMdTestData>

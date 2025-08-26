@@ -28,7 +28,7 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
         if (mod.OriginalInputSpan.IsWhiteSpace()) return mod;
         
         ReadOnlySpan<char> span = input.AsSpan();
-        Span<char> buffer = stackalloc char[span.Length-1]; // set it to the max possible, and all mods start with a | based on the regex so we can trim one char
+        Span<char> buffer = stackalloc char[span.Length-1]; // set it to the max possible, and all mods start with a | based on the regex, so we can trim one char
         
         int keyStart = 0;
         int keyEnd = -1;
@@ -74,13 +74,13 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
         // Handle the last attribute if there is one
         if (spanLength > keyStart) {
             if (keyEnd == -1) {
-                // Last attribute is a flag
+                // The last attribute is a flag
                 int length = span[keyStart..spanLength].ToLowerInvariant(buffer);
                 string value = buffer[..length].ToString();
                 mod.Attributes.AddOrUpdate(value, new Range(spanLength, spanLength));
             }
             else if (valueStart < spanLength) {
-                // Last attribute is key=value
+                // The last attribute is key=value
                 int length = span[keyStart..keyEnd].ToLowerInvariant(buffer);
                 string value = buffer[..length].ToString();
                 mod.Attributes.AddOrUpdate(value, new Range(valueStart, spanLength));
@@ -132,5 +132,10 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
         OriginalInput = string.Empty;
 
         return true;
+    }
+    
+    public bool Equals(IMdSyntaxNodeModifier? other) {
+        // Don't need to check the attribute dictionary as it is fully dependent on the OriginalInput on creation.
+        return StringComparer.Ordinal.Equals(OriginalInput, other?.OriginalInput);
     }
 }

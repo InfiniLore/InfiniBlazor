@@ -75,6 +75,16 @@ Something</ExpectedMarkdownString>
     <ExpectedMarkdownString># Heading
 </ExpectedMarkdownString>
   </MdTestData>
+  <MdTestData Id="edgecaseMultipleHashtags" FileName="heading.xml">
+    <MdString># Heading 1 # Not a heading</MdString>
+    <MdSyntaxTree>
+      <HeadingMdSyntaxNode Level="1">
+        <ContentMdSyntaxNode xml:space="preserve">Heading 1 # Not a heading</ContentMdSyntaxNode>
+      </HeadingMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading 1 # Not a heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString># Heading 1 # Not a heading</ExpectedMarkdownString>
+  </MdTestData>
   <MdTestData Id="simple_Equals1" FileName="heading.xml">
     <MdString>Not A Heading
 =</MdString>

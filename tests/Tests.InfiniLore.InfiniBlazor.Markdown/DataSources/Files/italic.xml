@@ -25,6 +25,16 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;some text &lt;em&gt;**&lt;/em&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>some text ****</ExpectedMarkdownString>
   </MdTestData>
+  <MdTestData Id="edgecaseUnbound" FileName="italic.xml">
+    <MdString>*italic</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">*italic</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;*italic&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>*italic</ExpectedMarkdownString>
+  </MdTestData>
   <MdTestData Id="empty" FileName="italic.xml">
     <MdString>**</MdString>
     <MdSyntaxTree>
@@ -117,5 +127,17 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt; * &lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>** \* **</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withTag" FileName="italic.xml">
+    <MdString>*#tag*</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ItalicMdSyntaxNode>
+          <TagMdSyntaxNode xml:space="preserve">tag</TagMdSyntaxNode>
+        </ItalicMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;em&gt;&lt;span class="md-tag"&gt;#tag&lt;/span&gt;&lt;/em&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>*#tag*</ExpectedMarkdownString>
   </MdTestData>
 </ArrayOfMdTestData>

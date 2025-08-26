@@ -11,7 +11,7 @@
       <CalloutMdSyntaxNode CalloutType="note" CollapsedState="None" LeadingSpaces="0">
         <Modifiers>
           <Attributes>
-            <icon Start="6" End="15" />
+            <Entry Key="icon" Start="6" End="15" />
           </Attributes>
           <OriginalInput>|icon=signature</OriginalInput>
         </Modifiers>
@@ -29,7 +29,7 @@
       <CalloutMdSyntaxNode CalloutType="note" CollapsedState="None" LeadingSpaces="0">
         <Modifiers>
           <Attributes>
-            <icon Start="6" End="15" />
+            <Entry Key="icon" Start="6" End="15" />
           </Attributes>
           <OriginalInput>|icon=undefined</OriginalInput>
         </Modifiers>
@@ -123,7 +123,7 @@
       <CalloutMdSyntaxNode CalloutType="note" CollapsedState="None" LeadingSpaces="0">
         <Modifiers>
           <Attributes>
-            <icon Start="6" End="15" />
+            <Entry Key="icon" Start="6" End="15" />
           </Attributes>
           <OriginalInput>|icon=signature</OriginalInput>
         </Modifiers>
@@ -136,7 +136,7 @@
           <CalloutMdSyntaxNode CalloutType="note" CollapsedState="None" LeadingSpaces="0">
             <Modifiers>
               <Attributes>
-                <icon Start="6" End="15" />
+                <Entry Key="icon" Start="6" End="15" />
               </Attributes>
               <OriginalInput>|icon=signature</OriginalInput>
             </Modifiers>
