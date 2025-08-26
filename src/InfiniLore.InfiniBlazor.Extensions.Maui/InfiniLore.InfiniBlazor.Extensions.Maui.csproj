@@ -8,7 +8,7 @@
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.InfiniBlazor.Extensions.Maui</PackageId>
-        <Version>0.1.0-preview.86</Version>
+        <Version>0.1.0-preview.87</Version>
         <Authors>Anna Sas</Authors>
         <Description>InfiniLore's Component Library: MAUI compatibility</Description>
         <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>

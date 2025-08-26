@@ -13,7 +13,6 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 [InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Strike)]
 public sealed class StrikeSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
     private static readonly int StrikeContentId = MdRegexLib.GetGroupId(MdRegexGroupNames.StrikeContent);
-    private static readonly int StrikeId = MdRegexLib.GetGroupId(MdRegexGroupNames.Strike);
     public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.Strike;
     
     // -----------------------------------------------------------------------------------------------------------------
