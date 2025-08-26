@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="code_block.xml">
+    <MdString>```
+const code = sample();
+```
+
+```javascript
+const code = sample();
+```</MdString>
+    <MdSyntaxTree>
+      <CodeBlockMdSyntaxNode xml:space="preserve">const code = sample();
+</CodeBlockMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <CodeBlockMdSyntaxNode xml:space="preserve">const code = sample();
+</CodeBlockMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;pre&gt;&lt;code&gt;const code = sample();
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code class="language-javascript"&gt;const code = sample();
+&lt;/code&gt;&lt;/pre&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>```
+const code = sample();
+```
+
+```javascript
+const code = sample();
+```</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="empty" FileName="code_block.xml">
+    <MdString>```
+
+```</MdString>
+    <MdSyntaxTree>
+      <CodeBlockMdSyntaxNode xml:space="preserve">
+</CodeBlockMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;pre&gt;&lt;code&gt;
+&lt;/code&gt;&lt;/pre&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>```
+
+```</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="languages" FileName="code_block.xml">
+    <MdString>```javascript
+content
+```
+
+```typescript
+content
+```
+
+```python
+content
+```
+
+```csharp
+content
+```</MdString>
+    <MdSyntaxTree>
+      <CodeBlockMdSyntaxNode xml:space="preserve">content
+</CodeBlockMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <CodeBlockMdSyntaxNode xml:space="preserve">content
+</CodeBlockMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <CodeBlockMdSyntaxNode xml:space="preserve">content
+</CodeBlockMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <CodeBlockMdSyntaxNode xml:space="preserve">content
+</CodeBlockMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;pre&gt;&lt;code class="language-javascript"&gt;content
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code class="language-typescript"&gt;content
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code class="language-python"&gt;content
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code class="language-csharp"&gt;content
+&lt;/code&gt;&lt;/pre&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>```javascript
+content
+```
+
+```typescript
+content
+```
+
+```python
+content
+```
+
+```csharp
+content
+```</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withValidMarkdown" FileName="code_block.xml">
+    <MdString>```
+**some valid markdown**
+```</MdString>
+    <MdSyntaxTree>
+      <CodeBlockMdSyntaxNode xml:space="preserve">**some valid markdown**
+</CodeBlockMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;pre&gt;&lt;code&gt;**some valid markdown**
+&lt;/code&gt;&lt;/pre&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>```
+**some valid markdown**
+```</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withWhiteSpaceInContent" FileName="code_block.xml">
+    <MdString>```
+tell application "Foo"
+    beep
+end tell
+```</MdString>
+    <MdSyntaxTree>
+      <CodeBlockMdSyntaxNode xml:space="preserve">tell application "Foo"
+    beep
+end tell
+</CodeBlockMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;pre&gt;&lt;code&gt;tell application "Foo"
+    beep
+end tell
+&lt;/code&gt;&lt;/pre&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>```
+tell application "Foo"
+    beep
+end tell
+```</ExpectedMarkdownString>
+  </MdTestData>
+</ArrayOfMdTestData>

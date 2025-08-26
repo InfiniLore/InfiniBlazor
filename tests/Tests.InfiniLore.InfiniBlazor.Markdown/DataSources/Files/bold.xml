@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  
   <MdTestData Id="default" FileName="bold.xml">
     <MdString>**bold**</MdString>
     <MdSyntaxTree>
@@ -13,19 +12,7 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;bold&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>**bold**</ExpectedMarkdownString>
   </MdTestData>
-  
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <MdTestData Id="edgeCase_HrTagPossibility" FileName="bold.xml">
+  <MdTestData Id="edgeCase_HrTagPossibility" FileName="bold.xml">
     <DeveloperNote>to exclude the &lt;hr&gt; tag being triggered</DeveloperNote>
     <MdString>some text *****</MdString>
     <MdSyntaxTree>
@@ -125,5 +112,20 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;bold &lt;em&gt;nested * italic&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>**bold *nested \* italic***</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withLink" FileName="bold.xml">
+    <MdString>**[transgenderinfo](https://www.transgenderinfo.be)**</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
+            <ContentMdSyntaxNode xml:space="preserve">transgenderinfo</ContentMdSyntaxNode>
+          </LinkMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;&lt;a href="https://www.transgenderinfo.be"&gt;transgenderinfo&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>**[transgenderinfo](https://www.transgenderinfo.be)**</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
   </MdTestData>
 </ArrayOfMdTestData>

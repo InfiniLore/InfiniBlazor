@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="image.xml">
+    <MdString>![transgenderinfo](https://www.transgenderinfo.be)</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ImageMdSyntaxNode Href="https://www.transgenderinfo.be" AltText="transgenderinfo" />
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;img class"inline-block" src="https://www.transgenderinfo.be" alt="transgenderinfo"/&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>![transgenderinfo](https://www.transgenderinfo.be)</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="empty" FileName="image.xml">
+    <MdString>![]()</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">![]()</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;![]()&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>![]()</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withBold" FileName="image.xml">
+    <MdString>![**transgenderinfo**](https://www.transgenderinfo.be)</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ImageMdSyntaxNode Href="https://www.transgenderinfo.be" AltText="**transgenderinfo**" />
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;img class"inline-block" src="https://www.transgenderinfo.be" alt="**transgenderinfo**"/&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>![**transgenderinfo**](https://www.transgenderinfo.be)</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withEscapedBracket" FileName="image.xml">
+    <MdString>![\]](https://localhost:7210/icon.png)
+
+![\[](https://localhost:7210/icon.png)</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ImageMdSyntaxNode Href="https://localhost:7210/icon.png" AltText="\]" />
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <ImageMdSyntaxNode Href="https://localhost:7210/icon.png" AltText="\[" />
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;img class"inline-block" src="https://localhost:7210/icon.png" alt="]"/&gt;&lt;/p&gt;&lt;p&gt;&lt;img class"inline-block" src="https://localhost:7210/icon.png" alt="["/&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>![\]](https://localhost:7210/icon.png)
+
+![\[](https://localhost:7210/icon.png)</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withItalic" FileName="image.xml">
+    <MdString>![*transgenderinfo*](https://www.transgenderinfo.be)</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ImageMdSyntaxNode Href="https://www.transgenderinfo.be" AltText="*transgenderinfo*" />
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;img class"inline-block" src="https://www.transgenderinfo.be" alt="*transgenderinfo*"/&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>![*transgenderinfo*](https://www.transgenderinfo.be)</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withSubscript" FileName="image.xml">
+    <MdString>![^transgenderinfo^](https://www.transgenderinfo.be)</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ImageMdSyntaxNode Href="https://www.transgenderinfo.be" AltText="^transgenderinfo^" />
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;img class"inline-block" src="https://www.transgenderinfo.be" alt="^transgenderinfo^"/&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>![^transgenderinfo^](https://www.transgenderinfo.be)</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withSuperscript" FileName="image.xml">
+    <MdString>![^^transgenderinfo^^](https://www.transgenderinfo.be)</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ImageMdSyntaxNode Href="https://www.transgenderinfo.be" AltText="^^transgenderinfo^^" />
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;img class"inline-block" src="https://www.transgenderinfo.be" alt="^^transgenderinfo^^"/&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>![^^transgenderinfo^^](https://www.transgenderinfo.be)</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+</ArrayOfMdTestData>

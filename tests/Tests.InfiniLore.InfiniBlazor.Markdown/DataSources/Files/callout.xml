@@ -1,5 +1,56 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="customIcon" FileName="callout.xml">
+    <DeveloperNote>The icon name "undefined" is not a valid icon name for the IconProvider, though this should not matter for the paring.</DeveloperNote>
+    <MdString>&gt;[!note|icon=signature] Title
+&gt; Body
+
+&gt;[!note|icon=undefined] Title
+&gt; Body</MdString>
+    <MdSyntaxTree>
+      <CalloutMdSyntaxNode CalloutType="note" CollapsedState="None" LeadingSpaces="0">
+        <Modifiers>
+          <Attributes>
+            <icon Start="6" End="15" />
+          </Attributes>
+          <OriginalInput>|icon=signature</OriginalInput>
+        </Modifiers>
+        <CalloutTitleMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">Title</ContentMdSyntaxNode>
+        </CalloutTitleMdSyntaxNode>
+        <CalloutBodyMdSyntaxNode>
+          <ParagraphMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">Body</ContentMdSyntaxNode>
+          </ParagraphMdSyntaxNode>
+        </CalloutBodyMdSyntaxNode>
+      </CalloutMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <CalloutMdSyntaxNode CalloutType="note" CollapsedState="None" LeadingSpaces="0">
+        <Modifiers>
+          <Attributes>
+            <icon Start="6" End="15" />
+          </Attributes>
+          <OriginalInput>|icon=undefined</OriginalInput>
+        </Modifiers>
+        <CalloutTitleMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">Title</ContentMdSyntaxNode>
+        </CalloutTitleMdSyntaxNode>
+        <CalloutBodyMdSyntaxNode>
+          <ParagraphMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">Body</ContentMdSyntaxNode>
+          </ParagraphMdSyntaxNode>
+        </CalloutBodyMdSyntaxNode>
+      </CalloutMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;div class="md-callout md-callout-note icon-signature"&gt;&lt;div class="md-callout-title"&gt;Title&lt;/div&gt;&lt;div class="md-callout-body"&gt;&lt;p&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="md-callout md-callout-note icon-undefined"&gt;&lt;div class="md-callout-title"&gt;Title&lt;/div&gt;&lt;div class="md-callout-body"&gt;&lt;p&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&gt;[!note|icon=signature] Title
+&gt; Body
+
+&gt;[!note|icon=undefined] Title
+&gt; Body</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
   <MdTestData Id="default" FileName="callout.xml">
     <MdString>&gt;[!note] Title
 &gt; Body</MdString>
@@ -18,5 +69,116 @@
     <ExpectedHtmlStringSimplified>&lt;div class="md-callout md-callout-note"&gt;&lt;div class="md-callout-title"&gt;Title&lt;/div&gt;&lt;div class="md-callout-body"&gt;&lt;p&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>&gt;[!note] Title
 &gt; Body</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="edgecaseUnknownState" FileName="callout.xml">
+    <MdString>&gt;[!note] Title
+&gt; Body
+
+[a]</MdString>
+    <MdSyntaxTree>
+      <CalloutMdSyntaxNode CalloutType="note" CollapsedState="None" LeadingSpaces="0">
+        <CalloutTitleMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">Title</ContentMdSyntaxNode>
+        </CalloutTitleMdSyntaxNode>
+        <CalloutBodyMdSyntaxNode>
+          <ParagraphMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">Body</ContentMdSyntaxNode>
+          </ParagraphMdSyntaxNode>
+        </CalloutBodyMdSyntaxNode>
+      </CalloutMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">[a]</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;div class="md-callout md-callout-note"&gt;&lt;div class="md-callout-title"&gt;Title&lt;/div&gt;&lt;div class="md-callout-body"&gt;&lt;p&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;[a]&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&gt;[!note] Title
+&gt; Body
+
+[a]</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="empty" FileName="callout.xml">
+    <MdString>&gt;[!]
+&gt;</MdString>
+    <MdSyntaxTree>
+      <BlockQuoteMdSyntaxNode LeadingSpaces="0">
+        <ParagraphMdSyntaxNode>
+          <ContentMdSyntaxNode xml:space="preserve">[!]</ContentMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+        <NewLineMdSyntaxNode />
+      </BlockQuoteMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;[!]&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&gt;[!]
+&gt; </ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withNestedCalloutAndCustomIcons" FileName="callout.xml">
+    <MdString>&gt;[!note|icon=signature] **Do Something**
+&gt;&gt;[!note|icon=signature] **Do Something**
+&gt;&gt; Body Content</MdString>
+    <MdSyntaxTree>
+      <CalloutMdSyntaxNode CalloutType="note" CollapsedState="None" LeadingSpaces="0">
+        <Modifiers>
+          <Attributes>
+            <icon Start="6" End="15" />
+          </Attributes>
+          <OriginalInput>|icon=signature</OriginalInput>
+        </Modifiers>
+        <CalloutTitleMdSyntaxNode>
+          <BoldMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">Do Something</ContentMdSyntaxNode>
+          </BoldMdSyntaxNode>
+        </CalloutTitleMdSyntaxNode>
+        <CalloutBodyMdSyntaxNode>
+          <CalloutMdSyntaxNode CalloutType="note" CollapsedState="None" LeadingSpaces="0">
+            <Modifiers>
+              <Attributes>
+                <icon Start="6" End="15" />
+              </Attributes>
+              <OriginalInput>|icon=signature</OriginalInput>
+            </Modifiers>
+            <CalloutTitleMdSyntaxNode>
+              <BoldMdSyntaxNode>
+                <ContentMdSyntaxNode xml:space="preserve">Do Something</ContentMdSyntaxNode>
+              </BoldMdSyntaxNode>
+            </CalloutTitleMdSyntaxNode>
+            <CalloutBodyMdSyntaxNode>
+              <ParagraphMdSyntaxNode>
+                <ContentMdSyntaxNode xml:space="preserve">Body Content</ContentMdSyntaxNode>
+              </ParagraphMdSyntaxNode>
+            </CalloutBodyMdSyntaxNode>
+          </CalloutMdSyntaxNode>
+        </CalloutBodyMdSyntaxNode>
+      </CalloutMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;div class="md-callout md-callout-note icon-signature"&gt;&lt;div class="md-callout-title"&gt;&lt;strong&gt;Do Something&lt;/strong&gt;&lt;/div&gt;&lt;div class="md-callout-body"&gt;&lt;div class="md-callout md-callout-note icon-signature"&gt;&lt;div class="md-callout-title"&gt;&lt;strong&gt;Do Something&lt;/strong&gt;&lt;/div&gt;&lt;div class="md-callout-body"&gt;&lt;p&gt;Body Content&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&gt;[!note|icon=signature] **Do Something**
+&gt; &gt;[!note|icon=signature] **Do Something**
+&gt; &gt; Body Content</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withTitleMarkdown" FileName="callout.xml">
+    <MdString>&gt;[!note] **Do Something**
+&gt; Body Content</MdString>
+    <MdSyntaxTree>
+      <CalloutMdSyntaxNode CalloutType="note" CollapsedState="None" LeadingSpaces="0">
+        <CalloutTitleMdSyntaxNode>
+          <BoldMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">Do Something</ContentMdSyntaxNode>
+          </BoldMdSyntaxNode>
+        </CalloutTitleMdSyntaxNode>
+        <CalloutBodyMdSyntaxNode>
+          <ParagraphMdSyntaxNode>
+            <ContentMdSyntaxNode xml:space="preserve">Body Content</ContentMdSyntaxNode>
+          </ParagraphMdSyntaxNode>
+        </CalloutBodyMdSyntaxNode>
+      </CalloutMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;div class="md-callout md-callout-note"&gt;&lt;div class="md-callout-title"&gt;&lt;strong&gt;Do Something&lt;/strong&gt;&lt;/div&gt;&lt;div class="md-callout-body"&gt;&lt;p&gt;Body Content&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&gt;[!note] **Do Something**
+&gt; Body Content</ExpectedMarkdownString>
   </MdTestData>
 </ArrayOfMdTestData>

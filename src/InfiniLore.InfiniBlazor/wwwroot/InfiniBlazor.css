@@ -582,6 +582,12 @@
       box-sizing: border-box;
     }
   }
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
   .block {
     display: block;
   }
@@ -1914,11 +1920,20 @@
   .break-all {
     word-break: break-all;
   }
+  .whitespace-break-spaces {
+    white-space: break-spaces;
+  }
   .whitespace-nowrap {
     white-space: nowrap;
   }
   .whitespace-pre {
     white-space: pre;
+  }
+  .whitespace-pre-line {
+    white-space: pre-line;
+  }
+  .whitespace-pre-wrap {
+    white-space: pre-wrap;
   }
   .text-\(--border\) {
     color: var(--border);
