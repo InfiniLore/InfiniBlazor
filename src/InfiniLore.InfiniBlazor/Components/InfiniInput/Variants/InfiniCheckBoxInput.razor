@@ -1,7 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@namespace InfiniLore.InfiniBlazor.Components
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -11,24 +11,22 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniInputLayout Component="@this">
     <InfiniSpacer/>
-    <InfiniButton
-        Href="@Href"
-        IconName="@IconName"
-        OnClick="@OnClick"
-        Variant="@Variant"
-        Color="@Color"
-        Size="@Size">
-        @ChildContent
-    </InfiniButton>
+    <div class="flex flex-col gap-2">
+        @foreach (ICheckBoxData data in Data) {
+            <div class="flex flex-row gap-2">
+                <InfiniCheckbox @bind-IsChecked="data.IsChecked"></InfiniCheckbox>
+                @if (data.Label.IsNotNullOrWhiteSpace()) {
+                    <InfiniLabel>@data.Label</InfiniLabel>
+                }
+            </div>
+        }
+
+    </div>
 </InfiniInputLayout>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
-    [Parameter] public string? Href { get; set; }
-    [Parameter] public string? IconName { get; set; }
-    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
-    [Parameter] public ButtonVariant Variant { get; set; } = ButtonVariant.Default;
-    [Parameter] public Color Color { get; set; } = Color.Default;
-    [Parameter] public Size Size { get; set; } = Size.M;
+    [Parameter] public IEnumerable<ICheckBoxData> Data { get; set; } = Array.Empty<ICheckBoxData>();
 }

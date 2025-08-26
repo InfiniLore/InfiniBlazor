@@ -16,7 +16,10 @@ public abstract class InfiniComponentCoreBase : ComponentBase, IAsyncDisposable 
 
     [Parameter] public virtual Color DebugColor { get; set; } = Color.Red;
 
-    protected virtual bool IsDisabled => CascadedDisabled;
+    [Parameter] public bool IsDisabled {
+        get => CascadedDisabled;
+        set => CascadedDisabled = value;
+    }
     [CascadingParameter(Name = nameof(CascadedDisabled))] public bool CascadedDisabled { get; set; }
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -40,4 +43,8 @@ public abstract class InfiniComponentCoreBase : ComponentBase, IAsyncDisposable 
 
     protected static string HiddenIfNot(bool condition)
         => HiddenIf(!condition);
+
+    protected string WithDisabled(string onEnabled, string onDisabled) {
+        return IsDisabled ? onDisabled : onEnabled;
+    }
 }

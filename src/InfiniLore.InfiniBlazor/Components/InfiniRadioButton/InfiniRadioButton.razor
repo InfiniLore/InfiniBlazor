@@ -1,0 +1,106 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.Lucide
+@inherits InfiniChildlessComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="inline-flex">
+    <input
+        type="checkbox"
+        class="sr-only"
+        checked="@IsChecked"
+        disabled="@IsDisabled"
+        @onfocus="@OnFocusAsync"
+        @onblur="@OnBlurAsync"
+        tabindex="@(IsDisabled ? -1 : 0)"
+        @onkeydown="@OnKeyDownAsync"
+    >
+    <!-- Custom checkbox appearance -->
+    <div 
+        class="@ConcatClasses(BackgroundClasses,ContainerBorderClasses, FocusClasses, SizeClasses) rounded-full border-2 flex justify-center items-center"
+        @onclick="@OnToggleAsync">
+        @if (IsChecked) {
+            <div class="@WithDisabled("infini-bg-(--color-accent)", "text-(--color-base-70)") min-w-9/10 min-h-9/10 max-w-9/10 max-h-9/10 rounded-full" ></div>
+        }
+        else {
+            <LiSlash Size="@Size.ToLucideIconSize()"  Class="@WithDisabled("text-(--color-base-50) p-1", "text-(--color-base-70)")"/>
+        }
+    </div>
+</div>
+
+@* onchange="@(async () => await IsCheckedChanged.InvokeAsync(IsChecked))" *@
+@* @onkeydown="OnKeyDown" *@
+@* aria-checked="@(IsIndeterminate ? "mixed" : IsChecked.ToString().ToLower())" *@
+@* aria-disabled="@IsDisabled.ToString().ToLower()" *@
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [Parameter] public bool IsChecked { get; set; }
+    [Parameter] public EventCallback<bool> IsCheckedChanged { get; set; }
+
+    [Parameter] public Size Size { get; set; } = Size.M;
+    private bool _isFocused;
+    
+    private string BackgroundClasses => IsDisabled
+        ? "infini-bg-(--color-base-90)"
+        : IsChecked
+            ? "infini-bg-(--color-base-60)"
+            : "infini-bg-(--color-base-80)";
+        
+    private string FocusClasses => _isFocused && !IsDisabled ? "border-(--color-accent)" : string.Empty;
+    private string ContainerBorderClasses => WithDisabled(
+        "border-(--border) hover:border-(--color-accent) cursor-pointer",
+        "border-(--color-base-50) cursor-not-allowed"
+    );
+
+    private string SizeClasses => Size switch {
+        Size.Xxs => "p-0.5 w-3.5 h-3.5",
+        Size.Xs => "p-0.5 w-5 h-5",
+        Size.S => "p-0.5 w-6 h-6",
+        Size.M => "p-1 w-8 h-8",
+        Size.L => "p-1 w-11 h-11",
+        Size.Xl => "p-1 w-14 h-14",
+        Size.Xxl => "p-1 w-17 h-17",
+        _ => throw new ArgumentOutOfRangeException()
+    };
+    
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private async Task OnToggleAsync() {
+        if (IsDisabled) return;
+        
+        IsChecked = !IsChecked;
+        await IsCheckedChanged.InvokeAsync(IsChecked);
+        StateHasChanged();
+    }
+    
+    private async Task OnKeyDownAsync(KeyboardEventArgs e) {
+        if (IsDisabled) return;
+
+        if (e.Key is "Space" or "Enter") {
+            await OnToggleAsync();
+        }
+    }   
+    
+    private async Task OnFocusAsync() {
+        _isFocused = true;
+        StateHasChanged();
+        await Task.CompletedTask;
+    }
+
+    private async Task OnBlurAsync() {
+        _isFocused = false;
+        StateHasChanged();
+        await Task.CompletedTask;
+    }
+}

@@ -2,6 +2,7 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor
+@using InfiniLore.InfiniBlazor.Components.InfiniInput.Variants
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -40,15 +41,15 @@
             Label="Do something"
             @bind-Value="@SubmitExample.Value"
             Placeholder="Type something else and submit..."
-            Disabled="TextInputDisabled"/>
+            IsDisabled="TextInputDisabled"/>
 
         <InfiniTextInput
             Label="Do something with a long label... bla bla bla blabla bla bla blabla bla bla blabla bla bla blabla bla bla blabla bla bla blabla bla bla bla bla bla bla bla bla"
             LabelLocation="LabelLocation.Left"
             @bind-Value="@SubmitExample.Value"
             Placeholder="Type something else and submit..."
-            Disabled="TextInputDisabled">
-            <InfiniButton OnClick="SubmitExample.OnSubmit">Submit</InfiniButton>
+            IsDisabled="TextInputDisabled">
+            <InfiniButton OnClick="@SubmitExample.OnSubmit">Submit</InfiniButton>
         </InfiniTextInput>
 
         <InfiniTextAreaInput
@@ -56,19 +57,19 @@
             LabelLocation="LabelLocation.Left"
             @bind-Value="@SubmitExample.Value"
             Placeholder="Type something else and submit..."
-            Disabled="TextInputDisabled">
-            <InfiniButton OnClick="SubmitExample.OnSubmit">Submit</InfiniButton>
+            IsDisabled="TextInputDisabled">
+            <InfiniButton OnClick="@SubmitExample.OnSubmit">Submit</InfiniButton>
         </InfiniTextAreaInput>
 
         <InfiniFileInput
             Label="Upload Files"
             Accept=".png,.jpg,.jpeg"
             AllowMultipleFiles
-            Disabled="TextInputDisabled"
+            IsDisabled="TextInputDisabled"
             OnFilesChanged="HandleFilesChanged"
             Placeholder="Choose documents..."/>
         
-        <InfiniButtonInput Label="Does Something" Disabled="TextInputDisabled">
+        <InfiniButtonInput Label="Does Something" IsDisabled="TextInputDisabled">
             Submit
         </InfiniButtonInput>
 
@@ -106,13 +107,24 @@
             Placeholder="Type something else and submit..."
             Label="Test Example"
         >
-            <InfiniButton Variant="ButtonVariant.Primary" OnClick="SubmitExample.OnSubmit">Submit</InfiniButton>
+            <InfiniButton Variant="ButtonVariant.Primary" OnClick="@SubmitExample.OnSubmit">Submit</InfiniButton>
         </InfiniTextInput>
 
         <div class="text-sm space-y-1">
             <p>Bound Value: @SubmitExample.Value</p>
             <p>Submitted Value: @SubmitExample.SubmittedValue</p>
         </div>
+    </div>
+</InfiniSection>
+
+<InfiniSection Class="w-full">
+    <InfiniHeading3>CheckBox Inputs</InfiniHeading3>
+    <div class="space-y-4">
+        <InfiniCheckBoxInput Data="@Data"/>
+        <InfiniRadioButtonInput 
+            Label="@(SelectedId.ToString())"
+            Data="@RadioButtonDatas" 
+            @bind-SelectedId="SelectedId"/>
     </div>
 </InfiniSection>
 
@@ -153,6 +165,45 @@
     private bool TextInputDisabled { get; set; }
 
     private IEnumerable<IBrowserFile>? SelectedFiles { get; set; }
+
+    private IEnumerable<ICheckBoxData> Data { get; set; } = new[] {
+        new CheckBoxData { Label = "Something" },
+        new CheckBoxData { Label = "else" }
+    };
+
+    private IEnumerable<IRadioButtonData<Guid>> RadioButtonDatas { get; set; } = new[] {
+        new RadioButtonData() {
+            Id = Guid.CreateVersion7(),
+            Label = "Something"
+        },
+        new RadioButtonData() {
+            Id = Guid.CreateVersion7(),
+            Label = "Else"
+        },
+        new RadioButtonData() {
+            Id = Guid.CreateVersion7(),
+            Label = "Else"
+        },
+        new RadioButtonData() {
+            Id = Guid.CreateVersion7(),
+            Label = "Else"
+        },
+        new RadioButtonData() {
+            Id = Guid.CreateVersion7(),
+            Label = "Else"
+        }
+    };
+    private Guid SelectedId { get; set; } 
+
+    private class CheckBoxData : ICheckBoxData {
+        public string? Label { get; init; }
+        public bool IsChecked { get; set; }
+    }
+
+    private class RadioButtonData : IRadioButtonData<Guid> {
+        public required Guid Id { get; init; }
+        public required string? Label { get; init; }
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Models
