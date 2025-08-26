@@ -89,7 +89,7 @@ public sealed class MarkdownStringMdSyntaxSerializer(IServiceProvider servicePro
             if (!_elementHandlers.TryGetValue(group.Name, out IMarkdownStringMdSyntaxNodeSerializer? handler)) continue;
 
             MdSyntaxSerializerOrigin handlerOrigin = handler.SkipOnOrigin;
-            // if (handlerOrigin is not MdSyntaxSerializerOrigin.NotSkipped && parentOrigin.HasFlagFast(handlerOrigin)) continue;
+            if (handlerOrigin is not MdSyntaxSerializerOrigin.NotSkipped && parentOrigin.HasFlagFast(handlerOrigin)) continue;
 
             handler.HandleMatch(runningParser, parentNode, match, parentOrigin);
         }
