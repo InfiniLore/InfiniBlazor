@@ -13,7 +13,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
 
             - name: Setup .NET
               uses: actions/setup-dotnet@v4
@@ -21,15 +21,15 @@ jobs:
                   dotnet-version: '9.x'
 
             - name: Restore dependencies
-              run: dotnet restore InfiniLore.InfiniBlazor.slnx
+              run: dotnet restore InfiniLore.InfiniBlazor.GitHubActions.slnf
 
             - name: Build
-              run: dotnet build InfiniLore.InfiniBlazor.slnx --configuration Release --no-restore
+              run: dotnet build InfiniLore.InfiniBlazor.GitHubActions.slnf --configuration Release --no-restore
             
             # Ensure that the tests must pass 
             # The job will fail automatically if any test fails because `dotnet test` exits with a non-zero code
             - name: Run tests     
-              run: dotnet test InfiniLore.InfiniBlazor.slnx --configuration Release --no-restore --no-build
+              run: dotnet test InfiniLore.InfiniBlazor.GitHubActions.slnf --configuration Release --no-restore --no-build
 
             - name: Publish to NuGet
               env:
