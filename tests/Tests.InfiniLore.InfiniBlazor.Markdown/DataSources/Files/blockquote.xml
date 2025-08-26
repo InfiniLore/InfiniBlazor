@@ -88,8 +88,8 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;text&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>&gt; text
-&gt;</ExpectedMarkdownString>
-      <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>true</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+&gt;  </ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
   </MdTestData>
   <MdTestData Id="edgecase_UnMatchedSpaces" FileName="blockquote.xml">
     <MdString>&gt; 1

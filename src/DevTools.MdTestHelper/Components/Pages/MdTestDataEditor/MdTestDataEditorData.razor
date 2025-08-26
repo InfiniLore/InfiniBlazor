@@ -59,9 +59,9 @@
 
             <InfiniSpacer/>
             <div class="w-full flex justify-center items-center h-16">
-                <InfiniToggleButton Label="Freeze Auto Updates" @bind-Value="FreezeAutoUpdates"/>
+                <InfiniToggleInput Label="Freeze Auto Updates" @bind-Value="FreezeAutoUpdates"/>
                 @if (FreezeAutoUpdates) {
-                    <InfiniSpacer/>
+                    <InfiniSpacerHorizontal Spacing="Size.M"/>
                     <InfiniButton Variant="ButtonVariant.Default" OnClick="@OnGenerateAsync">Generate Outputs
                     </InfiniButton>
                 }
@@ -91,6 +91,10 @@
                         @bind-Value="@ExpectedMarkdownString"
                         Rows="22"
                         Class="font-mono w-full"/>
+                    <InfiniToggleInput
+                        Label="Skip test on whitespace mismatch"
+                        @bind-Value="@SkipOnWhitespaceMisMatch"
+                        />
                 </InfiniTabPage>
             </InfiniTabContainer>
 
@@ -122,6 +126,7 @@
     private string ExpectedSyntaxTreeString { get; set; } = string.Empty;
     private string? ExpectedHtmlStringSimplified { get; set; } = string.Empty;
     private string? ExpectedMarkdownString { get; set; } = string.Empty;
+    private bool SkipOnWhitespaceMisMatch { get; set; }
 
     public bool FreezeAutoUpdates { get; set; }
     // -----------------------------------------------------------------------------------------------------------------
@@ -202,6 +207,7 @@
 
         ExpectedHtmlStringSimplified = testData.ExpectedHtmlStringSimplified;
         ExpectedMarkdownString = testData.ExpectedMarkdownString;
+        SkipOnWhitespaceMisMatch = testData.ExpectedMarkdownStringSkipOnWhitespaceMisMatch;
 
         TestDataOrigin = testData;
     }
@@ -220,7 +226,8 @@
             MdString = MdString,
             MdSyntaxTree = MarkdownParser.MarkdownString.SerializeToSyntaxTree(MdString),
             ExpectedHtmlStringSimplified = ExpectedHtmlStringSimplified,
-            ExpectedMarkdownString = ExpectedMarkdownString
+            ExpectedMarkdownString = ExpectedMarkdownString,
+            ExpectedMarkdownStringSkipOnWhitespaceMisMatch = SkipOnWhitespaceMisMatch
         };
 
         if (!await MdTestDataProvider.TryAddOrUpdateAsync(xmlData.FileName, xmlData)) {

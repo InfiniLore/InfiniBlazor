@@ -20,7 +20,7 @@ public class MdTestData : IXmlSerializable {
     public required IMdSyntaxTree MdSyntaxTree { get; set; } 
     public string? ExpectedHtmlStringSimplified { get; set; }
     public string? ExpectedMarkdownString { get; set; }
-    public bool ExpectedMarkdownStringSkipOnWhitespaceMisMatch { get; set; } = false;
+    public bool ExpectedMarkdownStringSkipOnWhitespaceMisMatch { get; set; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -68,7 +68,7 @@ public class MdTestData : IXmlSerializable {
                 }
 
                 case nameof(ExpectedMarkdownStringSkipOnWhitespaceMisMatch): {
-                    ExpectedMarkdownStringSkipOnWhitespaceMisMatch = reader.ReadElementContentAsBoolean();
+                    ExpectedMarkdownStringSkipOnWhitespaceMisMatch = bool.Parse(reader.ReadElementContentAsString());
                     break;
                 }
 
