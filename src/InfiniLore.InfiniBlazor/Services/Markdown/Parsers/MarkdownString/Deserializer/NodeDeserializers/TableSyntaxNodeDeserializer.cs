@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class TableSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNodeDeserializer<TableMdSyntaxNode> {
+public sealed class TableSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<TableMdSyntaxNode> {
     protected override void Deserialize(TableMdSyntaxNode node, StringBuilder builder) {
         ReadOnlySpan<TableCellMdSyntaxNode> headerCells = node.GetHeaderCells();
         ReadOnlySpan<TableRowMdSyntaxNode> rows = node.GetRows();

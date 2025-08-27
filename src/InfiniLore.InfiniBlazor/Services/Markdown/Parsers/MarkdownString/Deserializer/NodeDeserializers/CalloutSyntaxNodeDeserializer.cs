@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class CalloutSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNodeDeserializer<CalloutMdSyntaxNode> {
+public sealed class CalloutSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<CalloutMdSyntaxNode> {
     private static ConcurrentDictionary<int, string> LeadingSpacesCache { get; } = new() {
         [0] = string.Empty,
         [1] = " ",

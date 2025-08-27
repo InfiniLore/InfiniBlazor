@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class HeadingSimpleSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNodeDeserializer<HeadingSimpleMdSyntaxNode> {
+public sealed class HeadingSimpleSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<HeadingSimpleMdSyntaxNode> {
 
     protected override void Deserialize(HeadingSimpleMdSyntaxNode node, StringBuilder builder) {
         DeserializeChildren(node, builder);

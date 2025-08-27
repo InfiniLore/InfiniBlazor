@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class ListItemSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNodeDeserializer<ListItemMdSyntaxNode> {
+public sealed class ListItemSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<ListItemMdSyntaxNode> {
     protected override void Deserialize(ListItemMdSyntaxNode node, StringBuilder builder) {
         switch (node) {
             case {Parent:ListUnOrderedMdSyntaxNode, IsCheckable: false}:

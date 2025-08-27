@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class ListOrderedSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNodeDeserializer<ListOrderedMdSyntaxNode> {
+public sealed class ListOrderedSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<ListOrderedMdSyntaxNode> {
     protected override void Deserialize(ListOrderedMdSyntaxNode node, StringBuilder builder) {
         foreach (IMdSyntaxNode child in node.GetChildrenSpan()) {
             if (!Deserializer.TryGetNodeDeserializer(child, out IMdStringMdSyntaxNodeDeserializer? deserializer)) continue;
