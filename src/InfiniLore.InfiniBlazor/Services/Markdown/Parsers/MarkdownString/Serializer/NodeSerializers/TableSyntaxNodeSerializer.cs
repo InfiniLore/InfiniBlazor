@@ -7,7 +7,7 @@ using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Buffers;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.MultiLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -18,7 +18,6 @@ public sealed class TableSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSeria
     private static readonly int BodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.TableBody);
     private static readonly int HeadId = MdRegexLib.GetGroupId(MdRegexGroupNames.TableHead);
     private static readonly int SepId = MdRegexLib.GetGroupId(MdRegexGroupNames.TableSeparator);
-    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -26,8 +25,7 @@ public sealed class TableSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSeria
     public void HandleMatch(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch,
-        MdSyntaxSerializerOrigin parentOrigin
+        Match entireMatch
     ) {
         // Extract header, separator, and rows
         ReadOnlySpan<char> header = entireMatch.Groups[HeadId].ValueSpan;
@@ -55,7 +53,7 @@ public sealed class TableSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSeria
             tableHeadRow.AddChildNode(tableHeadCellNode);
             
             ReadOnlySpan<char> column = header[headerColumns[index]];
-            stack.PushSingleLineMatchesToStack(column.ToString(), tableHeadCellNode, parentOrigin);
+            stack.PushSingleLineMatchesToStack(column.ToString(), tableHeadCellNode);
         }
 
         // Add rows
@@ -81,10 +79,7 @@ public sealed class TableSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSeria
                     ReadOnlySpan<char> column = row[columnBuffer[columnIndex]];
                     if (column.IsEmpty || column.IsWhiteSpace()) continue;
                     
-                    stack.PushSingleLineMatchesToStack(
-                        column.ToString(), 
-                        tableCell, 
-                        parentOrigin);
+                    stack.PushSingleLineMatchesToStack(column.ToString(), tableCell);
                 }
             }
         }

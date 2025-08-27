@@ -6,7 +6,7 @@ using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLi
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -14,12 +14,11 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 public sealed class CodeInlineSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
     private static readonly int CodeContentId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeInlineContent);
     private static readonly int CodeInlineId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeInline);
-    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.Code;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match entireMatch, MdSyntaxSerializerOrigin parentOrigin) {
+    public void HandleMatch(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match entireMatch) {
         if (!entireMatch.Groups[CodeContentId].TryGetValue(out string? codeValue)) return ;
         if (!entireMatch.Groups[CodeInlineId].TryGetValueSpan(out ReadOnlySpan<char> fullOriginalString)) return ;
 

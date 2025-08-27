@@ -1,4 +1,4 @@
-﻿// ---------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
@@ -6,14 +6,14 @@ using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLi
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Strike)]
-public sealed class StrikeSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-    private static readonly int StrikeContentId = MdRegexLib.GetGroupId(MdRegexGroupNames.StrikeContent);
-    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.Strike;
+[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Emote)]
+public sealed class EmoteSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+    private static readonly int EmoteBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.EmoteContent);
+    private static readonly int EmoteId = MdRegexLib.GetGroupId(MdRegexGroupNames.Emote);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -21,14 +21,14 @@ public sealed class StrikeSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSeri
     public void HandleMatch(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch,
-        MdSyntaxSerializerOrigin parentOrigin
+        Match entireMatch
     ) {
-        if (!entireMatch.Groups[StrikeContentId].TryGetValue(out string? strikeValue)) return ;
+        if (entireMatch.Groups[EmoteId] is not {Success: true, Value: var originalEmote}) return ;
+        if (entireMatch.Groups[EmoteBodyId] is not {Success: true, Value: var emoteBody}) return ;
         
-        StrikeMdSyntaxNode node = StrikeMdSyntaxNode.Pool.Get();
+        EmoteMdSyntaxNode node = EmoteMdSyntaxNode.Pool.Get();
+        node.OriginalEmote = originalEmote;
+        node.EmoteKey = emoteBody;
         parentNode.AddChildNode(node);
-        
-        stack.PushSingleLineMatchesToStack(strikeValue, node, parentOrigin | SkipOnOrigin);
     }
 }

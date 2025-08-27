@@ -7,7 +7,7 @@ using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.MultiLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -27,8 +27,7 @@ public sealed class CalloutSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSer
     public void HandleMatch(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch,
-        MdSyntaxSerializerOrigin parentOrigin
+        Match entireMatch
     ) {
         CalloutMdSyntaxNode node = CalloutMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
@@ -49,7 +48,7 @@ public sealed class CalloutSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSer
             CalloutTitleMdSyntaxNode titleNode = CalloutTitleMdSyntaxNode.Pool.Get();
             node.AddChildNode(titleNode);
             
-            stack.PushSingleLineMatchesToStack(title, titleNode, parentOrigin);
+            stack.PushSingleLineMatchesToStack(title, titleNode);
         }
 
         // ReSharper disable once InvertIf
@@ -59,8 +58,7 @@ public sealed class CalloutSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSer
             
             stack.PushMultiLineMatchesToStack(
                 LineNormalization.NormalizeBlockQuote(calloutBody, out _),
-                bodyNode,
-                parentOrigin | MdSyntaxSerializerOrigin.PreserveHtml
+                bodyNode
             );
         }
     }

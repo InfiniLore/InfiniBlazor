@@ -49,22 +49,30 @@ public sealed class MarkdownStringMdSyntaxSerializer(IServiceProvider servicePro
     public void SerializeToTree(string markdown, IMdSyntaxTree nodeTree) {
         MdSyntaxFragmentStack runningSerializer = MdSyntaxFragmentStack.Pool.Get();
 
-        MdSyntaxFragment? fragment = null;
         string normalized = markdown.ReplaceLineEndings("\n");
 
         try {
-            runningSerializer.PushMultiLineMatchesToStack(normalized, nodeTree.RootNode, MdSyntaxSerializerOrigin.Undefined);
+            runningSerializer.PushMultiLineMatchesToStack(normalized, nodeTree.RootNode);
 
-            while (runningSerializer.TryPopDto(out fragment)) {
-                if (fragment.TryGetAsProcessedNode(out IMdSyntaxNode? parentNode, out IMdSyntaxNode? childNode)) {
-                    parentNode.AddChildNode(childNode);
+            while (runningSerializer.TryPopDto(out MdSyntaxFragment fragment)) {
+                switch (fragment) {
+                    // Not yet processed
+                    case { ParentNode: {} parentNode, Match: {} match }: {
+                        ProcessMatch(match, parentNode, runningSerializer);
+                        break;
+                    }
+                    // Already processed and simply needs to be added in correct location
+                    case {ParentNode: {} parentNode, ChildNode: {} childNode} : {
+                        parentNode.AddChildNode(childNode);
+                        break;
+                    }
+                    
+                    // Unhandled state which should never happen
+                    default: {
+                        logger.Error("Unhandled state in MarkdownStringMdSyntaxSerializer.SerializeToTree with fragment '{fragment}'.", fragment);
+                        break;   
+                    }
                 }
-                else if (fragment.TryGetAsMatch(out Match? match, out parentNode, out MdSyntaxSerializerOrigin handlerOrigin)) {
-                    ProcessMatch(match, parentNode, handlerOrigin, runningSerializer);
-                }
-
-                MdSyntaxFragment.Pool.Return(fragment);
-                fragment = null;
             }
         }
         catch (Exception ex) {
@@ -72,13 +80,11 @@ public sealed class MarkdownStringMdSyntaxSerializer(IServiceProvider servicePro
             throw;
         }
         finally {
-            // makes it so we don't have to have a nested try catch
-            if (fragment is not null) MdSyntaxFragment.Pool.Return(fragment);
             MdSyntaxFragmentStack.Pool.Return(runningSerializer);
         }
     }
 
-    private void ProcessMatch(Match match, IMdSyntaxNode parentNode, MdSyntaxSerializerOrigin parentOrigin, IMdSyntaxFragmentStack runningParser) {
+    private void ProcessMatch(Match match, IMdSyntaxNode parentNode, IMdSyntaxFragmentStack runningParser) {
         GroupCollection groups = match.Groups;
         int length = groups.Count;
         if (length == 0) return;
@@ -88,10 +94,7 @@ public sealed class MarkdownStringMdSyntaxSerializer(IServiceProvider servicePro
             if (!group.Success) continue;
             if (!_elementHandlers.TryGetValue(group.Name, out IMarkdownStringMdSyntaxNodeSerializer? handler)) continue;
 
-            MdSyntaxSerializerOrigin handlerOrigin = handler.SkipOnOrigin;
-            if (handlerOrigin is not MdSyntaxSerializerOrigin.NotSkipped && parentOrigin.HasFlagFast(handlerOrigin)) continue;
-
-            handler.HandleMatch(runningParser, parentNode, match, parentOrigin);
+            handler.HandleMatch(runningParser, parentNode, match);
         }
     }
 }

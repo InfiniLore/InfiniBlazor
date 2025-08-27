@@ -6,32 +6,30 @@ using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLi
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.MultiLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.HeadingSimple)]
-public sealed class HeadingSimpleSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-    private static readonly int HsTextId = MdRegexLib.GetGroupId(MdRegexGroupNames.HeadingSimpleText);
-    private static readonly int HsIdentifierId = MdRegexLib.GetGroupId(MdRegexGroupNames.HeadingSimpleIdentifier);
-    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
+[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Heading)]
+public sealed class HeadingSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+    private static readonly int HLevelId = MdRegexLib.GetGroupId(MdRegexGroupNames.HeadingLevel);
+    private static readonly int HTextId = MdRegexLib.GetGroupId(MdRegexGroupNames.HeadingText);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch,
-        MdSyntaxSerializerOrigin parentOrigin
+        Match entireMatch
     ) {
-        if (!entireMatch.Groups[HsTextId].TryGetValue(out string? headerSimpleText)) return;
-        if (!entireMatch.Groups[HsIdentifierId].TryGetValue(out string? headerIdentifierText)) return;
+        // ReSharper disable once DuplicatedSequentialIfBodies
+        if (!entireMatch.Groups[HLevelId].TryGetLength(out int headingLevel)) return;
+        if (!entireMatch.Groups[HTextId].TryGetValue(out string? headerText)) return;
 
-        HeadingSimpleMdSyntaxNode headingNode = HeadingSimpleMdSyntaxNode.Pool.Get();
-        headingNode.ContentIdentifier = headerIdentifierText;
-        
+        HeadingMdSyntaxNode headingNode = HeadingMdSyntaxNode.Pool.Get();
+        headingNode.Level = headingLevel;
         parentNode.AddChildNode(headingNode);
         
-        stack.PushSingleLineMatchesToStack(headerSimpleText, headingNode, parentOrigin);
+        stack.PushSingleLineMatchesToStack(headerText, headingNode);
     }
 }

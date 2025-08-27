@@ -4,7 +4,6 @@
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using InfiniLore.InfiniBlazor.Pooling;
 using Microsoft.Extensions.ObjectPool;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLib;
 
@@ -20,17 +19,17 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region PushToStack
-    public void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node, MdSyntaxSerializerOrigin handlerOrigin) {
+    public void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node) {
         MatchCollection matches = MdRegexLib.MultilineStructuresRegex.Matches(input);
         int count = matches.Count;
         _stack.EnsureCapacity(_stack.Count + count);
         
         for (int i = count - 1; i >= 0; i--) {
-            PushMatchToStack(matches[i], node, handlerOrigin);
+            PushMatchToStack(matches[i], node);
         }
     }
 
-    public void PushSingleLineMatchesToStack(string input, IMdSyntaxNode node, MdSyntaxSerializerOrigin handlerOrigin) {
+    public void PushSingleLineMatchesToStack(string input, IMdSyntaxNode node) {
         MatchCollection matches = MdRegexLib.SinglelineStructuresRegex.Matches(input);
         int count = matches.Count;
         _stack.EnsureCapacity(_stack.Count + count);
@@ -48,7 +47,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
                 PushProcessedNodeToStack(node, contentNode);
             }
 
-            PushMatchToStack(match, node, handlerOrigin);
+            PushMatchToStack(match, node);
             currentIndex = match.Index;
         }
 
@@ -64,18 +63,16 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
     public void PushProcessedNodeToStack(IMdSyntaxNode parentNode, IMdSyntaxNode childNode) 
         => _stack.Push(MdSyntaxFragment.AsProcessedNode(parentNode, childNode));
 
-    private void PushMatchToStack(Match match, IMdSyntaxNode currentNode, MdSyntaxSerializerOrigin handlerOrigin) 
-        => _stack.Push(MdSyntaxFragment.AsUnhandledMatch(match, currentNode, handlerOrigin));
+    private void PushMatchToStack(Match match, IMdSyntaxNode currentNode) 
+        => _stack.Push(MdSyntaxFragment.AsUnhandledMatch(match, currentNode));
     #endregion
     
-    public bool TryPopDto([NotNullWhen(true)] out MdSyntaxFragment? dto) {
+    public bool TryPopDto(out MdSyntaxFragment dto) {
         return _stack.TryPop(out dto);
     }
     
     public bool TryReset() {
-        while (TryPopDto(out MdSyntaxFragment? dto)) {
-            MdSyntaxFragment.Pool.Return(dto);
-        }
+        _stack.Clear();
         return _stack.Count == 0;
     }
 }

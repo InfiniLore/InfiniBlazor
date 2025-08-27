@@ -6,14 +6,13 @@ using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLi
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Italic)]
-public sealed class ItalicSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-    private static readonly int ItalicId = MdRegexLib.GetGroupId(MdRegexGroupNames.ItalicContent);
-    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.Italic;
+[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Strike)]
+public sealed class StrikeSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+    private static readonly int StrikeContentId = MdRegexLib.GetGroupId(MdRegexGroupNames.StrikeContent);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -21,13 +20,13 @@ public sealed class ItalicSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSeri
     public void HandleMatch(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch,
-        MdSyntaxSerializerOrigin parentOrigin
+        Match entireMatch
     ) {
-        if (!entireMatch.Groups[ItalicId].TryGetValue(out string? italicValue)) return ;
-
-        ItalicMdSyntaxNode node = ItalicMdSyntaxNode.Pool.Get();
+        if (!entireMatch.Groups[StrikeContentId].TryGetValue(out string? strikeValue)) return ;
+        
+        StrikeMdSyntaxNode node = StrikeMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
-        stack.PushSingleLineMatchesToStack(italicValue, node, parentOrigin | SkipOnOrigin);
+        
+        stack.PushSingleLineMatchesToStack(strikeValue, node);
     }
 }

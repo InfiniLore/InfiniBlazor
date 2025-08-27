@@ -6,14 +6,13 @@ using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLi
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.SupScript)]
-public sealed class SuperScriptSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-    private static readonly int SpId = MdRegexLib.GetGroupId(MdRegexGroupNames.SuperScriptContent);
-    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.SuperScript;
+[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.BlockQuote)]
+public sealed class BlockQuoteSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+    private static readonly int BlockQuoteId = MdRegexLib.GetGroupId(MdRegexGroupNames.BlockQuote);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -21,13 +20,18 @@ public sealed class SuperScriptSyntaxNodeSerializer : IMarkdownStringMdSyntaxNod
     public void HandleMatch(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch,
-        MdSyntaxSerializerOrigin parentOrigin
+        Match entireMatch
     ) {
-        if (!entireMatch.Groups[SpId].TryGetValue(out string? superValue)) return ;
+        Group group = entireMatch.Groups[BlockQuoteId];
+        if (!group.TryGetValueSpan(out ReadOnlySpan<char> blockQuoteBody)) return;
+
+        // Replace Regex usage with span-based logic:
+        string adjustedBlockquote = LineNormalization.NormalizeBlockQuote(blockQuoteBody, out int leadingSpaces);
+
+        BlockQuoteMdSyntaxNode blockQuoteNode = BlockQuoteMdSyntaxNode.Pool.Get();
+        blockQuoteNode.LeadingSpaces = leadingSpaces;
         
-        SuperScriptMdSyntaxNode node = SuperScriptMdSyntaxNode.Pool.Get();
-        parentNode.AddChildNode(node);
-        stack.PushSingleLineMatchesToStack(superValue, node, parentOrigin | SkipOnOrigin);
+        parentNode.AddChildNode(blockQuoteNode);
+        stack.PushMultiLineMatchesToStack(adjustedBlockquote, blockQuoteNode);
     }
 }

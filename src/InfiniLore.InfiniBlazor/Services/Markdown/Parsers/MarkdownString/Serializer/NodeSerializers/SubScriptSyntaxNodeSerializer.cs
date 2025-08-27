@@ -6,23 +6,26 @@ using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLi
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.BoldContent)]
-public sealed class BoldSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-    private static readonly int BId = MdRegexLib.GetGroupId(MdRegexGroupNames.Bold);
-    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.Bold;
+[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.SubScript)]
+public sealed class SubScriptSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+    private static readonly int SbId = MdRegexLib.GetGroupId(MdRegexGroupNames.SubScriptContent);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match entireMatch, MdSyntaxSerializerOrigin parentOrigin) {
-        if (!entireMatch.Groups[BId].TryGetValue(out string? boldValue)) return;
+    public void HandleMatch(
+        IMdSyntaxFragmentStack stack,
+        IMdSyntaxNode parentNode,
+        Match entireMatch
+    ) {
+        if (!entireMatch.Groups[SbId].TryGetValue(out string? subValue)) return ;
 
-        BoldMdSyntaxNode node = BoldMdSyntaxNode.Pool.Get();
+        SubScriptMdSyntaxNode node = SubScriptMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
-        stack.PushSingleLineMatchesToStack(boldValue, node, parentOrigin | SkipOnOrigin);
+        stack.PushSingleLineMatchesToStack(subValue, node);
     }
 }

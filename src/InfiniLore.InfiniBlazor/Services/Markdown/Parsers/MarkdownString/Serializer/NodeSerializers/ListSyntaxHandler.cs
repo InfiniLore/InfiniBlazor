@@ -7,7 +7,7 @@ using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Buffers;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.MultiLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -20,8 +20,6 @@ public sealed class BaseListSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSe
     private static readonly int LIndexId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListIndex);
     private static readonly int ListItemLeadingSpaces = MdRegexLib.GetGroupId(MdRegexGroupNames.ListItemLeadingSpaces);
     private static readonly int ListTaskItemLeadingSpaces = MdRegexLib.GetGroupId(MdRegexGroupNames.ListTaskItemLeadingSpaces);
-    
-    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -29,8 +27,7 @@ public sealed class BaseListSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSe
     public void HandleMatch(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch,
-        MdSyntaxSerializerOrigin parentOrigin
+        Match entireMatch
     ) {
         if (!entireMatch.TryGetValue(out string? listBody)) return;
         bool isOrdered = !entireMatch.Groups[LsId].ValueSpan.Contains('-');
@@ -61,7 +58,7 @@ public sealed class BaseListSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSe
                 
                 if (groups[LBodyId].TryGetValueSpan(out ReadOnlySpan<char> itemBody) && !itemBody.IsEmpty) {
                     string normalizedBody = LineNormalization.NormalizeLineIndentation(itemBody, out int leadingSpaces);
-                    stack.PushMultiLineMatchesToStack(normalizedBody, listItemNode, parentOrigin | MdSyntaxSerializerOrigin.PreserveHtml);
+                    stack.PushMultiLineMatchesToStack(normalizedBody, listItemNode);
                     switch (listNode) {
                         case ListOrderedMdSyntaxNode ordered:
                             ordered.LeadingSpaces = leadingSpaces;
@@ -73,7 +70,7 @@ public sealed class BaseListSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSe
                 }
 
                 if (groups[LHeadId].TryGetValue(out string? listHeader)) {
-                    stack.PushSingleLineMatchesToStack(listHeader, listItemNode, parentOrigin);
+                    stack.PushSingleLineMatchesToStack(listHeader, listItemNode);
                 }
                 
                 if (groups[LIndexId].TryGetValue(out string? listIndex)) {

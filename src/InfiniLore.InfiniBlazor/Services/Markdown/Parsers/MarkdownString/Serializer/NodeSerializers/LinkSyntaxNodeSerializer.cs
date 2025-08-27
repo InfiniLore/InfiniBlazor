@@ -7,7 +7,7 @@ using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -17,7 +17,6 @@ public sealed class LinkSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerial
     private static readonly int LnHrefId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkHref);
     private static readonly int LnModsId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkModifiers);
     private static readonly int LnBangId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkBang);
-    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -25,8 +24,7 @@ public sealed class LinkSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerial
     public void HandleMatch(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch,
-        MdSyntaxSerializerOrigin parentOrigin
+        Match entireMatch
     ) {
         // ReSharper disable once DuplicatedSequentialIfBodies
         if (!entireMatch.Groups[LnTextId].TryGetValue(out string? linkText)) return ;
@@ -48,6 +46,6 @@ public sealed class LinkSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerial
         linkNode.Href = linkHref;
         parentNode.AddChildNode(linkNode);
 
-        stack.PushSingleLineMatchesToStack(linkText, linkNode, parentOrigin);
+        stack.PushSingleLineMatchesToStack(linkText, linkNode);
     }
 }

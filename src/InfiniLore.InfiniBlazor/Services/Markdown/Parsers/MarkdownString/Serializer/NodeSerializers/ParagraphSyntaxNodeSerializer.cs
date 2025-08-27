@@ -6,28 +6,30 @@ using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLi
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Tag)]
-public sealed class TagSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-    private static readonly int TextId = MdRegexLib.GetGroupId(MdRegexGroupNames.TagText);
-    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
-    
+[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Paragraph)]
+public sealed class ParagraphSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+    private static readonly int PId = MdRegexLib.GetGroupId(MdRegexGroupNames.ParagraphContent);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch,
-        MdSyntaxSerializerOrigin parentOrigin
+        Match entireMatch
     ) {
-        if (!entireMatch.Groups[TextId].TryGetValue(out string? tagValue)) return ;
+        if (!entireMatch.Groups[PId].TryGetValue(out string? paragraph)) return;
 
-        TagMdSyntaxNode node = TagMdSyntaxNode.Pool.Get();
-        node.ContentTag = tagValue;
-        parentNode.AddChildNode(node);
+        if (parentNode is HtmlSpanMdSyntaxNode) {
+            stack.PushSingleLineMatchesToStack(paragraph, parentNode);
+            return;
+        }
+
+        ParagraphMdSyntaxNode node = ParagraphMdSyntaxNode.Pool.Get();
+        parentNode = parentNode.AddChildNode(node);
+        stack.PushSingleLineMatchesToStack(paragraph, parentNode);
     }
 }

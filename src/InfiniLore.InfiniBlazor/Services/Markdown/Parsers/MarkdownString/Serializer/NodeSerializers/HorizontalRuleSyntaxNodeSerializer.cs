@@ -6,14 +6,13 @@ using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLi
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.SingleLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Escaped)]
-public sealed class EscapedSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
-    private static readonly int EscapedId = MdRegexLib.GetGroupId(MdRegexGroupNames.Escaped);
+[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.HorizontalRule)]
+public sealed class HorizontalRuleSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+    private static readonly int HrId = MdRegexLib.GetGroupId(MdRegexGroupNames.HorizontalRuleContent);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -21,12 +20,12 @@ public sealed class EscapedSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSer
     public void HandleMatch(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch,
-        MdSyntaxSerializerOrigin parentOrigin
+        Match entireMatch
     ) {
-        char value = entireMatch.Groups[EscapedId].ValueSpan[1];
-        EscapedCharacterMdSyntaxNode node = EscapedCharacterMdSyntaxNode.Pool.Get();
-        node.ContentChar = value;
+        if (!entireMatch.Groups[HrId].TryGetValue(out string? hrContent)) return;
+        
+        HorizontalRuleMdSyntaxNode node = HorizontalRuleMdSyntaxNode.Pool.Get();
+        node.Identifier = hrContent;
         parentNode.AddChildNode(node);
     }
 }

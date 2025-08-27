@@ -6,32 +6,26 @@ using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLi
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.MultiLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Paragraph)]
-public sealed class ParagraphSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-
-    private static readonly int PId = MdRegexLib.GetGroupId(MdRegexGroupNames.ParagraphContent);
-    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
+[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Italic)]
+public sealed class ItalicSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+    private static readonly int ItalicId = MdRegexLib.GetGroupId(MdRegexGroupNames.ItalicContent);
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void HandleMatch(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch,
-        MdSyntaxSerializerOrigin parentOrigin
+        Match entireMatch
     ) {
-        if (!entireMatch.Groups[PId].TryGetValue(out string? paragraph)) return;
+        if (!entireMatch.Groups[ItalicId].TryGetValue(out string? italicValue)) return ;
 
-        bool writeParagraph = !parentOrigin.HasFlag(MdSyntaxSerializerOrigin.Html);
-        
-        if (writeParagraph) {
-            ParagraphMdSyntaxNode node = ParagraphMdSyntaxNode.Pool.Get();
-            parentNode = parentNode.AddChildNode(node);
-        }
-        stack.PushSingleLineMatchesToStack(paragraph, parentNode, parentOrigin);
+        ItalicMdSyntaxNode node = ItalicMdSyntaxNode.Pool.Get();
+        parentNode.AddChildNode(node);
+        stack.PushSingleLineMatchesToStack(italicValue, node);
     }
 }

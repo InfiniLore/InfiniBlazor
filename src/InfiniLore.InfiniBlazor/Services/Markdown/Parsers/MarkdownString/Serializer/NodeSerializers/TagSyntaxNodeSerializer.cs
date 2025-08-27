@@ -6,14 +6,13 @@ using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLi
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.MultiLine;
-
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.NewLine)]
-public sealed class NewLineSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
+[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Tag)]
+public sealed class TagSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+    private static readonly int TextId = MdRegexLib.GetGroupId(MdRegexGroupNames.TagText);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -21,7 +20,12 @@ public sealed class NewLineSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSer
     public void HandleMatch(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch,
-        MdSyntaxSerializerOrigin parentOrigin
-    ) => parentNode.AddChildNode(NewLineMdSyntaxNode.Pool.Get());
+        Match entireMatch
+    ) {
+        if (!entireMatch.Groups[TextId].TryGetValue(out string? tagValue)) return ;
+
+        TagMdSyntaxNode node = TagMdSyntaxNode.Pool.Get();
+        node.ContentTag = tagValue;
+        parentNode.AddChildNode(node);
+    }
 }
