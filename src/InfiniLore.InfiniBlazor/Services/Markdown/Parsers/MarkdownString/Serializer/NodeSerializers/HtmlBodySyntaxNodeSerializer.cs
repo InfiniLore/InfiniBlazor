@@ -6,7 +6,7 @@ using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLi
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers.MultiLine;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -18,7 +18,6 @@ public sealed class HtmlBodySyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSe
     private static readonly int SpanTagId = MdRegexLib.GetGroupId(MdRegexGroupNames.SpanTag);
     private static readonly int SpanTagAttrsId = MdRegexLib.GetGroupId(MdRegexGroupNames.SpanTagAttrs);
     private static readonly int SpanBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.SpanBody);
-    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -26,40 +25,51 @@ public sealed class HtmlBodySyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSe
     public void HandleMatch(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch,
-        MdSyntaxSerializerOrigin parentOrigin
+        Match entireMatch
     ) {
-        if (!parentOrigin.HasFlag(MdSyntaxSerializerOrigin.PreserveHtml)) {
-            
+        // Only add paragraph wrapper if there's trailing content (pre or post)
+        bool hasTrailingContent = entireMatch.Groups[HtmlPreId].Success || entireMatch.Groups[HtmlPostId].Success;
+
+        Match? spanMatch = null;
+        bool hasHtmlBody = entireMatch.Groups[HtmlBodyId].TryGetValue(out string? htmlBody);
+        string? spanTag = null;
+        string? spanBody = null;
+        if (hasHtmlBody && htmlBody is not null) {
+            spanMatch = MdRegexLib.FindSpanHtmlRegex.Match(htmlBody);
+            if (spanMatch.Groups[SpanTagId].TryGetValue(out spanTag) && spanMatch.Groups[SpanBodyId].TryGetValue(out spanBody)) {
+                hasTrailingContent = true;
+            }
+        }
+        
+        if (hasTrailingContent && parentNode is not (ParagraphMdSyntaxNode or HtmlSpanMdSyntaxNode)) {
             parentNode = parentNode.AddChildNode(ParagraphMdSyntaxNode.Pool.Get());
         }
 
         if (entireMatch.Groups[HtmlPostId].TryGetValue(out string? post)) {
-            stack.PushSingleLineMatchesToStack(post, parentNode, parentOrigin);
+            stack.PushSingleLineMatchesToStack(post, parentNode);
         }
 
-        if (entireMatch.Groups[HtmlBodyId].TryGetValue(out string? htmlBody)) {
+        if (hasHtmlBody && htmlBody is not null) {
             // Span should be the only special case allowed that allows for Markdown parsing within it
-            Match match = MdRegexLib.FindSpanHtmlRegex.Match(htmlBody);
-            if (match.Groups[SpanTagId].TryGetValue(out string? spanTag) && match.Groups[SpanBodyId].TryGetValue(out string? spanBody)) {
+            if (spanMatch is not null && spanTag is not null && spanBody is not null) {
                 HtmlSpanMdSyntaxNode spanNode = HtmlSpanMdSyntaxNode.Pool.Get();
                 spanNode.TagValue = spanTag;
-                
-                string spanTagAttrs = match.Groups[SpanTagAttrsId].Value;
+
+                string spanTagAttrs = spanMatch.Groups[SpanTagAttrsId].Value;
                 spanNode.Attributes = spanTagAttrs;
-                
-                stack.PushMultiLineMatchesToStack(spanBody, spanNode, parentOrigin | MdSyntaxSerializerOrigin.Html);
+
+                stack.PushMultiLineMatchesToStack(spanBody, spanNode);
                 stack.PushProcessedNodeToStack(parentNode, spanNode);
             }
             else {
                 ContentHtmlMdSyntaxNode htmlNode = ContentHtmlMdSyntaxNode.Pool.Get();
-                htmlNode.ContentHtml= htmlBody;
+                htmlNode.ContentHtml = htmlBody;
                 stack.PushProcessedNodeToStack(parentNode, htmlNode);
             }
         }
 
         if (entireMatch.Groups[HtmlPreId].TryGetValue(out string? pre)) {
-            stack.PushSingleLineMatchesToStack(pre, parentNode, parentOrigin);
+            stack.PushSingleLineMatchesToStack(pre, parentNode);
         }
     }
 }
