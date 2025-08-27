@@ -12,10 +12,10 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public static class MarkdownStringMdSyntaxDeserializerFactory {
-    public static IMarkdownStringMdSyntaxDeserializer Create(IServiceProvider provider) {
+    public static IMdStringMdSyntaxDeserializer Create(IServiceProvider provider) {
         var instance = ActivatorUtilities.CreateInstance<MarkdownStringMdSyntaxDeserializer>(provider);
 
-        Dictionary<Type, IMarkdownStringMdSyntaxNodeDeserializer> deserializers = new Dictionary<Type, IMarkdownStringMdSyntaxNodeDeserializer>()
+        Dictionary<Type, IMdStringMdSyntaxNodeDeserializer> deserializers = new Dictionary<Type, IMdStringMdSyntaxNodeDeserializer>()
             .Register<BlockQuoteMdSyntaxNode, BlockQuoteSyntaxNodeDeserializer>(instance)
             .Register<BoldMdSyntaxNode, BoldSyntaxNodeDeserializer>(instance)
             // .Register<CalloutBodyMdSyntaxNode, CalloutBodySyntaxNodeDeserializer>(instance) // Not implemented due to the CalloutSyntaxNodeDeserializer handling them directly
@@ -56,9 +56,9 @@ public static class MarkdownStringMdSyntaxDeserializerFactory {
     // -----------------------------------------------------------------------------------------------------------------
     // Helper Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private static Dictionary<Type, IMarkdownStringMdSyntaxNodeDeserializer> Register<TNode, TDeserializer>(
-        this Dictionary<Type, IMarkdownStringMdSyntaxNodeDeserializer> deserializers,
-        IMarkdownStringMdSyntaxDeserializer instance
+    private static Dictionary<Type, IMdStringMdSyntaxNodeDeserializer> Register<TNode, TDeserializer>(
+        this Dictionary<Type, IMdStringMdSyntaxNodeDeserializer> deserializers,
+        IMdStringMdSyntaxDeserializer instance
     ) where TDeserializer : BaseMarkdownStringMdSyntaxNodeDeserializer<TNode>, new() where TNode : IMdSyntaxNode {
         deserializers.AddOrUpdate(typeof(TNode), new TDeserializer {
             Deserializer = instance

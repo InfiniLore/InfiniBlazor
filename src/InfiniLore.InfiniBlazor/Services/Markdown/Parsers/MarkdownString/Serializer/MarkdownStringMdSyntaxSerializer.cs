@@ -10,13 +10,13 @@ using System.Text.RegularExpressions;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLib;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer;
+
+using MdSyntaxSerializer = Action<IMdSyntaxFragmentStack, IMdSyntaxNode, Match>;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-using MdSyntaxSerializer = Action<IMdSyntaxFragmentStack, IMdSyntaxNode, Match>;
-
-[InjectableSingleton<IMarkdownStringMdSyntaxSerializer>]
-public sealed class MarkdownStringMdSyntaxSerializer(ILogger<MarkdownStringMdSyntaxSerializer> logger) : IMarkdownStringMdSyntaxSerializer {
+[InjectableSingleton<IMdStringMdSyntaxSerializer>]
+public sealed class MarkdownStringMdSyntaxSerializer(ILogger<MarkdownStringMdSyntaxSerializer> logger) : IMdStringMdSyntaxSerializer {
     private readonly FrozenDictionary<string, MdSyntaxSerializer> _elementHandlers = new Dictionary<string, MdSyntaxSerializer> {
         [MdRegexGroupNames.BlockQuote] = BlockQuoteSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.Bold] = BoldSyntaxNodeSerializer.Serialize,
@@ -96,8 +96,7 @@ public sealed class MarkdownStringMdSyntaxSerializer(ILogger<MarkdownStringMdSyn
 
         for (int index = 0; index < length; index++) {
             Group group = groups[index];
-            if (!group.Success) continue;
-            if (!_elementHandlers.TryGetValue(group.Name, out MdSyntaxSerializer? handler)) continue;
+            if (!group.Success || !_elementHandlers.TryGetValue(group.Name, out MdSyntaxSerializer? handler)) continue;
             handler(runningParser, parentNode, match);
         }
     }

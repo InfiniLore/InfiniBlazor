@@ -10,8 +10,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxTreeParser>]
-public class MarkdownStringMdSyntaxTreeParser(IMarkdownStringMdSyntaxSerializer serializer, IMarkdownStringMdSyntaxDeserializer deserializer) : IMarkdownStringMdSyntaxTreeParser {
+[InjectableSingleton<IMsStringMdSyntaxTreeParser>]
+public class MarkdownStringMdSyntaxTreeParser(IMdStringMdSyntaxSerializer serializer, IMdStringMdSyntaxDeserializer deserializer) : IMsStringMdSyntaxTreeParser {
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

@@ -1,14 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Diagnostics.CodeAnalysis;
+using System.Text;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMarkdownStringMdSyntaxDeserializer {
-    string DeserializeToString(IMdSyntaxTree tree);
-    bool TryGetNodeDeserializer(IMdSyntaxNode node, [NotNullWhen(true)] out IMarkdownStringMdSyntaxNodeDeserializer? deserializer);
+public interface IMdStringMdSyntaxNodeDeserializer{
+    void Deserialize(IMdSyntaxNode node, StringBuilder builder);
 }

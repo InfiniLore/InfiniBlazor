@@ -15,11 +15,11 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 public class MarkdownParser(
     IHtmlStringMdSyntaxTreeParser htmlString,
     [FromKeyedServices("styled")] IHtmlStringMdSyntaxTreeParser styledHtmlString,
-    IMarkdownStringMdSyntaxTreeParser markdownString,
+    IMsStringMdSyntaxTreeParser markdownString,
     IXmlMdSyntaxTreeParser xml
 ) : IMarkdownParser {
     public IHtmlStringMdSyntaxTreeParser HtmlString => htmlString;
     public IHtmlStringMdSyntaxTreeParser StyledHtmlString => styledHtmlString;
-    public IMarkdownStringMdSyntaxTreeParser MarkdownString => markdownString;
+    public IMsStringMdSyntaxTreeParser MarkdownString => markdownString;
     public IXmlMdSyntaxTreeParser Xml => xml;
 }

@@ -12,6 +12,6 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 public interface IMarkdownParser {
     IHtmlStringMdSyntaxTreeParser HtmlString { get; }
     IHtmlStringMdSyntaxTreeParser StyledHtmlString { get; }
-    IMarkdownStringMdSyntaxTreeParser MarkdownString { get; }
+    IMsStringMdSyntaxTreeParser MarkdownString { get; }
     IXmlMdSyntaxTreeParser Xml { get; }
 }

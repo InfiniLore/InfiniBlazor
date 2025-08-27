@@ -8,10 +8,10 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public abstract class BaseMarkdownStringMdSyntaxNodeDeserializer<TNode> : IMarkdownStringMdSyntaxNodeDeserializer
+public abstract class BaseMarkdownStringMdSyntaxNodeDeserializer<TNode> : IMdStringMdSyntaxNodeDeserializer
     where TNode : IMdSyntaxNode
 {
-    public IMarkdownStringMdSyntaxDeserializer Deserializer { get; internal set; } = null!;
+    public IMdStringMdSyntaxDeserializer Deserializer { get; internal init; } = null!;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -21,9 +21,9 @@ public abstract class BaseMarkdownStringMdSyntaxNodeDeserializer<TNode> : IMarkd
         Deserialize(typedNode, builder);
     }
     
-    protected virtual void DeserializeChildren(TNode node, StringBuilder builder) {
+    protected void DeserializeChildren(TNode node, StringBuilder builder) {
         foreach (IMdSyntaxNode child in node.GetChildrenSpan()) {
-            if (!Deserializer.TryGetNodeDeserializer(child, out IMarkdownStringMdSyntaxNodeDeserializer? deserializer)) continue;
+            if (!Deserializer.TryGetNodeDeserializer(child, out IMdStringMdSyntaxNodeDeserializer? deserializer)) continue;
             deserializer.Deserialize(child, builder);
         }
     }

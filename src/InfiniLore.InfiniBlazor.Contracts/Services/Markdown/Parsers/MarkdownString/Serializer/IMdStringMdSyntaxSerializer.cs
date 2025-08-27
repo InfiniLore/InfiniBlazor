@@ -1,12 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Text.RegularExpressions;
-
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMarkdownStringMdSyntaxNodeSerializer{
-    void Serialize(IMdSyntaxFragmentStack engine, IMdSyntaxNode parentNode, Match match);
+public interface IMdStringMdSyntaxSerializer {
+    IMdSyntaxTree SerializeToTree(string markdown);
+    void SerializeToTree(string markdown, IMdSyntaxTree nodeTree);
 }

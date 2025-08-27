@@ -19,7 +19,7 @@ namespace InfiniLore.InfiniBlazor.Components;
 public partial class InfiniMarkdownEditor(
     ITextEditor textEditor,
     IJsInfiniBlazor jsInfiniBlazor,
-    IMarkdownStringMdSyntaxSerializer syntaxParser,
+    IMdStringMdSyntaxSerializer syntaxParser,
     [FromKeyedServices("styled")] IHtmlStringMdSyntaxTreeParser htmlStringTreeParser,
     IVisualDebuggerProvider debuggerProvider,
     ILogger<InfiniMarkdownEditor> logger
