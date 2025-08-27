@@ -2,8 +2,8 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
 using System.Text.RegularExpressions;
@@ -13,29 +13,34 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
+using MdSyntaxSerializer = Action<IMdSyntaxFragmentStack, IMdSyntaxNode, Match>;
+
 [InjectableSingleton<IMarkdownStringMdSyntaxSerializer>]
-public sealed class MarkdownStringMdSyntaxSerializer(IServiceProvider serviceProvider, ILogger<MarkdownStringMdSyntaxSerializer> logger) : IMarkdownStringMdSyntaxSerializer {
-    private readonly FrozenDictionary<string, IMarkdownStringMdSyntaxNodeSerializer> _elementHandlers = ToFrozenDictionary(logger, serviceProvider);
-    
-    // -----------------------------------------------------------------------------------------------------------------
-    // Constructors
-    // -----------------------------------------------------------------------------------------------------------------
-    private static FrozenDictionary<string, IMarkdownStringMdSyntaxNodeSerializer> ToFrozenDictionary(ILogger logger, IServiceProvider serviceProvider) {
-        ReadOnlySpan<string> keyNames = MdRegexLib.MarkdownStructureGroupNames.AsSpan();
-        var dictionaryBuilder = new Dictionary<string, IMarkdownStringMdSyntaxNodeSerializer>(keyNames.Length);
-
-        for (int index = keyNames.Length - 1; index >= 0; index--) {
-            string groupName = keyNames[index];
-            if (serviceProvider.GetKeyedService<IMarkdownStringMdSyntaxNodeSerializer>(groupName) is not {} service) {
-                logger.Warning("No MarkdownElementHandler service found for group name '{groupName}'", groupName);
-                continue;
-            }
-
-            dictionaryBuilder[groupName] = service;
-        }
-
-        return dictionaryBuilder.ToFrozenDictionary();
-    }
+public sealed class MarkdownStringMdSyntaxSerializer(ILogger<MarkdownStringMdSyntaxSerializer> logger) : IMarkdownStringMdSyntaxSerializer {
+    private readonly FrozenDictionary<string, MdSyntaxSerializer> _elementHandlers = new Dictionary<string, MdSyntaxSerializer> {
+        [MdRegexGroupNames.BlockQuote] = BlockQuoteSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.Bold] = BoldSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.Callout] = CalloutSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.CodeBlock] = CodeBlockSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.CodeInline] = CodeInlineSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.Emote] = EmoteSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.Escaped] = EscapedSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.HeadingSimple] = HeadingSimpleSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.Heading] = HeadingSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.HorizontalRule] = HorizontalRuleSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.HtmlBody] = HtmlBodySyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.Italic] = ItalicSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.Link] = LinkSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.List] = ListSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.NewLine] = NewLineSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.Paragraph] = ParagraphSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.Strike] = StrikeSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.SubScript] = SubScriptSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.SuperScript] = SuperScriptSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.Table] = TableSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.Tag] = TagSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.Underline] = UnderlineSyntaxNodeSerializer.Serialize,
+    }.ToFrozenDictionary();
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -92,9 +97,8 @@ public sealed class MarkdownStringMdSyntaxSerializer(IServiceProvider servicePro
         for (int index = 0; index < length; index++) {
             Group group = groups[index];
             if (!group.Success) continue;
-            if (!_elementHandlers.TryGetValue(group.Name, out IMarkdownStringMdSyntaxNodeSerializer? handler)) continue;
-
-            handler.HandleMatch(runningParser, parentNode, match);
+            if (!_elementHandlers.TryGetValue(group.Name, out MdSyntaxSerializer? handler)) continue;
+            handler(runningParser, parentNode, match);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -10,19 +9,18 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.BlockQuote)]
-public sealed class BlockQuoteSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+public static class BlockQuoteSyntaxNodeSerializer  {
     private static readonly int BlockQuoteId = MdRegexLib.GetGroupId(MdRegexGroupNames.BlockQuote);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(
+    public static void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch
+        Match match
     ) {
-        Group group = entireMatch.Groups[BlockQuoteId];
+        Group group = match.Groups[BlockQuoteId];
         if (!group.TryGetValueSpan(out ReadOnlySpan<char> blockQuoteBody)) return;
 
         // Replace Regex usage with span-based logic:

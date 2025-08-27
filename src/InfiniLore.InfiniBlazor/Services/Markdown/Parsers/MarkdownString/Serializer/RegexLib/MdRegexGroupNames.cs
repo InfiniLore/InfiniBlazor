@@ -8,8 +8,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Reg
 public static class MdRegexGroupNames {
     public const string BlockQuote = "blockQuote";
     public const string BlockQuoteBody = "bqBody";
-    public const string Bold = "b";
-    public const string BoldContent = "bold";
+    public const string Bold = "bold";
+    public const string BoldContent = "b";
     public const string Callout = "callout";
     public const string CalloutBody = "clBody";
     public const string CalloutMod = "clMod";
@@ -60,7 +60,7 @@ public static class MdRegexGroupNames {
     public const string StrikeContent = "s";
     public const string SubScript = "subScript";
     public const string SubScriptContent = "sb";
-    public const string SupScript = "supScript";
+    public const string SuperScript = "supScript";
     public const string SuperScriptContent = "sp";
     public const string Table = "table";
     public const string TableBody = "tBody";

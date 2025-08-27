@@ -1,18 +1,15 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.HtmlBody)]
-public sealed class HtmlBodySyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+public static class HtmlBodySyntaxNodeSerializer  {
     private static readonly int HtmlPreId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlPre);
     private static readonly int HtmlBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlBody);
     private static readonly int HtmlPostId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlPost);
@@ -23,16 +20,16 @@ public sealed class HtmlBodySyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSe
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(
+    public static void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch
+        Match match
     ) {
         // Only add paragraph wrapper if there's trailing content (pre or post)
-        bool hasTrailingContent = entireMatch.Groups[HtmlPreId].Success || entireMatch.Groups[HtmlPostId].Success;
+        bool hasTrailingContent = match.Groups[HtmlPreId].Success || match.Groups[HtmlPostId].Success;
 
         Match? spanMatch = null;
-        bool hasHtmlBody = entireMatch.Groups[HtmlBodyId].TryGetValue(out string? htmlBody);
+        bool hasHtmlBody = match.Groups[HtmlBodyId].TryGetValue(out string? htmlBody);
         string? spanTag = null;
         string? spanBody = null;
         if (hasHtmlBody && htmlBody is not null) {
@@ -46,7 +43,7 @@ public sealed class HtmlBodySyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSe
             parentNode = parentNode.AddChildNode(ParagraphMdSyntaxNode.Pool.Get());
         }
 
-        if (entireMatch.Groups[HtmlPostId].TryGetValue(out string? post)) {
+        if (match.Groups[HtmlPostId].TryGetValue(out string? post)) {
             stack.PushSingleLineMatchesToStack(post, parentNode);
         }
 
@@ -69,7 +66,7 @@ public sealed class HtmlBodySyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSe
             }
         }
 
-        if (entireMatch.Groups[HtmlPreId].TryGetValue(out string? pre)) {
+        if (match.Groups[HtmlPreId].TryGetValue(out string? pre)) {
             stack.PushSingleLineMatchesToStack(pre, parentNode);
         }
     }

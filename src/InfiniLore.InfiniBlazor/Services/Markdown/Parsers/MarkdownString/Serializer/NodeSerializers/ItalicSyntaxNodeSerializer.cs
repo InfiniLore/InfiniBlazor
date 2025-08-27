@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -10,19 +9,18 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Italic)]
-public sealed class ItalicSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+public static class ItalicSyntaxNodeSerializer  {
     private static readonly int ItalicId = MdRegexLib.GetGroupId(MdRegexGroupNames.ItalicContent);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(
+    public static void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch
+        Match match
     ) {
-        if (!entireMatch.Groups[ItalicId].TryGetValue(out string? italicValue)) return ;
+        if (!match.Groups[ItalicId].TryGetValue(out string? italicValue)) return ;
 
         ItalicMdSyntaxNode node = ItalicMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);

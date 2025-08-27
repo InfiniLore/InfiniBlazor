@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Buffers;
@@ -11,8 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.List)]
-public sealed class BaseListSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+public static class ListSyntaxNodeSerializer  {
     private static readonly int LsId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListIdentifier);
     private static readonly int LTaskId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListTask);
     private static readonly int LHeadId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListHead);
@@ -24,13 +22,13 @@ public sealed class BaseListSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSe
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(
+    public static void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch
+        Match match
     ) {
-        if (!entireMatch.TryGetValue(out string? listBody)) return;
-        bool isOrdered = !entireMatch.Groups[LsId].ValueSpan.Contains('-');
+        if (!match.TryGetValue(out string? listBody)) return;
+        bool isOrdered = !match.Groups[LsId].ValueSpan.Contains('-');
 
         MatchCollection matchCollection = MdRegexLib.ListItemBodyRegex.Matches(listBody);
         int matchCount = matchCollection.Count;

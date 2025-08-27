@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Buffers;
@@ -11,8 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Table)]
-public sealed class TableSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+public static class TableSyntaxNodeSerializer  {
     private const int StackAllocThreshold = 16;
 
     private static readonly int BodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.TableBody);
@@ -22,21 +20,21 @@ public sealed class TableSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSeria
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(
+    public static void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch
+        Match match
     ) {
         // Extract header, separator, and rows
-        ReadOnlySpan<char> header = entireMatch.Groups[HeadId].ValueSpan;
+        ReadOnlySpan<char> header = match.Groups[HeadId].ValueSpan;
         Span<Range> headerColumns = stackalloc Range[header.Length];
         int headerColumnCount = header.Split(headerColumns, '|', StringSplitOptions.TrimEntries);
 
-        ReadOnlySpan<char> separator = entireMatch.Groups[SepId].ValueSpan;
+        ReadOnlySpan<char> separator = match.Groups[SepId].ValueSpan;
         Span<Range> separatorColumns = stackalloc Range[separator.Length];
         int _ = separator.Split(separatorColumns, '|', StringSplitOptions.TrimEntries);
 
-        ReadOnlySpan<char> rows = entireMatch.Groups[BodyId].ValueSpan;
+        ReadOnlySpan<char> rows = match.Groups[BodyId].ValueSpan;
         Span<Range> rowRanges = stackalloc Range[rows.Length];
         int rowCount = rows.Split(rowRanges, '\n', StringSplitOptions.TrimEntries);
 

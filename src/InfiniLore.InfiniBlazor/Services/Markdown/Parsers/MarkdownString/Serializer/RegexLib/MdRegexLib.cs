@@ -85,9 +85,9 @@ public static partial class MdRegexLib {
 
         // Singleline
         MdRegexGroupNames.Escaped,
-        MdRegexGroupNames.BoldContent,
+        MdRegexGroupNames.Bold,
         MdRegexGroupNames.Italic,
-        MdRegexGroupNames.SupScript,
+        MdRegexGroupNames.SuperScript,
         MdRegexGroupNames.SubScript,
         MdRegexGroupNames.Strike,
         MdRegexGroupNames.CodeInline,

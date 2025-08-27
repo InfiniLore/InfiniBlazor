@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -10,19 +9,18 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Underline)]
-public sealed class UnderlineSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+public static class UnderlineSyntaxNodeSerializer  {
     private static readonly int UId = MdRegexLib.GetGroupId(MdRegexGroupNames.UnderlineContent);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(
+    public static void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch
+        Match match
     ) {
-        if (!entireMatch.Groups[UId].TryGetValue(out string? underlineValue)) return ;
+        if (!match.Groups[UId].TryGetValue(out string? underlineValue)) return ;
         
         UnderlineMdSyntaxNode node = UnderlineMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);

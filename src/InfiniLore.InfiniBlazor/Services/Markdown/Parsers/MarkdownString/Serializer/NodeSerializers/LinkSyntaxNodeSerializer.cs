@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
@@ -11,8 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Link)]
-public sealed class LinkSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+public static class LinkSyntaxNodeSerializer  {
     private static readonly int LnTextId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkText);
     private static readonly int LnHrefId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkHref);
     private static readonly int LnModsId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkModifiers);
@@ -21,17 +19,17 @@ public sealed class LinkSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerial
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(
+    public static void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch
+        Match match
     ) {
         // ReSharper disable once DuplicatedSequentialIfBodies
-        if (!entireMatch.Groups[LnTextId].TryGetValue(out string? linkText)) return ;
-        if (!entireMatch.Groups[LnHrefId].TryGetValue(out string? linkHref)) return;
-        if (!entireMatch.Groups[LnModsId].TryGetValue(out string? mods)) return;
+        if (!match.Groups[LnTextId].TryGetValue(out string? linkText)) return ;
+        if (!match.Groups[LnHrefId].TryGetValue(out string? linkHref)) return;
+        if (!match.Groups[LnModsId].TryGetValue(out string? mods)) return;
 
-        if (entireMatch.Groups[LnBangId].Success) {
+        if (match.Groups[LnBangId].Success) {
             ImageMdSyntaxNode imgNode = ImageMdSyntaxNode.Pool.Get();
             imgNode.Href = linkHref;
             imgNode.OriginalAltText = linkText;

@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
@@ -11,9 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Callout)]
-public sealed class CalloutSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
-    public MdSyntaxSerializerOrigin SkipOnOrigin => MdSyntaxSerializerOrigin.NotSkipped;
+public static class CalloutSyntaxNodeSerializer  {
     // private static readonly int CalloutId = MdRegexLib.GetGroupId(MdRegexGroupNames.Callout);
     private static readonly int CalloutTypeId = MdRegexLib.GetGroupId(MdRegexGroupNames.CalloutType);
     private static readonly int CalloutModId = MdRegexLib.GetGroupId(MdRegexGroupNames.CalloutMod);
@@ -24,27 +21,27 @@ public sealed class CalloutSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSer
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(
+    public static void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch
+        Match match
     ) {
         CalloutMdSyntaxNode node = CalloutMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
 
-        if (entireMatch.Groups[CalloutOptionId] is { Success: true, ValueSpan: {Length: > 0} option }) {
+        if (match.Groups[CalloutOptionId] is { Success: true, ValueSpan: {Length: > 0} option }) {
             node.WithExpandOption(option);
         }
 
-        if (entireMatch.Groups[CalloutTypeId] is { Success: true, Value: {} typeName }) {
+        if (match.Groups[CalloutTypeId] is { Success: true, Value: {} typeName }) {
             node.CalloutType = typeName;
         }
         
-        if (entireMatch.Groups[CalloutModId] is { Success: true, Value: {} mods }) {
+        if (match.Groups[CalloutModId] is { Success: true, Value: {} mods }) {
             node.WithModifier(MdSyntaxNodeModifier.FromString(mods));
         }
 
-        if (entireMatch.Groups[CalloutTitleId] is { Success: true, Value: {} title }) {
+        if (match.Groups[CalloutTitleId] is { Success: true, Value: {} title }) {
             CalloutTitleMdSyntaxNode titleNode = CalloutTitleMdSyntaxNode.Pool.Get();
             node.AddChildNode(titleNode);
             
@@ -52,7 +49,7 @@ public sealed class CalloutSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSer
         }
 
         // ReSharper disable once InvertIf
-        if (entireMatch.Groups[CalloutBodyId] is { Success: true, ValueSpan: var calloutBody }) {
+        if (match.Groups[CalloutBodyId] is { Success: true, ValueSpan: var calloutBody }) {
             CalloutBodyMdSyntaxNode bodyNode = CalloutBodyMdSyntaxNode.Pool.Get();
             node.AddChildNode(bodyNode);
             

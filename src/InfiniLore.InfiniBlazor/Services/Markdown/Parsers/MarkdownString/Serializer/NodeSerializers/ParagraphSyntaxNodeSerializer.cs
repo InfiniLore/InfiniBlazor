@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -10,18 +9,17 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Paragraph)]
-public sealed class ParagraphSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+public static class ParagraphSyntaxNodeSerializer  {
     private static readonly int PId = MdRegexLib.GetGroupId(MdRegexGroupNames.ParagraphContent);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(
+    public static void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch
+        Match match
     ) {
-        if (!entireMatch.Groups[PId].TryGetValue(out string? paragraph)) return;
+        if (!match.Groups[PId].TryGetValue(out string? paragraph)) return;
 
         if (parentNode is HtmlSpanMdSyntaxNode) {
             stack.PushSingleLineMatchesToStack(paragraph, parentNode);

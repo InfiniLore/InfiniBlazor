@@ -1,7 +1,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -10,21 +9,20 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMarkdownStringMdSyntaxNodeSerializer>(MdRegexGroupNames.Emote)]
-public sealed class EmoteSyntaxNodeSerializer : IMarkdownStringMdSyntaxNodeSerializer {
+public static class EmoteSyntaxNodeSerializer  {
     private static readonly int EmoteBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.EmoteContent);
     private static readonly int EmoteId = MdRegexLib.GetGroupId(MdRegexGroupNames.Emote);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void HandleMatch(
+    public static void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
-        Match entireMatch
+        Match match
     ) {
-        if (entireMatch.Groups[EmoteId] is not {Success: true, Value: var originalEmote}) return ;
-        if (entireMatch.Groups[EmoteBodyId] is not {Success: true, Value: var emoteBody}) return ;
+        if (match.Groups[EmoteId] is not {Success: true, Value: var originalEmote}) return ;
+        if (match.Groups[EmoteBodyId] is not {Success: true, Value: var emoteBody}) return ;
         
         EmoteMdSyntaxNode node = EmoteMdSyntaxNode.Pool.Get();
         node.OriginalEmote = originalEmote;
