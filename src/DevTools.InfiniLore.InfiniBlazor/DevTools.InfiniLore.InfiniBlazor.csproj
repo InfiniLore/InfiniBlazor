@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\tests\Tests.Shared.Infinilore.InfiniBlazor\Tests.Shared.Infinilore.InfiniBlazor.csproj" />
+      <ProjectReference Include="..\..\tests\Tests.Shared.InfiniLore.InfiniBlazor\Tests.Shared.InfiniLore.InfiniBlazor.csproj" />
     </ItemGroup>
 
 </Project>
