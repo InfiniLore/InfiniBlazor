@@ -16,6 +16,15 @@ jobs:
               uses: actions/setup-dotnet@v4
               with:
                   dotnet-version: '9.x'
+            
+            - name: Dump .slnf file
+              run: cat InfiniLore.InfiniBlazor.GitHubActions.slnf
+            
+            - name: List files
+              run: ls -R                         
+                         
+            - name: Clean build folder
+              run: dotnet clean InfiniLore.InfiniBlazor.GitHubActions.slnf
 
             - name: Restore dependencies
               run: dotnet restore InfiniLore.InfiniBlazor.GitHubActions.slnf 
