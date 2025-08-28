@@ -1,0 +1,111 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using Microsoft.AspNetCore.Components.Rendering
+@using Microsoft.AspNetCore.Components.RenderTree
+@using System.Text
+@inherits ComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="flex flex-col gap-2">
+    <!-- Render dynamically generated code -->
+    <div>
+        <InfiniCodeBlock Content="@GetSource()"/>
+    </div>
+
+    <!-- Render actual child content -->
+    <div>
+        @ChildContent
+    </div>
+</div>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private string GetSource() {
+        if (ChildContent == null) return string.Empty;
+
+        // Render the RenderFragment into the RenderTreeBuilder
+        var builder = new RenderTreeBuilder();
+        ChildContent.Invoke(builder);
+
+        // Convert the render tree frames to a string
+        ArrayRange<RenderTreeFrame> frames = builder.GetFrames();
+        return ProcessFrames(frames);
+    }
+
+    private static string ProcessFrames(ArrayRange<RenderTreeFrame> frames) {
+        var sb = new StringBuilder();
+        int depth = 0;
+
+        for (int i = 0; i < frames.Count; i++) {
+            RenderTreeFrame frame = frames.Array[i];
+
+            switch (frame.FrameType) {
+                case RenderTreeFrameType.Element:
+                    // Open the element
+                    sb.Append(new string(' ', depth * 2));// Indentation based on depth
+                    sb.Append($"<{frame.ElementName}");
+
+                    // Process attributes
+                    i = ProcessAttributes(frames, i + 1, sb);
+
+                    // Close the opening tag and prepare for possible children
+                    sb.AppendLine(">");
+                    depth++;
+                    break;
+
+                case RenderTreeFrameType.Text:
+                    // Render text content
+                    sb.AppendLine(new string(' ', depth * 2) + frame.TextContent);
+                    break;
+
+                case RenderTreeFrameType.Component:
+                    // Render Blazor component
+                    sb.AppendLine(new string(' ', depth * 2) + $"<{frame.ComponentType.Name} />");
+                    break;
+
+                case RenderTreeFrameType.Markup:
+                    // Render pre-defined markup
+                    sb.AppendLine(new string(' ', depth * 2) + frame.MarkupContent);
+                    break;
+
+            }
+
+            // Manage closing tags for elements implicitly
+            if (i + 1 >= frames.Count || frames.Array[i + 1].FrameType != RenderTreeFrameType.Element && frames.Array[i + 1].FrameType != RenderTreeFrameType.Text) {
+                if (frame.FrameType == RenderTreeFrameType.Element) {
+                    depth--;
+                    sb.AppendLine(new string(' ', depth * 2) + $"</{frame.ElementName}>");
+                }
+            }
+        }
+
+        return sb.ToString();
+    }
+
+    private static int ProcessAttributes(ArrayRange<RenderTreeFrame> frames, int currentIndex, StringBuilder sb) {
+        while (currentIndex < frames.Count) {
+            RenderTreeFrame frame = frames.Array[currentIndex];
+
+            if (frame.FrameType == RenderTreeFrameType.Attribute) {
+                sb.Append($" {frame.AttributeName}=\"{frame.AttributeValue}\"");
+                currentIndex++;
+            } else {
+                // Stop processing when the next frame is not an attribute
+                break;
+            }
+        }
+
+        return currentIndex - 1; // Return the last attribute index
+    }
+}
