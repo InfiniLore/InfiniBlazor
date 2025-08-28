@@ -3,6 +3,7 @@
         "path": "InfiniLore.InfiniBlazor.slnx",
         "projects": [
             "src/DevTools.InfiniLore.InfiniBlazor/DevTools.InfiniLore.InfiniBlazor.csproj",
+            "src/DevTools.MdTestHelper/DevTools.MdTestHelper.csproj",
             "src/InfiniLore.InfiniBlazor.Contracts/InfiniLore.InfiniBlazor.Contracts.csproj",
             "src/InfiniLore.InfiniBlazor.Extensions.ExtraComponents/InfiniLore.InfiniBlazor.Extensions.ExtraComponents.csproj",
             "src/InfiniLore.InfiniBlazor.Extensions.Maui/InfiniLore.InfiniBlazor.Extensions.Maui.csproj",
