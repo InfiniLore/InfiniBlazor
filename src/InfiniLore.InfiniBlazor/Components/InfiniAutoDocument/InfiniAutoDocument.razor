@@ -1,38 +1,38 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor
+@using InfiniLore.InfiniBlazor.AutoDocumenting
 
+@namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@page "/example/autodocument"
-
-@rendermode RenderModeProvider.InfiniRenderMode
+@inject IAutoDocumenter AutoDocumenter
+@inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniPage Title="AutoDocument" Class="p-4">
-    <InfiniSection Class="gap-4 w-full h-full">
-        <InfiniHeading3>AutoDocument Test</InfiniHeading3>
-        <InfiniAutoDocument>
-            <InfiniButton>Something</InfiniButton>
-        </InfiniAutoDocument>
-        
-        <InfiniAutoDocument>
-            <InfiniButton IsDisabled>Something</InfiniButton>
-        </InfiniAutoDocument>
-        
-        <InfiniAutoDocument>
-            <p>Something</p>
-            <p>Something</p>
-        </InfiniAutoDocument>
-    </InfiniSection>
-</InfiniPage>
+<div class="flex flex-col gap-2">
+    <!-- Render dynamically generated code -->
+    <div>
+        <InfiniCodeBlock Content="@GetSource()" Language="razor"/>
+    </div>
+
+    <!-- Render actual child content -->
+    <div>
+        @ChildContent
+    </div>
+</div>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
-    
+    private string GetSource() {
+        if (ChildContent == null) return string.Empty;
+
+        // Delegate processing to the injected service
+        return AutoDocumenter.ConvertToString(ChildContent);
+    }
 }
