@@ -40,6 +40,6 @@
     <Project Path="tests\Tests.InfiniLore.InfiniBlazor.Markdown\Tests.InfiniLore.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
     <Project Path="tests\Tests.InfiniLore.InfiniBlazor\Tests.InfiniLore.InfiniBlazor.csproj" Type="Classic C#" />
     <Project Path="tests\Tests.Shared.InfiniLore.InfiniBlazor.Markdown\Tests.Shared.InfiniLore.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
-    <Project Path="tests\Tests.Shared.InfiniLore.InfiniBlazor\Tests.Shared.InfiniLore.InfiniBlazor.csproj" Type="Classic C#" />
+    <Project Path="tests\Tests.Shared.InfiniLore.InfiniBlazor.TEMP\Tests.Shared.InfiniLore.InfiniBlazor.TEMP.csproj" Type="Classic C#" />
   </Folder>
 </Solution>
