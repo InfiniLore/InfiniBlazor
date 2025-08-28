@@ -12,11 +12,8 @@ namespace InfiniLore.InfiniBlazor.AutoDocumenting;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-
-// Yes, we are aware that this isn't perfect as the type names are expected to change at some point. For now, it works.
-#pragma warning disable BL0006 
-
 [InjectableSingleton<IAutoDocumenter>]
+// Yes, we are aware that this isn't perfect as the type names are expected to change at some point. For now, it works.
 [SuppressMessage("Usage", "BL0006:Do not use RenderTree types")]
 public class AutoDocumenter : IAutoDocumenter {
     public string ConvertToString(RenderFragment fragment) {
