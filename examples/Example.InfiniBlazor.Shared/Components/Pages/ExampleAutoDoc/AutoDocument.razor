@@ -56,80 +56,98 @@
 
             switch (frame.FrameType) {
                 case RenderTreeFrameType.Element:
-                    // Open the element
-                    sb.Append(new string(' ', depth * 2));// Indentation
+                    // Render the element
+                    sb.Append(new string(' ', depth * 2));
                     sb.Append($"<{frame.ElementName}");
 
-                    // Process attributes
+                    // Process its attributes
                     i = ProcessAttributes(frames, i + 1, sb);
 
-                    // Close the opening tag
                     sb.AppendLine(">");
 
-                    // Recursively process children
+                    // Process child frames recursively
                     depth++;
                     i = ProcessFrame(frames, i + 1, sb, depth, frame.ElementSubtreeLength - 1);
                     depth--;
 
-                    // Close the element tag
                     sb.AppendLine(new string(' ', depth * 2) + $"</{frame.ElementName}>");
                     break;
 
                 case RenderTreeFrameType.Text:
-                    // Add the text content
+                    // Render text content
                     sb.AppendLine(new string(' ', depth * 2) + frame.TextContent);
                     break;
 
                 case RenderTreeFrameType.Component:
-                    // Open the component tag
+                    // Render the component
                     sb.Append(new string(' ', depth * 2));
                     sb.Append($"<{frame.ComponentType.Name}");
 
-                    // Process attributes
-                    i = ProcessAttributes(frames, i + 1, sb);
+                    // Check for and render child content/RenderFragment attributes
+                    i = ProcessAttributes(frames, i + 1, sb, depth);
 
+                    // Check if the component has child content
                     if (frame.ComponentSubtreeLength > 0) {
-                        sb.AppendLine(">");// Open the component tag
+                        sb.AppendLine(">");
 
-                        // Process child frames
+                        // Process child frames recursively
                         depth++;
                         i = ProcessFrame(frames, i + 1, sb, depth, frame.ComponentSubtreeLength - 1);
                         depth--;
 
-                        // Close the component tag
                         sb.AppendLine(new string(' ', depth * 2) + $"</{frame.ComponentType.Name}>");
                     } else {
-                        // Self-closing component tag
                         sb.AppendLine(" />");
                     }
 
                     break;
 
                 case RenderTreeFrameType.Markup:
-                    // Render pre-defined markup
+                    // Handle predefined HTML markup
                     sb.AppendLine(new string(' ', depth * 2) + frame.MarkupContent);
+                    break;
+
+                case RenderTreeFrameType.Region:
+                    // Process regions recursively
+                    i = ProcessFrame(frames, i + 1, sb, depth, frame.RegionSubtreeLength);
                     break;
 
                     }
         }
 
-        return startIndex + framesProcessed - 1; // Return the final frame index
+        return startIndex + framesProcessed - 1;
     }
 
-    private static int ProcessAttributes(ArrayRange<RenderTreeFrame> frames, int currentIndex, StringBuilder sb) {
+    private static int ProcessAttributes(ArrayRange<RenderTreeFrame> frames, int currentIndex, StringBuilder sb, int depth = 0) {
         while (currentIndex < frames.Count) {
             RenderTreeFrame frame = frames.Array[currentIndex];
 
-            // Only process valid attributes
-            if (frame.FrameType == RenderTreeFrameType.Attribute && frame.AttributeName != "ChildContent") {
-                sb.Append($" {frame.AttributeName}=\"{frame.AttributeValue}\"");
+            if (frame.FrameType == RenderTreeFrameType.Attribute) {
+                if (frame.AttributeValue is RenderFragment renderFragment) {
+                    // Handle RenderFragment attributes (e.g., ChildContent)
+                    sb.AppendLine(">");// Close the component opening tag before rendering RenderFragment content
+                    var childBuilder = new RenderTreeBuilder();
+
+                    // Invoke the RenderFragment
+                    renderFragment.Invoke(childBuilder);
+
+                    // Process the RenderFragment's child frames
+                    ArrayRange<RenderTreeFrame> childFrames = childBuilder.GetFrames();
+                    ProcessFrame(childFrames, 0, sb, depth + 1, childFrames.Count);
+
+                    sb.Append(new string(' ', depth * 2));// Indentation for closing tag
+                } else {
+                    // Render regular attributes
+                    sb.Append($" {frame.AttributeName}=\"{frame.AttributeValue}\"");
+                }
+
                 currentIndex++;
             } else {
-                // Stop processing non-attribute frames
+                // Stop processing when the next frame is not an attribute
                 break;
             }
         }
 
-        return currentIndex - 1; // Return the last frame index processed as an attribute
+        return currentIndex - 1;// Return the last processed attribute index
     }
 }
