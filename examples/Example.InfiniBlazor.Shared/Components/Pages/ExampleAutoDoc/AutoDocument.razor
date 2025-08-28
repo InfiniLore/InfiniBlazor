@@ -4,11 +4,11 @@
 @using Microsoft.AspNetCore.Components.Rendering
 @using Microsoft.AspNetCore.Components.RenderTree
 @using System.Text
-@inherits ComponentBase
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
+@inherits ComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -38,40 +38,71 @@
         var builder = new RenderTreeBuilder();
         ChildContent.Invoke(builder);
 
-        // Convert the render tree frames to a string
         ArrayRange<RenderTreeFrame> frames = builder.GetFrames();
         return ProcessFrames(frames);
     }
 
     private static string ProcessFrames(ArrayRange<RenderTreeFrame> frames) {
         var sb = new StringBuilder();
-        int depth = 0;
+        ProcessFrame(frames, 0, sb, 0, frames.Count);
+        return sb.ToString();
+    }
 
-        for (int i = 0; i < frames.Count; i++) {
+    private static int ProcessFrame(ArrayRange<RenderTreeFrame> frames, int startIndex, StringBuilder sb, int depth, int limit) {
+        int framesProcessed = 0;
+
+        for (int i = startIndex; framesProcessed < limit; i++, framesProcessed++) {
             RenderTreeFrame frame = frames.Array[i];
 
             switch (frame.FrameType) {
                 case RenderTreeFrameType.Element:
                     // Open the element
-                    sb.Append(new string(' ', depth * 2));// Indentation based on depth
+                    sb.Append(new string(' ', depth * 2));// Indentation
                     sb.Append($"<{frame.ElementName}");
 
                     // Process attributes
                     i = ProcessAttributes(frames, i + 1, sb);
 
-                    // Close the opening tag and prepare for possible children
+                    // Close the opening tag
                     sb.AppendLine(">");
+
+                    // Recursively process children
                     depth++;
+                    i = ProcessFrame(frames, i + 1, sb, depth, frame.ElementSubtreeLength - 1);
+                    depth--;
+
+                    // Close the element tag
+                    sb.AppendLine(new string(' ', depth * 2) + $"</{frame.ElementName}>");
                     break;
 
                 case RenderTreeFrameType.Text:
-                    // Render text content
+                    // Add the text content
                     sb.AppendLine(new string(' ', depth * 2) + frame.TextContent);
                     break;
 
                 case RenderTreeFrameType.Component:
-                    // Render Blazor component
-                    sb.AppendLine(new string(' ', depth * 2) + $"<{frame.ComponentType.Name} />");
+                    // Open the component tag
+                    sb.Append(new string(' ', depth * 2));
+                    sb.Append($"<{frame.ComponentType.Name}");
+
+                    // Process attributes
+                    i = ProcessAttributes(frames, i + 1, sb);
+
+                    if (frame.ComponentSubtreeLength > 0) {
+                        sb.AppendLine(">");// Open the component tag
+
+                        // Process child frames
+                        depth++;
+                        i = ProcessFrame(frames, i + 1, sb, depth, frame.ComponentSubtreeLength - 1);
+                        depth--;
+
+                        // Close the component tag
+                        sb.AppendLine(new string(' ', depth * 2) + $"</{frame.ComponentType.Name}>");
+                    } else {
+                        // Self-closing component tag
+                        sb.AppendLine(" />");
+                    }
+
                     break;
 
                 case RenderTreeFrameType.Markup:
@@ -79,33 +110,26 @@
                     sb.AppendLine(new string(' ', depth * 2) + frame.MarkupContent);
                     break;
 
-            }
-
-            // Manage closing tags for elements implicitly
-            if (i + 1 >= frames.Count || frames.Array[i + 1].FrameType != RenderTreeFrameType.Element && frames.Array[i + 1].FrameType != RenderTreeFrameType.Text) {
-                if (frame.FrameType == RenderTreeFrameType.Element) {
-                    depth--;
-                    sb.AppendLine(new string(' ', depth * 2) + $"</{frame.ElementName}>");
-                }
-            }
+                    }
         }
 
-        return sb.ToString();
+        return startIndex + framesProcessed - 1; // Return the final frame index
     }
 
     private static int ProcessAttributes(ArrayRange<RenderTreeFrame> frames, int currentIndex, StringBuilder sb) {
         while (currentIndex < frames.Count) {
             RenderTreeFrame frame = frames.Array[currentIndex];
 
-            if (frame.FrameType == RenderTreeFrameType.Attribute) {
+            // Only process valid attributes
+            if (frame.FrameType == RenderTreeFrameType.Attribute && frame.AttributeName != "ChildContent") {
                 sb.Append($" {frame.AttributeName}=\"{frame.AttributeValue}\"");
                 currentIndex++;
             } else {
-                // Stop processing when the next frame is not an attribute
+                // Stop processing non-attribute frames
                 break;
             }
         }
 
-        return currentIndex - 1; // Return the last attribute index
+        return currentIndex - 1; // Return the last frame index processed as an attribute
     }
 }
