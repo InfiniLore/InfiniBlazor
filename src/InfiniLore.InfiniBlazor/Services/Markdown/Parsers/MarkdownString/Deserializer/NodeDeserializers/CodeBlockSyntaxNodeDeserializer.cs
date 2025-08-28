@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class CodeBlockSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNodeDeserializer<CodeBlockMdSyntaxNode> {
+public sealed class CodeBlockSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<CodeBlockMdSyntaxNode> {
     protected override void Deserialize(CodeBlockMdSyntaxNode node, StringBuilder builder) {
         builder.Append("```");
         builder.Append(node.Language);

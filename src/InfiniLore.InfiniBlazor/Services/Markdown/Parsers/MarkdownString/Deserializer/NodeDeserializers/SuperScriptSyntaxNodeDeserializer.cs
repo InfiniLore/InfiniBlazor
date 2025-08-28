@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class SuperScriptSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNodeDeserializer<SuperScriptMdSyntaxNode> {
+public sealed class SuperScriptSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<SuperScriptMdSyntaxNode> {
     protected override void Deserialize(SuperScriptMdSyntaxNode node, StringBuilder builder) {
         builder.Append('^');
         builder.Append('^');

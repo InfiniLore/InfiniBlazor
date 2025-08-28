@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class LinkSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNodeDeserializer<LinkMdSyntaxNode> {
+public sealed class LinkSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<LinkMdSyntaxNode> {
     protected override void Deserialize(LinkMdSyntaxNode node, StringBuilder builder) {
         builder.Append('[');
         DeserializeChildren(node, builder);

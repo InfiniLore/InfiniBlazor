@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class ItalicSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNodeDeserializer<ItalicMdSyntaxNode> {
+public sealed class ItalicSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<ItalicMdSyntaxNode> {
 
     protected override void Deserialize(ItalicMdSyntaxNode node, StringBuilder builder) {
         builder.Append('*');

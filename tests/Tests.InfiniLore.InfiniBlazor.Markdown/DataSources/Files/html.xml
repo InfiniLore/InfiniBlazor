@@ -13,11 +13,9 @@
   <MdTestData Id="default" FileName="html.xml">
     <MdString>&lt;div&gt;&lt;/div&gt;</MdString>
     <MdSyntaxTree>
-      <ParagraphMdSyntaxNode>
-        <ContentHtmlMdSyntaxNode xml:space="preserve">&lt;div&gt;&lt;/div&gt;</ContentHtmlMdSyntaxNode>
-      </ParagraphMdSyntaxNode>
+      <ContentHtmlMdSyntaxNode xml:space="preserve">&lt;div&gt;&lt;/div&gt;</ContentHtmlMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;div&gt;&lt;/div&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlStringSimplified>&lt;div&gt;&lt;/div&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>&lt;div&gt;&lt;/div&gt;</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="empty" FileName="html.xml">
@@ -120,8 +118,7 @@ how do you like your blueeyed boy
 Mister Death
 &lt;/pre&gt;</MdString>
     <MdSyntaxTree>
-      <ParagraphMdSyntaxNode>
-        <ContentHtmlMdSyntaxNode xml:space="preserve">&lt;pre&gt;
+      <ContentHtmlMdSyntaxNode xml:space="preserve">&lt;pre&gt;
 Buffalo Bill ’s
 defunct
        who used to
@@ -134,9 +131,8 @@ he was a handsome man
 how do you like your blueeyed boy
 Mister Death
 &lt;/pre&gt;</ContentHtmlMdSyntaxNode>
-      </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;pre&gt;
+    <ExpectedHtmlStringSimplified>&lt;pre&gt;
 Buffalo Bill ’s
 defunct
        who used to
@@ -148,7 +144,7 @@ he was a handsome man
                      and what i want to know is
 how do you like your blueeyed boy
 Mister Death
-&lt;/pre&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+&lt;/pre&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>&lt;pre&gt;
 Buffalo Bill ’s
 defunct
@@ -182,8 +178,7 @@ Mister Death
         <ContentMdSyntaxNode xml:space="preserve">Unrelated previous paragraph followed by a blank line</ContentMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
-      <ParagraphMdSyntaxNode>
-        <ContentHtmlMdSyntaxNode xml:space="preserve">&lt;table&gt;
+      <ContentHtmlMdSyntaxNode xml:space="preserve">&lt;table&gt;
     &lt;tr&gt;
         &lt;td&gt;Table cell&lt;/td&gt;
         &lt;td&gt;
@@ -195,9 +190,8 @@ Mister Death
         &lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</ContentHtmlMdSyntaxNode>
-      </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;Unrelated previous paragraph followed by a blank line&lt;/p&gt;&lt;p&gt;&lt;table&gt;
+    <ExpectedHtmlStringSimplified>&lt;p&gt;Unrelated previous paragraph followed by a blank line&lt;/p&gt;&lt;table&gt;
     &lt;tr&gt;
         &lt;td&gt;Table cell&lt;/td&gt;
         &lt;td&gt;
@@ -208,7 +202,7 @@ Mister Death
             &lt;/table&gt;
         &lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+&lt;/table&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>Unrelated previous paragraph followed by a blank line
 &lt;table&gt;
     &lt;tr&gt;

@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class CalloutSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNodeDeserializer<CalloutMdSyntaxNode> {
+public sealed class CalloutSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<CalloutMdSyntaxNode> {
     private static ConcurrentDictionary<int, string> LeadingSpacesCache { get; } = new() {
         [0] = string.Empty,
         [1] = " ",
@@ -37,7 +37,7 @@ public sealed class CalloutSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNo
         if (node.TryGetTitleNode(out CalloutTitleMdSyntaxNode? titleNode)) {
             builder.Append(' ');
             foreach (IMdSyntaxNode child in titleNode.GetChildrenSpan()) {
-                if (!Deserializer.TryGetNodeDeserializer(child, out IMarkdownStringMdSyntaxNodeDeserializer? deserializer)) continue;
+                if (!Deserializer.TryGetNodeDeserializer(child, out IMdStringMdSyntaxNodeDeserializer? deserializer)) continue;
 
                 deserializer.Deserialize(child, builder);
             }
@@ -53,7 +53,7 @@ public sealed class CalloutSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNo
         try {
             // First, deserialize all children to get the raw content
             foreach (IMdSyntaxNode child in span) {
-                if (!Deserializer.TryGetNodeDeserializer(child, out IMarkdownStringMdSyntaxNodeDeserializer? deserializer)) continue;
+                if (!Deserializer.TryGetNodeDeserializer(child, out IMdStringMdSyntaxNodeDeserializer? deserializer)) continue;
 
                 deserializer.Deserialize(child, contentBuilder);
             }

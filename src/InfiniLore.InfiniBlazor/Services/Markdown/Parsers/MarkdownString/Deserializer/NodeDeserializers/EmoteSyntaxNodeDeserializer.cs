@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class EmoteSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNodeDeserializer<EmoteMdSyntaxNode> {
+public sealed class EmoteSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<EmoteMdSyntaxNode> {
     protected override void Deserialize(EmoteMdSyntaxNode node, StringBuilder builder) {
         builder.Append(node.OriginalEmote);
     }

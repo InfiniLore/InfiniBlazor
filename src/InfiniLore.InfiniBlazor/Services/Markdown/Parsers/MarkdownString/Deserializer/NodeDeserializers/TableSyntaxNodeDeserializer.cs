@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class TableSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNodeDeserializer<TableMdSyntaxNode> {
+public sealed class TableSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<TableMdSyntaxNode> {
     protected override void Deserialize(TableMdSyntaxNode node, StringBuilder builder) {
         ReadOnlySpan<TableCellMdSyntaxNode> headerCells = node.GetHeaderCells();
         ReadOnlySpan<TableRowMdSyntaxNode> rows = node.GetRows();
@@ -25,7 +25,7 @@ public sealed class TableSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNode
             TableCellMdSyntaxNode cell = headerCells[col];
             try {
                 foreach (IMdSyntaxNode child in cell.GetChildrenSpan()) {
-                    if (!Deserializer.TryGetNodeDeserializer(child, out IMarkdownStringMdSyntaxNodeDeserializer? deserializer)) continue;
+                    if (!Deserializer.TryGetNodeDeserializer(child, out IMdStringMdSyntaxNodeDeserializer? deserializer)) continue;
 
                     deserializer.Deserialize(child, headCellBuilder);// Use headCellBuilder, not builder
                 }
@@ -45,7 +45,7 @@ public sealed class TableSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNode
                 IMdSyntaxNode cell = cells[col];
                 try {
                     foreach (IMdSyntaxNode childNode in cell.GetChildrenSpan()) {
-                        if (!Deserializer.TryGetNodeDeserializer(childNode, out IMarkdownStringMdSyntaxNodeDeserializer? deserializer)) continue;
+                        if (!Deserializer.TryGetNodeDeserializer(childNode, out IMdStringMdSyntaxNodeDeserializer? deserializer)) continue;
 
                         deserializer.Deserialize(childNode, cellBuilder);// Use cellBuilder, not builder
                     }

@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class HtmlSpanSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNodeDeserializer<HtmlSpanMdSyntaxNode> {
+public sealed class HtmlSpanSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<HtmlSpanMdSyntaxNode> {
 
     protected override void Deserialize(HtmlSpanMdSyntaxNode node, StringBuilder builder) {
         builder.Append(node.TagValue);

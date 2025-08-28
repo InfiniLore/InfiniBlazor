@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class ImageSyntaxNodeDeserializer : BaseMarkdownStringMdSyntaxNodeDeserializer<ImageMdSyntaxNode> {
+public sealed class ImageSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<ImageMdSyntaxNode> {
     protected override void Deserialize(ImageMdSyntaxNode node, StringBuilder builder) {
         builder.Append('!');
         builder.Append('[');
