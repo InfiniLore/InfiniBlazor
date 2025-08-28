@@ -7,7 +7,6 @@
             "src\\InfiniLore.InfiniBlazor.Extensions.Maui\\InfiniLore.InfiniBlazor.Extensions.Maui.csproj",
             "src\\InfiniLore.InfiniBlazor.SourceGenerators\\InfiniLore.InfiniBlazor.SourceGenerators.csproj",
             "src\\InfiniLore.InfiniBlazor\\InfiniLore.InfiniBlazor.csproj",
-            "tests\\Benchmarks.InfiniLore.InfiniBlazor.Markdown\\Benchmarks.InfiniLore.InfiniBlazor.Markdown.csproj",
             "tests\\Tests.Shared.InfiniLore.InfiniBlazor\\Tests.Shared.InfiniLore.InfiniBlazor.csproj",
             "tests\\Tests.Shared.InfiniLore.InfiniBlazor.Markdown\\Tests.Shared.InfiniLore.InfiniBlazor.Markdown.csproj",
             "tests\\Tests.InfiniLore.InfiniBlazor\\Tests.InfiniLore.InfiniBlazor.csproj",
