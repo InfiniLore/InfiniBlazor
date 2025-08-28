@@ -50,18 +50,19 @@
 
     private static int ProcessFrame(ArrayRange<RenderTreeFrame> frames, int startIndex, StringBuilder sb, int depth, int limit) {
         int framesProcessed = 0;
+        bool isChildContentRendered = false; // Track whether RenderFragment/ChildContent is rendered
 
         for (int i = startIndex; framesProcessed < limit; i++, framesProcessed++) {
             RenderTreeFrame frame = frames.Array[i];
 
             switch (frame.FrameType) {
                 case RenderTreeFrameType.Element:
-                    // Render the element
-                    sb.Append(new string(' ', depth * 2));
+                    // Open the element
+                    sb.Append(new string(' ', depth * 2));// Indentation
                     sb.Append($"<{frame.ElementName}");
 
                     // Process its attributes
-                    i = ProcessAttributes(frames, i + 1, sb);
+                    i = ProcessAttributes(frames, i + 1, sb, depth, ref isChildContentRendered);
 
                     sb.AppendLine(">");
 
@@ -70,24 +71,28 @@
                     i = ProcessFrame(frames, i + 1, sb, depth, frame.ElementSubtreeLength - 1);
                     depth--;
 
+                    // Close the element
                     sb.AppendLine(new string(' ', depth * 2) + $"</{frame.ElementName}>");
                     break;
 
                 case RenderTreeFrameType.Text:
-                    // Render text content
+                    // Render text content directly
                     sb.AppendLine(new string(' ', depth * 2) + frame.TextContent);
                     break;
 
                 case RenderTreeFrameType.Component:
-                    // Render the component
+                    // Open the component tag
                     sb.Append(new string(' ', depth * 2));
                     sb.Append($"<{frame.ComponentType.Name}");
 
                     // Check for and render child content/RenderFragment attributes
-                    i = ProcessAttributes(frames, i + 1, sb, depth);
+                    i = ProcessAttributes(frames, i + 1, sb, depth, ref isChildContentRendered);
 
-                    // Check if the component has child content
-                    if (frame.ComponentSubtreeLength > 0) {
+                    if (isChildContentRendered) {
+                        // Child content has been rendered already, so just close the component tag
+                        sb.AppendLine(new string(' ', depth * 2) + $"</{frame.ComponentType.Name}>");
+                    } else if (frame.ComponentSubtreeLength > 0) {
+                        // If the component has child frames but not ChildContent attribute
                         sb.AppendLine(">");
 
                         // Process child frames recursively
@@ -97,6 +102,7 @@
 
                         sb.AppendLine(new string(' ', depth * 2) + $"</{frame.ComponentType.Name}>");
                     } else {
+                        // Self-closing component if no child frames and no ChildContent
                         sb.AppendLine(" />");
                     }
 
@@ -112,20 +118,20 @@
                     i = ProcessFrame(frames, i + 1, sb, depth, frame.RegionSubtreeLength);
                     break;
 
-                    }
+            }
         }
 
         return startIndex + framesProcessed - 1;
     }
 
-    private static int ProcessAttributes(ArrayRange<RenderTreeFrame> frames, int currentIndex, StringBuilder sb, int depth = 0) {
+    private static int ProcessAttributes(ArrayRange<RenderTreeFrame> frames, int currentIndex, StringBuilder sb, int depth, ref bool isChildContentRendered) {
         while (currentIndex < frames.Count) {
             RenderTreeFrame frame = frames.Array[currentIndex];
 
             if (frame.FrameType == RenderTreeFrameType.Attribute) {
                 if (frame.AttributeValue is RenderFragment renderFragment) {
-                    // Handle RenderFragment attributes (e.g., ChildContent)
-                    sb.AppendLine(">");// Close the component opening tag before rendering RenderFragment content
+                    // Handle RenderFragment, such as ChildContent
+                    sb.AppendLine(">");// Close the opening tag of the component
                     var childBuilder = new RenderTreeBuilder();
 
                     // Invoke the RenderFragment
@@ -135,7 +141,7 @@
                     ArrayRange<RenderTreeFrame> childFrames = childBuilder.GetFrames();
                     ProcessFrame(childFrames, 0, sb, depth + 1, childFrames.Count);
 
-                    sb.Append(new string(' ', depth * 2));// Indentation for closing tag
+                    isChildContentRendered = true;// Mark that ChildContent has been rendered
                 } else {
                     // Render regular attributes
                     sb.Append($" {frame.AttributeName}=\"{frame.AttributeValue}\"");
