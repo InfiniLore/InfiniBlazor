@@ -23,6 +23,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" />
+      <ProjectReference Include="..\Tests.Shared.InfiniLore.InfiniBlazor.AutoDocumenting\Tests.Shared.InfiniLore.InfiniBlazor.AutoDocumenting.csproj" />
         <ProjectReference Include="..\Tests.Shared.InfiniLore.InfiniBlazor\Tests.Shared.InfiniLore.InfiniBlazor.csproj" />
     </ItemGroup>
 
