@@ -5,6 +5,7 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components.RenderTree;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace InfiniLore.InfiniBlazor.AutoDocumenting;
@@ -16,6 +17,7 @@ namespace InfiniLore.InfiniBlazor.AutoDocumenting;
 #pragma warning disable BL0006 
 
 [InjectableSingleton<IAutoDocumenter>]
+[SuppressMessage("Usage", "BL0006:Do not use RenderTree types")]
 public class AutoDocumenter : IAutoDocumenter {
     public string ConvertToString(RenderFragment fragment) {
         // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
