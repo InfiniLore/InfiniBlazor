@@ -18,8 +18,8 @@ public static class Program {
         builder.Services.AddInfiniBlazor(config => {
             config.RegisterTheme<PrideThemeCollection>();
             config.AddMarkdownLogic();
+            config.RegisterAutoDocumentationData<AutoDocumenterData_ExampleInfiniBlazorShared>();
         });
-        builder.Services.AddSingleton<IAutoDocumenterData, AutoDocumenterData_ExampleInfiniBlazorShared>();
         
         builder.Services.AddHttpClient();
 
