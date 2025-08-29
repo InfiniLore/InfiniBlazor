@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace InfiniLore.InfiniBlazor.SourceGenerators;
+namespace InfiniLore.InfiniBlazor.SourceGenerators.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

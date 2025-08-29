@@ -16,7 +16,7 @@ namespace Tests.InfiniBlazor.Shared.Markdown;
 [SuppressMessage("ReSharper", "InvertIf")]
 public class MdTestDataProvider(ILogger<MdTestDataProvider> logger) {
     private const string RootFilePath = "../../";
-    private const string TestFolderFromRootPath = "tests/Tests.InfiniLore.InfiniBlazor.Markdown/DataSources/Files";
+    private const string TestFolderFromRootPath = "tests/Tests.InfiniBlazor.Markdown/DataSources/Files";
 
     internal string TestFolder { get; private init; } = Path.GetFullPath(Path.Combine(RootFilePath, TestFolderFromRootPath));
 

@@ -29,6 +29,8 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
+    [EditorRequired, Parameter] public string Id { get; set; } = string.Empty;
+    
     private string GetSource() {
         if (ChildContent == null) return string.Empty;
 
