@@ -6,7 +6,6 @@ using System.Collections.Immutable;
 using System.Linq;
 
 namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -20,7 +19,7 @@ public static class AutoDocumenterDataWriter {
     public static string GenerateFile(ImmutableArray<RazorFileData> razorFileDatas) {
         GeneratorStringBuilder builder = new GeneratorStringBuilder()
             .AppendUsings(
-                "System.Collections.Frozen"    
+                "System.Collections.Frozen"
             )
             .AppendNamespace(Namespace)
             .AppendLine($"public partial class AutoDocumenterData : {Namespace}.IAutoDocumenterData {{")
@@ -28,15 +27,16 @@ public static class AutoDocumenterDataWriter {
             .AppendLineIndented($"// Count Files: {razorFileDatas.Length}")
             .Indent(WriteFileDataDictionary, razorFileDatas)
             .AppendLine("}");
-        
+
         return builder.ToStringAndClear();
     }
-    
+
     private static void WriteFileDataDictionary(GeneratorStringBuilder builder, ImmutableArray<RazorFileData> razorFileDatas) {
-        builder.AppendLine("public static FrozenDictionary<string, string> RazorFileDatas { get; } = new Dictionary<string, string>() {")
-            .ForEachAppendLineIndented(razorFileDatas.SelectMany(data => data.Components), static componentData => 
-                $"[\"{componentData.Id}\"] = \"\"\"{componentData.Body}\"\"\","
-            )
+        builder
+            .AppendLine("public static FrozenDictionary<string, string> RazorFileDatas { get; } = new Dictionary<string, string>() {")
+            .ForEachAppendLineIndented(razorFileDatas.SelectMany(data => data.Components), static componentData 
+                => $"[\"{componentData.Id}\"] = \"\"\"{componentData.Body}    \"\"\",")
             .AppendLine("}.ToFrozenDictionary();");
     }
+
 }

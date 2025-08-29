@@ -98,21 +98,23 @@ public static class RazorFileExtractor {
             index++;
         }
     }
-    
-    private static int FindNonEscapedCharacterIndex(SourceText source, char character, int indexStart) {
-        int indexEnd = -1;
-        char previousChar = char.MinValue;
-        for (int index = indexStart; index < source.Length; index++) {
-            char currentChar = source[index];
-            if (currentChar != character || previousChar == '\\') {
-                previousChar = currentChar;
-                continue;
+
+    private static int FindNonEscapedCharacterIndex(SourceText source, char character, int startIndex) {
+        for (int i = startIndex; i < source.Length; i++) {
+            if (source[i] != character) continue;
+
+            // Count preceding backslashes
+            int backslashCount = 0;
+            for (int j = i - 1; j >= 0 && source[j] == '\\'; j--) {
+                backslashCount++;
             }
 
-            indexEnd = index;
-            break;
+            // If even number of backslashes (including 0), the character is not escaped
+            if (backslashCount % 2 != 0) continue;
+            return i;
         }
 
-        return indexEnd;
+        return -1;
+
     }
 }

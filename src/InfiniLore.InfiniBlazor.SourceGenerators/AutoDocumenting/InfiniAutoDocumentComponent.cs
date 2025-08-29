@@ -7,6 +7,6 @@ namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public record InfiniAutoDocumentComponent(
-    string Id, 
+    string Id,
     string? Body
 );
