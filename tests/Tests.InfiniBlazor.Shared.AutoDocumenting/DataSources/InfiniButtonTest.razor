@@ -1,6 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.Lucide
 @using Tests.InfiniBlazor.Shared.AutoDocumenting
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
@@ -21,8 +22,8 @@
     #region Default
     public static AutoDocumentTestData GetDefault() {
         return new AutoDocumentTestData(
-            GetRenderFragment(),
-            "<InfiniButton>Button</InfiniButton>"
+            "<InfiniButton>Button</InfiniButton>",
+            GetRenderFragment()
         );
         RenderFragment GetRenderFragment() => __builder => {
             <InfiniButton>Button</InfiniButton>
@@ -33,8 +34,8 @@
     #region Empty
     public static AutoDocumentTestData GetEmpty() {
         return new AutoDocumentTestData(
-            GetRenderFragment(),
-            "<InfiniButton></InfiniButton>"
+            "<InfiniButton></InfiniButton>",
+            GetRenderFragment()
         );
         RenderFragment GetRenderFragment() => __builder => {
             <InfiniButton></InfiniButton>
@@ -45,12 +46,37 @@
     #region WithIsDisabled
     public static AutoDocumentTestData GetWithIsDisabled() {
         return new AutoDocumentTestData(
-            GetRenderFragment(),
-            "<InfiniButton IsDisabled=\"true\">Button</InfiniButton>"
+            "<InfiniButton IsDisabled=\"true\">Button</InfiniButton>",
+            GetRenderFragment()
         );
         RenderFragment GetRenderFragment() => __builder => {
             <InfiniButton IsDisabled="true">Button</InfiniButton>
         };
     }
+    #endregion
+
+    #region WithIconNameLucide
+    public static AutoDocumentTestData GetWithIconNameLucide() {
+        return new AutoDocumentTestData(
+            "<InfiniButton IconName=\"@LucideNames.Signature\">Sign</InfiniButton>",
+            GetRenderFragment()
+        );
+        RenderFragment GetRenderFragment() => __builder => {
+            <InfiniButton IconName="@LucideNames.Signature">Sign</InfiniButton>
+        };
+    }
+    #endregion
+
+    #region GetWithOnClick
+    public static AutoDocumentTestData GetWithOnClick() {
+        return new AutoDocumentTestData(
+            "<InfiniButton OnClick=\"@(() => Console.WriteLine(\"DoSomething\"))\">Do Something</InfiniButton>",
+            new InfiniButtonTest().GetRenderFragment_GetWithOnClick()
+        );
+    }
+    private RenderFragment GetRenderFragment_GetWithOnClick() => __builder => {
+        <InfiniButton OnClick="@(() => DoSomething())">Do Something</InfiniButton>
+    };
+    public void DoSomething() {}
     #endregion
 }

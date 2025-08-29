@@ -16,10 +16,12 @@ public class AttributeValueConverter : IAttributeValueConverter {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public string FormatAttributeValue(RenderTreeFrame frame) => frame.AttributeValue switch {
-        true => "true",
-        false => "false",
-        null => string.Empty,
-        _ => frame.AttributeValue.ToString() ?? string.Empty
-    };
+    public string FormatAttributeValue(RenderTreeFrame frame) {
+        return frame.AttributeValue switch {
+            true => "true",
+            false => "false",
+            null => string.Empty,
+            _ => frame.AttributeValue.ToString() ?? string.Empty
+        };
+    }
 }

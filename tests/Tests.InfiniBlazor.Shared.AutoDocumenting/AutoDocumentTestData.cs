@@ -8,4 +8,4 @@ namespace Tests.InfiniBlazor.Shared.AutoDocumenting;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public record AutoDocumentTestData(RenderFragment RenderFragment, string ExpectedOutput);
+public record AutoDocumentTestData(string ExpectedOutput, RenderFragment RenderFragment);

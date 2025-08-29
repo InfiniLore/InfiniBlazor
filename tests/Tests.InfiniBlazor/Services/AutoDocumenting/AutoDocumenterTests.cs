@@ -26,6 +26,8 @@ public class AutoDocumenterTests {
         yield return InfiniButtonTest.GetDefault;
         yield return InfiniButtonTest.GetEmpty;
         yield return InfiniButtonTest.GetWithIsDisabled;
+        yield return InfiniButtonTest.GetWithIconNameLucide;
+        yield return InfiniButtonTest.GetWithOnClick;
     }
     
     // -----------------------------------------------------------------------------------------------------------------
