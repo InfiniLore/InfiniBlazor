@@ -1,14 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Collections.Immutable;
-
 namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public record RazorFileData(
-    string FileName,
-    ImmutableArray<InfiniAutoDocumentComponent> Components
+public record AutoDocumentedData(
+    string Id,
+    string? Body
 );

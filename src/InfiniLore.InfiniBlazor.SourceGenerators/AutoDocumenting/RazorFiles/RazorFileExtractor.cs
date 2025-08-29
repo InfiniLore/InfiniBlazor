@@ -4,7 +4,7 @@
 using Microsoft.CodeAnalysis.Text;
 using System.Collections.Generic;
 
-namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting;
+namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting.RazorFiles;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ public static class RazorFileExtractor {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static IEnumerable<InfiniAutoDocumentComponent> ExtractInfiniAutoDocumentComponents(SourceText source) {
+    public static IEnumerable<AutoDocumentedData> ExtractInfiniAutoDocumentComponents(SourceText source) {
         int sourceLength = source.Length;
 
         for (int index = 0; index < sourceLength;) {
@@ -88,7 +88,7 @@ public static class RazorFileExtractor {
                 }
 
                 string bodyContent = source.GetSubText(TextSpan.FromBounds(bodyIndexStart, bodyIndexEnd)).ToString();
-                yield return new InfiniAutoDocumentComponent(idContent, bodyContent);
+                yield return new AutoDocumentedData(idContent, bodyContent);
 
                 // Skip past the end tag to avoid reprocessing
                 index = bodyIndexEnd + EndTagLength;

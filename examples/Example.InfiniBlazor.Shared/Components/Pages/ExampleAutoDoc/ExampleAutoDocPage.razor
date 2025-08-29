@@ -2,6 +2,7 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor
+@using InfiniLore.InfiniBlazor.AutoDocumenting
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
@@ -20,7 +21,7 @@
         </InfiniAutoDocument>
         
         <InfiniAutoDocument Id="else">
-            <InfiniButton IsDisabled>Something</InfiniButton>
+            <InfiniButton IsDisabled OnClick="@DoSomething">Something</InfiniButton>
         </InfiniAutoDocument>
         
         <InfiniAutoDocument Id="test">
@@ -28,16 +29,13 @@
             <p>Something</p>
         </InfiniAutoDocument>
         
-        
-            <InfiniAutoDocument Id="beta">
-                <p>Something</p>
-                <p>Something</p>
-            </InfiniAutoDocument>
+        <InfiniAutoDocument Id="beta">
+            <p>Something</p>
+            <p>Something</p>
+        </InfiniAutoDocument>
         
     </InfiniSection>
 </InfiniPage>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@code {
-}
