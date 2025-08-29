@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.AutoDocumenting;
 using Microsoft.AspNetCore.Components;
+using Tests.Shared.InfiniLore.InfiniBlazor.AutoDocumenting;
 using Tests.Shared.InfiniLore.InfiniBlazor.AutoDocumenting.DataSources;
 
 namespace Tests.InfiniLore.InfiniBlazor.Services.AutoDocumenting;
@@ -16,19 +17,9 @@ public class AutoDocumenterTests {
     // -----------------------------------------------------------------------------------------------------------------
     // Test Data
     // -----------------------------------------------------------------------------------------------------------------
-    public static IEnumerable<Func<(RenderFragment, string)>> GetRenderFragments() {
-        yield return () => (
-            builder => {
-                builder.OpenComponent(0, typeof(ParagraphTest));
-                builder.CloseComponent();
-            },
-            """
-            <ParagraphTest>
-                <p>Something</p>
-                <p>Else</p>
-            </ParagraphTest>
-            """
-        );
+    public static IEnumerable<Func<AutoDocumentTestData>> GetRenderFragments() {
+        yield return ParagraphTest.GetDefault;
+        yield return ParagraphTest.GetEmpty;
     }
     
     // -----------------------------------------------------------------------------------------------------------------
@@ -36,13 +27,15 @@ public class AutoDocumenterTests {
     // -----------------------------------------------------------------------------------------------------------------
     [Test]
     [MethodDataSource(nameof(GetRenderFragments))]
-    public async Task Render_ReturnsExpected(RenderFragment renderFragment, string expected) {
+    public async Task Render_ReturnsExpected(AutoDocumentTestData testData) {
         // Arrange
+        RenderFragment renderFragment = testData.RenderFragment;
+        string expectedOutput = testData.ExpectedOutput;
         
         // Act
         string result = AutoDocumenter.ConvertToString(renderFragment);
 
         // Assert
-        await Assert.That(result).IsEqualTo(expected);
+        await Assert.That(result).IsEqualTo(expectedOutput);
     } 
 }
