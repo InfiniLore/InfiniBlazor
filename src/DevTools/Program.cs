@@ -4,7 +4,7 @@
 using CodeOfChaos.CliArgsParser;
 using CodeOfChaos.CliArgsParser.Library;
 
-namespace DevTools.InfiniLore.InfiniBlazor;
+namespace DevTools;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
