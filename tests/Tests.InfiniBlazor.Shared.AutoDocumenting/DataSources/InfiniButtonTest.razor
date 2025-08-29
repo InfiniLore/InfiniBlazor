@@ -22,13 +22,10 @@
     public static AutoDocumentTestData GetDefault() {
         return new AutoDocumentTestData(
             GetRenderFragment(),
-            """
-            <p>Something</p>
-            <p>Else</p>
-            """
+            "<InfiniButton>Button</InfiniButton>"
         );
         RenderFragment GetRenderFragment() => __builder => {
-            <InfiniButton ></InfiniButton>
+            <InfiniButton>Button</InfiniButton>
         };
     }
     #endregion
@@ -37,10 +34,22 @@
     public static AutoDocumentTestData GetEmpty() {
         return new AutoDocumentTestData(
             GetRenderFragment(),
-            "<p></p>"
+            "<InfiniButton></InfiniButton>"
         );
         RenderFragment GetRenderFragment() => __builder => {
-            <p></p>
+            <InfiniButton></InfiniButton>
+        };
+    }
+    #endregion
+
+    #region WithIsDisabled
+    public static AutoDocumentTestData GetWithIsDisabled() {
+        return new AutoDocumentTestData(
+            GetRenderFragment(),
+            "<InfiniButton IsDisabled=\"true\">Button</InfiniButton>"
+        );
+        RenderFragment GetRenderFragment() => __builder => {
+            <InfiniButton IsDisabled="true">Button</InfiniButton>
         };
     }
     #endregion

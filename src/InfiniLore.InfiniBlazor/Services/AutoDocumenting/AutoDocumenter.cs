@@ -13,9 +13,11 @@ namespace InfiniLore.InfiniBlazor.AutoDocumenting;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IAutoDocumenter>]
-// Yes, we are aware that this isn't perfect as the type names are expected to change at some point. For now, it works.
-[SuppressMessage("Usage", "BL0006:Do not use RenderTree types")]
-public class AutoDocumenter : IAutoDocumenter {
+[SuppressMessage("Usage", "BL0006:Do not use RenderTree types")]// Yes, I am aware that this isn't perfect as the type names are expected to change at some point. For now, it works.
+public class AutoDocumenter(IAttributeValueConverter attributeValueConverter) : IAutoDocumenter {
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
     public string ConvertToString(RenderFragment fragment) {
         // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
         if (fragment == null) return string.Empty;
@@ -28,9 +30,17 @@ public class AutoDocumenter : IAutoDocumenter {
         ArrayRange<RenderTreeFrame> frames = builder.GetFrames();
         return ProcessFrames(frames);
     }
+
     private string ProcessFrames(ArrayRange<RenderTreeFrame> frames) {
         var sb = new StringBuilder();
         ProcessFrames(frames, 0, sb, 0, frames.Count);
+
+        // ReSharper disable once InvertIf
+        if (sb.Length > 0) {
+            if (sb[^1] == '\n') sb.Length--;
+            if (sb[^1] == '\r') sb.Length--;
+        }
+
         return sb.ToString();
     }
 
@@ -41,27 +51,28 @@ public class AutoDocumenter : IAutoDocumenter {
         for (int i = startIndex; framesProcessed < limit; i++, framesProcessed++) {
             RenderTreeFrame frame = frames.Array[i];
             switch (frame.FrameType) {
-                case RenderTreeFrameType.Element:
+                case RenderTreeFrameType.Element: {
                     // Open the element
-                    sb.Append(new string(' ', depth * 2).TrimEnd());// Ensure indentation has no trailing spaces
-                    sb.Append($"<{frame.ElementName.Trim()}>");// Trim the tag name and content
+                    sb.Append(new string(' ', depth * 2).TrimEnd());
+                    sb.Append($"<{frame.ElementName.Trim()}>");
 
                     // Process its attributes
                     i = ProcessAttributes(frames, i + 1, sb, depth, ref isChildContentRendered);
 
                     if (frame.ElementSubtreeLength > 0) {
-                        sb.AppendLine();// Add a newline if there are child frames
+                        sb.AppendLine();
                         depth++;
                         i = ProcessFrames(frames, i + 1, sb, depth, frame.ElementSubtreeLength - 1);
                         depth--;
-                        sb.Append(new string(' ', depth * 2).TrimEnd());// Indentation for closing tag
+                        sb.Append(new string(' ', depth * 2).TrimEnd());
                     }
 
                     // Close the tag
                     sb.AppendLine($"</{frame.ElementName.Trim()}>");
                     break;
+                }
 
-                case RenderTreeFrameType.Text:
+                case RenderTreeFrameType.Text: {
                     // Render inline text after trimming unnecessary whitespace
                     string textContent = frame.TextContent.Trim();// Remove extra spaces
                     if (!string.IsNullOrEmpty(textContent))// Skip empty text
@@ -71,42 +82,51 @@ public class AutoDocumenter : IAutoDocumenter {
                     }
 
                     break;
+                }
 
-                case RenderTreeFrameType.Component:
+                case RenderTreeFrameType.Component: {
                     // Open the tag for the component
                     sb.Append(new string(' ', depth * 2));
-                    sb.Append($"<{frame.ComponentType.Name.Trim()}>");
+                    sb.Append($"<{frame.ComponentType.Name.Trim()}");
 
                     // Check for attributes or RenderFragment (ChildContent)
                     i = ProcessAttributes(frames, i + 1, sb, depth, ref isChildContentRendered);
 
                     if (isChildContentRendered) {
-                        sb.AppendLine($"</{frame.ComponentType.Name.Trim()}>");
+                        sb.Append($"</{frame.ComponentType.Name.Trim()}>");
                     }
                     else if (frame.ComponentSubtreeLength > 0) {
-                        sb.AppendLine(">");
+                        sb.Append('>');
                         depth++;
                         i = ProcessFrames(frames, i + 1, sb, depth, frame.ComponentSubtreeLength - 1);
                         depth--;
                         sb.Append(new string(' ', depth * 2));
-                        sb.AppendLine($"</{frame.ComponentType.Name.Trim()}>");
+                        sb.Append($"</{frame.ComponentType.Name.Trim()}>");
+                        sb.AppendLine();
                     }
+                    // No child content and no subtree - this is an empty component
                     else {
-                        sb.AppendLine(" />");// If no children, self-close
+                        sb.Append($"></{frame.ComponentType.Name.Trim()}>");
+                        if (depth > 0 || framesProcessed < limit - 1) {
+                            sb.AppendLine();
+                        }
                     }
 
                     break;
+                }
 
-                case RenderTreeFrameType.Markup:
-                    sb.Append(new string(' ', depth * 2)); // Properly render indentation
-                    sb.Append(frame.MarkupContent.Trim()); // Trim trailing spaces
-                    sb.AppendLine(); // Ensure single newline for markup
+                case RenderTreeFrameType.Markup: {
+                    sb.Append(new string(' ', depth * 2));
+                    sb.Append(frame.MarkupContent.Trim());
+                    sb.AppendLine();
                     break;
+                }
 
-                case RenderTreeFrameType.Region:
-                    // Handle recursive processing for regions
+                // Handle recursive processing for regions
+                case RenderTreeFrameType.Region: {
                     i = ProcessFrames(frames, i + 1, sb, depth, frame.RegionSubtreeLength);
                     break;
+                }
 
                 case RenderTreeFrameType.None:
                 case RenderTreeFrameType.Attribute:
@@ -122,33 +142,55 @@ public class AutoDocumenter : IAutoDocumenter {
     }
 
     private int ProcessAttributes(ArrayRange<RenderTreeFrame> frames, int currentIndex, StringBuilder sb, int depth, ref bool isChildContentRendered) {
+        int originalIndex = currentIndex;
+
         while (currentIndex < frames.Count) {
             RenderTreeFrame frame = frames.Array[currentIndex];
 
-            if (frame.FrameType != RenderTreeFrameType.Attribute)
-                break;// Stop if the frame isn't an attribute
+            // Stop if the frame isn't an attribute
+            if (frame.FrameType != RenderTreeFrameType.Attribute) break;
 
+            // Render the RenderFragment (like ChildContent)
             if (frame.AttributeValue is RenderFragment renderFragment) {
-                // Render the RenderFragment (like ChildContent)
-                sb.Append('>');// Close the parent tag
+                sb.Append('>');
                 var childBuilder = new RenderTreeBuilder();
                 renderFragment.Invoke(childBuilder);
 
                 // Process the RenderFragment's child frames
                 ArrayRange<RenderTreeFrame> childFrames = childBuilder.GetFrames();
-                sb.AppendLine();// Ensure a clean newline for child-rendered content
-                ProcessFrames(childFrames, 0, sb, depth + 1, childFrames.Count);// Recursively process child frames
-                isChildContentRendered = true;// Mark RenderFragment as handled
+
+                // Check if this is simple text content (single text frame)
+                bool isSimpleTextContent = childFrames.Count == 1 
+                    && childFrames.Array[0].FrameType == RenderTreeFrameType.Text;
+                
+                // For simple text content, don't add indentation - render inline
+                if (isSimpleTextContent) {
+                    string textContent = childFrames.Array[0].TextContent.Trim();
+                    if (!string.IsNullOrEmpty(textContent)) {
+                        sb.Append(textContent);
+                    }
+                }
+                else {
+                    // For complex content, use normal processing with indentation
+                    ProcessFrames(childFrames, 0, sb, depth + 1, childFrames.Count);
+                }
+
+                isChildContentRendered = true;
             }
+            // Render normal attributes inline
             else {
-                // Render normal attributes inline
-                sb.Append($" {frame.AttributeName}=\"{frame.AttributeValue}\"");
+                string attributeValue = attributeValueConverter.FormatAttributeValue(frame);
+                sb.Append($" {frame.AttributeName}=\"{attributeValue}\"");
             }
 
             currentIndex++;
         }
 
-        return currentIndex - 1;// Return the final attribute index
+        // Only close the tag if we processed attributes but no child content was rendered
+        if (!isChildContentRendered && currentIndex > originalIndex) {
+            sb.Append('>');
+        }
+
+        return currentIndex - 1;
     }
 }
-#pragma warning restore BL0006

@@ -12,7 +12,9 @@ namespace Tests.InfiniBlazor.Services.AutoDocumenting;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class AutoDocumenterTests {
-    private AutoDocumenter AutoDocumenter { get; } = new();
+    private AutoDocumenter AutoDocumenter { get; } = new(
+        attributeValueConverter: new AttributeValueConverter()    
+    );
     
     // -----------------------------------------------------------------------------------------------------------------
     // Test Data
@@ -20,6 +22,10 @@ public class AutoDocumenterTests {
     public static IEnumerable<Func<AutoDocumentTestData>> GetRenderFragments() {
         yield return ParagraphTest.GetDefault;
         yield return ParagraphTest.GetEmpty;
+        
+        yield return InfiniButtonTest.GetDefault;
+        yield return InfiniButtonTest.GetEmpty;
+        yield return InfiniButtonTest.GetWithIsDisabled;
     }
     
     // -----------------------------------------------------------------------------------------------------------------
