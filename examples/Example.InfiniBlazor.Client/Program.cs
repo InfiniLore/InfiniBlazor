@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using Example.InfiniBlazor.Shared.Themes;
+using InfiniLore.InfiniBlazor.AutoDocumenting;
 using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Emotes;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -17,6 +18,7 @@ public static class Program {
         builder.Services.AddInfiniBlazor(config => {
             config.RegisterTheme<PrideThemeCollection>();
             config.AddMarkdownLogic();
+            config.RegisterAutoDocumentationData<AutoDocumenterData_ExampleInfiniBlazorShared>();
         });
         
         builder.Services.AddHttpClient();

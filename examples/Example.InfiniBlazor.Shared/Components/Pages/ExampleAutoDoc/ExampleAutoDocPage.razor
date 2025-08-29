@@ -1,0 +1,40 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@page "/example/autodocument"
+
+@rendermode RenderModeProvider.InfiniRenderMode
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniPage Title="AutoDocument" Class="p-4">
+    <InfiniSection Class="gap-4 w-full h-full">
+        <InfiniHeading3>AutoDocument Test</InfiniHeading3>
+        <InfiniAutoDocument Id="something">
+            <InfiniButton>Something</InfiniButton>
+        </InfiniAutoDocument>
+        
+        <InfiniAutoDocument Id="else">
+            <InfiniButton IsDisabled OnClick="@DoSomething">Something</InfiniButton>
+        </InfiniAutoDocument>
+        
+        <InfiniAutoDocument Id="test">
+            <p>Something</p>
+            <p>Something</p>
+        </InfiniAutoDocument>
+        
+        <InfiniAutoDocument Id="beta">
+            <p>Something</p>
+            <p>Something</p>
+        </InfiniAutoDocument>
+        
+    </InfiniSection>
+</InfiniPage>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@

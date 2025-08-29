@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <LangVersion>latest</LangVersion>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="CodeOfChaos.CliArgsParser.Generators">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="CodeOfChaos.CliArgsParser.Library"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\tests\Tests.InfiniBlazor.Shared\Tests.InfiniBlazor.Shared.csproj" />
+    </ItemGroup>
+
+</Project>

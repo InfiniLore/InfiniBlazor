@@ -3,7 +3,7 @@
   "profiles": {
     "DebugRoslynSourceGenerator": {
       "commandName": "DebugRoslynComponent",
-      "targetProject": "../InfiniLore.InfiniBlazor.Theming/InfiniLore.InfiniBlazor.Theming.csproj"
+      "targetProject": "../../examples/Example.InfiniBlazor.Shared/Example.InfiniBlazor.Shared.csproj"
     }
   }
 }
