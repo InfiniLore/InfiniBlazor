@@ -1,13 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Microsoft.AspNetCore.Components;
-
 namespace InfiniLore.InfiniBlazor.AutoDocumenting;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IAutoDocumenter {
-    string ConvertToString(RenderFragment childContent);
+public interface IAutoDocumentationFragment {
+    IEnumerable<string> RazorData { get; }
+    IEnumerable<string> CsharpData { get; }
 }

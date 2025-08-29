@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.GeneratorTools;
-using InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting.RazorFiles;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
@@ -17,33 +17,39 @@ public static class AutoDocumenterDataWriter {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static string GenerateFile(ImmutableArray<(AutoDocumentedData data, string assemblyName)> combination, string propertyName) {
-        string assemblyName = combination.First().assemblyName.Replace(".", "");
-        ImmutableArray<AutoDocumentedData> dataArray = combination
-            .Select(data => data.data)
-            .ToImmutableArray();
-        
+    public static string GenerateFile(ImmutableArray<AutoDocumentedData> data, string assemblyName, string propertyName) {
         GeneratorStringBuilder builder = new GeneratorStringBuilder()
             .AppendUsings(
-                "System.Collections.Frozen"
+                "System",
+                "System.Collections.Frozen",
+                "System.Collections.Immutable"
             )
             .AppendNamespace(Namespace)
-            .AppendLine($"public partial class AutoDocumenterData_{assemblyName} : {Namespace}.IAutoDocumenterData {{")
+            .AppendLine($"public partial class AutoDocumenterData_{assemblyName.Replace(".", "")} : {Namespace}.IAutoDocumenterData {{")
             .Indent(static (builder, box) 
-                => WriteFileDataDictionary(builder, box.dataArray, box.propertyName),
-                (dataArray, propertyName)
+                => WriteFileDataDictionary(builder, box.data.GroupBy(data => data.Id), box.propertyName),
+                (data, propertyName)
             )
             .AppendLine("}");
 
         return builder.ToStringAndClear();
     }
 
-    private static void WriteFileDataDictionary(GeneratorStringBuilder builder, ImmutableArray<AutoDocumentedData> dataArray, string propertyName) {
-        builder
-            .AppendLine($"public static FrozenDictionary<string, string> {propertyName} {{ get; }} = new Dictionary<string, string>() {{")
-            .ForEachAppendLineIndented(dataArray, static componentData 
-                => $"[\"{componentData.Id}\"] = \"\"\"{componentData.Body}    \"\"\",")
-            .AppendLine("}.ToFrozenDictionary();");
+    private static void WriteFileDataDictionary(GeneratorStringBuilder builder, IEnumerable<IGrouping<string, AutoDocumentedData>> dataArray, string propertyName) {
+        builder.AppendLine($"public Lazy<FrozenDictionary<string, ImmutableArray<string>>> {propertyName} {{ get; }} = new Lazy<FrozenDictionary<string, ImmutableArray<string>>>(static () => new Dictionary<string, ImmutableArray<string>>() {{");
+
+        foreach (IGrouping<string, AutoDocumentedData> grouping in dataArray) {
+            builder.Indent(b => {
+                b.AppendLine($"[\"{grouping.Key}\"] = [");
+
+                foreach (AutoDocumentedData data in grouping) {
+                    b.AppendLineIndented($"\"\"\"\"\"\"{data.Body}    \"\"\"\"\"\",");
+                }
+                
+                b.AppendLine("],");
+            });
+        }
+        builder.AppendLine("}.ToFrozenDictionary());");
     }
 
 }

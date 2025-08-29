@@ -5,7 +5,6 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
 using System;
 using System.Collections.Immutable;
-using System.IO;
 
 namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting.RazorFiles;
 
@@ -43,14 +42,15 @@ public class AutoDocumentingRazorGenerator : IIncrementalGenerator {
             .SelectMany(static (data, _) => data);
 
         IncrementalValueProvider<string> assemblyNamePipeline = context.GetAssemblyNamePipeline();
-
-        IncrementalValueProvider<ImmutableArray<(AutoDocumentedData Left, string Right)>> razorData = razorDataPipeline
-            .Combine(assemblyNamePipeline)
-            .Collect();
         
-        context.RegisterSourceOutput(razorData, static (context, data) => {
-            context.AddSource(AutoDocumenterDataWriter.FileName, AutoDocumenterDataWriter.GenerateFile(data, "RazorFileData"));
+        IncrementalValueProvider<ImmutableArray<AutoDocumentedData>> razorData = razorDataPipeline.Collect();
+        IncrementalValueProvider<(ImmutableArray<AutoDocumentedData> Left, string Right)> sourceOutputData = razorData.Combine(assemblyNamePipeline);
+        
+        context.RegisterSourceOutput(sourceOutputData, static (context, tuple) => {
+            (ImmutableArray<AutoDocumentedData> data, string? assemblyName) = tuple;
+            context.AddSource(AutoDocumenterDataWriter.FileName, AutoDocumenterDataWriter.GenerateFile(data, assemblyName, "RazorData"));
         });
+        
     }
     
 }

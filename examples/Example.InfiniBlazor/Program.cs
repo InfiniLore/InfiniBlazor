@@ -4,6 +4,7 @@
 using Example.InfiniBlazor.Components;
 using Example.InfiniBlazor.Shared;
 using Example.InfiniBlazor.Shared.Themes;
+using InfiniLore.InfiniBlazor.AutoDocumenting;
 using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Emotes;
 
@@ -21,6 +22,8 @@ public class Program {
             config.RegisterTheme<PrideThemeCollection>();
             config.AddMarkdownLogic();
         });
+
+        builder.Services.AddSingleton<IAutoDocumenterData, AutoDocumenterData_ExampleInfiniBlazorShared>();
         
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents()

@@ -19,27 +19,31 @@ public class AutoDocumentingCsGenerator : IIncrementalGenerator {
                 fullyQualifiedMetadataName: TypeNames.AutoDocumentAttribute,
                 predicate: static (_, _) => true,
                 transform: static (context, _) => {
-                    IEnumerable<AttributeData> attributes = context.Attributes.Where(attribute => attribute.AttributeClass?.MetadataName == TypeNames.AutoDocumentAttribute);
+                    IEnumerable<AttributeData> attributes = context.Attributes.Where(attribute => attribute.AttributeClass?.MetadataName == "AutoDocumentAttribute");
                     foreach (AttributeData? attribute in attributes) {
                         if (attribute.ConstructorArguments.Length <= 0) continue;
                         if (attribute.ConstructorArguments[0].Value is not string id) continue;
-                        return new AutoDocumentedData(id, context.TargetNode.FullSpan.ToString());
-                    }
 
+                        string body = context.TargetNode.ToString()
+                            .Replace($"[AutoDocument(\"{id}\")]", "")
+                            .TrimStart();
+                        return new AutoDocumentedData(id, $"\n    {body}\n");
+                    }
                     return null;
-                }
+
+                }   
             )
             .Where(static data => data is not null)
             .Select(static (data, _) => data!);
         
         IncrementalValueProvider<string> assemblyNamePipeline = context.GetAssemblyNamePipeline();
         
-        IncrementalValueProvider<ImmutableArray<(AutoDocumentedData Left, string Right)>> csData = autoDocumentPipeline
-            .Combine(assemblyNamePipeline)
-            .Collect();
+        IncrementalValueProvider<ImmutableArray<AutoDocumentedData>> csData = autoDocumentPipeline.Collect();
+        IncrementalValueProvider<(ImmutableArray<AutoDocumentedData> Left, string Right)> sourceOutputData = csData.Combine(assemblyNamePipeline);
         
-        context.RegisterSourceOutput(csData, static (context, data) => {
-            context.AddSource(AutoDocumenterDataWriter.FileName, AutoDocumenterDataWriter.GenerateFile(data, "CsData"));
-        });
+        context.RegisterSourceOutput(sourceOutputData, static (context, tuple) => {
+            (ImmutableArray<AutoDocumentedData> data, string? assemblyName) = tuple;
+            context.AddSource(AutoDocumenterDataWriter.FileName, AutoDocumenterDataWriter.GenerateFile(data, assemblyName, "CsharpData"));
+        } );
     }
 }

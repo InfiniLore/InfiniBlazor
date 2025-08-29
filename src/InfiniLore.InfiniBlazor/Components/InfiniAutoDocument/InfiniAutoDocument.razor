@@ -2,12 +2,14 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.AutoDocumenting
+@using InfiniLore.InfiniBlazor.Pooling
+@using System.Text
 
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inject IAutoDocumenter AutoDocumenter
+@inject IAutoDocumentationProvider AutoDocumentationProvider
 @inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
@@ -15,7 +17,15 @@
 <div class="flex flex-col gap-2">
     <!-- Render dynamically generated code -->
     <div>
-        <InfiniCodeBlock Content="@GetSource()" Language="razor"/>
+        @if (AutoDocumentationProvider.TryGetDocumentationFragment(Id, out IAutoDocumentationFragment? fragment)) {
+            if (!fragment.RazorData.IsEmpty()) {
+                <InfiniCodeBlock Content="@AsSource(fragment.RazorData)" Language="razor"/>
+            }
+            if (!fragment.CsharpData.IsEmpty()) {
+                <InfiniCodeBlock Content="@AsSource(fragment.CsharpData)" Language="csharp"/>
+            }
+        }
+        @{  }
     </div>
 
     <!-- Render actual child content -->
@@ -30,11 +40,21 @@
 
 @code {
     [EditorRequired, Parameter] public string Id { get; set; } = string.Empty;
-    
-    private string GetSource() {
-        if (ChildContent == null) return string.Empty;
 
-        // Delegate processing to the injected service
-        return AutoDocumenter.ConvertToString(ChildContent);
+    private static string AsSource(IEnumerable<string> input) {
+        StringBuilder builder = GlobalPools.StringBuilder.Get();
+        try {
+            foreach (string s in input) {
+                builder.Append(s);
+                builder.Append("\n\n");
+            }
+
+            builder.Length--;
+            builder.Length--;
+            return builder.ToString();
+        }
+        finally {
+            GlobalPools.StringBuilder.Return(builder);
+        }
     }
 }

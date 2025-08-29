@@ -1,11 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using System.Diagnostics.CodeAnalysis;
+
 namespace InfiniLore.InfiniBlazor.AutoDocumenting;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class AutoDocumenterData : IAutoDocumenterData {
-    
+public interface IAutoDocumentationProvider {
+    bool TryGetDocumentationFragment(string id,[NotNullWhen(true)] out IAutoDocumentationFragment? fragment);
 }
