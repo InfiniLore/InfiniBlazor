@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting;
 // ---------------------------------------------------------------------------------------------------------------------
 public static class AutoDocumenterDataWriter {
     public const string FileName = "AutoDocumentorData.g.cs";
-    private const string Namespace = "InfiniLore.InfiniBlazor.AutoDocumenting";
+    private const string Namespace = "InfiniLore.InfiniBlazor.AutoDocumentation";
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

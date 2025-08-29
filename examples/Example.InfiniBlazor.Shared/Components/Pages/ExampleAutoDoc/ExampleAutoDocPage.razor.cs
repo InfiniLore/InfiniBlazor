@@ -1,4 +1,4 @@
-﻿using InfiniLore.InfiniBlazor.AutoDocumenting;
+﻿using InfiniLore.InfiniBlazor.AutoDocumentation;
 using Microsoft.AspNetCore.Components.Web;
 
 namespace Example.InfiniBlazor.Shared.Components.Pages.ExampleAutoDoc;

@@ -1,13 +1,15 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Diagnostics.CodeAnalysis;
+using System.Collections.Frozen;
+using System.Collections.Immutable;
 
-namespace InfiniLore.InfiniBlazor.AutoDocumenting;
+namespace InfiniLore.InfiniBlazor.AutoDocumentation;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IAutoDocumentationProvider {
-    bool TryGetDocumentationFragment(string id,[NotNullWhen(true)] out IAutoDocumentationFragment? fragment);
+public interface IAutoDocumenterData {
+     Lazy<FrozenDictionary<string, ImmutableArray<string>>> CsharpData { get; } 
+     Lazy<FrozenDictionary<string, ImmutableArray<string>>> RazorData { get; } 
 }

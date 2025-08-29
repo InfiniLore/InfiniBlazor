@@ -2,11 +2,12 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+
 using System.Collections.Frozen;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 
-namespace InfiniLore.InfiniBlazor.AutoDocumenting;
+namespace InfiniLore.InfiniBlazor.AutoDocumentation;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

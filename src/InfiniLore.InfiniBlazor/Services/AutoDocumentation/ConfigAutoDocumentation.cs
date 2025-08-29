@@ -1,20 +1,17 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Microsoft.Extensions.ObjectPool;
-using System.Text;
+using InfiniLore.InfiniBlazor.Config;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace InfiniLore.InfiniBlazor.Pooling.Policies;
-
+namespace InfiniLore.InfiniBlazor.AutoDocumentation;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class StringBuilderPolicy : PooledObjectPolicy<StringBuilder> {
-    private const int InitialCapacity = 1024;
-    
-    public override StringBuilder Create() => new(InitialCapacity);
-    public override bool Return(StringBuilder obj) {
-        obj.Clear();
-        return true;
+public static class ConfigAutoDocumentation {
+    public static InfiniBlazorConfig RegisterAutoDocumentationData<TData>(this InfiniBlazorConfig config)
+        where TData : class, IAutoDocumenterData, new() {
+        config.Services.AddSingleton<IAutoDocumenterData, TData>();
+        return config;
     }
 }
