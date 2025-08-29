@@ -36,11 +36,15 @@
     <Project Path="src\InfiniLore.InfiniBlazor.Extensions.Maui\InfiniLore.InfiniBlazor.Extensions.Maui.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests\Tests.InfiniBlazor.Markdown\Tests.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
+    <Project Path="tests\Tests.InfiniBlazor\Tests.InfiniBlazor.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/tests/benchmarks/">
     <Project Path="tests\Benchmarks.InfiniLore.InfiniBlazor.Markdown\Benchmarks.InfiniLore.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
-    <Project Path="tests\Tests.InfiniLore.InfiniBlazor.Markdown\Tests.InfiniLore.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
-    <Project Path="tests\Tests.InfiniLore.InfiniBlazor\Tests.InfiniLore.InfiniBlazor.csproj" Type="Classic C#" />
-    <Project Path="tests\Tests.Shared.InfiniLore.InfiniBlazor.AutoDocumenting\Tests.Shared.InfiniLore.InfiniBlazor.AutoDocumenting.csproj" Type="Classic C#" />
-    <Project Path="tests\Tests.Shared.InfiniLore.InfiniBlazor.Markdown\Tests.Shared.InfiniLore.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
-    <Project Path="tests\Tests.Shared.InfiniLore.InfiniBlazor\Tests.Shared.InfiniLore.InfiniBlazor.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/tests/shared/">
+    <Project Path="tests\Tests.InfiniBlazor.Shared.AutoDocumenting\Tests.InfiniBlazor.Shared.AutoDocumenting.csproj" Type="Classic C#" />
+    <Project Path="tests\Tests.InfiniBlazor.Shared.Markdown\Tests.InfiniBlazor.Shared.Markdown.csproj" Type="Classic C#" />
+    <Project Path="tests\Tests.InfiniBlazor.Shared\Tests.InfiniBlazor.Shared.csproj" Type="Classic C#" />
   </Folder>
 </Solution>

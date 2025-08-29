@@ -1,0 +1,48 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using Tests.InfiniBlazor.Shared.AutoDocumenting
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits ComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@* Needed to prevent the buidler from complaining that this isn't a component *@
+<div></div>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* ReSharper disable UnusedParameter.Local *@
+@code {
+    #region Default
+    public static AutoDocumentTestData GetDefault() {
+        return new AutoDocumentTestData(
+            GetRenderFragment(),
+            """
+            <p>Something</p>
+            <p>Else</p>
+            """
+        );
+        RenderFragment GetRenderFragment() => __builder => {
+            <p>Something</p>
+            <p>Else</p>
+        };
+    }
+    #endregion
+
+    #region Empty
+    public static AutoDocumentTestData GetEmpty() {
+        return new AutoDocumentTestData(
+            GetRenderFragment(),
+            "<p></p>"
+        );
+        RenderFragment GetRenderFragment() => __builder => {
+            <p></p>
+        };
+    }
+    #endregion
+}

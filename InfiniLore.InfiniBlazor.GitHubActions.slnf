@@ -7,11 +7,11 @@
             "src\\InfiniLore.InfiniBlazor.Extensions.Maui\\InfiniLore.InfiniBlazor.Extensions.Maui.csproj",
             "src\\InfiniLore.InfiniBlazor.SourceGenerators\\InfiniLore.InfiniBlazor.SourceGenerators.csproj",
             "src\\InfiniLore.InfiniBlazor\\InfiniLore.InfiniBlazor.csproj",
-            "tests\\Tests.Shared.InfiniLore.InfiniBlazor\\Tests.Shared.InfiniLore.InfiniBlazor.csproj",
-            "tests\\Tests.Shared.InfiniLore.InfiniBlazor.Markdown\\Tests.Shared.InfiniLore.InfiniBlazor.Markdown.csproj",
-            "tests\\Tests.InfiniLore.InfiniBlazor\\Tests.InfiniLore.InfiniBlazor.csproj",
-            "tests\\Tests.InfiniLore.InfiniBlazor.Markdown\\Tests.InfiniLore.InfiniBlazor.Markdown.csproj",
-            "tests\\Tests.Shared.InfiniLore.InfiniBlazor.AutoDocumenting\\Tests.Shared.InfiniLore.InfiniBlazor.AutoDocumenting.csproj"
+            "tests\\Tests.InfiniBlazor\\Tests.InfiniBlazor.csproj",
+            "tests\\Tests.InfiniBlazor.Markdown\\Tests.InfiniBlazor.Markdown.csproj",
+            "tests\\Tests.InfiniBlazor.Shared\\Tests.InfiniBlazor.Shared.csproj",
+            "tests\\Tests.InfiniBlazor.Shared.AutoDocumenting\\Tests.InfiniBlazor.Shared.AutoDocumenting.csproj",
+            "tests\\Tests.InfiniBlazor.Shared.Markdown\\Tests.InfiniBlazor.Shared.Markdown.csproj"
         ]
     }
 }
