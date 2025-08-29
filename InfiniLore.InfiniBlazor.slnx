@@ -43,7 +43,6 @@
     <Project Path="tests\Benchmarks.InfiniLore.InfiniBlazor.Markdown\Benchmarks.InfiniLore.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/tests/shared/">
-    <Project Path="tests\Tests.InfiniBlazor.Shared.AutoDocumenting\Tests.InfiniBlazor.Shared.AutoDocumenting.csproj" Type="Classic C#" />
     <Project Path="tests\Tests.InfiniBlazor.Shared.Markdown\Tests.InfiniBlazor.Shared.Markdown.csproj" Type="Classic C#" />
     <Project Path="tests\Tests.InfiniBlazor.Shared\Tests.InfiniBlazor.Shared.csproj" Type="Classic C#" />
   </Folder>

@@ -10,7 +10,6 @@
             "tests\\Tests.InfiniBlazor\\Tests.InfiniBlazor.csproj",
             "tests\\Tests.InfiniBlazor.Markdown\\Tests.InfiniBlazor.Markdown.csproj",
             "tests\\Tests.InfiniBlazor.Shared\\Tests.InfiniBlazor.Shared.csproj",
-            "tests\\Tests.InfiniBlazor.Shared.AutoDocumenting\\Tests.InfiniBlazor.Shared.AutoDocumenting.csproj",
             "tests\\Tests.InfiniBlazor.Shared.Markdown\\Tests.InfiniBlazor.Shared.Markdown.csproj"
         ]
     }
