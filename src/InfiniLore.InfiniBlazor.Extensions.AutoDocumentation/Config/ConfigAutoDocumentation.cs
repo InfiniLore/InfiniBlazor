@@ -8,10 +8,13 @@ namespace InfiniLore.InfiniBlazor.AutoDocumentation;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class ConfigAutoDocumentation {
-    public static InfiniBlazorConfig RegisterAutoDocumentationData<TData>(this InfiniBlazorConfig config)
+public sealed class AutoDocumentationConfig(InfiniBlazorConfig infiniBlazorConfig) {
+    
+    // ReSharper disable once UnusedMethodReturnValue.Global
+    public AutoDocumentationConfig RegisterAutoDocumentationData<TData>()
         where TData : class, IAutoDocumenterData, new() {
-        config.Services.AddSingleton<IAutoDocumenterData, TData>();
-        return config;
+        infiniBlazorConfig.Services.AddSingleton<IAutoDocumenterData, TData>();
+        return this;
     }
+    
 }

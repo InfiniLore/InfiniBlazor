@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.Text;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting.RazorFiles;
+namespace InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.RazorFiles;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

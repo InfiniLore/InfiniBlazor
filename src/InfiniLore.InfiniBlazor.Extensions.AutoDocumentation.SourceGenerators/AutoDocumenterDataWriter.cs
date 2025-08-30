@@ -5,7 +5,7 @@ using CodeOfChaos.GeneratorTools;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting;
+namespace InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

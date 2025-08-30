@@ -22,7 +22,9 @@ public class Program {
         builder.Services.AddInfiniBlazor(config => {
             config.RegisterTheme<PrideThemeCollection>();
             config.AddMarkdownLogic();
-            config.RegisterAutoDocumentationData<AutoDocumenterData_ExampleInfiniBlazorShared>();
+            config.AddAutoDocumentation(static config => 
+                config.RegisterAutoDocumentationData<AutoDocumenterData_ExampleInfiniBlazorShared>()
+            );
         });
         
         builder.Services.AddRazorComponents()

@@ -1,13 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting.RazorFiles;
+using InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.RazorFiles;
+using InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.RequiredSources;
 using Microsoft.CodeAnalysis;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting.CsFiles;
+namespace InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.CsFiles;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -15,7 +16,7 @@ namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting.CsFiles;
 public class AutoDocumentingCsGenerator : IIncrementalGenerator {
     public void Initialize(IncrementalGeneratorInitializationContext context) {
         IncrementalValuesProvider<AutoDocumentedData> autoDocumentPipeline = context.SyntaxProvider.ForAttributeWithMetadataName(
-                TypeNames.AutoDocumentAttribute,
+                SourceCodes.AutoDocumentAttributeTypeName,
                 predicate: static (_, _) => true,
                 transform: static (context, _) => {
                     if (!AutoDocumentedData.TryGetFromSyntaxNode(context.TargetNode, out AutoDocumentedData? data)) return null;

@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting;
+namespace InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

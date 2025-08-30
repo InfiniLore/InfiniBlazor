@@ -4,7 +4,7 @@
 using Microsoft.CodeAnalysis;
 using System;
 
-namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting;
+namespace InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
