@@ -5,6 +5,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -126,58 +127,86 @@ public static class RazorFileExtractor {
     public static IEnumerable<AutoDocumentedData> ExtractAutoDocumentMembers(SourceText source) {
         string text = source.ToString();
 
-        SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(text);
-        CompilationUnitSyntax root = syntaxTree.GetCompilationUnitRoot();
+        // Locate all @code {...} blocks in the Razor file using basic pattern searching
+        const string codeBlockStart = "@code";
+        int startIndex = 0;
 
-        foreach (MemberDeclarationSyntax? member in root.DescendantNodes().OfType<MemberDeclarationSyntax>()) {
-            switch (member) {
-                case BaseFieldDeclarationSyntax fieldDecl:
-                    foreach (VariableDeclaratorSyntax variable in fieldDecl.Declaration.Variables) {
-                        string? attr = GetAutoDocumentId(fieldDecl.AttributeLists);
+        while (true) {
+            int codeStart = text.IndexOf(codeBlockStart, startIndex, StringComparison.Ordinal);
+            if (codeStart == -1) break;// Exit the loop when no more @code blocks are found
+
+            int braceOpen = text.IndexOf('{', codeStart);
+            if (braceOpen == -1) break;// Malformed block, skip the remaining content
+
+            int braceClose = FindMatchingBrace(text, braceOpen);
+            if (braceClose == -1) break;// Unmatched braces, stop processing
+
+            string blockContent = text.Substring(braceOpen + 1, braceClose - braceOpen - 1).Trim();
+
+            SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(blockContent);
+            CompilationUnitSyntax root = syntaxTree.GetCompilationUnitRoot();
+
+            // Look for global statements (this is because they arent wrapped in a class)
+            foreach (GlobalStatementSyntax? globalStatement in root.Members.OfType<GlobalStatementSyntax>()) {
+                StatementSyntax statement = globalStatement.Statement;
+
+                switch (statement) {
+                    case LocalFunctionStatementSyntax localFunction: {
+                        string? attr = GetAutoDocumentId(localFunction.AttributeLists);
                         if (attr == null) continue;
 
-                        string body = variable.Initializer?.Value.ToFullString() ?? string.Empty;
-                        yield return new AutoDocumentedData(attr, $"field {variable.Identifier.Text} = {body}");
+                        // Remove the AutoDocument attribute
+                        LocalFunctionStatementSyntax cleanedFunction = localFunction.WithAttributeLists(
+                            RemoveAutoDocumentAttribute(localFunction.AttributeLists)
+                        );
+
+                        // Format the cleaned function and return it, not perfect but will work
+                        yield return new AutoDocumentedData(attr, $"\n    {cleanedFunction.ToFullString()}\n");
+
+                        break;
                     }
-
-                    break;
-
-                case PropertyDeclarationSyntax propDecl: {
-                    string? propAttr = GetAutoDocumentId(propDecl.AttributeLists);
-                    if (propAttr == null) break;
-
-                    string body = propDecl.ExpressionBody?.Expression.ToFullString()
-                        ?? propDecl.AccessorList?.ToFullString()
-                        ?? string.Empty;
-
-                    yield return new AutoDocumentedData(propAttr, $"property {propDecl.Identifier.Text} {body}");
-
-                    break;
-                }
-
-                case MethodDeclarationSyntax methodDecl: {
-                    string? methodAttr = GetAutoDocumentId(methodDecl.AttributeLists);
-                    if (methodAttr == null) break;
-
-                    string body = methodDecl.Body?.ToFullString()
-                        ?? methodDecl.ExpressionBody?.Expression.ToFullString()
-                        ?? string.Empty;
-
-                    yield return new AutoDocumentedData(methodAttr, $"method {methodDecl.Identifier.Text} {body}");
-
-                    break;
                 }
             }
+
+            // Continue searching for the next @code block
+            startIndex = braceClose + 1;
         }
     }
-    
-    private static string? GetAutoDocumentId(SyntaxList<AttributeListSyntax> attrLists)
-        => attrLists.SelectMany(
-            static attributeList => attributeList.Attributes
-                .Select(static attribute => new { attribute, name = attribute.Name.ToString()})
-                .Where(static t => t.name.EndsWith("AutoDocument") || t.name.EndsWith("AutoDocumentAttribute"))
-                .Select(static t => t.attribute.ArgumentList?.Arguments.FirstOrDefault()?.Expression.ToString())
-                .Where(static argument => !string.IsNullOrWhiteSpace(argument)),
-            static (_, argument) => argument!.Trim('"')
-            ).FirstOrDefault();
+
+    private static SyntaxList<AttributeListSyntax> RemoveAutoDocumentAttribute(SyntaxList<AttributeListSyntax> attributeLists) {
+        return SyntaxFactory.List(attributeLists
+            .Select(attrList => SyntaxFactory.AttributeList(
+                SyntaxFactory.SeparatedList(attrList.Attributes.Where(attr =>
+                    !attr.Name.ToString().EndsWith("AutoDocument") &&
+                    !attr.Name.ToString().EndsWith("AutoDocumentAttribute")
+                ))
+            ))
+            .Where(list => list.Attributes.Any())
+        );
+    }
+
+    private static int FindMatchingBrace(string text, int openIndex) {
+        int depth = 0;
+        for (int i = openIndex; i < text.Length; i++) {
+            switch (text[i]) {
+                case '{':
+                    depth++;
+                    break;
+                case '}':
+                    depth--;
+                    if (depth == 0) return i;
+
+                    break;
+            }
+        }
+
+        return -1;
+    }
+
+    private static string? GetAutoDocumentId(SyntaxList<AttributeListSyntax> attrLists) {
+        return attrLists.SelectMany(attrList => attrList.Attributes)
+            .Where(attr => attr.Name.ToString().EndsWith("AutoDocument") || attr.Name.ToString().EndsWith("AutoDocumentAttribute"))
+            .Select(attr => attr.ArgumentList?.Arguments.FirstOrDefault()?.Expression.ToString().Trim('"'))
+            .FirstOrDefault();
+    }
 }
