@@ -6,7 +6,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting.RazorFiles;
@@ -62,7 +61,7 @@ public static class RazorFileExtractor {
                     int idIndexEnd = FindNonEscapedCharacterIndex(source, '"', idIndexStart);
                     if (idIndexEnd < 0) break;
 
-                    idContent = source.GetSubText(TextSpan.FromBounds(idIndexStart, idIndexEnd)).ToString();
+                    idContent = source.GetSubText(TextSpan.FromBounds(idIndexStart, idIndexEnd)).ToString().TrimStart('@');
                     index = idIndexEnd + 1;
                     break;
                 }
@@ -136,19 +135,26 @@ public static class RazorFileExtractor {
                     case RecordDeclarationSyntax:
                     case PropertyDeclarationSyntax:
                     case ClassDeclarationSyntax: {
-                        if (!TryGetAutoDocumentDataFromMember(member, out AutoDocumentedData? data)) yield break;
+                        if (!AutoDocumentedData.TryGetFromMember(member, out AutoDocumentedData? data)) yield break;
+
                         yield return data;
+
                         break;
                     }
 
-                    case GlobalStatementSyntax { Statement: LocalDeclarationStatementSyntax local }:  {
-                        if (!TryGetAutoDocumentDataFromStatement(local, out AutoDocumentedData? data)) yield break;
+                    case GlobalStatementSyntax { Statement: LocalDeclarationStatementSyntax local }: {
+                        if (!AutoDocumentedData.TryGetFromStatement(local, out AutoDocumentedData? data)) yield break;
+
                         yield return data;
+
                         break;
                     }
-                    case GlobalStatementSyntax { Statement: LocalFunctionStatementSyntax local}: {
-                        if (!TryGetAutoDocumentDataFromStatement(local, out AutoDocumentedData? data)) yield break;
+
+                    case GlobalStatementSyntax { Statement: LocalFunctionStatementSyntax local }: {
+                        if (!AutoDocumentedData.TryGetFromStatement(local, out AutoDocumentedData? data)) yield break;
+
                         yield return data;
+
                         break;
                     }
                 }
@@ -158,35 +164,6 @@ public static class RazorFileExtractor {
             index = braceClose;
         }
     }
-
-    #region TryGetAutoDocumentData
-    // YES, these look like duplicate code, but due to unique implementation of "WithAttributeLists" being from two different base classes, this is required
-    private static bool TryGetAutoDocumentDataFromMember<TMember>(TMember member, [NotNullWhen(true)] out AutoDocumentedData? data) where TMember : MemberDeclarationSyntax {
-        data = null;
-        string? attr = GetAutoDocumentId(member.AttributeLists);
-        if (attr == null) return false;
-                        
-        MemberDeclarationSyntax cleanedMember = member.WithAttributeLists(
-            RemoveAutoDocumentAttribute(member.AttributeLists)
-        );
-             
-        data =  new AutoDocumentedData(attr, $"\n    {cleanedMember.ToFullString()}");
-        return true;
-    }
-    
-    private static bool TryGetAutoDocumentDataFromStatement<TStatement>(TStatement member, [NotNullWhen(true)] out AutoDocumentedData? data) where TStatement : StatementSyntax {
-        data = null;
-        string? attr = GetAutoDocumentId(member.AttributeLists);
-        if (attr == null) return false;
-                        
-        StatementSyntax cleanedMember = member.WithAttributeLists(
-            RemoveAutoDocumentAttribute(member.AttributeLists)
-        );
-             
-        data =  new AutoDocumentedData(attr, $"\n    {cleanedMember.ToFullString()}");
-        return true;
-    }
-    #endregion
 
     private static int FindNonEscapedCharacterIndex(SourceText source, char character, int startIndex) {
         for (int i = startIndex; i < source.Length; i++) {
@@ -223,24 +200,6 @@ public static class RazorFileExtractor {
         return -1;
     }
 
-    private static SyntaxList<AttributeListSyntax> RemoveAutoDocumentAttribute(SyntaxList<AttributeListSyntax> attributeLists)
-        => SyntaxFactory.List(attributeLists
-                .Select(attrList => SyntaxFactory.AttributeList(
-                    SyntaxFactory.SeparatedList(attrList.Attributes.Where(attr => {
-                        string attrName = attr.Name.ToString();
-                        return !(attrName.EndsWith("AutoDocument") || attrName.EndsWith("AutoDocumentAttribute"));
-                    }))
-                ))
-                .Where(attrList => attrList.Attributes.Any())// Filter out empty attribute lists
-        );
 
-    private static string? GetAutoDocumentId(SyntaxList<AttributeListSyntax> attrLists) {
-        return attrLists.SelectMany(attrList => attrList.Attributes)
-            .Where(attr => {
-                string attrName = attr.Name.ToString();
-                return attrName.EndsWith("AutoDocument") || attrName.EndsWith("AutoDocumentAttribute");
-            })
-            .Select(attr => attr.ArgumentList?.Arguments.FirstOrDefault()?.Expression.ToString().Trim('"'))
-            .FirstOrDefault();
-    }
+
 }
