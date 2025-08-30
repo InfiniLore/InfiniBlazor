@@ -4,6 +4,7 @@
 using InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting.RazorFiles;
 using Microsoft.CodeAnalysis;
 using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 
 namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting.CsFiles;
@@ -42,9 +43,20 @@ public class AutoDocumentingCsGenerator : IIncrementalGenerator {
             static (context, tuple) => {
                 ((ImmutableArray<AutoDocumentedData> CSharp, ImmutableArray<AutoDocumentedData> RazorCsharp) data, string? assemblyName) = tuple;
                 (ImmutableArray<AutoDocumentedData> cSharp, ImmutableArray<AutoDocumentedData> razorCsharp) = data;
-                ImmutableArray<AutoDocumentedData> combinedData = cSharp.AddRange(razorCsharp);
-                context.AddSource(AutoDocumenterDataWriter.FileName, AutoDocumenterDataWriter.GenerateFile(combinedData, assemblyName, "CsharpData"));
+                context.AddSource(
+                    AutoDocumenterDataWriter.FileName,
+                    AutoDocumenterDataWriter.GenerateFile(EnumerateCombined(cSharp, razorCsharp), assemblyName, "CsharpData")
+                );
             }
         );
     }
+    
+    private static IEnumerable<AutoDocumentedData> EnumerateCombined(
+        ImmutableArray<AutoDocumentedData> csharpData,
+        ImmutableArray<AutoDocumentedData> razorCsharpData
+    ) {
+        foreach (AutoDocumentedData? item in csharpData) yield return item;
+        foreach (AutoDocumentedData? item in razorCsharpData) yield return item;
+    }
+
 }
