@@ -8,7 +8,7 @@ namespace Tests.InfiniBlazor.Extensions.AutoDocumentation.DataSources;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public record AutoDocmentationTestData(
+public record AutoDocumentationTestData(
     string Id, 
     bool ExpectedResult, 
     IAutoDocumentationFragment? ExpectedFragment

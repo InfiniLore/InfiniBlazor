@@ -19,7 +19,8 @@ public class AutoDocumentationProviderTests {
     // -----------------------------------------------------------------------------------------------------------------
     [Test]
     [MethodDataSource<ClassTestData>(nameof(ClassTestData.GetTestData))]
-    public async Task ShouldGetValidFragment(AutoDocmentationTestData testData) {
+    [MethodDataSource<PropertyTestData>(nameof(PropertyTestData.GetTestData))]
+    public async Task ShouldGetValidFragment(AutoDocumentationTestData testData) {
         // Arrange
         (string id, bool expectedResult, IAutoDocumentationFragment? expectedFragment) = testData;
         

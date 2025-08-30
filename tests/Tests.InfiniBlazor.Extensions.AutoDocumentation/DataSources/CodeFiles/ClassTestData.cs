@@ -41,9 +41,9 @@ public class ClassTestData {
         """;
     
 
-    public static IEnumerable<Func<AutoDocmentationTestData>> GetTestData() {
-        yield return () => new AutoDocmentationTestData("ClassTest", true, new AutoDocumentationFragment([], [ExpectedSourceClass]));
-        yield return () => new AutoDocmentationTestData("ClassInClass", true, new AutoDocumentationFragment([], [ExpectedSourceClassInClass]));
-        yield return () => new AutoDocmentationTestData("ClassInClassInClass", true, new AutoDocumentationFragment([], [ExpectedSourceClassInClassInClass]));
+    public static IEnumerable<Func<AutoDocumentationTestData>> GetTestData() {
+        yield return () => new AutoDocumentationTestData("ClassTest", true, new AutoDocumentationFragment([], [ExpectedSourceClass]));
+        yield return () => new AutoDocumentationTestData("ClassInClass", true, new AutoDocumentationFragment([], [ExpectedSourceClassInClass]));
+        yield return () => new AutoDocumentationTestData("ClassInClassInClass", true, new AutoDocumentationFragment([], [ExpectedSourceClassInClassInClass]));
     }
 }

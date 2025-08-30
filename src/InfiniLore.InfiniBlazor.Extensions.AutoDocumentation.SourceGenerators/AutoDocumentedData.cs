@@ -52,6 +52,8 @@ public record AutoDocumentedData(
         where TSyntaxNode : SyntaxNode {
         data = null;
         return syntaxNode switch {
+            FieldDeclarationSyntax fieldDeclaration => TryGetFromMember(fieldDeclaration, out data),
+            PropertyDeclarationSyntax propertyDeclaration => TryGetFromMember(propertyDeclaration, out data),
             MemberDeclarationSyntax memberDeclaration => TryGetFromMember(memberDeclaration, out data),
             LocalDeclarationStatementSyntax localDeclaration => TryGetFromStatement(localDeclaration, out data),
             _ => false
