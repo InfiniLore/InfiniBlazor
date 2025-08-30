@@ -34,7 +34,7 @@
   <Folder Name="/src/extensions/">
     <Project Path="src\InfiniLore.InfiniBlazor.Extensions.ExtraComponents\InfiniLore.InfiniBlazor.Extensions.ExtraComponents.csproj" Type="Classic C#" />
   </Folder>
-  <Folder Name="/src/extensions/AutoDocument/">
+  <Folder Name="/src/extensions/AutoDocumentation/">
     <Project Path="src\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.csproj" Type="Classic C#" />
   </Folder>
