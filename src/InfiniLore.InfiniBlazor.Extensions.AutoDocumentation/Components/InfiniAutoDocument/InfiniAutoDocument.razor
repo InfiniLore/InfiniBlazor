@@ -41,6 +41,9 @@
 @code {
     [EditorRequired, Parameter] public string Id { get; set; } = string.Empty;
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
     private static string AsSource(IEnumerable<string> input) {
         StringBuilder builder = GlobalPools.StringBuilder.Get();
         try {

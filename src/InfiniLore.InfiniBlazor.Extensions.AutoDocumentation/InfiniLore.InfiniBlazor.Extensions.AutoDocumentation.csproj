@@ -40,12 +40,15 @@
     <ItemGroup>
       <ProjectReference Include="..\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.csproj">
           <Pack>true</Pack>
-          <PrivateAssets>contentfiles;build</PrivateAssets>
+          <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>analyzers</IncludeAssets>
           <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-          <OutputItemType>Analyzer</OutputItemType>
+<!--          <OutputItemType>Analyzer</OutputItemType>-->
       </ProjectReference>
-      <ProjectReference Include="..\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" />
+      <ProjectReference Include="..\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj">
+          <PrivateAssets>all</PrivateAssets>
+      </ProjectReference>
+
     </ItemGroup>
 
 </Project>
