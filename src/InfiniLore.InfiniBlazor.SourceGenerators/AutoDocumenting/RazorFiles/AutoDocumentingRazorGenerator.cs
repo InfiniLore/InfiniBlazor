@@ -14,20 +14,6 @@ namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting.RazorFiles;
 [Generator]
 public class AutoDocumentingRazorGenerator : IIncrementalGenerator {
     
-    // razor file
-    // <InfiniAutoDocument Id="something">
-    //      Body
-    // </InfiniAutoDocument>
-    // @code {
-    // [AutoDocumentId("something"), AutoDocument]
-    // public void ....
-    // }
-    
-    // cs file -> CsLang generator
-    // [AutoDocumentId("something)]
-    // public void ....
-    // class, property, field, method, etc...
-    
     public void Initialize(IncrementalGeneratorInitializationContext context) {
         IncrementalValuesProvider<AutoDocumentedData> razorDataPipeline = context.AdditionalTextsProvider
             .Where(static text => text.Path.EndsWith(".razor", StringComparison.OrdinalIgnoreCase))

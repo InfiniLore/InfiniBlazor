@@ -146,22 +146,35 @@ public static class RazorFileExtractor {
             SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(blockContent);
             CompilationUnitSyntax root = syntaxTree.GetCompilationUnitRoot();
 
-            // Look for global statements (this is because they arent wrapped in a class)
-            foreach (GlobalStatementSyntax? globalStatement in root.Members.OfType<GlobalStatementSyntax>()) {
-                StatementSyntax statement = globalStatement.Statement;
-
-                switch (statement) {
-                    case LocalFunctionStatementSyntax localFunction: {
-                        string? attr = GetAutoDocumentId(localFunction.AttributeLists);
+            // Look for global statements (this is because they aren't wrapped in a class)
+            foreach (MemberDeclarationSyntax? member in root.DescendantNodes().OfType<MemberDeclarationSyntax>()) {
+                switch (member) {
+                    case PropertyDeclarationSyntax propertyDecl: {
+                        string? attr = GetAutoDocumentId(propertyDecl.AttributeLists);
                         if (attr == null) continue;
 
-                        // Remove the AutoDocument attribute
-                        LocalFunctionStatementSyntax cleanedFunction = localFunction.WithAttributeLists(
-                            RemoveAutoDocumentAttribute(localFunction.AttributeLists)
+                        PropertyDeclarationSyntax cleanedProperty = propertyDecl.WithAttributeLists(
+                            RemoveAutoDocumentAttribute(propertyDecl.AttributeLists)
                         );
 
-                        // Format the cleaned function and return it, not perfect but will work
-                        yield return new AutoDocumentedData(attr, $"\n    {cleanedFunction.ToFullString()}\n");
+                        yield return new AutoDocumentedData(attr, $"\n    {cleanedProperty.ToFullString()}\n");
+
+                        break;
+                    }
+
+                    case GlobalStatementSyntax globalStatement: {
+                        StatementSyntax statement = globalStatement.Statement;
+
+                        if (statement is LocalFunctionStatementSyntax localFunction) {
+                            string? attr = GetAutoDocumentId(localFunction.AttributeLists);
+                            if (attr == null) continue;
+
+                            LocalFunctionStatementSyntax cleanedFunction = localFunction.WithAttributeLists(
+                                RemoveAutoDocumentAttribute(localFunction.AttributeLists)
+                            );
+
+                            yield return new AutoDocumentedData(attr, $"\n    {cleanedFunction.ToFullString()}\n");
+                        }
 
                         break;
                     }

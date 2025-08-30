@@ -40,6 +40,11 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
+    // ReSharper disable once RedundantDefaultMemberInitializer
+    [AutoDocument("test"), Parameter] public bool Test { get; set; } = false;
+    
+    // ReSharper disable once UnusedMember.Local
+    // ReSharper disable once UnusedParameter.Local
     [AutoDocument("test")] private static void DoSomethingTest(MouseEventArgs obj) {
         throw new NotImplementedException();
     }
