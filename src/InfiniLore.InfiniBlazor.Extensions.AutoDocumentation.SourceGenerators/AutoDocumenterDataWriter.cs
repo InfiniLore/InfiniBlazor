@@ -52,9 +52,10 @@ public static class AutoDocumenterDataWriter {
                         body = EnforceKrStyle(data.Body);
                     }
 
-                    foreach (string s in body.Split('\n')) {
+                    foreach (string s in SplitPreservingNewline(body)) {
                         b.Builder.AppendLine(s);
                     }
+
                     b.Builder.AppendLine("\"\"\"\"\"\",");
                 }
 
@@ -64,34 +65,47 @@ public static class AutoDocumenterDataWriter {
 
         builder.AppendLine("}.ToFrozenDictionary());");
     }
-    
+
     private static readonly Regex OpenBraceRegex = new(
-        @"(\b(class|struct|interface|enum|method|if|else|while|for|do|switch|try|catch)([^{]*))\n\s*\{",
+        @"(\b(class|struct|interface|enum|method|if|else|while|for|do|switch|try|catch)[^{]*?)\s*\r?\n\s*\{",
         RegexOptions.Singleline | RegexOptions.Compiled
     );
 
     private static readonly Regex CloseBraceRegex = new(
-        @"\n\s*}",
+        @"\r?\n\s*}",
         RegexOptions.Compiled
     );
 
     private static string EnforceKrStyle(string code) {
-        // Use precompiled regex patterns for better performance
-        code = OpenBraceRegex.Replace(
-            code,
-            "$1 {"
-        );
+        // Place the opening brace on the same line as the declaration
+        code = OpenBraceRegex.Replace(code, "$1 {");
 
-        code = CloseBraceRegex.Replace(
-            code,
-            "\n}"
-        );
+        // Ensure the closing brace remains aligned properly on its own line
+        code = CloseBraceRegex.Replace(code, "\n}");
 
-        // Trim any leftover unnecessary spaces
-        return code.Trim();
+        // Return the formatted code, preserving original style of newlins (\r\n or \n)
+        return code;
     }
 
+    private static IEnumerable<string> SplitPreservingNewline(string text) {
+        int start = 0;
 
+        for (int i = 0; i < text.Length; i++) {
+            if (text[i] != '\n') continue;
+
+            int length = i > 0 && text[i - 1] == '\r' ? 2 : 1;
+            yield return text.Substring(start, i - start + length);
+
+            start = i + 1;
+        }
+
+        if (start >= text.Length) yield break;
+
+        string lastSegment = text.Substring(start);
+        if (!string.IsNullOrWhiteSpace(lastSegment)) {
+            yield return lastSegment;
+        }
+    }
 
 
 }
