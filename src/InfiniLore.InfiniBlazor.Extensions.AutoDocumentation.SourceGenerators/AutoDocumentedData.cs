@@ -6,7 +6,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -31,7 +30,7 @@ public record AutoDocumentedData(
             RemoveAutoDocumentAttribute(member.AttributeLists)
         );
 
-        data = new AutoDocumentedData(attr, EnforceKrStyle(cleanedMember.NormalizeWhitespace().ToFullString()));
+        data = new AutoDocumentedData(attr, cleanedMember.NormalizeWhitespace().ToFullString());
         return true;
     }
 
@@ -45,7 +44,7 @@ public record AutoDocumentedData(
             RemoveAutoDocumentAttribute(member.AttributeLists)
         );
 
-        data = new AutoDocumentedData(attr, EnforceKrStyle(cleanedMember.NormalizeWhitespace().ToFullString()));
+        data = new AutoDocumentedData(attr, cleanedMember.NormalizeWhitespace().ToFullString());
         return true;
     }
 
@@ -78,32 +77,6 @@ public record AutoDocumentedData(
             })
             .Select(attr => attr.ArgumentList?.Arguments.FirstOrDefault()?.Expression.ToString().Trim('"'))
             .FirstOrDefault();
-    }
-
-    private static readonly Regex OpenBraceRegex = new(
-        @"(\b(class|struct|interface|enum|method|if|else|while|for|do|switch|try|catch)([^{]*))\n\s*\{",
-        RegexOptions.Singleline | RegexOptions.Compiled
-    );
-
-    private static readonly Regex CloseBraceRegex = new(
-        @"\n\s*}",
-        RegexOptions.Compiled
-    );
-
-    private static string EnforceKrStyle(string code) {
-        // Use precompiled regex patterns for better performance
-        code = OpenBraceRegex.Replace(
-            code,
-            "$1 {"
-        );
-
-        code = CloseBraceRegex.Replace(
-            code,
-            "\n}"
-        );
-
-        // Trim any leftover unnecessary spaces
-        return code.Trim();
     }
     #endregion
 }

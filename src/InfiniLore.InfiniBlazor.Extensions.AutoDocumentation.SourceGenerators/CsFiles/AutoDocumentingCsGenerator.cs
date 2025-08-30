@@ -39,13 +39,13 @@ public class AutoDocumentingCsGenerator : IIncrementalGenerator {
             .Combine(razorDataPipeline.Collect());
         
         context.RegisterSourceOutput(
-            data.Combine( context.GetAssemblyNamePipeline()),
+            data.Combine(context.GetAssemblyNamePipeline().Combine(context.TryGetKrStyleBraces())),
             static (context, tuple) => {
-                ((ImmutableArray<AutoDocumentedData> CSharp, ImmutableArray<AutoDocumentedData> RazorCsharp) data, string? assemblyName) = tuple;
+                ((ImmutableArray<AutoDocumentedData> CSharp, ImmutableArray<AutoDocumentedData> RazorCsharp) data, (string? assemblyName, bool enableKrStyle)) = tuple;
                 (ImmutableArray<AutoDocumentedData> cSharp, ImmutableArray<AutoDocumentedData> razorCsharp) = data;
                 context.AddSource(
                     AutoDocumenterDataWriter.FileName,
-                    AutoDocumenterDataWriter.GenerateFile(EnumerateCombined(cSharp, razorCsharp), assemblyName, "CsharpData")
+                    AutoDocumenterDataWriter.GenerateFile(EnumerateCombined(cSharp, razorCsharp), assemblyName, enableKrStyle, "CsharpData")
                 );
             }
         );

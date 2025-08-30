@@ -25,10 +25,10 @@ public class AutoDocumentingRazorGenerator : IIncrementalGenerator {
         IncrementalValueProvider<ImmutableArray<AutoDocumentedData>> razorData = razorDataPipeline.Collect();
         
         context.RegisterSourceOutput(
-            razorData.Combine(context.GetAssemblyNamePipeline()),
+            razorData.Combine(context.GetAssemblyNamePipeline().Combine(context.TryGetKrStyleBraces())),
             static (context, tuple) => {
-                (ImmutableArray<AutoDocumentedData> data, string? assemblyName) = tuple;
-                context.AddSource(AutoDocumenterDataWriter.FileName, AutoDocumenterDataWriter.GenerateFile(data, assemblyName, "RazorData"));
+                (ImmutableArray<AutoDocumentedData> data, (string? assemblyName, bool enableKrStyle)) = tuple;
+                context.AddSource(AutoDocumenterDataWriter.FileName, AutoDocumenterDataWriter.GenerateFile(data, assemblyName, enableKrStyle,"RazorData"));
             }
         );
         

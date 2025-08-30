@@ -8,7 +8,13 @@
 
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
+        
+        <InifiniBlazor_AutoDocumentation_EnableKRParsing>true</InifiniBlazor_AutoDocumentation_EnableKRParsing>
     </PropertyGroup>
+    
+    <ItemGroup>
+        <CompilerVisibleProperty Include="inifiniblazor_autodocumentation_enablekrparsing" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="CodeOfChaos.Extensions"/>
