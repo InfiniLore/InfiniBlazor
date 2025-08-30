@@ -5,7 +5,6 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,6 +24,10 @@ public static class RazorFileExtractor {
     private const string EndTag = "</InfiniAutoDocument>";
     private static readonly SourceText EndTagText = SourceText.From(EndTag);
     private static readonly int EndTagLength = EndTag.Length;
+
+    private const string CodeBlockStart = "@code";
+    private static readonly SourceText CodeBlockStartText = SourceText.From(CodeBlockStart);
+    private static readonly int CodeBlockStartLength = CodeBlockStart.Length;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -108,45 +111,41 @@ public static class RazorFileExtractor {
         for (int i = startIndex; i < source.Length; i++) {
             if (source[i] != character) continue;
 
-            // Count preceding backslashes
             int backslashCount = 0;
             for (int j = i - 1; j >= 0 && source[j] == '\\'; j--) {
                 backslashCount++;
             }
 
-            // If even number of backslashes (including 0), the character is not escaped
             if (backslashCount % 2 != 0) continue;
 
             return i;
         }
 
         return -1;
-
     }
 
     public static IEnumerable<AutoDocumentedData> ExtractAutoDocumentMembers(SourceText source) {
-        string text = source.ToString();
+        int sourceLength = source.Length;
 
-        // Locate all @code {...} blocks in the Razor file using basic pattern searching
-        const string codeBlockStart = "@code";
-        int startIndex = 0;
+        for (int index = 0; index < sourceLength; index++) {
+            // Check bounds before creating TextSpan
+            if (index + CodeBlockStartLength > sourceLength) continue;
 
-        while (true) {
-            int codeStart = text.IndexOf(codeBlockStart, startIndex, StringComparison.Ordinal);
-            if (codeStart == -1) break; // Exit the loop when no more @code blocks are found
+            if (!source.GetSubText(TextSpan.FromBounds(index, index + CodeBlockStartLength)).ContentEquals(CodeBlockStartText)) continue;
 
-            int braceOpen = text.IndexOf('{', codeStart);
-            if (braceOpen == -1) break; // Malformed block, skip the remaining content
+            index += CodeBlockStartLength;
 
-            int braceClose = FindMatchingBrace(text, braceOpen);
-            if (braceClose == -1) break; // Unmatched braces, stop processing
+            int braceOpen = FindNonEscapedCharacterIndex(source, '{', index);
+            if (braceOpen == -1) break;
 
-            string blockContent = text.Substring(braceOpen + 1, braceClose - braceOpen - 1).Trim();
+            int braceClose = FindMatchingBrace(source.ToString(), braceOpen);
+            if (braceClose == -1) break;
 
+            SourceText blockContent = source.GetSubText(TextSpan.FromBounds(braceOpen + 1, braceClose));
+            
             SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(blockContent);
             CompilationUnitSyntax root = syntaxTree.GetCompilationUnitRoot();
 
-            // Look for global statements (this is because they aren't wrapped in a class)
             foreach (MemberDeclarationSyntax? member in root.DescendantNodes().OfType<MemberDeclarationSyntax>()) {
                 switch (member) {
                     case PropertyDeclarationSyntax propertyDecl: {
@@ -173,29 +172,17 @@ public static class RazorFileExtractor {
                                 RemoveAutoDocumentAttribute(localFunction.AttributeLists)
                             );
 
-                            yield return new AutoDocumentedData(attr, $"\n    {cleanedFunction.ToFullString()}\n");
+                            yield return new AutoDocumentedData(attr, $"\n    {cleanedFunction.ToFullString()}");
                         }
-
                         break;
                     }
                 }
             }
 
-            // Continue searching for the next @code block
-            startIndex = braceClose + 1;
+            // Skip past this @code block
+            index = braceClose;
         }
     }
-
-    private static SyntaxList<AttributeListSyntax> RemoveAutoDocumentAttribute(SyntaxList<AttributeListSyntax> attributeLists) 
-        => SyntaxFactory.List(attributeLists
-            .Select(attrList => SyntaxFactory.AttributeList(
-                SyntaxFactory.SeparatedList(attrList.Attributes.Where(attr => {
-                    string attrName = attr.Name.ToString();
-                    return !(attrName.EndsWith("AutoDocument") || attrName.EndsWith("AutoDocumentAttribute"));
-                }))
-            ))
-            .Where(list => list.Attributes.Any())
-        );
 
     private static int FindMatchingBrace(string text, int openIndex) {
         int depth = 0;
@@ -215,9 +202,23 @@ public static class RazorFileExtractor {
         return -1;
     }
 
+    private static SyntaxList<AttributeListSyntax> RemoveAutoDocumentAttribute(SyntaxList<AttributeListSyntax> attributeLists)
+        => SyntaxFactory.List(attributeLists
+                .Select(attrList => SyntaxFactory.AttributeList(
+                    SyntaxFactory.SeparatedList(attrList.Attributes.Where(attr => {
+                        string attrName = attr.Name.ToString();
+                        return !(attrName.EndsWith("AutoDocument") || attrName.EndsWith("AutoDocumentAttribute"));
+                    }))
+                ))
+                .Where(attrList => attrList.Attributes.Any())// Filter out empty attribute lists
+        );
+
     private static string? GetAutoDocumentId(SyntaxList<AttributeListSyntax> attrLists) {
         return attrLists.SelectMany(attrList => attrList.Attributes)
-            .Where(attr => attr.Name.ToString().EndsWith("AutoDocument") || attr.Name.ToString().EndsWith("AutoDocumentAttribute"))
+            .Where(attr => {
+                string attrName = attr.Name.ToString();
+                return attrName.EndsWith("AutoDocument") || attrName.EndsWith("AutoDocumentAttribute");
+            })
             .Select(attr => attr.ArgumentList?.Arguments.FirstOrDefault()?.Expression.ToString().Trim('"'))
             .FirstOrDefault();
     }
