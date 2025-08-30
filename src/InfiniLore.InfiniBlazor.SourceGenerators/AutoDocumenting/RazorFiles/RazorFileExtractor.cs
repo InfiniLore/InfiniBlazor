@@ -133,13 +133,13 @@ public static class RazorFileExtractor {
 
         while (true) {
             int codeStart = text.IndexOf(codeBlockStart, startIndex, StringComparison.Ordinal);
-            if (codeStart == -1) break;// Exit the loop when no more @code blocks are found
+            if (codeStart == -1) break; // Exit the loop when no more @code blocks are found
 
             int braceOpen = text.IndexOf('{', codeStart);
-            if (braceOpen == -1) break;// Malformed block, skip the remaining content
+            if (braceOpen == -1) break; // Malformed block, skip the remaining content
 
             int braceClose = FindMatchingBrace(text, braceOpen);
-            if (braceClose == -1) break;// Unmatched braces, stop processing
+            if (braceClose == -1) break; // Unmatched braces, stop processing
 
             string blockContent = text.Substring(braceOpen + 1, braceClose - braceOpen - 1).Trim();
 
@@ -186,17 +186,16 @@ public static class RazorFileExtractor {
         }
     }
 
-    private static SyntaxList<AttributeListSyntax> RemoveAutoDocumentAttribute(SyntaxList<AttributeListSyntax> attributeLists) {
-        return SyntaxFactory.List(attributeLists
+    private static SyntaxList<AttributeListSyntax> RemoveAutoDocumentAttribute(SyntaxList<AttributeListSyntax> attributeLists) 
+        => SyntaxFactory.List(attributeLists
             .Select(attrList => SyntaxFactory.AttributeList(
-                SyntaxFactory.SeparatedList(attrList.Attributes.Where(attr =>
-                    !attr.Name.ToString().EndsWith("AutoDocument") &&
-                    !attr.Name.ToString().EndsWith("AutoDocumentAttribute")
-                ))
+                SyntaxFactory.SeparatedList(attrList.Attributes.Where(attr => {
+                    string attrName = attr.Name.ToString();
+                    return !(attrName.EndsWith("AutoDocument") || attrName.EndsWith("AutoDocumentAttribute"));
+                }))
             ))
             .Where(list => list.Attributes.Any())
         );
-    }
 
     private static int FindMatchingBrace(string text, int openIndex) {
         int depth = 0;
