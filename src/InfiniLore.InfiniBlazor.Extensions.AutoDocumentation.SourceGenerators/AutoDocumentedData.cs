@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -20,9 +21,8 @@ public record AutoDocumentedData(
     // -----------------------------------------------------------------------------------------------------------------
     #region TryGetAutoDocumentData
     // YES, these look like duplicate code, but due to unique implementation of "WithAttributeLists" being from two different base classes, this is required
-    public static bool TryGetFromMember<TMember>(TMember member, [NotNullWhen(true)] out AutoDocumentedData? data) 
-        where TMember : MemberDeclarationSyntax
-    {
+    public static bool TryGetFromMember<TMember>(TMember member, [NotNullWhen(true)] out AutoDocumentedData? data)
+        where TMember : MemberDeclarationSyntax {
         data = null;
         string? attr = GetAutoDocumentId(member.AttributeLists);
         if (attr == null) return false;
@@ -31,13 +31,12 @@ public record AutoDocumentedData(
             RemoveAutoDocumentAttribute(member.AttributeLists)
         );
 
-        data = new AutoDocumentedData(attr, cleanedMember.ToFullString());
+        data = new AutoDocumentedData(attr, EnforceKrStyle(cleanedMember.NormalizeWhitespace().ToFullString()));
         return true;
     }
 
     public static bool TryGetFromStatement<TStatement>(TStatement member, [NotNullWhen(true)] out AutoDocumentedData? data)
-        where TStatement : StatementSyntax 
-    {
+        where TStatement : StatementSyntax {
         data = null;
         string? attr = GetAutoDocumentId(member.AttributeLists);
         if (attr == null) return false;
@@ -46,7 +45,7 @@ public record AutoDocumentedData(
             RemoveAutoDocumentAttribute(member.AttributeLists)
         );
 
-        data = new AutoDocumentedData(attr, cleanedMember.ToFullString());
+        data = new AutoDocumentedData(attr, EnforceKrStyle(cleanedMember.NormalizeWhitespace().ToFullString()));
         return true;
     }
 
@@ -79,6 +78,32 @@ public record AutoDocumentedData(
             })
             .Select(attr => attr.ArgumentList?.Arguments.FirstOrDefault()?.Expression.ToString().Trim('"'))
             .FirstOrDefault();
+    }
+
+    private static readonly Regex OpenBraceRegex = new(
+        @"(\b(class|struct|interface|enum|method|if|else|while|for|do|switch|try|catch)([^{]*))\n\s*\{",
+        RegexOptions.Singleline | RegexOptions.Compiled
+    );
+
+    private static readonly Regex CloseBraceRegex = new(
+        @"\n\s*}",
+        RegexOptions.Compiled
+    );
+
+    private static string EnforceKrStyle(string code) {
+        // Use precompiled regex patterns for better performance
+        code = OpenBraceRegex.Replace(
+            code,
+            "$1 {"
+        );
+
+        code = CloseBraceRegex.Replace(
+            code,
+            "\n}"
+        );
+
+        // Trim any leftover unnecessary spaces
+        return code.Trim();
     }
     #endregion
 }

@@ -29,17 +29,14 @@ public class ClassInClassInClass {
 public class ClassTestData {
     private const string ExpectedSource_Class = """
         public class Class {
-            
         }
         """;
     private const string ExpectedSource_ClassInClass = """
         public class Class {
-            
         }
         """;
     private const string ExpectedSource_ClassInClassInClass = """
         public class Class {
-            
         }
         """;
     
