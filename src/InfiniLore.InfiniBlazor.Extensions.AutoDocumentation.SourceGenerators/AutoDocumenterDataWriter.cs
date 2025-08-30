@@ -37,26 +37,26 @@ public static class AutoDocumenterDataWriter {
     }
 
 
-    private static void WriteFileDataDictionary(GeneratorStringBuilder builder, IEnumerable<IGrouping<string, AutoDocumentedData>> dataArray, bool enableKrStyle, string propertyName) {
+    private static void WriteFileDataDictionary(
+        GeneratorStringBuilder builder,
+        IEnumerable<IGrouping<string, AutoDocumentedData>> dataArray,
+        bool enableKrStyle,
+        string propertyName) {
+    
         builder.AppendLine($"public Lazy<FrozenDictionary<string, ImmutableArray<string>>> {propertyName} {{ get; }} = new Lazy<FrozenDictionary<string, ImmutableArray<string>>>(static () => new Dictionary<string, ImmutableArray<string>>() {{");
 
-        foreach (IGrouping<string, AutoDocumentedData> grouping in dataArray) {
+        foreach (IGrouping<string, AutoDocumentedData>? grouping in dataArray) {
             builder.Indent(b => {
                 b.AppendLine($"[\"{grouping.Key}\"] = [");
 
-                foreach (AutoDocumentedData data in grouping) {
-                    b.Builder.AppendLine("\"\"\"\"\"\"");
+                foreach (AutoDocumentedData? data in grouping) {
+                    string body = enableKrStyle ? EnforceKrStyle(data.Body) : data.Body;
 
-                    string body = data.Body;
-                    if (enableKrStyle) {
-                        body = EnforceKrStyle(data.Body);
+                    b.Builder.AppendLine("\"\"\"\"\"\""); 
+                    foreach (string line in body.Replace("\r", "").Split('\n')) {
+                        b.Builder.AppendLine(line);
                     }
-
-                    foreach (string s in SplitPreservingNewline(body)) {
-                        b.Builder.AppendLine(s);
-                    }
-
-                    b.Builder.AppendLine("\"\"\"\"\"\",");
+                    b.Builder.AppendLine("\"\"\"\"\"\","); 
                 }
 
                 b.AppendLine("],");
@@ -66,46 +66,20 @@ public static class AutoDocumenterDataWriter {
         builder.AppendLine("}.ToFrozenDictionary());");
     }
 
+
     private static readonly Regex OpenBraceRegex = new(
         @"(\b(class|struct|interface|enum|method|if|else|while|for|do|switch|try|catch)[^{]*?)\s*\r?\n\s*\{",
         RegexOptions.Singleline | RegexOptions.Compiled
     );
 
     private static readonly Regex CloseBraceRegex = new(
-        @"\r?\n\s*}",
+        @"\r?\n\s*\}",
         RegexOptions.Compiled
     );
 
     private static string EnforceKrStyle(string code) {
-        // Place the opening brace on the same line as the declaration
-        code = OpenBraceRegex.Replace(code, "$1 {");
-
-        // Ensure the closing brace remains aligned properly on its own line
+        code = OpenBraceRegex.Replace(code, "$1 {\n");
         code = CloseBraceRegex.Replace(code, "\n}");
-
-        // Return the formatted code, preserving original style of newlins (\r\n or \n)
-        return code;
+        return code.TrimEnd();
     }
-
-    private static IEnumerable<string> SplitPreservingNewline(string text) {
-        int start = 0;
-
-        for (int i = 0; i < text.Length; i++) {
-            if (text[i] != '\n') continue;
-
-            int length = i > 0 && text[i - 1] == '\r' ? 2 : 1;
-            yield return text.Substring(start, i - start + length);
-
-            start = i + 1;
-        }
-
-        if (start >= text.Length) yield break;
-
-        string lastSegment = text.Substring(start);
-        if (!string.IsNullOrWhiteSpace(lastSegment)) {
-            yield return lastSegment;
-        }
-    }
-
-
 }

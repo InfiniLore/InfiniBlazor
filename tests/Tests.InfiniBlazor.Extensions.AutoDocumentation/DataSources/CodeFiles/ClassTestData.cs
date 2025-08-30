@@ -27,26 +27,23 @@ public class ClassInClassInClass {
 }
 
 public class ClassTestData {
-    private const string ExpectedSource_Class = """
+    private const string ExpectedSourceClass = """
         public class Class {
-        
         }
         """;
-    private const string ExpectedSource_ClassInClass = """
+    private const string ExpectedSourceClassInClass = """
         public class Class {
-        
         }
         """;
-    private const string ExpectedSource_ClassInClassInClass = """
+    private const string ExpectedSourceClassInClassInClass = """
         public class Class {
-        
         }
         """;
     
 
     public static IEnumerable<Func<AutoDocmentationTestData>> GetTestData() {
-        yield return () => new AutoDocmentationTestData("ClassTest", true, new AutoDocumentationFragment([], [ExpectedSource_Class]));
-        yield return () => new AutoDocmentationTestData("ClassInClass", true, new AutoDocumentationFragment([], [ExpectedSource_ClassInClass]));
-        yield return () => new AutoDocmentationTestData("ClassInClassInClass", true, new AutoDocumentationFragment([], [ExpectedSource_ClassInClassInClass]));
+        yield return () => new AutoDocmentationTestData("ClassTest", true, new AutoDocumentationFragment([], [ExpectedSourceClass]));
+        yield return () => new AutoDocmentationTestData("ClassInClass", true, new AutoDocumentationFragment([], [ExpectedSourceClassInClass]));
+        yield return () => new AutoDocmentationTestData("ClassInClassInClass", true, new AutoDocumentationFragment([], [ExpectedSourceClassInClassInClass]));
     }
 }
