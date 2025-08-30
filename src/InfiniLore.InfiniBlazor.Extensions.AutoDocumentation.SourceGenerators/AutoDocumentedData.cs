@@ -13,7 +13,7 @@ namespace InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators;
 // ---------------------------------------------------------------------------------------------------------------------
 public record AutoDocumentedData(
     string Id,
-    string? Body
+    string Body
 ) {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

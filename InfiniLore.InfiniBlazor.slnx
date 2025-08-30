@@ -42,6 +42,7 @@
     <Project Path="src\InfiniLore.InfiniBlazor.Extensions.Maui\InfiniLore.InfiniBlazor.Extensions.Maui.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests\Tests.InfiniBlazor.Extensions.AutoDocumentation\Tests.InfiniBlazor.Extensions.AutoDocumentation.csproj" Type="Classic C#" />
     <Project Path="tests\Tests.InfiniBlazor.Markdown\Tests.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
     <Project Path="tests\Tests.InfiniBlazor\Tests.InfiniBlazor.csproj" Type="Classic C#" />
   </Folder>
