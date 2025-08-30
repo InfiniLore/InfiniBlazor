@@ -1,8 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting.RazorFiles;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -111,10 +115,69 @@ public static class RazorFileExtractor {
 
             // If even number of backslashes (including 0), the character is not escaped
             if (backslashCount % 2 != 0) continue;
+
             return i;
         }
 
         return -1;
 
     }
+
+    public static IEnumerable<AutoDocumentedData> ExtractAutoDocumentMembers(SourceText source) {
+        string text = source.ToString();
+
+        SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(text);
+        CompilationUnitSyntax root = syntaxTree.GetCompilationUnitRoot();
+
+        foreach (MemberDeclarationSyntax? member in root.DescendantNodes().OfType<MemberDeclarationSyntax>()) {
+            switch (member) {
+                case BaseFieldDeclarationSyntax fieldDecl:
+                    foreach (VariableDeclaratorSyntax variable in fieldDecl.Declaration.Variables) {
+                        string? attr = GetAutoDocumentId(fieldDecl.AttributeLists);
+                        if (attr == null) continue;
+
+                        string body = variable.Initializer?.Value.ToFullString() ?? string.Empty;
+                        yield return new AutoDocumentedData(attr, $"field {variable.Identifier.Text} = {body}");
+                    }
+
+                    break;
+
+                case PropertyDeclarationSyntax propDecl: {
+                    string? propAttr = GetAutoDocumentId(propDecl.AttributeLists);
+                    if (propAttr == null) break;
+
+                    string body = propDecl.ExpressionBody?.Expression.ToFullString()
+                        ?? propDecl.AccessorList?.ToFullString()
+                        ?? string.Empty;
+
+                    yield return new AutoDocumentedData(propAttr, $"property {propDecl.Identifier.Text} {body}");
+
+                    break;
+                }
+
+                case MethodDeclarationSyntax methodDecl: {
+                    string? methodAttr = GetAutoDocumentId(methodDecl.AttributeLists);
+                    if (methodAttr == null) break;
+
+                    string body = methodDecl.Body?.ToFullString()
+                        ?? methodDecl.ExpressionBody?.Expression.ToFullString()
+                        ?? string.Empty;
+
+                    yield return new AutoDocumentedData(methodAttr, $"method {methodDecl.Identifier.Text} {body}");
+
+                    break;
+                }
+            }
+        }
+    }
+    
+    private static string? GetAutoDocumentId(SyntaxList<AttributeListSyntax> attrLists)
+        => attrLists.SelectMany(
+            static attributeList => attributeList.Attributes
+                .Select(static attribute => new { attribute, name = attribute.Name.ToString()})
+                .Where(static t => t.name.EndsWith("AutoDocument") || t.name.EndsWith("AutoDocumentAttribute"))
+                .Select(static t => t.attribute.ArgumentList?.Arguments.FirstOrDefault()?.Expression.ToString())
+                .Where(static argument => !string.IsNullOrWhiteSpace(argument)),
+            static (_, argument) => argument!.Trim('"')
+            ).FirstOrDefault();
 }

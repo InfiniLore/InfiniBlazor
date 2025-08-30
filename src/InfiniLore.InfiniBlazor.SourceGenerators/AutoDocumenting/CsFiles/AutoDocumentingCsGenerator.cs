@@ -1,7 +1,10 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting.RazorFiles;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Text;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -38,8 +41,27 @@ public class AutoDocumentingCsGenerator : IIncrementalGenerator {
         
         IncrementalValueProvider<string> assemblyNamePipeline = context.GetAssemblyNamePipeline();
         
-        IncrementalValueProvider<ImmutableArray<AutoDocumentedData>> csData = autoDocumentPipeline.Collect();
-        IncrementalValueProvider<(ImmutableArray<AutoDocumentedData> Left, string Right)> sourceOutputData = csData.Combine(assemblyNamePipeline);
+        IncrementalValuesProvider<AutoDocumentedData> razorDataPipeline = context.AdditionalTextsProvider
+            .Where(static text => text.Path.EndsWith(".razor", StringComparison.OrdinalIgnoreCase))
+            .Select(static (text, ct) => {
+                SourceText? content = text.GetText(ct);
+                if (content is null || content.Length <= 0) return ImmutableArray<AutoDocumentedData>.Empty;
+                
+                ImmutableArray<AutoDocumentedData> dataArray = RazorFileExtractor.ExtractAutoDocumentMembers(content).ToImmutableArray();
+                return dataArray;
+            })
+            .SelectMany(static (data, _) => data);
+        
+        IncrementalValueProvider<ImmutableArray<AutoDocumentedData>> combinedPipeline =
+            autoDocumentPipeline
+                .Combine(razorDataPipeline.Collect())
+                .SelectMany((tuple, _) => {
+                    (AutoDocumentedData? csharpData, ImmutableArray<AutoDocumentedData> razorArray) = tuple;
+                    return new[] { csharpData }.Concat(razorArray);
+                })
+                .Collect();
+        
+        IncrementalValueProvider<(ImmutableArray<AutoDocumentedData> Left, string Right)> sourceOutputData = combinedPipeline.Combine(assemblyNamePipeline);
         
         context.RegisterSourceOutput(sourceOutputData, static (context, tuple) => {
             (ImmutableArray<AutoDocumentedData> data, string? assemblyName) = tuple;
