@@ -45,15 +45,17 @@ public static class AutoDocumenterDataWriter {
                 b.AppendLine($"[\"{grouping.Key}\"] = [");
 
                 foreach (AutoDocumentedData data in grouping) {
-                    b.AppendLineIndented("\"\"\"\"\"\"");
+                    b.Builder.AppendLine("\"\"\"\"\"\"");
 
                     string body = data.Body;
                     if (enableKrStyle) {
                         body = EnforceKrStyle(data.Body);
-                    } 
-                    
-                    b.ForEachAppendLineIndented(body.Split('\n'));
-                    b.AppendLineIndented("\"\"\"\"\"\",");
+                    }
+
+                    foreach (string s in body.Split('\n')) {
+                        b.Builder.AppendLine(s);
+                    }
+                    b.Builder.AppendLine("\"\"\"\"\"\",");
                 }
 
                 b.AppendLine("],");
