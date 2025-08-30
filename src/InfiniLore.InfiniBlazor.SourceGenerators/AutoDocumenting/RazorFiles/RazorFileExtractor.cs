@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting.RazorFiles;
@@ -131,40 +132,23 @@ public static class RazorFileExtractor {
 
             foreach (MemberDeclarationSyntax? member in root.DescendantNodes().OfType<MemberDeclarationSyntax>()) {
                 switch (member) {
-                    case PropertyDeclarationSyntax propertyDecl: {
-                        string? attr = GetAutoDocumentId(propertyDecl.AttributeLists);
-                        if (attr == null) continue;
-
-                        PropertyDeclarationSyntax cleanedProperty = propertyDecl.WithAttributeLists(
-                            RemoveAutoDocumentAttribute(propertyDecl.AttributeLists)
-                        );
-
-                        yield return new AutoDocumentedData(attr, $"\n    {cleanedProperty.ToFullString()}");
+                    case StructDeclarationSyntax:
+                    case RecordDeclarationSyntax:
+                    case PropertyDeclarationSyntax:
+                    case ClassDeclarationSyntax: {
+                        if (!TryGetAutoDocumentDataFromMember(member, out AutoDocumentedData? data)) yield break;
+                        yield return data;
                         break;
                     }
 
-                    case GlobalStatementSyntax { Statement: LocalDeclarationStatementSyntax localField }: {
-                        string? attr = GetAutoDocumentId(localField.AttributeLists);
-                        if (attr == null) continue;
-
-                        LocalDeclarationStatementSyntax cleanedField = localField.WithAttributeLists(
-                            RemoveAutoDocumentAttribute(localField.AttributeLists)
-                        );
-
-                        yield return new AutoDocumentedData(attr, $"\n    {cleanedField.ToFullString()}");
-
+                    case GlobalStatementSyntax { Statement: LocalDeclarationStatementSyntax local }:  {
+                        if (!TryGetAutoDocumentDataFromStatement(local, out AutoDocumentedData? data)) yield break;
+                        yield return data;
                         break;
                     }
-
-                    case GlobalStatementSyntax { Statement: LocalFunctionStatementSyntax localFunction }: {
-                        string? attr = GetAutoDocumentId(localFunction.AttributeLists);
-                        if (attr == null) continue;
-
-                        LocalFunctionStatementSyntax cleanedFunction = localFunction.WithAttributeLists(
-                            RemoveAutoDocumentAttribute(localFunction.AttributeLists)
-                        );
-
-                        yield return new AutoDocumentedData(attr, $"\n    {cleanedFunction.ToFullString()}");
+                    case GlobalStatementSyntax { Statement: LocalFunctionStatementSyntax local}: {
+                        if (!TryGetAutoDocumentDataFromStatement(local, out AutoDocumentedData? data)) yield break;
+                        yield return data;
                         break;
                     }
                 }
@@ -174,6 +158,35 @@ public static class RazorFileExtractor {
             index = braceClose;
         }
     }
+
+    #region TryGetAutoDocumentData
+    // YES, these look like duplicate code, but due to unique implementation of "WithAttributeLists" being from two different base classes, this is required
+    private static bool TryGetAutoDocumentDataFromMember<TMember>(TMember member, [NotNullWhen(true)] out AutoDocumentedData? data) where TMember : MemberDeclarationSyntax {
+        data = null;
+        string? attr = GetAutoDocumentId(member.AttributeLists);
+        if (attr == null) return false;
+                        
+        MemberDeclarationSyntax cleanedMember = member.WithAttributeLists(
+            RemoveAutoDocumentAttribute(member.AttributeLists)
+        );
+             
+        data =  new AutoDocumentedData(attr, $"\n    {cleanedMember.ToFullString()}");
+        return true;
+    }
+    
+    private static bool TryGetAutoDocumentDataFromStatement<TStatement>(TStatement member, [NotNullWhen(true)] out AutoDocumentedData? data) where TStatement : StatementSyntax {
+        data = null;
+        string? attr = GetAutoDocumentId(member.AttributeLists);
+        if (attr == null) return false;
+                        
+        StatementSyntax cleanedMember = member.WithAttributeLists(
+            RemoveAutoDocumentAttribute(member.AttributeLists)
+        );
+             
+        data =  new AutoDocumentedData(attr, $"\n    {cleanedMember.ToFullString()}");
+        return true;
+    }
+    #endregion
 
     private static int FindNonEscapedCharacterIndex(SourceText source, char character, int startIndex) {
         for (int i = startIndex; i < source.Length; i++) {

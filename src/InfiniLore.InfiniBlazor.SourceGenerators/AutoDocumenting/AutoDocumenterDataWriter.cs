@@ -18,6 +18,11 @@ public static class AutoDocumenterDataWriter {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static string GenerateFile(ImmutableArray<AutoDocumentedData> data, string assemblyName, string propertyName) {
+        // Eliminate duplicate entries based on value equality of AutoDocumentedData
+        //      This is due to a weird bug that can occur when you have a code behind and a razor file both have documented members,
+        //      and it gets caught by both the csharp analyzer and the razor analyzer.
+        ImmutableHashSet<AutoDocumentedData> uniqueData = data.ToImmutableHashSet();
+
         GeneratorStringBuilder builder = new GeneratorStringBuilder()
             .AppendUsings(
                 "System",
@@ -28,7 +33,7 @@ public static class AutoDocumenterDataWriter {
             .AppendLine($"public partial class AutoDocumenterData_{assemblyName.Replace(".", "")} : {Namespace}.IAutoDocumenterData {{")
             .Indent(static (builder, box) 
                 => WriteFileDataDictionary(builder, box.data.GroupBy(data => data.Id), box.propertyName),
-                (data, propertyName)
+                (data:uniqueData, propertyName)
             )
             .AppendLine("}");
 
