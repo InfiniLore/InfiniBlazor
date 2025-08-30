@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.GeneratorTools;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -63,8 +62,9 @@ public static class AutoDocumenterDataWriter {
                         break;       
                     }
                     string body = string.Join("\n", dataLines);
+                    string empty = new(' ', leadingWhitespaceCount);
                     
-                    b.AppendLineIndented($"\"\"\"\"\"\"{body}{new string(' ', leadingWhitespaceCount)}\"\"\"\"\"\",");
+                    b.AppendLineIndented($"\"\"\"\"\"\"\n{empty}{body}{empty}\"\"\"\"\"\",");
                 }
                 
                 b.AppendLine("],");

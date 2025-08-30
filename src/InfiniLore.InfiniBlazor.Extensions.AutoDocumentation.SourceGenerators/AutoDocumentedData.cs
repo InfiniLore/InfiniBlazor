@@ -31,7 +31,7 @@ public record AutoDocumentedData(
             RemoveAutoDocumentAttribute(member.AttributeLists)
         );
 
-        data = new AutoDocumentedData(attr, $"\n    {cleanedMember.ToFullString()}");
+        data = new AutoDocumentedData(attr, cleanedMember.ToFullString());
         return true;
     }
 
@@ -46,7 +46,7 @@ public record AutoDocumentedData(
             RemoveAutoDocumentAttribute(member.AttributeLists)
         );
 
-        data = new AutoDocumentedData(attr, $"\n    {cleanedMember.ToFullString()}");
+        data = new AutoDocumentedData(attr, cleanedMember.ToFullString());
         return true;
     }
 
