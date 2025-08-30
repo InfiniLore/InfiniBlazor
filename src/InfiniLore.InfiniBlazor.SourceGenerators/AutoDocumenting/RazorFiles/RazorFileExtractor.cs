@@ -107,23 +107,6 @@ public static class RazorFileExtractor {
         }
     }
 
-    private static int FindNonEscapedCharacterIndex(SourceText source, char character, int startIndex) {
-        for (int i = startIndex; i < source.Length; i++) {
-            if (source[i] != character) continue;
-
-            int backslashCount = 0;
-            for (int j = i - 1; j >= 0 && source[j] == '\\'; j--) {
-                backslashCount++;
-            }
-
-            if (backslashCount % 2 != 0) continue;
-
-            return i;
-        }
-
-        return -1;
-    }
-
     public static IEnumerable<AutoDocumentedData> ExtractAutoDocumentMembers(SourceText source) {
         int sourceLength = source.Length;
 
@@ -157,7 +140,6 @@ public static class RazorFileExtractor {
                         );
 
                         yield return new AutoDocumentedData(attr, $"\n    {cleanedProperty.ToFullString()}");
-
                         break;
                     }
 
@@ -170,6 +152,7 @@ public static class RazorFileExtractor {
                         );
 
                         yield return new AutoDocumentedData(attr, $"\n    {cleanedField.ToFullString()}");
+
                         break;
                     }
 
@@ -190,6 +173,23 @@ public static class RazorFileExtractor {
             // Skip past this @code block
             index = braceClose;
         }
+    }
+
+    private static int FindNonEscapedCharacterIndex(SourceText source, char character, int startIndex) {
+        for (int i = startIndex; i < source.Length; i++) {
+            if (source[i] != character) continue;
+
+            int backslashCount = 0;
+            for (int j = i - 1; j >= 0 && source[j] == '\\'; j--) {
+                backslashCount++;
+            }
+
+            if (backslashCount % 2 != 0) continue;
+
+            return i;
+        }
+
+        return -1;
     }
 
     private static int FindMatchingBrace(string text, int openIndex) {
