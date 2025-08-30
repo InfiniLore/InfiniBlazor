@@ -2,8 +2,8 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using Microsoft.CodeAnalysis;
-using System;
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting.RazorFiles;
 
@@ -14,11 +14,11 @@ namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting.RazorFiles;
 public class AutoDocumentingRazorGenerator : IIncrementalGenerator {
     
     public void Initialize(IncrementalGeneratorInitializationContext context) {
-        IncrementalValuesProvider<AutoDocumentedData> razorDataPipeline = context.AdditionalTextsProvider
-            .Where(static text => text.Path.EndsWith(".razor", StringComparison.OrdinalIgnoreCase))
+        IncrementalValuesProvider<AutoDocumentedData> razorDataPipeline = context
+            .GetRazorFilesPipeline()
             .Select(static (text, ct) => text.GetText(ct) is { Length: > 0 } content
-                ? RazorFileExtractor.ExtractInfiniAutoDocumentComponents(content).ToImmutableArray()
-                : ImmutableArray<AutoDocumentedData>.Empty
+                ? RazorFileExtractor.ExtractInfiniAutoDocumentComponents(content)
+                : Enumerable.Empty<AutoDocumentedData>()
             )
             .SelectMany(static (data, _) => data);
         

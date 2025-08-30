@@ -3,9 +3,9 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting.RazorFiles;
 using Microsoft.CodeAnalysis;
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting.CsFiles;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -19,18 +19,17 @@ public class AutoDocumentingCsGenerator : IIncrementalGenerator {
                 predicate: static (_, _) => true,
                 transform: static (context, _) => {
                     if (!AutoDocumentedData.TryGetFromSyntaxNode(context.TargetNode, out AutoDocumentedData? data)) return null;
-
                     return data;
                 }
             )
             .Where(static data => data is not null)
             .Select(static (data, _) => data!);
 
-        IncrementalValuesProvider<AutoDocumentedData> razorDataPipeline = context.AdditionalTextsProvider
-            .Where(static text => text.Path.EndsWith(".razor", StringComparison.OrdinalIgnoreCase))
+        IncrementalValuesProvider<AutoDocumentedData> razorDataPipeline = context
+            .GetRazorFilesPipeline()
             .Select(static (text, ct) => text.GetText(ct) is { Length: > 0 } content
-                ? RazorFileExtractor.ExtractAutoDocumentMembers(content).ToImmutableArray()
-                : ImmutableArray<AutoDocumentedData>.Empty
+                ? RazorFileExtractor.ExtractAutoDocumentMembers(content)
+                : Enumerable.Empty<AutoDocumentedData>()
             )
             .SelectMany(static (data, _) => data);
 
