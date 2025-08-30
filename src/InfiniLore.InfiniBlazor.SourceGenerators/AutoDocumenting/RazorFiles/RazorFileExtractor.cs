@@ -142,7 +142,7 @@ public static class RazorFileExtractor {
             if (braceClose == -1) break;
 
             SourceText blockContent = source.GetSubText(TextSpan.FromBounds(braceOpen + 1, braceClose));
-            
+
             SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(blockContent);
             CompilationUnitSyntax root = syntaxTree.GetCompilationUnitRoot();
 
@@ -161,19 +161,27 @@ public static class RazorFileExtractor {
                         break;
                     }
 
-                    case GlobalStatementSyntax globalStatement: {
-                        StatementSyntax statement = globalStatement.Statement;
+                    case GlobalStatementSyntax { Statement: LocalDeclarationStatementSyntax localField }: {
+                        string? attr = GetAutoDocumentId(localField.AttributeLists);
+                        if (attr == null) continue;
 
-                        if (statement is LocalFunctionStatementSyntax localFunction) {
-                            string? attr = GetAutoDocumentId(localFunction.AttributeLists);
-                            if (attr == null) continue;
+                        LocalDeclarationStatementSyntax cleanedField = localField.WithAttributeLists(
+                            RemoveAutoDocumentAttribute(localField.AttributeLists)
+                        );
 
-                            LocalFunctionStatementSyntax cleanedFunction = localFunction.WithAttributeLists(
-                                RemoveAutoDocumentAttribute(localFunction.AttributeLists)
-                            );
+                        yield return new AutoDocumentedData(attr, $"\n    {cleanedField.ToFullString()}");
+                        break;
+                    }
 
-                            yield return new AutoDocumentedData(attr, $"\n    {cleanedFunction.ToFullString()}");
-                        }
+                    case GlobalStatementSyntax { Statement: LocalFunctionStatementSyntax localFunction }: {
+                        string? attr = GetAutoDocumentId(localFunction.AttributeLists);
+                        if (attr == null) continue;
+
+                        LocalFunctionStatementSyntax cleanedFunction = localFunction.WithAttributeLists(
+                            RemoveAutoDocumentAttribute(localFunction.AttributeLists)
+                        );
+
+                        yield return new AutoDocumentedData(attr, $"\n    {cleanedFunction.ToFullString()}");
                         break;
                     }
                 }

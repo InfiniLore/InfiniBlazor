@@ -33,6 +33,9 @@
   </Folder>
   <Folder Name="/src/extensions/">
     <Project Path="src\InfiniLore.InfiniBlazor.Extensions.ExtraComponents\InfiniLore.InfiniBlazor.Extensions.ExtraComponents.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/src/extensions/AutoDocument/" />
+  <Folder Name="/src/extensions/Maui/">
     <Project Path="src\InfiniLore.InfiniBlazor.Extensions.Maui\InfiniLore.InfiniBlazor.Extensions.Maui.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/tests/">

@@ -40,9 +40,13 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
+    [AutoDocument(LucideNames.Baby)] private bool _test = false;
     // ReSharper disable once RedundantDefaultMemberInitializer
-    [AutoDocument("test"), Parameter] public bool Test { get; set; } = false;
-    
+    [AutoDocument(LucideNames.Baby), Parameter] public bool Test {
+        get => _test;
+        set => _test = value;
+    }
+
     // ReSharper disable once UnusedMember.Local
     // ReSharper disable once UnusedParameter.Local
     [AutoDocument("test")] private static void DoSomethingTest(MouseEventArgs obj) {
