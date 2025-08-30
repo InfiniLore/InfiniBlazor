@@ -157,7 +157,7 @@ public static class RazorFileExtractor {
                             RemoveAutoDocumentAttribute(propertyDecl.AttributeLists)
                         );
 
-                        yield return new AutoDocumentedData(attr, $"\n    {cleanedProperty.ToFullString()}\n");
+                        yield return new AutoDocumentedData(attr, $"\n    {cleanedProperty.ToFullString()}");
 
                         break;
                     }
