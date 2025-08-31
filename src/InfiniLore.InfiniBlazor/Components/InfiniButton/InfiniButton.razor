@@ -42,10 +42,11 @@ else {
     [Parameter] public EventCallback<bool> OnHoverChanged { get; set; }
     [Parameter] public bool AutoWidth { get; set; }
     
-    private const string ContainerReaction = "cursor-pointer active:scale-95 hover:transform hover:transition hover:ease-in hover:duration-200 overflow-visible";
+    public const string ContainerReaction = "cursor-pointer active:scale-95 hover:transform hover:transition hover:ease-in hover:duration-200 overflow-visible";
     private const string Rounding = "rounded-md";
 
-    protected virtual string CssDefault => "infini-bg-(--button-default) text-(--button-default-text) hover:text-(--button-default-text-hover) hover:infini-bg-(--button-default-hover)";
+    public const string DefaultCssClasses = "infini-bg-(--button-default) text-(--button-default-text) hover:text-(--button-default-text-hover) hover:infini-bg-(--button-default-hover)";
+    protected virtual string CssDefault => DefaultCssClasses;
     protected virtual string CssColor => ConcatClasses(Color.ToCssClassBackground(), Color.ToCssClassTextColorReadableForeground());
     
     private string ContainerClasses => Color switch {

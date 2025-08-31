@@ -11,15 +11,20 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="@Context">
-    <div class="@GetRootStyling()">
-        @if (TabsOnRight) {
-            @RenderContent
-            @RenderButtons
-        } else {
-            @RenderButtons
-            @RenderContent
-        }
-    </div>
+    <CascadingValue Value="@TabsOnRight">
+        <CascadingValue Value="@Orientation">
+            <div class="@GetRootStyling()">
+                @if (TabsOnRight) {
+                    @RenderContent
+                    @RenderButtons
+                }
+                else {
+                    @RenderButtons
+                    @RenderContent
+                }
+            </div>
+        </CascadingValue>
+    </CascadingValue>
 </CascadingValue>
 @* Thanks for the pain, Kellie *@
 
@@ -30,7 +35,7 @@
     [Parameter] public TabContainerStyle Style { get; set; } = TabContainerStyle.Default;
     [Parameter] public Orientation Orientation { get; set; } = Orientation.Horizontal;
     [Parameter] public bool TabsOnRight { get; set; }
-    
+
     private InfiniTabContainerContext Context { get; } = new();
 
     @* ReSharper disable once UnusedParameter.Local *@
@@ -38,6 +43,7 @@
         <div class="@GetContainerStyling() overflow-auto infini-scrollbar">
             @foreach ((string key, InfiniTabContent content) in Context.Tabs) {
                 <InfiniTabButton
+                    IsSelected="@(Context.SelectedTabId == key)"
                     IconName="@content.IconName"
                     Class="@GetButtonStyling()"
                     IsDisabled="@(IsDisabled || content.IsDisabled)"

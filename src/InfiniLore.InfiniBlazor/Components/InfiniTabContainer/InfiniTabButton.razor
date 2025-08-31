@@ -13,7 +13,7 @@
         onclick:stopPropagation="@StopPropagation"
         type="button"
         disabled="@IsDisabled"
-        class="@(ConcatClasses(Class)) inline-flex items-center justify-center transition-all duration-150 transform overflow-visible"
+        class="@(ConcatClasses(Class, RoundedClasses, SelectedClasses, InfiniButton.ContainerReaction)) py-0.5 px-2 inline-flex items-center justify-center transition-all duration-150 transform overflow-visible"
         >
     @ChildContent
 </button>
@@ -23,5 +23,18 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
+    [CascadingParameter] public bool TabsOnRight { get; set; }
+    [CascadingParameter] public Orientation Orientation { get; set; }
+    [Parameter] public bool IsSelected { get; set; }
 
+    private string RoundedClasses => (Orientation, TabsOnRight) switch {
+        (Orientation.Horizontal, _) => "rounded-t-md",
+        (Orientation.Vertical, false) => "rounded-l-md",
+        (Orientation.Vertical, true) => "rounded-r-md",
+        _ => throw new ArgumentOutOfRangeException()
+    };
+
+    private string SelectedClasses => IsSelected
+        ? InfiniButton.DefaultCssClasses
+        : "infini-bg-(--color-base-50) text-(--color-base-05) hover:text-(--button-default-text-hover) hover:infini-bg-(--color-base-60)";
 }
