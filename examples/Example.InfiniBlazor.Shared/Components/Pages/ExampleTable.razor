@@ -35,13 +35,13 @@
                 </InfiniTableCell>
                 <InfiniTableCell Alignment="Alignment.Right">
                     <div class="flex justify-end gap-2">
-                        <InfiniButton
+                        <InfiniButtonToolTipped
                             IsDisabled="true"
-                            Tooltip="Edit Not Available"
                             TooltipAnchor="Anchor.Left">
-                            Edit
-                        </InfiniButton>
-                        <InfiniButton OnClick="() => DeletePerson(person)">Delete</InfiniButton>
+                            <Content>Edit</Content>
+                            <Tooltip>Edit Not Available</Tooltip>
+                        </InfiniButtonToolTipped>
+                        <InfiniButton OnClick="@(() => DeletePerson(person))">Delete</InfiniButton>
                     </div>
                 </InfiniTableCell>
             </ContentWithIndex>
