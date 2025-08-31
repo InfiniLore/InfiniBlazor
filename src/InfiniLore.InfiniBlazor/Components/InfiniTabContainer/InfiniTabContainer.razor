@@ -80,8 +80,13 @@
             TabContainerStyle.Right => "flex flex-row gap-2 justify-end",
             _ => throw new ArgumentOutOfRangeException()
         },
-        Orientation.Vertical => "flex flex-col gap-2 justify-start",
-        _ => throw new ArgumentOutOfRangeException()
+        Orientation.Vertical => Style switch {
+            TabContainerStyle.Default => "flex flex-col gap-2 justify-start",
+            TabContainerStyle.Center => "flex flex-col gap-2 justify-center",
+            TabContainerStyle.Stretch => "grid grid-rows-[repeat(auto-fit,minmax(0,1fr))] gap-2",
+            TabContainerStyle.Right => "flex flex-col gap-2 justify-end",
+            _ => throw new ArgumentOutOfRangeException()
+        }
     };
 
     private string GetButtonStyling() => Orientation switch {
