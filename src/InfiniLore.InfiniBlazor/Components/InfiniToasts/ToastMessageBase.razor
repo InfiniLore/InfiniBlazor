@@ -11,14 +11,27 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@BodyClasses flex flex-row gap-2 infini-bg-(--color-base-80) text-(--text) text-sm rounded-lg px-2 py-1 shadow-lg border border-(--border) transition-all duration-300 ease-in-out pointer-events-auto @(IsClosing ? "opacity-0 scale-95" : "opacity-100 scale-100")">
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.Lucide
+@namespace InfiniLore.InfiniBlazor.Components
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="@BodyClasses grid grid-cols-[auto_1fr_auto] gap-2 infini-bg-(--color-base-80) text-(--text) text-sm rounded-lg px-2 py-1 shadow-lg border border-(--border) transition-all duration-300 ease-in-out pointer-events-auto @(IsClosing ? "opacity-0 scale-95" : "opacity-100 scale-100")">
     <!-- Icon -->
-    <div class="@(ToastData.Body.IsNotNullOrWhiteSpace() ? "items-start mt-1" : "items-center") flex ">
+    <div class="@(ToastData.Body.IsNotNullOrWhiteSpace() ? "items-start mt-1" : "items-center") flex">
         <LucideIcon Name="@IconName" Class="@(HeaderClasses)"/>
     </div>
 
     <!-- Text Content -->
-    <div class="flex flex-col justify-center grow">
+    <div class="flex flex-col justify-center">
         <p class="@HeaderClasses font-semibold leading-tight break-all">@ToastData.Title</p>
         @if (ToastData.Body.IsNotNullOrWhiteSpace()) {
             <p class="@BodyClasses mt-1 leading-snug break-all">@ToastData.Body</p>
