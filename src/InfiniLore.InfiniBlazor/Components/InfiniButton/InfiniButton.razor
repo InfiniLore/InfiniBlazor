@@ -20,7 +20,7 @@
     <Content>
         @if (Href.IsNotNullOrWhiteSpace()) {
             <a href="@_computedHref"
-               class="@(ConcatClasses(Class, ContainerClasses)) rounded-md inline-flex items-center justify-center transition-all duration-150 transform cursor-pointer active:scale-95 hover:scale-105"
+               class="@(ConcatClasses(Class, ContainerClasses)) rounded-md inline-flex items-center justify-center transition-all duration-150 transform cursor-pointer active:scale-95 hover:scale-105 overflow-visible "
                @onmouseenter="@ShowTooltip"
                @onmouseleave="@HideTooltip">
                 @ButtonContent
@@ -34,7 +34,7 @@
                     aria-label="@AriaLabel"
                     @onmouseenter="@ShowTooltip"
                     @onmouseleave="@HideTooltip"
-                    class="@(ConcatClasses(Class, ContainerClasses)) inline-flex items-center justify-center transition-all duration-150 transform">
+                    class="@(ConcatClasses(Class, ContainerClasses)) inline-flex items-center justify-center transition-all duration-150 transform overflow-visible ">
                 @ButtonContent
             </button>
         }
@@ -92,7 +92,7 @@
         </span>
     };
 
-    private const string ContainerReaction = "cursor-pointer active:scale-95 hover:transform hover:transition hover:ease-in hover:duration-200 hover:scale-105";
+    private const string ContainerReaction = "cursor-pointer active:scale-95 hover:transform hover:transition hover:ease-in hover:duration-200 overflow-visible";
     private const string Rounding = "rounded-md";
 
     private string ContainerClasses => (Variant, Color) switch {
