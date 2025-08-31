@@ -15,8 +15,7 @@ public class MarkdownStringTests(IMarkdownParser parser) {
 
     [Test]
     [MethodDataSource<MdTestDataSources>(nameof(MdTestDataSources.GetBlankTest))]
-    [MethodDataSource<MdTestDataSources>(nameof(MdTestDataSources.GetTestData))]
-    // [MethodDataSource(typeof(MdTestDataSources), nameof(MdTestDataSources.GetTestDataAsync))] // TODO: Use this when TUnit fixes https://github.com/thomhurst/TUnit/issues/2990
+    [MethodDataSource(typeof(MdTestDataSources), nameof(MdTestDataSources.GetTestDataAsync))]
     public async Task FromMarkdownString_ToSyntaxTree_ShouldBeSame(MdTestData data) {
         // Arrange
         string input = data.MdString;
@@ -33,8 +32,7 @@ public class MarkdownStringTests(IMarkdownParser parser) {
     
     [Test]
     [MethodDataSource<MdTestDataSources>(nameof(MdTestDataSources.GetBlankTest))]
-    [MethodDataSource<MdTestDataSources>(nameof(MdTestDataSources.GetTestData))]
-    // [MethodDataSource(typeof(MdTestDataSources), nameof(MdTestDataSources.GetTestDataAsync))] // TODO: Use this when TUnit fixes https://github.com/thomhurst/TUnit/issues/2990
+    [MethodDataSource(typeof(MdTestDataSources), nameof(MdTestDataSources.GetTestDataAsync))]
     public async Task FromSyntaxTree_ToMarkdownString_ShouldBeExpected(MdTestData data) {
         // Arrange
         IMdSyntaxTree input = data.MdSyntaxTree;

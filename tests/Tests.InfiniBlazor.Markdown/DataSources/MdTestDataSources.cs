@@ -36,26 +36,4 @@ public class MdTestDataSources {
 
         }
     }
-
-    public static IEnumerable<Func<MdTestData>> GetTestData() {
-        string[]? allFiles = MdTestDataProvider.TestInstance.TryGetFileNames();
-        if (allFiles is null) {
-            Assert.Fail("Could not get file names");
-            yield break;
-        }
-        
-        foreach (string file in allFiles) {
-            List<MdTestData>? dataEntries = MdTestDataProvider.TestInstance.TryGetXmlMdTestData(file);
-            if (dataEntries is null) {
-                Assert.Fail($"Could not get data for file {file}");
-                yield break;
-            }
-
-            foreach (MdTestData dataEntry in dataEntries) {
-                yield return () => dataEntry;
-            }
-
-        }
-    }
-    
 }
