@@ -43,7 +43,6 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>analyzers</IncludeAssets>
           <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-<!--          <OutputItemType>Analyzer</OutputItemType>-->
       </ProjectReference>
       <ProjectReference Include="..\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj">
           <PrivateAssets>all</PrivateAssets>
