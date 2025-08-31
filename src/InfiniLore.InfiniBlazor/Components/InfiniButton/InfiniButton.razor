@@ -34,7 +34,7 @@
                     aria-label="@AriaLabel"
                     @onmouseenter="@ShowTooltip"
                     @onmouseleave="@HideTooltip"
-                    class="@(ConcatClasses(Class, ContainerClasses)) rounded-md inline-flex items-center justify-center transition-all duration-150 transform">
+                    class="@(ConcatClasses(Class, ContainerClasses)) inline-flex items-center justify-center transition-all duration-150 transform">
                 @ButtonContent
             </button>
         }
@@ -92,7 +92,8 @@
         </span>
     };
 
-    private const string ContainerReaction = "cursor-pointer active:scale-95 hover:scale-105";
+    private const string ContainerReaction = "cursor-pointer active:scale-95 hover:transform hover:transition hover:ease-in hover:duration-200 hover:scale-105";
+    private const string Rounding = "rounded-md";
 
     private string ContainerClasses => (Variant, Color) switch {
         _ when IsDisabled => ConcatClasses(
@@ -103,13 +104,15 @@
         (ButtonVariant.Default, Color.Default) =>
             ConcatClasses(
                 ContainerReaction,
+                Rounding,
                 ContainerSizeClasses,
                 "infini-bg-(--button-default) text-(--button-default-text) hover:text-(--button-default-text-hover) hover:infini-bg-(--button-default-hover)"
             ),
 
         (ButtonVariant.Default, _) =>
             ConcatClasses(
-                "cursor-pointer active:scale-95 hover:scale-105",
+                ContainerReaction,
+                Rounding,
                 ContainerSizeClasses,
                 Color.ToCssClassBackground(),
                 Color.ToCssClassTextColorReadableForeground()
@@ -118,6 +121,7 @@
         (ButtonVariant.Primary, Color.Default) =>
             ConcatClasses(
                 ContainerReaction,
+                Rounding,
                 ContainerSizeClasses,
                 "infini-bg-(--button-primary) text-(--button-primary-text) hover:text-(--button-primary-text-hover) hover:infini-bg-(--button-primary-hover)"
             ),
@@ -125,6 +129,7 @@
         (ButtonVariant.Primary, _) =>
             ConcatClasses(
                 ContainerReaction,
+                Rounding,
                 ContainerSizeClasses,
                 "infini-bg-(--button-primary) hover:infini-bg-(--button-primary-hover)",
                 Color.ToCssClassText()
@@ -133,6 +138,7 @@
         (ButtonVariant.Transparent, Color.Default) =>
             ConcatClasses(
                 ContainerReaction,
+                Rounding,
                 ContainerSizeClasses,
                 "infini-bg-(--button-transparent) text-(--button-transparent-text) hover:text-(--button-transparent-text-hover) hover:infini-bg-(--button-transparent-hover)"
             ),
@@ -140,6 +146,7 @@
         (ButtonVariant.Transparent, _) =>
             ConcatClasses(
                 ContainerReaction,
+                Rounding,
                 ContainerSizeClasses,
                 "infini-bg-(--button-transparent)  hover:infini-bg-(--button-transparent-hover)",
                 Color.ToCssClassText()
@@ -148,6 +155,7 @@
         (ButtonVariant.Dark, Color.Default) =>
             ConcatClasses(
                 ContainerReaction,
+                Rounding,
                 ContainerSizeClasses,
                 "infini-bg-(--button-dark) hover:infini-bg-(--button-dark-hover) text-(--button-dark-text) hover:text-(--button-dark-text-hover) hover:ring-2 hover:ring-(--button-dark-ring)"
             ),
@@ -155,6 +163,7 @@
         (ButtonVariant.Dark, _) =>
             ConcatClasses(
                 ContainerReaction,
+                Rounding,
                 ContainerSizeClasses,
                 Color.ToCssClassText(),
                 Color.ToCssClassRingHover(),
@@ -164,6 +173,7 @@
         (ButtonVariant.Light, Color.Default) =>
             ConcatClasses(
                 ContainerReaction,
+                Rounding,
                 ContainerSizeClasses,
                 "infini-bg-(--button-light) hover:infini-bg-(--button-light-hover) text-(--button-light-text) hover:text-(--button-light-text-hover) hover:ring-2 hover:ring-(--button-light-ring) font-[450]"
             ),
@@ -171,6 +181,7 @@
         (ButtonVariant.Light, _) =>
             ConcatClasses(
                 ContainerReaction,
+                Rounding,
                 ContainerSizeClasses,
                 Color.ToCssClassText(),
                 Color.ToCssClassRingHover(),
@@ -180,6 +191,7 @@
         (ButtonVariant.Outline, Color.Default) =>
             ConcatClasses(
                 ContainerReaction,
+                Rounding,
                 ContainerSizeClasses,
                 "infini-bg-(--button-outline) hover:infini-bg-(--button-outline-hover) text-(--button-outline-text) hover:text-(--button-outline-text-hover) ring-1 ring-(--button-outline-ring) hover:ring-(--button-outline-ring-hover)"
             ),
@@ -187,6 +199,7 @@
         (ButtonVariant.Outline, _) =>
             ConcatClasses(
                 ContainerReaction,
+                Rounding,
                 ContainerSizeClasses,
                 "infini-bg-(--button-outline) hover:infini-bg-(--button-outline-hover) ring-1",
                 Color.ToCssClassText(),
@@ -196,6 +209,7 @@
         (ButtonVariant.OutlineSolid, Color.Default) =>
             ConcatClasses(
                 ContainerReaction,
+                Rounding,
                 ContainerSizeClasses,
                 "infini-bg-(--button-outline-solid) hover:infini-bg-(--button-outline-solid-hover) text-(--button-outline-solid-text) hover:text-(--button-outline-solid-text-hover) ring-1 ring-(--button-outline-solid-ring) hover:ring-(--button-outline-solid-ring-hover)"
             ),
@@ -203,11 +217,43 @@
         (ButtonVariant.OutlineSolid, _) =>
             ConcatClasses(
                 ContainerReaction,
+                Rounding,
                 ContainerSizeClasses,
                 "infini-bg-(--button-outline-solid) hover:infini-bg-(--button-outline-solid-hover) ring-1",
                 Color.ToCssClassText(),
                 Color.ToCssClassRing()
             ),
+        (ButtonVariant.TabUnSelected, Color.Default) =>
+            ConcatClasses(
+                ContainerReaction,
+                "rounded-t-md",
+                ContainerSizeClasses,
+                "infini-bg-(--color-base-50)  hover:infini-bg-(--color-base-60) text-(--color-base-10) hover:text-(--color-base-05)"  
+            ),
+        (ButtonVariant.TabUnSelected, _) =>
+            ConcatClasses(
+                ContainerReaction,
+                "rounded-t-md",
+                ContainerSizeClasses,
+                Color.ToCssClassText(),
+                "infini-bg-(--color-base-50) hover:infini-bg-(--color-base-60) hover:text-(--button-default-text-hover)"
+            ),
+        (ButtonVariant.TabSelected, Color.Default) =>
+            ConcatClasses(
+                ContainerReaction,
+                "rounded-t-md",
+                ContainerSizeClasses,
+                "infini-bg-(--button-default) text-(--button-default-text) hover:text-(--button-default-text-hover) hover:infini-bg-(--button-default-hover)"
+            ),
+        (ButtonVariant.TabSelected, _) =>
+            ConcatClasses(
+                ContainerReaction,
+                "rounded-t-md",
+                ContainerSizeClasses,
+                Color.ToCssClassBackground(),
+                Color.ToCssClassTextColorReadableForeground()
+            ),
+
 
         _ => string.Empty
     };

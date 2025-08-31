@@ -12,5 +12,7 @@ public enum ButtonVariant {
     Dark,
     Light,
     Outline,
-    OutlineSolid
+    OutlineSolid,
+    TabUnSelected,
+    TabSelected
 }

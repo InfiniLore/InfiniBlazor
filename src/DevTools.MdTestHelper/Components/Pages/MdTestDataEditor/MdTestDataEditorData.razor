@@ -72,21 +72,21 @@
 
         <div class="h-full w-full flex flex-col gap-1 mt-2">
             <InfiniTabContainer>
-                <InfiniTabPage TabName="Syntax Tree">
+                <InfiniTabContent TabName="Syntax Tree">
                     <InfiniTextAreaInput
                         @bind-Value="@ExpectedSyntaxTreeString"
                         Rows="22"
                         Class="font-mono w-full"/>
-                </InfiniTabPage>
+                </InfiniTabContent>
 
-                <InfiniTabPage TabName="Simplified HTML">
+                <InfiniTabContent TabName="Simplified HTML">
                     <InfiniTextAreaInput
                         @bind-Value="@ExpectedHtmlStringSimplified"
                         Rows="22"
                         Class="font-mono w-full"/>
-                </InfiniTabPage>
+                </InfiniTabContent>
 
-                <InfiniTabPage TabName="Markdown">
+                <InfiniTabContent TabName="Markdown">
                     <InfiniTextAreaInput
                         @bind-Value="@ExpectedMarkdownString"
                         Rows="22"
@@ -95,7 +95,7 @@
                         Label="Skip test on whitespace mismatch"
                         @bind-Value="@SkipOnWhitespaceMisMatch"
                         />
-                </InfiniTabPage>
+                </InfiniTabContent>
             </InfiniTabContainer>
 
             @if (ExpectedMarkdownString.IsNotNullOrWhiteSpace() && !string.Equals(MdString, ExpectedMarkdownString)) {

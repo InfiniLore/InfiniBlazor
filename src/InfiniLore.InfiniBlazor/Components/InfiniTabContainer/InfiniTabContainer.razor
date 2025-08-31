@@ -6,22 +6,22 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniChildlessComponentBase
-@* @rendermode RenderModeProvider.InfiniRenderMode *@
 
-@inject InfiniTabContainerContext Context
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="@Context">
-    <div class="h-full grid grid-cols-1 grid-rows-[auto_1fr] gap-2">
-        <div class="w-full grid auto-cols-max grid-flow-col gap-2 overflow-y-hidden overflow-x-auto infini-scrollbar">
+    <div class="h-full grid grid-cols-1 grid-rows-[auto_1fr] gap-0">
+        <div class="border-b border-(--border) flex space-x-2  overflow-x-auto overflow-y-hidden infini-scrollbar">
             @foreach (string tab in Context.Tabs) {
                 <InfiniButton
-                    Variant="@(Context.SelectedTab == tab ? ButtonVariant.Default : ButtonVariant.Dark)"
-                    OnClick="@(() => Context.SelectPage(tab))">@tab</InfiniButton>
+                    Variant="@(Context.SelectedTabId == tab ? ButtonVariant.TabSelected : ButtonVariant.TabUnSelected)"
+                    OnClick="@(() => Context.SelectPage(tab))">
+                    @tab
+                </InfiniButton>
             }
         </div>
-        <div class="w-full h-full">
+        <div class="w-full h-full border-x border-b rounded-b-md px-1 border-(--border)">
             @ChildContent
         </div>
     </div>
@@ -31,10 +31,10 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
     [Parameter] public RenderFragment? ChildContent { get; set; }
-
+    public InfiniTabContainerContext Context { get; set; } = new();
+    
     protected override void OnInitialized() {
         base.OnInitialized();
         Context.OnTabRegisterChange += StateHasChanged;

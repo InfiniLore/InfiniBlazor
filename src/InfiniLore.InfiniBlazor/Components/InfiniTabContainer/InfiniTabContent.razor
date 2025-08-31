@@ -9,7 +9,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@if (Context.SelectedTab == TabName) {
+@if (Context.SelectedTabId == TabName) {
     @ChildContent
 }
 
@@ -19,14 +19,20 @@
 @code {
     [EditorRequired, Parameter] public string TabName { get; set; } = string.Empty;
     [CascadingParameter] public InfiniTabContainerContext Context { get; set; } = null!;
+
+    private bool _isRegistered;
     
     protected override void OnInitialized() {
-        Context.RegisterPage(TabName);
+        if (!_isRegistered) {
+            Context.RegisterPage(TabName);
+            _isRegistered = true;
+        }
         Context.OnTabSelected += StateHasChanged;
     }
 
     public override async ValueTask DisposeAsync() {
         await base.DisposeAsync();
+        Context.UnregisterPage(TabName);
         Context.OnTabSelected -= StateHasChanged;
     }
 }
