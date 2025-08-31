@@ -5,7 +5,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniChildlessComponentBase
+@inherits InfiniComponentBase
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
@@ -26,9 +26,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
-    [Parameter] public RenderFragment? ChildContent { get; set; }
     [Parameter] public TabContainerStyle Style { get; set; } = TabContainerStyle.Default;
     [Parameter] public Orientation Orientation { get; set; } = Orientation.Horizontal;
     [Parameter] public bool TabsOnRight { get; set; }
