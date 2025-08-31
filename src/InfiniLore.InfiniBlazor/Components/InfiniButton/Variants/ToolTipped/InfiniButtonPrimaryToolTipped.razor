@@ -5,13 +5,13 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniButton
+@inherits InfiniButtonPrimary
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniToolTipWrapper @bind-ShowTooltip="@OnHover" Anchor="@TooltipAnchor">
     <Content>
-        <InfiniButton
+        <InfiniButtonPrimary
             AutoWidth="AutoWidth"
             IsDisabled="IsDisabled"
             Href="@Href"
@@ -23,12 +23,11 @@
             DisableTrackedQueryParams="@DisableTrackedQueryParams"
             Type="@Type"
             AriaLabel="@AriaLabel"
-            Variant="@Variant"
             Color="@Color"
             Size="@Size"
             @bind-OnHover="@OnHover">
             @Content
-        </InfiniButton>
+        </InfiniButtonPrimary>
     </Content>
     <Tooltip>
         @Tooltip

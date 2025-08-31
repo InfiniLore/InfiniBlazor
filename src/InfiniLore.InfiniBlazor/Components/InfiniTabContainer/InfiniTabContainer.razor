@@ -37,14 +37,13 @@
     private RenderFragment RenderButtons => __builder => {
         <div class="@GetContainerStyling() overflow-auto infini-scrollbar">
             @foreach ((string key, InfiniTabContent content) in Context.Tabs) {
-                <InfiniButton
+                <InfiniTabButton
                     IconName="@content.IconName"
                     Class="@GetButtonStyling()"
                     IsDisabled="@(IsDisabled || content.IsDisabled)"
-                    Variant="@(Context.SelectedTabId == key ? ButtonVariant.TabSelected : ButtonVariant.TabUnSelected)"
                     OnClick="@(() => Context.SelectPage(key))">
                     @key
-                </InfiniButton>
+                </InfiniTabButton>
             }
         </div>
     };

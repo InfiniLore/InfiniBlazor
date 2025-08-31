@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class InfiniButtonComponentBase : InfiniComponentBase {
+public partial class InfiniButtonComponentBase : InfiniComponentBase {
     [Inject] protected IQueryParameterManager QueryParameterManager { get; set; } = null!;
     
     [Parameter] public string? Href { get; set; }
@@ -23,6 +23,7 @@ public class InfiniButtonComponentBase : InfiniComponentBase {
     private EventCallbackDebouncer<MouseEventArgs> OnClickDebounced { get; set; } = EventCallbackDebouncer<MouseEventArgs>.Empty;
     [Parameter] public int DebounceMs { get; set; }
     [Parameter] public bool DisableTrackedQueryParams { get; set; }
+    [Parameter] public Size Size { get; set; } = Size.M;
     
     protected string? ComputedHref { get; private set; }
     
@@ -66,4 +67,16 @@ public class InfiniButtonComponentBase : InfiniComponentBase {
         if (Href is not null && !DisableTrackedQueryParams) NavigationManager.LocationChanged -= OnLocationChanged;
         if (!OnClickDebounced.IsEmpty) await OnClickDebounced.DisposeAsync();
     }
+    
+    protected string IconSizeClass => Size switch {
+        Size.Xxs => "w-3 h-3 my-0.5",
+        Size.Xs => "w-4 h-4 my-0.5",
+        Size.S => "w-5 h-5 my-0.5",
+        Size.M => "w-6 h-6 my-0.5",
+        Size.L => "w-7 h-7 my-0.5",
+        Size.Xl => "w-8 h-8 my-0.5",
+        Size.Xxl => "w-9 h-9 my-0.5",
+        _ => "w-6 h-6"
+    };
+    
 }

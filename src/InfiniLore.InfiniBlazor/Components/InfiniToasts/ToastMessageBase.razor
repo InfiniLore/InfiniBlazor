@@ -25,10 +25,9 @@
 
     <!-- Close Button -->
     <div class="flex items-center">
-        <InfiniButton
+        <InfiniButtonTransparent
             Class="@HeaderClasses"
             Size="Size.S"
-            Variant="ButtonVariant.Transparent"
             IconName="@LucideNames.X"
             OnClick="@RequestCloseAsync" />
     </div>
@@ -43,14 +42,13 @@
     <!-- Link (center column only) -->
     @if (ToastData.LinkHref.IsNotNullOrWhiteSpace()) {
         <div class="col-start-2 flex gap-4 ml-1">
-            <InfiniButton
+            <InfiniButtonTransparent
                 Size="Size.Xs"
                 Class="@ConcatClasses(HeaderClasses, "underline text-sm -ml-3")"
                 Href="@ToastData.LinkHref"
-                Variant="ButtonVariant.Transparent"
                 DisableTrackedQueryParams="@(!IsRelativeUri(ToastData.LinkHref))">
                 @(ToastData.LinkTitle ?? ToastData.LinkHref)
-            </InfiniButton>
+            </InfiniButtonTransparent>
         </div>
     }
 </div>

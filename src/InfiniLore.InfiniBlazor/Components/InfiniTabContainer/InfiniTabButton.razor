@@ -1,31 +1,27 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits ComponentBase
+@inherits InfiniButtonComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="flex items-center">
-    <InfiniButtonOutline
-        OnClick="@(async () => await Editor.OnModifierClickAsync(Modifier))"
-        Size="Size.S"
-        IconName="@IconName"
-    >
-        @ChildContent
-    </InfiniButtonOutline>
-</div>
+<button @onclick="@OnClickAsync"
+        onclick:stopPropagation="@StopPropagation"
+        type="button"
+        disabled="@IsDisabled"
+        class="@(ConcatClasses(Class)) inline-flex items-center justify-center transition-all duration-150 transform overflow-visible"
+        >
+    @ChildContent
+</button>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
-    [CascadingParameter] public InfiniMarkdownEditor Editor { get; set; } = null!;
-    [Parameter] [EditorRequired] public string Modifier { get; set; } = null!;
-    [Parameter] public string? IconName { get; set; }
-    [Parameter] public RenderFragment? ChildContent { get; set; }
+
 }

@@ -1,31 +1,43 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits ComponentBase
+@inherits InfiniButtonOutlineSolid
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="flex items-center">
-    <InfiniButtonOutline
-        OnClick="@(async () => await Editor.OnModifierClickAsync(Modifier))"
-        Size="Size.S"
-        IconName="@IconName"
-    >
-        @ChildContent
-    </InfiniButtonOutline>
-</div>
+<InfiniToolTipWrapper @bind-ShowTooltip="@OnHover" Anchor="@TooltipAnchor">
+    <Content>
+        <InfiniButtonOutlineSolid
+            AutoWidth="AutoWidth"
+            IsDisabled="IsDisabled"
+            Href="@Href"
+            IconName="@IconName"
+            Text="@Text"
+            StopPropagation="@StopPropagation"
+            OnClick="@OnClick"  
+            DebounceMs="@DebounceMs"
+            DisableTrackedQueryParams="@DisableTrackedQueryParams"
+            Type="@Type"
+            AriaLabel="@AriaLabel"
+            Color="@Color"
+            Size="@Size"
+            @bind-OnHover="@OnHover">
+            @Content
+        </InfiniButtonOutlineSolid>
+    </Content>
+    <Tooltip>
+        @Tooltip
+    </Tooltip>
+</InfiniToolTipWrapper>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
-    [CascadingParameter] public InfiniMarkdownEditor Editor { get; set; } = null!;
-    [Parameter] [EditorRequired] public string Modifier { get; set; } = null!;
-    [Parameter] public string? IconName { get; set; }
-    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter, EditorRequired] public required RenderFragment Content { get; set; }
+    [Parameter, EditorRequired] public required RenderFragment Tooltip { get; set; }
+    [Parameter] public Anchor TooltipAnchor { get; set; } = Anchor.Center | Anchor.Bottom;
 }

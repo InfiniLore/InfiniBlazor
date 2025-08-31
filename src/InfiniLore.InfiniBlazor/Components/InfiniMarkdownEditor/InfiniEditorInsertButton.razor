@@ -1,7 +1,6 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
@@ -12,7 +11,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniButton
     OnClick="@(async () => await Editor.OnInsertClickAsync(Content))"
-    Variant="@Variant"
     IconName="@IconName"
 >
     @ChildContent
@@ -26,5 +24,4 @@
     [Parameter] [EditorRequired] public string Content { get; set; } = null!;
     [Parameter] public string? IconName { get; set; }
     [Parameter] public RenderFragment? ChildContent { get; set; }
-    [Parameter] public ButtonVariant Variant { get; set; } = ButtonVariant.Transparent;
 }

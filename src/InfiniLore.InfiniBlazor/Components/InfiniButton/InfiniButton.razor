@@ -1,8 +1,6 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.Lucide
-
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
@@ -38,197 +36,38 @@ else {
 @code {
     [Parameter] public string Type { get; set; } = "button";
     [Parameter] public string? AriaLabel { get; set; }
-    [Parameter] public ButtonVariant Variant { get; set; } = ButtonVariant.Default;
     [Parameter] public Color Color { get; set; } = Color.Default;
-    [Parameter] public Size Size { get; set; } = Size.M;
     
     [Parameter] public bool OnHover { get; set; }
     [Parameter] public EventCallback<bool> OnHoverChanged { get; set; }
     [Parameter] public bool AutoWidth { get; set; }
-
-    // ReSharper disable once UnusedParameter.Local
-    private RenderFragment ButtonContent => __builder => {
-        <span class="inline-flex items-center gap-2">
-            @if (IconName.IsNotNullOrWhiteSpace()) {
-                <LucideIcon Name="@IconName" Class="@ConcatClasses(IconSizeClass, "pointer-events-none")"/>
-            }
-            @if (Text.IsNotNullOrWhiteSpace()) {
-                @Text
-            }
-            @if (ChildContent is not null) {
-                @ChildContent
-            }
-            @if (IconName.IsNullOrWhiteSpace() && ChildContent is null && Text.IsNullOrWhiteSpace()) {
-                <span class="@IconSizeClass"></span>
-            }
-        </span>
-    };
     
     private const string ContainerReaction = "cursor-pointer active:scale-95 hover:transform hover:transition hover:ease-in hover:duration-200 overflow-visible";
     private const string Rounding = "rounded-md";
 
-    private string ContainerClasses => (Variant, Color) switch {
+    protected virtual string CssDefault => "infini-bg-(--button-default) text-(--button-default-text) hover:text-(--button-default-text-hover) hover:infini-bg-(--button-default-hover)";
+    protected virtual string CssColor => ConcatClasses(Color.ToCssClassBackground(), Color.ToCssClassTextColorReadableForeground());
+    
+    private string ContainerClasses => Color switch {
         _ when IsDisabled => ConcatClasses(
             ContainerSizeClasses,
             Rounding,
             "infini-bg-(--button-disabled) text-(--button-disabled-text) opacity-50 cursor-not-allowed"
         ),
-
-        (ButtonVariant.Default, Color.Default) =>
-            ConcatClasses(
-                ContainerReaction,
-                Rounding,
-                ContainerSizeClasses,
-                "infini-bg-(--button-default) text-(--button-default-text) hover:text-(--button-default-text-hover) hover:infini-bg-(--button-default-hover)"
-            ),
-
-        (ButtonVariant.Default, _) =>
-            ConcatClasses(
-                ContainerReaction,
-                Rounding,
-                ContainerSizeClasses,
-                Color.ToCssClassBackground(),
-                Color.ToCssClassTextColorReadableForeground()
-            ),
-
-        (ButtonVariant.Primary, Color.Default) =>
-            ConcatClasses(
-                ContainerReaction,
-                Rounding,
-                ContainerSizeClasses,
-                "infini-bg-(--button-primary) text-(--button-primary-text) hover:text-(--button-primary-text-hover) hover:infini-bg-(--button-primary-hover)"
-            ),
-
-        (ButtonVariant.Primary, _) =>
-            ConcatClasses(
-                ContainerReaction,
-                Rounding,
-                ContainerSizeClasses,
-                "infini-bg-(--button-primary) hover:infini-bg-(--button-primary-hover)",
-                Color.ToCssClassText()
-            ),
-
-        (ButtonVariant.Transparent, Color.Default) =>
-            ConcatClasses(
-                ContainerReaction,
-                Rounding,
-                ContainerSizeClasses,
-                "infini-bg-(--button-transparent) text-(--button-transparent-text) hover:text-(--button-transparent-text-hover) hover:infini-bg-(--button-transparent-hover)"
-            ),
-
-        (ButtonVariant.Transparent, _) =>
-            ConcatClasses(
-                ContainerReaction,
-                Rounding,
-                ContainerSizeClasses,
-                "infini-bg-(--button-transparent)  hover:infini-bg-(--button-transparent-hover)",
-                Color.ToCssClassText()
-            ),
-
-        (ButtonVariant.Dark, Color.Default) =>
-            ConcatClasses(
-                ContainerReaction,
-                Rounding,
-                ContainerSizeClasses,
-                "infini-bg-(--button-dark) hover:infini-bg-(--button-dark-hover) text-(--button-dark-text) hover:text-(--button-dark-text-hover) hover:ring-2 hover:ring-(--button-dark-ring)"
-            ),
-
-        (ButtonVariant.Dark, _) =>
-            ConcatClasses(
-                ContainerReaction,
-                Rounding,
-                ContainerSizeClasses,
-                Color.ToCssClassText(),
-                Color.ToCssClassRingHover(),
-                "infini-bg-(--button-dark) hover:infini-bg-(--button-dark-hover) hover:ring-2"
-            ),
-
-        (ButtonVariant.Light, Color.Default) =>
-            ConcatClasses(
-                ContainerReaction,
-                Rounding,
-                ContainerSizeClasses,
-                "infini-bg-(--button-light) hover:infini-bg-(--button-light-hover) text-(--button-light-text) hover:text-(--button-light-text-hover) hover:ring-2 hover:ring-(--button-light-ring) font-[450]"
-            ),
-
-        (ButtonVariant.Light, _) =>
-            ConcatClasses(
-                ContainerReaction,
-                Rounding,
-                ContainerSizeClasses,
-                Color.ToCssClassText(),
-                Color.ToCssClassRingHover(),
-                "infini-bg-(--button-light) hover:infini-bg-(--button-light-hover) hover:ring-2"
-            ),
-
-        (ButtonVariant.Outline, Color.Default) =>
-            ConcatClasses(
-                ContainerReaction,
-                Rounding,
-                ContainerSizeClasses,
-                "infini-bg-(--button-outline) hover:infini-bg-(--button-outline-hover) text-(--button-outline-text) hover:text-(--button-outline-text-hover) ring-1 ring-(--button-outline-ring) hover:ring-(--button-outline-ring-hover)"
-            ),
-
-        (ButtonVariant.Outline, _) =>
-            ConcatClasses(
-                ContainerReaction,
-                Rounding,
-                ContainerSizeClasses,
-                "infini-bg-(--button-outline) hover:infini-bg-(--button-outline-hover) ring-1",
-                Color.ToCssClassText(),
-                Color.ToCssClassRing()
-            ),
-
-        (ButtonVariant.OutlineSolid, Color.Default) =>
-            ConcatClasses(
-                ContainerReaction,
-                Rounding,
-                ContainerSizeClasses,
-                "infini-bg-(--button-outline-solid) hover:infini-bg-(--button-outline-solid-hover) text-(--button-outline-solid-text) hover:text-(--button-outline-solid-text-hover) ring-1 ring-(--button-outline-solid-ring) hover:ring-(--button-outline-solid-ring-hover)"
-            ),
-
-        (ButtonVariant.OutlineSolid, _) =>
-            ConcatClasses(
-                ContainerReaction,
-                Rounding,
-                ContainerSizeClasses,
-                "infini-bg-(--button-outline-solid) hover:infini-bg-(--button-outline-solid-hover) ring-1",
-                Color.ToCssClassText(),
-                Color.ToCssClassRing()
-            ),
-        (ButtonVariant.TabUnSelected, Color.Default) =>
-            ConcatClasses(
-                ContainerReaction,
-                "rounded-t-md",
-                ContainerSizeClasses,
-                "infini-bg-(--color-base-50) hover:infini-bg-(--color-base-60) text-(--color-base-10) hover:text-(--color-base-05)"  
-            ),
-        (ButtonVariant.TabUnSelected, _) =>
-            ConcatClasses(
-                ContainerReaction,
-                "rounded-t-md",
-                ContainerSizeClasses,
-                Color.ToCssClassText(),
-                "infini-bg-(--color-base-50) hover:infini-bg-(--color-base-60) hover:text-(--button-default-text-hover)"
-            ),
-        (ButtonVariant.TabSelected, Color.Default) =>
-            ConcatClasses(
-                ContainerReaction,
-                "rounded-t-md",
-                ContainerSizeClasses,
-                "infini-bg-(--button-default) text-(--button-default-text) hover:text-(--button-default-text-hover) hover:infini-bg-(--button-default-hover)"
-            ),
-        (ButtonVariant.TabSelected, _) =>
-            ConcatClasses(
-                ContainerReaction,
-                "rounded-t-md",
-                ContainerSizeClasses,
-                Color.ToCssClassBackground(),
-                Color.ToCssClassTextColorReadableForeground()
-            ),
-
-
-        _ => string.Empty
+        
+        Color.Default =>  ConcatClasses(
+            ContainerReaction,
+            Rounding,
+            ContainerSizeClasses,
+            CssDefault
+        ),
+            
+        _ => ConcatClasses(
+            ContainerReaction,
+            Rounding,
+            ContainerSizeClasses,
+            CssColor
+        )
     };
 
     private string ContainerSizeClasses => Size switch {
@@ -240,17 +79,6 @@ else {
         Size.Xl => "px-2 py-1 text-2xl",
         Size.Xxl => "px-2 py-1 text-3xl",
         _ => string.Empty
-    };
-
-    private string IconSizeClass => Size switch {
-        Size.Xxs => "w-3 h-3 my-0.5",
-        Size.Xs => "w-4 h-4 my-0.5",
-        Size.S => "w-5 h-5 my-0.5",
-        Size.M => "w-6 h-6 my-0.5",
-        Size.L => "w-7 h-7 my-0.5",
-        Size.Xl => "w-8 h-8 my-0.5",
-        Size.Xxl => "w-9 h-9 my-0.5",
-        _ => "w-6 h-6"
     };
 
     // -----------------------------------------------------------------------------------------------------------------

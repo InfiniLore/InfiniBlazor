@@ -16,14 +16,13 @@
 <div class="@Class relative flex overflow-hidden min-h-0 text-(--color-base-10)">
     <div class="absolute top-2 right-4 flex justify-end @ZIndex.CodeBlockCopyButton">
         @if (EnableCopy) {
-            <InfiniButtonToolTipped
+            <InfiniButtonOutlineSolidToolTipped
                 IconName="@LucideNames.Copy"
-                Variant="ButtonVariant.OutlineSolid"
                 OnClick="@CopyToClipboardAsync"
                 TooltipAnchor="@Anchor.Left">
                 <Content>@Language</Content>
                 <Tooltip>Copy to clipboard</Tooltip>
-            </InfiniButtonToolTipped>
+            </InfiniButtonOutlineSolidToolTipped>
         }
     </div>
     <div class="infini-bg-(--codeblock) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar">
