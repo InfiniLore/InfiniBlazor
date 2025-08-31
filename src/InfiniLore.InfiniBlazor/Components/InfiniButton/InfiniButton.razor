@@ -13,7 +13,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @if (Href.IsNotNullOrWhiteSpace()) {
     <a href="@ComputedHref"
-       class="@(ConcatClasses(Class, ContainerClasses)) rounded-md inline-flex items-center justify-center transition-all duration-150 transform cursor-pointer active:scale-95 hover:scale-105 overflow-visible "
+       class="@(ConcatClasses(Class, ContainerClasses, AutoWidth ? string.Empty : "flex-none w-fit")) inline-flex items-center justify-center transition-all duration-150 transform overflow-visible"
        @onmouseenter="@OnMouseEnterAsync"
        @onmouseleave="@OnMouseExitAsync">
         @ButtonContent
@@ -27,7 +27,8 @@ else {
             aria-label="@AriaLabel"
             @onmouseenter="@OnMouseEnterAsync"
             @onmouseleave="@OnMouseExitAsync"
-            class="@(ConcatClasses(Class, ContainerClasses)) inline-flex items-center justify-center transition-all duration-150 transform overflow-visible ">
+            class="@(ConcatClasses(Class, ContainerClasses, AutoWidth ? string.Empty : "flex-none w-fit")) inline-flex items-center justify-center transition-all duration-150 transform overflow-visible"
+            >
         @ButtonContent
     </button>
 }
@@ -43,6 +44,7 @@ else {
     
     [Parameter] public bool OnHover { get; set; }
     [Parameter] public EventCallback<bool> OnHoverChanged { get; set; }
+    [Parameter] public bool AutoWidth { get; set; }
 
     // ReSharper disable once UnusedParameter.Local
     private RenderFragment ButtonContent => __builder => {
@@ -61,13 +63,14 @@ else {
             }
         </span>
     };
-
+    
     private const string ContainerReaction = "cursor-pointer active:scale-95 hover:transform hover:transition hover:ease-in hover:duration-200 overflow-visible";
     private const string Rounding = "rounded-md";
 
     private string ContainerClasses => (Variant, Color) switch {
         _ when IsDisabled => ConcatClasses(
             ContainerSizeClasses,
+            Rounding,
             "infini-bg-(--button-disabled) text-(--button-disabled-text) opacity-50 cursor-not-allowed"
         ),
 
