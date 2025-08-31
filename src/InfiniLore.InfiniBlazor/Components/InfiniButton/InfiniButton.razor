@@ -11,38 +11,26 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* WHY THE F do I need to do this to make it work? https://github.com/w3c/csswg-drafts/issues/9045 *@
-<InfiniTooltipWrapper>
-    <Content>
-        @if (Href.IsNotNullOrWhiteSpace()) {
-            <a href="@ComputedHref"
-               class="@(ConcatClasses(Class, ContainerClasses)) rounded-md inline-flex items-center justify-center transition-all duration-150 transform cursor-pointer active:scale-95 hover:scale-105 overflow-visible "
-               @onmouseenter="@ShowTooltip"
-               @onmouseleave="@HideTooltip">
-                @ButtonContent
-            </a>
-        }
-        else {
-            <button @onclick="@OnClickAsync"
-                    @onclick:stopPropagation="@StopPropagation"
-                    type="button"
-                    disabled="@IsDisabled"
-                    aria-label="@AriaLabel"
-                    @onmouseenter="@ShowTooltip"
-                    @onmouseleave="@HideTooltip"
-                    class="@(ConcatClasses(Class, ContainerClasses)) inline-flex items-center justify-center transition-all duration-150 transform overflow-visible ">
-                @ButtonContent
-            </button>
-        }
-    </Content>
-
-    <Tooltip>
-        <InfiniTooltip
-            Class="@(HiddenIfNot(_showTooltip && Tooltip.IsNotNullOrEmpty()))"
-            Content="@Tooltip"
-            Anchor="@TooltipAnchor"/>
-    </Tooltip>
-</InfiniTooltipWrapper>
+@if (Href.IsNotNullOrWhiteSpace()) {
+    <a href="@ComputedHref"
+       class="@(ConcatClasses(Class, ContainerClasses)) rounded-md inline-flex items-center justify-center transition-all duration-150 transform cursor-pointer active:scale-95 hover:scale-105 overflow-visible "
+       @onmouseenter="@ShowTooltip"
+       @onmouseleave="@HideTooltip">
+        @ButtonContent
+    </a>
+}
+else {
+    <button @onclick="@OnClickAsync"
+            @onclick:stopPropagation="@StopPropagation"
+            type="button"
+            disabled="@IsDisabled"
+            aria-label="@AriaLabel"
+            @onmouseenter="@ShowTooltip"
+            @onmouseleave="@HideTooltip"
+            class="@(ConcatClasses(Class, ContainerClasses)) inline-flex items-center justify-center transition-all duration-150 transform overflow-visible ">
+        @ButtonContent
+    </button>
+}
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
@@ -54,10 +42,9 @@
     [Parameter] public ButtonVariant Variant { get; set; } = ButtonVariant.Default;
     [Parameter] public Color Color { get; set; } = Color.Default;
     [Parameter] public Size Size { get; set; } = Size.M;
-    [Parameter] public string? Tooltip { get; set; }
-    [Parameter] public Anchor TooltipAnchor { get; set; } = Anchor.Center | Anchor.Bottom;
-
-    private bool _showTooltip;
+    
+    [Parameter] public bool OnHover { get; set; }
+    [Parameter] public EventCallback<bool> OnHoverChanged { get; set; }
 
     // ReSharper disable once UnusedParameter.Local
     private RenderFragment ButtonContent => __builder => {
@@ -268,6 +255,12 @@
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private void ShowTooltip() => _showTooltip = true;
-    private void HideTooltip() => _showTooltip = false;
+    private async Task ShowTooltip() {
+        OnHover = true;
+        await OnHoverChanged.InvokeAsync(OnHover);
+    }
+    private async Task HideTooltip() {
+        OnHover = false;
+        await OnHoverChanged.InvokeAsync(OnHover);
+    }
 }

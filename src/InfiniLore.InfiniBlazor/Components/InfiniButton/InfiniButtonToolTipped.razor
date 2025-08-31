@@ -1,0 +1,38 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniButton
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* WHY THE F do I need to do this to make it work? https://github.com/w3c/csswg-drafts/issues/9045 *@
+<InfiniTooltipWrapper>
+    <Content>
+        <InfiniButton
+            Type="@Type"
+            AriaLabel="@AriaLabel"
+            Variant="@Variant"
+            Color="@Color"
+            Size="@Size"
+            @bind-OnHover="@OnHover">
+            @ChildContent
+        </InfiniButton>
+    </Content>
+    <Tooltip>
+        <InfiniTooltip
+            Class="@(HiddenIfNot(OnHover && Tooltip.IsNotNullOrEmpty()))"
+            Content="@Tooltip"
+            Anchor="@TooltipAnchor"/>
+    </Tooltip>
+</InfiniTooltipWrapper>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter] public string? Tooltip { get; set; }
+    [Parameter] public Anchor TooltipAnchor { get; set; } = Anchor.Center | Anchor.Bottom;
+}
