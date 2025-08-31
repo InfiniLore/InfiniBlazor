@@ -2974,10 +2974,24 @@
       }
     }
   }
+  .hover\:infini-bg-\(--color-base-50\) {
+    &:hover {
+      @media (hover: hover) {
+        background: var(--color-base-50);
+      }
+    }
+  }
   .hover\:infini-bg-\(--color-base-60\) {
     &:hover {
       @media (hover: hover) {
         background: var(--color-base-60);
+      }
+    }
+  }
+  .hover\:infini-bg-\(--color-base-70\) {
+    &:hover {
+      @media (hover: hover) {
+        background: var(--color-base-70);
       }
     }
   }

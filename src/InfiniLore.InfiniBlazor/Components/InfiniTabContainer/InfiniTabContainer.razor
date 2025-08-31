@@ -13,12 +13,14 @@
 <CascadingValue Value="@Context">
     <div class="h-full grid grid-cols-1 grid-rows-[auto_1fr] gap-0">
         <div class="@GetContainerStyling() w-full overflow-x-auto overflow-y-hidden infini-scrollbar">
-            @foreach (string tab in Context.Tabs) {
+            @foreach ((string key, InfiniTabContent content) in Context.Tabs) {
                 <InfiniButton
+                    IconName="@content.IconName"
                     Class="@GetButtonStyling()"
-                    Variant="@(Context.SelectedTabId == tab ? ButtonVariant.TabSelected : ButtonVariant.TabUnSelected)"
-                    OnClick="@(() => Context.SelectPage(tab))">
-                    @tab
+                    IsDisabled="@(IsDisabled || content.IsDisabled)"
+                    Variant="@(Context.SelectedTabId == key ? ButtonVariant.TabSelected : ButtonVariant.TabUnSelected)"
+                    OnClick="@(() => Context.SelectPage(key))">
+                    @key
                 </InfiniButton>
             }
         </div>
@@ -42,10 +44,10 @@
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private string GetContainerStyling() => Style switch {
-        TabContainerStyle.Default => "flex justify-start",
-        TabContainerStyle.Center => "flex justify-center",
+        TabContainerStyle.Default => "flex flex-row gap-2 justify-start",
+        TabContainerStyle.Center => "flex flex-row gap-2 justify-center",
         TabContainerStyle.Stretch => "grid grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-2",
-        TabContainerStyle.Right => "flex justify-end",
+        TabContainerStyle.Right => "flex flex-row gap-2 justify-end",
         _ => throw new ArgumentOutOfRangeException()
     };
     private string GetButtonStyling() => Style switch {
