@@ -12,6 +12,13 @@
 <InfiniToolTipWrapper @bind-ShowTooltip="@OnHover" Anchor="@TooltipAnchor">
     <Content>
         <InfiniButton
+            Href="@Href"
+            IconName="@IconName"
+            Text="@Text"
+            StopPropagation="@StopPropagation"
+            OnClick="@OnClick"  
+            DebounceMs="@DebounceMs"
+            DisableTrackedQueryParams="@DisableTrackedQueryParams"
             Type="@Type"
             AriaLabel="@AriaLabel"
             Variant="@Variant"

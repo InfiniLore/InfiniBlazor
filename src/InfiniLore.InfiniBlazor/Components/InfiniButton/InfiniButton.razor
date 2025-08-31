@@ -11,33 +11,29 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* ReSharper disable CSharpWarnings::CS8974 *@
 @if (Href.IsNotNullOrWhiteSpace()) {
     <a href="@ComputedHref"
        class="@(ConcatClasses(Class, ContainerClasses)) rounded-md inline-flex items-center justify-center transition-all duration-150 transform cursor-pointer active:scale-95 hover:scale-105 overflow-visible "
-       onmouseenter="@ShowTooltip"
-       onmouseleave="@HideTooltip">
+       @onmouseenter="@OnMouseEnterAsync"
+       @onmouseleave="@OnMouseExitAsync">
         @ButtonContent
     </a>
 }
 else {
-    <button onclick="@OnClickAsync"
+    <button @onclick="@OnClickAsync"
             onclick:stopPropagation="@StopPropagation"
             type="button"
             disabled="@IsDisabled"
             aria-label="@AriaLabel"
-            onmouseenter="@ShowTooltip"
-            onmouseleave="@HideTooltip"
+            @onmouseenter="@OnMouseEnterAsync"
+            @onmouseleave="@OnMouseExitAsync"
             class="@(ConcatClasses(Class, ContainerClasses)) inline-flex items-center justify-center transition-all duration-150 transform overflow-visible ">
         @ButtonContent
     </button>
 }
-@* ReSharper restore CSharpWarnings::CS8974 *@
-
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
     [Parameter] public string Type { get; set; } = "button";
     [Parameter] public string? AriaLabel { get; set; }
@@ -257,11 +253,11 @@ else {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private async Task ShowTooltip() {
+    private async Task OnMouseEnterAsync() {
         OnHover = true;
         await OnHoverChanged.InvokeAsync(OnHover);
     }
-    private async Task HideTooltip() {
+    private async Task OnMouseExitAsync() {
         OnHover = false;
         await OnHoverChanged.InvokeAsync(OnHover);
     }
