@@ -19,9 +19,9 @@
                 IconName="copy"
                 Variant="ButtonVariant.OutlineSolid"
                 OnClick="@CopyToClipboardAsync"
-                Tooltip="Copy to clipboard"
                 TooltipAnchor="@Anchor.Left">
-                @Language
+                <Content>@Language</Content>
+                <Tooltip>Copy to clipboard</Tooltip>
             </InfiniButtonToolTipped>
         }
     </div>

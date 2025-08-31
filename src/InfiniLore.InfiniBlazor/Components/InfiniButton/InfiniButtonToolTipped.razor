@@ -10,7 +10,7 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* WHY THE F do I need to do this to make it work? https://github.com/w3c/csswg-drafts/issues/9045 *@
-<InfiniTooltipWrapper @bind-ShowTooltip="@OnHover" Anchor="@TooltipAnchor">
+<InfiniToolTipWrapper @bind-ShowTooltip="@OnHover" Anchor="@TooltipAnchor">
     <Content>
         <InfiniButton
             Type="@Type"
@@ -19,17 +19,18 @@
             Color="@Color"
             Size="@Size"
             @bind-OnHover="@OnHover">
-            @ChildContent
+            @Content
         </InfiniButton>
     </Content>
     <Tooltip>
         @Tooltip
     </Tooltip>
-</InfiniTooltipWrapper>
+</InfiniTooltipWrappera>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public string? Tooltip { get; set; }
+    [Parameter, EditorRequired] public required RenderFragment Content { get; set; }
+    [Parameter, EditorRequired] public required RenderFragment Tooltip { get; set; }
     [Parameter] public Anchor TooltipAnchor { get; set; } = Anchor.Center | Anchor.Bottom;
 }
