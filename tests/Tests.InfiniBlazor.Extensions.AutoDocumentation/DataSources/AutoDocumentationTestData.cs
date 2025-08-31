@@ -1,17 +1,15 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Config;
-using Microsoft.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.AutoDocumentation;
 
-namespace InfiniLore.InfiniBlazor.AutoDocumentation;
+namespace Tests.InfiniBlazor.Extensions.AutoDocumentation.DataSources;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class ConfigAutoDocumentation {
-    public static InfiniBlazorConfig RegisterAutoDocumentationData<TData>(this InfiniBlazorConfig config)
-        where TData : class, IAutoDocumenterData, new() {
-        config.Services.AddSingleton<IAutoDocumenterData, TData>();
-        return config;
-    }
-}
+public record AutoDocumentationTestData(
+    string Id, 
+    bool ExpectedResult, 
+    IAutoDocumentationFragment? ExpectedFragment
+);

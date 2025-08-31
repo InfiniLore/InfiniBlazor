@@ -27,7 +27,9 @@ public static class Program {
             "InfiniLore.InfiniBlazor.Contracts",
             "InfiniLore.InfiniBlazor.SourceGenerators",
             "InfiniLore.InfiniBlazor.Extensions.ExtraComponents",
-            "InfiniLore.InfiniBlazor.Extensions.Maui"
+            "InfiniLore.InfiniBlazor.Extensions.Maui",
+            "InfiniLore.InfiniBlazor.Extensions.AutoDocumentation",
+            "InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators"
         );
 
         string oneLineArgs = ArgsInputHelper.ToOneLine(args).Replace("%PROJECTS%", projects);

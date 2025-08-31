@@ -2,14 +2,22 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.AutoDocumentation;
-using Microsoft.AspNetCore.Components.Web;
 
-namespace Example.InfiniBlazor.Shared.Components.Pages.ExampleAutoDoc;
+namespace Tests.InfiniBlazor.Extensions.AutoDocumentation.DataSources.CodeFiles;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class ExampleAutoDocPage {
-    [AutoDocument("else")] private static void DoSomething(MouseEventArgs obj) {
-        throw new NotImplementedException();
+public class PropertyHoldingClass {
+    [AutoDocument("PropertyTest")] public bool SomeProperty { get; set; }
+    
+}
+
+public class PropertyTestData {
+    private const string ExpectedSourceProperty = "public bool SomeProperty { get; set; }";
+    
+
+    public static IEnumerable<Func<AutoDocumentationTestData>> GetTestData() {
+        yield return () => new AutoDocumentationTestData("PropertyTest", true, new AutoDocumentationFragment([], [ExpectedSourceProperty]));
     }
 }

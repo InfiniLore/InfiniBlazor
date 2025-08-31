@@ -25,6 +25,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Extensions.AutoDocumentation" />
         <InternalsVisibleTo Include="Tests.InfiniBlazor" />
         <InternalsVisibleTo Include="Tests.InfiniBlazor.Markdown" />
     </ItemGroup>
@@ -92,5 +93,6 @@
       <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdTag.razor" />
       <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdUnderline.razor" />
       <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\UnknownBlazorMdComponent.razor" />
+      <UpToDateCheckInput Remove="Components\InfiniAutoDocument\InfiniAutoDocument.razor" />
     </ItemGroup>
 </Project>

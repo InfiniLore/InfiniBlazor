@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>InfiniLore.InfiniBlazor.AutoDocumentation</RootNamespace>
+
+        <!-- Package metadata -->
+        <PackageId>InfiniLore.InfiniBlazor.Extensions.AutoDocumenation</PackageId>
+        <Version>0.1.0-preview.87</Version>
+        <Authors>Anna Sas</Authors>
+        <Description>Generators to help with AutDocumentation of razor components</Description>
+        <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
+        <PackageTags>Blazor;Ui;Design;Components;Library;Contracts;Generator</PackageTags>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <DebugType>embedded</DebugType>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageIcon>icon.png</PackageIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="../../LICENSE" Pack="true" PackagePath="" Visible="false" />
+        <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
+        <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="JetBrains.Annotations" />
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" />
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.csproj">
+          <Pack>true</Pack>
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>analyzers</IncludeAssets>
+          <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+<!--          <OutputItemType>Analyzer</OutputItemType>-->
+      </ProjectReference>
+      <ProjectReference Include="..\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj">
+          <PrivateAssets>all</PrivateAssets>
+      </ProjectReference>
+
+    </ItemGroup>
+
+</Project>

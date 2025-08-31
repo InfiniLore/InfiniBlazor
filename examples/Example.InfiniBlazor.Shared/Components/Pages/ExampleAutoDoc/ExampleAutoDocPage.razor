@@ -1,7 +1,8 @@
-﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+﻿@* AUTO DOC ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor
+@using InfiniLore.InfiniBlazor.AutoDocumentation
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
@@ -19,7 +20,7 @@
             <InfiniButton>Something</InfiniButton>
         </InfiniAutoDocument>
         
-        <InfiniAutoDocument Id="else">
+        <InfiniAutoDocument Id="@LucideNames.Baby">
             <InfiniButton IsDisabled OnClick="@DoSomething">Something</InfiniButton>
         </InfiniAutoDocument>
         
@@ -38,3 +39,35 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [AutoDocument(LucideNames.Baby)] private bool _test;
+    // ReSharper disable once RedundantDefaultMemberInitializer
+    [AutoDocument(LucideNames.Baby), Parameter] public bool Test {
+        get => _test;
+        set => _test = value;
+    }
+
+    // ReSharper disable once UnusedMember.Local
+    // ReSharper disable once UnusedParameter.Local
+    [AutoDocument("test")] private static void DoSomethingTest(MouseEventArgs obj) {
+        throw new NotImplementedException();
+    }
+
+
+    [AutoDocument(LucideNames.Baby)] public class LetsDoATest {
+        
+    }
+    
+    [AutoDocument(LucideNames.Baby)] public record LetsDoATestRecord {
+        
+    }
+    
+    
+    [AutoDocument(LucideNames.Baby)] public struct LetsDoATestStruct {
+        
+    }
+    
+    [AutoDocument(LucideNames.Baby)] public record struct LetsDoATestRecordStruct {
+        
+    }
+}

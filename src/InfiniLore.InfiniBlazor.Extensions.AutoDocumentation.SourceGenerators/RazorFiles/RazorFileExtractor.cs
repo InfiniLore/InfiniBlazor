@@ -1,10 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace InfiniLore.InfiniBlazor.SourceGenerators.AutoDocumenting.RazorFiles;
+namespace InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.RazorFiles;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -20,6 +24,10 @@ public static class RazorFileExtractor {
     private const string EndTag = "</InfiniAutoDocument>";
     private static readonly SourceText EndTagText = SourceText.From(EndTag);
     private static readonly int EndTagLength = EndTag.Length;
+
+    private const string CodeBlockStart = "@code";
+    private static readonly SourceText CodeBlockStartText = SourceText.From(CodeBlockStart);
+    private static readonly int CodeBlockStartLength = CodeBlockStart.Length;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -53,7 +61,7 @@ public static class RazorFileExtractor {
                     int idIndexEnd = FindNonEscapedCharacterIndex(source, '"', idIndexStart);
                     if (idIndexEnd < 0) break;
 
-                    idContent = source.GetSubText(TextSpan.FromBounds(idIndexStart, idIndexEnd)).ToString();
+                    idContent = source.GetSubText(TextSpan.FromBounds(idIndexStart, idIndexEnd)).ToString().TrimStart('@');
                     index = idIndexEnd + 1;
                     break;
                 }
@@ -99,22 +107,99 @@ public static class RazorFileExtractor {
         }
     }
 
+    public static IEnumerable<AutoDocumentedData> ExtractAutoDocumentMembers(SourceText source) {
+        int sourceLength = source.Length;
+
+        for (int index = 0; index < sourceLength; index++) {
+            // Check bounds before creating TextSpan
+            if (index + CodeBlockStartLength > sourceLength) continue;
+
+            if (!source.GetSubText(TextSpan.FromBounds(index, index + CodeBlockStartLength)).ContentEquals(CodeBlockStartText)) continue;
+
+            index += CodeBlockStartLength;
+
+            int braceOpen = FindNonEscapedCharacterIndex(source, '{', index);
+            if (braceOpen == -1) break;
+
+            int braceClose = FindMatchingBrace(source.ToString(), braceOpen);
+            if (braceClose == -1) break;
+
+            SourceText blockContent = source.GetSubText(TextSpan.FromBounds(braceOpen + 1, braceClose));
+
+            SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(blockContent);
+            CompilationUnitSyntax root = syntaxTree.GetCompilationUnitRoot();
+
+            foreach (MemberDeclarationSyntax? member in root.DescendantNodes().OfType<MemberDeclarationSyntax>()) {
+                switch (member) {
+                    case StructDeclarationSyntax:
+                    case RecordDeclarationSyntax:
+                    case PropertyDeclarationSyntax:
+                    case ClassDeclarationSyntax: {
+                        if (!AutoDocumentedData.TryGetFromMember(member, out AutoDocumentedData? data)) yield break;
+
+                        yield return data;
+
+                        break;
+                    }
+
+                    case GlobalStatementSyntax { Statement: LocalDeclarationStatementSyntax local }: {
+                        if (!AutoDocumentedData.TryGetFromStatement(local, out AutoDocumentedData? data)) yield break;
+
+                        yield return data;
+
+                        break;
+                    }
+
+                    case GlobalStatementSyntax { Statement: LocalFunctionStatementSyntax local }: {
+                        if (!AutoDocumentedData.TryGetFromStatement(local, out AutoDocumentedData? data)) yield break;
+
+                        yield return data;
+
+                        break;
+                    }
+                }
+            }
+
+            // Skip past this @code block
+            index = braceClose;
+        }
+    }
+
     private static int FindNonEscapedCharacterIndex(SourceText source, char character, int startIndex) {
         for (int i = startIndex; i < source.Length; i++) {
             if (source[i] != character) continue;
 
-            // Count preceding backslashes
             int backslashCount = 0;
             for (int j = i - 1; j >= 0 && source[j] == '\\'; j--) {
                 backslashCount++;
             }
 
-            // If even number of backslashes (including 0), the character is not escaped
             if (backslashCount % 2 != 0) continue;
+
             return i;
         }
 
         return -1;
-
     }
+
+    private static int FindMatchingBrace(string text, int openIndex) {
+        int depth = 0;
+        for (int i = openIndex; i < text.Length; i++) {
+            switch (text[i]) {
+                case '{':
+                    depth++;
+                    break;
+                case '}':
+                    depth--;
+                    if (depth == 0) return i;
+
+                    break;
+            }
+        }
+
+        return -1;
+    }
+
+
+
 }

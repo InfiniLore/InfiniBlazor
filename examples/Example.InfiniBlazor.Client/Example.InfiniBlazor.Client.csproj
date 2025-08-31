@@ -16,6 +16,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
+      <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.csproj" />
       <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" />
       <ProjectReference Include="..\Example.InfiniBlazor.Shared\Example.InfiniBlazor.Shared.csproj" />
     </ItemGroup>
