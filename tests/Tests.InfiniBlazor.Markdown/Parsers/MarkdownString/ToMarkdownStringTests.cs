@@ -11,30 +11,10 @@ namespace Tests.InfiniBlazor.Markdown.Parsers.MarkdownString;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [DiDataSource]
-public class MarkdownStringTests(IMarkdownParser parser) {
-
+public class ToMarkdownStringTests(IMarkdownParser parser) {
     [Test]
     [MethodDataSource<MdTestDataSources>(nameof(MdTestDataSources.GetBlankTest))]
-    [MethodDataSource<MdTestDataSources>(nameof(MdTestDataSources.GetTestData))]
-    // [MethodDataSource(typeof(MdTestDataSources), nameof(MdTestDataSources.GetTestDataAsync))] // TODO: Use this when TUnit fixes https://github.com/thomhurst/TUnit/issues/2990
-    public async Task FromMarkdownString_ToSyntaxTree_ShouldBeSame(MdTestData data) {
-        // Arrange
-        string input = data.MdString;
-        IMdSyntaxTree expectedOutput = data.MdSyntaxTree;
-
-        // Act
-        IMdSyntaxTree foundTree = parser.MarkdownString.SerializeToSyntaxTree(input);
-
-        // Assert
-        await Assert.That(foundTree)
-            .IsNotNull()
-            .IsEqualTo(expectedOutput);
-    }
-    
-    [Test]
-    [MethodDataSource<MdTestDataSources>(nameof(MdTestDataSources.GetBlankTest))]
-    [MethodDataSource<MdTestDataSources>(nameof(MdTestDataSources.GetTestData))]
-    // [MethodDataSource(typeof(MdTestDataSources), nameof(MdTestDataSources.GetTestDataAsync))] // TODO: Use this when TUnit fixes https://github.com/thomhurst/TUnit/issues/2990
+    [MethodDataSource(typeof(MdTestDataSources), nameof(MdTestDataSources.GetTestDataAsync))]
     public async Task FromSyntaxTree_ToMarkdownString_ShouldBeExpected(MdTestData data) {
         // Arrange
         IMdSyntaxTree input = data.MdSyntaxTree;
