@@ -1,17 +1,13 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using CodeOfChaos.Extensions.Debouncers
-@using InfiniLore.InfiniBlazor.QueryParameters
 @using InfiniLore.Lucide
-@using Microsoft.AspNetCore.Components.Routing
 
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniComponentBase
-@inject IQueryParameterManager QueryParameterManager
+@inherits InfiniButtonComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -19,7 +15,7 @@
 <InfiniTooltipWrapper>
     <Content>
         @if (Href.IsNotNullOrWhiteSpace()) {
-            <a href="@_computedHref"
+            <a href="@ComputedHref"
                class="@(ConcatClasses(Class, ContainerClasses)) rounded-md inline-flex items-center justify-center transition-all duration-150 transform cursor-pointer active:scale-95 hover:scale-105 overflow-visible "
                @onmouseenter="@ShowTooltip"
                @onmouseleave="@HideTooltip">
@@ -29,7 +25,7 @@
         else {
             <button @onclick="@OnClickAsync"
                     @onclick:stopPropagation="@StopPropagation"
-                    type="@Type"
+                    type="button"
                     disabled="@IsDisabled"
                     aria-label="@AriaLabel"
                     @onmouseenter="@ShowTooltip"
@@ -53,14 +49,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
-    [Parameter] public string? Href { get; set; }
-    [Parameter] public string? IconName { get; set; }
-    [Parameter] public string? Text { get; set; }
-    [Parameter] public bool StopPropagation { get; set; } = true;
-    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
-    private EventCallbackDebouncer<MouseEventArgs> OnClickDebounced { get; set; } = EventCallbackDebouncer<MouseEventArgs>.Empty;
-    [Parameter] public int DebounceMs { get; set; }
-
     [Parameter] public string Type { get; set; } = "button";
     [Parameter] public string? AriaLabel { get; set; }
     [Parameter] public ButtonVariant Variant { get; set; } = ButtonVariant.Default;
@@ -68,9 +56,6 @@
     [Parameter] public Size Size { get; set; } = Size.M;
     [Parameter] public string? Tooltip { get; set; }
     [Parameter] public Anchor TooltipAnchor { get; set; } = Anchor.Center | Anchor.Bottom;
-    [Parameter] public bool DisableTrackedQueryParams { get; set; }
-
-    private string? _computedHref;
 
     private bool _showTooltip;
 
@@ -283,46 +268,6 @@
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    
-    protected override void OnInitialized() {
-        base.OnInitialized();
-        if (Href is not null && !DisableTrackedQueryParams) NavigationManager.LocationChanged += OnLocationChanged;
-        ComputeHref();
-    }
-
-    protected override async Task OnParametersSetAsync() {
-        base.OnParametersSet();
-        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-        if (OnClickDebounced is not null) await OnClickDebounced.DisposeAsync();
-        OnClickDebounced = DebounceMs > 0 
-            ? OnClick.GetDebouncer(DebounceMs)
-            : EventCallbackDebouncer<MouseEventArgs>.Empty;
-    }
-
     private void ShowTooltip() => _showTooltip = true;
     private void HideTooltip() => _showTooltip = false;
-    
-    private async Task OnClickAsync(MouseEventArgs args) {
-        if (IsDisabled) return;
-
-        if (!OnClickDebounced.IsEmpty) await OnClickDebounced.InvokeDebouncedAsync(args);
-        else await OnClick.InvokeAsync(args);
-    }
-
-    private void OnLocationChanged(object? sender, LocationChangedEventArgs e) {
-        ComputeHref();
-        InvokeAsync(StateHasChanged);
-    }
-
-    private void ComputeHref() {
-        _computedHref = Href is not null && !DisableTrackedQueryParams
-            ? QueryParameterManager.ApplyTrackedQueryParameters(Href)
-            : Href;
-    }
-
-    public override async ValueTask DisposeAsync() {
-        await base.DisposeAsync();
-        if (Href is not null && !DisableTrackedQueryParams) NavigationManager.LocationChanged -= OnLocationChanged;
-        if (!OnClickDebounced.IsEmpty) await OnClickDebounced.DisposeAsync();
-    }
 }
