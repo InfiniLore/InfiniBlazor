@@ -9,13 +9,13 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* ReSharper disable CSharpWarnings::CS8974 *@
-<button @onclick="@Callback" class="@ContainerClasses cursor-pointer">
+<button 
+    @onclick="@Callback"
+    class="@ContainerClasses cursor-pointer">
     <InfiniNavItem Text="@Text" Icon="@Icon" Class="@Class">
         @ChildContent
     </InfiniNavItem>
 </button>
-@* ReSharper restore CSharpWarnings::CS8974 *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@

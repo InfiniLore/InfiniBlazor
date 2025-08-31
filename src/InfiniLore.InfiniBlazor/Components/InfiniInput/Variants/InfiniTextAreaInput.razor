@@ -9,12 +9,11 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* ReSharper disable CSharpWarnings::CS8974 *@
 <InfiniInputLayout Component="@this">
     <textarea
         id="@Id"
         value="@Value"
-        oninput="@OnInputHandler"
+        @oninput="@OnInputHandler"
         onchange="@OnChange"
         placeholder="@Placeholder"
         disabled="@IsDisabled"
@@ -26,7 +25,6 @@
 
     @ChildContent
 </InfiniInputLayout>
-@* ReSharper restore CSharpWarnings::CS8974 *@
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code

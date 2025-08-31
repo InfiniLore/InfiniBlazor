@@ -9,7 +9,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* ReSharper disable CSharpWarnings::CS8974 *@
 <div @onclick="@OnContainerClick"
      class="@(ConcatClasses(Class, CollapsedState ? "px-1 py-2" : "p-2")) flex flex-nowrap items-center rounded hover:bg-(--nav-button-hover) group transition-all duration-300">
     <span class="@ConcatClasses(Direction.ToFlexRow(), CollapsedState ? "gap-0": "gap-4")  flex items-center w-full transition-all justify-between">
@@ -37,7 +36,6 @@
         </div>
     </span>
 </div>
-@* ReSharper restore CSharpWarnings::CS8974 *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@

@@ -10,22 +10,22 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* ReSharper disable CSharpWarnings::CS8974 *@
+
 <div class="@Class inline-flex">
     <input
         type="checkbox"
         class="sr-only"
         checked="@IsChecked"
         disabled="@IsDisabled"
-        onfocus="@OnFocusAsync"
-        onblur="@OnBlurAsync"
+        @onfocus="@OnFocusAsync"
+        @onblur="@OnBlurAsync"
         tabindex="@(IsDisabled ? -1 : 0)"
-        onkeydown="@OnKeyDownAsync"
+        @onkeydown="@OnKeyDownAsync"
     />
     <!-- Custom checkbox appearance -->
     <div 
         class="@ConcatClasses(BackgroundClasses,ContainerBorderClasses, FocusClasses, Size.ToTailwindRounded()) border-2 p-0.5"
-        onclick="@OnToggleAsync">
+        @onclick="@OnToggleAsync">
         @if (IsChecked) {
             <LiCheck Size="@Size.ToLucideIconSize()" Class="@WhenDisabled("text-(--color-base-10)", "text-(--color-base-70)")"/>
         }
@@ -35,7 +35,7 @@
     </div>
     @ChildContent
 </div>
-@* ReSharper restore CSharpWarnings::CS8974 *@
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@

@@ -12,17 +12,15 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* ReSharper disable CSharpWarnings::CS8974 *@
 <div class="@Class @(EditorState.ShowSidePreview ? "border-r border-(--border)" : "") min-h-0 flex">
     <textarea
         class="grow p-4 border-none focus:outline-none resize-none overflow-scroll infini-scrollbar font-mono"
         value="@EditorState.Source.Text"
         ref="@EditorState.InputRef"
-        oninput="@OnInputAsync"
-        onkeydown="@OnKeyDownAsync">
+        @oninput="@OnInputAsync"
+        @onkeydown="@OnKeyDownAsync">
     </textarea>
 </div>
-@* ReSharper restore CSharpWarnings::CS8974 *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@

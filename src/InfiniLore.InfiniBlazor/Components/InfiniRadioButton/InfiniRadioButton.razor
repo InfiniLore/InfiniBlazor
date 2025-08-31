@@ -10,7 +10,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* ReSharper disable CSharpWarnings::CS8974 *@
+
 <div class="inline-flex">
     <input
         type="checkbox"
@@ -35,7 +35,7 @@
     </div>
     @ChildContent
 </div>
-@* ReSharper restore CSharpWarnings::CS8974 *@
+
 
 @* onchange="@(async () => await IsCheckedChanged.InvokeAsync(IsChecked))" *@
 @* @onkeydown="OnKeyDown" *@

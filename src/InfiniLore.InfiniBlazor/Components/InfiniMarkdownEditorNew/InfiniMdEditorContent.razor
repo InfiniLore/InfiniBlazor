@@ -12,19 +12,18 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* ReSharper disable CSharpWarnings::CS8974 *@
 <div class="@Class border-2 border-red-500 flex">
     <textarea 
         class="w-full h-full  overflow-y-auto infini-scrollbar"
         value="@TextAreaValue"
         ref="@EditorContext.ContentRef"
-        oninput="@OnInputAsyncDebounced.InvokeDebouncedAsync"
-        onkeydown="@OnKeyDownAsyncDebounced.InvokeDebouncedAsync"
+        @oninput="@(args => OnInputAsyncDebounced.InvokeDebouncedAsync(args))"
+        @onkeydown="@(args => OnKeyDownAsyncDebounced.InvokeDebouncedAsync(args))"
     >
 
     </textarea>
 </div>
-@* ReSharper restore CSharpWarnings::CS8974 *@
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
