@@ -5,20 +5,56 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
+@inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="relative">
-    <div class="@InfiniTooltip.AnchorClass relative">
+    <div class="@AnchorClass relative">
         @Content
     </div>
-    @Tooltip
+    <div class="@ConcatClasses(HiddenIfNot(ShowTooltip), Class, AnchorClasses) @ZIndex.Tooltip absolute anchored shadow-md/30">
+        <div class="@TriangleClasses shadow-md/30 transform px-3 py-1 infini-bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md transition-opacity duration-200 whitespace-nowrap pointer-events-none">
+            @Tooltip
+        </div>
+    </div>
 </div>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     [Parameter, EditorRequired] public required RenderFragment Content { get; set; } 
-    [Parameter, EditorRequired] public required RenderFragment Tooltip { get; set; } 
+    [Parameter, EditorRequired] public required RenderFragment Tooltip { get; set; }
+    
+    [Parameter, EditorRequired] public bool ShowTooltip { get; set; }
+    [Parameter] public EventCallback<bool> ShowTooltipChanged { get; set; }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    [Parameter] public Anchor Anchor { get; set; } = Anchor.Center | Anchor.Bottom;
+    [Parameter] public ElementReference Target { get; set; }
+
+    private string AnchorClasses => Anchor switch {
+        Anchor.CenterBottom => "anchored-bottom-center/anchor-tooltip pt-2",
+        Anchor.LeftBottom => "anchored-bottom-left/anchor-tooltip",
+        Anchor.RightBottom => "anchored-bottom-right/anchor-tooltip",
+        Anchor.CenterTop => "anchored-top-center/anchor-tooltip pb-2",
+        Anchor.LeftTop => "anchored-top-left/anchor-tooltip",
+        Anchor.RightTop => "anchored-top-right/anchor-tooltip",
+        Anchor.Left => "anchored-left/anchor-tooltip pr-2",
+        Anchor.Right => "anchored-right/anchor-tooltip pl-2",
+        _ => "anchored/anchor-tooltip"
+    };
+
+    private string TriangleClasses => Anchor switch {
+        Anchor.CenterBottom => ConcatClasses(TriangleCommonClasses, "before:-top-1 before:left-1/2 before:-translate-x-1/2"),
+        Anchor.CenterTop => ConcatClasses(TriangleCommonClasses, "before:-bottom-1 before:left-1/2 before:-translate-x-1/2"),
+        Anchor.Left => ConcatClasses(TriangleCommonClasses, "before:-right-1 before:top-1/2 before:-translate-y-1/2"),
+        Anchor.Right => ConcatClasses(TriangleCommonClasses, "before:-left-1 before:top-1/2 before:-translate-y-1/2"),
+        _ => string.Empty
+    };
+
+    private const string TriangleCommonClasses = "before:content-[''] before:absolute before:w-2 before:h-2 before:rotate-45 before:infini-bg-(--color-base-90)";
+    public const string AnchorClass = "anchor/anchor-tooltip";
 }
