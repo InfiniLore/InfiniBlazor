@@ -25,6 +25,8 @@
 @code {
     [Parameter, EditorRequired] public required RenderFragment Content { get; set; } 
     [Parameter, EditorRequired] public required RenderFragment Tooltip { get; set; }
+    [Parameter] public Anchor Anchor { get; set; } = Anchor.Center | Anchor.Bottom;
+    [Parameter] public ElementReference Target { get; set; }
     
     [Parameter, EditorRequired] public bool ShowTooltip { get; set; }
     [Parameter] public EventCallback<bool> ShowTooltipChanged { get; set; }
@@ -32,18 +34,16 @@
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    [Parameter] public Anchor Anchor { get; set; } = Anchor.Center | Anchor.Bottom;
-    [Parameter] public ElementReference Target { get; set; }
 
     private string AnchorClasses => Anchor switch {
-        Anchor.CenterBottom => "anchored-bottom-center/anchor-tooltip pt-2",
+        Anchor.CenterBottom => "anchored-bottom-center/anchor-tooltip",
         Anchor.LeftBottom => "anchored-bottom-left/anchor-tooltip",
         Anchor.RightBottom => "anchored-bottom-right/anchor-tooltip",
-        Anchor.CenterTop => "anchored-top-center/anchor-tooltip pb-2",
+        Anchor.CenterTop => "anchored-top-center/anchor-tooltip",
         Anchor.LeftTop => "anchored-top-left/anchor-tooltip",
         Anchor.RightTop => "anchored-top-right/anchor-tooltip",
-        Anchor.Left => "anchored-left/anchor-tooltip pr-2",
-        Anchor.Right => "anchored-right/anchor-tooltip pl-2",
+        Anchor.Left => "anchored-left/anchor-tooltip",
+        Anchor.Right => "anchored-right/anchor-tooltip",
         _ => "anchored/anchor-tooltip"
     };
 

@@ -19,7 +19,7 @@
                  alt="Profile"
                  class="w-full h-full rounded-full object-cover group-hover:ring-2 ring-(--usericon-ring)"
                  crossorigin="anonymous"
-                 @onerror:preventDefault="@HandleImageError"/>
+                 @onerror="@HandleImageError"/>
         } else {
             <span class="w-8 h-8 flex justify-center items-center">
                 <LiCircleUser class="w-8 h-8 text-(--usericon-alt) group-hover:text-(--usericon-alt-hover)"/>

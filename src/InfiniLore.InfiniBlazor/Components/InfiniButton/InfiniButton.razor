@@ -15,19 +15,19 @@
 @if (Href.IsNotNullOrWhiteSpace()) {
     <a href="@ComputedHref"
        class="@(ConcatClasses(Class, ContainerClasses)) rounded-md inline-flex items-center justify-center transition-all duration-150 transform cursor-pointer active:scale-95 hover:scale-105 overflow-visible "
-       @onmouseenter="@ShowTooltip"
-       @onmouseleave="@HideTooltip">
+       onmouseenter="@ShowTooltip"
+       onmouseleave="@HideTooltip">
         @ButtonContent
     </a>
 }
 else {
-    <button @onclick="@OnClickAsync"
-            @onclick:stopPropagation="@StopPropagation"
+    <button onclick="@OnClickAsync"
+            onclick:stopPropagation="@StopPropagation"
             type="button"
             disabled="@IsDisabled"
             aria-label="@AriaLabel"
-            @onmouseenter="@ShowTooltip"
-            @onmouseleave="@HideTooltip"
+            onmouseenter="@ShowTooltip"
+            onmouseleave="@HideTooltip"
             class="@(ConcatClasses(Class, ContainerClasses)) inline-flex items-center justify-center transition-all duration-150 transform overflow-visible ">
         @ButtonContent
     </button>
