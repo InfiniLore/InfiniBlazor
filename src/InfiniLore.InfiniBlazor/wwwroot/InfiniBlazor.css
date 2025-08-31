@@ -463,6 +463,24 @@
   .z-1000 {
     z-index: 1000;
   }
+  .container {
+    width: 100%;
+    @media (width >= 40rem) {
+      max-width: 40rem;
+    }
+    @media (width >= 48rem) {
+      max-width: 48rem;
+    }
+    @media (width >= 64rem) {
+      max-width: 64rem;
+    }
+    @media (width >= 80rem) {
+      max-width: 80rem;
+    }
+    @media (width >= 96rem) {
+      max-width: 96rem;
+    }
+  }
   .m-0 {
     margin: calc(var(--spacing) * 0);
   }
@@ -1075,20 +1093,32 @@
   .grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+  .grid-cols-\[1fr_auto\] {
+    grid-template-columns: 1fr auto;
+  }
   .grid-cols-\[1fr_auto_1fr\] {
     grid-template-columns: 1fr auto 1fr;
   }
   .grid-cols-\[2fr_1fr\] {
     grid-template-columns: 2fr 1fr;
   }
+  .grid-cols-\[auto_1fr\] {
+    grid-template-columns: auto 1fr;
+  }
   .grid-cols-\[repeat\(auto-fit\,minmax\(0\,1fr\)\)\] {
     grid-template-columns: repeat(auto-fit,minmax(0,1fr));
+  }
+  .grid-rows-1 {
+    grid-template-rows: repeat(1, minmax(0, 1fr));
   }
   .grid-rows-3 {
     grid-template-rows: repeat(3, minmax(0, 1fr));
   }
   .grid-rows-\[auto_1fr\] {
     grid-template-rows: auto 1fr;
+  }
+  .grid-rows-\[repeat\(auto-fit\,minmax\(0\,1fr\)\)\] {
+    grid-template-rows: repeat(auto-fit,minmax(0,1fr));
   }
   .flex-col {
     flex-direction: column;

@@ -11,8 +11,33 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="@Context">
-    <div class="h-full grid grid-cols-1 grid-rows-[auto_1fr] gap-0">
-        <div class="@GetContainerStyling() w-full overflow-x-auto overflow-y-hidden infini-scrollbar">
+    <div class="@GetRootStyling()">
+        @if (TabsOnRight) {
+            @RenderContent
+            @RenderButtons
+        } else {
+            @RenderButtons
+            @RenderContent
+        }
+    </div>
+</CascadingValue>
+
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public TabContainerStyle Style { get; set; } = TabContainerStyle.Default;
+    [Parameter] public Orientation Orientation { get; set; } = Orientation.Horizontal;
+    [Parameter] public bool TabsOnRight { get; set; }
+    
+    private InfiniTabContainerContext Context { get; } = new();
+
+    @* ReSharper disable once UnusedParameter.Local *@
+    private RenderFragment RenderButtons => __builder => {
+        <div class="@GetContainerStyling() overflow-auto infini-scrollbar">
             @foreach ((string key, InfiniTabContent content) in Context.Tabs) {
                 <InfiniButton
                     IconName="@content.IconName"
@@ -24,40 +49,52 @@
                 </InfiniButton>
             }
         </div>
+    };
+
+    @* ReSharper disable once UnusedParameter.Local *@
+    private RenderFragment RenderContent => __builder => {
         <div class="w-full h-full border-1 rounded-b-md px-1 border-(--border)">
             @ChildContent
         </div>
-    </div>
-</CascadingValue>
-
-
-@* ------------------------------------------------------------------------------------------------------------------ *@
-@* Code
-@* ------------------------------------------------------------------------------------------------------------------ *@
-@code {
-    [Parameter] public RenderFragment? ChildContent { get; set; }
-    [Parameter] public TabContainerStyle Style { get; set; } = TabContainerStyle.Default;
-    
-    private InfiniTabContainerContext Context { get; set; } = new();
+    };
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private string GetContainerStyling() => Style switch {
-        TabContainerStyle.Default => "flex flex-row gap-2 justify-start",
-        TabContainerStyle.Center => "flex flex-row gap-2 justify-center",
-        TabContainerStyle.Stretch => "grid grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-2",
-        TabContainerStyle.Right => "flex flex-row gap-2 justify-end",
+    private string GetRootStyling() => Orientation switch {
+        Orientation.Horizontal => "h-full grid grid-cols-1 grid-rows-[auto_1fr] gap-0",
+        Orientation.Vertical => TabsOnRight
+            ? "h-full grid grid-rows-1 grid-cols-[1fr_auto] gap-0"
+            : "h-full grid grid-rows-1 grid-cols-[auto_1fr] gap-0",
         _ => throw new ArgumentOutOfRangeException()
     };
-    private string GetButtonStyling() => Style switch {
-        TabContainerStyle.Default => string.Empty,
-        TabContainerStyle.Center => string.Empty ,
-        TabContainerStyle.Stretch => "w-full",
-        TabContainerStyle.Right => string.Empty,
+
+    private string GetContainerStyling() => Orientation switch {
+        Orientation.Horizontal => Style switch {
+            TabContainerStyle.Default => "flex flex-row gap-2 justify-start",
+            TabContainerStyle.Center => "flex flex-row gap-2 justify-center",
+            TabContainerStyle.Stretch => "grid grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-2",
+            TabContainerStyle.Right => "flex flex-row gap-2 justify-end",
+            _ => throw new ArgumentOutOfRangeException()
+        },
+        Orientation.Vertical => "flex flex-col gap-2 justify-start",
         _ => throw new ArgumentOutOfRangeException()
     };
-    
+
+    private string GetButtonStyling() => Orientation switch {
+        Orientation.Horizontal => Style switch {
+            TabContainerStyle.Default => string.Empty,
+            TabContainerStyle.Center => string.Empty,
+            TabContainerStyle.Stretch => "w-full",
+            TabContainerStyle.Right => string.Empty,
+            _ => throw new ArgumentOutOfRangeException()
+        },
+        Orientation.Vertical => "w-full",
+        _ => throw new ArgumentOutOfRangeException()
+    };
+
+
+
     protected override void OnInitialized() {
         base.OnInitialized();
         Context.OnTabRegisterChange += StateHasChanged;
