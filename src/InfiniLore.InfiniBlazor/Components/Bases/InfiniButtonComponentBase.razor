@@ -1,31 +1,36 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* ReSharper disable once CheckNamespace *@
+@using InfiniLore.Lucide
+
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits ComponentBase
+@inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="flex items-center">
-    <InfiniButtonOutline
-        OnClick="@(async () => await Editor.OnModifierClickAsync(Modifier))"
-        Size="Size.S"
-        IconName="@IconName"
-    >
-        @ChildContent
-    </InfiniButtonOutline>
-</div>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
-    [CascadingParameter] public InfiniMarkdownEditor Editor { get; set; } = null!;
-    [Parameter] [EditorRequired] public string Modifier { get; set; } = null!;
-    [Parameter] public string? IconName { get; set; }
-    [Parameter] public RenderFragment? ChildContent { get; set; }
+    // ReSharper disable once UnusedParameter.Local
+    protected RenderFragment ButtonContent => __builder => {
+        <span class="inline-flex items-center gap-2">
+            @if (IconName.IsNotNullOrWhiteSpace()) {
+                <LucideIcon Name="@IconName" Class="@ConcatClasses(IconSizeClass, "pointer-events-none")"/>
+            }
+            @if (Text.IsNotNullOrWhiteSpace()) {
+                @Text
+            }
+            @if (ChildContent is not null) {
+                @ChildContent
+            }
+            @if (IconName.IsNullOrWhiteSpace() && ChildContent is null && Text.IsNullOrWhiteSpace()) {
+                <span class="@IconSizeClass"></span>
+            }
+        </span>
+    };
 }

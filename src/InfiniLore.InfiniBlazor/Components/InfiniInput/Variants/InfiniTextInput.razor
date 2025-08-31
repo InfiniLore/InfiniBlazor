@@ -14,11 +14,11 @@
         id="@Id"
         type="@Type"
         value="@Value"
-        @oninput="OnInputHandler"
-        @onchange="OnChange"
+        @oninput="@OnInputHandler"
+        onchange="@OnChange"
         placeholder="@Placeholder"
         disabled="@IsDisabled"
-        @attributes="@(AutoFocus ? new Dictionary<string, object> { { "autofocus", "autofocus" } } : null)"
+        attributes="@(AutoFocus ? new Dictionary<string, object> { { "autofocus", "autofocus" } } : null)"
         maxlength="@MaxLength"
         class="@Class @DisabledClasses min-w-24 w-full placeholder-(--color-base-40) rounded-md border border-(--border) focus:ring-2 outline-none ring-(--color-accent) text-sm p-2 shadow-sm transition max-h-10 "/>
     @ChildContent
@@ -27,7 +27,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
     [Parameter, EditorRequired] public string? Value { get; set; }
     [Parameter] public EventCallback<string?> ValueChanged { get; set; }

@@ -1,31 +1,43 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits ComponentBase
+@inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="flex items-center">
-    <InfiniButtonOutline
-        OnClick="@(async () => await Editor.OnModifierClickAsync(Modifier))"
-        Size="Size.S"
-        IconName="@IconName"
-    >
-        @ChildContent
-    </InfiniButtonOutline>
-</div>
+@if (Context.SelectedTabId == TabName && !IsDisabled) {
+    @ChildContent
+}
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
-    [CascadingParameter] public InfiniMarkdownEditor Editor { get; set; } = null!;
-    [Parameter] [EditorRequired] public string Modifier { get; set; } = null!;
+    [EditorRequired, Parameter] public string TabName { get; set; } = string.Empty;
     [Parameter] public string? IconName { get; set; }
-    [Parameter] public RenderFragment? ChildContent { get; set; }
+    
+    [CascadingParameter] public InfiniTabContainerContext Context { get; set; } = null!;
+
+    private bool _isRegistered;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override void OnInitialized() {
+        if (!_isRegistered) {
+            Context.RegisterPage(TabName, this);
+            _isRegistered = true;
+        }
+        Context.OnTabSelected += StateHasChanged;
+    }
+
+    public override async ValueTask DisposeAsync() {
+        await base.DisposeAsync();
+        Context.UnregisterPage(TabName);
+        Context.OnTabSelected -= StateHasChanged;
+    }
 }

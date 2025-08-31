@@ -16,13 +16,14 @@
     <textarea 
         class="w-full h-full  overflow-y-auto infini-scrollbar"
         value="@TextAreaValue"
-        @ref="EditorContext.ContentRef"
-        @oninput="async args => await OnInputAsyncDebounced.InvokeDebouncedAsync(args)"
-        @onkeydown="async args => await OnKeyDownAsyncDebounced.InvokeDebouncedAsync(args)"
+        ref="@EditorContext.ContentRef"
+        @oninput="@(args => OnInputAsyncDebounced.InvokeDebouncedAsync(args))"
+        @onkeydown="@(args => OnKeyDownAsyncDebounced.InvokeDebouncedAsync(args))"
     >
 
     </textarea>
 </div>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@

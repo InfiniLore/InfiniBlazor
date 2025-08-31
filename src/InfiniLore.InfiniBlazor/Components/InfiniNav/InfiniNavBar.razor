@@ -11,12 +11,13 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 <CascadingValue Value="NavBarCollapsed">
     <CascadingValue Value="NavBarSize">
         <CascadingValue Value="NavBarLocation">
             <div
                 @ref="@Reference"
-                @onwheel="OnWheelAsync"
+                @onwheel="@OnWheelAsync"
                 class="@ConcatClasses(Class, NavLocationClasses, SizeClasses, OrientationClasses)
                transition-all duration-300
                flex whitespace-nowrap border-(--nav-border) text-white infini-scrollbar-hidden
@@ -26,6 +27,7 @@
         </CascadingValue>
     </CascadingValue>
 </CascadingValue>
+
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code

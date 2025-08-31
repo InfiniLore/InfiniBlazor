@@ -1,18 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-
 namespace InfiniLore.InfiniBlazor.Components;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableTransient<InfiniTabContainerContext>]
-public class InfiniTabContainerContext(ILogger<InfiniTabContainerContext> logger) {
-    public List<string> Tabs { get; } = new();
-    public string? SelectedTab { get; set; }
+public class InfiniTabContainerContext {
+    public Dictionary<string, InfiniTabContent> Tabs { get; } = new();
+    public string? SelectedTabId { get; private set; }
     
     public Action? OnTabRegisterChange { get; set; }
     public Action? OnTabSelected { get; set; }
@@ -20,28 +15,27 @@ public class InfiniTabContainerContext(ILogger<InfiniTabContainerContext> logger
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void RegisterPage(string pageName) {
-        Tabs.Add(pageName);
-        SelectedTab ??= pageName; // Define the first page as selected
+    public void RegisterPage(string pageName, InfiniTabContent element) {
+        Tabs.AddOrUpdate(pageName, element);
+        SelectedTabId ??= pageName; // Define the first page as selected
         
         OnTabRegisterChange?.Invoke();
     }
     
     public void UnregisterPage(string pageName) {
         Tabs.Remove(pageName);
-        if (SelectedTab == pageName) SelectedTab = Tabs.FirstOrDefault(); // Select the first page (if any)
+        if (SelectedTabId == pageName) SelectedTabId = Tabs.FirstOrDefault().Key; // Select the first page (if any)
         
         OnTabRegisterChange?.Invoke();
     }
     
     public void SelectPage(string pageName) {
-        if (!Tabs.Contains(pageName)) {
-            logger.Warning("Page '{TabName}' is not registered in the tab container.", pageName);
+        if (!Tabs.ContainsKey(pageName)) {
             return;
         }
         
-        SelectedTab = pageName;
+        SelectedTabId = pageName;
         OnTabSelected?.Invoke();
-        logger.Warning("Page '{TabName}' selected.", pageName);
+        
     }
 }

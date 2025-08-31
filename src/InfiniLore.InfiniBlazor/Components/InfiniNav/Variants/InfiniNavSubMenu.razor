@@ -10,9 +10,10 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 <CascadingValue Value="@(Depth + 1)">
     <div class="@OrientationClasses overflow-clip" style="anchor-name: @($"--{Id:N}")">
-        <button @onclick="OnClick" class="flex w-full cursor-pointer">
+        <button @onclick="@OnClick" class="flex w-full cursor-pointer">
             <div class="@ContainerClassesNoHover w-full grow">
                 <div class="flex grow w-full">
                     <InfiniNavItem Text="@Text" Icon="@IconName"/>
@@ -30,6 +31,7 @@
         </div>
     </div>
 </CascadingValue>
+
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code

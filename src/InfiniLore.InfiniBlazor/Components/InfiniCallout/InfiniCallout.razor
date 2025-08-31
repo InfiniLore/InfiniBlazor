@@ -14,45 +14,57 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@ConcatClasses(Class, Style.CssContainer) my-2 flex flex-col min-w-full min-h-lh pt-2 pb-3 px-3 border-l-4 border-y-1 border-r-1 rounded-r-xl">
+<div
+    class="@ConcatClasses(Class, Style.CssContainer) my-2 flex flex-col min-w-full min-h-lh pt-2 pb-3 px-3 border-l-4 border-y-1 border-r-1 rounded-r-xl">
     @* Top Banner *@
     <div class="@Style.CssTitle flex flex-row w-full gap-2 items-center">
         <div class="flex shrink">
             @if (Icon is not null) {
-              @Icon  
-            } else if (TryGetIconName(out string? iconName)) {
+                @Icon
+            }
+            else if (TryGetIconName(out string? iconName)) {
                 <LucideIcon Name="@iconName"/>
-            } 
+            }
         </div>
-        
+
         <div class="flex grow w-full text-xl">
             @Title
         </div>
-        
+
         @if (AllowCollapsing) {
-            <InfiniButton
-                Class="flex shrink "
+            <InfiniButtonTransparentToolTipped
+                Class="flex items-center justify-center"
                 Size="Size.S"
-                TooltipAnchor="Anchor.Left"
-                Tooltip="@(IsCollapsed ? "Open Callout" : "Close Callout")"
-                Variant="ButtonVariant.Transparent"
                 OnClick="@(() => IsCollapsed = !IsCollapsed)"
-                IconName="@(IsCollapsed ? LucideNames.ChevronDown : LucideNames.ChevronUp)"/>
+                IconName=""
+                TooltipAnchor="Anchor.Left">
+                <Content>
+                    @if (IsCollapsed) {
+                        <LiChevronDown Class="@Style.CssTitle"/>
+                    }
+                    else {
+                        <LiChevronUp Class="@Style.CssTitle"/>
+                    }
+                </Content>
+                <Tooltip>@(IsCollapsed ? "Open Callout" : "Close Callout")</Tooltip>
+            </InfiniButtonTransparentToolTipped>
         }
     </div>
-    
+
     @* Body *@
-    <div class="@ConcatClasses(Style.CssBody ,IsCollapsed ? "h-0 overflow-hidden opacity-0 pointer-events-none border-none" : "h-auto opacity-100 border-t-1 pt-2 mt-1" ) flex flex-col transition-all duration-300 ease-in-out">
+    <div
+        class="@ConcatClasses(Style.CssBody, IsCollapsed ? "h-0 overflow-hidden opacity-0 pointer-events-none border-none" : "h-auto opacity-100 border-t-1 pt-2 mt-1") flex flex-col transition-all duration-300 ease-in-out">
         @Content
     </div>
 </div>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
-    [Parameter, EditorRequired] public RenderFragment Title { get; set; } 
+    [Parameter, EditorRequired] public RenderFragment Title { get; set; }
     [Parameter] public RenderFragment? Content { get; set; }
-    [Parameter] public bool AllowCollapsing { get; set; } 
+    [Parameter] public bool AllowCollapsing { get; set; }
     [Parameter] public bool IsCollapsed { get; set; }
     [Parameter] public RenderFragment? Icon { get; set; }
     [Parameter] public string? IconName { get; set; }
@@ -68,6 +80,7 @@
             Style = CalloutStyleProvider.DefaultStyle;
             return;
         }
+
         Style = style;
     }
 

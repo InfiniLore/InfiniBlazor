@@ -13,12 +13,13 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="relative w-8 h-8">
     <a href="@Href" @onclick:stopPropagation>
+        @* ReSharper disable once CSharpWarnings::CS8974 *@
         @if (!_imageLoadFailed) {
             <img src="@ImageUrl"
                  alt="Profile"
                  class="w-full h-full rounded-full object-cover group-hover:ring-2 ring-(--usericon-ring)"
                  crossorigin="anonymous"
-                 @onerror="HandleImageError"/>
+                 @onerror="@HandleImageError"/>
         } else {
             <span class="w-8 h-8 flex justify-center items-center">
                 <LiCircleUser class="w-8 h-8 text-(--usericon-alt) group-hover:text-(--usericon-alt-hover)"/>

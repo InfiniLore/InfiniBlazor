@@ -2,6 +2,7 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.JsRuntime
+@using InfiniLore.Lucide
 
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -15,14 +16,13 @@
 <div class="@Class relative flex overflow-hidden min-h-0 text-(--color-base-10)">
     <div class="absolute top-2 right-4 flex justify-end @ZIndex.CodeBlockCopyButton">
         @if (EnableCopy) {
-            <InfiniButton
-                IconName="copy"
-                Variant="ButtonVariant.OutlineSolid"
+            <InfiniButtonOutlineSolidToolTipped
+                IconName="@LucideNames.Copy"
                 OnClick="@CopyToClipboardAsync"
-                Tooltip="Copy to clipboard"
                 TooltipAnchor="@Anchor.Left">
-                @Language
-            </InfiniButton>
+                <Content>@Language</Content>
+                <Tooltip>Copy to clipboard</Tooltip>
+            </InfiniButtonOutlineSolidToolTipped>
         }
     </div>
     <div class="infini-bg-(--codeblock) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar">
@@ -36,7 +36,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
     [Parameter] public string? Content { get; set; } = string.Empty;
     [Parameter] public EventCallback<string> ContentChanged { get; set; }

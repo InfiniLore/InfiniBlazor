@@ -6,10 +6,11 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.Lucide
-@inherits InfiniChildlessComponentBase
+@inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 <div class="inline-flex">
     <input
         type="checkbox"
@@ -26,13 +27,15 @@
         class="@ConcatClasses(BackgroundClasses,ContainerBorderClasses, FocusClasses, SizeClasses) rounded-full border-2 flex justify-center items-center"
         @onclick="@OnToggleAsync">
         @if (IsChecked) {
-            <div class="@WithDisabled("infini-bg-(--color-accent)", "text-(--color-base-70)") min-w-9/10 min-h-9/10 max-w-9/10 max-h-9/10 rounded-full" ></div>
+            <div class="@WhenDisabled("infini-bg-(--color-accent)", "text-(--color-base-70)") min-w-9/10 min-h-9/10 max-w-9/10 max-h-9/10 rounded-full" ></div>
         }
         else {
-            <LiSlash Size="@Size.ToLucideIconSize()"  Class="@WithDisabled("text-(--color-base-50) p-1", "text-(--color-base-70)")"/>
+            <LiSlash Size="@Size.ToLucideIconSize()"  Class="@WhenDisabled("text-(--color-base-50) p-1", "text-(--color-base-70)")"/>
         }
     </div>
+    @ChildContent
 </div>
+
 
 @* onchange="@(async () => await IsCheckedChanged.InvokeAsync(IsChecked))" *@
 @* @onkeydown="OnKeyDown" *@
@@ -57,7 +60,7 @@
             : "infini-bg-(--color-base-80)";
         
     private string FocusClasses => _isFocused && !IsDisabled ? "border-(--color-accent)" : string.Empty;
-    private string ContainerBorderClasses => WithDisabled(
+    private string ContainerBorderClasses => WhenDisabled(
         "border-(--border) hover:border-(--color-accent) cursor-pointer",
         "border-(--color-base-50) cursor-not-allowed"
     );

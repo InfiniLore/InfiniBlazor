@@ -9,35 +9,40 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@ConcatClasses(Class, AnchorClasses) @ZIndex.Tooltip absolute anchored ">
-    <div
-        class="
-            @TriangleClasses
-            transform px-3 py-1 infini-bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md transition-opacity duration-200 whitespace-nowrap pointer-events-none drop-shadow-md
-        "
-    >
+<div class="relative">
+    <div class="@AnchorClass relative">
         @Content
     </div>
+    <div class="@ConcatClasses(HiddenIfNot(ShowTooltip), Class, AnchorClasses) @ZIndex.Tooltip absolute anchored shadow-md/30">
+        <div class="@TriangleClasses shadow-md/30 transform px-3 py-1 infini-bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md transition-opacity duration-200 whitespace-nowrap pointer-events-none">
+            @Tooltip
+        </div>
+    </div>
 </div>
-
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
-    [Parameter, EditorRequired] public string Content { get; set; } = "";
+    [Parameter, EditorRequired] public required RenderFragment Content { get; set; } 
+    [Parameter, EditorRequired] public required RenderFragment Tooltip { get; set; }
     [Parameter] public Anchor Anchor { get; set; } = Anchor.Center | Anchor.Bottom;
-    [Parameter] public ElementReference Target { get; set; }
+    
+    [Parameter, EditorRequired] public bool ShowTooltip { get; set; }
+    [Parameter] public EventCallback<bool> ShowTooltipChanged { get; set; }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
 
     private string AnchorClasses => Anchor switch {
-        Anchor.CenterBottom => "anchored-bottom-center/anchor-tooltip pt-2",
+        Anchor.CenterBottom => "anchored-bottom-center/anchor-tooltip",
         Anchor.LeftBottom => "anchored-bottom-left/anchor-tooltip",
         Anchor.RightBottom => "anchored-bottom-right/anchor-tooltip",
-        Anchor.CenterTop => "anchored-top-center/anchor-tooltip pb-2",
+        Anchor.CenterTop => "anchored-top-center/anchor-tooltip",
         Anchor.LeftTop => "anchored-top-left/anchor-tooltip",
         Anchor.RightTop => "anchored-top-right/anchor-tooltip",
-        Anchor.Left => "anchored-left/anchor-tooltip pr-2",
-        Anchor.Right => "anchored-right/anchor-tooltip pl-2",
+        Anchor.Left => "anchored-left/anchor-tooltip",
+        Anchor.Right => "anchored-right/anchor-tooltip",
         _ => "anchored/anchor-tooltip"
     };
 

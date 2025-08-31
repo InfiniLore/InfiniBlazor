@@ -27,16 +27,16 @@
         <InfiniTextAreaInput Label="Added Note" @bind-Value="DeveloperNote" class="h-24"/>
 
         <div class="w-full flex justify-center gap-2">
-            <InfiniButton IconName="@LucideNames.BrushCleaning" Variant="ButtonVariant.Default" OnClick="@OnClearAsync">
+            <InfiniButton IconName="@LucideNames.BrushCleaning" OnClick="@OnClearAsync">
                 Clear
             </InfiniButton>
-            <InfiniButton IconName="@LucideNames.Search" Variant="ButtonVariant.Default" OnClick="@OnFetchAsync">Fetch
+            <InfiniButton IconName="@LucideNames.Search" OnClick="@OnFetchAsync">Fetch
             </InfiniButton>
             <InfiniSpacer/>
-            <InfiniButton IconName="@LucideNames.Save" Variant="ButtonVariant.Default" Color="Color.Green"
+            <InfiniButton IconName="@LucideNames.Save" Color="Color.Green"
                           OnClick="@OnSaveAsync">Save
             </InfiniButton>
-            <InfiniButton IconName="@LucideNames.Trash2" Variant="ButtonVariant.Default" Color="Color.Red"
+            <InfiniButton IconName="@LucideNames.Trash2" Color="Color.Red"
                           OnClick="@OnDeleteAsync">Delete
             </InfiniButton>
         </div>
@@ -62,7 +62,7 @@
                 <InfiniToggleInput Label="Freeze Auto Updates" @bind-Value="FreezeAutoUpdates"/>
                 @if (FreezeAutoUpdates) {
                     <InfiniSpacerHorizontal Spacing="Size.M"/>
-                    <InfiniButton Variant="ButtonVariant.Default" OnClick="@OnGenerateAsync">Generate Outputs
+                    <InfiniButton OnClick="@OnGenerateAsync">Generate Outputs
                     </InfiniButton>
                 }
             </div>
@@ -72,21 +72,21 @@
 
         <div class="h-full w-full flex flex-col gap-1 mt-2">
             <InfiniTabContainer>
-                <InfiniTabPage TabName="Syntax Tree">
+                <InfiniTabContent TabName="Syntax Tree">
                     <InfiniTextAreaInput
                         @bind-Value="@ExpectedSyntaxTreeString"
                         Rows="22"
                         Class="font-mono w-full"/>
-                </InfiniTabPage>
+                </InfiniTabContent>
 
-                <InfiniTabPage TabName="Simplified HTML">
+                <InfiniTabContent TabName="Simplified HTML">
                     <InfiniTextAreaInput
                         @bind-Value="@ExpectedHtmlStringSimplified"
                         Rows="22"
                         Class="font-mono w-full"/>
-                </InfiniTabPage>
+                </InfiniTabContent>
 
-                <InfiniTabPage TabName="Markdown">
+                <InfiniTabContent TabName="Markdown">
                     <InfiniTextAreaInput
                         @bind-Value="@ExpectedMarkdownString"
                         Rows="22"
@@ -95,7 +95,7 @@
                         Label="Skip test on whitespace mismatch"
                         @bind-Value="@SkipOnWhitespaceMisMatch"
                         />
-                </InfiniTabPage>
+                </InfiniTabContent>
             </InfiniTabContainer>
 
             @if (ExpectedMarkdownString.IsNotNullOrWhiteSpace() && !string.Equals(MdString, ExpectedMarkdownString)) {

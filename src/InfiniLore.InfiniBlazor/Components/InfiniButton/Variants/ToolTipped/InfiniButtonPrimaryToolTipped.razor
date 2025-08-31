@@ -5,28 +5,39 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniComponentBase
+@inherits InfiniButtonPrimary
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@if (Context.SelectedTab == TabName) {
-    @ChildContent
-}
-
+<InfiniToolTipWrapper @bind-ShowTooltip="@OnHover" Anchor="@TooltipAnchor">
+    <Content>
+        <InfiniButtonPrimary
+            AutoWidth="AutoWidth"
+            IsDisabled="IsDisabled"
+            Href="@Href"
+            IconName="@IconName"
+            Text="@Text"
+            StopPropagation="@StopPropagation"
+            OnClick="@OnClick"  
+            DebounceMs="@DebounceMs"
+            DisableTrackedQueryParams="@DisableTrackedQueryParams"
+            Type="@Type"
+            AriaLabel="@AriaLabel"
+            Color="@Color"
+            Size="@Size"
+            @bind-OnHover="@OnHover">
+            @Content
+        </InfiniButtonPrimary>
+    </Content>
+    <Tooltip>
+        @Tooltip
+    </Tooltip>
+</InfiniToolTipWrapper>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [EditorRequired, Parameter] public string TabName { get; set; } = string.Empty;
-    [CascadingParameter] public InfiniTabContainerContext Context { get; set; } = null!;
-    
-    protected override void OnInitialized() {
-        Context.RegisterPage(TabName);
-        Context.OnTabSelected += StateHasChanged;
-    }
-
-    public override async ValueTask DisposeAsync() {
-        await base.DisposeAsync();
-        Context.OnTabSelected -= StateHasChanged;
-    }
+    [Parameter, EditorRequired] public required RenderFragment Content { get; set; }
+    [Parameter, EditorRequired] public required RenderFragment Tooltip { get; set; }
+    [Parameter] public Anchor TooltipAnchor { get; set; } = Anchor.Center | Anchor.Bottom;
 }

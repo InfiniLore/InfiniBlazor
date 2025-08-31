@@ -15,7 +15,6 @@
         Href="@Href"
         IconName="@IconName"
         OnClick="@OnClick"
-        Variant="@Variant"
         Color="@Color"
         Size="@Size">
         @ChildContent
@@ -28,7 +27,6 @@
     [Parameter] public string? Href { get; set; }
     [Parameter] public string? IconName { get; set; }
     [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
-    [Parameter] public ButtonVariant Variant { get; set; } = ButtonVariant.Default;
     [Parameter] public Color Color { get; set; } = Color.Default;
     [Parameter] public Size Size { get; set; } = Size.M;
 }
