@@ -6,42 +6,23 @@ using Tests.InfiniBlazor.Markdown.DataSources;
 using Tests.InfiniBlazor.Shared.Markdown;
 using Tests.Shared.Infinilore.InfiniBlazor;
 
-namespace Tests.InfiniBlazor.Markdown.Parsers.MarkdownString;
+namespace Tests.InfiniBlazor.Markdown.Parsers.HtmlSimplified;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [DiDataSource]
-public class MarkdownStringTests(IMarkdownParser parser) {
-
+public class ToHtmlSimplifiedTests(IMarkdownParser parser) {
     [Test]
     [MethodDataSource<MdTestDataSources>(nameof(MdTestDataSources.GetBlankTest))]
     [MethodDataSource(typeof(MdTestDataSources), nameof(MdTestDataSources.GetTestDataAsync))]
-    public async Task FromMarkdownString_ToSyntaxTree_ShouldBeSame(MdTestData data) {
-        // Arrange
-        string input = data.MdString;
-        IMdSyntaxTree expectedOutput = data.MdSyntaxTree;
-
-        // Act
-        IMdSyntaxTree foundTree = parser.MarkdownString.SerializeToSyntaxTree(input);
-
-        // Assert
-        await Assert.That(foundTree)
-            .IsNotNull()
-            .IsEqualTo(expectedOutput);
-    }
-    
-    [Test]
-    [MethodDataSource<MdTestDataSources>(nameof(MdTestDataSources.GetBlankTest))]
-    [MethodDataSource(typeof(MdTestDataSources), nameof(MdTestDataSources.GetTestDataAsync))]
-    public async Task FromSyntaxTree_ToMarkdownString_ShouldBeExpected(MdTestData data) {
+    public async Task FromSyntaxTree_ToHtmlSimplified_ShouldBeExpected(MdTestData data) {
         // Arrange
         IMdSyntaxTree input = data.MdSyntaxTree;
-        string? expectedOutput = data.ExpectedMarkdownString;
+        string? expectedOutput = data.ExpectedHtmlStringSimplified;
         Skip.When(expectedOutput is null, "The expected output is null.");
 
         // Act
-        string foundOutput = parser.MarkdownString.DeserializeToString(input);
-        Skip.When(data.ExpectedMarkdownStringSkipOnWhitespaceMisMatch && foundOutput != expectedOutput, "The expected output is not equal to the actual output, but this is a known state");
+        string foundOutput = parser.HtmlString.DeserializeToString(input);
 
         // Assert
         await Assert.That(foundOutput)

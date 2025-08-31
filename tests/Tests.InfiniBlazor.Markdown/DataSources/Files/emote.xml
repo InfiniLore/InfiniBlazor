@@ -7,7 +7,7 @@
         <EmoteMdSyntaxNode EmoteKey="flag-transgender" OriginalEmote=":flag-transgender:" />
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;:flag-transgender:&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;🏳️‍⚧️&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>:flag-transgender:</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="empty" FileName="emote.xml">
