@@ -93,8 +93,6 @@
         _ => throw new ArgumentOutOfRangeException()
     };
 
-
-
     protected override void OnInitialized() {
         base.OnInitialized();
         Context.OnTabRegisterChange += StateHasChanged;
