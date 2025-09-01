@@ -21,12 +21,16 @@
 <CascadingValue Value="@EditorContext">
     <CascadingValue Value="@RenderContext">
         <div class="mdEditor-container flex w-full flex-col h-full">
-            <div class="mdEditor-toolbarTop"></div>
+            <div class="mdEditor-toolbarTop">
+                
+            </div>
             <div class="flex flex-row size-full h-full">
                 <InfiniMdEditorInput Class="max-w-1/2 min-w-1/2 w-1/2"/>
                 <InfiniMdEditorPreview Class="max-w-1/2 min-w-1/2 w-1/2"/>
             </div>
-            <div class="mdEditor-toolbarBottom"></div>
+            <div class="mdEditor-toolbarBottom">
+                
+            </div>
         </div>
     </CascadingValue>
 </CascadingValue>
@@ -38,8 +42,8 @@
     [Parameter] public string? Content { get; set; }
     [Parameter] public EventCallback<string?> ContentChanged { get; set; }
     
-    private MdEditorContext EditorContext { get; set; } = new();
-    private MdRenderContext RenderContext { get; set; } = new();
+    private MdEditorContext EditorContext { get; } = new();
+    private MdRenderContext RenderContext { get; } = new();
     private InfiniEditorKeyCombo LastPressedCombo { get; set; } = InfiniEditorKeyCombo.Empty;
     
     private Dictionary<InfiniEditorKeyCombo, Func<InfiniMarkdownEditorNew,Task>> KeyCombos { get; } = new() {
