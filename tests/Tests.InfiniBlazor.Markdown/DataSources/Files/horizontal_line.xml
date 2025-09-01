@@ -3,7 +3,7 @@
   <MdTestData Id="1" FileName="horizontal_line.xml">
     <MdString>-
 
-=</MdString>
+_</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <ContentMdSyntaxNode xml:space="preserve">-</ContentMdSyntaxNode>
@@ -11,18 +11,18 @@
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">=</ContentMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">_</ContentMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;-&lt;/p&gt;&lt;p&gt;=&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;-&lt;/p&gt;&lt;p&gt;_&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>-
 
-=</ExpectedMarkdownString>
+_</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="2" FileName="horizontal_line.xml">
     <MdString>--
 
-==</MdString>
+__</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <ContentMdSyntaxNode xml:space="preserve">--</ContentMdSyntaxNode>
@@ -30,13 +30,13 @@
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">==</ContentMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">__</ContentMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;--&lt;/p&gt;&lt;p&gt;==&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;--&lt;/p&gt;&lt;p&gt;__&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>--
 
-==</ExpectedMarkdownString>
+__</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="3" FileName="horizontal_line.xml">
     <MdString>---
