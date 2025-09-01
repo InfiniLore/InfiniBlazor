@@ -4,7 +4,6 @@
 @using CodeOfChaos.Extensions.Debouncers
 @using InfiniLore.InfiniBlazor.Markdown
 @using InfiniLore.InfiniBlazor.Markdown.Syntax
-@using Microsoft.Extensions.Logging
 
 @* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
@@ -13,13 +12,12 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniMdEditorComponentBase
 @inject IMarkdownParser Parser
-@inject ILogger<InfiniMdEditorContent> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="@Class border-2 border-red-500 flex">
     <textarea 
-        class="w-full h-full  overflow-y-auto infini-scrollbar"
+        class="w-full h-full font-mono overflow-y-auto infini-scrollbar"
         value="@TextAreaValue"
         ref="@EditorContext.ContentRef"
         @oninput="@(args => OnInputAsyncDebounced.InvokeDebouncedAsync(args))"
@@ -72,7 +70,7 @@
         await EditorContext.UpdateSource(source).ConfigureAwait(false);
     }
     
-    private Task OnKeyDownAsync(KeyboardEventArgs args) {
+    private static Task OnKeyDownAsync(KeyboardEventArgs args) {
         return Task.CompletedTask;
     }
     
