@@ -39,6 +39,8 @@ public static class InfiniBlazorMdComponentConverterFactory {
         mapBuilder.Register<TagMdSyntaxNode, Infini_MdTag>();
         mapBuilder.Register<UnderlineMdSyntaxNode, Infini_MdUnderline>();
         mapBuilder.Register<ContentHtmlMdSyntaxNode, Infini_MdContentHtml>();
+        mapBuilder.Register<EscapedCharacterMdSyntaxNode, Infini_MdEscapedCharacter>();
+        
         
         mapBuilder.TrimExcess();
         return new BlazorMdComponentConverter {
