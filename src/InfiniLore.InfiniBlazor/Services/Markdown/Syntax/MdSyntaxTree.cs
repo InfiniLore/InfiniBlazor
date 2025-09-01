@@ -26,6 +26,8 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     private static ObjectPool<Stack<IMdSyntaxNode>> MdSyntaxNodeStackPool { get; } = PoolingHelpers.CreateStackPool<IMdSyntaxNode>(PoolingHelpers.ParsersRetained);
     
     private bool IsInitialized => LazyRootNode.IsValueCreated;
+    public static IMdSyntaxTree Empty { get; set; } = new MdSyntaxTree();
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

@@ -1,38 +1,19 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.Syntax;
-using InfiniLore.InfiniBlazor.TextEditor;
-using Microsoft.AspNetCore.Components;
-
-namespace InfiniLore.InfiniBlazor.Components;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MdEditorContext {
-    public bool IsLocked { get; set; }
-    public ITextSource TextSource { get; private set; } = new TextSource();
-    public ElementReference ContentRef { get; set; }
-
-    public IMdSyntaxTree SyntaxTree { get; set; } = MdSyntaxTree.Empty;
-    
-    public event Func<string, Task>? OnSourceUpdate;
+public class MdRenderContext {
     public event Func<Task>? OnSyntaxTreeUpdate;
-    
-    public static MdEditorContext Empty => new();
+    public static MdRenderContext Empty { get; set; } = new();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void SetTextSource(ITextSource textSource) => TextSource = textSource;
-    
-    public async Task UpdateSource(string value) {
-        if (OnSourceUpdate is null) return;
-        await OnSourceUpdate(value).ConfigureAwait(false);
-    }
-    public async Task InvokeSyntaxTreeUpdated() {
+    public async Task SyntaxTreeUpdated() {
         if (OnSyntaxTreeUpdate is null) return;
         await OnSyntaxTreeUpdate().ConfigureAwait(false);
     }

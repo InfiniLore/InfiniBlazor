@@ -3,8 +3,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Markdown
 @using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
-@using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer
-@using InfiniLore.InfiniBlazor.Markdown.Syntax
 
 @* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
@@ -12,7 +10,6 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inject IBlazorMdComponentConverter ComponentConverter
-@inject  IMdStringMdSyntaxSerializer SyntaxParser
 @inherits InfiniMdEditorComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
@@ -35,32 +32,20 @@
     protected override void OnInitialized() {
         base.OnInitialized();
 
-        EditorContext.OnSourceChange += OnSourceChangedAsync;
+        EditorContext.OnSyntaxTreeUpdate += OnSourceChangedAsync;
     }
 
     public override async ValueTask DisposeAsync() {
         await base.DisposeAsync();
 
-        EditorContext.OnSourceChange -= OnSourceChangedAsync;
+        EditorContext.OnSyntaxTreeUpdate -= OnSourceChangedAsync;
     }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private async Task OnSourceChangedAsync() {
-        MdSyntaxTree tree = MdSyntaxTree.Pool.Get();
-        SyntaxParser.SerializeToTree(EditorContext.TextSource.Text, tree);
-
-        // TODO add a cleanup to the old output
-        
-        EditorContext.Output = new MdEditorOutput(
-            tree,
-            null,
-            default
-        );
-        
-        SyntaxNodes = tree.VisitTopLevelNodes();
-        
+        SyntaxNodes = EditorContext.SyntaxTree.VisitTopLevelNodes();
         await InvokeAsync(StateHasChanged).ConfigureAwait(false);
     }
 }

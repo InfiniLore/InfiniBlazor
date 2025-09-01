@@ -2,6 +2,9 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using CodeOfChaos.Extensions.Debouncers
+@using InfiniLore.InfiniBlazor.Markdown
+@using InfiniLore.InfiniBlazor.Markdown.Syntax
+@using Microsoft.Extensions.Logging
 
 @* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
@@ -9,6 +12,8 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniMdEditorComponentBase
+@inject IMarkdownParser Parser
+@inject ILogger<InfiniMdEditorContent> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -40,12 +45,22 @@
 
         OnInputAsyncDebounced = ThrottledDebouncer<ChangeEventArgs>.FromDelegate(OnInputAsync, 100, 300);
         OnKeyDownAsyncDebounced = Debouncer<KeyboardEventArgs>.FromDelegate(OnKeyDownAsync);
+
+        RenderContext.OnSyntaxTreeUpdate += OnSyntaxTreeUpdated;
+        EditorContext.OnSourceUpdate += OnSourceUpdated;
     }
 
     protected override void OnParametersSet() {
         base.OnParametersSet();
 
         TextAreaValue = EditorContext.TextSource.Text;
+    }
+
+    public override async ValueTask DisposeAsync() {
+        await base.DisposeAsync();
+        
+        RenderContext.OnSyntaxTreeUpdate -= OnSyntaxTreeUpdated;
+        EditorContext.OnSourceUpdate -= OnSourceUpdated;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -59,5 +74,24 @@
     
     private Task OnKeyDownAsync(KeyboardEventArgs args) {
         return Task.CompletedTask;
+    }
+    
+    private async Task OnSourceUpdated(string newSource) {
+        if (EditorContext.SyntaxTree is MdSyntaxTree oldTree) MdSyntaxTree.Pool.Return(oldTree);
+        
+        IMdSyntaxTree newTree = Parser.MarkdownString.SerializeToSyntaxTree(newSource);
+        EditorContext.SyntaxTree = newTree;
+
+        await EditorContext.InvokeSyntaxTreeUpdated().ConfigureAwait(false);
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task OnSyntaxTreeUpdated() {
+        string newContent = Parser.MarkdownString.DeserializeToString(EditorContext.SyntaxTree);
+        EditorContext.TextSource.Text = newContent;
+        TextAreaValue = newContent;
+        await EditorContext.UpdateSource(newContent).ConfigureAwait(false);
+        
+        await InvokeAsync(StateHasChanged);
     }
 }

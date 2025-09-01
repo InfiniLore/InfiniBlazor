@@ -28,6 +28,7 @@ public static class InfiniBlazorMdComponentConverterFactory {
         mapBuilder.Register<ImageMdSyntaxNode, Infini_MdImage>();
         mapBuilder.Register<ItalicMdSyntaxNode, Infini_MdItalic>();
         mapBuilder.Register<LinkMdSyntaxNode, Infini_MdLink>();
+        mapBuilder.Register<ListItemMdSyntaxNode, Infini_MdListItem>();
         mapBuilder.Register<ListOrderedMdSyntaxNode, Infini_MdListOrdered>();
         mapBuilder.Register<ListUnOrderedMdSyntaxNode, Infini_MdListUnOrdered>();
         mapBuilder.Register<ParagraphMdSyntaxNode, Infini_MdParagraph>();
