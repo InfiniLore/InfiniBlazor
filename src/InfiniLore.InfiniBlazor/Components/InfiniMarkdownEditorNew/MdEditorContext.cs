@@ -19,26 +19,26 @@ public class MdEditorContext {
 
     public IMdSyntaxTree SyntaxTree { get; set; } = MdSyntaxTree.Empty;
     
-    public event Func<string, Task>? OnSourceUpdate;
-    public event Func<Task>? OnSyntaxTreeUpdate;
-    public event Func<KeyboardEventArgs, Task>? OnInputKeyDown;
+    public event Func<string, Task>? OnSourceChangedAsync;
+    public event Func<Task>? OnSyntaxTreeChangedAsync;
+    public event Func<KeyboardEventArgs, Task>? OnInputKeyDownAsync;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     
-    public async Task InvokeSourceUpdatedAsync(string value) {
-        if (OnSourceUpdate is null) return;
-        await OnSourceUpdate(value).ConfigureAwait(false);
+    public async Task InvokeSourceChangeAsync(string value) {
+        if (OnSourceChangedAsync is null) return;
+        await OnSourceChangedAsync(value).ConfigureAwait(false);
     }
     
-    public async Task InvokeSyntaxTreeUpdatedAsync() {
-        if (OnSyntaxTreeUpdate is null) return;
-        await OnSyntaxTreeUpdate().ConfigureAwait(false);
+    public async Task InvokeSyntaxTreeChangeAsync() {
+        if (OnSyntaxTreeChangedAsync is null) return;
+        await OnSyntaxTreeChangedAsync().ConfigureAwait(false);
     }
 
     public async Task InvokeInputKeyDownAsync(KeyboardEventArgs e) {
-        if (OnInputKeyDown is null) return;
-        await OnInputKeyDown(e).ConfigureAwait(false);   
+        if (OnInputKeyDownAsync is null) return;
+        await OnInputKeyDownAsync(e).ConfigureAwait(false);   
     }
 }

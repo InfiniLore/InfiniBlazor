@@ -7,14 +7,14 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdRenderContext {
-    public event Func<IMdSyntaxNode, Task>? OnSyntaxNodeChange;
+    public event Func<IMdSyntaxNode, Task>? OnSyntaxNodeChanged;
     public static MdRenderContext Empty { get; set; } = new();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public async Task InvokeSyntaxNodeChanged(IMdSyntaxNode node) {
-        if (OnSyntaxNodeChange is null) return;
-        await OnSyntaxNodeChange(node).ConfigureAwait(false);
+    public async Task InvokeSyntaxNodeChange(IMdSyntaxNode node) {
+        if (OnSyntaxNodeChanged is null) return;
+        await OnSyntaxNodeChanged(node).ConfigureAwait(false);
     }
 }

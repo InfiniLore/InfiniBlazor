@@ -4,7 +4,6 @@
 @using InfiniLore.InfiniBlazor.JsRuntime
 @using InfiniLore.InfiniBlazor.Markdown
 @using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
-@using Microsoft.Extensions.Logging
 
 @* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
@@ -16,7 +15,6 @@
 
 @inject IJsInfiniBlazor JsInfiniBlazor
 @inject ITextEditor TextEditor
-@inject ILogger<InfiniMarkdownEditorNew> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -37,6 +35,9 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
+    [Parameter] public string? Content { get; set; }
+    [Parameter] public EventCallback<string?> ContentChanged { get; set; }
+    
     private MdEditorContext EditorContext { get; set; } = new();
     private MdRenderContext RenderContext { get; set; } = new();
     private InfiniEditorKeyCombo LastPressedCombo { get; set; } = InfiniEditorKeyCombo.Empty;
@@ -54,9 +55,20 @@
     protected override void OnInitialized() {
         base.OnInitialized();
         
-        RenderContext.OnSyntaxNodeChange += OnSyntaxNodeChangedAsync;
-        EditorContext.OnSourceUpdate += OnSourceUpdatedAsync;
-        EditorContext.OnInputKeyDown += OnInputKeyDownAsync;
+        RenderContext.OnSyntaxNodeChanged += OnSyntaxNodeChangedAsync;
+        EditorContext.OnSourceChangedAsync += OnSourceChangedAsync;
+        EditorContext.OnInputKeyDownAsync += OnInputKeyDownAsync;
+    }
+
+    protected override async Task OnParametersSetAsync() {
+        await base.OnParametersSetAsync();
+
+        EditorContext.TextSource.UpdateSource(Content ?? string.Empty);
+
+        EditorContext.SyntaxTree.ReturnToPool();
+        EditorContext.SyntaxTree = Parser.MarkdownString.SerializeToSyntaxTree(EditorContext.TextSource.Text);
+        await EditorContext.InvokeSyntaxTreeChangeAsync();
+        await InvokeAsync(StateHasChanged);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender) {
@@ -75,26 +87,32 @@
     public override async ValueTask DisposeAsync() {
         await base.DisposeAsync();
         
-        RenderContext.OnSyntaxNodeChange -= OnSyntaxNodeChangedAsync;
-        EditorContext.OnSourceUpdate -= OnSourceUpdatedAsync;
-        EditorContext.OnInputKeyDown -= OnInputKeyDownAsync;
+        RenderContext.OnSyntaxNodeChanged -= OnSyntaxNodeChangedAsync;
+        EditorContext.OnSourceChangedAsync -= OnSourceChangedAsync;
+        EditorContext.OnInputKeyDownAsync -= OnInputKeyDownAsync;
         await JsInfiniBlazor.KeyDownListener.RemovePreventDefaultListenerAsync();
     }
 
-    private async Task OnSourceUpdatedAsync(string newSource) {
+    private async Task OnSourceChangedAsync(string newSource) {
         EditorContext.TextSource.UpdateSource(newSource);
 
         EditorContext.SyntaxTree.ReturnToPool();
         EditorContext.SyntaxTree = Parser.MarkdownString.SerializeToSyntaxTree(EditorContext.TextSource.Text);
-        await EditorContext.InvokeSyntaxTreeUpdatedAsync();
+        await EditorContext.InvokeSyntaxTreeChangeAsync();
+        
+        Content = EditorContext.TextSource.Text;
+        await ContentChanged.InvokeAsync(Content);
+        
         await InvokeAsync(StateHasChanged);
     }
 
-    private Task OnSyntaxNodeChangedAsync(IMdSyntaxNode _) => OnSyntaxTreeChanged();
-
-    private async Task OnSyntaxTreeChanged() {
+    private async Task OnSyntaxNodeChangedAsync(IMdSyntaxNode _) {
         string newContent = Parser.MarkdownString.DeserializeToString(EditorContext.SyntaxTree);
         EditorContext.TextSource.UpdateSource(newContent);
+        
+        Content = EditorContext.TextSource.Text;
+        await ContentChanged.InvokeAsync(Content);
+        
         await InvokeAsync(StateHasChanged);
     }
 
@@ -111,7 +129,7 @@
 
         Range range = await JsInfiniBlazor.TextSelection.GetRangeAsync(EditorContext.InputElementRef);
         TextEditor.Modify(EditorContext.TextSource, modifierName, range);
-        await EditorContext.InvokeSourceUpdatedAsync(EditorContext.TextSource.Text);
+        await EditorContext.InvokeSourceChangeAsync(EditorContext.TextSource.Text);
         await InvokeAsync(StateHasChanged);
     }
 
@@ -120,7 +138,7 @@
 
         Range range = await JsInfiniBlazor.TextSelection.GetRangeAsync(EditorContext.InputElementRef);
         TextEditor.Insert(EditorContext.TextSource, content, range);
-        await EditorContext.InvokeSourceUpdatedAsync(EditorContext.TextSource.Text);
+        await EditorContext.InvokeSourceChangeAsync(EditorContext.TextSource.Text);
         await InvokeAsync(StateHasChanged);
     }
 
@@ -139,7 +157,6 @@
         int caretIndex = await JsInfiniBlazor.TextSelection.GetStartIndexAsync(EditorContext.InputElementRef);
         if (!TextEditor.TryGetCaretLine(EditorContext.TextSource, caretIndex, out Range lineRange)) return;
 
-        Logger.Warning("{lineRange}", lineRange);
         await JsInfiniBlazor.TextSelection.SetRangeAsync(EditorContext.InputElementRef, lineRange);
     }
 }

@@ -16,7 +16,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="@Class flex min-h-0">
     <div class="border-2 border-green-500 flex-1 overflow-y-auto infini-scrollbar">
-        @ComponentConverter.RenderRootComponents(SyntaxNodes)
+        @ComponentConverter.RenderRootComponents(EditorContext.SyntaxTree.VisitTopLevelNodes())
     </div>
 </div>
 
@@ -26,28 +26,25 @@
 @code {
     [CascadingParameter] protected MdEditorContext EditorContext { get; set; } = null!;
     
-    private IEnumerable<IMdSyntaxNode> SyntaxNodes { get; set; } = Enumerable.Empty<IMdSyntaxNode>();
-    
     // -----------------------------------------------------------------------------------------------------------------
     // Component lifetime Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected override void OnInitialized() {
         base.OnInitialized();
 
-        EditorContext.OnSyntaxTreeUpdate += OnSourceChangedAsync;
+        EditorContext.OnSyntaxTreeChangedAsync += OnSourceChangedAsync;
     }
 
     public override async ValueTask DisposeAsync() {
         await base.DisposeAsync();
 
-        EditorContext.OnSyntaxTreeUpdate -= OnSourceChangedAsync;
+        EditorContext.OnSyntaxTreeChangedAsync -= OnSourceChangedAsync;
     }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private async Task OnSourceChangedAsync() {
-        SyntaxNodes = EditorContext.SyntaxTree.VisitTopLevelNodes();
-        await InvokeAsync(StateHasChanged).ConfigureAwait(false);
+        await InvokeAsync(StateHasChanged);
     }
 }

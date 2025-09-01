@@ -13,13 +13,17 @@
 <InfiniPage Title="Markdown Editor" Class="p-4 w-full">
     <InfiniSection Class="grow flex flex-col gap-2 overflow-auto infini-scrollbar h-128 w-full">
         <InfiniHeading1>Markdown Editor 2</InfiniHeading1>
-        <InfiniMarkdownEditorNew>
+        <InfiniMarkdownEditorNew @bind-Content="Content">
         </InfiniMarkdownEditorNew>
+        
+        <InfiniCodeBlock @bind-Content="Content" Language="markdown"/>
+        
     </InfiniSection>
 </InfiniPage>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
+    public string? Content { get; set; } = "- [ ] something";
 }
 

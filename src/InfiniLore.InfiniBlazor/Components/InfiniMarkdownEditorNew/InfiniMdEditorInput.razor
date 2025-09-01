@@ -52,7 +52,7 @@
         if (EditorContext.IsLocked) return;
         if (args.Value is not string source) return;
         
-        await EditorContext.InvokeSourceUpdatedAsync(source).ConfigureAwait(false);
+        await EditorContext.InvokeSourceChangeAsync(source).ConfigureAwait(false);
     }
     
     private async Task OnKeyDownAsync(KeyboardEventArgs args) {

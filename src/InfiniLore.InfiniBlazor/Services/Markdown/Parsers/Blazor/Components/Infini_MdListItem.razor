@@ -30,6 +30,6 @@
 @code {
     private async Task OnCheckChanged(bool state) {
         SyntaxNode.WithCheckMarker(state ? "x" : " ");
-        if (RenderContext is not null) await RenderContext.InvokeSyntaxNodeChanged(SyntaxNode);
+        if (RenderContext is not null) await RenderContext.InvokeSyntaxNodeChange(SyntaxNode);
     }
 }
