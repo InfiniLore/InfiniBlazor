@@ -14,29 +14,29 @@ public static class InfiniBlazorMdComponentConverterFactory {
     public static IBlazorMdComponentConverter Create(IServiceProvider serviceProvider) {
         var mapBuilder = new Dictionary<Type, BlazorMdComponentRecord>(32);
 
-        mapBuilder.Register<Infini_MdBlockQuote, BlockQuoteMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdBold, BoldMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdCallout, CalloutMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdCodeBlock, CodeBlockMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdCodeInline, CodeInlineMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdContent, ContentMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdEmote, EmoteMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdHeading, HeadingMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdHeadingSimple, HeadingSimpleMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdHorizontalRule, HorizontalRuleMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdHtmlSpan, HtmlSpanMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdImage, ImageMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdItalic, ItalicMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdLink, LinkMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdListOrdered, ListOrderedMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdListUnOrdered, ListUnOrderedMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdParagraph, ParagraphMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdStrike, StrikeMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdSubScript, SubScriptMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdSuperScript, SuperScriptMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdTable, TableMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdTag, TagMdSyntaxNode>();
-        mapBuilder.Register<Infini_MdUnderline, UnderlineMdSyntaxNode>();
+        mapBuilder.Register<BlockQuoteMdSyntaxNode, Infini_MdBlockQuote>();
+        mapBuilder.Register<BoldMdSyntaxNode, Infini_MdBold>();
+        mapBuilder.Register<CalloutMdSyntaxNode, Infini_MdCallout>();
+        mapBuilder.Register<CodeBlockMdSyntaxNode, Infini_MdCodeBlock>();
+        mapBuilder.Register<CodeInlineMdSyntaxNode, Infini_MdCodeInline>();
+        mapBuilder.Register<ContentMdSyntaxNode, Infini_MdContent>();
+        mapBuilder.Register<EmoteMdSyntaxNode, Infini_MdEmote>();
+        mapBuilder.Register<HeadingMdSyntaxNode, Infini_MdHeading>();
+        mapBuilder.Register<HeadingSimpleMdSyntaxNode, Infini_MdHeadingSimple>();
+        mapBuilder.Register<HorizontalRuleMdSyntaxNode, Infini_MdHorizontalRule>();
+        mapBuilder.Register<HtmlSpanMdSyntaxNode, Infini_MdHtmlSpan>();
+        mapBuilder.Register<ImageMdSyntaxNode, Infini_MdImage>();
+        mapBuilder.Register<ItalicMdSyntaxNode, Infini_MdItalic>();
+        mapBuilder.Register<LinkMdSyntaxNode, Infini_MdLink>();
+        mapBuilder.Register<ListOrderedMdSyntaxNode, Infini_MdListOrdered>();
+        mapBuilder.Register<ListUnOrderedMdSyntaxNode, Infini_MdListUnOrdered>();
+        mapBuilder.Register<ParagraphMdSyntaxNode, Infini_MdParagraph>();
+        mapBuilder.Register<StrikeMdSyntaxNode, Infini_MdStrike>();
+        mapBuilder.Register<SubScriptMdSyntaxNode, Infini_MdSubScript>();
+        mapBuilder.Register<SuperScriptMdSyntaxNode, Infini_MdSuperScript>();
+        mapBuilder.Register<TableMdSyntaxNode, Infini_MdTable>();
+        mapBuilder.Register<TagMdSyntaxNode, Infini_MdTag>();
+        mapBuilder.Register<UnderlineMdSyntaxNode, Infini_MdUnderline>();
         
         mapBuilder.TrimExcess();
         return new BlazorMdComponentConverter {
@@ -47,7 +47,7 @@ public static class InfiniBlazorMdComponentConverterFactory {
         };
     }
 
-    private static void Register<TComponent, TNode>(this Dictionary<Type, BlazorMdComponentRecord> dictionary) where TComponent : InfiniBlazorMdComponentBase<TNode> where TNode : class, IMdSyntaxNode {
+    private static void Register<TNode, TComponent>(this Dictionary<Type, BlazorMdComponentRecord> dictionary) where TComponent : InfiniBlazorMdComponentBase<TNode> where TNode : class, IMdSyntaxNode {
         int count = dictionary.Count;
         if (dictionary.Capacity < count + 1) dictionary.EnsureCapacity(count * 2);
         
