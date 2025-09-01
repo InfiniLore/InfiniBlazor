@@ -35,10 +35,10 @@ public static partial class MdRegexLib {
     [GeneratedRegex("""
           (?<heading>^(?<hLevel>\#{1,6})[\ ]+(?<hText>[^\n]+)$)
         | (?<codeBlock>`{3}(?<cLang>.*?)?\n(?<cBody>[\s\S]*?)`{3})
-        | (?<headingSimple>^(?<hsText>.+?)\n(?<hsIdentifier>[\ ]*[-=]{3,}))
+        | (?<headingSimple>^(?<hsText>.+?)\n(?<hsIdentifier>\ *(?:={3,}?|-{3,}?)\ *$))
         | (?<list>
-            ^[^\S\n]*(?<lsId>-|\d+\.|\.\d+)\ *.*
-            (?:\n(?:(?:-|\d+\.|\.\d+)|(?:\ +)).+)*
+            ^[^\S\n]*(?<lsId>-(?!-)|\d+\.|\.\d+).+
+            (?:\n(?:(?:-(?!-)|\d+\.|\.\d+)|(?:\ +)).+)*
           )
         | (?<table>
             ^\|(?<tHead>.+)\|\ *\n
@@ -65,7 +65,7 @@ public static partial class MdRegexLib {
               )
             (?<htmlPost>.+)?
           )
-        | (?<horizontalRule>^(?<hr>[\-=]{3,64})\s*$)
+        | (?<horizontalRule>^(?<hr>\ *?(\-{3,}?|_{3,}?)\ *?)$)
         | (?<paragraph>(?<p>.+?)$)
         | (?<newLine>\n)
 

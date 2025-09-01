@@ -41,41 +41,47 @@
   <MdTestData Id="3" FileName="horizontal_line.xml">
     <MdString>---
 
-===</MdString>
+___</MdString>
     <MdSyntaxTree>
       <HorizontalRuleMdSyntaxNode Identifier="---" />
       <NewLineMdSyntaxNode />
-      <HorizontalRuleMdSyntaxNode Identifier="===" />
+      <NewLineMdSyntaxNode />
+      <HorizontalRuleMdSyntaxNode Identifier="___" />
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;hr&gt;&lt;hr&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>---
-===</ExpectedMarkdownString>
+
+___</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="4" FileName="horizontal_line.xml">
     <MdString>----
 
-====</MdString>
+____</MdString>
     <MdSyntaxTree>
       <HorizontalRuleMdSyntaxNode Identifier="----" />
       <NewLineMdSyntaxNode />
-      <HorizontalRuleMdSyntaxNode Identifier="====" />
+      <NewLineMdSyntaxNode />
+      <HorizontalRuleMdSyntaxNode Identifier="____" />
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;hr&gt;&lt;hr&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>----
-====</ExpectedMarkdownString>
+
+____</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="5" FileName="horizontal_line.xml">
     <MdString>-----
 
-=====</MdString>
+_____</MdString>
     <MdSyntaxTree>
       <HorizontalRuleMdSyntaxNode Identifier="-----" />
       <NewLineMdSyntaxNode />
-      <HorizontalRuleMdSyntaxNode Identifier="=====" />
+      <NewLineMdSyntaxNode />
+      <HorizontalRuleMdSyntaxNode Identifier="_____" />
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;hr&gt;&lt;hr&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>-----
-=====</ExpectedMarkdownString>
+
+_____</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="edgecaseUnknown" FileName="horizontal_line.xml">
     <DeveloperNote>This is an older test that was once related to horizontal lines</DeveloperNote>
