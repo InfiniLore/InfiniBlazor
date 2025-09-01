@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Pooling;
+using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
 using System.Text.RegularExpressions;
 
@@ -17,10 +18,12 @@ public class TextEditor : ITextEditor {
     private FrozenDictionary<string, ITextModifier>.AlternateLookup<ReadOnlySpan<char>> AlternateLookup => _lookupCache ??= ModifierLookup.GetAlternateLookup<ReadOnlySpan<char>>();
 
     public IEnumerable<ITextModifier> Modifiers => ModifierLookup.Values;
+    public required ILogger<TextEditor> Logger { get; init; }
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void Modify(ITextSource source, ReadOnlySpan<char> modifierName, Range range) {
+        Logger.Error("{@source} {l} {range}", source.Text, source.Length, range);
         if (!AlternateLookup.TryGetValue(modifierName, out ITextModifier? modifier)) return;
 
         if (!modifier.IsSingleLineStructure || range.Start.Value == range.End.Value) {

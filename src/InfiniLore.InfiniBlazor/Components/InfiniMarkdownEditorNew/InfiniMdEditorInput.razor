@@ -16,11 +16,10 @@
     <textarea 
         class="focus:outline-none w-full h-full font-mono overflow-y-auto infini-scrollbar"
         value="@EditorContext.TextSource.Text"
-        ref="@EditorContext.ContentRef"
+        @ref="@EditorContext.InputElementRef"
         @oninput="@(args => OnInputAsyncDebounced.InvokeDebouncedAsync(args))"
-        @onkeydown="@(args => OnKeyDownAsyncDebounced.InvokeDebouncedAsync(args))"
+        @onkeydown="@OnKeyDownAsync"
     >
-
     </textarea>
 </div>
 
@@ -29,8 +28,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     private ThrottledDebouncer<ChangeEventArgs> OnInputAsyncDebounced { get; set; } = ThrottledDebouncer<ChangeEventArgs>.Empty;
-    private Debouncer<KeyboardEventArgs> OnKeyDownAsyncDebounced { get; set; } = Debouncer<KeyboardEventArgs>.Empty;
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Component lifetime Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -38,14 +36,12 @@
         base.OnInitialized();
 
         OnInputAsyncDebounced = ThrottledDebouncer<ChangeEventArgs>.FromDelegate(OnInputAsync, 100, 300);
-        OnKeyDownAsyncDebounced = Debouncer<KeyboardEventArgs>.FromDelegate(OnKeyDownAsync);
     }
 
     public override async ValueTask DisposeAsync() {
         await base.DisposeAsync();
         
         OnInputAsyncDebounced = ThrottledDebouncer<ChangeEventArgs>.Empty;
-        OnKeyDownAsyncDebounced = Debouncer<KeyboardEventArgs>.Empty;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -58,7 +54,10 @@
         await EditorContext.UpdateSource(source).ConfigureAwait(false);
     }
     
-    private static Task OnKeyDownAsync(KeyboardEventArgs args) {
-        return Task.CompletedTask;
+    private async Task OnKeyDownAsync(KeyboardEventArgs args) {
+        if (EditorContext.IsLocked) return;
+        if (!args.CtrlKey) return; // quick exit to not have to wait on every key press
+        
+        await EditorContext.InvokeInputKeyDown(args);
     }
 }

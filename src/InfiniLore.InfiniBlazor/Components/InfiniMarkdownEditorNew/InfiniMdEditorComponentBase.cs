@@ -10,10 +10,6 @@ namespace InfiniLore.InfiniBlazor.Components;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class InfiniMdEditorComponentBase : InfiniComponentBase {
-    [CascadingParameter] protected MdEditorContext EditorContext { get; set; } = MdEditorContext.Empty;
-    [CascadingParameter] protected MdRenderContext RenderContext { get; set; } = MdRenderContext.Empty;
-    
-    // Some helpful quick handles for the EditorContext
-    protected bool IsLocked => EditorContext.IsLocked;
-    protected ITextSource TextSource => EditorContext.TextSource;
+    [CascadingParameter] protected MdEditorContext EditorContext { get; set; } = null!;
+    [CascadingParameter] protected MdRenderContext RenderContext { get; set; } = null!;
 }

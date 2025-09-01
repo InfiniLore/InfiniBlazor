@@ -16,7 +16,7 @@ public class TextSource : ITextSource {
     public ReadOnlySpan<Range> LineRanges => LinesCache.AsSpan(0, LineCount);
     
     public int LineCount { get; private set; }
-    public bool IsEmpty => Text.Length == 0;
+    public bool IsEmpty => Length == 0;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
@@ -52,6 +52,7 @@ public class TextSource : ITextSource {
         LinesCache[newLineCount] = new Range(lastLineEnd, Length);
         LineCount = ++newLineCount;
     }
+    
     private void UpdateLinesCache(int newLineCount) {
         Range[] newLinesCache = ArrayPool<Range>.Shared.Rent(Math.Max(newLineCount, 1) * 2);
         Array.Copy(LinesCache, newLinesCache, Math.Min(LinesCache.Length, newLineCount)); // Copy existing ranges

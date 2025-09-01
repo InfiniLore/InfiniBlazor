@@ -5,6 +5,7 @@ using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using InfiniLore.InfiniBlazor.TextEditor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace InfiniLore.InfiniBlazor.Components;
 
@@ -14,26 +15,30 @@ namespace InfiniLore.InfiniBlazor.Components;
 public class MdEditorContext {
     public bool IsLocked { get; set; }
     public ITextSource TextSource { get; private set; } = new TextSource();
-    public ElementReference ContentRef { get; set; }
+    public ElementReference InputElementRef { get; set; }
 
     public IMdSyntaxTree SyntaxTree { get; set; } = MdSyntaxTree.Empty;
     
     public event Func<string, Task>? OnSourceUpdate;
     public event Func<Task>? OnSyntaxTreeUpdate;
-    
-    public static MdEditorContext Empty => new();
+    public event Func<KeyboardEventArgs, Task>? OnInputKeyDown;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void SetTextSource(ITextSource textSource) => TextSource = textSource;
     
     public async Task UpdateSource(string value) {
         if (OnSourceUpdate is null) return;
         await OnSourceUpdate(value).ConfigureAwait(false);
     }
+    
     public async Task InvokeSyntaxTreeUpdated() {
         if (OnSyntaxTreeUpdate is null) return;
         await OnSyntaxTreeUpdate().ConfigureAwait(false);
+    }
+
+    public async Task InvokeInputKeyDown(KeyboardEventArgs e) {
+        if (OnInputKeyDown is null) return;
+        await OnInputKeyDown(e).ConfigureAwait(false);   
     }
 }
