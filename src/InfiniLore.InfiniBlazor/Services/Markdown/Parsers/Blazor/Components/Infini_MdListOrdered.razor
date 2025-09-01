@@ -1,35 +1,24 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
+@using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
 
 @namespace InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
-@inherits InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.InfiniBlazorMdComponentBase<InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes.ListOrderedMdSyntaxNode>
+@inherits InfiniBlazorMdComponentBase<ListOrderedMdSyntaxNode>
+
+@rendermode RenderModeProvider.InfiniRenderMode
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <ol class="list-decimal pl-8 my-4">
-    @* We only parse the list items here *@
-    @foreach (ListItemMdSyntaxNode item in SyntaxNode.GetChildrenByType<ListItemMdSyntaxNode>()) {
-        <li class="my-2 [&:has(>input[type=checkbox])]:list-none [&>ul]:mt-2 [&>ol]:mt-2">
-            @if (item.IsCheckable) {
-                <input 
-                    class="form-checkbox h-4 w-4 text-blue-600 rounded focus:ring-blue-500 -ml-6 mr-2 inline-block align-middle" 
-                    type="checkbox"
-                    disabled 
-                    checked="@item.IsChecked"
-                >
-            }
-            @ComponentConverter.RenderChildComponents(item)
-        </li>
-    }
+    @ComponentConverter.RenderChildComponents(SyntaxNode)
 </ol>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    
 }

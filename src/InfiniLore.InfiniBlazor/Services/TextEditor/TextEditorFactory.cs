@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
 
 namespace InfiniLore.InfiniBlazor.TextEditor;
@@ -23,7 +24,8 @@ public static class TextEditorFactory {
             );
 
         return new TextEditor {
-            ModifierLookup = modifierLookup
+            ModifierLookup = modifierLookup,
+            Logger = provider.GetRequiredService<ILogger<TextEditor>>()
         };
 
     }

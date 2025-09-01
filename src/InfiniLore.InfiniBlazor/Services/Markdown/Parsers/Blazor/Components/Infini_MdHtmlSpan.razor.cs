@@ -9,13 +9,29 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // ReSharper disable once InconsistentNaming
 public partial class Infini_MdHtmlSpan {
+    [GeneratedRegex("""style\s*=\s*["']([^"']*)["']""", RegexOptions.IgnoreCase)]
+    private static partial Regex ExtractStyleAttributeRegex { get; }
+    
     [GeneratedRegex("""class\s*=\s*["']([^"']*)["']""", RegexOptions.IgnoreCase)]
     private static partial Regex ExtractClassAttributeRegex { get; }
     
-    private string? ExtractClassAttribute(string? htmlTag) {
+    private static string? ExtractClassAttribute(string? htmlTag) {
         if (htmlTag.IsNullOrEmpty()) return null;
         try {
             Match match = ExtractClassAttributeRegex.Match(htmlTag);
+            return match.Success
+                ? match.Groups[1].Value
+                : null;
+        }
+        catch (Exception) {
+            return null;
+        }
+    }
+    
+    private static string? ExtractStyleAttribute(string? htmlTag) {
+        if (htmlTag.IsNullOrEmpty()) return null;
+        try {
+            Match match = ExtractStyleAttributeRegex.Match(htmlTag);
             return match.Success
                 ? match.Groups[1].Value
                 : null;

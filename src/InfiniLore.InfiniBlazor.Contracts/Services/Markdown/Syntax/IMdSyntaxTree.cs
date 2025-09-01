@@ -8,7 +8,9 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMdSyntaxTree : IDisposable, IEquatable<IMdSyntaxTree> {
     IMdSyntaxNode RootNode { get; }
-
+    
+    void ReturnToPool();
+    
     IEnumerable<IMdSyntaxNode> VisitTopLevelNodes();
     IEnumerable<IMdSyntaxNode> VisitNodesBreadthFirst();
     IEnumerable<IMdSyntaxNode> VisitNodesDeepestFirst();

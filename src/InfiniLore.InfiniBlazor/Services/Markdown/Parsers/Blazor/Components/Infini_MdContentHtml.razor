@@ -2,19 +2,15 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
-@namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.Components
+@namespace InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.InfiniBlazorMdComponentBase<InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes.HtmlSpanMdSyntaxNode>
+@inherits InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.InfiniBlazorMdComponentBase<InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes.ContentHtmlMdSyntaxNode>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<span class="@ExtractClassAttribute(SyntaxNode.Attributes)" style="@ExtractStyleAttribute(SyntaxNode.Attributes)">
-    @RenderChildContent()
-</span>
-
-
+@(new MarkupString(SyntaxNode.ContentHtml))
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@

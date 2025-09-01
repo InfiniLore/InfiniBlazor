@@ -12,6 +12,7 @@ public abstract class InfiniBlazorMdComponentBase<T> : ComponentBase
 {
     [Parameter] public required T SyntaxNode { get; set; }
     [Inject] public IBlazorMdComponentConverter ComponentConverter { get; set; } = null!;
+    [CascadingParameter] public MdRenderContext? RenderContext { get; set; }
     
     protected RenderFragment RenderChildContent() => ComponentConverter.RenderChildComponents(SyntaxNode);
 }

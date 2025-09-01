@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Pooling;
+using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
 using System.Text.RegularExpressions;
 
@@ -17,10 +18,12 @@ public class TextEditor : ITextEditor {
     private FrozenDictionary<string, ITextModifier>.AlternateLookup<ReadOnlySpan<char>> AlternateLookup => _lookupCache ??= ModifierLookup.GetAlternateLookup<ReadOnlySpan<char>>();
 
     public IEnumerable<ITextModifier> Modifiers => ModifierLookup.Values;
+    public required ILogger<TextEditor> Logger { get; init; }
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void Modify(ITextSource source, ReadOnlySpan<char> modifierName, Range range) {
+        Logger.Error("{@source} {l} {range}", source.Text, source.Length, range);
         if (!AlternateLookup.TryGetValue(modifierName, out ITextModifier? modifier)) return;
 
         if (!modifier.IsSingleLineStructure || range.Start.Value == range.End.Value) {
@@ -33,8 +36,8 @@ public class TextEditor : ITextEditor {
         int start = range.Start.GetOffset(totalLength);
         int end = range.End.GetOffset(totalLength);
 
-        for (int index = source.Lines.Count - 1; index >= 0; index--) {
-            Range lineRange = source.Lines[index];
+        for (int index = source.LineCount - 1; index >= 0; index--) {
+            Range lineRange = source.LineRanges[index];
             int lineStart = lineRange.Start.GetOffset(totalLength);
             int lineEnd = lineRange.End.GetOffset(totalLength);
 
@@ -68,14 +71,14 @@ public class TextEditor : ITextEditor {
         }
 
         // Generate the new text by replacing the specified range with the input text
-        source.Text = string.Concat(source.Text.AsSpan(0, start), input, source.Text.AsSpan(end));
+        source.UpdateSource(string.Concat(source.Text.AsSpan(0, start), input, source.Text.AsSpan(end)));
     }
 
     public bool TryGetCaretLine(ITextSource source, int caretIndex, out Range lineRange) {
         int normalizedCaretIndex = Math.Max(0, caretIndex);
 
         // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
-        foreach (Range lr in source.Lines) {
+        foreach (Range lr in source.LineRanges) {
             if (normalizedCaretIndex < lr.Start.Value) continue;
             if (normalizedCaretIndex > lr.End.Value) continue;
 

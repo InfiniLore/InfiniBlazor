@@ -20,8 +20,8 @@ public class TextEditorTests(ITextEditor textEditor) {
     [MethodDataSource(typeof(ModifyItalicMultiLineDataSources), nameof(ModifyItalicMultiLineDataSources.HelloWoldDataSource))]
     public async Task Modify_SpecificRange(string sectionName, int start, int end, string expected) {
         // Arrange
-        var source = new TextSource { Text = "Hello World!" };
-        var expectedSource = new TextSource { Text = expected };
+        var source = new TextSource("Hello World!");
+        var expectedSource = new TextSource(expected);
         Range range = start..end;
 
         // Act
@@ -36,8 +36,8 @@ public class TextEditorTests(ITextEditor textEditor) {
     [MethodDataSource(typeof(ModifyItalicMultiLineDataSources), nameof(ModifyItalicMultiLineDataSources.DataSources))]
     public async Task Modify_WholeRange(string sectionName, string input, string expected) {
         // Arrange
-        var source = new TextSource { Text = input };
-        var expectedSource = new TextSource { Text = expected };
+        var source = new TextSource(input);
+        var expectedSource = new TextSource(expected);
         Range range = ..input.Length;
 
         // Act
@@ -56,7 +56,7 @@ public class TextEditorTests(ITextEditor textEditor) {
     [Arguments("Hello World", "", 6, 11, "Hello ")]
     public async Task Insert(string original, string input, int start, int end, string expected) {
         // Arrange
-        var source = new TextSource { Text = original };
+        var source = new TextSource(original);
         Range range = start..end;
 
         // Act

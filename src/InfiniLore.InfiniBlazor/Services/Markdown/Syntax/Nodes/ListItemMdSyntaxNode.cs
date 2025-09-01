@@ -26,6 +26,11 @@ public sealed class ListItemMdSyntaxNode : MdSyntaxNode<ListItemMdSyntaxNode> {
         return this;
     }
     
+    public ListItemMdSyntaxNode WithCheckMarker(string checkMarker = "x") {
+        OriginalCheckMarker = checkMarker;
+        return this;
+    }
+    
     public override bool TryReset() {
         IsCheckable = false;
         Index = string.Empty;

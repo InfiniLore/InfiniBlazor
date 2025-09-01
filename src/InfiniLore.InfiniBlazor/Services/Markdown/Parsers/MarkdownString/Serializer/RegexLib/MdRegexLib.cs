@@ -35,8 +35,11 @@ public static partial class MdRegexLib {
     [GeneratedRegex("""
           (?<heading>^(?<hLevel>\#{1,6})[\ ]+(?<hText>[^\n]+)$)
         | (?<codeBlock>`{3}(?<cLang>.*?)?\n(?<cBody>[\s\S]*?)`{3})
-        | (?<headingSimple>^(?<hsText>.+?)\n(?<hsIdentifier>[\ ]*[-=]{3,}))
-        | (?<list>^\ *(?<lsId>-|\d+\.)[\ \[]+.+(?:\n\ *\S+[^\n]+)*)
+        | (?<headingSimple>^(?<hsText>.+?)\n(?<hsIdentifier>\ *(?:={3,}?|-{3,}?)\ *$))
+        | (?<list>
+            ^[^\S\n]*(?<lsId>-(?!-)|\d+\.|\.\d+).+
+            (?:\n(?:(?:-(?!-)|\d+\.|\.\d+)|(?:\ +)).+)*
+          )
         | (?<table>
             ^\|(?<tHead>.+)\|\ *\n
             ^\|(?<tSep>[:\-|\ ]+?)\|\ *
@@ -62,7 +65,7 @@ public static partial class MdRegexLib {
               )
             (?<htmlPost>.+)?
           )
-        | (?<horizontalRule>^(?<hr>[\-=]{3,64})\s*$)
+        | (?<horizontalRule>^(?<hr>\ *?(\-{3,}?|_{3,}?)\ *?)$)
         | (?<paragraph>(?<p>.+?)$)
         | (?<newLine>\n)
 
@@ -97,7 +100,7 @@ public static partial class MdRegexLib {
         MdRegexGroupNames.Tag
     ];
 
-    [GeneratedRegex(@"^ *(?:-|(?<lIndex>\d*)\.)(?:(?<lTaskSpace> *)\[(?<lTask>[ xX])])?(?:(?<lSpace> +)(?<lHead>[^\n]+)|(?<lHead> )|(?<lHead>))(?<lBody>(?:\n +.*)*)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"^ *(?:-|(?<lIndex>\d*)\.)(?:(?<lTaskSpace> *)\[(?<lTask>[ xX])])?(?:(?<lSpace> *)(?<lHead>.+)|(?<lHead> )|(?<lHead>))(?<lBody>(?:\n +.*)*)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex ListItemBodyRegex { get; }
 
     [GeneratedRegex("""

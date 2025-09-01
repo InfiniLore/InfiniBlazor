@@ -6,10 +6,14 @@ namespace InfiniLore.InfiniBlazor;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface ITextSource {
-    string Text { get; set; }
+    string Text { get; }
     ReadOnlySpan<char> TextSpan { get; }
 
     int Length { get; }
-    IReadOnlyList<Range> Lines { get; }
+    ReadOnlySpan<Range> LineRanges { get; }
+    int LineCount { get; }
+    
     bool IsEmpty { get; }
+
+    void UpdateSource(string value);
 }

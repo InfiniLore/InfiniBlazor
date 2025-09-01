@@ -8,16 +8,28 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniBlazorMdComponentBase<ListUnOrderedMdSyntaxNode>
+@inherits InfiniBlazorMdComponentBase<ListItemMdSyntaxNode>
+
+@rendermode RenderModeProvider.InfiniRenderMode
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<ul class="list-disc pl-8 my-4">
+<li class="my-2 [&:has(>[data-checkbox])]:list-none [&>ul]:mt-2 [&>ol]:mt-2">
+    @if (SyntaxNode.IsCheckable) {
+        <InfiniCheckbox 
+            Size="Size.S"
+            Class="-ml-6 mr-2 align-bottom" 
+            IsChecked="@SyntaxNode.IsChecked" 
+            IsCheckedChanged="@OnCheckChanged"/>
+    }
     @ComponentConverter.RenderChildComponents(SyntaxNode)
-</ul>
+</li>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-
+    private async Task OnCheckChanged(bool state) {
+        SyntaxNode.WithCheckMarker(state ? "x" : " ");
+        if (RenderContext is not null) await RenderContext.InvokeSyntaxNodeChange(SyntaxNode);
+    }
 }
