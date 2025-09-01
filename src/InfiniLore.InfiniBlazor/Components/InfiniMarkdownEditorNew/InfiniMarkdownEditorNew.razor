@@ -1,7 +1,9 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Markdown
 @using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
+@using InfiniLore.InfiniBlazor.Markdown.Syntax
 @using InfiniLore.InfiniBlazor.TextEditor
 
 @* ReSharper disable once CheckNamespace *@
@@ -10,6 +12,7 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniComponentBase
+@inject IMarkdownParser Parser
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -18,7 +21,7 @@
         <div class="mdEditor-container flex w-full flex-col h-full">
             <div class="mdEditor-toolbarTop"></div>
             <div class="flex flex-row size-full h-full">
-                <InfiniMdEditorContent Class="max-w-1/2 min-w-1/2 w-1/2"/>
+                <InfiniMdEditorInput Class="max-w-1/2 min-w-1/2 w-1/2"/>
                 <InfiniMdEditorPreview Class="max-w-1/2 min-w-1/2 w-1/2"/>
             </div>
             <div class="mdEditor-toolbarBottom"></div>
@@ -30,7 +33,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
     [Parameter] public ITextSource Source { get; set; } = TextSource.Empty;
     private MdEditorContext EditorContext { get; set; } = new();
@@ -39,8 +41,40 @@
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        
+        RenderContext.OnSyntaxTreeUpdate += OnSyntaxTreeUpdated;
+        EditorContext.OnSourceUpdate += OnSourceUpdated;
+    }
+    
     protected override void OnParametersSet() {
         base.OnParametersSet();
         EditorContext.SetTextSource(Source);
+    }
+
+    public override async ValueTask DisposeAsync() {
+        await base.DisposeAsync();
+        
+        RenderContext.OnSyntaxTreeUpdate -= OnSyntaxTreeUpdated;
+        EditorContext.OnSourceUpdate -= OnSourceUpdated;
+    }
+
+    private async Task OnSourceUpdated(string newSource) {
+        if (EditorContext.SyntaxTree is MdSyntaxTree oldTree) MdSyntaxTree.Pool.Return(oldTree);
+        
+        IMdSyntaxTree newTree = Parser.MarkdownString.SerializeToSyntaxTree(newSource);
+        EditorContext.SyntaxTree = newTree;
+
+        await EditorContext.InvokeSyntaxTreeUpdated().ConfigureAwait(false);
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task OnSyntaxTreeUpdated() {
+        string newContent = Parser.MarkdownString.DeserializeToString(EditorContext.SyntaxTree);
+        EditorContext.TextSource.UpdateSource(newContent);
+        
+        await EditorContext.UpdateSource(newContent).ConfigureAwait(false);
+        await InvokeAsync(StateHasChanged);
     }
 }

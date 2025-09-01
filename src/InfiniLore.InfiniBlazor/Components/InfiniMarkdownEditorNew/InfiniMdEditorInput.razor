@@ -2,8 +2,6 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using CodeOfChaos.Extensions.Debouncers
-@using InfiniLore.InfiniBlazor.Markdown
-@using InfiniLore.InfiniBlazor.Markdown.Syntax
 
 @* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
@@ -11,14 +9,13 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniMdEditorComponentBase
-@inject IMarkdownParser Parser
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="@Class border-2 border-red-500 flex">
     <textarea 
         class="focus:outline-none w-full h-full font-mono overflow-y-auto infini-scrollbar"
-        value="@TextAreaValue"
+        value="@EditorContext.TextSource.Text"
         ref="@EditorContext.ContentRef"
         @oninput="@(args => OnInputAsyncDebounced.InvokeDebouncedAsync(args))"
         @onkeydown="@(args => OnKeyDownAsyncDebounced.InvokeDebouncedAsync(args))"
@@ -31,7 +28,6 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private string? TextAreaValue { get; set; } = string.Empty;
     private ThrottledDebouncer<ChangeEventArgs> OnInputAsyncDebounced { get; set; } = ThrottledDebouncer<ChangeEventArgs>.Empty;
     private Debouncer<KeyboardEventArgs> OnKeyDownAsyncDebounced { get; set; } = Debouncer<KeyboardEventArgs>.Empty;
     
@@ -43,22 +39,13 @@
 
         OnInputAsyncDebounced = ThrottledDebouncer<ChangeEventArgs>.FromDelegate(OnInputAsync, 100, 300);
         OnKeyDownAsyncDebounced = Debouncer<KeyboardEventArgs>.FromDelegate(OnKeyDownAsync);
-
-        RenderContext.OnSyntaxTreeUpdate += OnSyntaxTreeUpdated;
-        EditorContext.OnSourceUpdate += OnSourceUpdated;
-    }
-
-    protected override void OnParametersSet() {
-        base.OnParametersSet();
-
-        TextAreaValue = EditorContext.TextSource.Text;
     }
 
     public override async ValueTask DisposeAsync() {
         await base.DisposeAsync();
         
-        RenderContext.OnSyntaxTreeUpdate -= OnSyntaxTreeUpdated;
-        EditorContext.OnSourceUpdate -= OnSourceUpdated;
+        OnInputAsyncDebounced = ThrottledDebouncer<ChangeEventArgs>.Empty;
+        OnKeyDownAsyncDebounced = Debouncer<KeyboardEventArgs>.Empty;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -67,29 +54,11 @@
     private async Task OnInputAsync(ChangeEventArgs args) {
         if (EditorContext.IsLocked) return;
         if (args.Value is not string source) return;
+        
         await EditorContext.UpdateSource(source).ConfigureAwait(false);
     }
     
     private static Task OnKeyDownAsync(KeyboardEventArgs args) {
         return Task.CompletedTask;
-    }
-    
-    private async Task OnSourceUpdated(string newSource) {
-        if (EditorContext.SyntaxTree is MdSyntaxTree oldTree) MdSyntaxTree.Pool.Return(oldTree);
-        
-        IMdSyntaxTree newTree = Parser.MarkdownString.SerializeToSyntaxTree(newSource);
-        EditorContext.SyntaxTree = newTree;
-
-        await EditorContext.InvokeSyntaxTreeUpdated().ConfigureAwait(false);
-        await InvokeAsync(StateHasChanged);
-    }
-
-    private async Task OnSyntaxTreeUpdated() {
-        string newContent = Parser.MarkdownString.DeserializeToString(EditorContext.SyntaxTree);
-        EditorContext.TextSource.UpdateSource(newContent);
-        TextAreaValue = newContent;
-        await EditorContext.UpdateSource(newContent).ConfigureAwait(false);
-        
-        await InvokeAsync(StateHasChanged);
     }
 }
