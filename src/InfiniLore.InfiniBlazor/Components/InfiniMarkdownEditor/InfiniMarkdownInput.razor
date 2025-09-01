@@ -16,7 +16,7 @@
     <textarea
         class="grow p-4 border-none focus:outline-none resize-none overflow-scroll infini-scrollbar font-mono"
         value="@EditorState.Source.Text"
-        ref="@EditorState.InputRef"
+        @ref="@EditorState.InputRef"
         @oninput="@OnInputAsync"
         @onkeydown="@OnKeyDownAsync">
     </textarea>
@@ -51,7 +51,7 @@
         if (EditorState.IsLocked) return;
         
         if (e.Value is string value) {
-            EditorState.Source.Text = value; 
+            EditorState.Source.UpdateSource(value);
         }
         await EditorState.SourceHasChanged();
     }

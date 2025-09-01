@@ -16,7 +16,7 @@ public class TextSourceTests {
         // Assert
         await Assert.That(textSource.Text).IsEmpty();
         await Assert.That(textSource.Length).IsEqualTo(0);
-        await Assert.That(textSource.Lines).IsEmpty();
+        await Assert.That(textSource.LineCount).IsEqualTo(1);
     }
 
     [Test]
@@ -27,12 +27,10 @@ public class TextSourceTests {
     [Arguments("Line1\n\nLine3", 3)]// Empty line in between
     public async Task Text_SetProperty_NormalizesLineEndingsAndUpdatesLines(string input, int expectedLineCount) {
         // Arrange
-        var textSource = new TextSource {
-            Text = input
-        };
+        var textSource = new TextSource(input);
 
         // Act & Assert
-        await Assert.That(textSource.Lines).HasCount(expectedLineCount);
+        await Assert.That(textSource.LineCount).IsEqualTo(expectedLineCount);
         await Assert.That(textSource.Text).DoesNotContain("\r\n");
         await Assert.That(textSource.Text).DoesNotContain("\r");
     }
@@ -44,7 +42,7 @@ public class TextSourceTests {
         const string text = "Hello\nWorld";
 
         // Act
-        textSource.Text = text;
+        textSource.UpdateSource(text);
 
         // Assert
         await Assert.That(textSource.Length).IsEqualTo(text.Length);
@@ -57,7 +55,7 @@ public class TextSourceTests {
         const string text = "Hello\nWorld";
 
         // Act
-        textSource.Text = text;
+        textSource.UpdateSource(text);
         ReadOnlySpan<char> span = textSource.TextSpan;
 
         // Assert
@@ -73,13 +71,13 @@ public class TextSourceTests {
         const string text = "Line1\nLine2\nLine3";
 
         // Act
-        textSource.Text = text;
+        textSource.UpdateSource(text);
 
         // Assert
-        await Assert.That(textSource.Lines).HasCount(3);
+        await Assert.That(textSource.LineCount).IsEqualTo(3);
 
-        await Assert.That(text[textSource.Lines[0]]).IsEquatableOrEqualTo("Line1");
-        await Assert.That(text[textSource.Lines[1]]).IsEquatableOrEqualTo("Line2");
-        await Assert.That(text[textSource.Lines[2]]).IsEquatableOrEqualTo("Line3");
+        await Assert.That(text[textSource.LineRanges[0]]).IsEquatableOrEqualTo("Line1");
+        await Assert.That(text[textSource.LineRanges[1]]).IsEquatableOrEqualTo("Line2");
+        await Assert.That(text[textSource.LineRanges[2]]).IsEquatableOrEqualTo("Line3");
     }
 }

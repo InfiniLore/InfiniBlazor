@@ -50,7 +50,7 @@ public abstract class SingleInstructionModifiers(ILogger logger) : ITextModifier
             editor.UpdateCaret(range.Start.Value + instructionLength);
 
             // Return only the relevant portion of the buffer as a string
-            source.Text = new string(bufferSpan[..finalLength]);
+            source.UpdateSource(new string(bufferSpan[..finalLength]));
         }
         finally {
             // Return the buffer to the pool to avoid memory leaks

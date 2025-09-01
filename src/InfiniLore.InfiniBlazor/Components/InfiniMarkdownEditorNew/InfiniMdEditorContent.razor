@@ -17,7 +17,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="@Class border-2 border-red-500 flex">
     <textarea 
-        class="w-full h-full font-mono overflow-y-auto infini-scrollbar"
+        class="focus:outline-none w-full h-full font-mono overflow-y-auto infini-scrollbar"
         value="@TextAreaValue"
         ref="@EditorContext.ContentRef"
         @oninput="@(args => OnInputAsyncDebounced.InvokeDebouncedAsync(args))"
@@ -86,7 +86,7 @@
 
     private async Task OnSyntaxTreeUpdated() {
         string newContent = Parser.MarkdownString.DeserializeToString(EditorContext.SyntaxTree);
-        EditorContext.TextSource.Text = newContent;
+        EditorContext.TextSource.UpdateSource(newContent);
         TextAreaValue = newContent;
         await EditorContext.UpdateSource(newContent).ConfigureAwait(false);
         
