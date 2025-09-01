@@ -27,17 +27,17 @@ public class MdEditorContext {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     
-    public async Task UpdateSource(string value) {
+    public async Task InvokeSourceUpdatedAsync(string value) {
         if (OnSourceUpdate is null) return;
         await OnSourceUpdate(value).ConfigureAwait(false);
     }
     
-    public async Task InvokeSyntaxTreeUpdated() {
+    public async Task InvokeSyntaxTreeUpdatedAsync() {
         if (OnSyntaxTreeUpdate is null) return;
         await OnSyntaxTreeUpdate().ConfigureAwait(false);
     }
 
-    public async Task InvokeInputKeyDown(KeyboardEventArgs e) {
+    public async Task InvokeInputKeyDownAsync(KeyboardEventArgs e) {
         if (OnInputKeyDown is null) return;
         await OnInputKeyDown(e).ConfigureAwait(false);   
     }

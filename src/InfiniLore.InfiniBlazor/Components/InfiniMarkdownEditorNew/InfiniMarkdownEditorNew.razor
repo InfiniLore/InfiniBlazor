@@ -4,7 +4,6 @@
 @using InfiniLore.InfiniBlazor.JsRuntime
 @using InfiniLore.InfiniBlazor.Markdown
 @using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
-@using InfiniLore.InfiniBlazor.Markdown.Syntax
 @using Microsoft.Extensions.Logging
 
 @* ReSharper disable once CheckNamespace *@
@@ -55,9 +54,9 @@
     protected override void OnInitialized() {
         base.OnInitialized();
         
-        RenderContext.OnSyntaxTreeUpdate += OnSyntaxTreeUpdated;
-        EditorContext.OnSourceUpdate += OnSourceUpdated;
-        EditorContext.OnInputKeyDown += OnInputKeyDown;
+        RenderContext.OnSyntaxNodeChange += OnSyntaxNodeChangedAsync;
+        EditorContext.OnSourceUpdate += OnSourceUpdatedAsync;
+        EditorContext.OnInputKeyDown += OnInputKeyDownAsync;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender) {
@@ -76,34 +75,33 @@
     public override async ValueTask DisposeAsync() {
         await base.DisposeAsync();
         
-        RenderContext.OnSyntaxTreeUpdate -= OnSyntaxTreeUpdated;
-        EditorContext.OnSourceUpdate -= OnSourceUpdated;
-        EditorContext.OnInputKeyDown -= OnInputKeyDown;
+        RenderContext.OnSyntaxNodeChange -= OnSyntaxNodeChangedAsync;
+        EditorContext.OnSourceUpdate -= OnSourceUpdatedAsync;
+        EditorContext.OnInputKeyDown -= OnInputKeyDownAsync;
         await JsInfiniBlazor.KeyDownListener.RemovePreventDefaultListenerAsync();
     }
 
-    private async Task OnSourceUpdated(string newSource) {
-        if (EditorContext.SyntaxTree is MdSyntaxTree oldTree) MdSyntaxTree.Pool.Return(oldTree);
+    private async Task OnSourceUpdatedAsync(string newSource) {
         EditorContext.TextSource.UpdateSource(newSource);
-        
-        IMdSyntaxTree newTree = Parser.MarkdownString.SerializeToSyntaxTree(EditorContext.TextSource.Text);
-        EditorContext.SyntaxTree = newTree;
+
+        EditorContext.SyntaxTree.ReturnToPool();
+        EditorContext.SyntaxTree = Parser.MarkdownString.SerializeToSyntaxTree(EditorContext.TextSource.Text);
+        await EditorContext.InvokeSyntaxTreeUpdatedAsync();
         await InvokeAsync(StateHasChanged);
     }
 
-    private async Task OnSyntaxTreeUpdated() {
+    private Task OnSyntaxNodeChangedAsync(IMdSyntaxNode _) => OnSyntaxTreeChanged();
+
+    private async Task OnSyntaxTreeChanged() {
         string newContent = Parser.MarkdownString.DeserializeToString(EditorContext.SyntaxTree);
-        await EditorContext.UpdateSource(newContent).ConfigureAwait(false);
+        EditorContext.TextSource.UpdateSource(newContent);
         await InvokeAsync(StateHasChanged);
     }
 
-    private async Task OnInputKeyDown(KeyboardEventArgs args) {
-        Logger.Warning("On KEY {@key}", args);
-        Logger.Warning("SOURCE {@key}", EditorContext.TextSource.Text);
-        
+    private async Task OnInputKeyDownAsync(KeyboardEventArgs args) {
         InfiniEditorKeyCombo combo = InfiniEditorKeyCombo.From(args);
         if (KeyCombos.TryGetValue(combo, out Func<InfiniMarkdownEditorNew, Task>? task)) await task(this);
-        Logger.Warning("On KEY {@key}", args);
+        
         LastPressedCombo = combo;
         await InvokeAsync(StateHasChanged);
     }
@@ -112,8 +110,8 @@
         if (EditorContext.IsLocked) return;
 
         Range range = await JsInfiniBlazor.TextSelection.GetRangeAsync(EditorContext.InputElementRef);
-        Logger.Warning("{range}", range);
         TextEditor.Modify(EditorContext.TextSource, modifierName, range);
+        await EditorContext.InvokeSourceUpdatedAsync(EditorContext.TextSource.Text);
         await InvokeAsync(StateHasChanged);
     }
 
@@ -122,13 +120,13 @@
 
         Range range = await JsInfiniBlazor.TextSelection.GetRangeAsync(EditorContext.InputElementRef);
         TextEditor.Insert(EditorContext.TextSource, content, range);
+        await EditorContext.InvokeSourceUpdatedAsync(EditorContext.TextSource.Text);
         await InvokeAsync(StateHasChanged);
     }
 
     private async Task HandleSelectAllAsync() {
         if (EditorContext.IsLocked) return;
         if (EditorContext.TextSource.IsEmpty) return;
-        Logger.Warning("ALL");
 
         // when ctrl+a has been pressed twice, select the full text
         if (LastPressedCombo == InfiniEditorKeyCombo.SelectAll) {

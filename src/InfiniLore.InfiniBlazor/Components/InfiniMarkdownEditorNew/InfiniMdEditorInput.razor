@@ -51,13 +51,13 @@
         if (EditorContext.IsLocked) return;
         if (args.Value is not string source) return;
         
-        await EditorContext.UpdateSource(source).ConfigureAwait(false);
+        await EditorContext.InvokeSourceUpdatedAsync(source).ConfigureAwait(false);
     }
     
     private async Task OnKeyDownAsync(KeyboardEventArgs args) {
         if (EditorContext.IsLocked) return;
         if (!args.CtrlKey) return; // quick exit to not have to wait on every key press
         
-        await EditorContext.InvokeInputKeyDown(args);
+        await EditorContext.InvokeInputKeyDownAsync(args);
     }
 }
