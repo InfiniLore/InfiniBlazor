@@ -36,7 +36,10 @@ public static partial class MdRegexLib {
           (?<heading>^(?<hLevel>\#{1,6})[\ ]+(?<hText>[^\n]+)$)
         | (?<codeBlock>`{3}(?<cLang>.*?)?\n(?<cBody>[\s\S]*?)`{3})
         | (?<headingSimple>^(?<hsText>.+?)\n(?<hsIdentifier>[\ ]*[-=]{3,}))
-        | (?<list>^\ *(?<lsId>-|\d+\.)[\ \[]+.+(?:\n\ *\S+[^\n]+)*)
+        | (?<list>
+            ^[^\S\n]*(?<lsId>-|\d+\.|\.\d+)\ *.*
+            (?:\n(?:(?:-|\d+\.|\.\d+)|(?:\ +)).+)*
+          )
         | (?<table>
             ^\|(?<tHead>.+)\|\ *\n
             ^\|(?<tSep>[:\-|\ ]+?)\|\ *

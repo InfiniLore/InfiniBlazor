@@ -232,11 +232,13 @@
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
-      <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">1. </ContentMdSyntaxNode>
-      </ParagraphMdSyntaxNode>
+      <ListOrderedMdSyntaxNode LeadingSpaces="0">
+        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="1" LeadingSpaces="0" CheckLeadingSpaces="0">
+          <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+        </ListItemMdSyntaxNode>
+      </ListOrderedMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;1.&lt;/p&gt;&lt;p&gt;1. &lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;1.&lt;/p&gt;&lt;ol&gt;&lt;li&gt; &lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>1.
 
 1. </ExpectedMarkdownString>
