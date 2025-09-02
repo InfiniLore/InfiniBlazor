@@ -20,6 +20,7 @@ public static partial class MdRegexLib {
         | (?<strike>~(?<s>.+?)(?<!\\)~)
         | (?<underline>_(?<u>.+?)(?<!\\)_)
         | (?<emote>:(?<e>[\p{L}\p{N}\-_]+):)
+        | (?<wikiLink>\[\[(?<wHref>[^\]\[\ ]+)\]\])
         | (?<link>
             (?<lnBang>!)?
             \[(?<lnText> (?:\ *!?\[.+?\]\(.+?\)\ *)|(?:[^\\\]]|\\\]|\\[^\]])*?)\]

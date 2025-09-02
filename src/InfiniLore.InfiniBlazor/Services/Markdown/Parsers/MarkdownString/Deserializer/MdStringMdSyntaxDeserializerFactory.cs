@@ -49,6 +49,7 @@ public static class MdStringMdSyntaxDeserializerFactory {
             .Register<TagMdSyntaxNode, TagSyntaxNodeDeserializer>(instance)
             .Register<UnderlineMdSyntaxNode, UnderlineSyntaxNodeDeserializer>(instance)
             .Register<UserMdSyntaxNode, UserSyntaxNodeDeserializer>(instance)
+            .Register<WikiLinkMdSyntaxNode, WikiLinkSyntaxNodeDeserializer>(instance)
         ;
         
         instance.Deserializers = deserializers.ToFrozenDictionary();

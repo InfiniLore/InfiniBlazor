@@ -115,6 +115,13 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 builder.Append("\">");
                 break;
             }
+            
+            case WikiLinkMdSyntaxNode {Href: var href}: {
+                builder.Append("<a href=\"");
+                builder.Append(href.AsSpan());
+                builder.Append("\">");
+                break;
+            }
 
             case ListItemMdSyntaxNode {IsCheckable: true, IsChecked: var checkedState}: {
                 builder.Append("<li>");
@@ -357,6 +364,7 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 break;
             }
 
+            case WikiLinkMdSyntaxNode:
             case LinkMdSyntaxNode: {
                 builder.Append("</a>");
                 break;

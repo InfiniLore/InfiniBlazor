@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="wikilink.xml">
+    <MdString>[[test]]</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <WikiLinkMdSyntaxNode Href="test" />
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;a href="test"&gt;&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>[[test]]</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="empty" FileName="wikilink.xml">
+    <MdString>[[]]
+
+[[ ]]</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">[[]]</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">[[ ]]</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;[[]]&lt;/p&gt;&lt;p&gt;[[ ]]&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>[[]]
+
+[[ ]]</ExpectedMarkdownString>
+  </MdTestData>
+</ArrayOfMdTestData>
