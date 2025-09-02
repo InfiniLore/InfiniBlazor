@@ -47,7 +47,9 @@ public static class MdStringMdSyntaxDeserializerFactory {
             // .Register<TableRowMdSyntaxNode, TableRowSyntaxNodeDeserializer>(instance) // Not implemented due to the TableSyntaxNodeDeserializer handling them directly
             .Register<TableMdSyntaxNode, TableSyntaxNodeDeserializer>(instance)
             .Register<TagMdSyntaxNode, TagSyntaxNodeDeserializer>(instance)
-            .Register<UnderlineMdSyntaxNode, UnderlineSyntaxNodeDeserializer>(instance);
+            .Register<UnderlineMdSyntaxNode, UnderlineSyntaxNodeDeserializer>(instance)
+            .Register<UserMdSyntaxNode, UserSyntaxNodeDeserializer>(instance)
+        ;
         
         instance.Deserializers = deserializers.ToFrozenDictionary();
         return instance;

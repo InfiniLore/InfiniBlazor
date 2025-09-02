@@ -63,6 +63,7 @@ public class XmlMdSyntaxTreeParser : IXmlMdSyntaxTreeParser {
         RegisterVisitor<TagMdSyntaxNode, TagXmlMdSyntaxNodeVisitor>();
         RegisterVisitor<UnderlineMdSyntaxNode, UnderlineXmlMdSyntaxNodeVisitor>();
         RegisterVisitor<NewLineMdSyntaxNode, NewLineXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<UserMdSyntaxNode, UserXmlMdSyntaxNodeVisitor>();
     }
 
     private void RegisterVisitor<TNode, TVisitor>() where TNode : MdSyntaxNode<TNode>, new() where TVisitor : XmlMdSyntaxNodeVisitor<TNode>, new() {

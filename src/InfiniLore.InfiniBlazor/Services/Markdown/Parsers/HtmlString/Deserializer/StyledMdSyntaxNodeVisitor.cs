@@ -361,6 +361,12 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 builder.Append(contentTag);
                 break;
             }
+            
+            case UserMdSyntaxNode { UserName: var userName }: {
+                builder.Append('@');
+                builder.Append(userName);
+                break;
+            }
 
         }
     }

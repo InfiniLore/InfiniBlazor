@@ -28,7 +28,8 @@ public static partial class MdRegexLib {
               \ ?(?<lnMods>(?:\|.*)?)
             \)
           )
-        | (?<tag>\#(?<tText>[\p{L}\p{N}\-_/]+))
+        | (?<tag>\#(?<tText>[\p{L}\p{N}\-_\/\.]+))
+        | (?<user>\@(?<uName>[\p{L}\p{N}\-_\/\.]+))
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex SinglelineStructuresRegex { get; }
 

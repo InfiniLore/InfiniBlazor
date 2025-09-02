@@ -294,6 +294,12 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 builder.Append(contentTag.AsSpan());
                 break;
             }
+            
+            case UserMdSyntaxNode { UserName: var userName }: {
+                builder.Append('@');
+                builder.Append(userName.AsSpan());
+                break;
+            }
         }
     }
     
