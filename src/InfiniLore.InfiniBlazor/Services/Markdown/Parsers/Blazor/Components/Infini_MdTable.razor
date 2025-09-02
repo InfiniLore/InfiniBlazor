@@ -6,6 +6,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Markdown
 @using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
 @inherits InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.InfiniBlazorMdComponentBase<InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes.TableMdSyntaxNode>
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -23,26 +24,26 @@
     </Header>
     <Content Context="rowNode">
         @* The cell itself doesnt hold data, but the content of the cell does *@
-        @{TableCellMdSyntaxNode[] nodes = rowNode.GetChildrenByType<TableCellMdSyntaxNode>().ToArray();}
+        @{ ReadOnlySpan<IMdSyntaxNode> nodes = rowNode.GetChildrenSpan(); }
         @for (int index = 0; index < nodes.Length; index++) {
-            TableCellMdSyntaxNode node = nodes[index];
-            <InfiniTableCell Alignment="@GetAlignment(index)">@ComponentConverter.RenderChildComponents(node)</InfiniTableCell>
+            IMdSyntaxNode node = nodes[index];
+            <InfiniTableCell
+                Alignment="@GetAlignment(index)">@ComponentConverter.RenderChildComponents(node)</InfiniTableCell>
         }
     </Content>
 </InfiniTable>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     private Alignment GetAlignment(int columnIndex) {
         if (!SyntaxNode.HasAlignments) return Alignment.Left;
-        TableMdSyntaxNode.Alignment alignment = SyntaxNode.Alignments[columnIndex];
-        return alignment switch {
+        return SyntaxNode.Alignments[columnIndex] switch {
             TableMdSyntaxNode.Alignment.Left => Alignment.Left,
             TableMdSyntaxNode.Alignment.Center => Alignment.Center,
             TableMdSyntaxNode.Alignment.Right => Alignment.Right,
-            TableMdSyntaxNode.Alignment.Unknown => Alignment.Left,
-            _ => throw new ArgumentOutOfRangeException(nameof(alignment), alignment, null)
+            _ => Alignment.Left
         };
     }
 
