@@ -4,6 +4,7 @@
 using InfiniLore.InfiniBlazor.AutoDocumentation;
 using Tests.InfiniBlazor.Extensions.AutoDocumentation.DataSources;
 using Tests.InfiniBlazor.Extensions.AutoDocumentation.DataSources.CodeFiles;
+using Tests.InfiniBlazor.Extensions.AutoDocumentation.DataSources.Components;
 
 namespace Tests.InfiniBlazor.Extensions.AutoDocumentation;
 
@@ -20,6 +21,7 @@ public class AutoDocumentationProviderTests {
     [Test]
     [MethodDataSource<ClassTestData>(nameof(ClassTestData.GetTestData))]
     [MethodDataSource<PropertyTestData>(nameof(PropertyTestData.GetTestData))]
+    [MethodDataSource<ComponentTestData>(nameof(ComponentTestData.GetTestData))]
     public async Task ShouldGetValidFragment(AutoDocumentationTestData testData) {
         // Arrange
         (string id, bool expectedResult, IAutoDocumentationFragment? expectedFragment) = testData;
