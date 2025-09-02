@@ -1,4 +1,12 @@
-﻿namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.Components;
+﻿// ---------------------------------------------------------------------------------------------------------------------
+// Imports
+// ---------------------------------------------------------------------------------------------------------------------
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.Components;
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Code
+// ---------------------------------------------------------------------------------------------------------------------
+// ReSharper disable once InconsistentNaming
 public partial class Infini_MdVariableContent(IVariableContentProvider? variableContentProvider = null) {
-    public IVariableContentProvider? VariableContentProvider { get; } = variableContentProvider;
+    private IVariableContentProvider? VariableContentProvider { get; } = variableContentProvider;
 }
