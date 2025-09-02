@@ -307,6 +307,11 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 builder.Append(userName.AsSpan());
                 break;
             }
+
+            case VariableContentMdSyntaxNode { Variable: var variable }: {
+                builder.Append(variable.AsSpan());
+                break;
+            }
         }
     }
     

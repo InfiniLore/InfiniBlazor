@@ -42,6 +42,7 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
         [MdRegexGroupNames.Underline] = UnderlineSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.User] = UserSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.WikiLink] = WikiLinkSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.Variable] = VariableContentSyntaxNodeSerializer.Serialize,
     }.ToFrozenDictionary();
     
     // -----------------------------------------------------------------------------------------------------------------
