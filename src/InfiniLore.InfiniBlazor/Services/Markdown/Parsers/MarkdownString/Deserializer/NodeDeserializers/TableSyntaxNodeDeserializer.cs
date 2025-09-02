@@ -97,7 +97,7 @@ public sealed class TableSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializ
             builder.Append('|');
             builder.Append(' ');
             builder.Append(left);
-            builder.Append('-', Math.Max(tableGrid[0, col].Length-2, 1));
+            builder.Append('-', Math.Max(tableGrid[0, col].Length - 2, 1));
             builder.Append(right);
             builder.Append(' ');
         }

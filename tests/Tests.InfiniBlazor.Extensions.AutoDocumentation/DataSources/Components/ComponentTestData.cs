@@ -32,7 +32,7 @@ public class ComponentTestData {
             ],
             [
             """
-            public bool Click()
+            public static bool Click()
             {
                 return true;
             }
