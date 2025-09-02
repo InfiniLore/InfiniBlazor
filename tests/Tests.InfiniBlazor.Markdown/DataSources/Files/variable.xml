@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="variable.xml">
+    <MdString>{{something.Fetch()}}</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <VariableContentMdSyntaxNode Variable="2" />
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;something.Fetch()&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>{{something.Fetch()}}</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="empty" FileName="variable.xml">
+    <MdString>{{}}</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">{{}}</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;{{}}&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>{{}}</ExpectedMarkdownString>
+  </MdTestData>
+</ArrayOfMdTestData>
