@@ -11,11 +11,11 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniPage Title="Markdown Editor" Class="p-4 w-full">
-    <InfiniSection Class="grow flex flex-col gap-2 overflow-auto infini-scrollbar h-128 w-full">
+    <InfiniSection Class="grow flex flex-col gap-2 overflow-auto infini-scrollbar min-h-128 w-full">
         <InfiniHeading1>Markdown Editor 2</InfiniHeading1>
-        <InfiniMarkdownEditorNew @bind-Content="Content">
-        </InfiniMarkdownEditorNew>
+        <InfiniMarkdownEditorNew @bind-Content="Content"/>
         
+        <hr>
         <InfiniCodeBlock @bind-Content="Content" Language="markdown"/>
         
     </InfiniSection>

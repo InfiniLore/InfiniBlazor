@@ -1,7 +1,6 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -29,7 +28,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     [CascadingParameter] protected MdEditorContext EditorContext { get; set; } = null!;
-
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -43,6 +42,6 @@
         if (EditorContext.IsLocked) return;
         if (!args.CtrlKey) return; // quick exit to not have to wait on every key press
         
-        await EditorContext.InvokeInputKeyDownAsync(args);
+        await EditorContext.InvokeInputKeyDownAsync(args).ConfigureAwait(false);
     }
 }

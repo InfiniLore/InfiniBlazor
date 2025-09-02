@@ -41,13 +41,13 @@ public static class InfiniBlazorMdComponentConverterFactory {
         mapBuilder.Register<TagMdSyntaxNode, Infini_MdTag>();
         mapBuilder.Register<UnderlineMdSyntaxNode, Infini_MdUnderline>();
         
-        
         mapBuilder.TrimExcess();
         return new BlazorMdComponentConverter {
             NodeToComponentMap =  mapBuilder.ToFrozenDictionary(),
             SkippedComponentTypes = [
                 typeof(NewLineMdSyntaxNode)
-            ]
+            ],
+            RenderUnknownComponents = true
         };
     }
 
