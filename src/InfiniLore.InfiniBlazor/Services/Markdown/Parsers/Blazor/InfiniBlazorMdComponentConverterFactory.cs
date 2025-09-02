@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents;
+using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.Components;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Collections.Frozen;
 using Infini_MdHtmlSpan = InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.Components.Infini_MdHtmlSpan;
