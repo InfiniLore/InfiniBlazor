@@ -12,10 +12,17 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@*TODO : Add variable content Provider*@
-<code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm">
-    Variable "@SyntaxNode.Variable" Not Found
-</code>
+@if (VariableContentProvider is not null && VariableContentProvider.TryGetVariableContent(SyntaxNode.Variable, out object? variableContent)) {
+    @variableContent
+}
+else {
+    <code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm">
+        Variable "@SyntaxNode.Variable" Not Found
+    </code>
+}
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Inject] public IVariableContentProvider? VariableContentProvider { get; set; }
+}
