@@ -15,7 +15,7 @@ public enum Alignment : byte {
     End
 }
 
-public static class AlignmentExtensions {
+public static class AlignmentUtilities {
     public static string ToTextAlign(this Alignment alignment) => alignment switch {
         Alignment.Left => "text-left",
         Alignment.Center => "text-center",
