@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="user.xml">
+    <MdString>@default</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <UserMdSyntaxNode xml:space="preserve">default</UserMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;@default&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>@default</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="empty" FileName="user.xml">
+    <MdString>@</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ContentMdSyntaxNode xml:space="preserve">@</ContentMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;@&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>@</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withHyphen" FileName="user.xml">
+    <MdString>@username-something
+
+@--username--</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <UserMdSyntaxNode xml:space="preserve">username-something</UserMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <UserMdSyntaxNode xml:space="preserve">--username--</UserMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;@username-something&lt;/p&gt;&lt;p&gt;@--username--&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>@username-something
+
+@--username--</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="withUnderscore" FileName="user.xml">
+    <MdString>@username_something
+
+@__username__</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <UserMdSyntaxNode xml:space="preserve">username_something</UserMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <UserMdSyntaxNode xml:space="preserve">__username__</UserMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;@username_something&lt;/p&gt;&lt;p&gt;@__username__&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>@username_something
+
+@__username__</ExpectedMarkdownString>
+  </MdTestData>
+</ArrayOfMdTestData>

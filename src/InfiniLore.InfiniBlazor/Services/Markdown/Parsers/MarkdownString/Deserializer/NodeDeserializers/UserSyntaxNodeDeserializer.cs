@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class UserSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<UserMdSyntaxNode> {
     protected override void Deserialize(UserMdSyntaxNode node, StringBuilder builder) {
-        builder.Append('#');
+        builder.Append('@');
         builder.Append(node.UserName);
     }
 }
