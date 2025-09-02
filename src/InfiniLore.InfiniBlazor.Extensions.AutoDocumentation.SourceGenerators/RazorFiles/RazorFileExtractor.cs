@@ -5,6 +5,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -96,6 +97,7 @@ public static class RazorFileExtractor {
                 }
 
                 string bodyContent = source.GetSubText(TextSpan.FromBounds(bodyIndexStart, bodyIndexEnd)).ToString();
+                bodyContent = TrimEqualWhitespace(bodyContent);
                 yield return new AutoDocumentedData(idContent, bodyContent);
 
                 // Skip past the end tag to avoid reprocessing
@@ -163,6 +165,74 @@ public static class RazorFileExtractor {
             // Skip past this @code block
             index = braceClose;
         }
+    }
+    
+    private static string TrimEqualWhitespace(string content) {
+        if (string.IsNullOrEmpty(content)) return content;
+
+        string[] lines = content.Split('\n');
+        
+        // Remove empty lines from start and end
+        int firstNonEmptyIndex = 0;
+        int lastNonEmptyIndex = lines.Length - 1;
+        
+        while (firstNonEmptyIndex < lines.Length && string.IsNullOrWhiteSpace(lines[firstNonEmptyIndex])) {
+            firstNonEmptyIndex++;
+        }
+        
+        while (lastNonEmptyIndex >= 0 && string.IsNullOrWhiteSpace(lines[lastNonEmptyIndex])) {
+            lastNonEmptyIndex--;
+        }
+        
+        if (firstNonEmptyIndex > lastNonEmptyIndex) return string.Empty;
+        
+        // Find minimum indentation among non-empty lines
+        int minIndentation = int.MaxValue;
+        for (int i = firstNonEmptyIndex; i <= lastNonEmptyIndex; i++) {
+            if (string.IsNullOrWhiteSpace(lines[i])) continue;
+            
+            int indentation = 0;
+            foreach (char c in lines[i]) {
+                if (c == ' ') indentation++;
+                else if (c == '\t') indentation += 4; // Treat tab as 4 spaces
+                else break;
+            }
+            
+            minIndentation = Math.Min(minIndentation, indentation);
+        }
+        
+        if (minIndentation is int.MaxValue or 0) {
+            return string.Join("\n", lines.Skip(firstNonEmptyIndex).Take(lastNonEmptyIndex - firstNonEmptyIndex + 1));
+        }
+        
+        // Remove the minimum indentation from all lines
+        var trimmedLines = new List<string>();
+        for (int i = firstNonEmptyIndex; i <= lastNonEmptyIndex; i++) {
+            if (string.IsNullOrWhiteSpace(lines[i])) {
+                trimmedLines.Add(string.Empty);
+            } else {
+                int charsToRemove = 0;
+                int indentationRemoved = 0;
+                
+                foreach (char c in lines[i]) {
+                    if (indentationRemoved >= minIndentation) break;
+                    
+                    if (c == ' ') {
+                        indentationRemoved++;
+                        charsToRemove++;
+                    } else if (c == '\t') {
+                        indentationRemoved += 4;
+                        charsToRemove++;
+                    } else {
+                        break;
+                    }
+                }
+                
+                trimmedLines.Add(lines[i].Substring(charsToRemove));
+            }
+        }
+        
+        return string.Join("\n", trimmedLines);
     }
 
     private static int FindNonEscapedCharacterIndex(SourceText source, char character, int startIndex) {
