@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using System.Buffers;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -10,8 +11,10 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class TableMdSyntaxNode : MdSyntaxNode<TableMdSyntaxNode> {
-    public int HeaderIndex { get; set; } = -1;
-
+    public int HeaderIndex { get; internal set; } = -1;
+    public Alignment[] Alignments { get; private set; } = ArrayPool<Alignment>.Shared.Rent(0);
+    public bool HasAlignments { get; private set; }
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -39,7 +42,7 @@ public sealed class TableMdSyntaxNode : MdSyntaxNode<TableMdSyntaxNode> {
         
     }
     
-    public void AddRow(TableRowMdSyntaxNode row) => AddChildNode(row);
+    public TableRowMdSyntaxNode AddRow(TableRowMdSyntaxNode row) => AddChildNode(row);
 
     public ReadOnlySpan<TableCellMdSyntaxNode> GetHeaderCells() {
         if (HeaderIndex is -1) return ReadOnlySpan<TableCellMdSyntaxNode>.Empty;
@@ -62,6 +65,17 @@ public sealed class TableMdSyntaxNode : MdSyntaxNode<TableMdSyntaxNode> {
             rowSpan.Length);
     }
 
+    public TableMdSyntaxNode WithAlignments(scoped ReadOnlySpan<Alignment> alignments) {
+        int arrayLength = alignments.Length;
+        
+        ArrayPool<Alignment>.Shared.Return(Alignments, true);
+        Alignments  = ArrayPool<Alignment>.Shared.Rent(arrayLength);
+        alignments.CopyTo(Alignments);
+        
+        HasAlignments = true;
+        return this;
+    }
+    
     public override bool TryReset() {
         if (!base.TryReset()) return false;
         HeaderIndex = -1;
@@ -70,4 +84,11 @@ public sealed class TableMdSyntaxNode : MdSyntaxNode<TableMdSyntaxNode> {
     
     public override bool Equals(TableMdSyntaxNode? other) => base.Equals(other)
         && HeaderIndex == other.HeaderIndex;
+    
+    public enum Alignment {
+        Left = -1,
+        Center = 0,
+        Right = 1,
+        Unknown
+    }
 }
