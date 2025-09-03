@@ -13,7 +13,10 @@ public partial class MdInfiniHtmlSpan {
     
     [GeneratedRegex("""class\s*=\s*["']([^"']*)["']""", RegexOptions.IgnoreCase)]
     private static partial Regex ExtractClassAttributeRegex { get; }
-    
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
     private static string? ExtractClassAttribute(string? htmlTag) {
         if (htmlTag.IsNullOrEmpty()) return null;
         try {
