@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class VariableContentXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<VariableContentMdSyntaxNode> {
     private const string Variable = nameof(VariableContentMdSyntaxNode.Variable);
-    private const string BracesCount = nameof(VariableContentMdSyntaxNode.Variable);
+    private const string BracesCount = nameof(VariableContentMdSyntaxNode.BracesCount);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

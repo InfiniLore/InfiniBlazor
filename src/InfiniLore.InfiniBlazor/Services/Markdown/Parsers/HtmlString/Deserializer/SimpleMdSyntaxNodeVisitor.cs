@@ -14,7 +14,6 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.HtmlString.Deserializer;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IHtmlStringMdSyntaxNodeVisitor>]
 public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideService lucideService) : IHtmlStringMdSyntaxNodeVisitor {
-
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
