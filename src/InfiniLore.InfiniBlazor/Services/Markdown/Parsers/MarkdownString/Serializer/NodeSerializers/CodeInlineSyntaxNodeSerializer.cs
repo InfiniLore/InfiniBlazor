@@ -21,15 +21,15 @@ public static class CodeInlineSyntaxNodeSerializer  {
         if (!match.Groups[CodeInlineId].TryGetValueSpan(out ReadOnlySpan<char> fullOriginalString)) return ;
 
         CodeInlineMdSyntaxNode node = CodeInlineMdSyntaxNode.Pool.Get();
-        node.Content = codeValue;
+        node.WithContent(codeValue);
         
         // Calculate backtick count by comparing full string length to content length
         int totalLength = fullOriginalString.Length;
         int contentLength = codeValue.Length;
         int totalBackticks = totalLength - contentLength;
         int backtickCount = totalBackticks / 2; // Backticks on one side
-        
-        node.BackTickCount = backtickCount;
+
+        node.WithBackTickCount(backtickCount);
         parentNode.AddChildNode(node);
     }
 }

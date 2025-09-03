@@ -6,11 +6,16 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class HtmlSpanMdSyntaxNode : MdSyntaxNode<HtmlSpanMdSyntaxNode> {
-    public string Attributes { get; set; } = string.Empty;
+    public string Attributes { get; private set; } = string.Empty;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public HtmlSpanMdSyntaxNode WithAttributes(string attributes) {
+        Attributes = attributes;
+        return this;
+    }
+    
     public override bool TryReset() {
         Attributes = string.Empty;
         return base.TryReset();

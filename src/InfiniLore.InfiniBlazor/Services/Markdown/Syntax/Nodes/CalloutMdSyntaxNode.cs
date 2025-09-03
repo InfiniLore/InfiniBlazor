@@ -12,13 +12,28 @@ public sealed class CalloutMdSyntaxNode() : MdSyntaxNode<CalloutMdSyntaxNode>(in
     private const int TitleNodeIndex = 0;
     private const int BodyNodeIndex = 1;
     
-    public string? CalloutType { get; set; }
-    public CollapseStateOptions CollapsedState { get; set; }
-    public int LeadingSpaces { get; set; }
+    public string? CalloutType { get; private set; }
+    public CollapseStateOptions CollapsedState { get; private set; }
+    public int LeadingSpaces { get; private set; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public CalloutMdSyntaxNode WithCalloutType(string calloutType) {
+        CalloutType = calloutType;
+        return this;
+    }
+    
+    public CalloutMdSyntaxNode WithLeadingSpaces(int leadingSpaces) {
+        LeadingSpaces = Math.Max(0, leadingSpaces);
+        return this;
+    }
+    
+    public CalloutMdSyntaxNode WithCollapseState(CollapseStateOptions collapseState) {
+        CollapsedState = collapseState;
+        return this;
+    }
+    
     public bool TrySetTitle(CalloutTitleMdSyntaxNode titleNode) 
         => TryAddChildNodeAtIndex(TitleNodeIndex, titleNode);
 

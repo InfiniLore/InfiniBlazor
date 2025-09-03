@@ -181,21 +181,21 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     public IMdSyntaxNode WithText(string content) {
         if (ChildNodes.LastOrDefault() is not TextMdSyntaxNode lastNode) {
             TextMdSyntaxNode newNode = TextMdSyntaxNode.Pool.Get();
-            newNode.Content = content;
+            newNode.WithContent(content);
             AddChildNode(newNode);
             return this;
         }
 
         int contentLength = lastNode.Content.Length;
         int length = contentLength + content.Length;
-        lastNode.Content = string.Create(
+        lastNode.WithContent(string.Create(
             length,
             (contentLength, OriginalContent: lastNode.Content, NewContent: content),
             action: static (span, state) => {
                 state.OriginalContent.AsSpan().CopyTo(span);
                 state.NewContent.AsSpan().CopyTo(span[state.contentLength..]);
-            });
-
+            }));
+        
         return this;
     }
 

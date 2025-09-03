@@ -22,7 +22,7 @@ public sealed class TemplateXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Temp
 
     protected override void SerializeDetails(XElement element, TemplateMdSyntaxNode targetNode) {
         base.SerializeDetails(element, targetNode);
-        targetNode.Content = element.Value;
-        targetNode.BracesCount = int.Parse(element.Attribute(BracesCount)?.Value ?? "0");  
+        targetNode.WithContent(element.Value);
+        targetNode.WithBracesCount(int.Parse(element.Attribute(BracesCount)?.Value ?? "0"));
     }
 }

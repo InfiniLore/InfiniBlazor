@@ -25,8 +25,8 @@ public static class TemplateSyntaxNodeSerializer  {
         if (!match.Groups[TemplateId].TryGetLength(out int variableLength)) return ;
 
         TemplateMdSyntaxNode node = TemplateMdSyntaxNode.Pool.Get();
-        node.Content = variableContent;
-        node.BracesCount = (variableLength - variableContent.Length) / 2;
+        node.WithContent(variableContent)
+            .WithBracesCount((variableLength - variableContent.Length) / 2);
         parentNode.AddChildNode(node);
     }
 }

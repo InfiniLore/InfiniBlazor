@@ -59,10 +59,10 @@ public static class ListSyntaxNodeSerializer  {
                     stack.PushMultiLineMatchesToStack(normalizedBody, listItemNode);
                     switch (listNode) {
                         case ListOrderedMdSyntaxNode ordered:
-                            ordered.LeadingSpaces = leadingSpaces;
+                            ordered.WithLeadingSpaces(leadingSpaces);
                             break;
                         case ListUnOrderedMdSyntaxNode unordered:
-                            unordered.LeadingSpaces = leadingSpaces;
+                            unordered.WithLeadingSpaces(leadingSpaces);
                             break;
                     }
                 }
@@ -72,13 +72,12 @@ public static class ListSyntaxNodeSerializer  {
                 }
                 
                 if (groups[LIndexId].TryGetValue(out string? listIndex)) {
-                    listItemNode.Index = listIndex;
+                    listItemNode.WithIndex(listIndex);
                 }
 
                 // ReSharper disable once InvertIf
                 if (groups[LTaskId].TryGetValue(out string? taskMarker)) {
-                    listItemNode.IsCheckable = true;
-                    listItemNode.OriginalCheckMarker = taskMarker;
+                    listItemNode.WithCheckMarker(taskMarker);
                 }
             }
         }

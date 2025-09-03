@@ -51,14 +51,14 @@ public static class HtmlSyntaxNodeSerializer  {
                 HtmlSpanMdSyntaxNode spanNode = HtmlSpanMdSyntaxNode.Pool.Get();
 
                 string spanTagAttrs = spanMatch.Groups[SpanTagAttrsId].Value;
-                spanNode.Attributes = spanTagAttrs;
+                spanNode.WithAttributes(spanTagAttrs);
 
                 stack.PushMultiLineMatchesToStack(spanBody, spanNode);
                 stack.PushProcessedNodeToStack(parentNode, spanNode);
             }
             else {
                 HtmlMdSyntaxNode htmlNode = HtmlMdSyntaxNode.Pool.Get();
-                htmlNode.Content = htmlBody;
+                htmlNode.WithContent(htmlBody);
                 stack.PushProcessedNodeToStack(parentNode, htmlNode);
             }
         }

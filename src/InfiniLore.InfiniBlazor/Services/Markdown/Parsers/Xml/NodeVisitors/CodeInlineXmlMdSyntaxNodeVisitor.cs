@@ -23,7 +23,7 @@ public sealed class CodeInlineXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Co
 
     protected override void SerializeDetails(XElement element, CodeInlineMdSyntaxNode targetNode) {
         base.SerializeDetails(element, targetNode);
-        targetNode.BackTickCount = int.Parse(element.Attribute(BackTickCount)?.Value ?? "1");
-        targetNode.Content = element.Value;   
+        targetNode.WithBackTickCount(int.Parse(element.Attribute(BackTickCount)?.Value ?? "1"));
+        targetNode.WithContent(element.Value);
     }
 }

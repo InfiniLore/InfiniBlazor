@@ -17,9 +17,12 @@ public class MdSyntaxTreeXmlParserTests {
     private static IMdSyntaxTree TestTree => new MdSyntaxTree {
         RootNode = new RootMdSyntaxNode()
             .WithChild(
-                new LinkMdSyntaxNode { Href = "https://example.com" }
+                new LinkMdSyntaxNode()
+                    .WithHref("https://example.com")
                     .WithText("Example Content")
-                    .WithChild(new ImageMdSyntaxNode { Href = "https://example.com/image.png", OriginalAltText = "Example Image" })
+                    .WithChild(new ImageMdSyntaxNode()
+                        .WithHref("https://example.com/image.png")
+                        .WithAltText("Example Image"))
             )
     };
 

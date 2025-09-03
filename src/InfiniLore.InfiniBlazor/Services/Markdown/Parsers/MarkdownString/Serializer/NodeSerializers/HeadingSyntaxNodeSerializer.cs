@@ -25,7 +25,7 @@ public static class HeadingSyntaxNodeSerializer  {
         if (!match.Groups[HTextId].TryGetValue(out string? headerText)) return;
 
         HeadingMdSyntaxNode headingNode = HeadingMdSyntaxNode.Pool.Get();
-        headingNode.Level = headingLevel;
+        headingNode.WithLevel(headingLevel);
         parentNode.AddChildNode(headingNode);
         
         stack.PushSingleLineMatchesToStack(headerText, headingNode);

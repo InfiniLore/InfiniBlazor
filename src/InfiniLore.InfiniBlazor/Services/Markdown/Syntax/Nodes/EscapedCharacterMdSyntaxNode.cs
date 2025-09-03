@@ -6,11 +6,16 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class EscapedCharacterMdSyntaxNode() : MdSyntaxNode<EscapedCharacterMdSyntaxNode>(initialChildCount:0) {
-    public char Content { get; set; } = char.MinValue;
+    public char Content { get; private set; } = char.MinValue;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public EscapedCharacterMdSyntaxNode WithContent(char content) {
+        Content = content;
+        return this;
+    }
+    
     public override bool TryReset() {
         Content = char.MinValue;
         return base.TryReset();

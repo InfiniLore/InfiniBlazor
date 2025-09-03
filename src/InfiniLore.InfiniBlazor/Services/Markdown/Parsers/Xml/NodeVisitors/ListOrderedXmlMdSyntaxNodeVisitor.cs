@@ -22,6 +22,6 @@ public sealed class ListOrderedXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<L
 
     protected override void SerializeDetails(XElement element, ListOrderedMdSyntaxNode targetNode) {
         base.SerializeDetails(element, targetNode);
-        targetNode.LeadingSpaces = int.Parse(element.Attribute(LeadingSpaces)?.Value ?? "0");
+        targetNode.WithLeadingSpaces(int.Parse(element.Attribute(LeadingSpaces)?.Value ?? "0"));
     }
 }

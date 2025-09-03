@@ -20,6 +20,6 @@ public sealed class EscapedCharacterXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisi
 
     protected override void SerializeDetails(XElement element, EscapedCharacterMdSyntaxNode targetNode) {
         base.SerializeDetails(element, targetNode);
-        targetNode.Content = element.Value.ElementAtOrDefault(0);   
+        targetNode.WithContent(element.Value.ElementAtOrDefault(0));
     }
 }

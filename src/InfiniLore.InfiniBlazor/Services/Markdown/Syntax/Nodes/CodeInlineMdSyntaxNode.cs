@@ -6,13 +6,23 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class CodeInlineMdSyntaxNode() : MdSyntaxNode<CodeInlineMdSyntaxNode>(initialChildCount: 0) {
-    public string Content { get; set; } = string.Empty;
-    public int BackTickCount { get; set; }
+    public string Content { get; private set; } = string.Empty;
+    public int BackTickCount { get; private set; }
 
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public CodeInlineMdSyntaxNode WithContent(string content) {
+        Content = content;
+        return this;
+    }
+    
+    public CodeInlineMdSyntaxNode WithBackTickCount(int backTickCount) {
+        BackTickCount = Math.Max(1, backTickCount);
+        return this;   
+    }
+    
     public bool TryGetContentWithoutEscapedBackTicks(Span<char> destination, out int resultLength) {
         if (destination.Length < Content.Length) {
             resultLength = -1;

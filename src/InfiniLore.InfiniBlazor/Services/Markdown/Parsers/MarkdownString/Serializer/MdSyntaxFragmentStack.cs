@@ -43,7 +43,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
             // If there's an uncaught text between this match's end and the last position, add it as raw input
             if (matchEnd < currentIndex) {
                 TextMdSyntaxNode contentNode = TextMdSyntaxNode.Pool.Get();
-                contentNode.Content = input[matchEnd..currentIndex];
+                contentNode.WithContent(input[matchEnd..currentIndex]);
                 PushProcessedNodeToStack(node, contentNode);
             }
 
@@ -55,7 +55,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
         if (currentIndex > 0) {
             // Handle any remaining text before the first match
             TextMdSyntaxNode contentNode = TextMdSyntaxNode.Pool.Get();
-            contentNode.Content = input[..currentIndex];
+            contentNode.WithContent(input[..currentIndex]);
             PushProcessedNodeToStack(node, contentNode);
         }
     }

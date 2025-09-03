@@ -6,33 +6,37 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class ListItemMdSyntaxNode : MdSyntaxNode<ListItemMdSyntaxNode> {
-    public bool IsCheckable { get; set; }
+    public bool IsCheckable => OriginalCheckMarker.IsNotNullOrEmpty();
     public bool IsChecked => OriginalCheckMarker.ToLowerInvariant().ElementAtOrDefault(0) == 'x';
-    public string Index { get; set; } = string.Empty;
-    public string OriginalCheckMarker { get; set; } = string.Empty;
+    public string Index { get; private set; } = string.Empty;
+    public string OriginalCheckMarker { get; private set; } = string.Empty;
     public int LeadingSpaces { get; private set; }
     public int CheckLeadingSpaces { get; private set; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public ListItemMdSyntaxNode WithIndex(string index) {
+        Index = index;
+        return this;   
+    }
+
+    public ListItemMdSyntaxNode WithCheckMarker(string checkMarker) {
+        OriginalCheckMarker = checkMarker;
+        return this;
+    }
+    
     public ListItemMdSyntaxNode WithLeadingSpaces(int leadingSpaces) {
-        LeadingSpaces = leadingSpaces;
+        LeadingSpaces = Math.Max(0, leadingSpaces);
         return this;
     }
 
     public ListItemMdSyntaxNode WithCheckLeadingSpaces(int checkLeadingSpaces) {
-        CheckLeadingSpaces = checkLeadingSpaces;
-        return this;
-    }
-
-    public ListItemMdSyntaxNode WithCheckMarker(string checkMarker = "x") {
-        OriginalCheckMarker = checkMarker;
+        CheckLeadingSpaces = Math.Max(0, checkLeadingSpaces);
         return this;
     }
 
     public override bool TryReset() {
-        IsCheckable = false;
         Index = string.Empty;
         OriginalCheckMarker = string.Empty;
         LeadingSpaces = 0;

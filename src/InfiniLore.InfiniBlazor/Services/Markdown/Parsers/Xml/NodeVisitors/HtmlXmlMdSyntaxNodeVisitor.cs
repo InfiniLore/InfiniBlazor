@@ -22,6 +22,6 @@ public sealed class HtmlXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<HtmlMdSy
 
     protected override void SerializeDetails(XElement element, HtmlMdSyntaxNode targetNode) {
         base.SerializeDetails(element, targetNode);
-        targetNode.Content = element.Value;   
+        targetNode.WithContent(element.Value); 
     }
 }

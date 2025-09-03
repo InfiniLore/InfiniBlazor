@@ -34,7 +34,7 @@ public static class CalloutSyntaxNodeSerializer  {
         }
 
         if (match.Groups[CalloutTypeId] is { Success: true, Value: {} typeName }) {
-            node.CalloutType = typeName;
+            node.WithCalloutType(typeName);
         }
         
         if (match.Groups[CalloutModId] is { Success: true, Value: {} mods }) {
