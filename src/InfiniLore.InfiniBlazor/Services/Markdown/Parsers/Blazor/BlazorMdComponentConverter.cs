@@ -30,6 +30,7 @@ public class BlazorMdComponentConverter : IBlazorMdComponentConverter {
         int sequence = 0;
         builder.OpenComponent(sequence++, data.ComponentType);
         int newSequence = data.Builder(builder, sequence, node); // newSequence is not used so far
+        builder.SetKey(node.Id);
             
         builder.CloseComponent();
     }

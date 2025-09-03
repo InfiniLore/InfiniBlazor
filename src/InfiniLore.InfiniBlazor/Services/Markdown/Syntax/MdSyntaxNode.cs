@@ -14,7 +14,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode, IResettable, IEquatable<T>
     where T : MdSyntaxNode<T>, new() {
-    private readonly Guid _id = Guid.CreateVersion7();// Not reset during TryReset, this is by design.
+    public Guid Id { get; } = Guid.CreateVersion7();// Not reset during TryReset, this is by design.
 
     public int ChildCount { get; private set; }
     protected IMdSyntaxNode[] ChildNodes { get; private set; } = GetInitialChildNodeArray(initialChildCount);
@@ -252,7 +252,7 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
 
     #region Equality
     // ReSharper disable once NonReadonlyMemberInGetHashCode
-    public override int GetHashCode() => HashCode.Combine(_id, ChildCount);
+    public override int GetHashCode() => HashCode.Combine(Id, ChildCount);
 
     public bool Equals(IMdSyntaxNode? other) => Equals(other as T);
     public override bool Equals(object? other) => Equals(other as T);
