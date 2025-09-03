@@ -20,8 +20,8 @@ public static class InfiniBlazorMdComponentConverterFactory {
         mapBuilder.Register<CalloutMdSyntaxNode, Infini_MdCallout>();
         mapBuilder.Register<CodeBlockMdSyntaxNode, Infini_MdCodeBlock>();
         mapBuilder.Register<CodeInlineMdSyntaxNode, Infini_MdCodeInline>();
-        mapBuilder.Register<HtmlMdSyntaxNode, Infini_MdContentHtml>();
-        mapBuilder.Register<TextMdSyntaxNode, Infini_MdContent>();
+        mapBuilder.Register<HtmlMdSyntaxNode, Infini_MdHtml>();
+        mapBuilder.Register<TextMdSyntaxNode, Infini_MdText>();
         mapBuilder.Register<EmoteMdSyntaxNode, Infini_MdEmote>();
         mapBuilder.Register<EscapedCharacterMdSyntaxNode, Infini_MdEscapedCharacter>();
         mapBuilder.Register<HeadingMdSyntaxNode, Infini_MdHeading>();
@@ -43,7 +43,7 @@ public static class InfiniBlazorMdComponentConverterFactory {
         mapBuilder.Register<UnderlineMdSyntaxNode, Infini_MdUnderline>();
         mapBuilder.Register<UserMdSyntaxNode, Infini_MdUser>();
         mapBuilder.Register<WikiLinkMdSyntaxNode, Infini_MdWikiLink>();
-        mapBuilder.Register<VariableMdSyntaxNode, Infini_MdVariableContent>();
+        mapBuilder.Register<VariableMdSyntaxNode, Infini_MdVariable>();
         
         mapBuilder.TrimExcess();
         return new BlazorMdComponentConverter {
