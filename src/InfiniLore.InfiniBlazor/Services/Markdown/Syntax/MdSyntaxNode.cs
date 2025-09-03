@@ -14,7 +14,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode, IResettable, IEquatable<T>
     where T : MdSyntaxNode<T>, new() {
-    private readonly Guid _id = Guid.CreateVersion7(); // Not reset during TryReset, this is by design.
+    private readonly Guid _id = Guid.CreateVersion7();// Not reset during TryReset, this is by design.
 
     public int ChildCount { get; private set; }
     protected IMdSyntaxNode[] ChildNodes { get; private set; } = GetInitialChildNodeArray(initialChildCount);
@@ -41,9 +41,16 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public bool TryGetModifier([NotNullWhen(true)] out IMdSyntaxNodeModifier? mdSyntaxNodeModifier) {
+        mdSyntaxNodeModifier = Modifier;
+        return mdSyntaxNodeModifier is not null;
+    }
+    
+    #region GetChild(ren)
     // ReSharper disable once ConvertIfStatementToReturnStatement
     public ReadOnlySpan<IMdSyntaxNode> GetChildrenSpan() {
         if (ChildCount == 0) return ReadOnlySpan<IMdSyntaxNode>.Empty;
+
         return ChildNodes.AsSpan(0, ChildCount);
     }
 
@@ -84,12 +91,9 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
         childNode = casted;
         return true;
     }
+    #endregion
 
-    public bool TryGetModifier([NotNullWhen(true)] out IMdSyntaxNodeModifier? mdSyntaxNodeModifier) {
-        mdSyntaxNodeModifier = Modifier;
-        return mdSyntaxNodeModifier is not null;
-    }
-
+    #region GetNextSibling(s)
     public bool TryGetNextSibling([NotNullWhen(true)] out IMdSyntaxNode? mdSyntaxNode) {
         mdSyntaxNode = null;
         if (Parent is null) return false;
@@ -121,8 +125,9 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
         // We should never get here because we are within our own parent
         return false;
     }
-
-
+    #endregion
+    
+    #region AddChild(ren)
     public void AddChildNode(IMdSyntaxNode childNode) {
         // Check if we need to resize
         EnsureChildNodeExpansionCapacity();
@@ -149,7 +154,7 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
 
         EnsureChildNodeExpansionCapacity();
         childNode.WithParent(this);
-        
+
         // ReSharper disable once ConvertTypeCheckPatternToNullCheck
         if (ChildNodes[index] is IMdSyntaxNode existingNode) {
             existingNode.ReturnToPool();
@@ -179,7 +184,9 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
         ArrayPool<IMdSyntaxNode>.Shared.Return(ChildNodes);
         ChildNodes = newArray;
     }
+    #endregion
 
+    #region With...
     public IMdSyntaxNode WithText(string content) {
         if (ChildNodes.LastOrDefault() is not TextMdSyntaxNode lastNode) {
             TextMdSyntaxNode newNode = TextMdSyntaxNode.Pool.Get();
@@ -197,7 +204,7 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
                 state.OriginalContent.AsSpan().CopyTo(span);
                 state.NewContent.AsSpan().CopyTo(span[state.contentLength..]);
             }));
-        
+
         return this;
     }
 
@@ -217,7 +224,9 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
         AddChildNode(child);
         return this;
     }
+    #endregion
 
+    #region ReturnToPool and Cleanup
     public void ReturnToPool()
         => Pool.Return(Unsafe.As<T>(this));
 
@@ -239,7 +248,9 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
 
         return true;
     }
+    #endregion
 
+    #region Equality
     // ReSharper disable once NonReadonlyMemberInGetHashCode
     public override int GetHashCode() => HashCode.Combine(_id, ChildCount);
 
@@ -264,4 +275,5 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
             );
 
     }
+    #endregion
 }
