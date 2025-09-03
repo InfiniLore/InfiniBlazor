@@ -102,7 +102,7 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
     
     private static bool IsNonEscapedCharacter(scoped ReadOnlySpan<char> source, int atIndex) {
         int backslashCount = 0;
-        for (int i = atIndex - 1; i >= 0 && source[i] == '\\'; i--) {
+        for (int i = atIndex - 1; i >= 0 && source[i] is '\\'; i--) {
             backslashCount++;
         }
         return backslashCount % 2 == 0;

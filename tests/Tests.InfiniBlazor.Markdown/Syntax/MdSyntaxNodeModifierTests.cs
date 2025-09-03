@@ -29,6 +29,7 @@ public class MdSyntaxNodeModifierTests {
         // Test Escaped pipes
         yield return () => (@"|something=\||",1, [["something", @"\|"]]);
         yield return () => (@"|something=\\||",1, [["something", @"\\"]]);
+        yield return () => (@"|something=\\\||",1, [["something", @"\\\|"]]);
         yield return () => ("|something=||",1, [["something", ""]]);
     }
     
