@@ -4,7 +4,7 @@
     <MdString>{{something.Fetch()}}</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <VariableContentMdSyntaxNode BracesCount="2">something.Fetch()</VariableContentMdSyntaxNode>
+        <VariableMdSyntaxNode BracesCount="2">something.Fetch()</VariableMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;something.Fetch()&lt;/p&gt;</ExpectedHtmlStringSimplified>

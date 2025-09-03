@@ -5,10 +5,10 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class VariableContentMdSyntaxNode() : MdSyntaxNode<VariableContentMdSyntaxNode>(initialChildCount:0) {
+public sealed class VariableMdSyntaxNode() : MdSyntaxNode<VariableMdSyntaxNode>(initialChildCount: 0) {
     public string Content { get; set; } = string.Empty;
     public int BracesCount { get; set; }
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -17,8 +17,9 @@ public sealed class VariableContentMdSyntaxNode() : MdSyntaxNode<VariableContent
         BracesCount = 0;
         return base.TryReset();
     }
-    
-    public override bool Equals(VariableContentMdSyntaxNode? other) => base.Equals(other)
-        && Content == other.Content
-        && BracesCount == other.BracesCount;
+
+    public override bool Equals(VariableMdSyntaxNode? other)
+        => base.Equals(other)
+            && StringComparer.InvariantCulture.Equals(Content, other.Content)
+            && BracesCount == other.BracesCount;
 }

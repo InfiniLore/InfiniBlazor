@@ -50,7 +50,7 @@ public static class MdStringMdSyntaxDeserializerFactory {
             .Register<UnderlineMdSyntaxNode, UnderlineSyntaxNodeDeserializer>(instance)
             .Register<UserMdSyntaxNode, UserSyntaxNodeDeserializer>(instance)
             .Register<WikiLinkMdSyntaxNode, WikiLinkSyntaxNodeDeserializer>(instance)
-            .Register<VariableContentMdSyntaxNode, VariableContentSyntaxNodeDeserializer>(instance)
+            .Register<VariableMdSyntaxNode, VariableContentSyntaxNodeDeserializer>(instance)
         ;
         
         instance.Deserializers = deserializers.ToFrozenDictionary();

@@ -35,7 +35,7 @@ public sealed class TableXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<TableMd
         
         // ReSharper disable once InvertIf
         if (element.Element(Alignments) is {} alignmentsElement) {
-            XElement[] alignmentElements = alignmentsElement.Elements("Alignment").ToArray();
+            XElement[] alignmentElements = alignmentsElement.Elements(Alignment).ToArray();
             if (alignmentElements.Length <= 0) return;
 
             Span<TableMdSyntaxNode.Alignment> alignmentValues = stackalloc TableMdSyntaxNode.Alignment[alignmentElements.Length];

@@ -24,7 +24,7 @@ public static class VariableContentSyntaxNodeSerializer  {
         if (!match.Groups[VariableContentId].TryGetValue(out string? variableContent)) return ;
         if (!match.Groups[VariableId].TryGetLength(out int variableLength)) return ;
 
-        VariableContentMdSyntaxNode node = VariableContentMdSyntaxNode.Pool.Get();
+        VariableMdSyntaxNode node = VariableMdSyntaxNode.Pool.Get();
         node.Content = variableContent;
         node.BracesCount = (variableLength - variableContent.Length) / 2;
         parentNode.AddChildNode(node);

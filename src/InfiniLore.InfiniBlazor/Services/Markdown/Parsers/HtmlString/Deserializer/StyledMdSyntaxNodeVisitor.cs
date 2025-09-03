@@ -386,7 +386,7 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 break;
             }
             
-            case VariableContentMdSyntaxNode { Content: var variable }: {
+            case VariableMdSyntaxNode { Content: var variable }: {
                 builder.Append(variable.AsSpan());
                 break;
             }
