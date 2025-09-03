@@ -34,8 +34,8 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     private static IMdSyntaxNode[] GetInitialChildNodeArray(int initialChildCount) => initialChildCount <= 0
         ? Array.Empty<IMdSyntaxNode>()
         : ArrayPool<IMdSyntaxNode>.Shared.Rent(Math.Max(1, initialChildCount));
-    
-    private static bool GetEmptyInitializedState(int initialChildCount) 
+
+    private static bool GetEmptyInitializedState(int initialChildCount)
         => initialChildCount <= 0;
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -216,7 +216,7 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
         return this;
     }
 
-    public void ReturnToPool() 
+    public void ReturnToPool()
         => Pool.Return(Unsafe.As<T>(this));
 
     public virtual bool TryReset() {
@@ -253,14 +253,13 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
             if (!ChildNodes[i].Equals(span[i])) return false;
         }
 
-        if (Depth != other.Depth) return false;
+        return Depth == other.Depth
+            && (Parent is not null || other.Parent is null)
+            && (Parent is null || other.Parent is not null)
+            && Type == other.Type
+            && (Modifier is null && other.Modifier is null
+                || Modifier != null && Modifier.Equals(other.Modifier)
+            );
 
-        if (Parent is null && other.Parent is not null) return false;
-        if (Parent is not null && other.Parent is null) return false;
-
-        if (Type != other.Type) return false;
-        if (Modifier is null && other.Modifier is null) return true;
-
-        return Modifier != null && Modifier.Equals(other.Modifier);
     }
 }
