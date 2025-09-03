@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.Components;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 // ReSharper disable once InconsistentNaming
-public partial class Infini_MdHtmlSpan {
+public partial class MdInfiniHtmlSpan {
     [GeneratedRegex("""style\s*=\s*["']([^"']*)["']""", RegexOptions.IgnoreCase)]
     private static partial Regex ExtractStyleAttributeRegex { get; }
     

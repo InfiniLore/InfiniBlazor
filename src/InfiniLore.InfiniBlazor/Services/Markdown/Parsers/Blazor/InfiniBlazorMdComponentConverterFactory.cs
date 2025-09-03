@@ -5,7 +5,6 @@ using InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.Components;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Collections.Frozen;
-using Infini_MdHtmlSpan = InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.Components.Infini_MdHtmlSpan;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -15,35 +14,35 @@ public static class InfiniBlazorMdComponentConverterFactory {
     public static IBlazorMdComponentConverter Create(IServiceProvider serviceProvider) {
         var mapBuilder = new Dictionary<Type, BlazorMdComponentRecord>(32);
 
-        mapBuilder.Register<BlockQuoteMdSyntaxNode, Infini_MdBlockQuote>();
-        mapBuilder.Register<BoldMdSyntaxNode, Infini_MdBold>();
-        mapBuilder.Register<CalloutMdSyntaxNode, Infini_MdCallout>();
-        mapBuilder.Register<CodeBlockMdSyntaxNode, Infini_MdCodeBlock>();
-        mapBuilder.Register<CodeInlineMdSyntaxNode, Infini_MdCodeInline>();
-        mapBuilder.Register<HtmlMdSyntaxNode, Infini_MdHtml>();
-        mapBuilder.Register<TextMdSyntaxNode, Infini_MdText>();
-        mapBuilder.Register<EmoteMdSyntaxNode, Infini_MdEmote>();
-        mapBuilder.Register<EscapedCharacterMdSyntaxNode, Infini_MdEscapedCharacter>();
-        mapBuilder.Register<HeadingMdSyntaxNode, Infini_MdHeading>();
-        mapBuilder.Register<HeadingSimpleMdSyntaxNode, Infini_MdHeadingSimple>();
-        mapBuilder.Register<HorizontalRuleMdSyntaxNode, Infini_MdHorizontalRule>();
-        mapBuilder.Register<HtmlSpanMdSyntaxNode, Infini_MdHtmlSpan>();
-        mapBuilder.Register<ImageMdSyntaxNode, Infini_MdImage>();
-        mapBuilder.Register<ItalicMdSyntaxNode, Infini_MdItalic>();
-        mapBuilder.Register<LinkMdSyntaxNode, Infini_MdLink>();
-        mapBuilder.Register<ListItemMdSyntaxNode, Infini_MdListItem>();
-        mapBuilder.Register<ListOrderedMdSyntaxNode, Infini_MdListOrdered>();
-        mapBuilder.Register<ListUnOrderedMdSyntaxNode, Infini_MdListUnOrdered>();
-        mapBuilder.Register<ParagraphMdSyntaxNode, Infini_MdParagraph>();
-        mapBuilder.Register<StrikeMdSyntaxNode, Infini_MdStrike>();
-        mapBuilder.Register<SubScriptMdSyntaxNode, Infini_MdSubScript>();
-        mapBuilder.Register<SuperScriptMdSyntaxNode, Infini_MdSuperScript>();
-        mapBuilder.Register<TableMdSyntaxNode, Infini_MdTable>();
-        mapBuilder.Register<TagMdSyntaxNode, Infini_MdTag>();
-        mapBuilder.Register<UnderlineMdSyntaxNode, Infini_MdUnderline>();
-        mapBuilder.Register<UserMdSyntaxNode, Infini_MdUser>();
-        mapBuilder.Register<WikiLinkMdSyntaxNode, Infini_MdWikiLink>();
-        mapBuilder.Register<TemplateMdSyntaxNode, Infini_MdTemplate>();
+        mapBuilder.Register<BlockQuoteMdSyntaxNode, MdInfiniBlockQuote>();
+        mapBuilder.Register<BoldMdSyntaxNode, MdInfiniBold>();
+        mapBuilder.Register<CalloutMdSyntaxNode, MdInfiniCallout>();
+        mapBuilder.Register<CodeBlockMdSyntaxNode, MdInfiniCodeBlock>();
+        mapBuilder.Register<CodeInlineMdSyntaxNode, MdInfiniCodeInline>();
+        mapBuilder.Register<HtmlMdSyntaxNode, MdInfiniHtml>();
+        mapBuilder.Register<TextMdSyntaxNode, MdInfiniText>();
+        mapBuilder.Register<EmoteMdSyntaxNode, MdInfiniEmote>();
+        mapBuilder.Register<EscapedCharacterMdSyntaxNode, MdInfiniEscapedCharacter>();
+        mapBuilder.Register<HeadingMdSyntaxNode, MdInfiniHeading>();
+        mapBuilder.Register<HeadingSimpleMdSyntaxNode, MdInfiniHeadingSimple>();
+        mapBuilder.Register<HorizontalRuleMdSyntaxNode, MdInfiniHorizontalRule>();
+        mapBuilder.Register<HtmlSpanMdSyntaxNode, MdInfiniHtmlSpan>();
+        mapBuilder.Register<ImageMdSyntaxNode, MdInfiniImage>();
+        mapBuilder.Register<ItalicMdSyntaxNode, MdInfiniItalic>();
+        mapBuilder.Register<LinkMdSyntaxNode, MdInfiniLink>();
+        mapBuilder.Register<ListItemMdSyntaxNode, MdInfiniListItem>();
+        mapBuilder.Register<ListOrderedMdSyntaxNode, MdInfiniListOrdered>();
+        mapBuilder.Register<ListUnOrderedMdSyntaxNode, MdInfiniListUnOrdered>();
+        mapBuilder.Register<ParagraphMdSyntaxNode, MdInfiniParagraph>();
+        mapBuilder.Register<StrikeMdSyntaxNode, MdInfiniStrike>();
+        mapBuilder.Register<SubScriptMdSyntaxNode, MdInfiniSubScript>();
+        mapBuilder.Register<SuperScriptMdSyntaxNode, MdInfiniSuperScript>();
+        mapBuilder.Register<TableMdSyntaxNode, MdInfiniTable>();
+        mapBuilder.Register<TagMdSyntaxNode, MdInfiniTag>();
+        mapBuilder.Register<UnderlineMdSyntaxNode, MdInfiniUnderline>();
+        mapBuilder.Register<UserMdSyntaxNode, MdInfiniUser>();
+        mapBuilder.Register<WikiLinkMdSyntaxNode, MdInfiniWikiLink>();
+        mapBuilder.Register<TemplateMdSyntaxNode, MdInfiniTemplate>();
         
         mapBuilder.TrimExcess();
         return new BlazorMdComponentConverter {
