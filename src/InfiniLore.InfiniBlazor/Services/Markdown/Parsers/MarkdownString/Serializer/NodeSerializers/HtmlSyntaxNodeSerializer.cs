@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class HtmlBodySyntaxNodeSerializer  {
+public static class HtmlSyntaxNodeSerializer  {
     private static readonly int HtmlPreId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlPre);
     private static readonly int HtmlBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlBody);
     private static readonly int HtmlPostId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlPost);

@@ -318,7 +318,7 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 break;
             }
 
-            case VariableMdSyntaxNode { Content: var variable }: {
+            case TemplateMdSyntaxNode { Content: var variable }: {
                 builder.Append(variable.AsSpan());
                 break;
             }

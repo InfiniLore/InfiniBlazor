@@ -73,6 +73,6 @@ public static class MdRegexGroupNames {
     public const string UserName = "uName";
     public const string WikiLink = "wikiLink";
     public const string WikiLinkHref = "wHref";
-    public const string Variable = "variable";
-    public const string VariableContent = "v";
+    public const string Template = "template";
+    public const string TemplateContent = "t";
 }

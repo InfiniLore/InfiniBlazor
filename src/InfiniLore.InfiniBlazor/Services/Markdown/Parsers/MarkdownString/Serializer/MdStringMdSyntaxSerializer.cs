@@ -28,7 +28,7 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
         [MdRegexGroupNames.HeadingSimple] = HeadingSimpleSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.Heading] = HeadingSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.HorizontalRule] = HorizontalRuleSyntaxNodeSerializer.Serialize,
-        [MdRegexGroupNames.HtmlBody] = HtmlBodySyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.HtmlBody] = HtmlSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.Italic] = ItalicSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.Link] = LinkSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.List] = ListSyntaxNodeSerializer.Serialize,
@@ -42,7 +42,7 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
         [MdRegexGroupNames.Underline] = UnderlineSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.User] = UserSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.WikiLink] = WikiLinkSyntaxNodeSerializer.Serialize,
-        [MdRegexGroupNames.Variable] = VariableContentSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.Template] = TemplateSyntaxNodeSerializer.Serialize,
     }.ToFrozenDictionary();
     
     // -----------------------------------------------------------------------------------------------------------------

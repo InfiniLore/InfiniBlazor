@@ -8,11 +8,11 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniBlazorMdComponentBase<VariableMdSyntaxNode>
+@inherits InfiniBlazorMdComponentBase<TemplateMdSyntaxNode>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@if (VariableContentProvider is not null && VariableContentProvider.TryGetVariableContent(SyntaxNode.Content, out object? variableContent)) {
+@if (TemplateContentProvider is not null && TemplateContentProvider.TryGetData(SyntaxNode.Content, out object? variableContent)) {
     @variableContent
 }
 else {

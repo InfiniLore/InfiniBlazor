@@ -1,12 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.Components;
+using System.Diagnostics.CodeAnalysis;
+
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-// ReSharper disable once InconsistentNaming
-public partial class Infini_MdVariable(IVariableContentProvider? variableContentProvider = null) {
-    private IVariableContentProvider? VariableContentProvider { get; } = variableContentProvider;
+public interface ITemplateContentProvider { 
+    bool TryGetData(string variableName,[NotNullWhen(true)] out object? data);
 }

@@ -9,9 +9,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class VariableContentSyntaxNodeSerializer  {
-    private static readonly int VariableId = MdRegexLib.GetGroupId(MdRegexGroupNames.Variable);
-    private static readonly int VariableContentId = MdRegexLib.GetGroupId(MdRegexGroupNames.VariableContent);
+public static class TemplateSyntaxNodeSerializer  {
+    private static readonly int TemplateId = MdRegexLib.GetGroupId(MdRegexGroupNames.Template);
+    private static readonly int TemplateContentId = MdRegexLib.GetGroupId(MdRegexGroupNames.TemplateContent);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -21,10 +21,10 @@ public static class VariableContentSyntaxNodeSerializer  {
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[VariableContentId].TryGetValue(out string? variableContent)) return ;
-        if (!match.Groups[VariableId].TryGetLength(out int variableLength)) return ;
+        if (!match.Groups[TemplateContentId].TryGetValue(out string? variableContent)) return ;
+        if (!match.Groups[TemplateId].TryGetLength(out int variableLength)) return ;
 
-        VariableMdSyntaxNode node = VariableMdSyntaxNode.Pool.Get();
+        TemplateMdSyntaxNode node = TemplateMdSyntaxNode.Pool.Get();
         node.Content = variableContent;
         node.BracesCount = (variableLength - variableContent.Length) / 2;
         parentNode.AddChildNode(node);
