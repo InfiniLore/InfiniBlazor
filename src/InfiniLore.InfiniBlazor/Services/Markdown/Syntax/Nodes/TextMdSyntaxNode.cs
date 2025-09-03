@@ -1,27 +1,27 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
-using System.Xml.Linq;
-
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
-
+namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class ContentHtmlXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<ContentHtmlMdSyntaxNode> {
-    
+public sealed class TextMdSyntaxNode() : MdSyntaxNode<TextMdSyntaxNode>(initialChildCount: 0) {
+    public string Content { get; private set; } = string.Empty;
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override void DeserializeDetails(ContentHtmlMdSyntaxNode node, XElement targetElement) {
-        base.DeserializeDetails(node, targetElement);
-        AddXmlPreserveSpace(targetElement);
-        targetElement.Value = node.ContentHtml;
+    public TextMdSyntaxNode WithContent(string content) {
+        Content = content;
+        return this;
+    }
+    
+    public override bool TryReset() {
+        Content = string.Empty;
+        return base.TryReset();
     }
 
-    protected override void SerializeDetails(XElement element, ContentHtmlMdSyntaxNode targetNode) {
-        base.SerializeDetails(element, targetNode);
-        targetNode.ContentHtml = element.Value;   
-    }
+    public override bool Equals(TextMdSyntaxNode? other)
+        => base.Equals(other)
+            && StringComparer.InvariantCulture.Equals(Content, other.Content);
 }

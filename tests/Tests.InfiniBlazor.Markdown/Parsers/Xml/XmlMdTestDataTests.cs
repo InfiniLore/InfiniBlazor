@@ -19,9 +19,9 @@ public class XmlMdTestDataTests {
         MdString = "Sample **Markdown**",
         MdSyntaxTree = new MdSyntaxTree {
             RootNode = new RootMdSyntaxNode()
-                .WithContent("Sample ")
+                .WithText("Sample ")
                 .WithChild(
-                    new BoldMdSyntaxNode().WithContent("Markdown")
+                    new BoldMdSyntaxNode().WithText("Markdown")
                 )
         }
     };

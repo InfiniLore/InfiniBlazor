@@ -5,7 +5,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <ItalicMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">italic</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">italic</TextMdSyntaxNode>
         </ItalicMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -16,9 +16,9 @@
     <MdString>some text ****</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">some text </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">some text </TextMdSyntaxNode>
         <ItalicMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">**</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">**</TextMdSyntaxNode>
         </ItalicMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -29,7 +29,7 @@
     <MdString>*italic</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">*italic</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">*italic</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;*italic&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -39,7 +39,7 @@
     <MdString>**</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">**</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">**</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;**&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -50,7 +50,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <ItalicMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">**</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">**</TextMdSyntaxNode>
         </ItalicMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -62,11 +62,11 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <ItalicMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">something </ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">something </TextMdSyntaxNode>
           <BoldMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">bold</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">bold</TextMdSyntaxNode>
           </BoldMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve"> in italic</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve"> in italic</TextMdSyntaxNode>
         </ItalicMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -78,11 +78,11 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <ItalicMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">italic </ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">italic </TextMdSyntaxNode>
         </ItalicMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">nested </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">nested </TextMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve"> bold**</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> bold**</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;em&gt;italic &lt;/em&gt;nested * bold**&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -94,7 +94,7 @@
       <ParagraphMdSyntaxNode>
         <ItalicMdSyntaxNode>
           <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">italic</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">italic</TextMdSyntaxNode>
         </ItalicMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -106,7 +106,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <ItalicMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">italic</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">italic</TextMdSyntaxNode>
           <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
         </ItalicMdSyntaxNode>
       </ParagraphMdSyntaxNode>
@@ -119,9 +119,9 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <BoldMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
           <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -133,7 +133,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">literal asterisks</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">literal asterisks</TextMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>

@@ -4,19 +4,22 @@
 @using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
 @using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
 
-@namespace InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents
+@namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniBlazorMdComponentBase<UserMdSyntaxNode>
+@inherits InfiniBlazorMdComponentBase<TemplateMdSyntaxNode>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<span class="inline-block infini-bg-(--color-base-95) rounded-xl px-1.5 text-(--color-accent) md-tag md-username-@(SyntaxNode.UserName.Replace('/', '-'))">
-    @SyntaxNode.UserName
-</span>
-
-
+@if (TemplateContentProvider is not null && TemplateContentProvider.TryGetData(SyntaxNode.Content, out object? variableContent)) {
+    @variableContent
+}
+else {
+    <code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm">
+        Variable "@SyntaxNode.Content" Not Found
+    </code>
+}
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@

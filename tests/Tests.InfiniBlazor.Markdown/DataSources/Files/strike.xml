@@ -5,7 +5,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <StrikeMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">something</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">something</TextMdSyntaxNode>
         </StrikeMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -16,7 +16,7 @@
     <MdString>~~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">~~</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">~~</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;~~&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -30,11 +30,11 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <StrikeMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">one</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">one</TextMdSyntaxNode>
         </StrikeMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve"> and </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> and </TextMdSyntaxNode>
         <StrikeMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">two</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">two</TextMdSyntaxNode>
         </StrikeMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
@@ -42,15 +42,15 @@
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
         <StrikeMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">one</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">one</TextMdSyntaxNode>
         </StrikeMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve"> and </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> and </TextMdSyntaxNode>
         <StrikeMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">two</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">two</TextMdSyntaxNode>
         </StrikeMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve"> and </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> and </TextMdSyntaxNode>
         <StrikeMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">three</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">three</TextMdSyntaxNode>
         </StrikeMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -65,11 +65,11 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <StrikeMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">nested </ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">nested </TextMdSyntaxNode>
         </StrikeMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">strikethrough</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">strikethrough</TextMdSyntaxNode>
         <StrikeMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve"> does not work</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve"> does not work</TextMdSyntaxNode>
         </StrikeMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -82,7 +82,7 @@
       <ParagraphMdSyntaxNode>
         <StrikeMdSyntaxNode>
           <BoldMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">bold and strike-through</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">bold and strike-through</TextMdSyntaxNode>
           </BoldMdSyntaxNode>
         </StrikeMdSyntaxNode>
       </ParagraphMdSyntaxNode>
@@ -94,7 +94,7 @@
     <MdString>~escaped\~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">~escaped</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">~escaped</TextMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">~</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -106,7 +106,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">~</EscapedCharacterMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">escaped~</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">escaped~</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;~escaped~&lt;/p&gt;</ExpectedHtmlStringSimplified>

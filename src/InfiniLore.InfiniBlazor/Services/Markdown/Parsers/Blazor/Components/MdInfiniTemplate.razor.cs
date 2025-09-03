@@ -1,11 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace DevTools.MdTestHelper.Services;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.Components;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class RootMdTestDataTreeNode : MdTestDataTreeNodeBase {
-    
+public partial class MdInfiniTemplate(ITemplateContentProvider? templateContentProvider = null) {
+    private ITemplateContentProvider? TemplateContentProvider { get; } = templateContentProvider;
 }

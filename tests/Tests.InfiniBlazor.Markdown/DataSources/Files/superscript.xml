@@ -5,7 +5,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <SuperScriptMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">superscript</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">superscript</TextMdSyntaxNode>
         </SuperScriptMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -16,7 +16,7 @@
     <MdString>^^superscript</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">^^superscript</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">^^superscript</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;^^superscript&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -27,7 +27,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <SubScriptMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">^^</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">^^</TextMdSyntaxNode>
         </SubScriptMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -39,11 +39,11 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <SuperScriptMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">something </ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">something </TextMdSyntaxNode>
           <BoldMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">bold</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">bold</TextMdSyntaxNode>
           </BoldMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve"> in superscript</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve"> in superscript</TextMdSyntaxNode>
         </SuperScriptMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -55,9 +55,9 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <SuperScriptMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">superscript **nested </ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">superscript **nested </TextMdSyntaxNode>
           <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">^ bold**</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">^ bold**</TextMdSyntaxNode>
         </SuperScriptMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -70,9 +70,9 @@
       <ParagraphMdSyntaxNode>
         <SubScriptMdSyntaxNode>
           <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">superscript</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">superscript</TextMdSyntaxNode>
         </SubScriptMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">^</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">^</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sub&gt;^superscript&lt;/sub&gt;^&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -82,9 +82,9 @@
     <MdString>^^superscript\^^</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">^</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">^</TextMdSyntaxNode>
         <SubScriptMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">superscript</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">superscript</TextMdSyntaxNode>
           <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
         </SubScriptMdSyntaxNode>
       </ParagraphMdSyntaxNode>
@@ -97,9 +97,9 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <SuperScriptMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
           <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
         </SuperScriptMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -112,7 +112,7 @@
       <ParagraphMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">literal little hats</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">literal little hats</TextMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>

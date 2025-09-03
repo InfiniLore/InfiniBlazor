@@ -18,14 +18,14 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <TagMdSyntaxNode xml:space="preserve">this</TagMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve"> is not a valid tag</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> is not a valid tag</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">#</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">#</TextMdSyntaxNode>
         <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
-          <ContentMdSyntaxNode xml:space="preserve">link</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">link</TextMdSyntaxNode>
         </LinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>

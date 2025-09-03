@@ -21,7 +21,7 @@ public static partial class MdRegexLib {
         | (?<underline>_(?<u>.+?)(?<!\\)_)
         | (?<emote>:(?<e>[\p{L}\p{N}\-_]+):)
         | (?<wikiLink>\[\[(?<wHref>[^\]\[\ ]+)\]\])
-        | (?<variable>(?<!\])(?<open>\{)+(?<v>[^\s{}]+)(?<-open>\})+(?(open)(?!)))
+        | (?<template>(?<!\])(?<open>\{)+(?<t>[^\s{}]+)(?<-open>\})+(?(open)(?!)))
         | (?<link>
             (?<lnBang>!)?
             \[(?<lnText> (?:\ *!?\[.+?\]\(.+?\)\ *)|(?:[^\\\]]|\\\]|\\[^\]])*?)\]
@@ -79,7 +79,7 @@ public static partial class MdRegexLib {
     public static partial Regex ListItemBodyRegex { get; }
 
     [GeneratedRegex("""
-        (?<spanTag><(?<spanHtmlTag>span)(?<spanTagAttrs>\b[^>]*)>)
+        (?<spanTag><(?<spanHtmlTag>span)\ ?(?<spanTagAttrs>\b[^>]*)>)
         (?<spanBody>
           (?>
             [^<]+

@@ -89,8 +89,13 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 break;
             }
             
-            case HtmlSpanMdSyntaxNode { TagValue: var tagValue }: {
-                builder.Append(tagValue.AsSpan());
+            case HtmlSpanMdSyntaxNode { Attributes: var attributes }: {
+                builder.Append("<span");
+                if (attributes.IsNotNullOrEmpty()) {
+                    builder.Append(' ');
+                    builder.Append(attributes);
+                }
+                builder.Append('>');
                 break;
             }
 
@@ -133,7 +138,7 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 break;
             }
 
-            case WikiLinkMdSyntaxNode {Href: var href}: {
+            case WikiLinkMdSyntaxNode {Content: var href}: {
                 builder.Append("<a class=\"text-(--color-accent) hover:text-(--color-accent-light) hover:underline\" href=\"");
                 builder.Append(href);
                 builder.Append("\">");
@@ -226,7 +231,7 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 break;
             }
 
-            case TagMdSyntaxNode {ContentTag: var contentTag}: {
+            case TagMdSyntaxNode {Content: var contentTag}: {
                 builder.Append("<span class=\"inline-block infini-bg-(--color-base-95) rounded-xl px-1.5 text-(--color-accent) md-tag md-tag-");
                 builder.Append(contentTag.Replace('/', '-'));
                 builder.Append("\">");
@@ -305,22 +310,28 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
     
     public override void HandleContent(IMdSyntaxNode node, StringBuilder builder) {
         switch (node) {
-            case CodeBlockMdSyntaxNode { ContentCode: var code }: {
+            case CodeBlockMdSyntaxNode { Content: var code }: {
                 builder.Append(code);
                 break;
             }
 
-            case CodeInlineMdSyntaxNode {ContentCode: var code }: {
-                builder.Append(code);
+            case CodeInlineMdSyntaxNode codeInlineNode: {
+                Span<char> span = stackalloc char[codeInlineNode.Content.Length];
+                if (codeInlineNode.TryGetContentWithoutEscapedBackTicks(span, out int length)) {
+                    builder.Append(span[..length]);
+                }
+                else {
+                    builder.Append(codeInlineNode.Content);
+                }
                 break;
             }
 
-            case ContentHtmlMdSyntaxNode { ContentHtml: var content }: {
+            case HtmlMdSyntaxNode { Content: var content }: {
                 builder.Append(content);
                 break;
             }
 
-            case ContentMdSyntaxNode { Content: var content }: {
+            case TextMdSyntaxNode { Content: var content }: {
                 builder.Append(content);
                 break;
             }
@@ -353,7 +364,7 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 break;
             }
 
-            case EscapedCharacterMdSyntaxNode { ContentChar: var contentChar }: {
+            case EscapedCharacterMdSyntaxNode { Content: var contentChar }: {
                 builder.Append(contentChar);
                 break;
             }
@@ -363,19 +374,19 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 break;
             }
 
-            case TagMdSyntaxNode { ContentTag: var contentTag }: {
+            case TagMdSyntaxNode { Content: var contentTag }: {
                 builder.Append('#');
                 builder.Append(contentTag);
                 break;
             }
             
-            case UserMdSyntaxNode { UserName: var userName }: {
+            case UserMdSyntaxNode { Content: var userName }: {
                 builder.Append('@');
                 builder.Append(userName);
                 break;
             }
             
-            case VariableContentMdSyntaxNode { Variable: var variable }: {
+            case TemplateMdSyntaxNode { Content: var variable }: {
                 builder.Append(variable.AsSpan());
                 break;
             }

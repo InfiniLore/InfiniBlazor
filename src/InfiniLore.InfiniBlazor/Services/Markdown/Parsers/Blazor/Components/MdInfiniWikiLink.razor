@@ -1,20 +1,22 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
+
 @namespace InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniBlazorMdComponentBase<InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes.CodeInlineMdSyntaxNode>
+@inherits InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.InfiniBlazorMdComponentBase<InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes.WikiLinkMdSyntaxNode>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm">
-    @SyntaxNode.ContentCode
-</code>
+<a href="@SyntaxNode.Content" class="text-(--color-accent) hover:text-(--color-accent-light) hover:underline">
+    @SyntaxNode.Content
+</a>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
+
 }

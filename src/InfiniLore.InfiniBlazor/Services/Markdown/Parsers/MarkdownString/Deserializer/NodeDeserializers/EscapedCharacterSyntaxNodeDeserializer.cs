@@ -12,6 +12,6 @@ public sealed class EscapedCharacterSyntaxNodeDeserializer : MdStringMdSyntaxNod
 
     protected override void Deserialize(EscapedCharacterMdSyntaxNode node, StringBuilder builder) {
         builder.Append('\\');
-        builder.Append(node.ContentChar);
+        builder.Append(node.Content);
     }
 }

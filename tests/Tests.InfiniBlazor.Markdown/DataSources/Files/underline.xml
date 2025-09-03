@@ -5,7 +5,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <UnderlineMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">underline</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">underline</TextMdSyntaxNode>
         </UnderlineMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -19,9 +19,9 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <UnderlineMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve"> `</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve"> `</TextMdSyntaxNode>
         </UnderlineMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">`</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">`</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;u&gt; `&lt;/u&gt;`&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -32,7 +32,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">_</CodeInlineMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
         <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">_</CodeInlineMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -43,7 +43,7 @@
     <MdString>__</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">__</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">__</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;__&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -56,7 +56,7 @@
       <ParagraphMdSyntaxNode>
         <UnderlineMdSyntaxNode>
           <BoldMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">bold and underlined</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">bold and underlined</TextMdSyntaxNode>
           </BoldMdSyntaxNode>
         </UnderlineMdSyntaxNode>
       </ParagraphMdSyntaxNode>
@@ -72,7 +72,7 @@
         <UnderlineMdSyntaxNode>
           <BoldMdSyntaxNode>
             <ItalicMdSyntaxNode>
-              <ContentMdSyntaxNode xml:space="preserve">bold, italic, and underlined</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">bold, italic, and underlined</TextMdSyntaxNode>
             </ItalicMdSyntaxNode>
           </BoldMdSyntaxNode>
         </UnderlineMdSyntaxNode>
@@ -89,7 +89,7 @@
         <UnderlineMdSyntaxNode>
           <BoldMdSyntaxNode>
             <LinkMdSyntaxNode Href="https://example.com">
-              <ContentMdSyntaxNode xml:space="preserve">bold link</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">bold link</TextMdSyntaxNode>
             </LinkMdSyntaxNode>
           </BoldMdSyntaxNode>
         </UnderlineMdSyntaxNode>
@@ -104,9 +104,9 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <UnderlineMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">underlined with an </ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">underlined with an </TextMdSyntaxNode>
           <EscapedCharacterMdSyntaxNode xml:space="preserve">_</EscapedCharacterMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve"> escaped</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve"> escaped</TextMdSyntaxNode>
         </UnderlineMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -118,7 +118,7 @@
     <MdString>_escaped\_</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">_escaped</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">_escaped</TextMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">_</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -131,7 +131,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">_</EscapedCharacterMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">escaped_</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">escaped_</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;_escaped_&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -143,7 +143,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">_</EscapedCharacterMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">escaped</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">escaped</TextMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">_</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -157,7 +157,7 @@
       <ParagraphMdSyntaxNode>
         <UnderlineMdSyntaxNode>
           <ItalicMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">italic and underlined</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">italic and underlined</TextMdSyntaxNode>
           </ItalicMdSyntaxNode>
         </UnderlineMdSyntaxNode>
       </ParagraphMdSyntaxNode>
@@ -172,11 +172,11 @@
       <ParagraphMdSyntaxNode>
         <UnderlineMdSyntaxNode>
           <BoldMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">multiple</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">multiple</TextMdSyntaxNode>
           </BoldMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve"> elements to </ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve"> elements to </TextMdSyntaxNode>
           <ItalicMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">underline</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">underline</TextMdSyntaxNode>
           </ItalicMdSyntaxNode>
         </UnderlineMdSyntaxNode>
       </ParagraphMdSyntaxNode>

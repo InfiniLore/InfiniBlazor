@@ -27,10 +27,10 @@ public static class CodeBlockSyntaxNodeSerializer  {
         CodeBlockMdSyntaxNode codeNode = CodeBlockMdSyntaxNode.Pool.Get();
 
         string langNameValue = match.Groups[CLangId].Value;
-        if (!langNameValue.IsEmpty()) codeNode.Language = langNameValue;
+        if (!langNameValue.IsEmpty()) codeNode.WithLanguage(langNameValue);
 
         string content = ProcessCodeBlockContent(ref codeBlockBody);
-        codeNode.ContentCode = content;
+        codeNode.WithContent(content);
         parentNode.AddChildNode(codeNode);
     }
 

@@ -8,10 +8,10 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class VariableContentSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<VariableContentMdSyntaxNode> {
-    protected override void Deserialize(VariableContentMdSyntaxNode node, StringBuilder builder) {
+public sealed class TemplateSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<TemplateMdSyntaxNode> {
+    protected override void Deserialize(TemplateMdSyntaxNode node, StringBuilder builder) {
         builder.Append('{', Math.Max(node.BracesCount, 1));
-        builder.Append(node.Variable);
+        builder.Append(node.Content);
         builder.Append('}', Math.Max(node.BracesCount, 1));
     }
 }

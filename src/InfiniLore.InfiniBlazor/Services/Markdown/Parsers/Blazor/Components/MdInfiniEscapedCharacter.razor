@@ -1,20 +1,18 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
+@using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
 
 @namespace InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.InfiniBlazorMdComponentBase<InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes.TagMdSyntaxNode>
+@inherits InfiniBlazorMdComponentBase<EscapedCharacterMdSyntaxNode>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<span class="inline-block infini-bg-(--color-base-95) rounded-xl px-1.5 text-(--color-accent) md-tag md-tag-@(SyntaxNode.ContentTag.Replace('/', '-'))">
-    @SyntaxNode.ContentTag
-</span>
-
-
+@SyntaxNode.Content
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@

@@ -15,7 +15,7 @@
     <MdString>![]()</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">![]()</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">![]()</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;![]()&lt;/p&gt;</ExpectedHtmlStringSimplified>

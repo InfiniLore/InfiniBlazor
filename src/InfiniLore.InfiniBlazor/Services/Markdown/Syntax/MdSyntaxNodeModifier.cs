@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Pooling;
 using Microsoft.Extensions.ObjectPool;
+using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
@@ -10,47 +11,64 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
-    public Dictionary<string, Range> Attributes { get; } = new();
-    public string OriginalInput { get; internal set; } = string.Empty;
+    private Lazy<FrozenDictionary<string, Range>> InternalAttributesDictionary { get; set; } = new(static () => FrozenDictionary<string, Range>.Empty);
+
+    public FrozenDictionary<string, Range> Attributes => InternalAttributesDictionary.Value;
+    public string OriginalInput { get; private set; } = string.Empty;
     public ReadOnlySpan<char> OriginalInputSpan => OriginalInput.AsSpan();
-    
+
     public static ObjectPool<MdSyntaxNodeModifier> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxNodeModifier>(16);
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
-    
-    // ReSharper disable once InvertIf
     public static MdSyntaxNodeModifier FromString(string input) {
         MdSyntaxNodeModifier mod = Pool.Get();
         mod.OriginalInput = input;
-        
+
         if (mod.OriginalInputSpan.IsWhiteSpace()) return mod;
-        
-        ReadOnlySpan<char> span = input.AsSpan();
-        Span<char> buffer = stackalloc char[span.Length-1]; // set it to the max possible, and all mods start with a | based on the regex, so we can trim one char
-        
+
+        mod.InternalAttributesDictionary = new Lazy<FrozenDictionary<string, Range>>(() => GetLazyDictionary(mod.OriginalInputSpan));
+
+        return mod;
+    }
+
+    // ReSharper disable once InvertIf
+    private static FrozenDictionary<string, Range> GetLazyDictionary(scoped ReadOnlySpan<char> span) {
+        int spanLength = span.Length;
+
+        Span<char> buffer = stackalloc char[spanLength - 1];// set it to the max possible, and all mods start with a | based on the regex, so we can trim one char
+
         int keyStart = 0;
         int keyEnd = -1;
         int valueStart = 0;
-        
-        for(int pointer = 0; pointer < span.Length;) {
-            switch (span[pointer]) {
+
+        var dictionary = new Dictionary<string, Range>(StringComparer.OrdinalIgnoreCase);
+
+        for (int pointer = 0; pointer < spanLength;) {
+            char currentCharacter = span[pointer];
+            if (currentCharacter is not ('|' or '=') || span.IsEscapedCharacterAtIndex(pointer)) {
+                pointer++;
+                continue;
+            }
+
+            switch (currentCharacter) {
                 case '|': {
                     if (pointer > keyStart) {
                         if (keyEnd == -1) {
                             // No '=' found, this is a flag attribute
                             int length = span[keyStart..pointer].ToLowerInvariant(buffer);
                             string value = buffer[..length].ToString();
-                            mod.Attributes.AddOrUpdate(value, new Range(pointer, pointer));
+                            dictionary.AddOrUpdate(value, new Range(pointer, pointer));
                         }
                         else {
                             // Normal key=value attribute
                             int length = span[keyStart..keyEnd].ToLowerInvariant(buffer);
                             string value = buffer[..length].ToString();
-                            mod.Attributes.AddOrUpdate(value, new Range(valueStart, pointer));
+                            dictionary.AddOrUpdate(value, new Range(valueStart, pointer));
                         }
                     }
+
                     keyStart = ++pointer;
                     keyEnd = -1;
                     continue;
@@ -68,34 +86,59 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
                 }
             }
         }
-        
-        int spanLength = span.Length;
-        
+
         // Handle the last attribute if there is one
         if (spanLength > keyStart) {
             if (keyEnd == -1) {
                 // The last attribute is a flag
                 int length = span[keyStart..spanLength].ToLowerInvariant(buffer);
                 string value = buffer[..length].ToString();
-                mod.Attributes.AddOrUpdate(value, new Range(spanLength, spanLength));
+                dictionary.AddOrUpdate(value, new Range(spanLength, spanLength));
             }
             else if (valueStart < spanLength) {
                 // The last attribute is key=value
                 int length = span[keyStart..keyEnd].ToLowerInvariant(buffer);
                 string value = buffer[..length].ToString();
-                mod.Attributes.AddOrUpdate(value, new Range(valueStart, spanLength));
+                dictionary.AddOrUpdate(value, new Range(valueStart, spanLength));
             }
         }
-        
-        return mod;
+
+        return dictionary.ToFrozenDictionary();
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public bool TryGetAttributeValue(string key, [NotNullWhen(true)] out string? value) {
+    public bool TryGetValue(string key, [NotNullWhen(true)] out string? value) {
         if (Attributes.TryGetValue(key, out Range range)) {
-            value = OriginalInput[range];
+            ReadOnlySpan<char> original = OriginalInputSpan[range];
+            Span<char> span = stackalloc char[original.Length];
+            int destinationIndex = 0;
+
+            int startIndex = original.Length > 0 && original[0] == '"' ? 1 : 0;
+            int endIndex = original.Length;
+
+            if (original.Length > 1 && original[^1] == '"') {
+                int backslashCount = 0;
+                for (int j = original.Length - 2; j >= 0 && original[j] == '\\'; j--) {
+                    backslashCount++;
+                }
+
+                if (backslashCount % 2 == 0) endIndex--;
+            }
+
+            for (int i = startIndex; i < endIndex; i++) {
+                char c = original[i];
+                if (i + 1 < endIndex && c == '\\' && original[i + 1] == '"' && original.IsNotEscapedCharacterAtIndex(i)) {
+                    i++;
+                    span[destinationIndex++] = original[i];
+                }
+                else {
+                    span[destinationIndex++] = c;
+                }
+            }
+
+            value = new string(span[..destinationIndex]);
             return true;
         }
 
@@ -104,7 +147,7 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
     }
 
     // ReSharper disable once InvertIf
-    public bool TryGetAttributeFlag(string key, out bool value) {
+    public bool TryGetFlag(string key, out bool value) {
         if (!Attributes.TryGetValue(key, out Range range)) {
             value = false;
             return false;
@@ -114,26 +157,28 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
             value = true;
             return true;
         }
-        
+
         ReadOnlySpan<char> span = OriginalInputSpan[range];
         if (bool.TryParse(span, out value)) return true;
-        
+
         // Only accept 0 or 1 as valid int values
         if (int.TryParse(span, out int intValue) && intValue is 0 or 1) {
             value = intValue != 0;
             return true;
         }
-        
+
         return false;
     }
-    
+
+    public void ReturnToPool() => Pool.Return(this);
+
     public bool TryReset() {
-        Attributes.Clear();
+        InternalAttributesDictionary = new Lazy<FrozenDictionary<string, Range>>(static () => FrozenDictionary<string, Range>.Empty);
         OriginalInput = string.Empty;
 
         return true;
     }
-    
+
     public bool Equals(IMdSyntaxNodeModifier? other) {
         // Don't need to check the attribute dictionary as it is fully dependent on the OriginalInput on creation.
         return StringComparer.Ordinal.Equals(OriginalInput, other?.OriginalInput);

@@ -6,17 +6,13 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.InfiniBlazorMdComponentBase<InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes.WikiLinkMdSyntaxNode>
+@inherits InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.InfiniBlazorMdComponentBase<InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes.CodeBlockMdSyntaxNode>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<a href="@SyntaxNode.Href" class="text-(--color-accent) hover:text-(--color-accent-light) hover:underline">
-    @SyntaxNode.Href
-</a>
-
+<InfiniCodeBlock Content="@SyntaxNode.Content.TrimEnd()" Language="@SyntaxNode.Language" />
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-
 }

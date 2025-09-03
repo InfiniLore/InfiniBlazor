@@ -27,7 +27,7 @@ public static class BlockQuoteSyntaxNodeSerializer  {
         string adjustedBlockquote = LineNormalization.NormalizeBlockQuote(blockQuoteBody, out int leadingSpaces);
 
         BlockQuoteMdSyntaxNode blockQuoteNode = BlockQuoteMdSyntaxNode.Pool.Get();
-        blockQuoteNode.LeadingSpaces = leadingSpaces;
+        blockQuoteNode.WithLeadingSpaces(leadingSpaces);
         
         parentNode.AddChildNode(blockQuoteNode);
         stack.PushMultiLineMatchesToStack(adjustedBlockquote, blockQuoteNode);

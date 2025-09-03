@@ -15,11 +15,11 @@ public sealed class EscapedCharacterXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisi
     protected override void DeserializeDetails(EscapedCharacterMdSyntaxNode node, XElement targetElement) {
         base.DeserializeDetails(node, targetElement);
         AddXmlPreserveSpace(targetElement);
-        targetElement.Value = node.ContentChar.ToString();
+        targetElement.Value = node.Content.ToString();
     }
 
     protected override void SerializeDetails(XElement element, EscapedCharacterMdSyntaxNode targetNode) {
         base.SerializeDetails(element, targetNode);
-        targetNode.ContentChar = element.Value.ElementAtOrDefault(0);   
+        targetNode.WithContent(element.Value.ElementAtOrDefault(0));
     }
 }

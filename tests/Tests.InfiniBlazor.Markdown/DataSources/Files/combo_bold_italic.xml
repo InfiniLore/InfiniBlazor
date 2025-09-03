@@ -6,7 +6,7 @@
       <ParagraphMdSyntaxNode>
         <BoldMdSyntaxNode>
           <ItalicMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">bold and italic</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">bold and italic</TextMdSyntaxNode>
           </ItalicMdSyntaxNode>
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
@@ -19,7 +19,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <BoldMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">**</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">**</TextMdSyntaxNode>
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -32,13 +32,13 @@
       <ParagraphMdSyntaxNode>
         <BoldMdSyntaxNode>
           <ItalicMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
             <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
             <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
             <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
           </ItalicMdSyntaxNode>
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
@@ -50,11 +50,11 @@
     <MdString>"***\*bold and italic***</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">"</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">"</TextMdSyntaxNode>
         <BoldMdSyntaxNode>
           <ItalicMdSyntaxNode>
             <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">bold and italic</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">bold and italic</TextMdSyntaxNode>
           </ItalicMdSyntaxNode>
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>

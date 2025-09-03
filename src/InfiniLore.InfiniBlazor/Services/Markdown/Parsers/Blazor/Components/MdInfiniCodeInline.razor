@@ -2,24 +2,25 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
-@using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
-
-@namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.Components
+@namespace InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniBlazorMdComponentBase<VariableContentMdSyntaxNode>
+@inherits InfiniBlazorMdComponentBase<InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes.CodeInlineMdSyntaxNode>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@if (VariableContentProvider is not null && VariableContentProvider.TryGetVariableContent(SyntaxNode.Variable, out object? variableContent)) {
-    @variableContent
-}
-else {
-    <code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm">
-        Variable "@SyntaxNode.Variable" Not Found
-    </code>
-}
+<code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm">
+    @{Span<char> span = stackalloc char[SyntaxNode.Content.Length];}
+    @if (SyntaxNode.TryGetContentWithoutEscapedBackTicks(span, out int length)) {
+        @span[..length].ToString()
+    }
+    else {
+        @SyntaxNode.Content
+    }
+</code>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+}

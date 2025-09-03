@@ -60,19 +60,8 @@ public abstract class XmlMdSyntaxNodeVisitor<TNode> : IXmlMdSyntaxNodeVisitor wh
         return node;  
     }
 
-    private static MdSyntaxNodeModifier DeserializeModifiers(XElement element) {
-        MdSyntaxNodeModifier modifier = MdSyntaxNodeModifier.Pool.Get();
-        
-        foreach (XElement attr in element.Element(Attributes)!.Elements()) {
-            // TODO - Validate that the attributes are valid
-            int start = int.Parse(attr.Attribute(Start)!.Value);
-            int end = int.Parse(attr.Attribute(End)!.Value);
-            modifier.Attributes[attr.Attribute(Key)!.Value] = new Range(start, end);
-        }
-        
-        modifier.OriginalInput = element.Element(OriginalInput)!.Value;
-        return modifier;   
-    }
+    private static MdSyntaxNodeModifier DeserializeModifiers(XElement element) 
+        => MdSyntaxNodeModifier.FromString(element.Element(OriginalInput)!.Value);
 
     protected virtual void SerializeDetails(XElement element, TNode targetNode) {
         if (element.Element(Modifiers) is {} modifiersElement) targetNode.WithModifier(DeserializeModifiers(modifiersElement));

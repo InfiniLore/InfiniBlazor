@@ -4,7 +4,7 @@
     <MdString>[[test]]</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <WikiLinkMdSyntaxNode Href="test" />
+        <WikiLinkMdSyntaxNode>test</WikiLinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;a href="test"&gt;&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -16,12 +16,12 @@
 [[ ]]</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">[[]]</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">[[]]</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">[[ ]]</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">[[ ]]</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;[[]]&lt;/p&gt;&lt;p&gt;[[ ]]&lt;/p&gt;</ExpectedHtmlStringSimplified>

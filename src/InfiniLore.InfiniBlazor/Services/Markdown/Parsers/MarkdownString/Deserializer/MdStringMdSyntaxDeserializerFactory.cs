@@ -23,8 +23,8 @@ public static class MdStringMdSyntaxDeserializerFactory {
             .Register<CalloutMdSyntaxNode, CalloutSyntaxNodeDeserializer>(instance)
             .Register<CodeBlockMdSyntaxNode, CodeBlockSyntaxNodeDeserializer>(instance)
             .Register<CodeInlineMdSyntaxNode, CodeInlineSyntaxNodeDeserializer>(instance)
-            .Register<ContentHtmlMdSyntaxNode, ContentHtmlSyntaxNodeDeserializer>(instance)
-            .Register<ContentMdSyntaxNode, ContentSyntaxNodeDeserializer>(instance)
+            .Register<HtmlMdSyntaxNode, ContentHtmlSyntaxNodeDeserializer>(instance)
+            .Register<TextMdSyntaxNode, ContentSyntaxNodeDeserializer>(instance)
             .Register<EmoteMdSyntaxNode, EmoteSyntaxNodeDeserializer>(instance)
             .Register<NewLineMdSyntaxNode, NewLineSyntaxNodeDeserializer>(instance)
             .Register<EscapedCharacterMdSyntaxNode, EscapedCharacterSyntaxNodeDeserializer>(instance)
@@ -50,7 +50,7 @@ public static class MdStringMdSyntaxDeserializerFactory {
             .Register<UnderlineMdSyntaxNode, UnderlineSyntaxNodeDeserializer>(instance)
             .Register<UserMdSyntaxNode, UserSyntaxNodeDeserializer>(instance)
             .Register<WikiLinkMdSyntaxNode, WikiLinkSyntaxNodeDeserializer>(instance)
-            .Register<VariableContentMdSyntaxNode, VariableContentSyntaxNodeDeserializer>(instance)
+            .Register<TemplateMdSyntaxNode, TemplateSyntaxNodeDeserializer>(instance)
         ;
         
         instance.Deserializers = deserializers.ToFrozenDictionary();

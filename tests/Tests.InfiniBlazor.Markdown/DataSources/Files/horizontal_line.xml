@@ -6,12 +6,12 @@
 _</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">-</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">-</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">_</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">_</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;-&lt;/p&gt;&lt;p&gt;_&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -25,12 +25,12 @@ _</ExpectedMarkdownString>
 __</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">--</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">--</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">__</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">__</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;--&lt;/p&gt;&lt;p&gt;__&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -90,15 +90,15 @@ _____</ExpectedMarkdownString>
 123</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">1234</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">1234</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">1234</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">1234</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">123</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">123</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;1234&lt;/p&gt;&lt;p&gt;1234&lt;/p&gt;&lt;p&gt;123&lt;/p&gt;</ExpectedHtmlStringSimplified>

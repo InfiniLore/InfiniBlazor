@@ -23,7 +23,7 @@ public static class HorizontalRuleSyntaxNodeSerializer  {
         if (!match.Groups[HrId].TryGetValue(out string? hrContent)) return;
         
         HorizontalRuleMdSyntaxNode node = HorizontalRuleMdSyntaxNode.Pool.Get();
-        node.Identifier = hrContent;
+        node.WithIdentifier(hrContent);
         parentNode.AddChildNode(node);
     }
 }

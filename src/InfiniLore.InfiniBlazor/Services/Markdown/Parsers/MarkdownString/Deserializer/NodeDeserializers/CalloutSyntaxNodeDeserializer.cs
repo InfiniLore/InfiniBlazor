@@ -32,6 +32,15 @@ public sealed class CalloutSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserial
         }
 
         builder.Append(']');
+       
+        // Add a collapsed state when present
+        string collapsedState = node.CollapsedState switch {
+            CalloutMdSyntaxNode.CollapseStateOptions.Closed => "-",
+            CalloutMdSyntaxNode.CollapseStateOptions.Open => "+",
+            CalloutMdSyntaxNode.CollapseStateOptions.None => string.Empty,
+            _ => throw new ArgumentOutOfRangeException(nameof(node), node.CollapsedState, null)
+        };
+        builder.Append(collapsedState);
 
         // Title does not contain any multiline structure, so we can deserialize it directly
         if (node.TryGetTitleNode(out CalloutTitleMdSyntaxNode? titleNode)) {

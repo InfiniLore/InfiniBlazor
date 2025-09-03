@@ -42,8 +42,8 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
 
             // If there's an uncaught text between this match's end and the last position, add it as raw input
             if (matchEnd < currentIndex) {
-                ContentMdSyntaxNode contentNode = ContentMdSyntaxNode.Pool.Get();
-                contentNode.Content = input[matchEnd..currentIndex];
+                TextMdSyntaxNode contentNode = TextMdSyntaxNode.Pool.Get();
+                contentNode.WithContent(input[matchEnd..currentIndex]);
                 PushProcessedNodeToStack(node, contentNode);
             }
 
@@ -54,8 +54,8 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
         // ReSharper disable once InvertIf
         if (currentIndex > 0) {
             // Handle any remaining text before the first match
-            ContentMdSyntaxNode contentNode = ContentMdSyntaxNode.Pool.Get();
-            contentNode.Content = input[..currentIndex];
+            TextMdSyntaxNode contentNode = TextMdSyntaxNode.Pool.Get();
+            contentNode.WithContent(input[..currentIndex]);
             PushProcessedNodeToStack(node, contentNode);
         }
     }

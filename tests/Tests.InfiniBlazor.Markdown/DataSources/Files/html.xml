@@ -4,7 +4,7 @@
     <MdString>test &lt;br/&gt; test</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">test &lt;br/&gt; test</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">test &lt;br/&gt; test</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;br/&gt; test&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -13,7 +13,7 @@
   <MdTestData Id="default" FileName="html.xml">
     <MdString>&lt;div&gt;&lt;/div&gt;</MdString>
     <MdSyntaxTree>
-      <ContentHtmlMdSyntaxNode xml:space="preserve">&lt;div&gt;&lt;/div&gt;</ContentHtmlMdSyntaxNode>
+      <HtmlMdSyntaxNode xml:space="preserve">&lt;div&gt;&lt;/div&gt;</HtmlMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;div&gt;&lt;/div&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>&lt;div&gt;&lt;/div&gt;</ExpectedMarkdownString>
@@ -22,7 +22,7 @@
     <MdString>&lt;&gt;&lt;/&gt;</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">&lt;&gt;&lt;/&gt;</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">&lt;&gt;&lt;/&gt;</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;&gt;&lt;/&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -32,9 +32,9 @@
     <MdString>external &lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt; external</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">external </ContentMdSyntaxNode>
-        <ContentHtmlMdSyntaxNode xml:space="preserve">&lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt;</ContentHtmlMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve"> external</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">external </TextMdSyntaxNode>
+        <HtmlMdSyntaxNode xml:space="preserve">&lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt;</HtmlMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> external</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;external &lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt; external&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -46,10 +46,10 @@
 &lt;/div&gt;</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">test </ContentMdSyntaxNode>
-        <ContentHtmlMdSyntaxNode xml:space="preserve">&lt;div&gt;
+        <TextMdSyntaxNode xml:space="preserve">test </TextMdSyntaxNode>
+        <HtmlMdSyntaxNode xml:space="preserve">&lt;div&gt;
 &lt;strong&gt;something&lt;/strong&gt;
-&lt;/div&gt;</ContentHtmlMdSyntaxNode>
+&lt;/div&gt;</HtmlMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;div&gt;
@@ -64,13 +64,13 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <ItalicMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">test</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">test</TextMdSyntaxNode>
         </ItalicMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
-        <ContentHtmlMdSyntaxNode xml:space="preserve">&lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt;</ContentHtmlMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
+        <HtmlMdSyntaxNode xml:space="preserve">&lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt;</HtmlMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
         <BoldMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">bold this</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">bold this</TextMdSyntaxNode>
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -84,15 +84,15 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <ItalicMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">test</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">test</TextMdSyntaxNode>
         </ItalicMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
-        <ContentHtmlMdSyntaxNode xml:space="preserve">&lt;div&gt;
+        <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
+        <HtmlMdSyntaxNode xml:space="preserve">&lt;div&gt;
 &lt;strong&gt;something&lt;/strong&gt;
-&lt;/div&gt;</ContentHtmlMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+&lt;/div&gt;</HtmlMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
         <BoldMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">bold this</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">bold this</TextMdSyntaxNode>
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -118,7 +118,7 @@ how do you like your blueeyed boy
 Mister Death
 &lt;/pre&gt;</MdString>
     <MdSyntaxTree>
-      <ContentHtmlMdSyntaxNode xml:space="preserve">&lt;pre&gt;
+      <HtmlMdSyntaxNode xml:space="preserve">&lt;pre&gt;
 Buffalo Bill ’s
 defunct
        who used to
@@ -130,7 +130,7 @@ he was a handsome man
                      and what i want to know is
 how do you like your blueeyed boy
 Mister Death
-&lt;/pre&gt;</ContentHtmlMdSyntaxNode>
+&lt;/pre&gt;</HtmlMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;pre&gt;
 Buffalo Bill ’s
@@ -175,10 +175,10 @@ Mister Death
 &lt;/table&gt;</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">Unrelated previous paragraph followed by a blank line</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Unrelated previous paragraph followed by a blank line</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
-      <ContentHtmlMdSyntaxNode xml:space="preserve">&lt;table&gt;
+      <HtmlMdSyntaxNode xml:space="preserve">&lt;table&gt;
     &lt;tr&gt;
         &lt;td&gt;Table cell&lt;/td&gt;
         &lt;td&gt;
@@ -189,7 +189,7 @@ Mister Death
             &lt;/table&gt;
         &lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</ContentHtmlMdSyntaxNode>
+&lt;/table&gt;</HtmlMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;Unrelated previous paragraph followed by a blank line&lt;/p&gt;&lt;table&gt;
     &lt;tr&gt;

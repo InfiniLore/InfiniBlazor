@@ -4,7 +4,7 @@
     <MdString>A backslash at the end of a line: This is a line\\</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">A backslash at the end of a line: This is a line</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">A backslash at the end of a line: This is a line</TextMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">\</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -16,7 +16,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">\</EscapedCharacterMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">Start</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Start</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;\Start&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -28,7 +28,7 @@
       <ParagraphMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">not bold</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">not bold</TextMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
@@ -40,9 +40,9 @@
     <MdString>Escape characters like backticks: \`code\`</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">Escape characters like backticks: </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Escape characters like backticks: </TextMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">`</EscapedCharacterMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">code</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">code</TextMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">`</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -54,7 +54,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">not italic</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">not italic</TextMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -66,10 +66,10 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">[</EscapedCharacterMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">link text</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">link text</TextMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">]</EscapedCharacterMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">(</EscapedCharacterMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">https://example.com</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">https://example.com</TextMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">)</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -81,14 +81,14 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">"</EscapedCharacterMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">She told me that </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">She told me that </TextMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">'</EscapedCharacterMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">he isn't here right </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">he isn't here right </TextMdSyntaxNode>
         <ItalicMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">now</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">now</TextMdSyntaxNode>
         </ItalicMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">'</EscapedCharacterMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve"> - so I left.</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> - so I left.</TextMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">"</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -101,7 +101,7 @@
       <ParagraphMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">!</EscapedCharacterMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">"</EscapedCharacterMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">"</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">"</TextMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">#</EscapedCharacterMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">$</EscapedCharacterMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">%</EscapedCharacterMdSyntaxNode>
@@ -141,9 +141,9 @@
     <MdString>Escaping underscores:\_This is not underscored\_</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">Escaping underscores:</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Escaping underscores:</TextMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">_</EscapedCharacterMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">This is not underscored</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">This is not underscored</TextMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">_</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>

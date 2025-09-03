@@ -11,7 +11,12 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 public sealed class HtmlSpanSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<HtmlSpanMdSyntaxNode> {
 
     protected override void Deserialize(HtmlSpanMdSyntaxNode node, StringBuilder builder) {
-        builder.Append(node.TagValue);
+        builder.Append("<span");
+        if (node.Attributes.IsNotNullOrEmpty()) {
+            builder.Append(' ');
+            builder.Append(node.Attributes);
+        }
+        builder.Append('>');
         DeserializeChildren(node, builder);
         builder.Append("</span>");
     }

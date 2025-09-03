@@ -5,7 +5,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <BoldMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">bold</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">bold</TextMdSyntaxNode>
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -17,9 +17,9 @@
     <MdString>some text *****</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">some text </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">some text </TextMdSyntaxNode>
         <BoldMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">*</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">*</TextMdSyntaxNode>
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -30,7 +30,7 @@
     <MdString>**bold</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">**bold</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">**bold</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;**bold&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -42,7 +42,7 @@
       <ParagraphMdSyntaxNode>
         <BoldMdSyntaxNode>
           <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">bold</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">bold</TextMdSyntaxNode>
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -54,7 +54,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <BoldMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">bold</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">bold</TextMdSyntaxNode>
           <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
@@ -67,9 +67,9 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <BoldMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
           <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -81,9 +81,9 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <BoldMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">bold </ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">bold </TextMdSyntaxNode>
           <ItalicMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">italic</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">italic</TextMdSyntaxNode>
           </ItalicMdSyntaxNode>
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
@@ -97,9 +97,9 @@
       <ParagraphMdSyntaxNode>
         <BoldMdSyntaxNode>
           <ItalicMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">italic</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">italic</TextMdSyntaxNode>
           </ItalicMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve"> bold</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve"> bold</TextMdSyntaxNode>
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -111,11 +111,11 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <BoldMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">bold </ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">bold </TextMdSyntaxNode>
           <ItalicMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">nested </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">nested </TextMdSyntaxNode>
             <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> italic</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> italic</TextMdSyntaxNode>
           </ItalicMdSyntaxNode>
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
@@ -129,7 +129,7 @@
       <ParagraphMdSyntaxNode>
         <BoldMdSyntaxNode>
           <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
-            <ContentMdSyntaxNode xml:space="preserve">transgenderinfo</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">transgenderinfo</TextMdSyntaxNode>
           </LinkMdSyntaxNode>
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
@@ -155,7 +155,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <BoldMdSyntaxNode>
-          <WikiLinkMdSyntaxNode Href="boldWikiLink" />
+          <WikiLinkMdSyntaxNode>boldWikiLink</WikiLinkMdSyntaxNode>
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>

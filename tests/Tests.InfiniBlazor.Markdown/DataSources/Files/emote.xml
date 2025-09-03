@@ -14,7 +14,7 @@
     <MdString>::</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">::</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">::</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;::&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -24,7 +24,7 @@
     <MdString>:not/an/emote:</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">:not/an/emote:</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">:not/an/emote:</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;:not/an/emote:&lt;/p&gt;</ExpectedHtmlStringSimplified>

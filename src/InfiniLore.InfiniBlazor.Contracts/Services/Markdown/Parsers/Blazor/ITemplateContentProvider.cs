@@ -1,18 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.DependencyInjection;
-using InfiniLore.InfiniBlazor.DataTrees;
+using System.Diagnostics.CodeAnalysis;
 
-namespace DevTools.MdTestHelper.Services;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<MdTestDataTreeProvider>]
-public class MdTestDataTreeProvider : IInfiniDataTreeProvider<MdTestDataTree> {
-    
-    public ValueTask<MdTestDataTree?> TryGetDataTreeAsync(object? id = null) {
-        throw new NotImplementedException();
-    }
+public interface ITemplateContentProvider { 
+    bool TryGetData(string variableName,[NotNullWhen(true)] out object? data);
 }

@@ -22,7 +22,7 @@ public static class EscapedSyntaxNodeSerializer  {
     ) {
         char value = match.Groups[EscapedId].ValueSpan[1];
         EscapedCharacterMdSyntaxNode node = EscapedCharacterMdSyntaxNode.Pool.Get();
-        node.ContentChar = value;
+        node.WithContent(value);
         parentNode.AddChildNode(node);
     }
 }

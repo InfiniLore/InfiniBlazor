@@ -5,17 +5,22 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class TagMdSyntaxNode : EmptyMdSyntaxNode<TagMdSyntaxNode> {
-    public string ContentTag { get; set; } = string.Empty;
+public sealed class TagMdSyntaxNode() : MdSyntaxNode<TagMdSyntaxNode>(initialChildCount:0) {
+    public string Content { get; private set; } = string.Empty;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public TagMdSyntaxNode WithContent(string content) {
+        Content = content;
+        return this;
+    }
+    
     public override bool TryReset() {
-        ContentTag = string.Empty;
+        Content = string.Empty;
         return base.TryReset();
     }
     
     public override bool Equals(TagMdSyntaxNode? other) => base.Equals(other)
-        && ContentTag == other.ContentTag;
+        && StringComparer.InvariantCulture.Equals(Content, other.Content);
 }

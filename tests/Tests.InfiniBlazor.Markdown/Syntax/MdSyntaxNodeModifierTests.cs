@@ -25,6 +25,16 @@ public class MdSyntaxNodeModifierTests {
         // On duplicate keys the default behavior should be to take the last one.
         yield return () => ("|something=else|something=different",1, [["something", "different"]]);
         yield return () => ("|something=else|something=different|",1, [["something", "different"]]);
+        
+        // Test Escaped pipes
+        yield return () => (@"|something=\||",1, [["something", @"\|"]]);
+        yield return () => (@"|something=\\||",1, [["something", @"\\"]]);
+        yield return () => (@"|something=\\\||",1, [["something", @"\\\|"]]);
+        yield return () => ("|something=||",1, [["something", ""]]);
+        
+        yield return () => ("|something=\"else\"|",1, [["something", "else"]]);
+        yield return () => ("|something=\"else\\\"\"|",1, [["something", "else\""]]);
+        yield return () => ("|something=\"with \\\"content\\\"\"|",1, [["something", "with \"content\""]]);
     }
     
     [Test]
@@ -43,7 +53,7 @@ public class MdSyntaxNodeModifierTests {
                 string attributeKey = expected.First();
                 string attributeValue = expected.Last();
 
-                bool result = mod.TryGetAttributeValue(attributeKey, out string? value);
+                bool result = mod.TryGetValue(attributeKey, out string? value);
      
                 await Assert.That(result).IsTrue();
                 await Assert.That(value).IsEqualTo(attributeValue);   
@@ -51,7 +61,7 @@ public class MdSyntaxNodeModifierTests {
             
             else {
                 string attributeKey = expected.First();
-                bool result = mod.TryGetAttributeFlag(attributeKey, out bool value);
+                bool result = mod.TryGetFlag(attributeKey, out bool value);
      
                 await Assert.That(result).IsTrue();
                 await Assert.That(value).IsTrue();   
@@ -75,7 +85,7 @@ public class MdSyntaxNodeModifierTests {
         MdSyntaxNodeModifier mod = MdSyntaxNodeModifier.FromString(input);
 
         // Act
-        bool result = mod.TryGetAttributeFlag("flag", out bool foundState);
+        bool result = mod.TryGetFlag("flag", out bool foundState);
 
         // Assert
         await Assert.That(result).IsTrue();

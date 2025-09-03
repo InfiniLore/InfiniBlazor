@@ -45,8 +45,8 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 break;
             }
             
-            case ContentHtmlMdSyntaxNode:break;
-            case ContentMdSyntaxNode:
+            case HtmlMdSyntaxNode:break;
+            case TextMdSyntaxNode:
             case EmoteMdSyntaxNode:break;
             case EscapedCharacterMdSyntaxNode:break;
 
@@ -62,8 +62,13 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 break;
             }
             
-            case HtmlSpanMdSyntaxNode { TagValue: var tagValue }: {
-                builder.Append(tagValue.AsSpan());
+            case HtmlSpanMdSyntaxNode { Attributes: var attributes }: {
+                builder.Append("<span");
+                if (attributes.IsNotNullOrEmpty()) {
+                    builder.Append(' ');
+                    builder.Append(attributes);
+                }
+                builder.Append('>');
                 break;
             }
             
@@ -115,7 +120,7 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 break;
             }
             
-            case WikiLinkMdSyntaxNode {Href: var href}: {
+            case WikiLinkMdSyntaxNode {Content: var href}: {
                 builder.Append("<a href=\"");
                 builder.Append(href.AsSpan());
                 builder.Append("\">");
@@ -237,22 +242,28 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
     public virtual void HandleContent(IMdSyntaxNode node, StringBuilder builder) {
         switch (node) {
 
-            case CodeBlockMdSyntaxNode { ContentCode: var code }: {
+            case CodeBlockMdSyntaxNode { Content: var code }: {
                 builder.Append(code.AsSpan());
                 break;
             }
 
-            case CodeInlineMdSyntaxNode {ContentCode: var code }: {
-                builder.Append(code.AsSpan());
+            case CodeInlineMdSyntaxNode codeInlineNode: {
+                Span<char> span = stackalloc char[codeInlineNode.Content.Length];
+                if (codeInlineNode.TryGetContentWithoutEscapedBackTicks(span, out int length)) {
+                    builder.Append(span[..length]);
+                }
+                else {
+                    builder.Append(codeInlineNode.Content);
+                }
                 break;
             }
 
-            case ContentHtmlMdSyntaxNode { ContentHtml: var content }: {
+            case HtmlMdSyntaxNode { Content: var content }: {
                 builder.Append(content.AsSpan());
                 break;
             }
 
-            case ContentMdSyntaxNode { Content: var content }: {
+            case TextMdSyntaxNode { Content: var content }: {
                 builder.Append(content.AsSpan());
                 break;
             }
@@ -285,7 +296,7 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 break;
             }
 
-            case EscapedCharacterMdSyntaxNode { ContentChar: var contentChar }: {
+            case EscapedCharacterMdSyntaxNode { Content: var contentChar }: {
                 builder.Append(contentChar);
                 break;
             }
@@ -295,19 +306,19 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 break;
             }
 
-            case TagMdSyntaxNode { ContentTag: var contentTag }: {
+            case TagMdSyntaxNode { Content: var contentTag }: {
                 builder.Append('#');
                 builder.Append(contentTag.AsSpan());
                 break;
             }
             
-            case UserMdSyntaxNode { UserName: var userName }: {
+            case UserMdSyntaxNode { Content: var userName }: {
                 builder.Append('@');
                 builder.Append(userName.AsSpan());
                 break;
             }
 
-            case VariableContentMdSyntaxNode { Variable: var variable }: {
+            case TemplateMdSyntaxNode { Content: var variable }: {
                 builder.Append(variable.AsSpan());
                 break;
             }
@@ -336,8 +347,8 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 break;
             }
             
-            case ContentHtmlMdSyntaxNode:
-            case ContentMdSyntaxNode:
+            case HtmlMdSyntaxNode:
+            case TextMdSyntaxNode:
             case EmoteMdSyntaxNode:
             case EscapedCharacterMdSyntaxNode:break;
 

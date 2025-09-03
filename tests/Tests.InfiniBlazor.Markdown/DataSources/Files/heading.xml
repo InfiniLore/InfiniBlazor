@@ -10,31 +10,31 @@
 ####### Not A Heading</MdString>
     <MdSyntaxTree>
       <HeadingMdSyntaxNode Level="1">
-        <ContentMdSyntaxNode xml:space="preserve">Heading 1</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Heading 1</TextMdSyntaxNode>
       </HeadingMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <HeadingMdSyntaxNode Level="2">
-        <ContentMdSyntaxNode xml:space="preserve">Heading 2</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Heading 2</TextMdSyntaxNode>
       </HeadingMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <HeadingMdSyntaxNode Level="3">
-        <ContentMdSyntaxNode xml:space="preserve">Heading 3</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Heading 3</TextMdSyntaxNode>
       </HeadingMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <HeadingMdSyntaxNode Level="4">
-        <ContentMdSyntaxNode xml:space="preserve">Heading 4</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Heading 4</TextMdSyntaxNode>
       </HeadingMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <HeadingMdSyntaxNode Level="5">
-        <ContentMdSyntaxNode xml:space="preserve">Heading 5</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Heading 5</TextMdSyntaxNode>
       </HeadingMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <HeadingMdSyntaxNode Level="6">
-        <ContentMdSyntaxNode xml:space="preserve">Heading 6</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Heading 6</TextMdSyntaxNode>
       </HeadingMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">####### Not A Heading</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">####### Not A Heading</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading 1&lt;/h1&gt;&lt;h2&gt;Heading 2&lt;/h2&gt;&lt;h3&gt;Heading 3&lt;/h3&gt;&lt;h4&gt;Heading 4&lt;/h4&gt;&lt;h5&gt;Heading 5&lt;/h5&gt;&lt;h6&gt;Heading 6&lt;/h6&gt;&lt;p&gt;####### Not A Heading&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -51,11 +51,11 @@
 Something</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">#</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">#</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">Something</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Something</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;#&lt;/p&gt;&lt;p&gt;Something&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -67,7 +67,7 @@ Something</ExpectedMarkdownString>
 </MdString>
     <MdSyntaxTree>
       <HeadingMdSyntaxNode Level="1">
-        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingMdSyntaxNode>
       <NewLineMdSyntaxNode />
     </MdSyntaxTree>
@@ -79,7 +79,7 @@ Something</ExpectedMarkdownString>
     <MdString># Heading 1 # Not a heading</MdString>
     <MdSyntaxTree>
       <HeadingMdSyntaxNode Level="1">
-        <ContentMdSyntaxNode xml:space="preserve">Heading 1 # Not a heading</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Heading 1 # Not a heading</TextMdSyntaxNode>
       </HeadingMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading 1 # Not a heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
@@ -90,11 +90,11 @@ Something</ExpectedMarkdownString>
 =</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">Not A Heading</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Not A Heading</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">=</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">=</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;Not A Heading&lt;/p&gt;&lt;p&gt;=&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -106,11 +106,11 @@ Something</ExpectedMarkdownString>
 ==</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">Not A Heading</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Not A Heading</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">==</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">==</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;Not A Heading&lt;/p&gt;&lt;p&gt;==&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -121,8 +121,8 @@ Something</ExpectedMarkdownString>
     <MdString>Heading
 ===</MdString>
     <MdSyntaxTree>
-      <HeadingSimpleMdSyntaxNode ContentIdentifier="===">
-        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      <HeadingSimpleMdSyntaxNode Identifier="===">
+        <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
@@ -133,8 +133,8 @@ Something</ExpectedMarkdownString>
     <MdString>Heading
 ====</MdString>
     <MdSyntaxTree>
-      <HeadingSimpleMdSyntaxNode ContentIdentifier="====">
-        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      <HeadingSimpleMdSyntaxNode Identifier="====">
+        <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
@@ -145,8 +145,8 @@ Something</ExpectedMarkdownString>
     <MdString>Heading
 =====</MdString>
     <MdSyntaxTree>
-      <HeadingSimpleMdSyntaxNode ContentIdentifier="=====">
-        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      <HeadingSimpleMdSyntaxNode Identifier="=====">
+        <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
@@ -157,8 +157,8 @@ Something</ExpectedMarkdownString>
     <MdString>Heading
 ======</MdString>
     <MdSyntaxTree>
-      <HeadingSimpleMdSyntaxNode ContentIdentifier="======">
-        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      <HeadingSimpleMdSyntaxNode Identifier="======">
+        <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
@@ -169,8 +169,8 @@ Something</ExpectedMarkdownString>
     <MdString>Heading
 =======</MdString>
     <MdSyntaxTree>
-      <HeadingSimpleMdSyntaxNode ContentIdentifier="=======">
-        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      <HeadingSimpleMdSyntaxNode Identifier="=======">
+        <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
@@ -182,11 +182,11 @@ Something</ExpectedMarkdownString>
 -</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">Not A Heading</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Not A Heading</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">-</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">-</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;Not A Heading&lt;/p&gt;&lt;p&gt;-&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -198,11 +198,11 @@ Something</ExpectedMarkdownString>
 --</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">Not A Heading</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Not A Heading</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">--</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">--</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;Not A Heading&lt;/p&gt;&lt;p&gt;--&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -213,8 +213,8 @@ Something</ExpectedMarkdownString>
     <MdString>Heading
 ---</MdString>
     <MdSyntaxTree>
-      <HeadingSimpleMdSyntaxNode ContentIdentifier="---">
-        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      <HeadingSimpleMdSyntaxNode Identifier="---">
+        <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
@@ -225,8 +225,8 @@ Something</ExpectedMarkdownString>
     <MdString>Heading
 ----</MdString>
     <MdSyntaxTree>
-      <HeadingSimpleMdSyntaxNode ContentIdentifier="----">
-        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      <HeadingSimpleMdSyntaxNode Identifier="----">
+        <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
@@ -237,8 +237,8 @@ Something</ExpectedMarkdownString>
     <MdString>Heading
 -----</MdString>
     <MdSyntaxTree>
-      <HeadingSimpleMdSyntaxNode ContentIdentifier="-----">
-        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      <HeadingSimpleMdSyntaxNode Identifier="-----">
+        <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
@@ -249,8 +249,8 @@ Something</ExpectedMarkdownString>
     <MdString>Heading
 ------</MdString>
     <MdSyntaxTree>
-      <HeadingSimpleMdSyntaxNode ContentIdentifier="------">
-        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      <HeadingSimpleMdSyntaxNode Identifier="------">
+        <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
@@ -261,8 +261,8 @@ Something</ExpectedMarkdownString>
     <MdString>Heading
 -------</MdString>
     <MdSyntaxTree>
-      <HeadingSimpleMdSyntaxNode ContentIdentifier="-------">
-        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      <HeadingSimpleMdSyntaxNode Identifier="-------">
+        <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
@@ -273,8 +273,8 @@ Something</ExpectedMarkdownString>
     <MdString>Heading
                 ========</MdString>
     <MdSyntaxTree>
-      <HeadingSimpleMdSyntaxNode ContentIdentifier="                ========">
-        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      <HeadingSimpleMdSyntaxNode Identifier="                ========">
+        <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
@@ -285,8 +285,8 @@ Something</ExpectedMarkdownString>
     <MdString>Heading
                 ========</MdString>
     <MdSyntaxTree>
-      <HeadingSimpleMdSyntaxNode ContentIdentifier="                ========">
-        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      <HeadingSimpleMdSyntaxNode Identifier="                ========">
+        <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>
@@ -297,8 +297,8 @@ Something</ExpectedMarkdownString>
     <MdString>Heading
                 --------</MdString>
     <MdSyntaxTree>
-      <HeadingSimpleMdSyntaxNode ContentIdentifier="                --------">
-        <ContentMdSyntaxNode xml:space="preserve">Heading</ContentMdSyntaxNode>
+      <HeadingSimpleMdSyntaxNode Identifier="                --------">
+        <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlStringSimplified>

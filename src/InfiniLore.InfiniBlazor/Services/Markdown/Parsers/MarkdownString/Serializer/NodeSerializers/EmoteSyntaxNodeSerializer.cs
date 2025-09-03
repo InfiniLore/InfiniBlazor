@@ -25,8 +25,8 @@ public static class EmoteSyntaxNodeSerializer  {
         if (match.Groups[EmoteBodyId] is not {Success: true, Value: var emoteBody}) return ;
         
         EmoteMdSyntaxNode node = EmoteMdSyntaxNode.Pool.Get();
-        node.OriginalEmote = originalEmote;
-        node.EmoteKey = emoteBody;
+        node.WithOriginalEmote(originalEmote)
+            .WithEmoteKey(emoteBody);
         parentNode.AddChildNode(node);
     }
 }

@@ -8,9 +8,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class ContentHtmlSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<ContentHtmlMdSyntaxNode> {
+public sealed class ContentHtmlSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<HtmlMdSyntaxNode> {
 
-    protected override void Deserialize(ContentHtmlMdSyntaxNode node, StringBuilder builder) {
-        builder.Append(node.ContentHtml);
+    protected override void Deserialize(HtmlMdSyntaxNode node, StringBuilder builder) {
+        builder.Append(node.Content);
     }
 }

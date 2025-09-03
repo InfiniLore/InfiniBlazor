@@ -31,8 +31,8 @@ public static class LinkSyntaxNodeSerializer  {
 
         if (match.Groups[LnBangId].Success) {
             ImageMdSyntaxNode imgNode = ImageMdSyntaxNode.Pool.Get();
-            imgNode.Href = linkHref;
-            imgNode.OriginalAltText = linkText;
+            imgNode.WithAltText(linkText);
+            imgNode.WithHref(linkHref);
             
             if (mods.IsNotNullOrWhiteSpace()) imgNode.WithModifier(MdSyntaxNodeModifier.FromString(mods));
             
@@ -41,7 +41,7 @@ public static class LinkSyntaxNodeSerializer  {
         }
         
         LinkMdSyntaxNode linkNode = LinkMdSyntaxNode.Pool.Get();
-        linkNode.Href = linkHref;
+        linkNode.WithHref(linkHref);
         parentNode.AddChildNode(linkNode);
 
         stack.PushSingleLineMatchesToStack(linkText, linkNode);
