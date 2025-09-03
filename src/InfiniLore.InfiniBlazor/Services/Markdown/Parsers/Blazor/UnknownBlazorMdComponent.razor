@@ -22,7 +22,9 @@ else {
     <span class="@GetDepthClass text-sm font-mono">
         &lt;@(SyntaxNodeTypeName)#@(SyntaxNode.Depth)&gt;
     </span>
-    @ComponentConverter.RenderChildComponents(SyntaxNode)
+    <div class="ml-4">
+        @ComponentConverter.RenderChildComponents(SyntaxNode)
+    </div>
     <span class="@GetDepthClass text-sm font-mono"> 
         &lt;/@(SyntaxNodeTypeName)#@(SyntaxNode.Depth)&gt;
     </span>

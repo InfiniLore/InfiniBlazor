@@ -1,7 +1,6 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @* ReSharper disable once CheckNamespace *@
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -13,6 +12,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="@Class border-2 border-red-500 flex">
     @* WHY does this work better than onInput ????? https://github.com/dotnet/aspnetcore/issues/39837 *@
+    @* TODO fix this for WASM, very slow *@
     <textarea 
         class="focus:outline-none w-full h-full font-mono overflow-y-auto infini-scrollbar"
         @bind:get="@EditorContext.TextSource.Text"
@@ -43,6 +43,6 @@
         if (EditorContext.IsLocked) return;
         if (!args.CtrlKey) return; // quick exit to not have to wait on every key press
         
-        await EditorContext.InvokeInputKeyDownAsync(args);
+        await EditorContext.InvokeInputKeyDownAsync(args).ConfigureAwait(false);
     }
 }

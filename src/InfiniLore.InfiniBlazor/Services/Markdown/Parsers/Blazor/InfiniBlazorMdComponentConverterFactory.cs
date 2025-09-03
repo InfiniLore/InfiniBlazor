@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents;
+using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.Components;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Collections.Frozen;
 using Infini_MdHtmlSpan = InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.Components.Infini_MdHtmlSpan;
@@ -40,14 +41,17 @@ public static class InfiniBlazorMdComponentConverterFactory {
         mapBuilder.Register<TableMdSyntaxNode, Infini_MdTable>();
         mapBuilder.Register<TagMdSyntaxNode, Infini_MdTag>();
         mapBuilder.Register<UnderlineMdSyntaxNode, Infini_MdUnderline>();
-        
+        mapBuilder.Register<UserMdSyntaxNode, Infini_MdUser>();
+        mapBuilder.Register<WikiLinkMdSyntaxNode, Infini_MdWikiLink>();
+        mapBuilder.Register<VariableContentMdSyntaxNode, Infini_MdVariableContent>();
         
         mapBuilder.TrimExcess();
         return new BlazorMdComponentConverter {
             NodeToComponentMap =  mapBuilder.ToFrozenDictionary(),
             SkippedComponentTypes = [
                 typeof(NewLineMdSyntaxNode)
-            ]
+            ],
+            RenderUnknownComponents = true
         };
     }
 

@@ -36,7 +36,8 @@
 
     public override async ValueTask DisposeAsync() {
         await base.DisposeAsync();
-
+        
+        // help aaa
         EditorContext.OnSyntaxTreeChangedAsync -= OnSourceChangedAsync;
     }
     
@@ -44,6 +45,6 @@
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private async Task OnSourceChangedAsync() {
-        await InvokeAsync(StateHasChanged);
+        await InvokeAsync(StateHasChanged).ConfigureAwait(false);
     }
 }

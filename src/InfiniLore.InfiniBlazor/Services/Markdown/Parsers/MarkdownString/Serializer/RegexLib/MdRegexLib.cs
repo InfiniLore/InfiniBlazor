@@ -20,6 +20,8 @@ public static partial class MdRegexLib {
         | (?<strike>~(?<s>.+?)(?<!\\)~)
         | (?<underline>_(?<u>.+?)(?<!\\)_)
         | (?<emote>:(?<e>[\p{L}\p{N}\-_]+):)
+        | (?<wikiLink>\[\[(?<wHref>[^\]\[\ ]+)\]\])
+        | (?<variable>(?<!\])(?<open>\{)+(?<v>[^\s{}]+)(?<-open>\})+(?(open)(?!)))
         | (?<link>
             (?<lnBang>!)?
             \[(?<lnText> (?:\ *!?\[.+?\]\(.+?\)\ *)|(?:[^\\\]]|\\\]|\\[^\]])*?)\]
@@ -28,7 +30,8 @@ public static partial class MdRegexLib {
               \ ?(?<lnMods>(?:\|.*)?)
             \)
           )
-        | (?<tag>\#(?<tText>[\p{L}\p{N}\-_/]+))
+        | (?<tag>\#(?<tText>[\p{L}\p{N}\-_\/\.]+))
+        | (?<user>\@(?<uName>[\p{L}\p{N}\-_\/\.]+))
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex SinglelineStructuresRegex { get; }
 
@@ -71,35 +74,7 @@ public static partial class MdRegexLib {
 
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex MultilineStructuresRegex { get; }
-
-    public static readonly string[] MarkdownStructureGroupNames = [ 
-        // Multiline
-        MdRegexGroupNames.Paragraph,
-        MdRegexGroupNames.Heading,
-        MdRegexGroupNames.CodeBlock,
-        MdRegexGroupNames.HeadingSimple,
-        MdRegexGroupNames.List,
-        MdRegexGroupNames.Table,
-        MdRegexGroupNames.BlockQuote,
-        MdRegexGroupNames.Callout,
-        MdRegexGroupNames.HtmlBody,
-        MdRegexGroupNames.HorizontalRule,
-        MdRegexGroupNames.NewLine,
-
-        // Singleline
-        MdRegexGroupNames.Escaped,
-        MdRegexGroupNames.Bold,
-        MdRegexGroupNames.Italic,
-        MdRegexGroupNames.SuperScript,
-        MdRegexGroupNames.SubScript,
-        MdRegexGroupNames.Strike,
-        MdRegexGroupNames.CodeInline,
-        MdRegexGroupNames.Link,
-        MdRegexGroupNames.Underline,
-        MdRegexGroupNames.Emote,
-        MdRegexGroupNames.Tag
-    ];
-
+    
     [GeneratedRegex(@"^ *(?:-|(?<lIndex>\d*)\.)(?:(?<lTaskSpace> *)\[(?<lTask>[ xX])])?(?:(?<lSpace> *)(?<lHead>.+)|(?<lHead> )|(?<lHead>))(?<lBody>(?:\n +.*)*)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex ListItemBodyRegex { get; }
 

@@ -70,4 +70,10 @@ public static class MdRegexGroupNames {
     public const string TagText = "tText";
     public const string Underline = "underline";
     public const string UnderlineContent = "u";
+    public const string User = "user";
+    public const string UserName = "uName";
+    public const string WikiLink = "wikiLink";
+    public const string WikiLinkHref = "wHref";
+    public const string Variable = "variable";
+    public const string VariableContent = "v";
 }

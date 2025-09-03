@@ -150,4 +150,16 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;&lt;span class="md-tag"&gt;#tag&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>**#tag**</ExpectedMarkdownString>
   </MdTestData>
+  <MdTestData Id="withWikiLink" FileName="bold.xml">
+    <MdString>**[[boldWikiLink]]**</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <WikiLinkMdSyntaxNode Href="boldWikiLink" />
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;&lt;a href="boldWikiLink"&gt;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>**[[boldWikiLink]]**</ExpectedMarkdownString>
+  </MdTestData>
 </ArrayOfMdTestData>

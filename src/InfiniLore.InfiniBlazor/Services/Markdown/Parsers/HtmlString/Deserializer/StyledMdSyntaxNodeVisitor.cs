@@ -133,6 +133,13 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 break;
             }
 
+            case WikiLinkMdSyntaxNode {Href: var href}: {
+                builder.Append("<a class=\"text-(--color-accent) hover:text-(--color-accent-light) hover:underline\" href=\"");
+                builder.Append(href);
+                builder.Append("\">");
+                break;
+            }
+
             case LinkMdSyntaxNode {Href: var href}: {
                 builder.Append("<a class=\"text-(--color-accent) hover:text-(--color-accent-light) hover:underline\" href=\"");
                 builder.Append(href);
@@ -361,6 +368,17 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 builder.Append(contentTag);
                 break;
             }
+            
+            case UserMdSyntaxNode { UserName: var userName }: {
+                builder.Append('@');
+                builder.Append(userName);
+                break;
+            }
+            
+            case VariableContentMdSyntaxNode { Variable: var variable }: {
+                builder.Append(variable.AsSpan());
+                break;
+            }
 
         }
     }
@@ -404,6 +422,7 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 break;
             }
 
+            case WikiLinkMdSyntaxNode:
             case LinkMdSyntaxNode: {
                 builder.Append("</a>");
                 break;

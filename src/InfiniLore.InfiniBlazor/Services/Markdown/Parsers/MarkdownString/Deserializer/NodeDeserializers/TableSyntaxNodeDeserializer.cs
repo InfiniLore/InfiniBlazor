@@ -27,7 +27,7 @@ public sealed class TableSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializ
                 foreach (IMdSyntaxNode child in cell.GetChildrenSpan()) {
                     if (!Deserializer.TryGetNodeDeserializer(child, out IMdStringMdSyntaxNodeDeserializer? deserializer)) continue;
 
-                    deserializer.Deserialize(child, headCellBuilder);// Use headCellBuilder, not builder
+                    deserializer.Deserialize(child, headCellBuilder); // Use headCellBuilder, not builder
                 }
 
                 tableGrid[0, col] = headCellBuilder.ToString();
@@ -47,7 +47,7 @@ public sealed class TableSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializ
                     foreach (IMdSyntaxNode childNode in cell.GetChildrenSpan()) {
                         if (!Deserializer.TryGetNodeDeserializer(childNode, out IMdStringMdSyntaxNodeDeserializer? deserializer)) continue;
 
-                        deserializer.Deserialize(childNode, cellBuilder);// Use cellBuilder, not builder
+                        deserializer.Deserialize(childNode, cellBuilder); // Use cellBuilder, not builder
                     }
 
                     tableGrid[row + 1, col] = cellBuilder.ToString();
@@ -84,9 +84,21 @@ public sealed class TableSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializ
 
         // Write header separator
         for (int col = 0; col < totalColumns; col++) {
+            TableMdSyntaxNode.Alignment alignment = node.HasAlignments
+                ? node.Alignments[col]
+                : TableMdSyntaxNode.Alignment.Unknown;
+            (char left, char right) = alignment switch {
+                TableMdSyntaxNode.Alignment.Left => (':', '-'),
+                TableMdSyntaxNode.Alignment.Right => ('-', ':'),
+                TableMdSyntaxNode.Alignment.Center => (':', ':'),
+                _ => ('-', '-')
+            };
+            
             builder.Append('|');
             builder.Append(' ');
-            builder.Append('-', tableGrid[0, col].Length);
+            builder.Append(left);
+            builder.Append('-', Math.Max(tableGrid[0, col].Length - 2, 1));
+            builder.Append(right);
             builder.Append(' ');
         }
 

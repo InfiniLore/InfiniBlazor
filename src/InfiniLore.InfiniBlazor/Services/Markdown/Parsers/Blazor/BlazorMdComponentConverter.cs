@@ -12,14 +12,14 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor;
 public class BlazorMdComponentConverter : IBlazorMdComponentConverter {
     public required FrozenDictionary<Type, BlazorMdComponentRecord> NodeToComponentMap { get; init; }
     public required FrozenSet<Type> SkippedComponentTypes { get; init; }
-    private bool RenderUnknownComponents { get; set; } = true;
+    public required bool RenderUnknownComponents { get; init; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
 
     // ReSharper disable once UnusedVariable
-    private void RenderComponent(RenderTreeBuilder builder, IMdSyntaxNode node) {
+    private void RenderNodeAsComponent(RenderTreeBuilder builder, IMdSyntaxNode node) {
         if (SkippedComponentTypes.Contains(node.Type)) return;
         
         if (!NodeToComponentMap.TryGetValue(node.Type, out BlazorMdComponentRecord? data)){
@@ -36,7 +36,7 @@ public class BlazorMdComponentConverter : IBlazorMdComponentConverter {
     
     // ReSharper disable once InconsistentNaming
     public RenderFragment RenderComponent(IMdSyntaxNode node) 
-        => __builder => RenderComponent(__builder, node);
+        => __builder => RenderNodeAsComponent(__builder, node);
     
     // ReSharper disable once InconsistentNaming
     public RenderFragment RenderComponentDebug(IMdSyntaxNode node) => __builder => {
@@ -55,13 +55,13 @@ public class BlazorMdComponentConverter : IBlazorMdComponentConverter {
         
         ReadOnlySpan<IMdSyntaxNode> childSpan = node.GetChildrenSpan();
         for (int i = 0; i < childCount; i++) {
-            RenderComponent(__builder, childSpan[i]);
+            RenderNodeAsComponent(__builder, childSpan[i]);
         }
     };
 
     // ReSharper disable once InconsistentNaming
     public RenderFragment RenderRootComponents(IEnumerable<IMdSyntaxNode> nodes) => __builder => {
-        foreach (IMdSyntaxNode child in nodes) RenderComponent(__builder, child);
+        foreach (IMdSyntaxNode child in nodes) RenderNodeAsComponent(__builder, child);
     };
 }
 

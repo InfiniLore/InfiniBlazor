@@ -14,7 +14,6 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.HtmlString.Deserializer;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IHtmlStringMdSyntaxNodeVisitor>]
 public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideService lucideService) : IHtmlStringMdSyntaxNodeVisitor {
-
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -110,6 +109,13 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
             }
 
             case LinkMdSyntaxNode {Href: var href}: {
+                builder.Append("<a href=\"");
+                builder.Append(href.AsSpan());
+                builder.Append("\">");
+                break;
+            }
+            
+            case WikiLinkMdSyntaxNode {Href: var href}: {
                 builder.Append("<a href=\"");
                 builder.Append(href.AsSpan());
                 builder.Append("\">");
@@ -294,6 +300,17 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 builder.Append(contentTag.AsSpan());
                 break;
             }
+            
+            case UserMdSyntaxNode { UserName: var userName }: {
+                builder.Append('@');
+                builder.Append(userName.AsSpan());
+                break;
+            }
+
+            case VariableContentMdSyntaxNode { Variable: var variable }: {
+                builder.Append(variable.AsSpan());
+                break;
+            }
         }
     }
     
@@ -351,6 +368,7 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 break;
             }
 
+            case WikiLinkMdSyntaxNode:
             case LinkMdSyntaxNode: {
                 builder.Append("</a>");
                 break;

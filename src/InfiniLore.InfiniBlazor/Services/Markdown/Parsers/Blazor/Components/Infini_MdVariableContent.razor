@@ -1,0 +1,25 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
+@using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
+
+@namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniBlazorMdComponentBase<VariableContentMdSyntaxNode>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@if (VariableContentProvider is not null && VariableContentProvider.TryGetVariableContent(SyntaxNode.Variable, out object? variableContent)) {
+    @variableContent
+}
+else {
+    <code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm">
+        Variable "@SyntaxNode.Variable" Not Found
+    </code>
+}
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@

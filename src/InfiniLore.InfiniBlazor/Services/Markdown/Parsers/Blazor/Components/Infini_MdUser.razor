@@ -1,29 +1,22 @@
-@* ------------------------------------------------------------------------------------------------------------------ *@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor
+@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
+@using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
+
+@namespace InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@page "/markdown-editor/new"
-@rendermode RenderModeProvider.InfiniRenderMode
+@inherits InfiniBlazorMdComponentBase<UserMdSyntaxNode>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniPage Title="Markdown Editor" Class="p-4 w-full">
-    <InfiniSection Class="grow flex flex-col gap-2 overflow-auto infini-scrollbar min-h-128 w-full">
-        <InfiniHeading1>Markdown Editor 2</InfiniHeading1>
-        <InfiniMarkdownEditorNew @bind-Content="Content"/>
-        
-        <hr>
-        <InfiniCodeBlock @bind-Content="Content" Language="markdown"/>
-        
-    </InfiniSection>
-</InfiniPage>
+<span class="inline-block infini-bg-(--color-base-95) rounded-xl px-1.5 text-(--color-accent) md-tag md-username-@(SyntaxNode.UserName.Replace('/', '-'))">
+    @SyntaxNode.UserName
+</span>
+
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@code {
-    public string? Content { get; set; } = "- [ ] something";
-}
-
