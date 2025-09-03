@@ -47,8 +47,13 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
         
         for(int pointer = 0; pointer < spanLength;) {
             char currentCharacter = span[pointer];
+            if (currentCharacter is not ('|' or '=') || !IsNonEscapedCharacter(span, pointer)) {
+                pointer++;
+                continue;
+            }
+
             switch (currentCharacter) {
-                case '|' when IsNonEscapedCharacter(span, pointer): {
+                case '|': {
                     if (pointer > keyStart) {
                         if (keyEnd == -1) {
                             // No '=' found, this is a flag attribute
