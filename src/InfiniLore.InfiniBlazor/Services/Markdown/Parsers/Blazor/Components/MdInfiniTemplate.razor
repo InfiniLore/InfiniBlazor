@@ -12,7 +12,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@if (TemplateContentProvider is not null && TemplateContentProvider.TryGetData(SyntaxNode.Content, out object? variableContent)) {
+@if (TemplateDataProvider is not null && TemplateDataProvider.TryGetData(SyntaxNode.Content, out object? variableContent)) {
     @variableContent
 }
 else {

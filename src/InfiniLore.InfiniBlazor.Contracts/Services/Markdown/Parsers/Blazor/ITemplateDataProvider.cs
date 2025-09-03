@@ -8,6 +8,6 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface ITemplateContentProvider { 
+public interface ITemplateDataProvider { 
     bool TryGetData(string variableName,[NotNullWhen(true)] out object? data);
 }
