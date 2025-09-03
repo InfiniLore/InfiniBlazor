@@ -31,6 +31,10 @@ public class MdSyntaxNodeModifierTests {
         yield return () => (@"|something=\\||",1, [["something", @"\\"]]);
         yield return () => (@"|something=\\\||",1, [["something", @"\\\|"]]);
         yield return () => ("|something=||",1, [["something", ""]]);
+        
+        yield return () => ("|something=\"else\"|",1, [["something", "else"]]);
+        yield return () => ("|something=\"else\\\"\"|",1, [["something", "else\""]]);
+        yield return () => ("|something=\"with \\\"content\\\"\"|",1, [["something", "with \"content\""]]);
     }
     
     [Test]
