@@ -10,7 +10,6 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class TableXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<TableMdSyntaxNode> {
-    private const string HeaderIndex = nameof(TableMdSyntaxNode.HeaderIndex);
     private const string Alignments = nameof(TableMdSyntaxNode.Alignments);
     private const string Alignment = nameof(Alignment);
 
@@ -19,7 +18,8 @@ public sealed class TableXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<TableMd
     // -----------------------------------------------------------------------------------------------------------------
     protected override void DeserializeDetails(TableMdSyntaxNode node, XElement targetElement) {
         base.DeserializeDetails(node, targetElement);
-        targetElement.SetAttributeValue(HeaderIndex, node.HeaderIndex);
+        
+        // ReSharper disable once InvertIf
         if (node.HasAlignments) {
             XElement alignmentsElement = new(Alignments);
             int columCount = node.GetHeaderCells().Length;
@@ -32,7 +32,6 @@ public sealed class TableXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<TableMd
 
     protected override void SerializeDetails(XElement element, TableMdSyntaxNode targetNode) {
         base.SerializeDetails(element, targetNode);
-        targetNode.HeaderIndex = int.Parse(element.Attribute(HeaderIndex)?.Value ?? "0");   
         
         // ReSharper disable once InvertIf
         if (element.Element(Alignments) is {} alignmentsElement) {

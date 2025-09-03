@@ -118,7 +118,7 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
     // -----------------------------------------------------------------------------------------------------------------
     public bool TryGetValue(string key, [NotNullWhen(true)] out string? value) {
         if (Attributes.TryGetValue(key, out Range range)) {
-            value = OriginalInput[range];
+            value = OriginalInput[range].Trim('"'); // TODO trim with escaped aware system
             return true;
         }
 

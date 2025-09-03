@@ -71,7 +71,7 @@ public static class TableSyntaxNodeSerializer  {
                 int rowColumnCount = row.Split(columnBuffer, '|', StringSplitOptions.RemoveEmptyEntries);
 
                 TableRowMdSyntaxNode tableRow = TableRowMdSyntaxNode.Pool.Get();
-                tableNode.AddRow(tableRow);
+                tableNode.TryAddRow(tableRow);
                 
                 for (int columnIndex = 0; columnIndex < rowColumnCount; columnIndex++) {
                     TableCellMdSyntaxNode tableCell = TableCellMdSyntaxNode.Pool.Get();
