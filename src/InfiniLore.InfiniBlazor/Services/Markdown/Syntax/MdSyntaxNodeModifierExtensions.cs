@@ -10,10 +10,10 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
 // ---------------------------------------------------------------------------------------------------------------------
 public static class MdSyntaxNodeModifierExtensions {
     public static bool TryGetIconName(this IMdSyntaxNodeModifier mod, [NotNullWhen(true)] out string? iconName) 
-        => mod.TryGetAttributeValue("icon", out iconName) && iconName.IsNotNullOrWhiteSpace();
+        => mod.TryGetValue("icon", out iconName) && iconName.IsNotNullOrWhiteSpace();
     
     public static bool TryGetTitle(this IMdSyntaxNodeModifier mod, [NotNullWhen(true)] out string? title) 
-        => mod.TryGetAttributeValue("title", out title);
+        => mod.TryGetValue("title", out title);
 
     public static bool TryGetSize(this IMdSyntaxNodeModifier mod, out (int Width, int Height) size) {
         size = (-1,-1);
@@ -47,11 +47,11 @@ public static class MdSyntaxNodeModifierExtensions {
     }
     
     public static bool TryGetFit(this IMdSyntaxNodeModifier mod, out bool state) 
-        => mod.TryGetAttributeFlag("fit", out state);
+        => mod.TryGetFlag("fit", out state);
 
     public static bool TryGetAlign(this IMdSyntaxNodeModifier mod,[NotNullWhen(true)] out string? align) {
         align = null;
-        if (!mod.TryGetAttributeValue("align", out  align)) return false;
+        if (!mod.TryGetValue("align", out  align)) return false;
         return VerticalAlignImageUtilities.TryGetFromString(align, out _) || align.IsNotNullOrWhiteSpace();
     }
     

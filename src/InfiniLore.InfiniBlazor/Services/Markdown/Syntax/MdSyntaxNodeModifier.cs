@@ -22,7 +22,6 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
-   
     public static MdSyntaxNodeModifier FromString(string input) {
         MdSyntaxNodeModifier mod = Pool.Get();
         mod.OriginalInput = input;
@@ -35,8 +34,10 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
     }
     
     // ReSharper disable once InvertIf
-    private static FrozenDictionary<string, Range> GetLazyDictionary(ReadOnlySpan<char> span) {
-        Span<char> buffer = stackalloc char[span.Length-1]; // set it to the max possible, and all mods start with a | based on the regex, so we can trim one char
+    private static FrozenDictionary<string, Range> GetLazyDictionary(scoped ReadOnlySpan<char> span) {
+        int spanLength = span.Length;
+        
+        Span<char> buffer = stackalloc char[spanLength-1]; // set it to the max possible, and all mods start with a | based on the regex, so we can trim one char
         
         int keyStart = 0;
         int keyEnd = -1;
@@ -44,9 +45,10 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
         
         var dictionary = new Dictionary<string, Range>(StringComparer.OrdinalIgnoreCase);
         
-        for(int pointer = 0; pointer < span.Length;) {
-            switch (span[pointer]) {
-                case '|': {
+        for(int pointer = 0; pointer < spanLength;) {
+            char currentCharacter = span[pointer];
+            switch (currentCharacter) {
+                case '|' when IsNonEscapedCharacter(span, pointer): {
                     if (pointer > keyStart) {
                         if (keyEnd == -1) {
                             // No '=' found, this is a flag attribute
@@ -79,8 +81,6 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
             }
         }
         
-        int spanLength = span.Length;
-        
         // Handle the last attribute if there is one
         if (spanLength > keyStart) {
             if (keyEnd == -1) {
@@ -99,11 +99,19 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
         
         return dictionary.ToFrozenDictionary();
     }
+    
+    private static bool IsNonEscapedCharacter(scoped ReadOnlySpan<char> source, int atIndex) {
+        int backslashCount = 0;
+        for (int i = atIndex - 1; i >= 0 && source[i] == '\\'; i--) {
+            backslashCount++;
+        }
+        return backslashCount % 2 == 0;
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public bool TryGetAttributeValue(string key, [NotNullWhen(true)] out string? value) {
+    public bool TryGetValue(string key, [NotNullWhen(true)] out string? value) {
         if (Attributes.TryGetValue(key, out Range range)) {
             value = OriginalInput[range];
             return true;
@@ -114,7 +122,7 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
     }
 
     // ReSharper disable once InvertIf
-    public bool TryGetAttributeFlag(string key, out bool value) {
+    public bool TryGetFlag(string key, out bool value) {
         if (!Attributes.TryGetValue(key, out Range range)) {
             value = false;
             return false;
