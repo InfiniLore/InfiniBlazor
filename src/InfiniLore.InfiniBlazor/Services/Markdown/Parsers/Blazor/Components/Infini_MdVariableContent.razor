@@ -12,12 +12,12 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@if (VariableContentProvider is not null && VariableContentProvider.TryGetVariableContent(SyntaxNode.Variable, out object? variableContent)) {
+@if (VariableContentProvider is not null && VariableContentProvider.TryGetVariableContent(SyntaxNode.Content, out object? variableContent)) {
     @variableContent
 }
 else {
     <code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm">
-        Variable "@SyntaxNode.Variable" Not Found
+        Variable "@SyntaxNode.Content" Not Found
     </code>
 }
 @* ------------------------------------------------------------------------------------------------------------------ *@

@@ -9,19 +9,19 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class ContentHtmlXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<ContentHtmlMdSyntaxNode> {
+public sealed class HtmlXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<HtmlMdSyntaxNode> {
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override void DeserializeDetails(ContentHtmlMdSyntaxNode node, XElement targetElement) {
+    protected override void DeserializeDetails(HtmlMdSyntaxNode node, XElement targetElement) {
         base.DeserializeDetails(node, targetElement);
         AddXmlPreserveSpace(targetElement);
-        targetElement.Value = node.ContentHtml;
+        targetElement.Value = node.Content;
     }
 
-    protected override void SerializeDetails(XElement element, ContentHtmlMdSyntaxNode targetNode) {
+    protected override void SerializeDetails(XElement element, HtmlMdSyntaxNode targetNode) {
         base.SerializeDetails(element, targetNode);
-        targetNode.ContentHtml = element.Value;   
+        targetNode.Content = element.Value;   
     }
 }

@@ -13,7 +13,7 @@ public sealed class CodeBlockSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeseri
         builder.Append("```");
         builder.Append(node.Language);
         builder.Append('\n');
-        builder.Append(node.ContentCode);
+        builder.Append(node.Content);
         builder.Append("```");
     }
 }

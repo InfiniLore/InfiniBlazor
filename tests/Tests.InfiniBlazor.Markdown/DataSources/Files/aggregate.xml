@@ -38,35 +38,35 @@ You can visit [Google](https://www.google.com) or check out the following image:
 ![Placeholder Image](https://via.placeholder.com/150)</MdString>
     <MdSyntaxTree>
       <HeadingMdSyntaxNode Level="2">
-        <ContentMdSyntaxNode xml:space="preserve">Longer Example with Multiple Sections</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Longer Example with Multiple Sections</TextMdSyntaxNode>
       </HeadingMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <HeadingMdSyntaxNode Level="3">
-        <ContentMdSyntaxNode xml:space="preserve">Introduction</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Introduction</TextMdSyntaxNode>
       </HeadingMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">Welcome to this test. This section introduces the topic, along with </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Welcome to this test. This section introduces the topic, along with </TextMdSyntaxNode>
         <BoldMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">bold</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">bold</TextMdSyntaxNode>
         </BoldMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">, </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">, </TextMdSyntaxNode>
         <ItalicMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">italic</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">italic</TextMdSyntaxNode>
         </ItalicMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">, and </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">, and </TextMdSyntaxNode>
         <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">code</CodeInlineMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve"> formatting.</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> formatting.</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <HeadingMdSyntaxNode Level="3">
-        <ContentMdSyntaxNode xml:space="preserve">Code Snippet</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Code Snippet</TextMdSyntaxNode>
       </HeadingMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">Below is an example of a C# code snippet:</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Below is an example of a C# code snippet:</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <CodeBlockMdSyntaxNode xml:space="preserve" Language="csharp">public class Program {
@@ -78,26 +78,26 @@ You can visit [Google](https://www.google.com) or check out the following image:
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <HeadingMdSyntaxNode Level="3">
-        <ContentMdSyntaxNode xml:space="preserve">Bullet Points</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Bullet Points</TextMdSyntaxNode>
       </HeadingMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">Here are some bullet points:</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Here are some bullet points:</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <ListUnOrderedMdSyntaxNode LeadingSpaces="2">
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">Point one</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Point one</TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">Point two</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Point two</TextMdSyntaxNode>
           <NewLineMdSyntaxNode />
           <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
             <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-              <ContentMdSyntaxNode xml:space="preserve">Subpoint A</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">Subpoint A</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
             <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-              <ContentMdSyntaxNode xml:space="preserve">Subpoint B</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">Subpoint B</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
           </ListUnOrderedMdSyntaxNode>
         </ListItemMdSyntaxNode>
@@ -105,71 +105,71 @@ You can visit [Google](https://www.google.com) or check out the following image:
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <HeadingMdSyntaxNode Level="3">
-        <ContentMdSyntaxNode xml:space="preserve">Blockquote</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Blockquote</TextMdSyntaxNode>
       </HeadingMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <BlockQuoteMdSyntaxNode LeadingSpaces="1">
         <ParagraphMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">This is a blockquote. It can contain multiple lines of text</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">This is a blockquote. It can contain multiple lines of text</TextMdSyntaxNode>
         </ParagraphMdSyntaxNode>
         <NewLineMdSyntaxNode />
         <ParagraphMdSyntaxNode>
-          <ContentMdSyntaxNode xml:space="preserve">and demonstrates how Markdown handles quoted content.</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">and demonstrates how Markdown handles quoted content.</TextMdSyntaxNode>
         </ParagraphMdSyntaxNode>
       </BlockQuoteMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <HeadingMdSyntaxNode Level="3">
-        <ContentMdSyntaxNode xml:space="preserve">Table Example</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Table Example</TextMdSyntaxNode>
       </HeadingMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <TableMdSyntaxNode HeaderIndex="0">
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Column 1</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Column 1</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Column 2</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Column 2</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Column 3</ContentMdSyntaxNode>
-          </TableCellMdSyntaxNode>
-        </TableRowMdSyntaxNode>
-        <TableRowMdSyntaxNode>
-          <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Data 1   </ContentMdSyntaxNode>
-          </TableCellMdSyntaxNode>
-          <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Data 2   </ContentMdSyntaxNode>
-          </TableCellMdSyntaxNode>
-          <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Data 3   </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Column 3</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Data 4   </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Data 1   </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Data 5   </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Data 2   </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Data 6   </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Data 3   </TextMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+        </TableRowMdSyntaxNode>
+        <TableRowMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Data 4   </TextMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Data 5   </TextMdSyntaxNode>
+          </TableCellMdSyntaxNode>
+          <TableCellMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Data 6   </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
       </TableMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <HeadingMdSyntaxNode Level="3">
-        <ContentMdSyntaxNode xml:space="preserve">Links and Images</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Links and Images</TextMdSyntaxNode>
       </HeadingMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">You can visit </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">You can visit </TextMdSyntaxNode>
         <LinkMdSyntaxNode Href="https://www.google.com">
-          <ContentMdSyntaxNode xml:space="preserve">Google</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Google</TextMdSyntaxNode>
         </LinkMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve"> or check out the following image:</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> or check out the following image:</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
@@ -233,57 +233,57 @@ You can visit [Google](https://www.google.com) or check out the following image:
      - Sub-Item 2.2.2</MdString>
     <MdSyntaxTree>
       <HeadingMdSyntaxNode Level="2">
-        <ContentMdSyntaxNode xml:space="preserve">Nested Lists and Complex Formatting</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Nested Lists and Complex Formatting</TextMdSyntaxNode>
       </HeadingMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <ListUnOrderedMdSyntaxNode LeadingSpaces="2">
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
           <BoldMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Main Topic 1</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Main Topic 1</TextMdSyntaxNode>
           </BoldMdSyntaxNode>
           <NewLineMdSyntaxNode />
           <ListUnOrderedMdSyntaxNode LeadingSpaces="2">
             <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-              <ContentMdSyntaxNode xml:space="preserve">Subtopic 1.1</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">Subtopic 1.1</TextMdSyntaxNode>
               <NewLineMdSyntaxNode />
               <ListUnOrderedMdSyntaxNode LeadingSpaces="2">
                 <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-                  <ContentMdSyntaxNode xml:space="preserve">Detail 1.1.1</ContentMdSyntaxNode>
+                  <TextMdSyntaxNode xml:space="preserve">Detail 1.1.1</TextMdSyntaxNode>
                 </ListItemMdSyntaxNode>
                 <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-                  <ContentMdSyntaxNode xml:space="preserve">Detail 1.1.2</ContentMdSyntaxNode>
+                  <TextMdSyntaxNode xml:space="preserve">Detail 1.1.2</TextMdSyntaxNode>
                   <NewLineMdSyntaxNode />
                   <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
                     <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-                      <ContentMdSyntaxNode xml:space="preserve">Extra Detail 1.1.2.1</ContentMdSyntaxNode>
+                      <TextMdSyntaxNode xml:space="preserve">Extra Detail 1.1.2.1</TextMdSyntaxNode>
                     </ListItemMdSyntaxNode>
                   </ListUnOrderedMdSyntaxNode>
                 </ListItemMdSyntaxNode>
               </ListUnOrderedMdSyntaxNode>
             </ListItemMdSyntaxNode>
             <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-              <ContentMdSyntaxNode xml:space="preserve">Subtopic 1.2</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">Subtopic 1.2</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
           </ListUnOrderedMdSyntaxNode>
         </ListItemMdSyntaxNode>
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
           <BoldMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Main Topic 2</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Main Topic 2</TextMdSyntaxNode>
           </BoldMdSyntaxNode>
           <NewLineMdSyntaxNode />
           <ListOrderedMdSyntaxNode LeadingSpaces="3">
             <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="1" LeadingSpaces="1" CheckLeadingSpaces="0">
-              <ContentMdSyntaxNode xml:space="preserve">Item 2.1</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">Item 2.1</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
             <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="2" LeadingSpaces="1" CheckLeadingSpaces="0">
-              <ContentMdSyntaxNode xml:space="preserve">Item 2.2</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">Item 2.2</TextMdSyntaxNode>
               <NewLineMdSyntaxNode />
               <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
                 <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-                  <ContentMdSyntaxNode xml:space="preserve">Sub-Item 2.2.1</ContentMdSyntaxNode>
+                  <TextMdSyntaxNode xml:space="preserve">Sub-Item 2.2.1</TextMdSyntaxNode>
                 </ListItemMdSyntaxNode>
                 <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-                  <ContentMdSyntaxNode xml:space="preserve">Sub-Item 2.2.2</ContentMdSyntaxNode>
+                  <TextMdSyntaxNode xml:space="preserve">Sub-Item 2.2.2</TextMdSyntaxNode>
                 </ListItemMdSyntaxNode>
               </ListUnOrderedMdSyntaxNode>
             </ListItemMdSyntaxNode>

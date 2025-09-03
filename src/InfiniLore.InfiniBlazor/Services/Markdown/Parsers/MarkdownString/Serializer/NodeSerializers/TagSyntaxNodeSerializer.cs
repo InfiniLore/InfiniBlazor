@@ -23,7 +23,7 @@ public static class TagSyntaxNodeSerializer  {
         if (!match.Groups[TextId].TryGetValue(out string? tagValue)) return ;
 
         TagMdSyntaxNode node = TagMdSyntaxNode.Pool.Get();
-        node.ContentTag = tagValue;
+        node.Content = tagValue;
         parentNode.AddChildNode(node);
     }
 }

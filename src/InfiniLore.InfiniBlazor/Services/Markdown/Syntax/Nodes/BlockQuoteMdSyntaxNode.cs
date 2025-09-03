@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -17,6 +16,7 @@ public sealed class BlockQuoteMdSyntaxNode : MdSyntaxNode<BlockQuoteMdSyntaxNode
         return base.TryReset();
     }
 
-    public override bool Equals(BlockQuoteMdSyntaxNode? other) => base.Equals(other) 
-        && LeadingSpaces == other.LeadingSpaces ;
+    public override bool Equals(BlockQuoteMdSyntaxNode? other)
+        => base.Equals(other)
+            && LeadingSpaces == other.LeadingSpaces;
 }

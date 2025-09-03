@@ -15,7 +15,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">Nested </CodeInlineMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve"> is not valid syntax.`</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> is not valid syntax.`</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;Nested &lt;/code&gt; is not valid syntax.`&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -35,7 +35,7 @@
     <MdString>``</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">``</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">``</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;``&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -45,7 +45,7 @@
     <MdString>```</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">```</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">```</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;```&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -55,7 +55,7 @@
     <MdString>````</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">````</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">````</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;````&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -65,7 +65,7 @@
     <MdString>`````</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">`````</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">`````</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;`````&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -75,9 +75,9 @@
     <MdString>Backticks inside inline code: ``Code with `backticks` inside``.</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">Backticks inside inline code: </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Backticks inside inline code: </TextMdSyntaxNode>
         <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="2">Code with `backticks` inside</CodeInlineMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">.</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">.</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;Backticks inside inline code: &lt;code&gt;Code with `backticks` inside&lt;/code&gt;.&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -87,9 +87,9 @@
     <MdString>Backticks inside inline code: ```Code with `backticks` inside```.</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">Backticks inside inline code: </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Backticks inside inline code: </TextMdSyntaxNode>
         <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="3">Code with `backticks` inside</CodeInlineMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">.</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">.</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;Backticks inside inline code: &lt;code&gt;Code with `backticks` inside&lt;/code&gt;.&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -109,9 +109,9 @@
     <MdString>This is an `example` of some inline code.</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">This is an </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">This is an </TextMdSyntaxNode>
         <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">example</CodeInlineMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve"> of some inline code.</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> of some inline code.</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;This is an &lt;code&gt;example&lt;/code&gt; of some inline code.&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -121,9 +121,9 @@
     <MdString>This is the `last example`.</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">This is the </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">This is the </TextMdSyntaxNode>
         <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">last example</CodeInlineMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">.</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">.</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;This is the &lt;code&gt;last example&lt;/code&gt;.&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -133,11 +133,11 @@
     <MdString>"Multiple `inline` `code` segments.</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">"Multiple </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">"Multiple </TextMdSyntaxNode>
         <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">inline</CodeInlineMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
         <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">code</CodeInlineMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve"> segments.</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> segments.</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;"Multiple &lt;code&gt;inline&lt;/code&gt; &lt;code&gt;code&lt;/code&gt; segments.&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -148,7 +148,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">code</CodeInlineMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve"> at the start of the line.</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> at the start of the line.</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;code&lt;/code&gt; at the start of the line.&lt;/p&gt;</ExpectedHtmlStringSimplified>

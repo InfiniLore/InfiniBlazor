@@ -16,43 +16,43 @@
     <MdSyntaxTree>
       <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">list item</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">list item</TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
       </ListUnOrderedMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">list item</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">list item</TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">list item</ContentMdSyntaxNode>
-        </ListItemMdSyntaxNode>
-      </ListUnOrderedMdSyntaxNode>
-      <NewLineMdSyntaxNode />
-      <NewLineMdSyntaxNode />
-      <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
-        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">list item</ContentMdSyntaxNode>
-        </ListItemMdSyntaxNode>
-        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">list item</ContentMdSyntaxNode>
-        </ListItemMdSyntaxNode>
-        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">list item</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">list item</TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
       </ListUnOrderedMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">list item</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">list item</TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">list item</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">list item</TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">list item</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">list item</TextMdSyntaxNode>
+        </ListItemMdSyntaxNode>
+      </ListUnOrderedMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
+        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
+          <TextMdSyntaxNode xml:space="preserve">list item</TextMdSyntaxNode>
+        </ListItemMdSyntaxNode>
+        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
+          <TextMdSyntaxNode xml:space="preserve">list item</TextMdSyntaxNode>
+        </ListItemMdSyntaxNode>
+        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
+          <TextMdSyntaxNode xml:space="preserve">list item</TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
       </ListUnOrderedMdSyntaxNode>
     </MdSyntaxTree>
@@ -77,16 +77,16 @@
     <MdSyntaxTree>
       <ListUnOrderedMdSyntaxNode LeadingSpaces="6">
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="4" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">Extra spaces for alignment</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Extra spaces for alignment</TextMdSyntaxNode>
           <NewLineMdSyntaxNode />
           <ListOrderedMdSyntaxNode LeadingSpaces="0">
             <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="1" LeadingSpaces="1" CheckLeadingSpaces="0">
-              <ContentMdSyntaxNode xml:space="preserve">This is a sublist</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">This is a sublist</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
           </ListOrderedMdSyntaxNode>
         </ListItemMdSyntaxNode>
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="4" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">Another item</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Another item</TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
       </ListUnOrderedMdSyntaxNode>
     </MdSyntaxTree>
@@ -106,31 +106,31 @@ something
  something</MdString>
     <MdSyntaxTree>
       <HeadingMdSyntaxNode Level="1">
-        <ContentMdSyntaxNode xml:space="preserve">Should be a Paragrah</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Should be a Paragrah</TextMdSyntaxNode>
       </HeadingMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
         <ListItemMdSyntaxNode IsCheckable="true" CheckMarker=" " Index="" LeadingSpaces="1" CheckLeadingSpaces="1">
-          <ContentMdSyntaxNode xml:space="preserve">a task</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">a task</TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
       </ListUnOrderedMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">something</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">something</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <HeadingMdSyntaxNode Level="1">
-        <ContentMdSyntaxNode xml:space="preserve">Should be List SubContent</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Should be List SubContent</TextMdSyntaxNode>
       </HeadingMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <ListUnOrderedMdSyntaxNode LeadingSpaces="1">
         <ListItemMdSyntaxNode IsCheckable="true" CheckMarker=" " Index="" LeadingSpaces="1" CheckLeadingSpaces="1">
-          <ContentMdSyntaxNode xml:space="preserve">a task</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">a task</TextMdSyntaxNode>
           <NewLineMdSyntaxNode />
           <ParagraphMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">something</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">something</TextMdSyntaxNode>
           </ParagraphMdSyntaxNode>
         </ListItemMdSyntaxNode>
       </ListUnOrderedMdSyntaxNode>
@@ -151,13 +151,13 @@ something
 - </MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">-</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">-</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="0" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve"> </ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
       </ListUnOrderedMdSyntaxNode>
     </MdSyntaxTree>
@@ -179,19 +179,19 @@ something
     <MdSyntaxTree>
       <ListUnOrderedMdSyntaxNode LeadingSpaces="4">
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">Top-level item</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Top-level item</TextMdSyntaxNode>
           <NewLineMdSyntaxNode />
           <ListUnOrderedMdSyntaxNode LeadingSpaces="4">
             <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-              <ContentMdSyntaxNode xml:space="preserve">Subitem level 1</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">Subitem level 1</TextMdSyntaxNode>
               <NewLineMdSyntaxNode />
               <ListUnOrderedMdSyntaxNode LeadingSpaces="4">
                 <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-                  <ContentMdSyntaxNode xml:space="preserve">Subitem level 2</ContentMdSyntaxNode>
+                  <TextMdSyntaxNode xml:space="preserve">Subitem level 2</TextMdSyntaxNode>
                   <NewLineMdSyntaxNode />
                   <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
                     <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-                      <ContentMdSyntaxNode xml:space="preserve">Subitem level 3</ContentMdSyntaxNode>
+                      <TextMdSyntaxNode xml:space="preserve">Subitem level 3</TextMdSyntaxNode>
                     </ListItemMdSyntaxNode>
                   </ListUnOrderedMdSyntaxNode>
                 </ListItemMdSyntaxNode>
@@ -204,19 +204,19 @@ something
       <NewLineMdSyntaxNode />
       <ListUnOrderedMdSyntaxNode LeadingSpaces="2">
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">This list has</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">This list has</TextMdSyntaxNode>
           <NewLineMdSyntaxNode />
           <ListUnOrderedMdSyntaxNode LeadingSpaces="2">
             <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-              <ContentMdSyntaxNode xml:space="preserve">Uneven indentation</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">Uneven indentation</TextMdSyntaxNode>
               <NewLineMdSyntaxNode />
               <ListUnOrderedMdSyntaxNode LeadingSpaces="2">
                 <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-                  <ContentMdSyntaxNode xml:space="preserve">But still renders</ContentMdSyntaxNode>
+                  <TextMdSyntaxNode xml:space="preserve">But still renders</TextMdSyntaxNode>
                   <NewLineMdSyntaxNode />
                   <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
                     <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-                      <ContentMdSyntaxNode xml:space="preserve">Correctly!</ContentMdSyntaxNode>
+                      <TextMdSyntaxNode xml:space="preserve">Correctly!</TextMdSyntaxNode>
                     </ListItemMdSyntaxNode>
                   </ListUnOrderedMdSyntaxNode>
                 </ListItemMdSyntaxNode>
@@ -251,41 +251,41 @@ something
     <MdSyntaxTree>
       <ListUnOrderedMdSyntaxNode LeadingSpaces="2">
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">Item 1</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Item 1</TextMdSyntaxNode>
           <NewLineMdSyntaxNode />
           <ListOrderedMdSyntaxNode LeadingSpaces="0">
             <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="1" LeadingSpaces="1" CheckLeadingSpaces="0">
-              <ContentMdSyntaxNode xml:space="preserve">Subitem 1.1</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">Subitem 1.1</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
             <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="2" LeadingSpaces="1" CheckLeadingSpaces="0">
-              <ContentMdSyntaxNode xml:space="preserve">Subitem 1.2</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">Subitem 1.2</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
           </ListOrderedMdSyntaxNode>
         </ListItemMdSyntaxNode>
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">Item 2</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Item 2</TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
       </ListUnOrderedMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <ListUnOrderedMdSyntaxNode LeadingSpaces="2">
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">Unordered item 1</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Unordered item 1</TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">Unordered item 2</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Unordered item 2</TextMdSyntaxNode>
           <NewLineMdSyntaxNode />
           <ListOrderedMdSyntaxNode LeadingSpaces="0">
             <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="1" LeadingSpaces="1" CheckLeadingSpaces="0">
-              <ContentMdSyntaxNode xml:space="preserve">Mixed nested ordered item 2.1</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">Mixed nested ordered item 2.1</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
             <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="2" LeadingSpaces="1" CheckLeadingSpaces="0">
-              <ContentMdSyntaxNode xml:space="preserve">Mixed nested ordered item 2.2</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">Mixed nested ordered item 2.2</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
           </ListOrderedMdSyntaxNode>
         </ListItemMdSyntaxNode>
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">Unordered item 3</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Unordered item 3</TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
       </ListUnOrderedMdSyntaxNode>
     </MdSyntaxTree>
@@ -309,19 +309,19 @@ something
     <MdSyntaxTree>
       <ListUnOrderedMdSyntaxNode LeadingSpaces="2">
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">Item 1</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Item 1</TextMdSyntaxNode>
           <NewLineMdSyntaxNode />
           <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
             <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-              <ContentMdSyntaxNode xml:space="preserve">Subitem 1.1</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">Subitem 1.1</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
             <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-              <ContentMdSyntaxNode xml:space="preserve">Subitem 1.2</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">Subitem 1.2</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
           </ListUnOrderedMdSyntaxNode>
         </ListItemMdSyntaxNode>
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">Item 2</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Item 2</TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
       </ListUnOrderedMdSyntaxNode>
     </MdSyntaxTree>
@@ -340,13 +340,13 @@ something
     <MdSyntaxTree>
       <ListUnOrderedMdSyntaxNode LeadingSpaces="5">
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">Normal item</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Normal item</TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
         <ListItemMdSyntaxNode IsCheckable="true" CheckMarker=" " Index="" LeadingSpaces="1" CheckLeadingSpaces="1">
-          <ContentMdSyntaxNode xml:space="preserve">Task item without sublist</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Task item without sublist</TextMdSyntaxNode>
           <NewLineMdSyntaxNode />
           <ParagraphMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">related paragraph between list items.</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">related paragraph between list items.</TextMdSyntaxNode>
           </ParagraphMdSyntaxNode>
         </ListItemMdSyntaxNode>
       </ListUnOrderedMdSyntaxNode>
@@ -354,7 +354,7 @@ something
       <NewLineMdSyntaxNode />
       <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
         <ListItemMdSyntaxNode IsCheckable="true" CheckMarker="x" Index="" LeadingSpaces="1" CheckLeadingSpaces="1">
-          <ContentMdSyntaxNode xml:space="preserve">Another completed task</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Another completed task</TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
       </ListUnOrderedMdSyntaxNode>
     </MdSyntaxTree>
@@ -380,26 +380,26 @@ something
     <MdSyntaxTree>
       <ListUnOrderedMdSyntaxNode LeadingSpaces="2">
         <ListItemMdSyntaxNode IsCheckable="true" CheckMarker=" " Index="" LeadingSpaces="1" CheckLeadingSpaces="1">
-          <ContentMdSyntaxNode xml:space="preserve">Task with sublist</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Task with sublist</TextMdSyntaxNode>
           <NewLineMdSyntaxNode />
           <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
             <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-              <ContentMdSyntaxNode xml:space="preserve">SubItem A</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">SubItem A</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
             <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-              <ContentMdSyntaxNode xml:space="preserve">SubItem B</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">SubItem B</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
           </ListUnOrderedMdSyntaxNode>
         </ListItemMdSyntaxNode>
         <ListItemMdSyntaxNode IsCheckable="true" CheckMarker="x" Index="" LeadingSpaces="1" CheckLeadingSpaces="1">
-          <ContentMdSyntaxNode xml:space="preserve">Completed task with sublist</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Completed task with sublist</TextMdSyntaxNode>
           <NewLineMdSyntaxNode />
           <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
             <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-              <ContentMdSyntaxNode xml:space="preserve">SubItem C</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">SubItem C</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
             <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-              <ContentMdSyntaxNode xml:space="preserve">SubItem D</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">SubItem D</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
           </ListUnOrderedMdSyntaxNode>
         </ListItemMdSyntaxNode>
@@ -408,19 +408,19 @@ something
       <NewLineMdSyntaxNode />
       <ListUnOrderedMdSyntaxNode LeadingSpaces="2">
         <ListItemMdSyntaxNode IsCheckable="true" CheckMarker="x" Index="" LeadingSpaces="1" CheckLeadingSpaces="1">
-          <ContentMdSyntaxNode xml:space="preserve">Mixed list</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Mixed list</TextMdSyntaxNode>
           <NewLineMdSyntaxNode />
           <ListOrderedMdSyntaxNode LeadingSpaces="0">
             <ListItemMdSyntaxNode IsCheckable="true" CheckMarker=" " Index="1" LeadingSpaces="1" CheckLeadingSpaces="1">
-              <ContentMdSyntaxNode xml:space="preserve">Subtask 1</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">Subtask 1</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
             <ListItemMdSyntaxNode IsCheckable="true" CheckMarker="x" Index="2" LeadingSpaces="1" CheckLeadingSpaces="1">
-              <ContentMdSyntaxNode xml:space="preserve">Subtask 2</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">Subtask 2</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
           </ListOrderedMdSyntaxNode>
         </ListItemMdSyntaxNode>
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">Another item</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Another item</TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
       </ListUnOrderedMdSyntaxNode>
     </MdSyntaxTree>
@@ -447,22 +447,22 @@ something
     <MdSyntaxTree>
       <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">Normal item</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Normal item</TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
         <ListItemMdSyntaxNode IsCheckable="true" CheckMarker=" " Index="" LeadingSpaces="1" CheckLeadingSpaces="1">
-          <ContentMdSyntaxNode xml:space="preserve">Task item without sublist</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Task item without sublist</TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
       </ListUnOrderedMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">    Unrelated paragraph between list items.</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">    Unrelated paragraph between list items.</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
         <ListItemMdSyntaxNode IsCheckable="true" CheckMarker="x" Index="" LeadingSpaces="1" CheckLeadingSpaces="1">
-          <ContentMdSyntaxNode xml:space="preserve">Another completed task</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">Another completed task</TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
       </ListUnOrderedMdSyntaxNode>
     </MdSyntaxTree>
@@ -481,19 +481,19 @@ something
     <MdSyntaxTree>
       <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">A list item with </ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">A list item with </TextMdSyntaxNode>
           <BoldMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">bold text</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">bold text</TextMdSyntaxNode>
           </BoldMdSyntaxNode>
         </ListItemMdSyntaxNode>
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">A list item with </ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">A list item with </TextMdSyntaxNode>
           <ItalicMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">italic text</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">italic text</TextMdSyntaxNode>
           </ItalicMdSyntaxNode>
         </ListItemMdSyntaxNode>
         <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
-          <ContentMdSyntaxNode xml:space="preserve">A list item with </ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">A list item with </TextMdSyntaxNode>
           <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">inline code</CodeInlineMdSyntaxNode>
         </ListItemMdSyntaxNode>
       </ListUnOrderedMdSyntaxNode>

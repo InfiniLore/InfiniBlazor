@@ -21,7 +21,7 @@ public static class CodeInlineSyntaxNodeSerializer  {
         if (!match.Groups[CodeInlineId].TryGetValueSpan(out ReadOnlySpan<char> fullOriginalString)) return ;
 
         CodeInlineMdSyntaxNode node = CodeInlineMdSyntaxNode.Pool.Get();
-        node.OriginalContentCode = codeValue;
+        node.Content = codeValue;
         
         // Calculate backtick count by comparing full string length to content length
         int totalLength = fullOriginalString.Length;

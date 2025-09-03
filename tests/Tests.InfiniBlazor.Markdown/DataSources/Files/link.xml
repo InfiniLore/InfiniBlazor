@@ -5,7 +5,7 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
-          <ContentMdSyntaxNode xml:space="preserve">transgenderinfo</ContentMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">transgenderinfo</TextMdSyntaxNode>
         </LinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -17,7 +17,7 @@
     <MdString>[link](https://example.com</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">[link](https://example.com</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">[link](https://example.com</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;[link](https://example.com&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -28,7 +28,7 @@
     <MdString>[]()</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">[]()</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">[]()</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;[]()&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -41,7 +41,7 @@
       <ParagraphMdSyntaxNode>
         <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
           <BoldMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">transgenderinfo</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">transgenderinfo</TextMdSyntaxNode>
           </BoldMdSyntaxNode>
         </LinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
@@ -93,7 +93,7 @@
       <ParagraphMdSyntaxNode>
         <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
           <ItalicMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">transgenderinfo</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">transgenderinfo</TextMdSyntaxNode>
           </ItalicMdSyntaxNode>
         </LinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
@@ -108,7 +108,7 @@
       <ParagraphMdSyntaxNode>
         <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
           <SubScriptMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">transgenderinfo</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">transgenderinfo</TextMdSyntaxNode>
           </SubScriptMdSyntaxNode>
         </LinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
@@ -123,7 +123,7 @@
       <ParagraphMdSyntaxNode>
         <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
           <SuperScriptMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">transgenderinfo</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">transgenderinfo</TextMdSyntaxNode>
           </SuperScriptMdSyntaxNode>
         </LinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>

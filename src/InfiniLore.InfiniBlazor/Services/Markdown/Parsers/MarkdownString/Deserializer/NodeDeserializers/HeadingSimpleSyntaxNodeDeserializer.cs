@@ -13,6 +13,6 @@ public sealed class HeadingSimpleSyntaxNodeDeserializer : MdStringMdSyntaxNodeDe
     protected override void Deserialize(HeadingSimpleMdSyntaxNode node, StringBuilder builder) {
         DeserializeChildren(node, builder);
         builder.Append('\n');
-        builder.Append(node.ContentIdentifier);
+        builder.Append(node.Identifier);
     }
 }

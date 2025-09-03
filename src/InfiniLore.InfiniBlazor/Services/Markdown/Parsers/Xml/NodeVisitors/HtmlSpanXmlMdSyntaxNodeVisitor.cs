@@ -10,7 +10,6 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class HtmlSpanXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<HtmlSpanMdSyntaxNode> {
-    private const string TagValue = nameof(HtmlSpanMdSyntaxNode.TagValue);
     private const string Attributes = nameof(HtmlSpanMdSyntaxNode.Attributes);
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -18,13 +17,11 @@ public sealed class HtmlSpanXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Html
     // -----------------------------------------------------------------------------------------------------------------
     protected override void DeserializeDetails(HtmlSpanMdSyntaxNode node, XElement targetElement) {
         base.DeserializeDetails(node, targetElement);
-        targetElement.SetAttributeValue(TagValue, node.TagValue);
         targetElement.SetAttributeValue(Attributes, node.Attributes);
     }
 
     protected override void SerializeDetails(XElement element, HtmlSpanMdSyntaxNode targetNode) {
         base.SerializeDetails(element, targetNode);
-        targetNode.TagValue = element.Attribute(TagValue)?.Value ?? string.Empty;
         targetNode.Attributes = element.Attribute(Attributes)?.Value ?? string.Empty;
     }
 }

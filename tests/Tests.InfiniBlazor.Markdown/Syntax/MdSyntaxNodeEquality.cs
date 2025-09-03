@@ -21,8 +21,8 @@ public class MdSyntaxNodeEqualityTests {
         );
 
         yield return () => (
-            new ContentMdSyntaxNode().WithStringContent("Hello world!"),
-            new ContentMdSyntaxNode().WithStringContent("Hello world!"),
+            new TextMdSyntaxNode().WithText("Hello world!"),
+            new TextMdSyntaxNode().WithText("Hello world!"),
             true
         );
 
@@ -46,11 +46,9 @@ public class MdSyntaxNodeEqualityTests {
 
         yield return () => (
             new HtmlSpanMdSyntaxNode {
-                TagValue = "span",
                 Attributes = "class='test'"
             },
             new HtmlSpanMdSyntaxNode {
-                TagValue = "span",
                 Attributes = "class='test'"
             },
             true
@@ -84,9 +82,9 @@ public class MdSyntaxNodeEqualityTests {
 
         yield return () => {
             var parentNode1 = new ParagraphMdSyntaxNode();
-            parentNode1.AddChildNode(new ContentMdSyntaxNode().WithStringContent("Child Node"));
+            parentNode1.AddChildNode(new TextMdSyntaxNode().WithText("Child Node"));
             var parentNode2 = new ParagraphMdSyntaxNode();
-            parentNode2.AddChildNode(new ContentMdSyntaxNode().WithStringContent("Child Node"));
+            parentNode2.AddChildNode(new TextMdSyntaxNode().WithText("Child Node"));
 
             return (parentNode1, parentNode2, true);
         };
@@ -94,13 +92,13 @@ public class MdSyntaxNodeEqualityTests {
         // Negative cases (expected = false)
         yield return () => (
             new ParagraphMdSyntaxNode(),
-            new ContentMdSyntaxNode(),
+            new TextMdSyntaxNode(),
             false
         );
 
         yield return () => (
-            new ContentMdSyntaxNode().WithStringContent("Hello"),
-            new ContentMdSyntaxNode().WithStringContent("Hello world!"),
+            new TextMdSyntaxNode().WithText("Hello"),
+            new TextMdSyntaxNode().WithText("Hello world!"),
             false
         );
 
@@ -124,14 +122,12 @@ public class MdSyntaxNodeEqualityTests {
 
         yield return () => (
             new HtmlSpanMdSyntaxNode {
-                TagValue = "div",
                 Attributes = "class='test'"
             },
             new HtmlSpanMdSyntaxNode {
-                TagValue = "span",
                 Attributes = "class='test'"
             },
-            false
+            true
         );
 
         yield return () => (
@@ -162,10 +158,10 @@ public class MdSyntaxNodeEqualityTests {
 
         yield return () => {
             var nodeWithChild1 = new ParagraphMdSyntaxNode();
-            nodeWithChild1.AddChildNode(new ContentMdSyntaxNode().WithStringContent("First Child"));
+            nodeWithChild1.AddChildNode(new TextMdSyntaxNode().WithText("First Child"));
 
             var nodeWithChild2 = new ParagraphMdSyntaxNode();
-            nodeWithChild2.AddChildNode(new ContentMdSyntaxNode().WithStringContent("Second Child"));
+            nodeWithChild2.AddChildNode(new TextMdSyntaxNode().WithText("Second Child"));
 
             return (nodeWithChild1, nodeWithChild2, false);
         };
@@ -211,7 +207,7 @@ public class MdSyntaxNodeEqualityTests {
                 OriginalCheckMarker = "o"
             };
 
-            listNode1.AddChildNode(new HtmlSpanMdSyntaxNode { TagValue = "span", Attributes = "style='color:red;'" });
+            listNode1.AddChildNode(new HtmlSpanMdSyntaxNode {Attributes = "style='color:red;'" });
 
             var listNode2 = new ListItemMdSyntaxNode {
                 IsCheckable = false,
@@ -219,7 +215,7 @@ public class MdSyntaxNodeEqualityTests {
                 OriginalCheckMarker = "o"
             };
 
-            listNode2.AddChildNode(new HtmlSpanMdSyntaxNode { TagValue = "span", Attributes = "style='color:blue;'" });
+            listNode2.AddChildNode(new HtmlSpanMdSyntaxNode {Attributes = "style='color:blue;'" });
 
             return (listNode1, listNode2, false);
         };

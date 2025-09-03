@@ -20,17 +20,17 @@ public sealed class ListItemMdSyntaxNode : MdSyntaxNode<ListItemMdSyntaxNode> {
         LeadingSpaces = leadingSpaces;
         return this;
     }
-    
+
     public ListItemMdSyntaxNode WithCheckLeadingSpaces(int checkLeadingSpaces) {
         CheckLeadingSpaces = checkLeadingSpaces;
         return this;
     }
-    
+
     public ListItemMdSyntaxNode WithCheckMarker(string checkMarker = "x") {
         OriginalCheckMarker = checkMarker;
         return this;
     }
-    
+
     public override bool TryReset() {
         IsCheckable = false;
         Index = string.Empty;
@@ -39,9 +39,12 @@ public sealed class ListItemMdSyntaxNode : MdSyntaxNode<ListItemMdSyntaxNode> {
         CheckLeadingSpaces = 0;
         return base.TryReset();
     }
-    
-    public override bool Equals(ListItemMdSyntaxNode? other) => base.Equals(other)
-        && IsCheckable == other.IsCheckable
-        && Index == other.Index
-        && OriginalCheckMarker == other.OriginalCheckMarker;
+
+    public override bool Equals(ListItemMdSyntaxNode? other)
+        => base.Equals(other)
+            && IsCheckable == other.IsCheckable
+            && StringComparer.InvariantCulture.Equals(Index, other.Index)
+            && StringComparer.InvariantCulture.Equals(OriginalCheckMarker, other.OriginalCheckMarker)
+            && LeadingSpaces == other.LeadingSpaces
+            && CheckLeadingSpaces == other.CheckLeadingSpaces;
 }

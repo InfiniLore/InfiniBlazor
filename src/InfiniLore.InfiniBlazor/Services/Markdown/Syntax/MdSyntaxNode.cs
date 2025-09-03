@@ -178,9 +178,9 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
         ChildNodes = newArray;
     }
 
-    public IMdSyntaxNode WithStringContent(string content) {
-        if (ChildNodes.LastOrDefault() is not ContentMdSyntaxNode lastNode) {
-            ContentMdSyntaxNode newNode = ContentMdSyntaxNode.Pool.Get();
+    public IMdSyntaxNode WithText(string content) {
+        if (ChildNodes.LastOrDefault() is not TextMdSyntaxNode lastNode) {
+            TextMdSyntaxNode newNode = TextMdSyntaxNode.Pool.Get();
             newNode.Content = content;
             AddChildNode(newNode);
             return this;
@@ -216,12 +216,8 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
         return this;
     }
 
-    public void ReturnToPool() {
-        if (this is not T casted) throw new InvalidOperationException($"Cannot return {GetType()} to shared pool. Expected {typeof(T)}");
-
-        TryReset();
-        Pool.Return(casted);
-    }
+    public void ReturnToPool() 
+        => Pool.Return(Unsafe.As<T>(this));
 
     public virtual bool TryReset() {
         if (ChildNodes.Length > 0) {

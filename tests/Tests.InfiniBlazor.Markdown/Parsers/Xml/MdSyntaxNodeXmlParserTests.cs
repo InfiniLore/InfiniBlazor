@@ -18,7 +18,7 @@ public class MdSyntaxTreeXmlParserTests {
         RootNode = new RootMdSyntaxNode()
             .WithChild(
                 new LinkMdSyntaxNode { Href = "https://example.com" }
-                    .WithStringContent("Example Content")
+                    .WithText("Example Content")
                     .WithChild(new ImageMdSyntaxNode { Href = "https://example.com/image.png", OriginalAltText = "Example Image" })
             )
     };
@@ -26,7 +26,7 @@ public class MdSyntaxTreeXmlParserTests {
     private const string Xml = """
         <MdSyntaxTree>
             <LinkMdSyntaxNode Href="https://example.com">
-                <ContentMdSyntaxNode xml:space="preserve">Example Content</ContentMdSyntaxNode>
+                <TextMdSyntaxNode xml:space="preserve">Example Content</TextMdSyntaxNode>
                 <ImageMdSyntaxNode Href="https://example.com/image.png" AltText="Example Image" />
             </LinkMdSyntaxNode>
         </MdSyntaxTree>
@@ -103,8 +103,8 @@ public class MdSyntaxTreeXmlParserTests {
 
         IMdSyntaxNode firstChild = children[0];
         await Assert.That(firstChild).IsNotNull();
-        await Assert.That(firstChild).IsTypeOf<ContentMdSyntaxNode>();
-        await Assert.That(((ContentMdSyntaxNode)firstChild).Content).IsEqualTo("Example Content");
+        await Assert.That(firstChild).IsTypeOf<TextMdSyntaxNode>();
+        await Assert.That(((TextMdSyntaxNode)firstChild).Content).IsEqualTo("Example Content");
 
         IMdSyntaxNode secondChild = children[1];
         await Assert.That(secondChild).IsNotNull();
@@ -134,8 +134,8 @@ public class MdSyntaxTreeXmlParserTests {
 
         IMdSyntaxNode firstChild = children[0];
         await Assert.That(firstChild).IsNotNull();
-        await Assert.That(firstChild).IsTypeOf<ContentMdSyntaxNode>();
-        await Assert.That(((ContentMdSyntaxNode)firstChild).Content).IsEqualTo("Example Content");
+        await Assert.That(firstChild).IsTypeOf<TextMdSyntaxNode>();
+        await Assert.That(((TextMdSyntaxNode)firstChild).Content).IsEqualTo("Example Content");
 
         IMdSyntaxNode secondChild = children[1];
         await Assert.That(secondChild).IsNotNull();

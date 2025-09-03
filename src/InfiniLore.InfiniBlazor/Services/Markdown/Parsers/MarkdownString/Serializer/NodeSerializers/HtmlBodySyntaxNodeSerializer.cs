@@ -13,7 +13,6 @@ public static class HtmlBodySyntaxNodeSerializer  {
     private static readonly int HtmlPreId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlPre);
     private static readonly int HtmlBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlBody);
     private static readonly int HtmlPostId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlPost);
-    private static readonly int SpanTagId = MdRegexLib.GetGroupId(MdRegexGroupNames.SpanTag);
     private static readonly int SpanTagAttrsId = MdRegexLib.GetGroupId(MdRegexGroupNames.SpanTagAttrs);
     private static readonly int SpanBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.SpanBody);
 
@@ -30,11 +29,10 @@ public static class HtmlBodySyntaxNodeSerializer  {
 
         Match? spanMatch = null;
         bool hasHtmlBody = match.Groups[HtmlBodyId].TryGetValue(out string? htmlBody);
-        string? spanTag = null;
         string? spanBody = null;
         if (hasHtmlBody && htmlBody is not null) {
             spanMatch = MdRegexLib.FindSpanHtmlRegex.Match(htmlBody);
-            if (spanMatch.Groups[SpanTagId].TryGetValue(out spanTag) && spanMatch.Groups[SpanBodyId].TryGetValue(out spanBody)) {
+            if (spanMatch.Groups[SpanBodyId].TryGetValue(out spanBody)) {
                 hasTrailingContent = true;
             }
         }
@@ -49,9 +47,8 @@ public static class HtmlBodySyntaxNodeSerializer  {
 
         if (hasHtmlBody && htmlBody is not null) {
             // Span should be the only special case allowed that allows for Markdown parsing within it
-            if (spanMatch is not null && spanTag is not null && spanBody is not null) {
+            if (spanMatch is not null && spanBody is not null) {
                 HtmlSpanMdSyntaxNode spanNode = HtmlSpanMdSyntaxNode.Pool.Get();
-                spanNode.TagValue = spanTag;
 
                 string spanTagAttrs = spanMatch.Groups[SpanTagAttrsId].Value;
                 spanNode.Attributes = spanTagAttrs;
@@ -60,8 +57,8 @@ public static class HtmlBodySyntaxNodeSerializer  {
                 stack.PushProcessedNodeToStack(parentNode, spanNode);
             }
             else {
-                ContentHtmlMdSyntaxNode htmlNode = ContentHtmlMdSyntaxNode.Pool.Get();
-                htmlNode.ContentHtml = htmlBody;
+                HtmlMdSyntaxNode htmlNode = HtmlMdSyntaxNode.Pool.Get();
+                htmlNode.Content = htmlBody;
                 stack.PushProcessedNodeToStack(parentNode, htmlNode);
             }
         }

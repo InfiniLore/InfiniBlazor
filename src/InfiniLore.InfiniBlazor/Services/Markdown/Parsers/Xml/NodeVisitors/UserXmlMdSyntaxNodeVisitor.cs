@@ -16,11 +16,11 @@ public sealed class UserXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<UserMdSy
     protected override void DeserializeDetails(UserMdSyntaxNode node, XElement targetElement) {
         base.DeserializeDetails(node, targetElement);
         AddXmlPreserveSpace(targetElement);
-        targetElement.Value = node.UserName;
+        targetElement.Value = node.Content;
     }
 
     protected override void SerializeDetails(XElement element, UserMdSyntaxNode targetNode) {
         base.SerializeDetails(element, targetNode);
-        targetNode.UserName = element.Value;   
+        targetNode.Content = element.Value;   
     }
 }

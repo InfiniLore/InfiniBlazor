@@ -16,11 +16,11 @@ public sealed class TagXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<TagMdSynt
     protected override void DeserializeDetails(TagMdSyntaxNode node, XElement targetElement) {
         base.DeserializeDetails(node, targetElement);
         AddXmlPreserveSpace(targetElement);
-        targetElement.Value = node.ContentTag;
+        targetElement.Value = node.Content;
     }
 
     protected override void SerializeDetails(XElement element, TagMdSyntaxNode targetNode) {
         base.SerializeDetails(element, targetNode);
-        targetNode.ContentTag = element.Value;   
+        targetNode.Content = element.Value;   
     }
 }

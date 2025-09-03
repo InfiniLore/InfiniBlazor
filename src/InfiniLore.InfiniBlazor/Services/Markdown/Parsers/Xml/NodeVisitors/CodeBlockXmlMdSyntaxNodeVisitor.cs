@@ -18,12 +18,12 @@ public sealed class CodeBlockXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Cod
         base.DeserializeDetails(node, targetElement);
         AddXmlPreserveSpace(targetElement);
         targetElement.SetAttributeValue(Language, node.Language);
-        targetElement.Value = node.ContentCode;
+        targetElement.Value = node.Content;
     }
 
     protected override void SerializeDetails(XElement element, CodeBlockMdSyntaxNode targetNode) {
         base.SerializeDetails(element, targetNode);
         targetNode.Language = element.Attribute(Language)?.Value ?? string.Empty;
-        targetNode.ContentCode = element.Value;   
+        targetNode.Content = element.Value;   
     }
 }

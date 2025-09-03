@@ -23,7 +23,7 @@ public static class UserSyntaxNodeSerializer  {
         if (!match.Groups[UsernameId].TryGetValue(out string? username)) return ;
 
         UserMdSyntaxNode node = UserMdSyntaxNode.Pool.Get();
-        node.UserName = username;
+        node.Content = username;
         parentNode.AddChildNode(node);
     }
 }

@@ -22,12 +22,12 @@
       <TableMdSyntaxNode HeaderIndex="0">
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Test</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Test</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Value </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Value </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
       </TableMdSyntaxNode>
@@ -40,12 +40,12 @@
         </Alignments>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Test</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Test</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Value </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Value </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
       </TableMdSyntaxNode>
@@ -57,12 +57,12 @@
         </Alignments>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Test</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Test</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Value </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Value </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
       </TableMdSyntaxNode>
@@ -74,12 +74,12 @@
         </Alignments>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Test</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Test</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Value </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Value </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
       </TableMdSyntaxNode>
@@ -118,24 +118,24 @@
         </Alignments>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Column 1</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Column 1</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Column 2</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Column 2</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Column 3</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Column 3</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Row 2 col 1 </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Row 2 col 1 </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Row 2 col 2 </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Row 2 col 2 </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Row 2 col 3 </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Row 2 col 3 </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
       </TableMdSyntaxNode>
@@ -159,12 +159,12 @@
       <TableMdSyntaxNode HeaderIndex="0">
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Test</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Test</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Value </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Value </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
       </TableMdSyntaxNode>
@@ -173,24 +173,24 @@
       <TableMdSyntaxNode HeaderIndex="0">
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Column 1</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Column 1</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Column 2</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Column 2</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Column 3</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Column 3</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Row 2 col 1 </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Row 2 col 1 </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Row 2 col 2 </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Row 2 col 2 </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Row 2 col 3 </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Row 2 col 3 </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
       </TableMdSyntaxNode>
@@ -218,13 +218,13 @@
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
             <BoldMdSyntaxNode>
-              <ContentMdSyntaxNode xml:space="preserve">Test</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">Test</TextMdSyntaxNode>
             </BoldMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Value    </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Value    </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
       </TableMdSyntaxNode>
@@ -235,19 +235,19 @@
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
             <BoldMdSyntaxNode>
-              <ContentMdSyntaxNode xml:space="preserve">Test</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">Test</TextMdSyntaxNode>
             </BoldMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">nothing</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">nothing</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Value    </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Value    </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Value   </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Value   </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
       </TableMdSyntaxNode>
@@ -276,13 +276,13 @@
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
             <ItalicMdSyntaxNode>
-              <ContentMdSyntaxNode xml:space="preserve">Test</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">Test</TextMdSyntaxNode>
             </ItalicMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Value  </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Value  </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
       </TableMdSyntaxNode>
@@ -293,19 +293,19 @@
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
             <ItalicMdSyntaxNode>
-              <ContentMdSyntaxNode xml:space="preserve">Test</ContentMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">Test</TextMdSyntaxNode>
             </ItalicMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">nothing</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">nothing</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Value  </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Value  </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Value   </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Value   </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
       </TableMdSyntaxNode>
@@ -332,22 +332,22 @@
       <TableMdSyntaxNode HeaderIndex="0">
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Column 1</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Column 1</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Column 2</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Column 2</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Column 3</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Column 3</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Row 2 col 1 </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Row 2 col 1 </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode />
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Row 2 col 3 </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Row 2 col 3 </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
       </TableMdSyntaxNode>
@@ -356,18 +356,18 @@
       <TableMdSyntaxNode HeaderIndex="0">
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Column 1</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Column 1</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Column 2</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Column 2</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve">Column 3</ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">Column 3</TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
         </TableRowMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
-            <ContentMdSyntaxNode xml:space="preserve"> Row 2 col 1 </ContentMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> Row 2 col 1 </TextMdSyntaxNode>
           </TableCellMdSyntaxNode>
           <TableCellMdSyntaxNode />
           <TableCellMdSyntaxNode />

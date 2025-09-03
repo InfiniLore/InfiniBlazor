@@ -30,7 +30,7 @@ public static class CodeBlockSyntaxNodeSerializer  {
         if (!langNameValue.IsEmpty()) codeNode.Language = langNameValue;
 
         string content = ProcessCodeBlockContent(ref codeBlockBody);
-        codeNode.ContentCode = content;
+        codeNode.Content = content;
         parentNode.AddChildNode(codeNode);
     }
 

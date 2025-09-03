@@ -1,28 +1,22 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
-using System.Xml.Linq;
-
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
-
+namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class ContentXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<ContentMdSyntaxNode> {
-    
+public sealed class HtmlMdSyntaxNode() : MdSyntaxNode<HtmlMdSyntaxNode>(initialChildCount: 0) {
+    public string Content { get; set; } = string.Empty;
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override void DeserializeDetails(ContentMdSyntaxNode node, XElement targetElement) {
-        base.DeserializeDetails(node, targetElement);
-        AddXmlPreserveSpace(targetElement);
-        targetElement.Value = node.Content;
-
+    public override bool TryReset() {
+        Content = string.Empty;
+        return base.TryReset();
     }
 
-    protected override void SerializeDetails(XElement element, ContentMdSyntaxNode targetNode) {
-        base.SerializeDetails(element, targetNode);
-        targetNode.Content = element.Value;   
-    }
+    public override bool Equals(HtmlMdSyntaxNode? other)
+        => base.Equals(other)
+            && Content == other.Content;
 }

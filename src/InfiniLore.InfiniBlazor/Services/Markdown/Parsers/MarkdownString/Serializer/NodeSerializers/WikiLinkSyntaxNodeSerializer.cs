@@ -23,7 +23,7 @@ public static class WikiLinkSyntaxNodeSerializer  {
         if (!match.Groups[WikiLinkHrefId].TryGetValue(out string? href)) return ;
 
         WikiLinkMdSyntaxNode node = WikiLinkMdSyntaxNode.Pool.Get();
-        node.Href = href;
+        node.Content = href;
         parentNode.AddChildNode(node);
     }
 }

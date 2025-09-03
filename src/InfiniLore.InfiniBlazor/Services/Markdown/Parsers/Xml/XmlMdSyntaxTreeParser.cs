@@ -38,8 +38,8 @@ public class XmlMdSyntaxTreeParser : IXmlMdSyntaxTreeParser {
         RegisterVisitor<CalloutMdSyntaxNode, CalloutXmlMdSyntaxNodeVisitor>();
         RegisterVisitor<CodeBlockMdSyntaxNode, CodeBlockXmlMdSyntaxNodeVisitor>();
         RegisterVisitor<CodeInlineMdSyntaxNode, CodeInlineXmlMdSyntaxNodeVisitor>();
-        RegisterVisitor<ContentHtmlMdSyntaxNode, ContentHtmlXmlMdSyntaxNodeVisitor>();
-        RegisterVisitor<ContentMdSyntaxNode, ContentXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<HtmlMdSyntaxNode, HtmlXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<TextMdSyntaxNode, TextXmlMdSyntaxNodeVisitor>();
         RegisterVisitor<EmoteMdSyntaxNode, EmoteXmlMdSyntaxNodeVisitor>();
         RegisterVisitor<EscapedCharacterMdSyntaxNode, EscapedCharacterXmlMdSyntaxNodeVisitor>();
         RegisterVisitor<HeadingMdSyntaxNode, HeadingXmlMdSyntaxNodeVisitor>();

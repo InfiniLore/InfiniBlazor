@@ -4,7 +4,7 @@
     <MdString>{{something.Fetch()}}</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <VariableContentMdSyntaxNode Variable="something.Fetch()" BracesCount="2" />
+        <VariableContentMdSyntaxNode BracesCount="2">something.Fetch()</VariableContentMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;something.Fetch()&lt;/p&gt;</ExpectedHtmlStringSimplified>
@@ -14,7 +14,7 @@
     <MdString>{{}}</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <ContentMdSyntaxNode xml:space="preserve">{{}}</ContentMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">{{}}</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;{{}}&lt;/p&gt;</ExpectedHtmlStringSimplified>

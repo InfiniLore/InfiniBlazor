@@ -24,7 +24,7 @@ public static class HeadingSimpleSyntaxNodeSerializer  {
         if (!match.Groups[HsIdentifierId].TryGetValue(out string? headerIdentifierText)) return;
 
         HeadingSimpleMdSyntaxNode headingNode = HeadingSimpleMdSyntaxNode.Pool.Get();
-        headingNode.ContentIdentifier = headerIdentifierText;
+        headingNode.Identifier = headerIdentifierText;
         
         parentNode.AddChildNode(headingNode);
         

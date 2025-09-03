@@ -20,8 +20,8 @@ public static class InfiniBlazorMdComponentConverterFactory {
         mapBuilder.Register<CalloutMdSyntaxNode, Infini_MdCallout>();
         mapBuilder.Register<CodeBlockMdSyntaxNode, Infini_MdCodeBlock>();
         mapBuilder.Register<CodeInlineMdSyntaxNode, Infini_MdCodeInline>();
-        mapBuilder.Register<ContentHtmlMdSyntaxNode, Infini_MdContentHtml>();
-        mapBuilder.Register<ContentMdSyntaxNode, Infini_MdContent>();
+        mapBuilder.Register<HtmlMdSyntaxNode, Infini_MdContentHtml>();
+        mapBuilder.Register<TextMdSyntaxNode, Infini_MdContent>();
         mapBuilder.Register<EmoteMdSyntaxNode, Infini_MdEmote>();
         mapBuilder.Register<EscapedCharacterMdSyntaxNode, Infini_MdEscapedCharacter>();
         mapBuilder.Register<HeadingMdSyntaxNode, Infini_MdHeading>();

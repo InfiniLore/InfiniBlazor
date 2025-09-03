@@ -11,21 +11,22 @@ public sealed partial class ImageMdSyntaxNode : MdSyntaxNode<ImageMdSyntaxNode> 
     public string Href { get; set; } = string.Empty;
     public string NormalizedAltText => NormalizeAltText.Replace(OriginalAltText, string.Empty);
     public string OriginalAltText { get; set; } = string.Empty;
-    
+
     [GeneratedRegex(@"\\(?!\\)")]
     private static partial Regex NormalizeAltText { get; }
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public override bool TryReset() {
         Href = string.Empty;
         OriginalAltText = string.Empty;
-        
+
         return base.TryReset();
     }
-    
-    public override bool Equals(ImageMdSyntaxNode? other) => base.Equals(other)
-        && Href == other.Href
-        && OriginalAltText == other.OriginalAltText;
+
+    public override bool Equals(ImageMdSyntaxNode? other)
+        => base.Equals(other)
+            && StringComparer.InvariantCulture.Equals(OriginalAltText, other.OriginalAltText)
+            && StringComparer.InvariantCulture.Equals(Href, other.Href);
 }

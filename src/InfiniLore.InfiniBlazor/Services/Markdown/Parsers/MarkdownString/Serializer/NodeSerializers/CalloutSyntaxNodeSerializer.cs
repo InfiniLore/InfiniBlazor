@@ -43,7 +43,7 @@ public static class CalloutSyntaxNodeSerializer  {
 
         if (match.Groups[CalloutTitleId] is { Success: true, Value: {} title }) {
             CalloutTitleMdSyntaxNode titleNode = CalloutTitleMdSyntaxNode.Pool.Get();
-            node.AddChildNode(titleNode);
+            node.TrySetTitle(titleNode);
             
             stack.PushSingleLineMatchesToStack(title, titleNode);
         }
@@ -51,7 +51,7 @@ public static class CalloutSyntaxNodeSerializer  {
         // ReSharper disable once InvertIf
         if (match.Groups[CalloutBodyId] is { Success: true, ValueSpan: var calloutBody }) {
             CalloutBodyMdSyntaxNode bodyNode = CalloutBodyMdSyntaxNode.Pool.Get();
-            node.AddChildNode(bodyNode);
+            node.TrySetBody(bodyNode);
             
             stack.PushMultiLineMatchesToStack(
                 LineNormalization.NormalizeBlockQuote(calloutBody, out _),

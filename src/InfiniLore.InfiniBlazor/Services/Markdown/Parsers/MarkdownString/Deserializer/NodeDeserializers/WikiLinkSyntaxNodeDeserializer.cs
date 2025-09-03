@@ -12,7 +12,7 @@ public sealed class WikiLinkSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeseria
     protected override void Deserialize(WikiLinkMdSyntaxNode node, StringBuilder builder) {
         builder.Append('[');
         builder.Append('[');
-        builder.Append(node.Href);
+        builder.Append(node.Content);
         builder.Append(']');
         builder.Append(']');
     }
