@@ -5,7 +5,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class EmoteMdSyntaxNode : EmptyMdSyntaxNode<EmoteMdSyntaxNode> {
+public sealed class EmoteMdSyntaxNode() : MdSyntaxNode<EmoteMdSyntaxNode>(initialChildCount:0) {
     public string EmoteKey { get; set; } = string.Empty;
     public string OriginalEmote { get; set; } = string.Empty;
     

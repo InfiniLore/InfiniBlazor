@@ -5,7 +5,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class CodeBlockMdSyntaxNode : EmptyMdSyntaxNode<CodeBlockMdSyntaxNode> {
+public sealed class CodeBlockMdSyntaxNode() : MdSyntaxNode<CodeBlockMdSyntaxNode>(initialChildCount:0) {
     public string ContentCode { get; set; } = string.Empty;
     public string Language { get; set; } = string.Empty;
 

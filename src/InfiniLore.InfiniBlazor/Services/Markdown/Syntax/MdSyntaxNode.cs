@@ -12,14 +12,14 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable, IEquatable<T>
+public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode, IResettable, IEquatable<T>
     where T : MdSyntaxNode<T>, new() 
 {
     private readonly Guid _id = Guid.CreateVersion7();
     
-    private const int ChildrenMinimumCapacity = 2;
     public int ChildCount { get; protected set; }
-    protected virtual IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(ChildrenMinimumCapacity);
+    protected IMdSyntaxNode[] ChildNodes { get; private set; } = GetInitialChildNodeArray(initialChildCount);
+    private readonly bool _isEmptyInitialized = GetEmptyInitializedState(initialChildCount); 
 
     public virtual int Depth { get; private set; }
     public IMdSyntaxNode? Parent { get; private set; }
@@ -28,14 +28,17 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable, IEquatable<T
     private IMdSyntaxNodeModifier? Modifier { get; set; }
 
     public static ObjectPool<T> Pool { get; } = PoolingHelpers.CreateResettablePool<T>(PoolingHelpers.VisitorPerParserRetained);
-    // -----------------------------------------------------------------------------------------------------------------
-    // Constructor Methods
-    // -----------------------------------------------------------------------------------------------------------------
-    protected static IMdSyntaxNode[] GetInitialChildNodes(int count)
-        => count != 0
-            ? ArrayPool<IMdSyntaxNode>.Shared.Rent(count)
-            : Array.Empty<IMdSyntaxNode>();
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Constructors
+    // -----------------------------------------------------------------------------------------------------------------
+    private static IMdSyntaxNode[] GetInitialChildNodeArray(int initialChildCount) {
+        return initialChildCount <= 0 
+            ? Array.Empty<IMdSyntaxNode>()
+            : ArrayPool<IMdSyntaxNode>.Shared.Rent(Math.Max(1,initialChildCount));
+    }
+    private static bool GetEmptyInitializedState(int initialChildCount) => initialChildCount <= 0;
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -121,7 +124,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable, IEquatable<T
 
     public void AddChildNode(IMdSyntaxNode childNode) {
         // Check if we need to resize
-        EnsureChildNodeCapacity();
+        EnsureChildNodeExpansionCapacity();
         childNode.WithParent(this);
 
         // ReSharper disable once HeapView.PossibleBoxingAllocation
@@ -130,7 +133,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable, IEquatable<T
 
     public TChild AddChildNode<TChild>(TChild childNode) where TChild : IMdSyntaxNode {
         // Check if we need to resize
-        EnsureChildNodeCapacity();
+        EnsureChildNodeExpansionCapacity();
         childNode.WithParent(this);
 
         // ReSharper disable once HeapView.PossibleBoxingAllocation
@@ -139,14 +142,15 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable, IEquatable<T
     }
 
     // ReSharper disable once InvertIf
-    protected void EnsureChildNodeCapacity() {
-        if (ChildCount == 0) {
-            IMdSyntaxNode[] newArray = GetInitialChildNodes(ChildrenMinimumCapacity);
-            ChildNodes = newArray;
+    protected void EnsureChildNodeExpansionCapacity() {
+        if (ChildNodes.Length == 0 && _isEmptyInitialized) {
+            // We are initializing with an empty array shared object, so we need to initialize it from the pool, else we wont be able to return it to a pool
+            ChildNodes = ArrayPool<IMdSyntaxNode>.Shared.Rent(2);
+            return;
         }
-
+        
         if (ChildCount == ChildNodes.Length) {
-            int newSize = Math.Max(ChildrenMinimumCapacity, Math.Max(1, ChildNodes.Length) * 2);
+            int newSize = (ChildNodes.Length + 1) * 2;
             IMdSyntaxNode[] newArray = ArrayPool<IMdSyntaxNode>.Shared.Rent(newSize);
             Array.Copy(ChildNodes, newArray, ChildCount);
 
@@ -155,9 +159,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable, IEquatable<T
         }
     }
 
-    public IMdSyntaxNode WithContent(string content) {
-        if (content.IsNullOrWhiteSpace()) return this;
-
+    public IMdSyntaxNode WithStringContent(string content) {
         if (ChildNodes.LastOrDefault() is not ContentMdSyntaxNode lastNode) {
             ContentMdSyntaxNode newNode = ContentMdSyntaxNode.Pool.Get();
             newNode.Content = content;
@@ -185,9 +187,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable, IEquatable<T
     }
     
     public IMdSyntaxNode WithModifier(IMdSyntaxNodeModifier modifier) {
-        if (Modifier is MdSyntaxNodeModifier mod) {
-            MdSyntaxNodeModifier.Pool.Return(mod);
-        }
+        Modifier?.ReturnToPool();
         Modifier = modifier;
         return this;   
     }
@@ -207,7 +207,7 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable, IEquatable<T
     public virtual bool TryReset() {
         if (ChildNodes.Length > 0) {
             ArrayPool<IMdSyntaxNode>.Shared.Return(ChildNodes, true);
-            ChildNodes = ArrayPool<IMdSyntaxNode>.Shared.Rent(ChildrenMinimumCapacity);
+            ChildNodes = GetInitialChildNodeArray(initialChildCount);
         }
 
         ChildCount = 0;
@@ -247,11 +247,4 @@ public abstract class MdSyntaxNode<T> : IMdSyntaxNode, IResettable, IEquatable<T
         if (Modifier is null && other.Modifier is null) return true;
         return Modifier != null && Modifier.Equals(other.Modifier);
     }
-}
-
-// ---------------------------------------------------------------------------------------------------------------------
-// Quick Generic Alternatives 
-// ---------------------------------------------------------------------------------------------------------------------
-public abstract class EmptyMdSyntaxNode<T> : MdSyntaxNode<T> where T : MdSyntaxNode<T>, new() {
-    protected override IMdSyntaxNode[] ChildNodes { get; set; } = GetInitialChildNodes(0); // Will never have children so don't initialize
 }

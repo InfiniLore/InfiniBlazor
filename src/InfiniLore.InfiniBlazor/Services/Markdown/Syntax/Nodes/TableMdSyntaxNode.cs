@@ -29,7 +29,7 @@ public sealed class TableMdSyntaxNode : MdSyntaxNode<TableMdSyntaxNode> {
         }
         
         // There are other children, so we need to insert it at the first location
-        EnsureChildNodeCapacity();
+        EnsureChildNodeExpansionCapacity();
         headerRow.WithParent(this);
         
         ChildCount++;

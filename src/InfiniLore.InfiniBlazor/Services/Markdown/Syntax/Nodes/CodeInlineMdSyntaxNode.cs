@@ -5,7 +5,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class CodeInlineMdSyntaxNode : EmptyMdSyntaxNode<CodeInlineMdSyntaxNode> {
+public sealed class CodeInlineMdSyntaxNode() : MdSyntaxNode<CodeInlineMdSyntaxNode>(initialChildCount:0) {
     public string ContentCode => OriginalContentCode.Replace("\\`", "`");
     public string OriginalContentCode { get; set; } = string.Empty;
     public int BackTickCount { get; set; }

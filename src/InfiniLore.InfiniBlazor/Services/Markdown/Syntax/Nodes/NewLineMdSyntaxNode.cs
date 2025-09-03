@@ -6,4 +6,4 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class NewLineMdSyntaxNode : EmptyMdSyntaxNode<NewLineMdSyntaxNode>;
+public class NewLineMdSyntaxNode() : MdSyntaxNode<NewLineMdSyntaxNode>(initialChildCount:0);

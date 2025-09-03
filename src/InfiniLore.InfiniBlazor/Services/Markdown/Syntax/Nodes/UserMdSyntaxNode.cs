@@ -5,7 +5,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class UserMdSyntaxNode : EmptyMdSyntaxNode<UserMdSyntaxNode> {
+public sealed class UserMdSyntaxNode() : MdSyntaxNode<UserMdSyntaxNode>(initialChildCount:0) {
     public string UserName { get; set; } = string.Empty;
     
     // -----------------------------------------------------------------------------------------------------------------

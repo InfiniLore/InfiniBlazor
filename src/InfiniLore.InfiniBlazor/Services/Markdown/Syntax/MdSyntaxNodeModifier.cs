@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Pooling;
 using Microsoft.Extensions.ObjectPool;
+using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
@@ -10,8 +11,10 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
-    public Dictionary<string, Range> Attributes { get; } = new();
-    public string OriginalInput { get; internal set; } = string.Empty;
+    private Lazy<FrozenDictionary<string, Range>> InternalAttributesDictionary { get; set; } = new(static () => FrozenDictionary<string, Range>.Empty);
+    
+    public FrozenDictionary<string, Range> Attributes => InternalAttributesDictionary.Value;
+    public string OriginalInput { get; private set; } = string.Empty;
     public ReadOnlySpan<char> OriginalInputSpan => OriginalInput.AsSpan();
     
     public static ObjectPool<MdSyntaxNodeModifier> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxNodeModifier>(16);
@@ -19,20 +22,27 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
-    
-    // ReSharper disable once InvertIf
+   
     public static MdSyntaxNodeModifier FromString(string input) {
         MdSyntaxNodeModifier mod = Pool.Get();
         mod.OriginalInput = input;
         
         if (mod.OriginalInputSpan.IsWhiteSpace()) return mod;
+
+        mod.InternalAttributesDictionary = new Lazy<FrozenDictionary<string, Range>>(() => GetLazyDictionary(mod.OriginalInputSpan));
         
-        ReadOnlySpan<char> span = input.AsSpan();
+        return mod;
+    }
+    
+    // ReSharper disable once InvertIf
+    private static FrozenDictionary<string, Range> GetLazyDictionary(ReadOnlySpan<char> span) {
         Span<char> buffer = stackalloc char[span.Length-1]; // set it to the max possible, and all mods start with a | based on the regex, so we can trim one char
         
         int keyStart = 0;
         int keyEnd = -1;
         int valueStart = 0;
+        
+        var dictionary = new Dictionary<string, Range>(StringComparer.OrdinalIgnoreCase);
         
         for(int pointer = 0; pointer < span.Length;) {
             switch (span[pointer]) {
@@ -42,13 +52,13 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
                             // No '=' found, this is a flag attribute
                             int length = span[keyStart..pointer].ToLowerInvariant(buffer);
                             string value = buffer[..length].ToString();
-                            mod.Attributes.AddOrUpdate(value, new Range(pointer, pointer));
+                            dictionary.AddOrUpdate(value, new Range(pointer, pointer));
                         }
                         else {
                             // Normal key=value attribute
                             int length = span[keyStart..keyEnd].ToLowerInvariant(buffer);
                             string value = buffer[..length].ToString();
-                            mod.Attributes.AddOrUpdate(value, new Range(valueStart, pointer));
+                            dictionary.AddOrUpdate(value, new Range(valueStart, pointer));
                         }
                     }
                     keyStart = ++pointer;
@@ -77,17 +87,17 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
                 // The last attribute is a flag
                 int length = span[keyStart..spanLength].ToLowerInvariant(buffer);
                 string value = buffer[..length].ToString();
-                mod.Attributes.AddOrUpdate(value, new Range(spanLength, spanLength));
+                dictionary.AddOrUpdate(value, new Range(spanLength, spanLength));
             }
             else if (valueStart < spanLength) {
                 // The last attribute is key=value
                 int length = span[keyStart..keyEnd].ToLowerInvariant(buffer);
                 string value = buffer[..length].ToString();
-                mod.Attributes.AddOrUpdate(value, new Range(valueStart, spanLength));
+                dictionary.AddOrUpdate(value, new Range(valueStart, spanLength));
             }
         }
         
-        return mod;
+        return dictionary.ToFrozenDictionary();
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -127,8 +137,10 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
         return false;
     }
     
+    public void ReturnToPool() => Pool.Return(this);
+
     public bool TryReset() {
-        Attributes.Clear();
+        InternalAttributesDictionary = new Lazy<FrozenDictionary<string, Range>>(static () => FrozenDictionary<string, Range>.Empty);
         OriginalInput = string.Empty;
 
         return true;

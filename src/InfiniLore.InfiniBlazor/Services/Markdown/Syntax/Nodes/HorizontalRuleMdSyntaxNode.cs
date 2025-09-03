@@ -5,7 +5,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class HorizontalRuleMdSyntaxNode : EmptyMdSyntaxNode<HorizontalRuleMdSyntaxNode> {
+public sealed class HorizontalRuleMdSyntaxNode() : MdSyntaxNode<HorizontalRuleMdSyntaxNode>(initialChildCount:0) {
     public string Identifier { get; set; } = string.Empty;
 
     // -----------------------------------------------------------------------------------------------------------------

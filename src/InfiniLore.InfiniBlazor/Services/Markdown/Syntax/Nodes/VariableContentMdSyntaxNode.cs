@@ -5,7 +5,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class VariableContentMdSyntaxNode : MdSyntaxNode<VariableContentMdSyntaxNode> {
+public sealed class VariableContentMdSyntaxNode() : MdSyntaxNode<VariableContentMdSyntaxNode>(initialChildCount:0) {
     public string Variable { get; set; } = string.Empty;
     public int BracesCount { get; set; }
     
