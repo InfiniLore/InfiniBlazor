@@ -14,7 +14,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode, IResettable, IEquatable<T>
     where T : MdSyntaxNode<T>, new() {
-    private readonly Guid _id = Guid.CreateVersion7();
+    private readonly Guid _id = Guid.CreateVersion7(); // Not reset during TryReset, this is by design.
 
     public int ChildCount { get; private set; }
     protected IMdSyntaxNode[] ChildNodes { get; private set; } = GetInitialChildNodeArray(initialChildCount);
@@ -44,7 +44,6 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     // ReSharper disable once ConvertIfStatementToReturnStatement
     public ReadOnlySpan<IMdSyntaxNode> GetChildrenSpan() {
         if (ChildCount == 0) return ReadOnlySpan<IMdSyntaxNode>.Empty;
-
         return ChildNodes.AsSpan(0, ChildCount);
     }
 
@@ -65,9 +64,6 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
 
     public IMdSyntaxNode GetChildAt(int index)
         => ChildNodes[index];
-
-    public TChild GetChildAt<TChild>(int index) where TChild : IMdSyntaxNode
-        => (TChild)ChildNodes[index];
 
     public bool TryGetChildAt(int index, [NotNullWhen(true)] out IMdSyntaxNode? childNode) {
         if (index < 0 || index >= ChildCount) {
@@ -153,6 +149,12 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
 
         EnsureChildNodeExpansionCapacity();
         childNode.WithParent(this);
+        
+        // ReSharper disable once ConvertTypeCheckPatternToNullCheck
+        if (ChildNodes[index] is IMdSyntaxNode existingNode) {
+            existingNode.ReturnToPool();
+            ChildCount--;
+        }
 
         ChildNodes[index] = childNode;
         ChildCount++;
@@ -163,7 +165,7 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     private void EnsureChildNodeExpansionCapacity() {
         int childNodeArrayLength = ChildNodes.Length;
         if (childNodeArrayLength == 0 && _isEmptyInitialized) {
-            // We are initializing with an empty array shared object, so we need to initialize it from the pool, else we wont be able to return it to a pool
+            // We are initializing with an empty array shared object, so we need to initialize it from the pool, else we won't be able to return it to a pool
             ChildNodes = ArrayPool<IMdSyntaxNode>.Shared.Rent(2);
             return;
         }
