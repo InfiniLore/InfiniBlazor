@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode, IResettable
+public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     where T : MdSyntaxNode<T>, new() {
     public Guid Id { get; } = Guid.CreateVersion7();// Not reset during TryReset, this is by design.
 
@@ -20,9 +20,10 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     protected IMdSyntaxNode[] ChildNodes { get; private set; } = GetInitialChildNodeArray(initialChildCount);
     private readonly bool _isEmptyInitialized = GetEmptyInitializedState(initialChildCount);
 
-    public virtual int Depth { get; private set; }
+    public int Depth { get; private set; }
     public IMdSyntaxNode? Parent { get; private set; }
-    public Type Type { get; } = typeof(T);
+    private static readonly Type TypeBacking = typeof(T);
+    public Type Type => TypeBacking; 
 
     public IMdSyntaxNodeModifier? Modifier { get; private set; }
 

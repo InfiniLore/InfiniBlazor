@@ -1,13 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using Microsoft.Extensions.ObjectPool;
 using System.Diagnostics.CodeAnalysis;
 
 namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMdSyntaxNode : IEquatable<IMdSyntaxNode>{
+public interface IMdSyntaxNode : IResettable, IEquatable<IMdSyntaxNode>{
     Guid Id { get; }
     IMdSyntaxNode? Parent { get; }
     int ChildCount { get; }
