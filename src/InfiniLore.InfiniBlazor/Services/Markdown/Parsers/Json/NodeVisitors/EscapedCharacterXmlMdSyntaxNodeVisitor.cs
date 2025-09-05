@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.Json;
 
@@ -9,8 +10,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Json.NodeVisitors;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class EscapedCharacterJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<EscapedCharacterMdSyntaxNode> {
-    private const string Content = nameof(EscapedCharacterMdSyntaxNode.Content);
-    
+    private static readonly string Content = nameof(EscapedCharacterMdSyntaxNode.Content).ToCamelCase();
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

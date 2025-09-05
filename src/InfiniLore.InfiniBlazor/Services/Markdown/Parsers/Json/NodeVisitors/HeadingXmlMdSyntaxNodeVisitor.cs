@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.Json;
 
@@ -9,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Json.NodeVisitors;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class HeadingJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<HeadingMdSyntaxNode> {
-    private const string Level = "level";
+    private static readonly string Level = nameof(HeadingMdSyntaxNode.Level).ToCamelCase();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

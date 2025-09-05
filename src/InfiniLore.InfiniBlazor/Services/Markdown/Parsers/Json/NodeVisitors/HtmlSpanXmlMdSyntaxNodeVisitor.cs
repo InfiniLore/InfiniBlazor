@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.Json;
 
@@ -9,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Json.NodeVisitors;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class HtmlSpanJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<HtmlSpanMdSyntaxNode> {
-    private const string Attributes = nameof(HtmlSpanMdSyntaxNode.Attributes);
+    private static readonly string Attributes = nameof(HtmlSpanMdSyntaxNode.Attributes).ToCamelCase();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

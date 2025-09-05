@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.Json;
 
@@ -9,9 +10,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Json.NodeVisitors;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class CalloutJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<CalloutMdSyntaxNode> {
-    private const string CalloutType = nameof(CalloutMdSyntaxNode.CalloutType);
-    private const string CollapsedState = nameof(CalloutMdSyntaxNode.CollapsedState);
-    private const string LeadingSpaces = nameof(CalloutMdSyntaxNode.LeadingSpaces);
+    private static readonly string CalloutType = nameof(CalloutMdSyntaxNode.CalloutType).ToCamelCase();
+    private static readonly string CollapsedState = nameof(CalloutMdSyntaxNode.CollapsedState).ToCamelCase();
+    private static readonly string LeadingSpaces = nameof(CalloutMdSyntaxNode.LeadingSpaces).ToCamelCase();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.Json;
 
@@ -9,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Json.NodeVisitors;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class WikiLinkJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<WikiLinkMdSyntaxNode> {
-    private const string Content = nameof(WikiLinkMdSyntaxNode.Content);
+    private static readonly string Content = nameof(WikiLinkMdSyntaxNode.Content).ToCamelCase();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.Json;
 
@@ -9,10 +10,10 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Json.NodeVisitors;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class ListItemJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<ListItemMdSyntaxNode> {
-    private const string LeadingSpaces = nameof(ListItemMdSyntaxNode.LeadingSpaces);
-    private const string CheckLeadingSpaces = nameof(ListItemMdSyntaxNode.CheckLeadingSpaces);
-    private const string Index = nameof(ListItemMdSyntaxNode.Index);
-    private const string CheckMarker = nameof(CheckMarker);
+    private static readonly string LeadingSpaces = nameof(ListItemMdSyntaxNode.LeadingSpaces).ToCamelCase();
+    private static readonly string CheckLeadingSpaces = nameof(ListItemMdSyntaxNode.CheckLeadingSpaces).ToCamelCase();
+    private static readonly string Index = nameof(ListItemMdSyntaxNode.Index).ToCamelCase();
+    private static readonly string CheckMarker = nameof(CheckMarker).ToCamelCase();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

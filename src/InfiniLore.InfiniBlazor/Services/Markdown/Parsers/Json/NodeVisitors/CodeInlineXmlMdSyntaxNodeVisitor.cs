@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.Json;
 
@@ -9,8 +10,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Json.NodeVisitors;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class CodeInlineJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<CodeInlineMdSyntaxNode> {
-    private const string BackTickCount = nameof(CodeInlineMdSyntaxNode.BackTickCount);
-    private const string Content = nameof(CodeInlineMdSyntaxNode.Content);
+    private static readonly string BackTickCount = nameof(CodeInlineMdSyntaxNode.BackTickCount).ToCamelCase();
+    private static readonly string Content = nameof(CodeInlineMdSyntaxNode.Content).ToCamelCase();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

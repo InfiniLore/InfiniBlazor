@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.Json;
 
@@ -9,8 +10,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Json.NodeVisitors;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class EmoteJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<EmoteMdSyntaxNode> {
-    private const string EmoteKey = nameof(EmoteMdSyntaxNode.EmoteKey);
-    private const string OriginalEmote = nameof(EmoteMdSyntaxNode.OriginalEmote);
+    private static readonly string EmoteKey = nameof(EmoteMdSyntaxNode.EmoteKey).ToCamelCase();
+    private static readonly string OriginalEmote = nameof(EmoteMdSyntaxNode.OriginalEmote).ToCamelCase();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

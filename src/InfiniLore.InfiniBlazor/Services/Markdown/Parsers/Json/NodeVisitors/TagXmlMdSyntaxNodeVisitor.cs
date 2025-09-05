@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.Json;
 
@@ -9,8 +10,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Json.NodeVisitors;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class TagJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<TagMdSyntaxNode> {
-    private const string Content = nameof(TagMdSyntaxNode.Content);
-    
+    private static readonly string Content = nameof(TagMdSyntaxNode.Content).ToCamelCase();
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

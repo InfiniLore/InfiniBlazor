@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.Json;
 
@@ -9,8 +10,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Json.NodeVisitors;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class BlockQuoteJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<BlockQuoteMdSyntaxNode> {
-    private const string LeadingSpaces = nameof(BlockQuoteMdSyntaxNode.LeadingSpaces);
-    
+    private static readonly string LeadingSpaces = nameof(BlockQuoteMdSyntaxNode.LeadingSpaces).ToCamelCase();
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

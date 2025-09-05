@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.Json;
 
@@ -9,8 +10,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Json.NodeVisitors;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class ImageJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<ImageMdSyntaxNode> {
-    private const string Href = nameof(ImageMdSyntaxNode.Href);
-    private const string AltText = nameof(AltText);
+    private static readonly string Href = nameof(ImageMdSyntaxNode.Href).ToCamelCase();
+    private static readonly string AltText = nameof(AltText).ToCamelCase();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

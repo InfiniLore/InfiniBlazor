@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.Json;
 
@@ -9,8 +10,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Json.NodeVisitors;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class TemplateJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<TemplateMdSyntaxNode> {
-    private const string BracesCount = nameof(TemplateMdSyntaxNode.BracesCount);
-    private const string Content = nameof(TemplateMdSyntaxNode.Content);
+    private static readonly string BracesCount = nameof(TemplateMdSyntaxNode.BracesCount).ToCamelCase();
+    private static readonly string Content = nameof(TemplateMdSyntaxNode.Content).ToCamelCase();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

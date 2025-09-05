@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.Json;
 
@@ -9,9 +10,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Json.NodeVisitors;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class CodeBlockJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<CodeBlockMdSyntaxNode> {
-    private const string Language = nameof(CodeBlockMdSyntaxNode.Language);
-    private const string Content = nameof(CodeBlockMdSyntaxNode.Content);
-    
+    private static readonly string Language = nameof(CodeBlockMdSyntaxNode.Language).ToCamelCase();
+    private static readonly string Content = nameof(CodeBlockMdSyntaxNode.Content).ToCamelCase();
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
