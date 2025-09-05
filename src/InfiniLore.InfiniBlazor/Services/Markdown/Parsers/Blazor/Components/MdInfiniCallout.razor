@@ -4,12 +4,13 @@
 @using InfiniLore.InfiniBlazor.Markdown
 @using InfiniLore.InfiniBlazor.Markdown.Syntax
 @using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
+@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
 
 @namespace InfiniLore.InfiniBlazor.Components.DynamicMarkdownComponents
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.InfiniBlazorMdComponentBase<InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes.CalloutMdSyntaxNode>
+@inherits InfiniBlazorMdComponentBase<CalloutMdSyntaxNode>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
