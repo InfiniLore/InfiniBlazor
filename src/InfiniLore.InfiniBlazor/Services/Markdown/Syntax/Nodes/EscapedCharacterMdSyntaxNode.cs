@@ -21,6 +21,7 @@ public sealed class EscapedCharacterMdSyntaxNode() : MdSyntaxNode<EscapedCharact
         return base.TryReset();
     }
 
-    protected override bool Equals(EscapedCharacterMdSyntaxNode? other) => base.Equals(other)
-        && Content == other.Content;
+    protected override bool Equals(EscapedCharacterMdSyntaxNode? other)
+        => base.Equals(other)
+            && Content == other.Content;
 }
