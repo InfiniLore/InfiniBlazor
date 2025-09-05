@@ -6,6 +6,6 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class MdInfiniTemplate(ITemplateContentProvider? templateContentProvider = null) {
-    private ITemplateContentProvider? TemplateContentProvider { get; } = templateContentProvider;
+public partial class MdInfiniTemplate(ITemplateDataProvider? templateContentProvider = null) {
+    private ITemplateDataProvider? TemplateContentProvider { get; } = templateContentProvider;
 }

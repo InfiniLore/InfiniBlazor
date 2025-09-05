@@ -43,6 +43,7 @@ public static class InfiniBlazorMdComponentConverterFactory {
         mapBuilder.Register<UserMdSyntaxNode, MdInfiniUser>();
         mapBuilder.Register<WikiLinkMdSyntaxNode, MdInfiniWikiLink>();
         mapBuilder.Register<TemplateMdSyntaxNode, MdInfiniTemplate>();
+        // mapBuilder.Register<NewLineMdSyntaxNode, MdInfiniNewLine>(); // Not implemented well yet, only as an example
         
         mapBuilder.TrimExcess();
         return new BlazorMdComponentConverter {
