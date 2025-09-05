@@ -13,6 +13,7 @@ public interface IMdSyntaxNode : IEquatable<IMdSyntaxNode>{
     int ChildCount { get; }
     int Depth { get; }
     Type Type { get; }
+    IMdSyntaxNodeModifier? Modifier { get; }
 
     ReadOnlySpan<IMdSyntaxNode> GetChildrenSpan();
     IEnumerable<IMdSyntaxNode> GetChildren();
@@ -21,8 +22,6 @@ public interface IMdSyntaxNode : IEquatable<IMdSyntaxNode>{
     IMdSyntaxNode GetChildAt(int index);
     bool TryGetChildAt(int index, [NotNullWhen(true)] out IMdSyntaxNode? childNode);
     bool TryGetChildAt<TChild>(int index, [NotNullWhen(true)] out TChild? childNode) where TChild : IMdSyntaxNode;
-
-    bool TryGetModifier([NotNullWhen(true)] out IMdSyntaxNodeModifier? mdSyntaxNodeModifier);
 
     bool TryGetNextSibling([NotNullWhen(true)] out IMdSyntaxNode? mdSyntaxNode);
     bool HasNextSibling();

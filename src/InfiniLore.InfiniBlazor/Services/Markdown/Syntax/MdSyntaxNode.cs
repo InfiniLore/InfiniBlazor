@@ -24,7 +24,7 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     public IMdSyntaxNode? Parent { get; private set; }
     public Type Type { get; } = typeof(T);
 
-    private IMdSyntaxNodeModifier? Modifier { get; set; }
+    public IMdSyntaxNodeModifier? Modifier { get; private set; }
 
     public static ObjectPool<T> Pool { get; } = PoolingHelpers.CreateResettablePool<T>(PoolingHelpers.VisitorPerParserRetained);
 
@@ -41,11 +41,6 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public bool TryGetModifier([NotNullWhen(true)] out IMdSyntaxNodeModifier? mdSyntaxNodeModifier) {
-        mdSyntaxNodeModifier = Modifier;
-        return mdSyntaxNodeModifier is not null;
-    }
-    
     #region GetChild(ren)
     // ReSharper disable once ConvertIfStatementToReturnStatement
     public ReadOnlySpan<IMdSyntaxNode> GetChildrenSpan() {

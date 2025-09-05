@@ -27,8 +27,8 @@ public sealed class CalloutSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserial
     protected override void Deserialize(CalloutMdSyntaxNode node, StringBuilder builder) {
         builder.Append(">[!");
         builder.Append(node.CalloutType);
-        if (node.TryGetModifier(out IMdSyntaxNodeModifier? modifier)) {
-            builder.Append(modifier.OriginalInputSpan);
+        if (node.Modifier is {OriginalInputSpan: var inputSpan}) {
+            builder.Append(inputSpan);
         }
 
         builder.Append(']');

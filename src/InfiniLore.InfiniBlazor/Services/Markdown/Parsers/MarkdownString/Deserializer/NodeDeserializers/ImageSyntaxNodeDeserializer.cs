@@ -16,7 +16,7 @@ public sealed class ImageSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializ
         builder.Append(']');
         builder.Append('(');
         builder.Append(node.Href);
-        if (node.TryGetModifier(out IMdSyntaxNodeModifier? modifier)) builder.Append(modifier.OriginalInputSpan);
+        if (node.Modifier is {OriginalInputSpan: var inputSpan}) builder.Append(inputSpan);
         builder.Append(')');
     }
 }
