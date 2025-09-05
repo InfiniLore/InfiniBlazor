@@ -17,7 +17,7 @@ public static class Program {
         var builder = WebAssemblyHostBuilder.CreateDefault(args);
         
         builder.Services.AddInfiniBlazor(config => {
-            config.RegisterTheme<PrideThemeCollection>();
+            config.Theming.RegisterTheme<PrideThemeCollection>();
             config.AddMarkdownLogic();
             config.AddAutoDocumentation(static config => 
                 config.RegisterAutoDocumentationData<AutoDocumenterData_ExampleInfiniBlazorShared>()

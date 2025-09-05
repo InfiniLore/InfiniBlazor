@@ -2,8 +2,10 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.QueryParameters;
 using Microsoft.Extensions.Logging;
+using System.Collections.Frozen;
 
 namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -22,12 +24,17 @@ public class ThemeStateProvider(
     public event Action? OnChanged;
     public event Func<Task>? OnChangedAsync;
     private readonly ThemeState State = GetInitialState(themingConfig);
+    
+    private FrozenDictionary<string, IThemeCollection> RegisteredThemeCollections => themingConfig.GetRegisteredThemeCollections();
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Constructors
+    // -----------------------------------------------------------------------------------------------------------------
     private static ThemeState GetInitialState(IThemingConfig themingConfig) {
         string collectionName = themingConfig.DefaultThemeCollectionName;
         string modeName = themingConfig.DefaultThemeMode.Name;
 
-        themingConfig.RegisteredBaseThemes.TryGetValue(collectionName, out IThemeCollection? theme);
+        themingConfig.GetRegisteredThemeCollections().TryGetValue(collectionName, out IThemeCollection? theme);
 
         return new ThemeState {
             CollectionName = collectionName,
@@ -124,7 +131,7 @@ public class ThemeStateProvider(
     private async ValueTask UpdateState(string? collectionName, string? modeName, CancellationToken ct) {
         if (collectionName.IsNullOrWhiteSpace()) return;
 
-        if (!themingConfig.RegisteredBaseThemes.TryGetValue(collectionName, out IThemeCollection? collection)) {
+        if (!RegisteredThemeCollections.TryGetValue(collectionName, out IThemeCollection? collection)) {
             if (externalProvider is not null) {
                 collection = await externalProvider.TryGetCollectionAsync(collectionName, ct);
             }
@@ -162,7 +169,7 @@ public class ThemeStateProvider(
     }
 
     public async ValueTask<IThemeCollection?> TryGetCollectionAsync(string themeName, CancellationToken ct = default) {
-        if (themingConfig.RegisteredBaseThemes.TryGetValue(themeName, out IThemeCollection? theme)) {
+        if (RegisteredThemeCollections.TryGetValue(themeName, out IThemeCollection? theme)) {
             return theme;
         }
 

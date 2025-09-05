@@ -30,7 +30,7 @@ public static class MauiProgram {
 
         builder.Services.AddHttpClient();
         builder.AddInfiniBlazor(config => {
-            config.RegisterTheme<PrideThemeCollection>();
+            config.Theming.RegisterTheme<PrideThemeCollection>();
             config.AddMarkdownLogic();
         });
 

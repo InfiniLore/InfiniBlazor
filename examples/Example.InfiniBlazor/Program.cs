@@ -20,7 +20,7 @@ public class Program {
         builder.Services.AddLogging();
 
         builder.Services.AddInfiniBlazor(config => {
-            config.RegisterTheme<PrideThemeCollection>();
+            config.Theming.RegisterTheme<PrideThemeCollection>();
             config.AddMarkdownLogic();
             config.AddAutoDocumentation(static config => 
                 config.RegisterAutoDocumentationData<AutoDocumenterData_ExampleInfiniBlazorShared>()

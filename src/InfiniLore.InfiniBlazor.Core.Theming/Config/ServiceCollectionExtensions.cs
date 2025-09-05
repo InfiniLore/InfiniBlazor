@@ -1,12 +1,19 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Theming;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace InfiniLore.InfiniBlazor.Theming.Config;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IThemingConfig {
-    IReadOnlyDictionary<string, IThemeCollection> RegisteredBaseThemes { get; }
-    string DefaultThemeCollectionName { get; }
-    ThemeMode DefaultThemeMode { get; } 
+public static class ServiceCollectionExtensions {
+    public static IServiceCollection AddInfiniBlazorTheming(this IServiceCollection serviceCollection, Action<InfiniBlazorThemingConfig>? configure = null) {
+        var themingConfig = new InfiniBlazorThemingConfig(serviceCollection);
+        
+        configure?.Invoke(themingConfig);
+        
+        return serviceCollection;
+    }
 }

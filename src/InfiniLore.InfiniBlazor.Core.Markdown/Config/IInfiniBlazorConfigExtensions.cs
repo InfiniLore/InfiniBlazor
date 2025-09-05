@@ -1,22 +1,20 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Config;
-using InfiniLore.InfiniBlazor.Core.Markdown;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace InfiniLore.InfiniBlazor.Markdown;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class IInfiniBlazorConfigExtensions {
-    public static TConfig AddMarkdown<TConfig>(this TConfig config, Action<MarkdownConfig>? configure = null) where TConfig : class, IInfiniBlazorConfig {
-        config.Services.RegisterServicesFromInfiniLoreInfiniBlazorCoreMarkdown();
+public static class ServiceCollectionExtensions {
+    public static IServiceCollection AddInfiniBlazorMarkdown(this IServiceCollection serviceCollection, Action<InfiniBlazorMarkdownConfig>? configure = null) {
+        var themingConfig = new InfiniBlazorMarkdownConfig(serviceCollection);
         
-        var markdownConfig = new MarkdownConfig(config);
+        configure?.Invoke(themingConfig);
         
-        configure?.Invoke(markdownConfig);
-        
-        return config;
+        return serviceCollection;
     }
 }
+

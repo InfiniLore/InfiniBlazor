@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Theming;
-using InfiniLore.InfiniBlazor.Theming.Collections;
+using InfiniLore.InfiniBlazor.Theming.ThemeCollections;
 
 namespace Tests.InfiniBlazor.Services.Theming;
 // ---------------------------------------------------------------------------------------------------------------------

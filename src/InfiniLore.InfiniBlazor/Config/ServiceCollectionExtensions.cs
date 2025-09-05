@@ -6,8 +6,6 @@ using InfiniLore.InfiniBlazor.Callouts;
 using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer;
-using InfiniLore.InfiniBlazor.Theming;
-using InfiniLore.InfiniBlazor.Theming.Collections;
 using InfiniLore.InfiniBlazor.Toasting;
 using System.Collections.Frozen;
 
@@ -22,7 +20,7 @@ public static class ServiceCollectionExtensions {
         services.RegisterServicesFromInfiniLoreInfiniBlazor();
         services.AddLucideIcons();
 
-        config.RegisterTheme<DefaultThemeCollection>();
+        // config.RegisterTheme<DefaultThemeCollection>();
         
         services.AddSingleton(InfiniBlazorMdComponentConverterFactory.Create);
         services.AddSingleton(CalloutStyleProviderFactory.Create);
@@ -30,12 +28,12 @@ public static class ServiceCollectionExtensions {
         
         configure?.Invoke(config);
         
-        // Add all added stuff after the config is done
-        services.AddSingleton<IThemingConfig>(new FrozenThemingConfig {
-            RegisteredBaseThemes = config.RegisteredBaseThemeCollections.ToFrozenDictionary(),
-            DefaultThemeCollectionName = config.DefaultThemeCollectionName,
-            DefaultThemeMode = config.DefaultThemeMode,
-        });
+        // // Add all added stuff after the config is done
+        // services.AddSingleton<IThemingConfig>(new FrozenThemingConfig {
+        //     RegisteredBaseThemes = config.RegisteredBaseThemeCollections.ToFrozenDictionary(),
+        //     DefaultThemeCollectionName = config.DefaultThemeCollectionName,
+        //     DefaultThemeMode = config.DefaultThemeMode,
+        // });
 
         services.AddSingleton<IToastingConfig>(new FrozenToastingConfig {
             AutoRemoveDuration = config.ToastDefaultDuration,
