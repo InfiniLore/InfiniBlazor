@@ -70,8 +70,4 @@
       <EmbeddedResource Include="wwwroot\libs\emotes\emotes_lucide.json" />
       <EmbeddedResource Include="wwwroot\libs\emotes\emotes_standard.json" />
     </ItemGroup>
-    
-    <ItemGroup>
-      <Folder Include="Aggregates\Theming\" />
-    </ItemGroup>
 </Project>

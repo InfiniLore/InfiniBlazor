@@ -43,7 +43,7 @@ public sealed class InfiniBlazorMarkdownConfig : IMarkdownConfig {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public InfiniBlazorMarkdownConfig RegisterBlazorComponent<TNode, TComponent>() where TComponent : InfiniBlazorMdComponentBase<TNode>, IMdSyntaxNode where TNode : class, IMdSyntaxNode {
+    public InfiniBlazorMarkdownConfig RegisterMdBlazorComponent<TNode, TComponent>() where TComponent : InfiniBlazorMdComponentBase<TNode> where TNode : class, IMdSyntaxNode {
         int count = ComponentRecords.Count;
         if (ComponentRecords.Capacity < count + 1) ComponentRecords.EnsureCapacity(count * 2);
         

@@ -1,6 +1,8 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.Config;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using System.Collections.Frozen;
@@ -9,10 +11,11 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class BlazorMdComponentConverter : IBlazorMdComponentConverter {
-    public required FrozenDictionary<Type, IMdComponentRecord> NodeToComponentMap { get; init; }
-    public required FrozenSet<Type> SkippedComponentTypes { get; init; }
-    public required bool RenderUnknownComponents { get; init; }
+[InjectableSingleton<IBlazorMdComponentConverter>]
+public class BlazorMdComponentConverter(IMarkdownConfig config) : IBlazorMdComponentConverter {
+    public required FrozenDictionary<Type, IMdComponentRecord> NodeToComponentMap { get; init; } = config.GetComponentRecords();
+    public required FrozenSet<Type> SkippedComponentTypes { get; init; } = config.GetSkippedBlazorComponentTypes();
+    public required bool RenderUnknownComponents { get; init; } = config.RenderUnknownBlazorComponents;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
