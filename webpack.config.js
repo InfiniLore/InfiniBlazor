@@ -6,7 +6,7 @@ module.exports = {
     // mode: "production",
     devtool: "inline-source-map",
     entry: {
-        main: "./src/InfiniLore.InfiniBlazor/TypescriptLib/Index.ts",
+        main: "./src/InfiniLore.InfiniBlazor.Core.Js/TypescriptLib/Index.ts",
     },
     output: {
         path: path.resolve(__dirname, './src/InfiniLore.InfiniBlazor/wwwroot'),

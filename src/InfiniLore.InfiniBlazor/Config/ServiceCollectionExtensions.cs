@@ -4,6 +4,7 @@
 using InfiniLore.InfiniBlazor;
 using InfiniLore.InfiniBlazor.Callouts;
 using InfiniLore.InfiniBlazor.Config;
+using InfiniLore.InfiniBlazor.Core.Js;
 using InfiniLore.InfiniBlazor.Markdown.Editors;
 using InfiniLore.InfiniBlazor.Markdown.MdBlazorComponents;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer;
@@ -20,6 +21,7 @@ public static class ServiceCollectionExtensions {
     public static IServiceCollection AddInfiniBlazor(this IServiceCollection services, Action<InfiniBlazorConfig>? configure = null) {
         var config = new InfiniBlazorConfig(services);
         services.RegisterServicesFromInfiniLoreInfiniBlazor();
+        services.RegisterServicesFromInfiniLoreInfiniBlazorCoreJs();
         services.AddLucideIcons();
 
         services.AddSingleton(CalloutStyleProviderFactory.Create);
