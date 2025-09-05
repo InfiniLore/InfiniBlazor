@@ -141,6 +141,6 @@ public partial class InfiniThemeManager(
     private string GetBaseThemeCss() {
         if (TryGetCssString(InfiniBlazorCssData.Instance, out string? css)) return css;
         logger.Warning("Could not create base theme CSS.");
-        return string.Empty;
+        return ":root{}";
     }
 }
