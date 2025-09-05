@@ -25,6 +25,7 @@ public sealed class InfiniBlazorMarkdownConfig : IMarkdownConfig {
     // -----------------------------------------------------------------------------------------------------------------
     public InfiniBlazorMarkdownConfig(IServiceCollection serviceCollection) {
         serviceCollection.RegisterServicesFromInfiniLoreInfiniBlazorCoreMarkdown();
+        serviceCollection.AddSingleton<IMarkdownConfig>(this);
         
         ComponentRecordsLazy = new Lazy<FrozenDictionary<Type, IMdComponentRecord>>(() => {
             ComponentRecords.TrimExcess();

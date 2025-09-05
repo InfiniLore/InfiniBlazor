@@ -26,6 +26,7 @@ public class InfiniBlazorThemingConfig : IThemingConfig {
     public InfiniBlazorThemingConfig(IServiceCollection serviceCollection) {
         _serviceCollection = serviceCollection;
         serviceCollection.RegisterServicesFromInfiniLoreInfiniBlazorCoreTheming();
+        serviceCollection.AddSingleton<IThemingConfig>(this);
         
         RegisteredBaseThemeCollectionsLazy = new Lazy<FrozenDictionary<string, IThemeCollection>>(() => {
             RegisteredBaseThemeCollections.TrimExcess();
