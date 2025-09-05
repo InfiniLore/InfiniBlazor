@@ -16,6 +16,9 @@
     <File Path="package.json" />
     <File Path="webpack.config.js" />
   </Folder>
+  <Folder Name="/benchmarks/">
+    <Project Path="tests\Benchmarks.InfiniLore.InfiniBlazor.Markdown\Benchmarks.InfiniLore.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
+  </Folder>
   <Folder Name="/example/">
     <Project Path="examples\Example.InfiniBlazor.Shared\Example.InfiniBlazor.Shared.csproj" Type="Classic C#" />
   </Folder>
@@ -31,6 +34,9 @@
     <Project Path="src\InfiniLore.InfiniBlazor.SourceGenerators\InfiniLore.InfiniBlazor.SourceGenerators.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" Type="Classic C#" />
   </Folder>
+  <Folder Name="/src/core/">
+    <Project Path="src\InfiniLore.InfiniBlazor.Core.Markdown\InfiniLore.InfiniBlazor.Core.Markdown.csproj" Type="Classic C#" />
+  </Folder>
   <Folder Name="/src/extensions/">
     <Project Path="src\InfiniLore.InfiniBlazor.Extensions.ExtraComponents\InfiniLore.InfiniBlazor.Extensions.ExtraComponents.csproj" Type="Classic C#" />
   </Folder>
@@ -42,12 +48,13 @@
     <Project Path="src\InfiniLore.InfiniBlazor.Extensions.Maui\InfiniLore.InfiniBlazor.Extensions.Maui.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/tests/">
-    <Project Path="tests\Tests.InfiniBlazor.Extensions.AutoDocumentation\Tests.InfiniBlazor.Extensions.AutoDocumentation.csproj" Type="Classic C#" />
-    <Project Path="tests\Tests.InfiniBlazor.Markdown\Tests.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
     <Project Path="tests\Tests.InfiniBlazor\Tests.InfiniBlazor.csproj" Type="Classic C#" />
   </Folder>
-  <Folder Name="/tests/benchmarks/">
-    <Project Path="tests\Benchmarks.InfiniLore.InfiniBlazor.Markdown\Benchmarks.InfiniLore.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
+  <Folder Name="/tests/core/">
+    <Project Path="tests\Tests.InfiniBlazor.Core.Markdown\Tests.InfiniBlazor.Core.Markdown.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/tests/extensions/">
+    <Project Path="tests\Tests.InfiniBlazor.Extensions.AutoDocumentation\Tests.InfiniBlazor.Extensions.AutoDocumentation.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/tests/shared/">
     <Project Path="tests\Tests.InfiniBlazor.Shared.Markdown\Tests.InfiniBlazor.Shared.Markdown.csproj" Type="Classic C#" />

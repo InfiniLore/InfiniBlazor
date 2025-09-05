@@ -4,7 +4,7 @@
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Tests.InfiniBlazor.Shared.Markdown;
 
-namespace Tests.InfiniBlazor.Markdown;
+namespace Tests.InfiniBlazor.Core.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

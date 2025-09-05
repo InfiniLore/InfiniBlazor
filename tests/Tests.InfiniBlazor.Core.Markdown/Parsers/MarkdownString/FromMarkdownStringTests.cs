@@ -2,11 +2,11 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using Tests.InfiniBlazor.Markdown.DataSources;
+using Tests.InfiniBlazor.Core.Markdown.DataSources;
 using Tests.InfiniBlazor.Shared.Markdown;
 using Tests.Shared.Infinilore.InfiniBlazor;
 
-namespace Tests.InfiniBlazor.Markdown.Parsers.MarkdownString;
+namespace Tests.InfiniBlazor.Core.Markdown.Parsers.MarkdownString;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

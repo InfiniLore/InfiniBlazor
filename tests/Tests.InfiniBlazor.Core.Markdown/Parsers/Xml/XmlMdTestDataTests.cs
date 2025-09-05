@@ -6,7 +6,7 @@ using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Xml.Serialization;
 using Tests.InfiniBlazor.Shared.Markdown;
 
-namespace Tests.InfiniBlazor.Markdown.Parsers.Xml;
+namespace Tests.InfiniBlazor.Core.Markdown.Parsers.Xml;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

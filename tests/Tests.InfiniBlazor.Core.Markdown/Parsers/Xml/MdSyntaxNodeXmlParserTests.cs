@@ -2,18 +2,18 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.Parsers.Json;
+using InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text;
-using System.Text.Json;
+using System.Xml.Linq;
 
-namespace Tests.InfiniBlazor.Markdown.Parsers.Json;
+namespace Tests.InfiniBlazor.Core.Markdown.Parsers.Xml;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MdSyntaxTreeJsonParserTests {
-    private readonly JsonMdSyntaxTreeParser _parser = new();
+public class MdSyntaxTreeXmlParserTests {
+    private readonly XmlMdSyntaxTreeParser _parser = new();
     private static IMdSyntaxTree TestTree => new MdSyntaxTree {
         RootNode = new RootMdSyntaxNode()
             .WithChild(
@@ -26,31 +26,18 @@ public class MdSyntaxTreeJsonParserTests {
             )
     };
 
-    private const string Json = """
-        {
-          "type": "MdSyntaxTree",
-          "children": [
-            {
-              "type": "LinkMdSyntaxNode",
-              "href": "https://example.com",
-              "children": [
-                {
-                  "type": "TextMdSyntaxNode",
-                  "content": "Example Content"
-                },
-                {
-                  "type": "ImageMdSyntaxNode",
-                  "href": "https://example.com/image.png",
-                  "altText": "Example Image"
-                }
-              ]
-            }
-          ]
-        }
+    private const string Xml = """
+        <MdSyntaxTree>
+            <LinkMdSyntaxNode Href="https://example.com">
+                <TextMdSyntaxNode xml:space="preserve">Example Content</TextMdSyntaxNode>
+                <ImageMdSyntaxNode Href="https://example.com/image.png" AltText="Example Image" />
+            </LinkMdSyntaxNode>
+        </MdSyntaxTree>
         """;
+    
+    private static readonly string FilePathOutput = $"{Guid.NewGuid():N}.xml";
+    private static readonly string FilePathInput = $"{Guid.NewGuid():N}.xml";
 
-    private static readonly string FilePathOutput = $"{Guid.NewGuid():N}.json";
-    private static readonly string FilePathInput = $"{Guid.NewGuid():N}.json";
 
     // -----------------------------------------------------------------------------------------------------------------
     // Test Methods
@@ -59,45 +46,41 @@ public class MdSyntaxTreeJsonParserTests {
     [After(Class)]
     public static void FileSetup() {
         if (File.Exists(FilePathOutput)) File.Delete(FilePathOutput);
-        if (File.Exists(FilePathInput)) File.Delete(FilePathInput);
+        if (File.Exists(FilePathInput)) File.Delete(FilePathInput);   
     }
-
+    
     [Test]
-    public async Task DeserializeToStreamAsync_ShouldWriteJsonCorrectly() {
+    public async Task DeserializeToStreamAsync_ShouldWriteXmlCorrectly() {
         // Arrange
-        JsonDocument expected = JsonDocument.Parse(Json);
+        XElement expected = XElement.Parse(Xml);
 
         // Act
         MemoryStream memoryStream = new();
-        await _parser.DeserializeToJsonStreamAsync(memoryStream, TestTree);
+        await _parser.DeserializeToXmlStreamAsync(memoryStream, TestTree);
         memoryStream.Position = 0;
         string result = await new StreamReader(memoryStream).ReadToEndAsync();
-        JsonDocument resultJson = JsonDocument.Parse(result);
-
+        XElement resultXml = XElement.Parse(result);
         // Assert
-        string expectedJson = JsonSerializer.Serialize(expected.RootElement, new JsonSerializerOptions { WriteIndented = false });
-        string actualJson = JsonSerializer.Serialize(resultJson.RootElement, new JsonSerializerOptions { WriteIndented = false });
 
-        await Assert.That(actualJson).IsEqualTo(expectedJson);
+
+        await Assert.That(resultXml.ToString(SaveOptions.DisableFormatting)).IsEqualTo(expected.ToString(SaveOptions.DisableFormatting));
     }
 
     [Test]
-    public async Task DeserializeToFileAsync_ShouldCreateFileWithCorrectJson() {
+    public async Task DeserializeToFileAsync_ShouldCreateFileWithCorrectXml() {
         // Arrange
-        JsonDocument expected = JsonDocument.Parse(Json);
 
         // Act
-        await _parser.DeserializeToJsonFileAsync(FilePathOutput, TestTree);
+        await _parser.DeserializeToXmlFileAsync(FilePathOutput, TestTree);
 
         // Assert
         await Assert.That(File.Exists(FilePathOutput)).IsTrue();
         string result = await File.ReadAllTextAsync(FilePathOutput);
 
-        JsonDocument resultJson = JsonDocument.Parse(result);
-        string expectedJson = JsonSerializer.Serialize(expected.RootElement, new JsonSerializerOptions { WriteIndented = false });
-        string actualJson = JsonSerializer.Serialize(resultJson.RootElement, new JsonSerializerOptions { WriteIndented = false });
+        XElement expected = XElement.Parse(Xml);
 
-        await Assert.That(actualJson).IsEqualTo(expectedJson);
+        XElement resultXml = XElement.Parse(result);
+        await Assert.That(resultXml.ToString(SaveOptions.DisableFormatting)).IsEqualTo(expected.ToString(SaveOptions.DisableFormatting));
 
         // Cleanup
         File.Delete(FilePathOutput);
@@ -106,7 +89,7 @@ public class MdSyntaxTreeJsonParserTests {
     [Test]
     public async Task DeserializeFromStreamAsync_ShouldBuildCorrectTree() {
         // Arrange
-        using MemoryStream stream = new(Encoding.UTF8.GetBytes(Json));
+        using MemoryStream stream = new(Encoding.UTF8.GetBytes(Xml));
 
         // Act
         IMdSyntaxTree tree = await _parser.SerializeToSyntaxTreeAsync(stream);
@@ -115,11 +98,11 @@ public class MdSyntaxTreeJsonParserTests {
         await Assert.That(tree.RootNode).IsNotNull();
         await Assert.That(tree.RootNode.GetChildAt(0)).IsTypeOf<LinkMdSyntaxNode>();
 
-        var linkNode = (LinkMdSyntaxNode)tree.RootNode.GetChildAt(0);
-        await Assert.That(linkNode.Href).IsEqualTo("https://example.com");
+        var listNode = (LinkMdSyntaxNode)tree.RootNode.GetChildAt(0);
+        await Assert.That(listNode.Href).IsEqualTo("https://example.com");
 
-        List<IMdSyntaxNode> children = linkNode.GetChildren().ToList();
-        await Assert.That(children).HasCount().EqualTo(2);
+        List<IMdSyntaxNode> children = listNode.GetChildren().ToList();
+        await Assert.That(children).HasCount(2);
 
         IMdSyntaxNode firstChild = children[0];
         await Assert.That(firstChild).IsNotNull();
@@ -137,7 +120,7 @@ public class MdSyntaxTreeJsonParserTests {
     [Test]
     public async Task DeserializeFromFileAsync_ShouldBuildCorrectTree() {
         // Arrange
-        await File.WriteAllTextAsync(FilePathInput, Json);
+        await File.WriteAllTextAsync(FilePathInput, Xml);
 
         // Act
         IMdSyntaxTree tree = await _parser.SerializeToSyntaxTreeAsync(FilePathInput);
@@ -146,11 +129,11 @@ public class MdSyntaxTreeJsonParserTests {
         await Assert.That(tree.RootNode).IsNotNull();
         await Assert.That(tree.RootNode.GetChildAt(0)).IsTypeOf<LinkMdSyntaxNode>();
 
-        var linkNode = (LinkMdSyntaxNode)tree.RootNode.GetChildAt(0);
-        await Assert.That(linkNode.Href).IsEqualTo("https://example.com");
+        var listNode = (LinkMdSyntaxNode)tree.RootNode.GetChildAt(0);
+        await Assert.That(listNode.Href).IsEqualTo("https://example.com");
 
-        List<IMdSyntaxNode> children = linkNode.GetChildren().ToList();
-        await Assert.That(children).HasCount().EqualTo(2);
+        List<IMdSyntaxNode> children = listNode.GetChildren().ToList();
+        await Assert.That(children).HasCount(2);
 
         IMdSyntaxNode firstChild = children[0];
         await Assert.That(firstChild).IsNotNull();
@@ -171,14 +154,14 @@ public class MdSyntaxTreeJsonParserTests {
     [Test]
     public async Task DeserializeSerialize_ShouldPreserveTreeStructure() {
         // Arrange
-        var parser = new JsonMdSyntaxTreeParser();
+        var parser = new XmlMdSyntaxTreeParser();
 
         // Create a sample syntax tree
         IMdSyntaxTree originalTree = TestTree;
 
         // Serialize to memory stream
         await using var memoryStream = new MemoryStream();
-        await parser.DeserializeToJsonStreamAsync(memoryStream, originalTree);
+        await parser.DeserializeToXmlStreamAsync(memoryStream, originalTree);
 
         // Reset the memory stream for reading
         memoryStream.Position = 0;
@@ -192,28 +175,4 @@ public class MdSyntaxTreeJsonParserTests {
         await Assert.That(originalRootNode).IsEqualTo(deserializedRootNode);
     }
 
-    [Test]
-    public async Task DeserializeToJsonElement_ShouldReturnCorrectStructure() {
-        // Act
-        JsonElement result = _parser.DeserializeToJsonElement(TestTree);
-
-        // Assert
-        await Assert.That(result.GetProperty("type").GetString()).IsEqualTo("MdSyntaxTree");
-        await Assert.That(result.GetProperty("children").GetArrayLength()).IsEqualTo(1);
-
-        JsonElement linkElement = result.GetProperty("children")[0];
-        await Assert.That(linkElement.GetProperty("type").GetString()).IsEqualTo("LinkMdSyntaxNode");
-        await Assert.That(linkElement.GetProperty("href").GetString()).IsEqualTo("https://example.com");
-
-        await Assert.That(linkElement.GetProperty("children").GetArrayLength()).IsEqualTo(2);
-
-        JsonElement textElement = linkElement.GetProperty("children")[0];
-        await Assert.That(textElement.GetProperty("type").GetString()).IsEqualTo("TextMdSyntaxNode");
-        await Assert.That(textElement.GetProperty("content").GetString()).IsEqualTo("Example Content");
-
-        JsonElement imageElement = linkElement.GetProperty("children")[1];
-        await Assert.That(imageElement.GetProperty("type").GetString()).IsEqualTo("ImageMdSyntaxNode");
-        await Assert.That(imageElement.GetProperty("href").GetString()).IsEqualTo("https://example.com/image.png");
-        await Assert.That(imageElement.GetProperty("altText").GetString()).IsEqualTo("Example Image");
-    }
 }
