@@ -55,7 +55,7 @@ public class XmlMdTestDataTests {
         // Assert
         await Assert.That(deserializedData)
             .IsNotNull()
-            .IsEquivalentTo(testEntry);
+            .IsEqualTo(testEntry);
         
         await Assert.That(deserializedData?.Id).IsEqualTo(nameof(TestEntry));
     }
@@ -84,11 +84,10 @@ public class XmlMdTestDataTests {
         await Assert.That(deserializedData)
             .IsNotNull()
             .IsNotEmpty()
-            .HasCount(3)
-            .IsEquivalentTo([
-                TestEntry,
-                TestEntry,
-                TestEntry
-            ]);
+            .HasCount(3);
+
+        await Assert.That(deserializedData![0]).IsEqualTo(TestEntry);
+        await Assert.That(deserializedData[1]).IsEqualTo(TestEntry);
+        await Assert.That(deserializedData[2]).IsEqualTo(TestEntry);
     }
 }

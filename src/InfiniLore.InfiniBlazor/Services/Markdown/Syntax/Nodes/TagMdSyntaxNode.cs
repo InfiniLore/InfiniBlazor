@@ -20,7 +20,8 @@ public sealed class TagMdSyntaxNode() : MdSyntaxNode<TagMdSyntaxNode>(initialChi
         Content = string.Empty;
         return base.TryReset();
     }
-    
-    public override bool Equals(TagMdSyntaxNode? other) => base.Equals(other)
-        && StringComparer.InvariantCulture.Equals(Content, other.Content);
+
+    protected override bool Equals(TagMdSyntaxNode? other) 
+        => base.Equals(other)
+            && StringComparer.InvariantCulture.Equals(Content, other.Content);
 }

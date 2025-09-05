@@ -21,7 +21,7 @@ public sealed class LinkMdSyntaxNode : MdSyntaxNode<LinkMdSyntaxNode> {
         return base.TryReset();
     }
 
-    public override bool Equals(LinkMdSyntaxNode? other)
+    protected override bool Equals(LinkMdSyntaxNode? other)
         => base.Equals(other)
             && StringComparer.InvariantCulture.Equals(Href, other.Href);
 }

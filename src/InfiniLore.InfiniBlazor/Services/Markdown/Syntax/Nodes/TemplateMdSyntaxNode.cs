@@ -28,7 +28,7 @@ public sealed class TemplateMdSyntaxNode() : MdSyntaxNode<TemplateMdSyntaxNode>(
         return base.TryReset();
     }
 
-    public override bool Equals(TemplateMdSyntaxNode? other)
+    protected override bool Equals(TemplateMdSyntaxNode? other)
         => base.Equals(other)
             && StringComparer.InvariantCulture.Equals(Content, other.Content)
             && BracesCount == other.BracesCount;

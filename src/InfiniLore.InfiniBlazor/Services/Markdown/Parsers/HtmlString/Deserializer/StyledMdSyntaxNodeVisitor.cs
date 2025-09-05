@@ -109,7 +109,7 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                     builder.Append('"');
                 }
 
-                if (imgNode.TryGetModifier(out IMdSyntaxNodeModifier? modifier)) {
+                if (imgNode.Modifier is {} modifier) {
                     if (modifier.TryGetTitle(out string? title)) {
                         builder.Append(" title=\"");
                         builder.Append(title.AsSpan());
@@ -275,7 +275,7 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 };
 
                 string? svgData = null;
-                if (parentNode.TryGetModifier(out IMdSyntaxNodeModifier? modifiers) && modifiers.TryGetIconName(out string? name)) {
+                if (parentNode.Modifier is {} modifiers && modifiers.TryGetIconName(out string? name)) {
                     svgData = _lucideService.GetIconAsString(name);
                 }
                 if (svgData.IsNullOrWhiteSpace()) {

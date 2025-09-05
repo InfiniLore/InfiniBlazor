@@ -52,7 +52,7 @@ public sealed class CodeInlineMdSyntaxNode() : MdSyntaxNode<CodeInlineMdSyntaxNo
         return base.TryReset();
     }
 
-    public override bool Equals(CodeInlineMdSyntaxNode? other)
+    protected override bool Equals(CodeInlineMdSyntaxNode? other)
         => base.Equals(other)
             && StringComparer.InvariantCulture.Equals(Content, other.Content)
             && BackTickCount == other.BackTickCount;

@@ -84,7 +84,7 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                     builder.Append('"');
                 }
 
-                if (imgNode.TryGetModifier(out IMdSyntaxNodeModifier? modifier)) {
+                if (imgNode.Modifier is {} modifier) {
                     if (modifier.TryGetTitle(out string? title)) {
                         builder.Append(" title=\"");
                         builder.Append(title.AsSpan());
@@ -214,7 +214,7 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
             case CalloutMdSyntaxNode {CalloutType: {} calloutType} calloutNode: {
                 builder.Append("<div class=\"md-callout md-callout-");
                 builder.Append(calloutType);
-                if (calloutNode.TryGetModifier(out IMdSyntaxNodeModifier? modifier) && modifier.TryGetIconName(out string? iconName)) {
+                if (calloutNode.Modifier is {} modifier && modifier.TryGetIconName(out string? iconName)) {
                     builder.Append(" icon-");
                     builder.Append(iconName);
                 }

@@ -71,7 +71,7 @@ public sealed class CalloutMdSyntaxNode() : MdSyntaxNode<CalloutMdSyntaxNode>(in
         return base.TryReset();
     }
 
-    public override bool Equals(CalloutMdSyntaxNode? other)
+    protected override bool Equals(CalloutMdSyntaxNode? other)
         => base.Equals(other)
             && LeadingSpaces == other.LeadingSpaces
             && CollapsedState == other.CollapsedState

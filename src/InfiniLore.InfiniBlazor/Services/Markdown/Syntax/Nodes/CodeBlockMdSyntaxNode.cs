@@ -28,7 +28,7 @@ public sealed class CodeBlockMdSyntaxNode() : MdSyntaxNode<CodeBlockMdSyntaxNode
         return base.TryReset();
     }
 
-    public override bool Equals(CodeBlockMdSyntaxNode? other)
+    protected override bool Equals(CodeBlockMdSyntaxNode? other)
         => base.Equals(other)
             && StringComparer.InvariantCulture.Equals(Content, other.Content)
             && StringComparer.InvariantCulture.Equals(Language, other.Language);

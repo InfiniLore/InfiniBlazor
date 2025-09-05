@@ -20,8 +20,8 @@ public sealed class UserMdSyntaxNode() : MdSyntaxNode<UserMdSyntaxNode>(initialC
         Content = string.Empty;
         return base.TryReset();
     }
-    
-    public override bool Equals(UserMdSyntaxNode? other) 
+
+    protected override bool Equals(UserMdSyntaxNode? other) 
         => base.Equals(other)
             && StringComparer.InvariantCulture.Equals(Content, other.Content);
 }

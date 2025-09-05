@@ -35,7 +35,7 @@ public sealed partial class ImageMdSyntaxNode : MdSyntaxNode<ImageMdSyntaxNode> 
         return base.TryReset();
     }
 
-    public override bool Equals(ImageMdSyntaxNode? other)
+    protected override bool Equals(ImageMdSyntaxNode? other)
         => base.Equals(other)
             && StringComparer.InvariantCulture.Equals(OriginalAltText, other.OriginalAltText)
             && StringComparer.InvariantCulture.Equals(Href, other.Href);

@@ -12,7 +12,7 @@ namespace Tests.InfiniBlazor.Shared.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class MdTestData : IXmlSerializable {
+public class MdTestData : IXmlSerializable, IEquatable<MdTestData> {
     public required string FileName { get; set; } = string.Empty;
     public required string Id { get; set; } = string.Empty;
     public string? DeveloperNote { get; set; }
@@ -101,4 +101,26 @@ public class MdTestData : IXmlSerializable {
         if (ExpectedMarkdownString.IsNotNullOrWhiteSpace()) writer.WriteElementString(nameof(ExpectedMarkdownString), ExpectedMarkdownString);
         if (ExpectedMarkdownStringSkipOnWhitespaceMisMatch) writer.WriteElementString(nameof(ExpectedMarkdownStringSkipOnWhitespaceMisMatch), ExpectedMarkdownStringSkipOnWhitespaceMisMatch.ToString());
     }
+    
+    public bool Equals(MdTestData? other) {
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return FileName == other.FileName 
+            && Id == other.Id 
+            && DeveloperNote == other.DeveloperNote 
+            && MdString == other.MdString 
+            && MdSyntaxTree.Equals(other.MdSyntaxTree) 
+            && ExpectedHtmlStringSimplified == other.ExpectedHtmlStringSimplified 
+            && ExpectedMarkdownString == other.ExpectedMarkdownString 
+            && ExpectedMarkdownStringSkipOnWhitespaceMisMatch == other.ExpectedMarkdownStringSkipOnWhitespaceMisMatch;
+    }
+    public override bool Equals(object? obj) {
+        if (obj is null) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        return obj.GetType() == GetType() && Equals((MdTestData)obj);
+    }
+    
+    // ReSharper disable NonReadonlyMemberInGetHashCode
+    public override int GetHashCode() => HashCode.Combine(FileName, Id, DeveloperNote, MdString, MdSyntaxTree, ExpectedHtmlStringSimplified, ExpectedMarkdownString, ExpectedMarkdownStringSkipOnWhitespaceMisMatch);
+    // ReSharper restore NonReadonlyMemberInGetHashCode
 }
