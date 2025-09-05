@@ -172,8 +172,7 @@ public class MdSyntaxTreeXmlParserTests {
         // Assert: Ensure the structure and content remain identical
         IMdSyntaxNode originalRootNode = originalTree.RootNode;
         IMdSyntaxNode deserializedRootNode = deserializedTree.RootNode;
-        bool result = originalRootNode.Equals(deserializedRootNode);
-        await Assert.That(result).IsTrue();
+        await Assert.That(originalRootNode).IsEqualTo(deserializedRootNode);
     }
 
 }

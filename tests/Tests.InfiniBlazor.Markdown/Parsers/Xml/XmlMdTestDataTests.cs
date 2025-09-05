@@ -86,11 +86,8 @@ public class XmlMdTestDataTests {
             .IsNotEmpty()
             .HasCount(3);
 
-        bool equals0 = deserializedData![0].Equals(TestEntry);
-        bool equals1 = deserializedData[1].Equals(TestEntry);
-        bool equals2 = deserializedData[2].Equals(TestEntry);
-        await Assert.That(equals0).IsTrue();
-        await Assert.That(equals1).IsTrue();
-        await Assert.That(equals2).IsTrue();
+        await Assert.That(deserializedData![0]).IsEqualTo(TestEntry);
+        await Assert.That(deserializedData[1]).IsEqualTo(TestEntry);
+        await Assert.That(deserializedData[2]).IsEqualTo(TestEntry);
     }
 }
