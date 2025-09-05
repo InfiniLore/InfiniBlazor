@@ -50,7 +50,7 @@ public static class MdSyntaxNodeModifierExtensions {
 
     public static bool TryGetAlign(this IMdSyntaxNodeModifier mod,[NotNullWhen(true)] out string? align) {
         align = null;
-        if (!mod.TryGetValue("align", out  align)) return false;
+        if (!mod.TryGetValue("align", out align)) return false;
         return VerticalAlignImageUtilities.TryGetFromString(align, out _) || align.IsNotNullOrWhiteSpace();
     }
     

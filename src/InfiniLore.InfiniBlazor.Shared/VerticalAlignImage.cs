@@ -1,25 +1,26 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor;
+using JetBrains.Annotations;
 
+namespace InfiniLore.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public enum VerticalAlignImage {
-    Baseline,
-    Sub,
-    Super,
-    TextTop,
-    TextBottom,
-    Middle,
-    Top,
-    Bottom,
-    Initial,
-    Inherit,
-    Revert,
-    ReveryLayer,
-    Unset
+    [UsedImplicitly] Baseline,
+    [UsedImplicitly] Sub,
+    [UsedImplicitly] Super,
+    [UsedImplicitly] TextTop,
+    [UsedImplicitly] TextBottom,
+    [UsedImplicitly] Middle,
+    [UsedImplicitly] Top,
+    [UsedImplicitly] Bottom,
+    [UsedImplicitly] Initial,
+    [UsedImplicitly] Inherit,
+    [UsedImplicitly] Revert,
+    [UsedImplicitly] RevertLayer,
+    [UsedImplicitly] Unset
 }
 
 public static class VerticalAlignImageUtilities {
