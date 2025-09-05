@@ -1,9 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Config;
-using InfiniLore.InfiniBlazor.Emotes;
-using InfiniLore.InfiniBlazor.TextEditor.TextModifiers;
+using InfiniLore.InfiniBlazor.Components.Emotes;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Tests.Shared.Infinilore.InfiniBlazor;
@@ -25,11 +23,14 @@ public class DiDataSourceAttribute : DependencyInjectionDataSourceAttribute<ISer
 
         services.AddLogging();
         services.AddLucideIcons();
-        services.AddInfiniBlazor(static config => config.AddMarkdownLogic(
-            static config => {
-                config.AddTextEditor().AddDefaultModifiers();
-                config.AddTextEditor("boldOnly").AddModifier<BoldModifier>();
-            }));
+        services.AddInfiniBlazor(
+            // static config => config.AddMarkdownLogic(
+            //     static config => {
+            //         config.AddTextEditor().AddDefaultModifiers();
+            //         config.AddTextEditor("boldOnly").AddModifier<BoldModifier>();
+            //     }
+            // )
+        );
 
         ServiceProvider provider = services.BuildServiceProvider();
 

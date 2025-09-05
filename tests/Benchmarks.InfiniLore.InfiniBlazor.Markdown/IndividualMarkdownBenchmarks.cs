@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
-using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Markdown;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,7 +18,7 @@ public class IndividualMarkdownBenchmarks {
     [GlobalSetup]
     public void Setup() {
         var serviceCollection = new ServiceCollection();
-        serviceCollection.AddInfiniBlazor(config => config.AddMarkdownLogic());
+        serviceCollection.AddInfiniBlazor();
         serviceCollection.AddLogging();
         ServiceProvider provider = serviceCollection.BuildServiceProvider();
         

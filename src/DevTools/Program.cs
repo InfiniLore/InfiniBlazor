@@ -23,13 +23,20 @@ public static class Program {
         //      Sometimes CLI params are not the answer.
         //      Code is the true savior
         string projects = string.Join(";", 
+            "InfiniLore.InfiniBlazor.Core.Components",
+            "InfiniLore.InfiniBlazor.Core.Js",
+            "InfiniLore.InfiniBlazor.Core.Markdown",
+            "InfiniLore.InfiniBlazor.Core.Theming",
+            
+            "InfiniLore.InfiniBlazor.Extensions.AutoDocumentation",
+            "InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators",
+            "InfiniLore.InfiniBlazor.Extensions.Maui",
+            "InfiniLore.InfiniBlazor.Extensions.ExtraComponents",
+            
             "InfiniLore.InfiniBlazor",
             "InfiniLore.InfiniBlazor.Contracts",
-            "InfiniLore.InfiniBlazor.SourceGenerators",
-            "InfiniLore.InfiniBlazor.Extensions.ExtraComponents",
-            "InfiniLore.InfiniBlazor.Extensions.Maui",
-            "InfiniLore.InfiniBlazor.Extensions.AutoDocumentation",
-            "InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators"
+            "InfiniLore.InfiniBlazor.Shared",
+            "InfiniLore.InfiniBlazor.SourceGenerators"
         );
 
         string oneLineArgs = ArgsInputHelper.ToOneLine(args).Replace("%PROJECTS%", projects);

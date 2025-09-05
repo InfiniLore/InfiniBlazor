@@ -1,7 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Emotes;
+using InfiniLore.InfiniBlazor.Components.Emotes;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 

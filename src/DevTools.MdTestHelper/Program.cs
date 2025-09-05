@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using DevTools.MdTestHelper.Components;
-using InfiniLore.InfiniBlazor.Config;
 using System.Diagnostics.CodeAnalysis;
 using Tests.InfiniBlazor.Shared.Markdown;
 
@@ -22,9 +21,7 @@ public class Program {
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
 
-        builder.Services.AddInfiniBlazor(config => 
-            config.AddMarkdownLogic()
-        );
+        builder.Services.AddInfiniBlazor();
 
         builder.Services.RegisterServicesFromDevToolsMdTestHelper();
         builder.Services.RegisterServicesFromTestsInfiniBlazorSharedMarkdown();

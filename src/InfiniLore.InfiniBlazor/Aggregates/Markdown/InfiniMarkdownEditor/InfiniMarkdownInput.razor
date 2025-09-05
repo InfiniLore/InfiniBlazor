@@ -1,0 +1,68 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@* ReSharper disable once CheckNamespace *@
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits ComponentBase
+@using InfiniLore.InfiniBlazor.Markdown
+@implements IDisposable
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="@Class @(EditorState.ShowSidePreview ? "border-r border-(--border)" : "") min-h-0 flex">
+    <textarea
+        class="grow p-4 border-none focus:outline-none resize-none overflow-scroll infini-scrollbar font-mono"
+        value="@EditorState.Source.Text"
+        @ref="@EditorState.InputRef"
+        @oninput="@OnInputAsync"
+        @onkeydown="@OnKeyDownAsync">
+    </textarea>
+</div>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [CascadingParameter] public MarkdownEditorState EditorState { get; set; } = null!;
+    [CascadingParameter] public InfiniMarkdownEditor Editor { get; set; } = null!;
+    [Parameter] public string? Class { get; set; }
+    
+    private Dictionary<InfiniEditorKeyCombo, Func<InfiniMarkdownEditor, Task>> KeyCombos { get; } = new() {
+        [InfiniEditorKeyCombo.Bold] = static editor => editor.OnModifierClickAsync("bold"),
+        [InfiniEditorKeyCombo.Italic] = static editor => editor.OnModifierClickAsync("italic"),
+        [InfiniEditorKeyCombo.Underline] = static editor => editor.OnModifierClickAsync("underline"),
+        [InfiniEditorKeyCombo.SelectAll] = static editor => editor.HandleSelectAllAsync()
+    };
+    
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override void OnInitialized() {
+        EditorState.OnOutputChange += StateHasChanged;
+    }
+
+    public void Dispose() {
+        EditorState.OnOutputChange -= StateHasChanged;
+    }
+    
+    public async Task OnInputAsync(ChangeEventArgs e) {
+        if (EditorState.IsLocked) return;
+        
+        if (e.Value is string value) {
+            EditorState.Source.UpdateSource(value);
+        }
+        await EditorState.SourceHasChanged();
+    }
+
+    public async Task OnKeyDownAsync(KeyboardEventArgs args) {
+        if (EditorState.IsLocked) return;
+        if (!args.CtrlKey) return; // quick exit to not have to wait on every key press
+
+        InfiniEditorKeyCombo combo = InfiniEditorKeyCombo.From(args);
+        if (KeyCombos.TryGetValue(combo, out Func<InfiniMarkdownEditor, Task>? task)) await task(Editor);
+    }
+}
+

@@ -1,7 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.QueryParameters;
+using InfiniLore.InfiniBlazor.Components;
 using Microsoft.AspNetCore.Components;
 
 namespace Tests.InfiniBlazor.Services.QueryParameters;

@@ -1,0 +1,81 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Components.Dialogs
+@using Microsoft.Extensions.Logging
+@using System.Diagnostics.CodeAnalysis
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inject IDialogProvider DialogProvider
+@inject ILogger<InfiniDialogManager> Logger
+@inherits InfiniComponentBase
+@rendermode RenderModeProvider.InfiniRenderMode
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="absolute flex top-0 left-0 size-screen min-size-screen max-size-screen justify-center items-center transition-opacity duration-300 text-(--text) @AppearClasses">
+    <CascadingValue Value="DialogContext">
+        @if (HasDialog) {
+            <DynamicComponent 
+                @key="Dialog.Id"
+                Type="Dialog.ComponentType"
+                Parameters="Dialog.AsDynamicParameters()"/>
+        }
+    </CascadingValue>
+</div>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    // private bool HasDialog { get; set; } = false;
+    [MemberNotNullWhen(true, nameof(Dialog))] private bool HasDialog => Dialog is not null;
+    private IDialogData? Dialog { get; set; }
+
+    private DialogManagerContext DialogContext { get; } = new();
+
+    private string AppearClasses => HasDialog
+        ? $"{ZIndex.DialogManager} backdrop-blur-sm bg-black/50 opacity-100 pointer-events-auto"
+        : $"{ZIndex.Zero} backdrop-blur-none bg-transparent opacity-0 pointer-events-none";
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        DialogContext.OnDialogExitAsync += RemoveDialogAsync;
+        DialogProvider.OnDialogOpenedAsync += OnDialogOpenedAsync;
+    }
+
+    public override ValueTask DisposeAsync() {
+        DialogProvider.OnDialogOpenedAsync -= OnDialogOpenedAsync;
+        DialogContext.OnDialogExitAsync -= RemoveDialogAsync;
+        return base.DisposeAsync();
+    }
+
+    private async Task OnDialogOpenedAsync() {
+        if (Dialog is not null) return; // Dialog is already open
+        if (await DialogProvider.TakeDialogAsync() is not {} data) return; // Stack of dialogs is empty, could happen in rapid concurrent states
+
+        Dialog = data;
+        if (!HasDialog) {
+            Logger.Warning("Dialog could not be initiated");
+            return;
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
+    
+    private async Task RemoveDialogAsync(Guid id) {
+        await DialogProvider.TryRemoveDialogAsync(id);
+        Dialog = null;
+        
+        // Try To take a new Dialog
+        if (await DialogProvider.TakeDialogAsync() is {} data) Dialog = data;
+        
+        StateHasChanged();
+    }
+}

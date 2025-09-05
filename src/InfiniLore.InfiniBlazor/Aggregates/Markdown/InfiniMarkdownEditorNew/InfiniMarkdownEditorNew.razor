@@ -1,0 +1,164 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.JsRuntime
+@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
+
+@namespace InfiniLore.InfiniBlazor.Markdown
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniComponentBase
+@inject IMarkdownParser Parser
+
+@inject IJsInfiniBlazor JsInfiniBlazor
+@inject ITextEditor TextEditor
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<CascadingValue Value="@EditorContext">
+    <CascadingValue Value="@RenderContext">
+        <div class="mdEditor-container flex w-full flex-col h-full">
+            <div class="mdEditor-toolbarTop">
+                
+            </div>
+            <div class="flex flex-row size-full h-full">
+                <InfiniMdEditorInput Class="max-w-1/2 min-w-1/2 w-1/2"/>
+                <InfiniMdEditorPreview Class="max-w-1/2 min-w-1/2 w-1/2"/>
+            </div>
+            <div class="mdEditor-toolbarBottom">
+                
+            </div>
+        </div>
+    </CascadingValue>
+</CascadingValue>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter] public string? Content { get; set; }
+    [Parameter] public EventCallback<string?> ContentChanged { get; set; }
+    
+    private MdEditorContext EditorContext { get; } = new();
+    private MdRenderContext RenderContext { get; } = new();
+    private InfiniEditorKeyCombo LastPressedCombo { get; set; } = InfiniEditorKeyCombo.Empty;
+    
+    private Dictionary<InfiniEditorKeyCombo, Func<InfiniMarkdownEditorNew,Task>> KeyCombos { get; } = new() {
+        [InfiniEditorKeyCombo.Bold] = static editor => editor.OnModifierClickAsync("bold"),
+        [InfiniEditorKeyCombo.Italic] = static editor => editor.OnModifierClickAsync("italic"),
+        [InfiniEditorKeyCombo.Underline] = static editor => editor.OnModifierClickAsync("underline"),
+        [InfiniEditorKeyCombo.SelectAll] = static editor => editor.HandleSelectAllAsync()
+    };
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        
+        RenderContext.OnSyntaxNodeChanged += OnSyntaxNodeChangedAsync;
+        EditorContext.OnSourceChangedAsync += OnSourceChangedAsync;
+        EditorContext.OnInputKeyDownAsync += OnInputKeyDownAsync;
+    }
+
+    protected override async Task OnParametersSetAsync() {
+        await base.OnParametersSetAsync();
+
+        EditorContext.TextSource.UpdateSource(Content ?? string.Empty);
+
+        EditorContext.SyntaxTree.ReturnToPool();
+        EditorContext.SyntaxTree = Parser.MarkdownString.SerializeToSyntaxTree(EditorContext.TextSource.Text);
+        await EditorContext.InvokeSyntaxTreeChangeAsync().ConfigureAwait(false);
+        await InvokeAsync(StateHasChanged);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        await base.OnAfterRenderAsync(firstRender);
+        if (firstRender) {
+            // Only add the "prevent default listener" once.
+            await JsInfiniBlazor.KeyDownListener.AddPreventDefaultListenerAsync().ConfigureAwait(false);
+            return;
+        }
+
+        // place the caret in a newly requested location
+        if (TextEditor.TryGetCaretUpdate(out int index))
+            await JsInfiniBlazor.TextSelection.SetIndexAsync(EditorContext.InputElementRef, index).ConfigureAwait(false);
+    }
+    
+    public override async ValueTask DisposeAsync() {
+        await base.DisposeAsync();
+        
+        RenderContext.OnSyntaxNodeChanged -= OnSyntaxNodeChangedAsync;
+        EditorContext.OnSourceChangedAsync -= OnSourceChangedAsync;
+        EditorContext.OnInputKeyDownAsync -= OnInputKeyDownAsync;
+        await JsInfiniBlazor.KeyDownListener.RemovePreventDefaultListenerAsync();
+    }
+
+    private async Task OnSourceChangedAsync(string newSource) {
+        EditorContext.TextSource.UpdateSource(newSource);
+
+        EditorContext.SyntaxTree.ReturnToPool();
+        EditorContext.SyntaxTree = Parser.MarkdownString.SerializeToSyntaxTree(EditorContext.TextSource.Text);
+        await EditorContext.InvokeSyntaxTreeChangeAsync().ConfigureAwait(false);
+        
+        Content = EditorContext.TextSource.Text;
+        await ContentChanged.InvokeAsync(Content).ConfigureAwait(false);
+        
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task OnSyntaxNodeChangedAsync(IMdSyntaxNode _) {
+        string newContent = Parser.MarkdownString.DeserializeToString(EditorContext.SyntaxTree);
+        EditorContext.TextSource.UpdateSource(newContent);
+        
+        Content = EditorContext.TextSource.Text;
+        await ContentChanged.InvokeAsync(Content).ConfigureAwait(false);
+        
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task OnInputKeyDownAsync(KeyboardEventArgs args) {
+        InfiniEditorKeyCombo combo = InfiniEditorKeyCombo.From(args);
+        if (KeyCombos.TryGetValue(combo, out Func<InfiniMarkdownEditorNew, Task>? task)) await task(this);
+        
+        LastPressedCombo = combo;
+        await InvokeAsync(StateHasChanged);
+    }
+    
+    public async Task OnModifierClickAsync(string modifierName) {
+        if (EditorContext.IsLocked) return;
+
+        Range range = await JsInfiniBlazor.TextSelection.GetRangeAsync(EditorContext.InputElementRef);
+        TextEditor.Modify(EditorContext.TextSource, modifierName, range);
+        await EditorContext.InvokeSourceChangeAsync(EditorContext.TextSource.Text);
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public async Task OnInsertClickAsync(string content) {
+        if (EditorContext.IsLocked) return;
+
+        Range range = await JsInfiniBlazor.TextSelection.GetRangeAsync(EditorContext.InputElementRef);
+        TextEditor.Insert(EditorContext.TextSource, content, range);
+        await EditorContext.InvokeSourceChangeAsync(EditorContext.TextSource.Text).ConfigureAwait(false);
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task HandleSelectAllAsync() {
+        if (EditorContext.IsLocked) return;
+        if (EditorContext.TextSource.IsEmpty) return;
+
+        // when ctrl+a has been pressed twice, select the full text
+        if (LastPressedCombo == InfiniEditorKeyCombo.SelectAll) {
+            Range fullRange = new(0, EditorContext.TextSource.Length);
+            await JsInfiniBlazor.TextSelection.SetRangeAsync(EditorContext.InputElementRef, fullRange).ConfigureAwait(false);
+            return;
+        }
+        
+        // when ctrl+a has been pressed only once, select the current line
+        int caretIndex = await JsInfiniBlazor.TextSelection.GetStartIndexAsync(EditorContext.InputElementRef);
+        if (!TextEditor.TryGetCaretLine(EditorContext.TextSource, caretIndex, out Range lineRange)) return;
+
+        await JsInfiniBlazor.TextSelection.SetRangeAsync(EditorContext.InputElementRef, lineRange).ConfigureAwait(false);
+    }
+}

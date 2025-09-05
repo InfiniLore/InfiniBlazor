@@ -8,7 +8,7 @@
 
     <ItemGroup>
         <InternalsVisibleTo Include="Tests.InfiniBlazor" />
-        <InternalsVisibleTo Include="Tests.InfiniBlazor.Markdown" />
+        <InternalsVisibleTo Include="Tests.InfiniBlazor.Core.Markdown" />
     </ItemGroup>
 
     <ItemGroup>
