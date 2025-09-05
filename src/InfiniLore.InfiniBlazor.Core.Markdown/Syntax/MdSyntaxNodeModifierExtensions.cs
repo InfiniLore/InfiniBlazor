@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Components;
 using System.Diagnostics.CodeAnalysis;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Syntax;

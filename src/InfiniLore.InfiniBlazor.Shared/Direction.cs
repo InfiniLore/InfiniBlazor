@@ -1,23 +1,21 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Components;
+namespace InfiniLore.InfiniBlazor;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[Flags]
-public enum Anchor {
-    Bottom = 1<<0,
-    Top = 1<<1,
-    Left = 1<<2,
-    Right = 1<<3,
-    Center = 1<<4,
+public enum Direction {
+    LeftToRight = 0,
+    Ltr = LeftToRight,
     
-    CenterBottom = Bottom | Center,
-    CenterTop = Top | Center,
-    LeftBottom = Bottom | Left,
-    LeftTop = Top | Left,
-    RightBottom = Bottom | Right,
-    RightTop = Top | Right,
+    RightToLeft = 1,
+    Rtl = RightToLeft,
+}
+
+
+public static class DirectionExtensions {
+    public static string ToFlexRow(this Direction direction) => direction is Direction.LeftToRight ? "flex-row" : "flex-row-reverse";
+    public static string ToFlexCol(this Direction direction) => direction is Direction.LeftToRight ? "flex-col" : "flex-col-reverse";
 }
