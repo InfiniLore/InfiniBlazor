@@ -39,6 +39,8 @@
     
     <ItemGroup>
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
+        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core.Markdown\InfiniLore.InfiniBlazor.Core.Markdown.csproj" />
+        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Shared\InfiniLore.InfiniBlazor.Shared.csproj" />
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.SourceGenerators\InfiniLore.InfiniBlazor.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="contentfiles;build" Pack="true" />
     </ItemGroup>
     
@@ -66,33 +68,5 @@
       <EmbeddedResource Include="wwwroot\InfiniBlazor.js" />
       <EmbeddedResource Include="wwwroot\libs\emotes\emotes_lucide.json" />
       <EmbeddedResource Include="wwwroot\libs\emotes\emotes_standard.json" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdBlockQuote.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdBold.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdCallout.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdCodeBlock.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdCodeInline.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdContent.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdEmote.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdHeading.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdHeadingSimple.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdHorizontalRule.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdHtmlSpan.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdImage.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdItalic.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdLink.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdListOrdered.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdListUnOrdered.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdParagraph.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdStrike.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdSubScript.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdSuperScript.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdTable.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdTag.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\Components\Infini_MdUnderline.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniMarkdownEditorNew\DynamicMarkdownComponents\UnknownBlazorMdComponent.razor" />
-      <UpToDateCheckInput Remove="Components\InfiniAutoDocument\InfiniAutoDocument.razor" />
     </ItemGroup>
 </Project>

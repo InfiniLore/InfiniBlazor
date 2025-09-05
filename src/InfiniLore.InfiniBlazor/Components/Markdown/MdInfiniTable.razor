@@ -1,0 +1,52 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Components
+@using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
+@using InfiniLore.InfiniBlazor.Markdown
+
+@namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniBlazorMdComponentBase<TableMdSyntaxNode>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniTable TItem="TableRowMdSyntaxNode" ItemsBySpan="SyntaxNode.GetRows">
+    <Header>
+        @{ ReadOnlySpan<TableCellMdSyntaxNode> span = SyntaxNode.GetHeaderCells(); }
+        @for (int index = 0; index < span.Length; index++) {
+            TableCellMdSyntaxNode headerItem = span[index];
+            <InfiniTableHeader Alignment="@GetAlignment(index)">
+                @ComponentConverter.RenderChildComponents(headerItem)
+            </InfiniTableHeader>
+        }
+    </Header>
+    <Content Context="rowNode">
+        @* The cell itself doesnt hold data, but the content of the cell does *@
+        @{ ReadOnlySpan<IMdSyntaxNode> nodes = rowNode.GetChildrenSpan(); }
+        @for (int index = 0; index < nodes.Length; index++) {
+            IMdSyntaxNode node = nodes[index];
+            <InfiniTableCell
+                Alignment="@GetAlignment(index)">@ComponentConverter.RenderChildComponents(node)</InfiniTableCell>
+        }
+    </Content>
+</InfiniTable>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    private Alignment GetAlignment(int columnIndex) {
+        if (!SyntaxNode.HasAlignments) return Alignment.Left;
+        return SyntaxNode.Alignments[columnIndex] switch {
+            TableMdSyntaxNode.Alignment.Left => Alignment.Left,
+            TableMdSyntaxNode.Alignment.Center => Alignment.Center,
+            TableMdSyntaxNode.Alignment.Right => Alignment.Right,
+            _ => Alignment.Left
+        };
+    }
+
+}
+

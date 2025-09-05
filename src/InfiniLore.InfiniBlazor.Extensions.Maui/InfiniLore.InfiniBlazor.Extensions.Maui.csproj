@@ -30,6 +30,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Shared\InfiniLore.InfiniBlazor.Shared.csproj" />
       <ProjectReference Include="..\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" />
     </ItemGroup>
 

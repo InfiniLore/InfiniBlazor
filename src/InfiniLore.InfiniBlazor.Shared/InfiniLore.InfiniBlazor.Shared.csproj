@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>InfiniLore.InfiniBlazor</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor" />
+        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Core.Markdown" />
+        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Extensions.AutoDocumentation" />
+        <InternalsVisibleTo Include="Tests.InfiniBlazor" />
+        <InternalsVisibleTo Include="Tests.InfiniBlazor.Markdown" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="CodeOfChaos.Extensions" />
+        <PackageReference Include="CodeOfChaos.Extensions.ObjectPool" />
+        <PackageReference Include="Microsoft.AspNetCore.Components" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
+        <PackageReference Include="Microsoft.AspNetCore.WebUtilities" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    </ItemGroup>
+
+</Project>
