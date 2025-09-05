@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor;
-using InfiniLore.InfiniBlazor.Components.Callouts;
+using InfiniLore.InfiniBlazor.Components;
 using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Core.Components;
 using InfiniLore.InfiniBlazor.Core.Js;

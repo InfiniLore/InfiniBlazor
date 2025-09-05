@@ -61,4 +61,8 @@
       <UpToDateCheckInput Remove="InfiniToasts\ToastMessageBase.razor" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Services\" />
+    </ItemGroup>
+
 </Project>
