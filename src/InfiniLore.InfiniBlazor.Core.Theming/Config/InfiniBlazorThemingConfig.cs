@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Core.Theming;
 using InfiniLore.InfiniBlazor.Theming.ThemeCollections;
 using Microsoft.Extensions.DependencyInjection;

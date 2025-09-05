@@ -1,16 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor;
-using System.Collections.Frozen;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace InfiniLore.InfiniBlazor.Config;
-
+namespace InfiniLore.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMarkdownConfig {
-    FrozenDictionary<Type, IMdComponentRecord> GetComponentRecords();
-    FrozenSet<Type> GetSkippedBlazorComponentTypes();
-    bool RenderUnknownBlazorComponents { get; }
+public interface IInfiniBlazorConfig {
+    IServiceCollection Services { get; }
 }

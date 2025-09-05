@@ -1,17 +1,16 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Theming;
+using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor;
 using System.Collections.Frozen;
 
-namespace InfiniLore.InfiniBlazor.Config;
+namespace InfiniLore.InfiniBlazor;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IThemingConfig {
-    string DefaultThemeCollectionName { get; }
-    ThemeMode DefaultThemeMode { get; }
-    
-    FrozenDictionary<string, IThemeCollection> GetRegisteredThemeCollections();
+public interface IMarkdownConfig {
+    FrozenDictionary<Type, IMdComponentRecord> GetComponentRecords();
+    FrozenSet<Type> GetSkippedBlazorComponentTypes();
+    bool RenderUnknownBlazorComponents { get; }
 }
