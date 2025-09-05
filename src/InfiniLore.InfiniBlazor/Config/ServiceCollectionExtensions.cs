@@ -9,8 +9,6 @@ using InfiniLore.InfiniBlazor.Markdown.Editors;
 using InfiniLore.InfiniBlazor.Markdown.MdBlazorComponents;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
-using InfiniLore.InfiniBlazor.Toasting;
-using System.Collections.Frozen;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
@@ -31,11 +29,6 @@ public static class ServiceCollectionExtensions {
         RegisterMdBlazorComponents(config);
         
         configure?.Invoke(config);
-
-        services.AddSingleton<IToastingConfig>(new FrozenToastingConfig {
-            AutoRemoveDuration = config.ToastDefaultDuration,
-            AppearanceComponentMapping = config.ToastAppearanceComponentMappings.ToFrozenDictionary(),
-        });
 
         return services;
     }

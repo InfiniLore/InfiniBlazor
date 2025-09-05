@@ -40,6 +40,7 @@
     <Project Path="src\InfiniLore.InfiniBlazor.Core.Js\InfiniLore.InfiniBlazor.Core.Js.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor.Core.Markdown\InfiniLore.InfiniBlazor.Core.Markdown.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor.Core.Theming\InfiniLore.InfiniBlazor.Core.Theming.csproj" Type="Classic C#" />
+    <Project Path="src\InfiniLore.InfiniBlazor.Core.Toasting\InfiniLore.InfiniBlazor.Core.Toasting.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/src/extensions/">
     <Project Path="src\InfiniLore.InfiniBlazor.Extensions.ExtraComponents\InfiniLore.InfiniBlazor.Extensions.ExtraComponents.csproj" Type="Classic C#" />

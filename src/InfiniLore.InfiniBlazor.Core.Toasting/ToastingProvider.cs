@@ -4,6 +4,7 @@
 using CodeOfChaos.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
+using System.Collections.Frozen;
 using System.Timers;
 using Timer=System.Timers.Timer;
 
@@ -21,6 +22,8 @@ public class ToastingProvider(IToastingConfig toastingConfig, ILogger<ToastingPr
     private ConcurrentDictionary<Guid, Timer> RemovalTimers { get; } = new();
     private ConcurrentDictionary<Guid, IToastMessageBase> ToastMessageComponents { get; } = new();
     private readonly ConcurrentDictionary<Guid, bool> _closingToasts = new();
+    
+    private FrozenDictionary<string, Type> AppearanceComponentMappings { get; } = toastingConfig.GetAppearanceComponentMapping();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -39,7 +42,7 @@ public class ToastingProvider(IToastingConfig toastingConfig, ILogger<ToastingPr
             ? toastingConfig.AutoRemoveDuration
             : displayDuration;
 
-        if (!toastingConfig.AppearanceComponentMapping.TryGetValue(appearanceName, out Type? componentType)) {
+        if (!AppearanceComponentMappings.TryGetValue(appearanceName, out Type? componentType)) {
             logger.Warning("Invalid toast appearance: {appearance}", appearanceName);
             return;
         }

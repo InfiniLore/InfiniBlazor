@@ -24,10 +24,11 @@
         <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
+    <!-- Include external files -->
     <ItemGroup>
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Extensions.AutoDocumentation" />
-        <InternalsVisibleTo Include="Tests.InfiniBlazor" />
-        <InternalsVisibleTo Include="Tests.InfiniBlazor.Markdown" />
+        <None Include="../../LICENSE" Pack="true" PackagePath="" Visible="false" />
+        <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
+        <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
     </ItemGroup>
 
     <ItemGroup>

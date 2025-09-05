@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.Lucide;
 
-namespace InfiniLore.InfiniBlazor.Components.ToastAppearances;
+namespace InfiniLore.InfiniBlazor.Toasting.ToastAppearances;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

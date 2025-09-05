@@ -1,14 +1,15 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Toasting;
+using InfiniLore.Lucide;
 
-namespace InfiniLore.InfiniBlazor.Config;
+namespace InfiniLore.InfiniBlazor.Toasting.ToastAppearances;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class FrozenToastingConfig : IToastingConfig {
-    public required int AutoRemoveDuration { get; init; }
-    public required IReadOnlyDictionary<string, Type> AppearanceComponentMapping { get; init; }
+public sealed class WarningToastMessage : ToastMessageBase {
+    protected override string HeaderClasses => "text-(--color-orange-light) ] [&_svg]:text-(--color-orange-light) [&_svg:hover]:text-(--color-accent)";
+    protected override string BodyClasses => "infini-bg-(--color-orange-dark) border-(--color-orange) text-(--color-base-10)";
+    protected override string IconName => LucideNames.TriangleAlert;
 }

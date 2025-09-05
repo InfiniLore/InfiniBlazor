@@ -2,14 +2,14 @@
 
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
-        <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>InfiniLore.InfiniBlazor.Toasting</RootNamespace>
         <DebugType>portable</DebugType>
-<!--        <Optimize>false</Optimize>-->
+        <!--        <Optimize>false</Optimize>-->
 
         <!-- Package metadata -->
-        <PackageId>InfiniLore.InfiniBlazor</PackageId>
+        <PackageId>InfiniLore.InfiniBlazor.Core.Toasting</PackageId>
         <Version>0.1.0-preview.87</Version>
         <Authors>Anna Sas</Authors>
         <Description>InfiniLore's Component Library</Description>
@@ -23,30 +23,23 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
-
-    <ItemGroup>
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Extensions.AutoDocumentation" />
-        <InternalsVisibleTo Include="Tests.InfiniBlazor" />
-        <InternalsVisibleTo Include="Tests.InfiniBlazor.Markdown" />
-    </ItemGroup>
-
+    
     <!-- Include external files -->
     <ItemGroup>
         <None Include="../../LICENSE" Pack="true" PackagePath="" Visible="false" />
         <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
         <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
     </ItemGroup>
-    
+
     <ItemGroup>
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core.Components\InfiniLore.InfiniBlazor.Core.Components.csproj" />
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core.Js\InfiniLore.InfiniBlazor.Core.Js.csproj" />
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core.Markdown\InfiniLore.InfiniBlazor.Core.Markdown.csproj" />
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core.Theming\InfiniLore.InfiniBlazor.Core.Theming.csproj" />
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core.Toasting\InfiniLore.InfiniBlazor.Core.Toasting.csproj" />
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Shared\InfiniLore.InfiniBlazor.Shared.csproj" />
+      <Folder Include="Components\" />
     </ItemGroup>
-    
+
+    <ItemGroup>
+      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
+      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core.Components\InfiniLore.InfiniBlazor.Core.Components.csproj" />
+    </ItemGroup>
+
     <ItemGroup>
         <PackageReference Include="CodeOfChaos.Extensions.AspNetCore.Components" />
         <PackageReference Include="CodeOfChaos.Extensions.MicrosoftLogging" />
@@ -65,11 +58,10 @@
         <PackageReference Include="Microsoft.AspNetCore.WebUtilities" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     </ItemGroup>
-    
+
     <ItemGroup>
-      <EmbeddedResource Include="wwwroot\InfiniBlazor.css" />
-      <EmbeddedResource Include="wwwroot\InfiniBlazor.js" />
-      <EmbeddedResource Include="wwwroot\libs\emotes\emotes_lucide.json" />
-      <EmbeddedResource Include="wwwroot\libs\emotes\emotes_standard.json" />
+      <AdditionalFiles Include="Components\InfiniToasts\InfiniToastManager.razor" />
+      <AdditionalFiles Include="Components\InfiniToasts\ToastMessageBase.razor" />
     </ItemGroup>
+
 </Project>
