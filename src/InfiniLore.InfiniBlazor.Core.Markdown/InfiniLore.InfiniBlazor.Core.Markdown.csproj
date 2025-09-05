@@ -30,8 +30,4 @@
         <PackageReference Include="Microsoft.AspNetCore.WebUtilities" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Components\" />
-    </ItemGroup>
 </Project>
