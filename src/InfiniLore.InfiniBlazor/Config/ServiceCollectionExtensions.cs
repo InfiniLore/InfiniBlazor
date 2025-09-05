@@ -20,20 +20,12 @@ public static class ServiceCollectionExtensions {
         services.RegisterServicesFromInfiniLoreInfiniBlazor();
         services.AddLucideIcons();
 
-        // config.RegisterTheme<DefaultThemeCollection>();
         
         services.AddSingleton(InfiniBlazorMdComponentConverterFactory.Create);
         services.AddSingleton(CalloutStyleProviderFactory.Create);
         services.AddSingleton(MdStringMdSyntaxDeserializerFactory.Create);
         
         configure?.Invoke(config);
-        
-        // // Add all added stuff after the config is done
-        // services.AddSingleton<IThemingConfig>(new FrozenThemingConfig {
-        //     RegisteredBaseThemes = config.RegisteredBaseThemeCollections.ToFrozenDictionary(),
-        //     DefaultThemeCollectionName = config.DefaultThemeCollectionName,
-        //     DefaultThemeMode = config.DefaultThemeMode,
-        // });
 
         services.AddSingleton<IToastingConfig>(new FrozenToastingConfig {
             AutoRemoveDuration = config.ToastDefaultDuration,

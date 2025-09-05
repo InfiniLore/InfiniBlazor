@@ -35,6 +35,7 @@
       <UpToDateCheckInput Remove="InfiniMarkdownEditorNew\InfiniMarkdownEditorNew.razor" />
       <UpToDateCheckInput Remove="InfiniMarkdownEditorNew\InfiniMdEditorInput.razor" />
       <UpToDateCheckInput Remove="InfiniMarkdownEditorNew\InfiniMdEditorPreview.razor" />
+      <UpToDateCheckInput Remove="InfiniThemes\InfiniThemeManager.razor" />
     </ItemGroup>
 
 </Project>
