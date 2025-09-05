@@ -64,8 +64,8 @@ public sealed class TableMdSyntaxNode : MdSyntaxNode<TableMdSyntaxNode> {
         HasAlignments = false;
         return base.TryReset();
     }
-    
-    public override bool Equals(TableMdSyntaxNode? other) {
+
+    protected override bool Equals(TableMdSyntaxNode? other) {
         for (int i = 0; i < Alignments.Length; i++) {
             Alignment? alignmentOther = other?.Alignments.ElementAtOrDefault(i);
             if (alignmentOther is null || alignmentOther != Alignments[i]) return false;

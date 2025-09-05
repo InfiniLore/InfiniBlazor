@@ -21,7 +21,7 @@ public sealed class HeadingSimpleMdSyntaxNode : MdSyntaxNode<HeadingSimpleMdSynt
         return base.TryReset();
     }
 
-    public override bool Equals(HeadingSimpleMdSyntaxNode? other)
+    protected override bool Equals(HeadingSimpleMdSyntaxNode? other)
         => base.Equals(other)
             && StringComparer.InvariantCulture.Equals(Identifier, other.Identifier);
 }

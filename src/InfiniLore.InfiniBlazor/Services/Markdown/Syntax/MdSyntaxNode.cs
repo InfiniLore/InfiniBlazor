@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode, IResettable, IEquatable<T>
+public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode, IResettable
     where T : MdSyntaxNode<T>, new() {
     public Guid Id { get; } = Guid.CreateVersion7();// Not reset during TryReset, this is by design.
 
@@ -170,7 +170,7 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     private void EnsureChildNodeExpansionCapacity() {
         int childNodeArrayLength = ChildNodes.Length;
         if (childNodeArrayLength == 0 && _isEmptyInitialized) {
-            // We are initializing with an empty array shared object, so we need to initialize it from the pool, else we won't be able to return it to a pool
+            // We are initializing with an empty array-shared object, so we need to initialize it from the pool, else we won't be able to return it to a pool
             ChildNodes = ArrayPool<IMdSyntaxNode>.Shared.Rent(2);
             return;
         }
@@ -257,7 +257,7 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     public bool Equals(IMdSyntaxNode? other) => Equals(other as T);
     public override bool Equals(object? other) => Equals(other as T);
 
-    public virtual bool Equals(T? other) {
+    protected virtual bool Equals([NotNullWhen(true)] T? other) {
         if (other is null) return false;
         if (ChildCount != other.ChildCount) return false;
 

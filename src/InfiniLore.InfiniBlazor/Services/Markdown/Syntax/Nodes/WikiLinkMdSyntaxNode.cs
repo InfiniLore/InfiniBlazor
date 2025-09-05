@@ -21,7 +21,7 @@ public sealed class WikiLinkMdSyntaxNode() : MdSyntaxNode<WikiLinkMdSyntaxNode>(
         return base.TryReset();
     }
 
-    public override bool Equals(WikiLinkMdSyntaxNode? other)
+    protected override bool Equals(WikiLinkMdSyntaxNode? other)
         => base.Equals(other)
             && StringComparer.InvariantCulture.Equals(Content, other.Content);
 }

@@ -7,7 +7,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMdSyntaxNode {
+public interface IMdSyntaxNode : IEquatable<IMdSyntaxNode>{
     Guid Id { get; }
     IMdSyntaxNode? Parent { get; }
     int ChildCount { get; }

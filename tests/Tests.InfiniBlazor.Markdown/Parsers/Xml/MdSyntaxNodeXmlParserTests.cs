@@ -170,7 +170,10 @@ public class MdSyntaxTreeXmlParserTests {
         IMdSyntaxTree deserializedTree = await parser.SerializeToSyntaxTreeAsync(memoryStream);
 
         // Assert: Ensure the structure and content remain identical
-        await Assert.That(originalTree).IsEquivalentTo(deserializedTree);
+        IMdSyntaxNode originalRootNode = originalTree.RootNode;
+        IMdSyntaxNode deserializedRootNode = deserializedTree.RootNode;
+        bool result = originalRootNode.Equals(deserializedRootNode);
+        await Assert.That(result).IsTrue();
     }
 
 }

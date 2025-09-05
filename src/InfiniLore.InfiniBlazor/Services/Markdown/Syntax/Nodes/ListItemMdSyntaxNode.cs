@@ -44,7 +44,7 @@ public sealed class ListItemMdSyntaxNode : MdSyntaxNode<ListItemMdSyntaxNode> {
         return base.TryReset();
     }
 
-    public override bool Equals(ListItemMdSyntaxNode? other)
+    protected override bool Equals(ListItemMdSyntaxNode? other)
         => base.Equals(other)
             && IsCheckable == other.IsCheckable
             && StringComparer.InvariantCulture.Equals(Index, other.Index)

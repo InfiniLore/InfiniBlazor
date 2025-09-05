@@ -21,7 +21,7 @@ public sealed class HtmlMdSyntaxNode() : MdSyntaxNode<HtmlMdSyntaxNode>(initialC
         return base.TryReset();
     }
 
-    public override bool Equals(HtmlMdSyntaxNode? other)
+    protected override bool Equals(HtmlMdSyntaxNode? other)
         => base.Equals(other)
             && Content == other.Content;
 }

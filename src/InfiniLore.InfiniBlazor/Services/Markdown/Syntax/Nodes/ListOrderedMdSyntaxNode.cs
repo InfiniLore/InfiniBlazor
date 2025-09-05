@@ -21,7 +21,7 @@ public sealed class ListOrderedMdSyntaxNode : MdSyntaxNode<ListOrderedMdSyntaxNo
         return base.TryReset();
     }
 
-    public override bool Equals(ListOrderedMdSyntaxNode? other)
+    protected override bool Equals(ListOrderedMdSyntaxNode? other)
         => base.Equals(other)
             && LeadingSpaces == other.LeadingSpaces;
 }
