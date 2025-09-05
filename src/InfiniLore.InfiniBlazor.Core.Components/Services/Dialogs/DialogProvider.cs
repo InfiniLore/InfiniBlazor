@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using System.Buffers;
 using System.Collections.Concurrent;
 
-namespace InfiniLore.InfiniBlazor.Dialogs;
+namespace InfiniLore.InfiniBlazor.Components.Dialogs;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

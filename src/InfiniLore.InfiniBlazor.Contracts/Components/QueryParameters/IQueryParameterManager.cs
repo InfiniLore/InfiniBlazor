@@ -1,16 +1,16 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Dialogs;
-
+namespace InfiniLore.InfiniBlazor.Components.QueryParameters;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IDialogProvider {
-    event Func<Task>? OnDialogOpenedAsync;
+public interface IQueryParameterManager {
+    void SetParam<T>(string key, T value);
+    void SetParams(params Span<(string key, object? value)> parameters);
+    void RemoveParam(string key);
+    void RemoveParams(params Span<string> keys);
+    T? GetParam<T>(string key);
 
-    Task PushDialogAsync(IDialogData dialog);
-    Task<IDialogData?> TryRemoveDialogAsync(Guid id);
-    
-    Task<IDialogData?> TakeDialogAsync();
+    public string ApplyTrackedQueryParameters(string uri);
 }

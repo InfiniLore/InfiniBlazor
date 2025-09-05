@@ -1,15 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Diagnostics.CodeAnalysis;
-
-namespace InfiniLore.InfiniBlazor.Callouts;
-
+namespace InfiniLore.InfiniBlazor.Components.Emotes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface ICalloutStyleProvider {
-    ICalloutStyle DefaultStyle { get; }
-
-    bool TryGetCalloutStyle(string id, [NotNullWhen(true)] out ICalloutStyle? style);
+public enum EmoteContentType {
+    Emoji,
+    LucideIconName,
+    SvgData
 }

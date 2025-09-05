@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace InfiniLore.InfiniBlazor.Emotes;
+namespace InfiniLore.InfiniBlazor.Components.Emotes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

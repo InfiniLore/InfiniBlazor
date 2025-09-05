@@ -1,14 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Callouts;
-
+namespace InfiniLore.InfiniBlazor.Components.Debugger;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface ICalloutStyle {
-    string IconName { get; }
-    string CssContainer { get; }
-    string CssTitle { get; }
-    string CssBody { get; }
+public enum DebuggerState {
+    Disabled,
+    Enabled
 }

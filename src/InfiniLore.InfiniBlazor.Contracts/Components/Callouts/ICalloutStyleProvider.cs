@@ -1,15 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Microsoft.AspNetCore.Components;
+using System.Diagnostics.CodeAnalysis;
 
-namespace InfiniLore.InfiniBlazor.DataTrees;
-
+namespace InfiniLore.InfiniBlazor.Components.Callouts;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IInfiniDataTreeNode {
-    string VisibleName { get; }
-    EventCallback OnClickCallback { get; }
-    IEnumerable<IInfiniDataTreeNode> DataNodes { get; }
+public interface ICalloutStyleProvider {
+    ICalloutStyle DefaultStyle { get; }
+
+    bool TryGetCalloutStyle(string id, [NotNullWhen(true)] out ICalloutStyle? style);
 }

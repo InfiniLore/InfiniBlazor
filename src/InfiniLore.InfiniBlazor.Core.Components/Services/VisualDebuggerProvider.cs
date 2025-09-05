@@ -2,10 +2,10 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using InfiniLore.InfiniBlazor.Debugger;
-using InfiniLore.InfiniBlazor.QueryParameters;
+using InfiniLore.InfiniBlazor.Components.Debugger;
+using InfiniLore.InfiniBlazor.Components.QueryParameters;
 
-namespace InfiniLore.InfiniBlazor;
+namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

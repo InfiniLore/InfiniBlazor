@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using Example.InfiniBlazor.Shared.Themes;
 using InfiniLore.InfiniBlazor.AutoDocumentation;
-using InfiniLore.InfiniBlazor.Emotes;
+using InfiniLore.InfiniBlazor.Components.Emotes;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace Example.InfiniBlazor.Client;

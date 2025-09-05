@@ -1,15 +1,19 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Dialogs;
-
+namespace InfiniLore.InfiniBlazor.Components.Debugger;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IDialogData {
-    Guid Id { get; }
-    Type ComponentType { get; }
-    int Priority { get; }
-    
-    IDictionary<string, object?>? AsDynamicParameters();
+public interface IVisualDebuggerProvider {
+    event Action? OnChange;
+    event Func<Task>? OnChangeAsync;
+
+    bool IsEnabled();
+    Task ToggleStateAsync();
+    Task SetStateAsync(DebuggerState state);
+
+    void InitializeFromUrl();
+
+    string? WithEnabled(string? onTrue, string? onFalse);
 }

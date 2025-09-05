@@ -1,25 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Callouts;
-
+namespace InfiniLore.InfiniBlazor.Components.Emotes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public record CalloutStyle(
-    string Key,
-    ICollection<string> AlternateKeys,
-    string IconName,
-    string CssContainer,
-    string CssTitle,
-    string CssBody
-) : ICalloutStyle {
-    public static CalloutStyle Empty => new(
-        string.Empty,
-        [],
-        string.Empty,
-        string.Empty,
-        string.Empty,
-        string.Empty
-    );
+public interface IEmoteEntry {
+    string? Data { get; }
+    EmoteContentType ContentType { get; }
 }

@@ -1,16 +1,24 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Text.Json.Serialization;
-
-namespace InfiniLore.InfiniBlazor.Emotes;
-
+namespace InfiniLore.InfiniBlazor.Components.Callouts;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public record EmoteEntry(
-    [property: JsonPropertyName("keys")] ICollection<string> Keys,
-    [property: JsonPropertyName("data")] string? Data,
-    [property: JsonPropertyName("contentType")] EmoteContentType ContentType
-) : IEmoteEntry;
-
+public record CalloutStyle(
+    string Key,
+    ICollection<string> AlternateKeys,
+    string IconName,
+    string CssContainer,
+    string CssTitle,
+    string CssBody
+) : ICalloutStyle {
+    public static CalloutStyle Empty => new(
+        string.Empty,
+        [],
+        string.Empty,
+        string.Empty,
+        string.Empty,
+        string.Empty
+    );
+}

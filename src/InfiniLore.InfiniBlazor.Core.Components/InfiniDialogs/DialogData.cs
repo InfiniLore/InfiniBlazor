@@ -1,7 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Dialogs;
+using InfiniLore.InfiniBlazor.Components.Dialogs;
 
 namespace InfiniLore.InfiniBlazor.Components;
 

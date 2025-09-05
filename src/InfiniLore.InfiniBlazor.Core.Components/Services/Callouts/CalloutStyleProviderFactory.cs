@@ -4,7 +4,7 @@
 using InfiniLore.Lucide;
 using System.Collections.Frozen;
 
-namespace InfiniLore.InfiniBlazor.Callouts;
+namespace InfiniLore.InfiniBlazor.Components.Callouts;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
