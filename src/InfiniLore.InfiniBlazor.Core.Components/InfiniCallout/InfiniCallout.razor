@@ -15,9 +15,9 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div
-    class="@ConcatClasses(Class, Style.CssContainer) my-2 flex flex-col min-w-full min-h-lh pt-2 pb-3 px-3 border-l-4 border-y-1 border-r-1 rounded-r-xl">
+    class="@ConcatClasses(Class, Style?.CssContainer) my-2 flex flex-col min-w-full min-h-lh pt-2 pb-3 px-3 border-l-4 border-y-1 border-r-1 rounded-r-xl">
     @* Top Banner *@
-    <div class="@Style.CssTitle flex flex-row w-full gap-2 items-center">
+    <div class="@Style?.CssTitle flex flex-row w-full gap-2 items-center">
         <div class="flex shrink">
             @if (Icon is not null) {
                 @Icon
@@ -40,10 +40,10 @@
                 TooltipAnchor="Anchor.Left">
                 <Content>
                     @if (IsCollapsed) {
-                        <LiChevronDown Class="@Style.CssTitle"/>
+                        <LiChevronDown Class="@Style?.CssTitle"/>
                     }
                     else {
-                        <LiChevronUp Class="@Style.CssTitle"/>
+                        <LiChevronUp Class="@Style?.CssTitle"/>
                     }
                 </Content>
                 <Tooltip>@(IsCollapsed ? "Open Callout" : "Close Callout")</Tooltip>
@@ -53,7 +53,7 @@
 
     @* Body *@
     <div
-        class="@ConcatClasses(Style.CssBody, IsCollapsed ? "h-0 overflow-hidden opacity-0 pointer-events-none border-none" : "h-auto opacity-100 border-t-1 pt-2 mt-1") flex flex-col transition-all duration-300 ease-in-out">
+        class="@ConcatClasses(Style?.CssBody, IsCollapsed ? "h-0 overflow-hidden opacity-0 pointer-events-none border-none" : "h-auto opacity-100 border-t-1 pt-2 mt-1") flex flex-col transition-all duration-300 ease-in-out">
         @Content
     </div>
 </div>
