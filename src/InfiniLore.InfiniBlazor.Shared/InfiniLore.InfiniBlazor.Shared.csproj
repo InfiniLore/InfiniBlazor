@@ -10,6 +10,7 @@
     <ItemGroup>
         <InternalsVisibleTo Include="InfiniLore.InfiniBlazor" />
         <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Core.Components" />
+        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Core.Theming" />
         <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Core.Markdown" />
         <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Extensions.AutoDocumentation" />
         <InternalsVisibleTo Include="Tests.InfiniBlazor" />

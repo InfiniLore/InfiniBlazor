@@ -72,10 +72,6 @@
     </ItemGroup>
     
     <ItemGroup>
-      <Folder Include="Aggregates\Layout\" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <AdditionalFiles Include="Aggregates\Layout\InfiniLayout\InfiniLayout.razor" />
+      <Folder Include="Aggregates\Theming\" />
     </ItemGroup>
 </Project>
