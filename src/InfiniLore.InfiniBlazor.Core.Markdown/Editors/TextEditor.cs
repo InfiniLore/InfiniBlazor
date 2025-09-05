@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.TextEditor;
+namespace InfiniLore.InfiniBlazor.Markdown.Editors;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

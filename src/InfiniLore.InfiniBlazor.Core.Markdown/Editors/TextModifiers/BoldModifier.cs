@@ -5,14 +5,14 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 
-namespace InfiniLore.InfiniBlazor.TextEditor.TextModifiers;
+namespace InfiniLore.InfiniBlazor.Markdown.Editors.TextModifiers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ITextModifier>()]
 [SuppressMessage("ReSharper", "ReplaceAutoPropertyWithComputedProperty")]
-public class UnderlineModifier(ILogger<UnderlineModifier> logger) : SingleInstructionModifiers(logger) {
-    public override string IconName { get; } = "underline";
-    public override string ModifierName { get; } = "underline";
-    protected override string Instruction { get; } = "_";
+public class BoldModifier(ILogger<BoldModifier> logger) : SingleInstructionModifiers(logger) {
+    public override string IconName { get; } = "bold";
+    public override string ModifierName { get; } = "bold";
+    protected override string Instruction { get; } = "**";
 }

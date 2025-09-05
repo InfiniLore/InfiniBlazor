@@ -4,10 +4,10 @@
 using InfiniLore.InfiniBlazor.Components;
 using InfiniLore.InfiniBlazor.Debugger;
 using InfiniLore.InfiniBlazor.JsRuntime;
+using InfiniLore.InfiniBlazor.Markdown.Editors;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.HtmlString;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
-using InfiniLore.InfiniBlazor.TextEditor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

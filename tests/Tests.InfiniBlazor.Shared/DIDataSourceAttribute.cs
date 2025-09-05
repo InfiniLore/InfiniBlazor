@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Emotes;
-using InfiniLore.InfiniBlazor.TextEditor.TextModifiers;
+using InfiniLore.InfiniBlazor.Markdown.Editors.TextModifiers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Tests.Shared.Infinilore.InfiniBlazor;

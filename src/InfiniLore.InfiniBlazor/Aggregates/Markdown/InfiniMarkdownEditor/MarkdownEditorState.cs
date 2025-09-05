@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.Debouncers;
-using InfiniLore.InfiniBlazor.TextEditor;
+using InfiniLore.InfiniBlazor.Markdown.Editors;
 using Microsoft.AspNetCore.Components;
 
 namespace InfiniLore.InfiniBlazor.Markdown;

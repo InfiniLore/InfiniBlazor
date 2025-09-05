@@ -3,14 +3,11 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.TextEditor;
+namespace InfiniLore.InfiniBlazor.Markdown.Editors;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public static partial class TextEditorRegexLib {
-    [GeneratedRegex("\r?\n", RegexOptions.Compiled | RegexOptions.ExplicitCapture)]
-    public static partial Regex LineEndingRegex { get; }
-
     [GeneratedRegex(@"^( *(?:- |\d+\. |>[>\-\d. ]* )).*$", RegexOptions.Compiled)]
     public static partial Regex ListItemsRegex { get; }
 
