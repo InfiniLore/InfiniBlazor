@@ -132,6 +132,7 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
         // Check if we need to resize
         EnsureChildNodeExpansionCapacity();
         childNode.WithParent(this);
+        childNode.WithDepth(Depth + 1);
 
         // ReSharper disable once HeapView.PossibleBoxingAllocation
         ChildNodes[ChildCount++] = childNode;
@@ -141,6 +142,7 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
         // Check if we need to resize
         EnsureChildNodeExpansionCapacity();
         childNode.WithParent(this);
+        childNode.WithDepth(Depth + 1);
 
         // ReSharper disable once HeapView.PossibleBoxingAllocation
         ChildNodes[ChildCount++] = childNode;
@@ -154,6 +156,7 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
 
         EnsureChildNodeExpansionCapacity();
         childNode.WithParent(this);
+        childNode.WithDepth(Depth + 1);
 
         // ReSharper disable once ConvertTypeCheckPatternToNullCheck
         if (ChildNodes[index] is IMdSyntaxNode existingNode) {
@@ -210,8 +213,15 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
 
     public IMdSyntaxNode WithParent(IMdSyntaxNode parent) {
         Parent = parent;
-        Depth = parent.Depth + 1;
         return this;
+    }
+    
+    public IMdSyntaxNode WithDepth(int depth) {
+        Depth = depth;
+        foreach (IMdSyntaxNode node in GetChildrenSpan()) {
+            node.WithDepth(depth + 1);
+        }
+        return this;   
     }
 
     public IMdSyntaxNode WithModifier(IMdSyntaxNodeModifier modifier) {

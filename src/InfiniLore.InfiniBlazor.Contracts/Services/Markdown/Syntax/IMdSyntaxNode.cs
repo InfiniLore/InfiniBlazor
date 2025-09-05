@@ -30,6 +30,7 @@ public interface IMdSyntaxNode : IEquatable<IMdSyntaxNode>{
     void AddChildNode(IMdSyntaxNode childNode);
     TChild AddChildNode<TChild>(TChild childNode) where TChild : IMdSyntaxNode;
 
+    IMdSyntaxNode WithDepth(int depth);
     IMdSyntaxNode WithText(string content);
     IMdSyntaxNode WithParent(IMdSyntaxNode parent);
     IMdSyntaxNode WithModifier(IMdSyntaxNodeModifier modifier);
