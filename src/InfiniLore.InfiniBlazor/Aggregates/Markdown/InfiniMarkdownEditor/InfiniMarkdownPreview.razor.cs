@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using InfiniLore.InfiniBlazor.Components;
+using Microsoft.AspNetCore.Components;
 
-// ReSharper disable once CheckNamespace
-namespace InfiniLore.InfiniBlazor.Components;
+namespace InfiniLore.InfiniBlazor.Markdown;
 // -----------------------------------------------------------------------------------------------------------------
 // Methods
 // -----------------------------------------------------------------------------------------------------------------

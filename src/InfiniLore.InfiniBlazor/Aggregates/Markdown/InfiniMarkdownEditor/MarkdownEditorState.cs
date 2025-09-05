@@ -5,13 +5,12 @@ using CodeOfChaos.Extensions.Debouncers;
 using InfiniLore.InfiniBlazor.TextEditor;
 using Microsoft.AspNetCore.Components;
 
-namespace InfiniLore.InfiniBlazor.Components;
-
+namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class MarkdownEditorState {
-    public bool ShowSidePreview { get; } = true;
+    public bool ShowSidePreview => true;
     public bool IsLocked { get; set; }
     
     public ElementReference InputRef { get; set; }
