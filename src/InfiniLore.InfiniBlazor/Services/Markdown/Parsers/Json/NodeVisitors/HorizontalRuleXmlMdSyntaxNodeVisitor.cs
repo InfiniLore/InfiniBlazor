@@ -1,0 +1,31 @@
+﻿// ---------------------------------------------------------------------------------------------------------------------
+// Imports
+// ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
+using System.Text.Json;
+
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Json.NodeVisitors;
+// ---------------------------------------------------------------------------------------------------------------------
+// Code
+// ---------------------------------------------------------------------------------------------------------------------
+public sealed class HorizontalRuleJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<HorizontalRuleMdSyntaxNode> {
+    private const string Identifier = nameof(HorizontalRuleMdSyntaxNode.Identifier);
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override void DeserializeDetails(HorizontalRuleMdSyntaxNode node, Utf8JsonWriter writer) {
+        base.DeserializeDetails(node, writer);
+
+        writer.WriteString(Identifier, node.Identifier);
+    }
+
+    protected override void SerializeDetails(JsonElement element, HorizontalRuleMdSyntaxNode targetNode) {
+        base.SerializeDetails(element, targetNode);
+
+        if (element.TryGetProperty(Identifier, out JsonElement identifierProperty)) {
+            targetNode.WithIdentifier(identifierProperty.GetString() ?? string.Empty);
+        }
+    }
+
+}

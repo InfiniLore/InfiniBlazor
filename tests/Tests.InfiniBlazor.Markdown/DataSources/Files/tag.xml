@@ -11,6 +11,28 @@
     <ExpectedMarkdownString>#tag</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
   </MdTestData>
+  <MdTestData Id="edgecasesNonBreakingSpace" FileName="tag.xml">
+    <MdString># </MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"># </TextMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;# &lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString># </ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="empty" FileName="tag.xml">
+    <MdString>#</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">#</TextMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;#&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>#</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
   <MdTestData Id="invalid" FileName="tag.xml">
     <MdString>#this is not a valid tag
 
