@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Core.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.Editors;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Frozen;
@@ -24,6 +25,7 @@ public sealed class InfiniBlazorMarkdownConfig : IMarkdownConfig {
     // -----------------------------------------------------------------------------------------------------------------
     public InfiniBlazorMarkdownConfig(IServiceCollection serviceCollection) {
         serviceCollection.RegisterServicesFromInfiniLoreInfiniBlazorCoreMarkdown();
+        serviceCollection.AddSingleton(TextEditorFactory.CreateTextEditor);
         serviceCollection.AddSingleton<IMarkdownConfig>(this);
         
         ComponentRecordsLazy = new Lazy<FrozenDictionary<Type, IMdComponentRecord>>(() => {
