@@ -4,6 +4,7 @@
 using InfiniLore.InfiniBlazor;
 using InfiniLore.InfiniBlazor.Callouts;
 using InfiniLore.InfiniBlazor.Config;
+using InfiniLore.InfiniBlazor.Markdown.Editors;
 using InfiniLore.InfiniBlazor.Markdown.MdBlazorComponents;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
@@ -23,6 +24,7 @@ public static class ServiceCollectionExtensions {
 
         services.AddSingleton(CalloutStyleProviderFactory.Create);
         services.AddSingleton(MdStringMdSyntaxDeserializerFactory.Create);
+        services.AddSingleton(TextEditorFactory.CreateTextEditor);
         
         RegisterMdBlazorComponents(config);
         

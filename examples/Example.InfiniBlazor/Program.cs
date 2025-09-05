@@ -5,8 +5,6 @@ using Example.InfiniBlazor.Components;
 using Example.InfiniBlazor.Shared;
 using Example.InfiniBlazor.Shared.Themes;
 using InfiniLore.InfiniBlazor.AutoDocumentation;
-
-using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Emotes;
 
 namespace Example.InfiniBlazor;
@@ -21,7 +19,6 @@ public class Program {
 
         builder.Services.AddInfiniBlazor(config => {
             config.Theming.RegisterTheme<PrideThemeCollection>();
-            config.AddMarkdownLogic();
             config.AddAutoDocumentation(static config => 
                 config.RegisterAutoDocumentationData<AutoDocumenterData_ExampleInfiniBlazorShared>()
             );
