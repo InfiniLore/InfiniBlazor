@@ -218,9 +218,12 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     
     public IMdSyntaxNode WithDepth(int depth) {
         Depth = depth;
+        if (ChildCount == 0) return this;
+        
         foreach (IMdSyntaxNode node in GetChildrenSpan()) {
             node.WithDepth(depth + 1);
         }
+        
         return this;   
     }
 
