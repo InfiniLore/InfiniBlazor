@@ -4,14 +4,8 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-
-        <RootNamespace>InfiniLore.InfiniBlazor.Markdown</RootNamespace>
+        <RootNamespace>InfiniLore.InfiniBlazor.Components</RootNamespace>
     </PropertyGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Shared\InfiniLore.InfiniBlazor.Shared.csproj" />
-    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="CodeOfChaos.Extensions.AspNetCore.Components" />
@@ -22,8 +16,9 @@
         <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" />
         <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators">
             <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>analyzers</IncludeAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+
         <PackageReference Include="JetBrains.Annotations" />
         <PackageReference Include="Microsoft.AspNetCore.Components" />
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
@@ -32,6 +27,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Components\" />
+      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
+      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Shared\InfiniLore.InfiniBlazor.Shared.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="InfiniMarkdownEditorNew\InfiniMarkdownEditorNew.razor" />
+      <UpToDateCheckInput Remove="InfiniMarkdownEditorNew\InfiniMdEditorInput.razor" />
+      <UpToDateCheckInput Remove="InfiniMarkdownEditorNew\InfiniMdEditorPreview.razor" />
+    </ItemGroup>
+
 </Project>

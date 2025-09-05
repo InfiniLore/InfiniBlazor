@@ -10,13 +10,38 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class MarkdownConfig(IInfiniBlazorConfig config) : IMarkdownConfig {
+public sealed class MarkdownConfig : IMarkdownConfig {
+    public IInfiniBlazorConfig Config { get; }
     private Dictionary<Type, MdComponentRecord> ComponentRecords { get; } = new(32);
+    private HashSet<Type> SkippedBlazorComponentTypes { get; } = new(32);
+    public bool RenderUnknownBlazorComponents { get; set; } = false;
+    
+    private Lazy<FrozenDictionary<Type, IMdComponentRecord>> ComponentRecordsLazy { get; }
+    private Lazy<FrozenSet<Type>> SkippedBlazorComponentTypesLazy { get; }
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Constructors
+    // -----------------------------------------------------------------------------------------------------------------
+    public MarkdownConfig(IInfiniBlazorConfig config) {
+        Config = config;
+        
+        ComponentRecordsLazy = new Lazy<FrozenDictionary<Type, IMdComponentRecord>>(() => {
+            ComponentRecords.TrimExcess();
+            return ComponentRecords.ToFrozenDictionary(
+                pair => pair.Key, 
+                IMdComponentRecord (pair) => pair.Value);
+        });
+        
+        SkippedBlazorComponentTypesLazy = new Lazy<FrozenSet<Type>>(() => {
+            SkippedBlazorComponentTypes.TrimExcess();
+            return SkippedBlazorComponentTypes.ToFrozenSet();
+        });
+    }
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public MarkdownConfig RegisterComponent<TNode, TComponent>() where TComponent : InfiniBlazorMdComponentBase<TNode>, IMdSyntaxNode where TNode : class, IMdSyntaxNode {
+    public MarkdownConfig RegisterBlazorComponent<TNode, TComponent>() where TComponent : InfiniBlazorMdComponentBase<TNode>, IMdSyntaxNode where TNode : class, IMdSyntaxNode {
         int count = ComponentRecords.Count;
         if (ComponentRecords.Capacity < count + 1) ComponentRecords.EnsureCapacity(count * 2);
         
@@ -24,12 +49,15 @@ public sealed class MarkdownConfig(IInfiniBlazorConfig config) : IMarkdownConfig
         return this;
     }
     
-    public FrozenDictionary<Type, IMdComponentRecord> GetComponentRecords() {
-        ComponentRecords.TrimExcess();
-        return ComponentRecords.ToFrozenDictionary(
-            pair => pair.Key, 
-            IMdComponentRecord (pair) => pair.Value);
+    public MarkdownConfig SkipBlazorRenderingOnComponent<TNode>() where TNode : class, IMdSyntaxNode {
+        SkippedBlazorComponentTypes.Add(typeof(TNode));
+        return this;   
     }
+
+    public FrozenDictionary<Type, IMdComponentRecord> GetComponentRecords()
+        => ComponentRecordsLazy.Value;
     
+    public FrozenSet<Type> GetSkippedBlazorComponentTypes()
+        => SkippedBlazorComponentTypesLazy.Value;
     
 }

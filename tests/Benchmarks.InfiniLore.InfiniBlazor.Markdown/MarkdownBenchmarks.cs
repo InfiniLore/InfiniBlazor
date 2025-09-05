@@ -7,6 +7,7 @@ using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Markdown;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
+using MarkdownConfig = InfiniLore.InfiniBlazor.Config.MarkdownConfig;
 
 namespace Benchmarks.InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------

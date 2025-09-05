@@ -2,15 +2,11 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor;
-using System.Collections.Frozen;
 
-namespace InfiniLore.InfiniBlazor.Config;
-
+namespace InfiniLore.InfiniBlazor.Markdown.MdBlazorComponents;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMarkdownConfig {
-    FrozenDictionary<Type, IMdComponentRecord> GetComponentRecords();
-    FrozenSet<Type> GetSkippedBlazorComponentTypes();
-    bool RenderUnknownBlazorComponents { get; }
+public partial class MdInfiniTemplate(ITemplateDataProvider? templateContentProvider = null) {
+    private ITemplateDataProvider? TemplateContentProvider { get; } = templateContentProvider;
 }

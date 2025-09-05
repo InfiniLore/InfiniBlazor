@@ -36,6 +36,7 @@
     <Project Path="src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/src/core/">
+    <Project Path="src\InfiniLore.InfiniBlazor.Core.Components\InfiniLore.InfiniBlazor.Core.Components.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor.Core.Markdown\InfiniLore.InfiniBlazor.Core.Markdown.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/src/extensions/">

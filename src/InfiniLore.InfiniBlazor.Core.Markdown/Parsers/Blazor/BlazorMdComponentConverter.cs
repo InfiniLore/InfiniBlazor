@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class BlazorMdComponentConverter : IBlazorMdComponentConverter {
-    public required FrozenDictionary<Type, MdComponentRecord> NodeToComponentMap { get; init; }
+    public required FrozenDictionary<Type, IMdComponentRecord> NodeToComponentMap { get; init; }
     public required FrozenSet<Type> SkippedComponentTypes { get; init; }
     public required bool RenderUnknownComponents { get; init; }
     
@@ -22,7 +22,7 @@ public class BlazorMdComponentConverter : IBlazorMdComponentConverter {
     private void RenderNodeAsComponent(RenderTreeBuilder builder, IMdSyntaxNode node) {
         if (SkippedComponentTypes.Contains(node.Type)) return;
         
-        if (!NodeToComponentMap.TryGetValue(node.Type, out MdComponentRecord? data)){
+        if (!NodeToComponentMap.TryGetValue(node.Type, out IMdComponentRecord? data)){
             if (!RenderUnknownComponents) return;
             data = MdComponentRecord.Empty;
         }
