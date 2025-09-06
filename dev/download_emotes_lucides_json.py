@@ -1,19 +1,18 @@
 ﻿import json
 import os
 import re
-import subprocess
-import tempfile
 import xml.etree.ElementTree as ET
 from typing import List, Dict, Optional
+import urllib.request
 
 # ----------------------------------------------------------------------------------------------------------------------
 # CONFIGURATION - Top level constants you can modify
 # ----------------------------------------------------------------------------------------------------------------------
 DIRECTORY_PACKAGES_PROPS_PATH = "../Directory.Packages.props"
 OUTPUT_JSON_FILE = "../src/InfiniLore.InfiniBlazor/wwwroot/libs/emotes/emotes_lucide.json"
-LUCIDE_PACKAGE_NAME = "lucide-static"
 INFINILORE_LUCIDE_PACKAGE_PATTERN = "InfiniLore.Lucide"
 
+UNPKG_ICON_NODES_URL = "https://unpkg.com/lucide-static@latest/icon-nodes.json"
 # ----------------------------------------------------------------------------------------------------------------------
 # FUNCTIONS
 # ----------------------------------------------------------------------------------------------------------------------
@@ -46,58 +45,34 @@ def extract_lucide_version_from_props(props_file_path: str) -> Optional[str]:
         print(f"Error parsing {props_file_path}: {e}")
         return None
 
-def extract_lucide_icons_from_npm(lucide_version: Optional[str] = None) -> List[str]:
-    # Create a temporary directory
-    with tempfile.TemporaryDirectory() as temp_dir:
-        print(f"Working in temporary directory: {temp_dir}")
 
-        original_cwd = os.getcwd()
-        os.chdir(temp_dir)
+def extract_lucide_icons_from_unpkg(lucide_version: Optional[str] = None) -> List[str]:
+    if lucide_version:
+        url = f"https://unpkg.com/lucide-static@0.{lucide_version}/icon-nodes.json"
+        print(f"Attempting to fetch icons for version {lucide_version}")
+    else:
+        url = UNPKG_ICON_NODES_URL
+        print("Fetching latest Lucide icons")
 
-        try:
-            print(f"Installing {LUCIDE_PACKAGE_NAME} package...")
-            subprocess.run(["npm", "init", "-y"], check=True, capture_output=True)
+    try:
+        print(f"   Fetching from: {url}")
 
-            package_to_install = LUCIDE_PACKAGE_NAME
-            if lucide_version:
-                print(f"Attempting to install version matching Lucide {lucide_version}")
+        with urllib.request.urlopen(url) as response:
+            data = json.loads(response.read().decode())
 
-            subprocess.run(["npm", "install", package_to_install], check=True, capture_output=True)
+        icon_names = list(data.keys()) if isinstance(data, dict) else []
 
-            # Find all SVG files in the icons directory
-            possible_icon_dirs = [
-                os.path.join("node_modules", LUCIDE_PACKAGE_NAME, "icons"),
-                os.path.join("node_modules", LUCIDE_PACKAGE_NAME, "src"),
-                os.path.join("node_modules", LUCIDE_PACKAGE_NAME)
-            ]
-
-            icons_dir = None
-            for potential_dir in possible_icon_dirs:
-                if os.path.exists(potential_dir):
-                    svg_files = [f for f in os.listdir(potential_dir) if f.endswith('.svg')]
-                    if svg_files:
-                        icons_dir = potential_dir
-                        print(f"Found icons directory: {icons_dir} with {len(svg_files)} SVG files")
-                        break
-
-            if not icons_dir:
-                print("Could not find icons directory with SVG files")
-                return []
-
-            # Extract icon names from SVG filenames
-            icon_names = []
-            for filename in os.listdir(icons_dir):
-                if filename.endswith('.svg'):
-                    icon_name = filename[:-4]
-                    icon_names.append(icon_name)
-
+        if icon_names:
+            print(f"   Successfully fetched {len(icon_names)} icon names")
             return sorted(icon_names)
-
-        except subprocess.CalledProcessError as e:
-            print(f"Error running npm command: {e}")
+        else:
+            print(f"   No icons found in response")
             return []
-        finally:
-            os.chdir(original_cwd)
+
+    except Exception as e:
+        print(f"   Failed to fetch from UNPKG: {e}")
+        return []
+
 
 def generate_icon_entries(icon_names: List[str]) -> List[Dict]:
     entries = []
@@ -114,6 +89,14 @@ def generate_icon_entries(icon_names: List[str]) -> List[Dict]:
 
     return entries
 
+
+def ensure_output_directory(output_path: str):
+    directory = os.path.dirname(output_path)
+    if directory and not os.path.exists(directory):
+        print(f"   Creating output directory: {directory}")
+        os.makedirs(directory, exist_ok=True)
+
+
 def main():
     print("=" * 80)
     print("Lucide Icons JSON Generator")
@@ -126,14 +109,14 @@ def main():
     if lucide_version:
         print(f"   Found Lucide version: {lucide_version}")
     else:
-        print( "   Could not extract version, proceeding with latest")
+        print("   Could not extract version, proceeding with latest")
 
-    # Try npm approach first
-    print("\n2. Attempting to extract icons from npm package...")
-    icon_names = extract_lucide_icons_from_npm(lucide_version)
+    # Extract icons from UNPKG
+    print("\n2. Extracting icons from UNPKG...")
+    icon_names = extract_lucide_icons_from_unpkg(lucide_version)
 
     if not icon_names:
-        print("   Failed to extract icons from both npm and GitHub")
+        print("   Failed to extract icons from UNPKG")
         return
 
     print(f"   Successfully extracted {len(icon_names)} icons")
@@ -141,6 +124,9 @@ def main():
     # Generate JSON entries
     print("\n3. Generating JSON entries...")
     entries = generate_icon_entries(icon_names)
+
+    # Ensure output directory exists
+    ensure_output_directory(OUTPUT_JSON_FILE)
 
     # Save to file
     print(f"4. Saving to {OUTPUT_JSON_FILE}...")
@@ -169,7 +155,8 @@ def main():
         print(f"Sample icon names: {', '.join(icon_names[:10])}...")
 
     except Exception as e:
-        print(f"   ✗ Error saving file: {e}")
+        print(f"   Error saving file: {e}")
+
 
 if __name__ == "__main__":
     main()
