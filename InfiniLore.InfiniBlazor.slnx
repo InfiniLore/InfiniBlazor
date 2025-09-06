@@ -5,12 +5,15 @@
     <File Path="Directory.Packages.props" />
     <File Path="InfiniLore.InfiniBlazor.GitHubActions.slnf" />
     <File Path="src\Directory.Build.props" />
-    <File Path="dev\bump_version.py" />
   </Folder>
   <Folder Name="/.dev-tools/github/">
     <File Path=".github\workflows\release.yml" />
     <File Path=".github\workflows\workflow-todo.yml" />
     <File Path=".github\workflows\onPullRequest-TestDotnet.yml" />
+  </Folder>
+  <Folder Name="/.dev-tools/py/">
+    <File Path="dev\bump_version.py" />
+    <File Path="dev\download_emotes_lucides_json.py" />
   </Folder>
   <Folder Name="/.dev-tools/web/">
     <File Path="tsconfig.json" />
