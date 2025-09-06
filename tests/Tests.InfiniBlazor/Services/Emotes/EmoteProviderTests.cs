@@ -15,6 +15,18 @@ public class EmoteProviderTests(IEmoteProvider provider) {
     // Test Methods
     // -----------------------------------------------------------------------------------------------------------------
     [Test]
+    public async Task CountShouldReturnExpected() {
+        // Arrange
+        const int expectedMinCount = 1600; // Lucide has around 1600 icons and those should all be loaded.
+        
+        // Act
+        int result = provider.Count;
+        
+        // Assert
+        await Assert.That(result).IsGreaterThanOrEqualTo(expectedMinCount);
+    }
+    
+    [Test]
     public async Task Initialize_ShouldPopulateData() {
         // Arrange
 
