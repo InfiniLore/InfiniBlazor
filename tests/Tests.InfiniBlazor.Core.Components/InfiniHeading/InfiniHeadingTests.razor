@@ -9,12 +9,40 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniHeading Size="HeadingSize.H1">Test</InfiniHeading>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private readonly RenderFragment Input = @<InfiniHeading Size="HeadingSize.H1">Test</InfiniHeading>;
-    private readonly RenderFragment ExpectedOutput = @<h1 class=" text-6xl font-semibold mb-6">Test</h1>;
+    public static IEnumerable<Func<(RenderFragment, RenderFragment)>> GetComponentDataSources() {
+        yield return () => (
+            @<InfiniHeading Size="HeadingSize.H1">Test</InfiniHeading>,
+            @<h1 class=" text-6xl font-semibold mb-6">Test</h1>
+        );
+        
+        yield return () => (
+            @<InfiniHeading Size="HeadingSize.H2">Test</InfiniHeading>,
+            @<h2 class=" text-5xl font-semibold mb-5">Test</h2>
+        );
+        
+        yield return () => (
+            @<InfiniHeading Size="HeadingSize.H3">Test</InfiniHeading>,
+            @<h3 class=" text-4xl font-semibold mb-4">Test</h3>
+        );
+        
+        yield return () => (
+            @<InfiniHeading Size="HeadingSize.H4">Test</InfiniHeading>,
+            @<h4 class=" text-3xl font-semibold mb-3">Test</h4>
+        );
+        
+        yield return () => (
+            @<InfiniHeading Size="HeadingSize.H5">Test</InfiniHeading>,
+            @<h5 class=" text-2xl font-semibold mb-2">Test</h5>
+        );
+        
+        yield return () => (
+            @<InfiniHeading Size="HeadingSize.H6">Test</InfiniHeading>,
+            @<h6 class=" text-xl font-semibold mb-1">Test</h6>
+        );
+    }
 }

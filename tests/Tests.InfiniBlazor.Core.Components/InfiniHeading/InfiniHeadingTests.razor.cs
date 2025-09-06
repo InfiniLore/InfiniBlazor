@@ -1,23 +1,24 @@
 ﻿using Bunit;
+using Microsoft.AspNetCore.Components;
 using Tests.InfiniBlazor.Shared;
 
 namespace Tests.InfiniBlazor.Core.Components.InfiniHeading;
 // -----------------------------------------------------------------------------------------------------------------
 // Methods
 // -----------------------------------------------------------------------------------------------------------------
-
 [DiDataSource]
 public partial class InfiniHeadingTests(IServiceProvider services) {
     [Test]
-    public async Task RendersCorrectly() {
+    [MethodDataSource(nameof(GetComponentDataSources))]
+    public Task RendersCorrectly(RenderFragment input, RenderFragment expectedOutput) {
         // Arrange
         Services.AddFallbackServiceProvider(services);
         
         // Act
-        IRenderedFragment renderedFragment = Render(Input);
+        IRenderedFragment renderedFragment = Render(input);
         
         // Assert
-        renderedFragment.MarkupMatches(ExpectedOutput);
-
+        renderedFragment.MarkupMatches(expectedOutput);
+        return Task.CompletedTask;
     }
 }
