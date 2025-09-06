@@ -58,7 +58,6 @@
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests\Tests.InfiniBlazor\Tests.InfiniBlazor.csproj" Type="Classic C#" />
-    <File Path="tests\Directory.Build.props" />
   </Folder>
   <Folder Name="/tests/core/">
     <Project Path="tests\Tests.InfiniBlazor.Core.Markdown\Tests.InfiniBlazor.Core.Markdown.csproj" Type="Classic C#" />

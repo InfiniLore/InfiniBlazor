@@ -1,16 +1,25 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">    
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
+    </PropertyGroup>
     <ItemGroup>
         <InternalsVisibleTo Include="Tests.InfiniBlazor" />
         <InternalsVisibleTo Include="Tests.InfiniBlazor.Core.Markdown" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CodeOfChaos.Extensions"/>
-        <PackageReference Include="CodeOfChaos.Extensions.AspNetCore" />
-        <PackageReference Include="CodeOfChaos.Testing.TUnit" />
-        <PackageReference Include="JetBrains.Annotations"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
-        <PackageReference Include="NSubstitute" />
+      <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Core.Markdown\InfiniLore.InfiniBlazor.Core.Markdown.csproj" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+       <PackageReference Include="NSubstitute" />
         <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

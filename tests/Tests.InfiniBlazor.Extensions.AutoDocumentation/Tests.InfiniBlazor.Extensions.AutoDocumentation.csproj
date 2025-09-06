@@ -1,9 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
-    <ItemGroup>
-        <PackageReference Include="TUnit" />
-    </ItemGroup>
-
     <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
         <InifiniBlazor_AutoDocumentation_EnableKRParsing>true</InifiniBlazor_AutoDocumentation_EnableKRParsing>
     </PropertyGroup>
     
@@ -12,20 +15,13 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.csproj" />
+        <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.csproj"  OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="contentfiles;build"/>
         <ProjectReference Include="..\Tests.InfiniBlazor.Shared\Tests.InfiniBlazor.Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CodeOfChaos.Extensions"/>
-        <PackageReference Include="CodeOfChaos.Extensions.AspNetCore" />
-        <PackageReference Include="CodeOfChaos.Testing.TUnit" />
-        <PackageReference Include="JetBrains.Annotations"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
-        <PackageReference Include="NSubstitute" />
-        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
+        <PackageReference Include="TUnit" />
     </ItemGroup>
 
 </Project>

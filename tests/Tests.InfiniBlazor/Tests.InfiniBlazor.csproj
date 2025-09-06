@@ -1,12 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <ItemGroup>
-        <PackageReference Include="TUnit" />
-    </ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
+    </PropertyGroup>
     
     <ItemGroup>
         <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Core.Theming\InfiniLore.InfiniBlazor.Core.Theming.csproj" />
         <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" />
         <ProjectReference Include="..\Tests.InfiniBlazor.Shared.Markdown\Tests.InfiniBlazor.Shared.Markdown.csproj" />
         <ProjectReference Include="..\Tests.InfiniBlazor.Shared\Tests.InfiniBlazor.Shared.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="TUnit" />
     </ItemGroup>
 </Project>
