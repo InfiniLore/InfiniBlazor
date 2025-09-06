@@ -1,7 +1,7 @@
 ﻿# InfiniLore.InfiniBlazor
 
-A comprehensive Blazor component library built for modern web applications. 
-`InfiniLore.InfiniBlazor` provides a rich set of UI components with advanced features including theming, markdown processing, and optional packges for auto-documentation, and cross-platform MAUI support.
+A comprehensive Blazor component library built for modern web applications.
+`InfiniLore.InfiniBlazor` provides a rich set of UI components with advanced features including theming, markdown processing, and optional packages for auto-documentation, and cross-platform MAUI support.
 
 > Originally this project was created as a simple interactive Markdown editor that could be used within any framework. 
 > However, as the project grew, it became clear that the library would benefit from a more comprehensive set of components and features. 
@@ -14,7 +14,7 @@ A comprehensive Blazor component library built for modern web applications.
 - **Advanced Controls**: Emote system with Lucide icon integration
 - **Interactive Elements**: Dialog system, callouts, query parameter management
 - **Theming System**: Dynamic theme management with CSS custom properties
-- **Markdown Processing**: Advanced markdown syntax parsing, and allowing developers to attach interactive rendering with custom Blazor integration
+- **Markdown Processing**: Advanced Markdown syntax parsing and allowing developers to attach interactive rendering with custom Blazor integration
 - **JavaScript Interop**: Seamless JavaScript integration layer
 - **Toast Notifications**: Built-in notification system
 
@@ -25,7 +25,7 @@ A comprehensive Blazor component library built for modern web applications.
 
 ## Technology Stack
 
-- **.NET 9.0**: Latest .NET framework
+- **.NET 9.0**: Latest .NET Core 
 - **C# 13.0**: Modern C# language features
 - **TUnit**: Modern testing framework
 
@@ -121,7 +121,7 @@ Cross-platform support for mobile and desktop applications with specialized comp
 Although the library is built with using TailwindCSS for styling, it is not required to style your application using TailwindCSS.
 
 The library includes a comprehensive theming system with:
-- CSS custom property based themes
+- CSS custom property-based themes
 - Dynamic theme switching
 - Component-specific styling hooks
 - TailwindCSS integration for utility classes
