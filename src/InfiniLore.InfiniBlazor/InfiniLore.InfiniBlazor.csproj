@@ -20,6 +20,8 @@
     </ItemGroup>
     
     <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+
         <PackageReference Include="CodeOfChaos.Extensions.AspNetCore.Components" />
         <PackageReference Include="CodeOfChaos.Extensions.MicrosoftLogging" />
         <PackageReference Include="CodeOfChaos.Extensions.ObjectPool" />
@@ -37,7 +39,6 @@
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />
         <PackageReference Include="Microsoft.AspNetCore.WebUtilities" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
-        <PackageReference Include="Microsoft.Extensions.Hosting" />
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
     </ItemGroup>
     
@@ -46,14 +47,5 @@
       <EmbeddedResource Include="wwwroot\InfiniBlazor.js" />
       <EmbeddedResource Include="wwwroot\libs\emotes\emotes_lucide.json" />
       <EmbeddedResource Include="wwwroot\libs\emotes\emotes_standard.json" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <Reference Include="Microsoft.AspNetCore">
-        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\9.0.8\Microsoft.AspNetCore.dll</HintPath>
-      </Reference>
-      <Reference Include="Microsoft.Extensions.Hosting.Abstractions">
-        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\9.0.8\Microsoft.Extensions.Hosting.Abstractions.dll</HintPath>
-      </Reference>
     </ItemGroup>
 </Project>
