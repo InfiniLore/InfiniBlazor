@@ -13,7 +13,7 @@
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
 
         
-        <Version>0.1.0-preview.93</Version>
+        <Version>0.1.0-preview.94</Version>
         <Authors>Anna Sas</Authors>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
