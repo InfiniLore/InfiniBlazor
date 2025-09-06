@@ -33,13 +33,4 @@
       <ProjectReference Include="..\InfiniLore.InfiniBlazor.Shared\InfiniLore.InfiniBlazor.Shared.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <UpToDateCheckInput Remove="InfiniToasts\InfiniToastManager.razor" />
-      <UpToDateCheckInput Remove="InfiniToasts\ToastMessageBase.razor" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Services\" />
-    </ItemGroup>
-
 </Project>
