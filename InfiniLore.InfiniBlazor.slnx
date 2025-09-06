@@ -60,6 +60,7 @@
     <Project Path="tests\Tests.InfiniBlazor\Tests.InfiniBlazor.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/tests/core/">
+    <Project Path="tests\Tests.InfiniBlazor.Core.Components\Tests.InfiniBlazor.Core.Components.csproj" Type="Classic C#" />
     <Project Path="tests\Tests.InfiniBlazor.Core.Markdown\Tests.InfiniBlazor.Core.Markdown.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/tests/extensions/">
