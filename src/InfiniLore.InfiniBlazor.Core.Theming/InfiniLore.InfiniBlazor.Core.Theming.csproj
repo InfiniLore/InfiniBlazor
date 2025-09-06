@@ -10,7 +10,7 @@
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.InfiniBlazor.Core.Theming</PackageId>
-        <Version>0.1.0-preview.87</Version>
+        <Version>0.1.0-preview.88</Version>
         <Authors>Anna Sas</Authors>
         <Description>InfiniLore's Component Library</Description>
         <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
