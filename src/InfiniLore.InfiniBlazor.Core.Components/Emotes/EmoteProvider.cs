@@ -5,7 +5,6 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -14,7 +13,7 @@ namespace InfiniLore.InfiniBlazor.Components;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IEmoteProvider>]
-public class EmoteProvider(ILogger<EmoteProvider> logger) : IEmoteProvider {
+public class EmoteProvider(ILogger<EmoteProvider> logger, IHttpClientFactory httpClientFactory) : IEmoteProvider {
     private ConcurrentDictionary<string, EmoteEntry> Entries { get; set; } = new();
 
     private static JsonSerializerOptions JsonSerializerOptions { get; } = new() {
@@ -29,24 +28,28 @@ public class EmoteProvider(ILogger<EmoteProvider> logger) : IEmoteProvider {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public async Task InitializeAsync(CancellationToken ct = default) {
-        string[] resourceNames = {
-            "InfiniLore.InfiniBlazor.wwwroot.libs.emotes.emotes_standard.json",
-            "InfiniLore.InfiniBlazor.wwwroot.libs.emotes.emotes_lucide.json"
+        string[] resourcePaths = {
+            "libs/emotes/emotes_standard.json",
+            "libs/emotes/emotes_lucide.json"
         };
 
-        // Find the assembly containing the embedded resources
-        Assembly? resourceAssembly = AppDomain.CurrentDomain.GetAssemblies()
-            .FirstOrDefault(assembly => assembly.GetManifestResourceNames().Any(name => resourceNames.Contains(name)));
-
-        if (resourceAssembly == null) {
-            logger.Error("Could not find assembly containing emote JSON resources");
-            return;
+        using HttpClient httpClient = httpClientFactory.CreateClient(HttpClientNames.InfiniBlazor);
+        List<Stream> streams = new();
+        
+        foreach (string resourcePath in resourcePaths) {
+            try {
+                Stream stream = await httpClient.GetStreamAsync(resourcePath, ct);
+                streams.Add(stream);
+            }
+            catch (Exception ex) {
+                logger.Warning(ex, "Could not load emote resource: {resourcePath}", resourcePath);
+            }
         }
 
-        List<Stream> streams = resourceNames
-            .Select(resourceName => resourceAssembly.GetManifestResourceStream(resourceName))
-            .Where(stream => stream is not null)!
-            .ToList<Stream>();
+        if (streams.Count == 0) {
+            logger.Error("Could not load any emote JSON resources from wwwroot");
+            return;
+        }
 
         await Task.WhenAll(streams.Select(stream => TryImportDataAsync(stream, ct)));
 
@@ -54,7 +57,6 @@ public class EmoteProvider(ILogger<EmoteProvider> logger) : IEmoteProvider {
             await stream.DisposeAsync();
         }
     }
-
 
     public bool HasKey(string key) => Entries.ContainsKey(key);
     public bool HasKey(ReadOnlySpan<char> key) => Entries.TryGetAlternateLookup(out ConcurrentDictionary<string, EmoteEntry>.AlternateLookup<ReadOnlySpan<char>> lookup) && lookup.ContainsKey(key);

@@ -15,7 +15,7 @@ public class EmoteProviderTests {
     
     private static EmoteProvider GetEmoteProvider() {
         var logger = Substitute.For<ILogger<EmoteProvider>>();
-        return new EmoteProvider(logger);
+        return new EmoteProvider(logger, Substitute.For<IHttpClientFactory>());
     }
 
     // -----------------------------------------------------------------------------------------------------------------

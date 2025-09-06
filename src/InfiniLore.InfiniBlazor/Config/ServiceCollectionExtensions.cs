@@ -10,6 +10,7 @@ using InfiniLore.InfiniBlazor.Markdown.Editors;
 using InfiniLore.InfiniBlazor.Markdown.MdBlazorComponents;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
+using Microsoft.AspNetCore.Components;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
@@ -27,9 +28,17 @@ public static class ServiceCollectionExtensions {
         services.AddSingleton(CalloutStyleProviderFactory.Create);
         services.AddSingleton(MdStringMdSyntaxDeserializerFactory.Create);
         services.AddSingleton(TextEditorFactory.CreateTextEditor);
-        
+
         RegisterMdBlazorComponents(config);
-        
+
+        services.AddHttpClient(HttpClientNames.InfiniBlazor, static (serviceProvider, client) => {
+            var navigationManager = serviceProvider.GetService<NavigationManager>(); // should work on wasm and server
+            if (navigationManager is { BaseUri: var baseUri }) client.BaseAddress = new Uri(baseUri);
+
+            client.Timeout = TimeSpan.FromSeconds(30);
+        });
+
+
         configure?.Invoke(config);
 
         return services;
