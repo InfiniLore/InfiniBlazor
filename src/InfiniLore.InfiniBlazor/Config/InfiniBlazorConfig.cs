@@ -25,7 +25,7 @@ public class InfiniBlazorConfig(IServiceCollection collection) : IInfiniBlazorCo
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public InfiniBlazorConfig SetComponentRenderMode(IComponentRenderMode renderMode) {
-        RenderModeProvider.InfiniRenderMode = renderMode;
+        InfiniRenderModeProvider.InfiniRenderMode = renderMode;
         return this;
     }
 }

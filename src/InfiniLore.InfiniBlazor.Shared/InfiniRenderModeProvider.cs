@@ -9,6 +9,6 @@ namespace InfiniLore.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class RenderModeProvider {
+public static class InfiniRenderModeProvider {
     public static IComponentRenderMode InfiniRenderMode { get; set; } = RenderMode.InteractiveServer;
 }
