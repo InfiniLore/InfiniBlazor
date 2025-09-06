@@ -29,6 +29,7 @@ public class DiDataSourceAttribute : DependencyInjectionDataSourceAttribute<ISer
         services.AddLucideIcons();
         services.AddInfiniBlazor();
         
+        // Special case for emoting, as the testing environment isn't a full Blazor app
         services.AddSingleton<IEmoteDataLoader>(static provider => {
             IEnumerable<string> paths = provider.GetRequiredService<IComponentsConfig>()
                 .GetEmoteJsonLibFilePaths()
