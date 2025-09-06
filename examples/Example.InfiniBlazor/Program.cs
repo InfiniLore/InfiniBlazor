@@ -5,8 +5,6 @@ using Example.InfiniBlazor.Components;
 using Example.InfiniBlazor.Shared;
 using Example.InfiniBlazor.Shared.Themes;
 using InfiniLore.InfiniBlazor.AutoDocumentation;
-using Microsoft.AspNetCore.Components.Endpoints.Infrastructure;
-using Microsoft.AspNetCore.Components.Web;
 
 namespace Example.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -19,7 +17,6 @@ public class Program {
         builder.Services.AddLogging();
 
         builder.Services.AddInfiniBlazor(config => {
-            config.SetComponentRenderMode(RenderMode.InteractiveWebAssembly);
             config.Theming.RegisterTheme<PrideThemeCollection>();
             config.AddAutoDocumentation(static config => 
                 config.RegisterAutoDocumentationData<AutoDocumenterData_ExampleInfiniBlazorShared>()

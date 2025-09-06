@@ -4,6 +4,7 @@
 using CodeOfChaos.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -13,7 +14,7 @@ namespace InfiniLore.InfiniBlazor.Components;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IEmoteProvider>]
-public class EmoteProvider(ILogger<EmoteProvider> logger, IHttpClientFactory httpClientFactory) : IEmoteProvider {
+public class EmoteProvider(ILogger<EmoteProvider> logger, IHttpClientFactory httpClientFactory, IComponentsConfig componentsConfig) : IEmoteProvider {
     private ConcurrentDictionary<string, EmoteEntry> Entries { get; set; } = new();
 
     private static JsonSerializerOptions JsonSerializerOptions { get; } = new() {
@@ -28,25 +29,28 @@ public class EmoteProvider(ILogger<EmoteProvider> logger, IHttpClientFactory htt
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public async Task InitializeAsync(CancellationToken ct = default) {
-        string[] resourcePaths = {
-            "/_content/InfiniLore.InfiniBlazor/libs/emotes/emotes_standard.json",
-            "/_content/InfiniLore.InfiniBlazor/libs/emotes/emotes_lucide.json"
-        };
+        ImmutableArray<string> resourceFilepaths = componentsConfig.GetEmoteJsonLibFilePaths();
+        if (resourceFilepaths.IsEmpty) return;
 
         using HttpClient httpClient = httpClientFactory.CreateClient(HttpClientNames.InfiniBlazor);
-        List<Stream> streams = new();
-        
-        foreach (string resourcePath in resourcePaths) {
-            try {
-                Stream stream = await httpClient.GetStreamAsync(resourcePath, ct);
-                streams.Add(stream);
-            }
-            catch (Exception ex) {
-                logger.Warning(ex, "Could not load emote resource: {resourcePath}", resourcePath);
-            }
-        }
 
-        if (streams.Count == 0 && resourcePaths.Length > 0) {
+        // ReSharper disable once AccessToDisposedClosure
+        Stream[] streams = await Task.WhenAll(
+            resourceFilepaths.Select(async resourcePath => {
+                try {
+                    return await httpClient.GetStreamAsync(resourcePath, ct);
+                }
+                catch (Exception ex) {
+                    logger.Warning(ex, "Failed to download emote resource at {resourcePath}", resourcePath);
+                    return null;
+                }
+            })
+        ).ContinueWith<Stream[]>(
+            static t => t.Result.Where(s => s != null).ToArray()!,
+            ct
+        );
+        
+        if (streams.Length == 0) {
             logger.Error("Could not load any emote JSON resources from wwwroot");
             return;
         }

@@ -32,9 +32,8 @@ public class InfiniBlazorToastingConfig : IToastingConfig {
         serviceCollection.AddSingleton<IToastingConfig>(this);
         AppearanceComponentMappingsLazy = new Lazy<FrozenDictionary<string, Type>>(() => ToastAppearanceComponentMappings.ToFrozenDictionary(
         ));
-
     }
-
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

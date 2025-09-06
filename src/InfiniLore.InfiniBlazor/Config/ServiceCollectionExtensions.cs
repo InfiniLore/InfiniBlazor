@@ -4,7 +4,6 @@
 using InfiniLore.InfiniBlazor;
 using InfiniLore.InfiniBlazor.Components;
 using InfiniLore.InfiniBlazor.Config;
-using InfiniLore.InfiniBlazor.Core.Components;
 using InfiniLore.InfiniBlazor.Core.Js;
 using InfiniLore.InfiniBlazor.Markdown.Editors;
 using InfiniLore.InfiniBlazor.Markdown.MdBlazorComponents;
@@ -20,9 +19,8 @@ namespace Microsoft.Extensions.DependencyInjection;
 // ---------------------------------------------------------------------------------------------------------------------
 public static class ServiceCollectionExtensions {
     public static IServiceCollection AddInfiniBlazor(this IServiceCollection services, Action<InfiniBlazorConfig>? configure = null) {
-        var config = new InfiniBlazorConfig(services);
+        var config = new InfiniBlazorConfig(services); // Handles a lot of the boilerplate for each core package
         services.RegisterServicesFromInfiniLoreInfiniBlazor();
-        services.RegisterServicesFromInfiniLoreInfiniBlazorCoreComponents();
         services.RegisterServicesFromInfiniLoreInfiniBlazorCoreJs();
         services.AddLucideIcons();
 
