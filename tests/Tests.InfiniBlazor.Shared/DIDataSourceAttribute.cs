@@ -8,7 +8,7 @@ using InfiniLore.InfiniBlazor.Config;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Tests.Shared.Infinilore.InfiniBlazor;
+namespace Tests.InfiniBlazor.Shared;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
