@@ -10,13 +10,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="TUnit" />
+        <PackageReference Include="CodeOfChaos.Extensions"/>
+        <PackageReference Include="CodeOfChaos.Extensions.AspNetCore" />
         <PackageReference Include="CodeOfChaos.Testing.TUnit" />
+        <PackageReference Include="JetBrains.Annotations"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
         <PackageReference Include="NSubstitute" />
+        <PackageReference Include="TUnit" />
     </ItemGroup>
-    
+
     <ItemGroup>
-        <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Shared\InfiniLore.InfiniBlazor.Shared.csproj" />
+        <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" />
         <ProjectReference Include="..\Tests.InfiniBlazor.Shared.Markdown\Tests.InfiniBlazor.Shared.Markdown.csproj" />
         <ProjectReference Include="..\Tests.InfiniBlazor.Shared\Tests.InfiniBlazor.Shared.csproj" />
     </ItemGroup>

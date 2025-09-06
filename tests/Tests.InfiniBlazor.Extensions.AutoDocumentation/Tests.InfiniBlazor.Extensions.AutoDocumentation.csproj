@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
         <LangVersion>latest</LangVersion>
@@ -7,21 +8,30 @@
 
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
+
         <InifiniBlazor_AutoDocumentation_EnableKRParsing>true</InifiniBlazor_AutoDocumentation_EnableKRParsing>
     </PropertyGroup>
-    
+
     <ItemGroup>
         <CompilerVisibleProperty Include="inifiniblazor_autodocumentation_enablekrparsing" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.csproj" />
-        <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.csproj"  OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="contentfiles;build"/>
-        <ProjectReference Include="..\Tests.InfiniBlazor.Shared\Tests.InfiniBlazor.Shared.csproj" />
+        <PackageReference Include="CodeOfChaos.Extensions"/>
+        <PackageReference Include="CodeOfChaos.Extensions.AspNetCore" />
+        <PackageReference Include="CodeOfChaos.Testing.TUnit" />
+        <PackageReference Include="JetBrains.Annotations"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+        <PackageReference Include="NSubstitute" />
+        <PackageReference Include="TUnit" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="TUnit" />
+        <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" />
+        <ProjectReference Include="..\Tests.InfiniBlazor.Shared.Markdown\Tests.InfiniBlazor.Shared.Markdown.csproj" />
+        <ProjectReference Include="..\Tests.InfiniBlazor.Shared\Tests.InfiniBlazor.Shared.csproj" />
+        <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="contentfiles;build" Pack="true" />
+        <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.csproj" />
     </ItemGroup>
 
 </Project>
