@@ -5,7 +5,6 @@ using Example.InfiniBlazor.Components;
 using Example.InfiniBlazor.Shared;
 using Example.InfiniBlazor.Shared.Themes;
 using InfiniLore.InfiniBlazor.AutoDocumentation;
-using InfiniLore.InfiniBlazor.Components;
 
 namespace Example.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -54,8 +53,9 @@ public class Program {
             .AddInteractiveServerRenderMode()
             .AddInteractiveWebAssemblyRenderMode()
             .AddAdditionalAssemblies(typeof(Client._Imports).Assembly, ISharedEntry.Assembly);
+
+        app.UseInfiniBlazor();
         
-        await app.Services.GetRequiredService<IEmoteProvider>().InitializeAsync();
         await app.RunAsync();
     }
 }
