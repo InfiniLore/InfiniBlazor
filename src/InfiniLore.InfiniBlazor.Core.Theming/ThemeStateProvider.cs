@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using InfiniLore.InfiniBlazor.Components.QueryParameters;
+using InfiniLore.InfiniBlazor.Components;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
 

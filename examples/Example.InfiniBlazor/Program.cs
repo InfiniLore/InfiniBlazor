@@ -5,7 +5,7 @@ using Example.InfiniBlazor.Components;
 using Example.InfiniBlazor.Shared;
 using Example.InfiniBlazor.Shared.Themes;
 using InfiniLore.InfiniBlazor.AutoDocumentation;
-using InfiniLore.InfiniBlazor.Components.Emotes;
+using InfiniLore.InfiniBlazor.Components;
 
 namespace Example.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
