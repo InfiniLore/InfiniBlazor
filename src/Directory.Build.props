@@ -38,8 +38,14 @@
         <InternalsVisibleTo Include="Tests.InfiniBlazor.Core.Markdown" />
     </ItemGroup>
 
+    <!-- Include external files -->
+    <ItemGroup>
+        <None Include="../../LICENSE" Pack="true" PackagePath="" Visible="false" />
+        <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
+        <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
+    </ItemGroup>
+
     <ItemGroup>
         <!-- Common package references -->
-        <PackageReference Include="JetBrains.Annotations" />
     </ItemGroup>
 </Project>
