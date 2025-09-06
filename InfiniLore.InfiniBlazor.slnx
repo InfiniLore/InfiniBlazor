@@ -1,7 +1,6 @@
 ﻿<Solution>
   <Folder Name="/.dev-tools/">
     <Project Path="dev\DevTools.MdTestHelper\DevTools.MdTestHelper.csproj" Type="Classic C#" />
-    <Project Path="dev\DevTools\DevTools.csproj" Type="Classic C#" />
     <File Path="README.md" />
     <File Path="Directory.Packages.props" />
     <File Path="InfiniLore.InfiniBlazor.GitHubActions.slnf" />
