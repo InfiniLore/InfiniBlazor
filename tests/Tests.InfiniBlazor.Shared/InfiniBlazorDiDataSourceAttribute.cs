@@ -14,8 +14,7 @@ namespace Tests.InfiniBlazor.Shared;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-// ReSharper disable once InconsistentNaming
-public class DiDataSourceAttribute : DependencyInjectionDataSourceAttribute<IServiceScope> {
+public class InfiniBlazorDiDataSourceAttribute : DependencyInjectionDataSourceAttribute<IServiceScope> {
     private static readonly IServiceProvider ServiceProvider = CreateSharedServiceProvider();
 
     // -----------------------------------------------------------------------------------------------------------------

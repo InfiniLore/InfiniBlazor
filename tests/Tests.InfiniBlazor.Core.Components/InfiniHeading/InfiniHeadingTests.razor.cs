@@ -6,13 +6,12 @@ namespace Tests.InfiniBlazor.Core.Components.InfiniHeading;
 // -----------------------------------------------------------------------------------------------------------------
 // Methods
 // -----------------------------------------------------------------------------------------------------------------
-[DiDataSource]
-public partial class InfiniHeadingTests(IServiceProvider services) {
+[InfiniBlazorDiDataSource]
+public partial class InfiniHeadingTests(IServiceProvider services) : InfiniBlazorBunitTest(services) {
     [Test]
     [MethodDataSource(nameof(GetComponentDataSources))]
     public Task RendersCorrectly(RenderFragment input, RenderFragment expectedOutput) {
         // Arrange
-        Services.AddFallbackServiceProvider(services);
         
         // Act
         IRenderedFragment renderedFragment = Render(input);
