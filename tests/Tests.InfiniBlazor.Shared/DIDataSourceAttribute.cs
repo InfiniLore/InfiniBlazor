@@ -1,8 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor;
 using InfiniLore.InfiniBlazor.Components;
+using InfiniLore.InfiniBlazor.Components.DataLoaders;
+using InfiniLore.InfiniBlazor.Config;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Tests.Shared.Infinilore.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -23,14 +27,22 @@ public class DiDataSourceAttribute : DependencyInjectionDataSourceAttribute<ISer
 
         services.AddLogging();
         services.AddLucideIcons();
-        services.AddInfiniBlazor(
-            // static config => config.AddMarkdownLogic(
-            //     static config => {
-            //         config.AddTextEditor().AddDefaultModifiers();
-            //         config.AddTextEditor("boldOnly").AddModifier<BoldModifier>();
-            //     }
-            // )
-        );
+        services.AddInfiniBlazor();
+        
+        services.AddSingleton<IEmoteDataLoader>(static provider => {
+            IEnumerable<string> paths = provider.GetRequiredService<IComponentsConfig>()
+                .GetEmoteJsonLibFilePaths()
+                .Select(static path => path.TrimStart('/')
+                    .Replace("_content/InfiniLore.InfiniBlazor/", "InfiniLore.InfiniBlazor.wwwroot.")
+                    .Replace("/", ".")
+                );
+            
+            return new AssemblyEmoteDataLoader(
+                typeof(InfiniBlazorConfig).Assembly,
+                paths,
+                provider.GetRequiredService<ILogger<AssemblyEmoteDataLoader>>()
+            );
+        });
 
         ServiceProvider provider = services.BuildServiceProvider();
 

@@ -8,6 +8,8 @@ namespace InfiniLore.InfiniBlazor.Components;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IEmoteProvider {
+    int Count { get; }
+    
     Task InitializeAsync(CancellationToken ct = default);
     
     bool HasKey(string key);
