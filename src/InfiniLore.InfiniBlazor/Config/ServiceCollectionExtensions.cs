@@ -11,6 +11,7 @@ using InfiniLore.InfiniBlazor.Markdown.MdBlazorComponents;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Configuration;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
@@ -32,12 +33,38 @@ public static class ServiceCollectionExtensions {
         RegisterMdBlazorComponents(config);
 
         services.AddHttpClient(HttpClientNames.InfiniBlazor, static (serviceProvider, client) => {
-            var navigationManager = serviceProvider.GetService<NavigationManager>(); // should work on wasm and server
-            if (navigationManager is { BaseUri: var baseUri }) client.BaseAddress = new Uri(baseUri);
+            var config = serviceProvider.GetService<IConfiguration>();
+            string? baseUrl = null;
 
+            // In WASM, use NavigationManager to get the browser's origin
+            try {
+                if (serviceProvider.GetService<NavigationManager>() is {} navManager) {
+                    baseUrl = navManager.BaseUri;
+                }
+            }
+            catch (Exception) {
+                // Ignore
+            }
+            
+            // In Server, use BaseUrl, or parse ASPNETCORE_URLS
+            if (baseUrl.IsNullOrWhiteSpace()) {
+                baseUrl = config?["BaseUrl"];
+
+                if (baseUrl.IsNullOrWhiteSpace()) {
+                    string? urls = config?["ASPNETCORE_URLS"];
+                    if (urls.IsNotNullOrWhiteSpace()) {
+                        string[] urlsSplit = urls.Split(';', StringSplitOptions.RemoveEmptyEntries)
+                            .Select(u => u.Trim()).ToArray();
+
+                        baseUrl = urlsSplit.FirstOrDefault(u => u.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+                            ?? urlsSplit.FirstOrDefault();
+                    }
+                }
+            }
+
+            if (baseUrl.IsNotNullOrWhiteSpace()) client.BaseAddress = new Uri(baseUrl.TrimEnd('/'), UriKind.Absolute);
             client.Timeout = TimeSpan.FromSeconds(30);
         });
-
 
         configure?.Invoke(config);
 
@@ -76,4 +103,25 @@ public static class ServiceCollectionExtensions {
         config.Markdown.RegisterMdBlazorComponent<TemplateMdSyntaxNode, MdInfiniTemplate>();
         // config.Markdown.RegisterBlazorComponent<NewLineMdSyntaxNode, MdInfiniNewLine>(); // Not implemented well yet, only as an example
     }
+}
+
+class BaseAddressHandler : DelegatingHandler {
+    public BaseAddressHandler(string baseUri) {
+        InnerHandler = new HttpClientHandler();
+        BaseUri = baseUri;
+    }
+
+    public string BaseUri { get; }
+
+    protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken ct) {
+        if (!request.RequestUri!.IsAbsoluteUri) {
+            request.RequestUri = new Uri(new Uri(BaseUri), request.RequestUri);
+        }
+
+        return base.SendAsync(request, ct);
+    }
+}
+
+class PassThroughHandler : DelegatingHandler {
+    public PassThroughHandler() => InnerHandler = new HttpClientHandler();
 }

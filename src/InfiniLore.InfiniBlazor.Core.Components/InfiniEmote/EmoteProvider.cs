@@ -29,8 +29,8 @@ public class EmoteProvider(ILogger<EmoteProvider> logger, IHttpClientFactory htt
     // -----------------------------------------------------------------------------------------------------------------
     public async Task InitializeAsync(CancellationToken ct = default) {
         string[] resourcePaths = {
-            "libs/emotes/emotes_standard.json",
-            "libs/emotes/emotes_lucide.json"
+            "/_content/InfiniLore.InfiniBlazor/libs/emotes/emotes_standard.json",
+            "/_content/InfiniLore.InfiniBlazor/libs/emotes/emotes_lucide.json"
         };
 
         using HttpClient httpClient = httpClientFactory.CreateClient(HttpClientNames.InfiniBlazor);
@@ -46,7 +46,7 @@ public class EmoteProvider(ILogger<EmoteProvider> logger, IHttpClientFactory htt
             }
         }
 
-        if (streams.Count == 0) {
+        if (streams.Count == 0 && resourcePaths.Length > 0) {
             logger.Error("Could not load any emote JSON resources from wwwroot");
             return;
         }
