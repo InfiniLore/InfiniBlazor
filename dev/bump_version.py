@@ -72,7 +72,7 @@ def main():
     subprocess.run(["git", "tag", tag], check=True)
 
     # Push commit and tag
-    subprocess.run(["git", "push"], check=True)
+    subprocess.run(["git", "push"], check=True, stderr=subprocess.DEVNULL)
     subprocess.run(["git", "push", "origin", tag], check=True)
 
     print(f"Bumped version: {old_version} → {new_version}")
