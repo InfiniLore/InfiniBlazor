@@ -1,33 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
-        <Platforms>AnyCPU;x64</Platforms>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <RootNamespace>InfiniLore.InfiniBlazor.Maui</RootNamespace>
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.InfiniBlazor.Extensions.Maui</PackageId>
-        <Version>0.1.0-preview.88</Version>
-        <Authors>Anna Sas</Authors>
-        <Description>InfiniLore's Component Library: MAUI compatibility</Description>
-        <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
+        <Description>InfiniLore's Component Library</Description>
         <PackageTags>Blazor;Ui;Design;Components;Library</PackageTags>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PublishRepositoryUrl>true</PublishRepositoryUrl>
-        <IncludeSymbols>true</IncludeSymbols>
-        <DebugType>embedded</DebugType>
-        <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
-
-    <!-- Include external files -->
-    <ItemGroup>
-        <None Include="../../LICENSE" Pack="true" PackagePath="" Visible="false" />
-        <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
-        <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
-    </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\InfiniLore.InfiniBlazor.Shared\InfiniLore.InfiniBlazor.Shared.csproj" />

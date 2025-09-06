@@ -5,8 +5,6 @@ using CodeOfChaos.GeneratorTools;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Immutable;
-using System.Linq;
-using System.Threading;
 
 namespace InfiniLore.InfiniBlazor.SourceGenerators.Theming;
 // ---------------------------------------------------------------------------------------------------------------------

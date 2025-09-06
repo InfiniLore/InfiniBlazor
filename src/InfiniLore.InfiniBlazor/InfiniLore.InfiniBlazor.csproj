@@ -1,41 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
-        <LangVersion>latest</LangVersion>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <DebugType>portable</DebugType>
-<!--        <Optimize>false</Optimize>-->
+        <RootNamespace>InfiniLore.InfiniBlazor</RootNamespace>
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.InfiniBlazor</PackageId>
-        <Version>0.1.0-preview.88</Version>
-        <Authors>Anna Sas</Authors>
         <Description>InfiniLore's Component Library</Description>
-        <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
         <PackageTags>Blazor;Ui;Design;Components;Library</PackageTags>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PublishRepositoryUrl>true</PublishRepositoryUrl>
-        <IncludeSymbols>true</IncludeSymbols>
-        <DebugType>embedded</DebugType>
-        <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
-
-    <ItemGroup>
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Extensions.AutoDocumentation" />
-        <InternalsVisibleTo Include="Tests.InfiniBlazor" />
-        <InternalsVisibleTo Include="Tests.InfiniBlazor.Markdown" />
-    </ItemGroup>
-
-    <!-- Include external files -->
-    <ItemGroup>
-        <None Include="../../LICENSE" Pack="true" PackagePath="" Visible="false" />
-        <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
-        <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
-    </ItemGroup>
     
     <ItemGroup>
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />

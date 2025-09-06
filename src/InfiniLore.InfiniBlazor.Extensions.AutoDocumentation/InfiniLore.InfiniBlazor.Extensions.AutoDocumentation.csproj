@@ -1,32 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
         <RootNamespace>InfiniLore.InfiniBlazor.AutoDocumentation</RootNamespace>
 
         <!-- Package metadata -->
-        <PackageId>InfiniLore.InfiniBlazor.Extensions.AutoDocumenation</PackageId>
-        <Version>0.1.0-preview.88</Version>
-        <Authors>Anna Sas</Authors>
-        <Description>Generators to help with AutDocumentation of razor components</Description>
-        <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
-        <PackageTags>Blazor;Ui;Design;Components;Library;Contracts;Generator</PackageTags>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PublishRepositoryUrl>true</PublishRepositoryUrl>
-        <IncludeSymbols>true</IncludeSymbols>
-        <DebugType>embedded</DebugType>
-        <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageIcon>icon.png</PackageIcon>
+        <PackageId>InfiniLore.InfiniBlazor.Extensions.AutoDocumentation</PackageId>
+        <Description>InfiniLore's Component Library</Description>
+        <PackageTags>Blazor;Ui;Design;Components;Library</PackageTags>
     </PropertyGroup>
-
-    <ItemGroup>
-        <None Include="../../LICENSE" Pack="true" PackagePath="" Visible="false" />
-        <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
-        <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
-    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" />

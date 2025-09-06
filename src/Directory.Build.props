@@ -1,0 +1,45 @@
+﻿<Project>
+    <PropertyGroup>
+        <!-- Common build properties -->
+        <TargetFramework>net9.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+
+        <!-- Symbols / Debugging -->
+        <DebugType>embedded</DebugType>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+        <!-- NuGet packaging defaults -->
+        <Version>0.1.0-preview.88</Version>
+        <Authors>Anna Sas</Authors>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageIcon>icon.png</PackageIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Core.Components" />
+        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Core.Js" />
+        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Core.Markdown" />
+        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Core.Theming" />
+        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Core.Toasting" />
+        
+        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Extensions.AutoDocumentation" />
+        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Extensions.ExtraComponents" />
+        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Extensions.Maui" />
+        
+        <InternalsVisibleTo Include="Tests.InfiniBlazor" />
+        <InternalsVisibleTo Include="Tests.InfiniBlazor.Shared" />
+        <InternalsVisibleTo Include="Tests.InfiniBlazor.Shared.Markdown" />
+        <InternalsVisibleTo Include="Tests.InfiniBlazor.Extensions.AutoDocumentation" />
+        <InternalsVisibleTo Include="Tests.InfiniBlazor.Core.Markdown" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- Common package references -->
+        <PackageReference Include="JetBrains.Annotations" />
+    </ItemGroup>
+</Project>

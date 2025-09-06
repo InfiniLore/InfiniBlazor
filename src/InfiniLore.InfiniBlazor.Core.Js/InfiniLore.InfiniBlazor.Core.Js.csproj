@@ -1,36 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
         <RootNamespace>InfiniLore.InfiniBlazor.Js</RootNamespace>
-        <DebugType>portable</DebugType>
-        <!--        <Optimize>false</Optimize>-->
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.InfiniBlazor.Core.Js</PackageId>
-        <Version>0.1.0-preview.88</Version>
-        <Authors>Anna Sas</Authors>
         <Description>InfiniLore's Component Library</Description>
-        <PackageProjectUrl>https://github.com/InfiniLore/InfiniLore.InfiniBlazor</PackageProjectUrl>
         <PackageTags>Blazor;Ui;Design;Components;Library</PackageTags>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PublishRepositoryUrl>true</PublishRepositoryUrl>
-        <IncludeSymbols>true</IncludeSymbols>
-        <DebugType>embedded</DebugType>
-        <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageIcon>icon.png</PackageIcon>
-    </PropertyGroup>
-
-
-    <!-- Include external files -->
-    <ItemGroup>
-        <None Include="../../LICENSE" Pack="true" PackagePath="" Visible="false" />
-        <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
-        <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
-    </ItemGroup>    
+    </PropertyGroup>    
 
     <ItemGroup>
         <PackageReference Include="CodeOfChaos.Extensions.AspNetCore.Components" />
