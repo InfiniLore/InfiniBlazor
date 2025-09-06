@@ -4,7 +4,6 @@
     <File Path="README.md" />
     <File Path="Directory.Packages.props" />
     <File Path="InfiniLore.InfiniBlazor.GitHubActions.slnf" />
-    <File Path="src\Directory.Build.props" />
   </Folder>
   <Folder Name="/.dev-tools/github/">
     <File Path=".github\workflows\release.yml" />
@@ -21,7 +20,7 @@
     <File Path="webpack.config.js" />
   </Folder>
   <Folder Name="/benchmarks/">
-    <Project Path="tests\Benchmarks.InfiniLore.InfiniBlazor.Markdown\Benchmarks.InfiniLore.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
+    <Project Path="benchmarks\Benchmarks.InfiniLore.InfiniBlazor.Markdown\Benchmarks.InfiniLore.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/example/">
     <Project Path="examples\Example.InfiniBlazor.Shared\Example.InfiniBlazor.Shared.csproj" Type="Classic C#" />
@@ -38,6 +37,7 @@
     <Project Path="src\InfiniLore.InfiniBlazor.Shared\InfiniLore.InfiniBlazor.Shared.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor.SourceGenerators\InfiniLore.InfiniBlazor.SourceGenerators.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" Type="Classic C#" />
+    <File Path="src\Directory.Build.props" />
   </Folder>
   <Folder Name="/src/core/">
     <Project Path="src\InfiniLore.InfiniBlazor.Core.Components\InfiniLore.InfiniBlazor.Core.Components.csproj" Type="Classic C#" />
@@ -58,6 +58,7 @@
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests\Tests.InfiniBlazor\Tests.InfiniBlazor.csproj" Type="Classic C#" />
+    <File Path="tests\Directory.Build.props" />
   </Folder>
   <Folder Name="/tests/core/">
     <Project Path="tests\Tests.InfiniBlazor.Core.Markdown\Tests.InfiniBlazor.Core.Markdown.csproj" Type="Classic C#" />
