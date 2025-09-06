@@ -48,4 +48,36 @@ jobs:
                   dotnet nuget push src/InfiniLore.InfiniBlazor.Contracts/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
                   dotnet nuget push src/InfiniLore.InfiniBlazor.Shared/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
                   dotnet nuget push src/InfiniLore.InfiniBlazor.SourceGenerators/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                  
+
+            -   name: Extract version from tag
+                id: version
+                run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+            -   name: Create GitHub Release
+                uses: actions/create-release@v1
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                with:
+                    tag_name: ${{ github.ref_name }}
+                    release_name: Release ${{ github.ref_name }}
+                    body: |
+                        ## InfiniBlazor ${{ steps.version.outputs.version }}
+                        
+                        ### 📦 NuGet Packages Published
+                        - InfiniLore.InfiniBlazor.Core.Components
+                        - InfiniLore.InfiniBlazor.Core.Js
+                        - InfiniLore.InfiniBlazor.Core.Markdown
+                        - InfiniLore.InfiniBlazor.Core.Theming
+                        - InfiniLore.InfiniBlazor.Core.Toasting
+                        - InfiniLore.InfiniBlazor.Extensions.AutoDocumentation
+                        - InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators
+                        - InfiniLore.InfiniBlazor.Extensions.ExtraComponents
+                        - InfiniLore.InfiniBlazor.Extensions.Maui
+                        - InfiniLore.InfiniBlazor
+                        - InfiniLore.InfiniBlazor.Contracts
+                        - InfiniLore.InfiniBlazor.Shared
+                        - InfiniLore.InfiniBlazor.SourceGenerators
+                        
+                        All packages are available on [NuGet](https://www.nuget.org/packages?q=InfiniLore.InfiniBlazor).
+                    draft: false
+                    prerelease: ${{ contains(github.ref_name, 'preview') || contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') }}
