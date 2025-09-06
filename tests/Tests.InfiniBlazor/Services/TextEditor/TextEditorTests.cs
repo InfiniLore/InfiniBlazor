@@ -4,7 +4,7 @@
 using InfiniLore.InfiniBlazor;
 using InfiniLore.InfiniBlazor.Markdown.Editors;
 using Tests.InfiniBlazor.DataSources.TextEditor;
-using Tests.Shared.Infinilore.InfiniBlazor;
+using Tests.InfiniBlazor.Shared;
 
 namespace Tests.InfiniBlazor.Services.TextEditor;
 // ---------------------------------------------------------------------------------------------------------------------

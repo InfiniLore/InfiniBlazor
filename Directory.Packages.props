@@ -5,7 +5,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="BenchmarkDotNet" Version="0.15.2" />
-    <PackageVersion Include="Bogus" Version="35.6.3" />
     <PackageVersion Include="CodeOfChaos.CliArgsParser.Generators" Version="5.1.0" />
     <PackageVersion Include="CodeOfChaos.CliArgsParser.Library" Version="5.1.0" />
     <PackageVersion Include="CodeOfChaos.Extensions" Version="0.81.1" />
@@ -39,6 +38,7 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.Common" Version="4.14.0" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.8" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.8" />
     <PackageVersion Include="Microsoft.Extensions.Http" Version="9.0.8" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.6" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="9.0.8" />

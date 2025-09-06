@@ -1,17 +1,18 @@
 ﻿<Solution>
   <Folder Name="/.dev-tools/">
     <Project Path="dev\DevTools.MdTestHelper\DevTools.MdTestHelper.csproj" Type="Classic C#" />
-    <Project Path="dev\DevTools\DevTools.csproj" Type="Classic C#" />
     <File Path="README.md" />
     <File Path="Directory.Packages.props" />
     <File Path="InfiniLore.InfiniBlazor.GitHubActions.slnf" />
-    <File Path="src\Directory.Build.props" />
-    <File Path="dev\bump_version.py" />
   </Folder>
   <Folder Name="/.dev-tools/github/">
     <File Path=".github\workflows\release.yml" />
     <File Path=".github\workflows\workflow-todo.yml" />
     <File Path=".github\workflows\onPullRequest-TestDotnet.yml" />
+  </Folder>
+  <Folder Name="/.dev-tools/py/">
+    <File Path="dev\bump_version.py" />
+    <File Path="dev\download_emotes_lucides_json.py" />
   </Folder>
   <Folder Name="/.dev-tools/web/">
     <File Path="tsconfig.json" />
@@ -19,7 +20,7 @@
     <File Path="webpack.config.js" />
   </Folder>
   <Folder Name="/benchmarks/">
-    <Project Path="tests\Benchmarks.InfiniLore.InfiniBlazor.Markdown\Benchmarks.InfiniLore.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
+    <Project Path="benchmarks\Benchmarks.InfiniLore.InfiniBlazor.Markdown\Benchmarks.InfiniLore.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/example/">
     <Project Path="examples\Example.InfiniBlazor.Shared\Example.InfiniBlazor.Shared.csproj" Type="Classic C#" />
@@ -36,6 +37,7 @@
     <Project Path="src\InfiniLore.InfiniBlazor.Shared\InfiniLore.InfiniBlazor.Shared.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor.SourceGenerators\InfiniLore.InfiniBlazor.SourceGenerators.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" Type="Classic C#" />
+    <File Path="src\Directory.Build.props" />
   </Folder>
   <Folder Name="/src/core/">
     <Project Path="src\InfiniLore.InfiniBlazor.Core.Components\InfiniLore.InfiniBlazor.Core.Components.csproj" Type="Classic C#" />

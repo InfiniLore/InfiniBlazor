@@ -8,10 +8,10 @@
 
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
-        
+
         <InifiniBlazor_AutoDocumentation_EnableKRParsing>true</InifiniBlazor_AutoDocumentation_EnableKRParsing>
     </PropertyGroup>
-    
+
     <ItemGroup>
         <CompilerVisibleProperty Include="inifiniblazor_autodocumentation_enablekrparsing" />
     </ItemGroup>
@@ -24,7 +24,6 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
         <PackageReference Include="NSubstitute" />
         <PackageReference Include="TUnit" />
-        <PackageReference Include="Bogus" />
     </ItemGroup>
 
     <ItemGroup>

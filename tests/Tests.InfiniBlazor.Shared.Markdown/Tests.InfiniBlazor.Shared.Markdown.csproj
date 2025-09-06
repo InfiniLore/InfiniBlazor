@@ -12,13 +12,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
-      <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" />
+        <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
+        <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="CodeOfChaos.Extensions" />
-      <PackageReference Include="NSubstitute" />
+        <PackageReference Include="CodeOfChaos.Extensions" />
+        <PackageReference Include="NSubstitute" />
         <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

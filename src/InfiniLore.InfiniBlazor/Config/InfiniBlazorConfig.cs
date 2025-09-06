@@ -1,10 +1,10 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Components.Config;
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Theming.Config;
 using InfiniLore.InfiniBlazor.Toasting.Config;
-using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InfiniLore.InfiniBlazor.Config;
@@ -16,16 +16,5 @@ public class InfiniBlazorConfig(IServiceCollection collection) : IInfiniBlazorCo
     public InfiniBlazorMarkdownConfig Markdown { get; } = new(collection);
     public InfiniBlazorThemingConfig Theming { get; } = new(collection);
     public InfiniBlazorToastingConfig Toasting { get; } = new(collection);
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
-    public InfiniBlazorConfig SetComponentRenderMode(IComponentRenderMode renderMode) {
-        InfiniRenderModeProvider.InfiniRenderMode = renderMode;
-        return this;
-    }
+    public InfiniBlazorComponentsConfig Components { get; } = new(collection);
 }

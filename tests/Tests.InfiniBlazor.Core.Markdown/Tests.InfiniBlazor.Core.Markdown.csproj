@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
         <LangVersion>latest</LangVersion>
@@ -18,7 +17,6 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
         <PackageReference Include="NSubstitute" />
         <PackageReference Include="TUnit" />
-        <PackageReference Include="Bogus" />
     </ItemGroup>
 
     <ItemGroup>
@@ -26,5 +24,4 @@
         <ProjectReference Include="..\Tests.InfiniBlazor.Shared.Markdown\Tests.InfiniBlazor.Shared.Markdown.csproj" />
         <ProjectReference Include="..\Tests.InfiniBlazor.Shared\Tests.InfiniBlazor.Shared.csproj" />
     </ItemGroup>
-
 </Project>
