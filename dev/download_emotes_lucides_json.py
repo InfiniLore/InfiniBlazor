@@ -78,7 +78,10 @@ def generate_icon_entries(icon_names: List[str]) -> List[Dict]:
     entries = []
 
     for icon_name in icon_names:
-        keys = [f"li{icon_name}", f"li-{icon_name}"]
+        key_without_dashes = f"li{icon_name.replace('-', '')}"
+        key_with_dashes = f"li-{icon_name}"
+
+        keys = [key_without_dashes, key_with_dashes]
 
         entry = {
             "keys": keys,
@@ -88,6 +91,7 @@ def generate_icon_entries(icon_names: List[str]) -> List[Dict]:
         entries.append(entry)
 
     return entries
+
 
 
 def ensure_output_directory(output_path: str):
