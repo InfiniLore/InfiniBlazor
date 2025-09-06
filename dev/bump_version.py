@@ -1,15 +1,15 @@
 ﻿#!/usr/bin/env python3
 import sys
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as Et
 import subprocess
 from pathlib import Path
 
-FILE : str = Path("../src/Directory.Build.props")
+FILE : Path = Path("../src/Directory.Build.props")
 
 def bump(version: str, part: str) -> str:
     """
     Bump version according to 'major', 'minor', 'patch', or 'preview'.
-    Expects format like: 0.1.0-preview.88
+    Expects a format like: 0.1.0-preview.88
     """
     core, preview = version, None
     if "-preview." in version:
@@ -48,7 +48,7 @@ def main():
         sys.exit(1)
 
     part = sys.argv[1].lower()
-    tree = ET.parse(FILE)
+    tree = Et.parse(FILE)
     root = tree.getroot()
 
     version_elem = root.find(".//Version")
