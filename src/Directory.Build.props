@@ -1,18 +1,19 @@
-﻿<Project>
+<?xml version='1.0' encoding='utf-8'?>
+<Project>
     <PropertyGroup>
-        <!-- Common build properties -->
+        
         <TargetFramework>net9.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
 
-        <!-- Symbols / Debugging -->
+        
         <DebugType>embedded</DebugType>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
 
-        <!-- NuGet packaging defaults -->
-        <Version>0.1.0-preview.88</Version>
+        
+        <Version>0.1.0-preview.89</Version>
         <Authors>Anna Sas</Authors>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -38,7 +39,7 @@
         <InternalsVisibleTo Include="Tests.InfiniBlazor.Core.Markdown" />
     </ItemGroup>
 
-    <!-- Include external files -->
+    
     <ItemGroup>
         <None Include="../../LICENSE" Pack="true" PackagePath="" Visible="false" />
         <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
@@ -46,6 +47,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <!-- Common package references -->
+        
     </ItemGroup>
 </Project>
