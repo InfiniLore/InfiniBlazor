@@ -17,7 +17,6 @@
         <PackageReference Include="JetBrains.Annotations"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
         <PackageReference Include="NSubstitute" />
-        <PackageReference Include="Bogus" />
         <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
