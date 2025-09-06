@@ -12,7 +12,7 @@ namespace Microsoft.AspNetCore.Builder;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public static class WebApplicationExtensions {
-    public static WebApplication UseInfiniBlazor(this WebApplication app) {
+    public static IHost UseInfiniBlazor(this IHost app) {
         var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
         lifetime.ApplicationStarted.Register(() => {
             _ = Task.Run(async () => {
@@ -21,7 +21,7 @@ public static class WebApplicationExtensions {
                     await emoteProvider.InitializeAsync();
                 }
                 catch (Exception ex) {
-                    var logger = app.Services.GetRequiredService<ILogger<WebApplication>>();
+                    var logger = app.Services.GetRequiredService<ILogger<IHostApplicationLifetime>>();
                     logger.LogError(ex, "Failed to initialize EmoteProvider");
                 }
             });

@@ -20,8 +20,6 @@
     </ItemGroup>
     
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App" />
-
         <PackageReference Include="CodeOfChaos.Extensions.AspNetCore.Components" />
         <PackageReference Include="CodeOfChaos.Extensions.MicrosoftLogging" />
         <PackageReference Include="CodeOfChaos.Extensions.ObjectPool" />
