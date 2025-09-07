@@ -5,14 +5,14 @@ using Bunit;
 using Microsoft.AspNetCore.Components;
 using Tests.InfiniBlazor.Shared;
 
-namespace Tests.InfiniBlazor.Core.Components.InfiniHeading;
+namespace Tests.InfiniBlazor.Core.Components.InfiniButton;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InfiniBlazorDiDataSource]
-public partial class InfiniHeadingTests(IServiceProvider services) : InfiniBlazorBunitTest(services) {
+public partial class InfiniButtonTests(IServiceProvider services) : InfiniBlazorBunitTest(services) {
     [Test]
-    [MethodDataSource(nameof(GetComponentDataSources))]
+    [MethodDataSource<InfiniButtonTests>(nameof(GetComponentDataSources))]
     public Task RendersCorrectly(BunitTestData testData) {
         // Arrange
         RenderFragment input = testData.Input;
