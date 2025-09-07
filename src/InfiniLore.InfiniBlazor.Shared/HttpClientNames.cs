@@ -6,6 +6,6 @@ namespace InfiniLore.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class HttpClientNames {
+internal static class HttpClientNames {
     public const string InfiniBlazor = "InfiniBlazor";
 }

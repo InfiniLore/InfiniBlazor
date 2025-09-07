@@ -20,7 +20,7 @@ public class InfiniBlazorDiDataSourceAttribute : DependencyInjectionDataSourceAt
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public override IServiceScope CreateScope(DataGeneratorMetadata dataGeneratorMetadata) => ServiceProvider.CreateAsyncScope();
+    public override IServiceScope CreateScope(DataGeneratorMetadata dataGeneratorMetadata) => ServiceProvider.CreateScope();
     public override object? Create(IServiceScope scope, Type type) => scope.ServiceProvider.GetService(type);
 
     private static ServiceProvider CreateSharedServiceProvider() {
