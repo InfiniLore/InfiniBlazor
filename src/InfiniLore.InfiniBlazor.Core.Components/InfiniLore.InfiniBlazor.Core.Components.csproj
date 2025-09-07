@@ -7,6 +7,8 @@
         <PackageId>InfiniLore.InfiniBlazor.Core.Components</PackageId>
         <Description>InfiniLore's Component Library</Description>
         <PackageTags>Blazor;Ui;Design;Components;Library</PackageTags>
+
+        <NoWarn>CS8974</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
@@ -30,8 +32,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
-      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Shared\InfiniLore.InfiniBlazor.Shared.csproj" />
+        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
+        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Shared\InfiniLore.InfiniBlazor.Shared.csproj" />
     </ItemGroup>
 
 </Project>

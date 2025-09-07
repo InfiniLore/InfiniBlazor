@@ -7,6 +7,8 @@
         <PackageId>InfiniLore.InfiniBlazor</PackageId>
         <Description>InfiniLore's Component Library</Description>
         <PackageTags>Blazor;Ui;Design;Components;Library</PackageTags>
+
+        <NoWarn>CS8974</NoWarn>
     </PropertyGroup>
     
     <ItemGroup>
