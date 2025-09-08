@@ -1399,6 +1399,10 @@
   .rounded-tr-lg {
     border-top-right-radius: var(--radius-lg);
   }
+  .rounded-b {
+    border-bottom-right-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+  }
   .rounded-b-2xl {
     border-bottom-right-radius: var(--radius-2xl);
     border-bottom-left-radius: var(--radius-2xl);

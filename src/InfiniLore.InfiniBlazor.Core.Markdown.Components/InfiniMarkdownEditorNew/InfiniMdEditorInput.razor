@@ -37,7 +37,6 @@
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private async Task OnInputAsync(ChangeEventArgs changeEventArgs) {
-        Logger.Warning("CHENGED");
         if (EditorContext.IsLocked) return;
         if (changeEventArgs.Value is not string input) return;
 

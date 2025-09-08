@@ -26,6 +26,7 @@
                 @* Toolbar Top *@
                 <div class="col-span-1 row-span-2 md:col-span-2 md:row-span-1">
                     <div class="flex flex-col h-full md:h-auto md:flex-row justify-between">
+                        @ToolbarTop
                         @if (VisualDebugger.IsEnabled()) {
                             <InfiniButtonOutlineSolid Color="Color.Red" IconName="@LucideNames.Plus" OnClick="@OnToggleLockedClickAsync"/>
                             <InfiniButtonOutlineSolid Color="Color.Red" IconName="@LucideNames.Minus" OnClick="@OnToggleInteractiveModeClickAsync"/>
@@ -63,9 +64,11 @@
                 }
                 
                 @* Toolbar Bottom *@
-                <div class="col-span-2">
-                    Toolbar bottom
-                </div>
+                @if (ToolbarBottom is not null) {
+                    <div class="col-span-2 min-h-lh infini-bg-(--color-base-80) rounded-b-md flex gap-2 justify-end w-full px-1">
+                        @ToolbarBottom
+                    </div>
+                }
             </div>
     </CascadingValue>
 </CascadingValue>
@@ -76,6 +79,10 @@
 @code {
     [Parameter] public MdEditorContext EditorContext { get; set; } = new();
     [Parameter] public EventCallback<MdEditorContext> EditorContextChanged  { get; set; }
+    
+    [Parameter] public RenderFragment? ToolbarTop { get; set; }
+    [Parameter] public RenderFragment? ToolbarBottom { get; set; }
+    
     private MdRenderContext RenderContext { get; } = new();
     private InfiniEditorKeyCombo LastPressedCombo { get; set; } = InfiniEditorKeyCombo.Empty;
 

@@ -14,4 +14,6 @@ public interface IMdSyntaxTree : IDisposable, IEquatable<IMdSyntaxTree> {
     IEnumerable<IMdSyntaxNode> VisitTopLevelNodes();
     IEnumerable<IMdSyntaxNode> VisitNodesBreadthFirst();
     IEnumerable<IMdSyntaxNode> VisitNodesDeepestFirst();
+
+    int GetCount();
 }
