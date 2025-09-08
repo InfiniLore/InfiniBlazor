@@ -337,7 +337,7 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
             }
 
             case EmoteMdSyntaxNode emoteNode: {
-                IEmoteEntry? entry = emoteProvider.GetEntryAsync(emoteNode.EmoteKey);
+                IEmoteEntry? entry = _emoteProvider.GetEntryAsync(emoteNode.EmoteKey);
                 switch (entry?.ContentType) {
                     case EmoteContentType.Emoji: {
                         builder.Append(entry.Data);
