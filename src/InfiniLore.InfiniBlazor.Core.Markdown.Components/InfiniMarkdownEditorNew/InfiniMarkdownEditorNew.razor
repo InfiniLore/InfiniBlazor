@@ -25,13 +25,10 @@
                 class="grid grid-rows-[1fr_1fr_auto] grid-cols-[auto_1fr] md:grid-rows-[auto_1fr_auto] md:grid-cols-2 gap-0 h-full">
                 @* Toolbar Top *@
                 <div class="col-span-1 row-span-2 md:col-span-2 md:row-span-1">
-                    <div class="flex flex-col h-full md:h-auto md:flex-row">
+                    <div class="flex flex-col h-full md:h-auto md:flex-row justify-between">
                         <InfiniButton IconName="@LucideNames.Plus" OnClick="@OnToggleLockedClickAsync"/>
-                        <InfiniSpacer/>
                         <InfiniButton IconName="@LucideNames.Minus" OnClick="@OnToggleInteractiveModeClickAsync"/>
-                        <InfiniSpacer/>
                         <InfiniButton IconName="@LucideNames.Eye" OnClick="@OnToggleShowPreviewClickAsync"/>
-                        <InfiniSpacer/>
                         <InfiniButton IconName="@LucideNames.EyeClosed" OnClick="@OnToggleShowInputClickAsync"/>
                     </div>
                 </div>
@@ -55,8 +52,9 @@
                     }
                     
                     default : {
-                        <div class="col-start-2 col-end-2 md:col-span-2 flex justify-center items-center text-(--color-base-20) bg-stripes bg-stripes-(--color-base-60)">
-                            Nothing to show here.
+                        <div class="col-start-2 col-end-2 md:col-span-2 flex justify-center items-center text-center text-(--color-base-20) bg-stripes bg-stripes-(--color-base-60)">
+                            Nothing to show here.<br/>
+                            You should not see this unless the developer messed up the layout.
                         </div>
                         break;
                     }
