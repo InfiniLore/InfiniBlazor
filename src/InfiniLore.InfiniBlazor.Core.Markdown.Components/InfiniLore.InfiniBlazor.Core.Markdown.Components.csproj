@@ -33,4 +33,8 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
         <PackageReference Include="Microsoft.Extensions.Http" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="InfiniMarkdownUnifiedEditor\" />
+    </ItemGroup>
 </Project>
