@@ -1,18 +1,26 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
-@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
-
-@namespace InfiniLore.InfiniBlazor.Markdown.MdBlazorComponents
+@namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniBlazorMdComponentBase<EmoteMdSyntaxNode>
+@inherits ComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniEmote Name="@SyntaxNode.EmoteKey" />
+<CascadingValue Value="@IsDisabled">
+    @ChildContent
+</CascadingValue>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    
+    [Parameter] public bool IsDisabled {
+        get => CascadedDisabled;
+        set => CascadedDisabled = value;
+    }
+    [CascadingParameter(Name = nameof(CascadedDisabled))] public bool CascadedDisabled { get; set; }
+}

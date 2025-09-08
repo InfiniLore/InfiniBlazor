@@ -18,16 +18,17 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="@EditorContext">
     <CascadingValue Value="@RenderContext">
+        <CascadingValue Value="@IsInteractive"></CascadingValue>
         <div class="mdEditor-container flex w-full flex-col h-full">
             <div class="mdEditor-toolbarTop">
-                
+
             </div>
             <div class="flex flex-row size-full h-full">
                 <InfiniMdEditorInput Class="max-w-1/2 min-w-1/2 w-1/2"/>
                 <InfiniMdEditorPreview Class="max-w-1/2 min-w-1/2 w-1/2"/>
             </div>
             <div class="mdEditor-toolbarBottom">
-                
+
             </div>
         </div>
     </CascadingValue>
@@ -39,6 +40,7 @@
 @code {
     [Parameter] public string? Content { get; set; }
     [Parameter] public EventCallback<string?> ContentChanged { get; set; }
+    [Parameter] public bool IsInteractive { get; set; }
     
     private MdEditorContext EditorContext { get; } = new();
     private MdRenderContext RenderContext { get; } = new();

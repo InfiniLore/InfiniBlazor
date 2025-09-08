@@ -1,27 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <RootNamespace>InfiniLore.InfiniBlazor</RootNamespace>
+        <RootNamespace>InfiniLore.InfiniBlazor.Markdown</RootNamespace>
 
         <!-- Package metadata -->
-        <PackageId>InfiniLore.InfiniBlazor</PackageId>
+        <PackageId>InfiniLore.InfiniBlazor.Core.Markdown.Components</PackageId>
         <Description>InfiniLore's Component Library</Description>
         <PackageTags>Blazor;Ui;Design;Components;Library</PackageTags>
-
-        <NoWarn>CS8974</NoWarn>
     </PropertyGroup>
-    
+
     <ItemGroup>
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core.Components\InfiniLore.InfiniBlazor.Core.Components.csproj" />
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core.Js\InfiniLore.InfiniBlazor.Core.Js.csproj" />
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core.Markdown.Components\InfiniLore.InfiniBlazor.Core.Markdown.Components.csproj" />
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core.Markdown\InfiniLore.InfiniBlazor.Core.Markdown.csproj" />
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core.Theming\InfiniLore.InfiniBlazor.Core.Theming.csproj" />
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core.Toasting\InfiniLore.InfiniBlazor.Core.Toasting.csproj" />
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Shared\InfiniLore.InfiniBlazor.Shared.csproj" />
     </ItemGroup>
-    
+
     <ItemGroup>
         <PackageReference Include="CodeOfChaos.Extensions.AspNetCore.Components" />
         <PackageReference Include="CodeOfChaos.Extensions.MicrosoftLogging" />
@@ -37,16 +29,12 @@
         <PackageReference Include="JetBrains.Annotations" />
         <PackageReference Include="Microsoft.AspNetCore.Components" />
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />
         <PackageReference Include="Microsoft.AspNetCore.WebUtilities" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
-        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
+        <PackageReference Include="Microsoft.Extensions.Http" />
     </ItemGroup>
-    
+
     <ItemGroup>
-      <EmbeddedResource Include="wwwroot\InfiniBlazor.css" />
-      <EmbeddedResource Include="wwwroot\InfiniBlazor.js" />
-      <EmbeddedResource Include="wwwroot\libs\emotes\emotes_lucide.json" />
-      <EmbeddedResource Include="wwwroot\libs\emotes\emotes_standard.json" />
+      <Folder Include="InfiniMarkdownUnifiedEditor\" />
     </ItemGroup>
 </Project>

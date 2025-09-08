@@ -1,14 +1,10 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-
 namespace InfiniLore.InfiniBlazor;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class InfiniRenderModeProvider {
-    public static IComponentRenderMode InfiniRenderMode { get; set; } = RenderMode.InteractiveWebAssembly;
-}
+// ReSharper disable once InconsistentNaming
+internal interface InfiniBlazorAssemblyEntry;

@@ -1,46 +1,26 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.Lucide
-
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniComponentBase
-@inject IEmoteProvider EmoteProvider
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@{ EmoteProvider.TryGetEntry(Name, out IEmoteEntry? entry); }
-@switch (entry) {
-    case { ContentType: EmoteContentType.Emoji, Data : {} data }: {
-        @data
-        break;
-    }
-
-    case { ContentType: EmoteContentType.LucideIconName, Data : {} data }: {
-        <LucideIcon Name="@data"></LucideIcon>
-        break;
-    }
-
-    case { ContentType: EmoteContentType.SvgData, Data : {} data }: {
-        @(new MarkupString(data))
-        break;
-    }
-
-    // ReSharper disable once RedundantEmptySwitchSection
-    default: {
-        @OnEmoteNotFound?.Invoke(Name)
-        // Emote not found
-        break;
-    }
+@if (!RendererInfo.IsInteractive) {
+    @StaticContent
+}
+else {
+    @LiveContent   
 }
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
-    [EditorRequired, Parameter] public required string Name { get; init; }
-    [Parameter] public Func<string, RenderFragment>? OnEmoteNotFound { get; init; } 
+    [EditorRequired, Parameter] public required RenderFragment StaticContent { get; set; }
+    [EditorRequired, Parameter] public required RenderFragment LiveContent { get; set; }
 }

@@ -18,6 +18,7 @@ public abstract class InfiniComponentBase : ComponentBase, IAsyncDisposable {
         get => CascadedDisabled;
         set => CascadedDisabled = value;
     }
+    
     [CascadingParameter(Name = nameof(CascadedDisabled))] public bool CascadedDisabled { get; set; }
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

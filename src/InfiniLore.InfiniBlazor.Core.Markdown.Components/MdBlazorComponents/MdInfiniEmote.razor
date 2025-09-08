@@ -1,28 +1,23 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
+@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
 
+@namespace InfiniLore.InfiniBlazor.Markdown.MdBlazorComponents
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
+@inherits InfiniBlazorMdComponentBase<EmoteMdSyntaxNode>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniHydratable>
-    <StaticContent>
-        
-    </StaticContent>
-    <LiveContent>
-        
-    </LiveContent>
-</InfiniHydratable>
-
+<InfiniEmote Name="@SyntaxNode.EmoteKey" OnEmoteNotFound="OnEmoteNotFound" />
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
-    [EditorRequired, Parameter] public RenderFragment StaticContent { get; set; }
-    [EditorRequired, Parameter] public RenderFragment LiveContent { get; set; }
+    private RenderFragment OnEmoteNotFound(string name) {
+        return @<span class="text-gray-300">:@name:</span>;
+    }
 }

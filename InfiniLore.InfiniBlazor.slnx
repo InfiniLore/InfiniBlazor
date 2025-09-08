@@ -42,6 +42,7 @@
   <Folder Name="/src/core/">
     <Project Path="src\InfiniLore.InfiniBlazor.Core.Components\InfiniLore.InfiniBlazor.Core.Components.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor.Core.Js\InfiniLore.InfiniBlazor.Core.Js.csproj" Type="Classic C#" />
+    <Project Path="src\InfiniLore.InfiniBlazor.Core.Markdown.Components\InfiniLore.InfiniBlazor.Core.Markdown.Components.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor.Core.Markdown\InfiniLore.InfiniBlazor.Core.Markdown.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor.Core.Theming\InfiniLore.InfiniBlazor.Core.Theming.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor.Core.Toasting\InfiniLore.InfiniBlazor.Core.Toasting.csproj" Type="Classic C#" />
