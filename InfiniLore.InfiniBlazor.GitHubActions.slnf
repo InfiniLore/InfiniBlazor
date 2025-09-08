@@ -18,6 +18,7 @@
             "src\\InfiniLore.InfiniBlazor.SourceGenerators\\InfiniLore.InfiniBlazor.SourceGenerators.csproj",
             
             "tests\\Tests.InfiniBlazor\\Tests.InfiniBlazor.csproj",
+            "tests\\Tests.InfiniBlazor.Core.Components\\Tests.InfiniBlazor.Core.Components.csproj",
             "tests\\Tests.InfiniBlazor.Core.Markdown\\Tests.InfiniBlazor.Core.Markdown.csproj",
             "tests\\Tests.InfiniBlazor.Shared\\Tests.InfiniBlazor.Shared.csproj",
             "tests\\Tests.InfiniBlazor.Shared.Markdown\\Tests.InfiniBlazor.Shared.Markdown.csproj",

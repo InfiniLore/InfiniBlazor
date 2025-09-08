@@ -10,7 +10,7 @@ namespace Tests.InfiniBlazor.Core.Markdown.Parsers.HtmlSimplified;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[DiDataSource]
+[InfiniBlazorDiDataSource]
 public class ToHtmlSimplifiedTests(IMarkdownParser parser) {
     [Test]
     [MethodDataSource<MdTestDataSources>(nameof(MdTestDataSources.GetBlankTest))]

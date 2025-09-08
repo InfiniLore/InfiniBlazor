@@ -1,17 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Project>
     <PropertyGroup>
-        
         <TargetFramework>net9.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-
         
         <DebugType>embedded</DebugType>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
-
         
         <Version>0.1.0-preview.94</Version>
         <Authors>Anna Sas</Authors>

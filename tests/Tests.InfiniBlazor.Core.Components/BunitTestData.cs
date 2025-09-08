@@ -1,11 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor;
+using Microsoft.AspNetCore.Components;
+
+namespace Tests.InfiniBlazor.Core.Components;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-internal static class HttpClientNames {
-    public const string InfiniBlazor = "InfiniBlazor";
-}
+public record BunitTestData(
+    RenderFragment Input, 
+    RenderFragment ExpectedMarkup
+);

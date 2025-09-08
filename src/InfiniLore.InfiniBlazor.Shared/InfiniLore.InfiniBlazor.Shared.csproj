@@ -10,6 +10,10 @@
     </PropertyGroup>
     
     <ItemGroup>
+        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor"/>
+    </ItemGroup>
+    
+    <ItemGroup>
         <PackageReference Include="CodeOfChaos.Extensions" />
         <PackageReference Include="CodeOfChaos.Extensions.ObjectPool" />
         <PackageReference Include="JetBrains.Annotations" />
