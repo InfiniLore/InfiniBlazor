@@ -26,16 +26,42 @@
                 @* Toolbar Top *@
                 <div class="col-span-1 row-span-2 md:col-span-2 md:row-span-1">
                     <div class="flex flex-col h-full md:h-auto md:flex-row">
-                        <InfiniButton IconName="@LucideNames.Plus"/>
+                        <InfiniButton IconName="@LucideNames.Plus" OnClick="@OnToggleLockedClickAsync"/>
                         <InfiniSpacer/>
-                        <InfiniButton IconName="@LucideNames.Minus" OnClick="@Callback"/>
+                        <InfiniButton IconName="@LucideNames.Minus" OnClick="@OnToggleInteractiveModeClickAsync"/>
+                        <InfiniSpacer/>
+                        <InfiniButton IconName="@LucideNames.Eye" OnClick="@OnToggleShowPreviewClickAsync"/>
+                        <InfiniSpacer/>
+                        <InfiniButton IconName="@LucideNames.EyeClosed" OnClick="@OnToggleShowInputClickAsync"/>
                     </div>
                 </div>
 
                 @* Content *@
-                <InfiniMdEditorInput Class="col-start-2 col-end-2 md:col-start-1 md:col-end-1"/>
-                <InfiniMdEditorPreview Class="col-start-2 col-end-2 md:col-start-2 md:col-end-2"/>
+                @switch (EditorContext.ShowInput, EditorContext.ShowPreview) {
+                    case (true, true): {
+                        <InfiniMdEditorInput Class="col-start-2 col-end-2 md:col-start-1 md:col-end-1"/>
+                        <InfiniMdEditorPreview Class="col-start-2 col-end-2 md:col-start-2 md:col-end-2"/>
+                        break;
+                    }
 
+                    case (true, false): {
+                        <InfiniMdEditorInput Class="col-start-2 col-end-2 md:col-span-2"/>
+                        break;
+                    }
+
+                    case (false, true): {
+                        <InfiniMdEditorPreview Class="col-start-2 col-end-2 md:col-span-2"/>
+                        break;
+                    }
+                    
+                    default : {
+                        <div class="col-start-2 col-end-2 md:col-span-2 flex justify-center items-center text-(--color-base-20) bg-stripes bg-stripes-(--color-base-60)">
+                            Nothing to show here.
+                        </div>
+                        break;
+                    }
+                }
+                
                 @* Toolbar Bottom *@
                 <div class="col-span-2">
                     Toolbar bottom
@@ -169,10 +195,31 @@
         await JsInfiniBlazor.TextSelection.SetRangeAsync(EditorContext.InputElementRef, lineRange).ConfigureAwait(false);
     }
 
-    private async Task Callback(MouseEventArgs obj) {
-        EditorContext.IsNotInteractive = !EditorContext.IsNotInteractive;
+    private async Task OnToggleInteractiveModeClickAsync(MouseEventArgs obj) {
+        EditorContext.IsInteractive = !EditorContext.IsInteractive;
         
-        Logger.Warning("state {i}", EditorContext.IsNotInteractive);
+        Logger.Warning("state IsInteractive : {i}", EditorContext.IsInteractive);
+        await InvokeAsync(StateHasChanged);
+    }
+    
+    private async Task OnToggleLockedClickAsync(MouseEventArgs obj) {
+        EditorContext.IsLocked = !EditorContext.IsLocked;
+        
+        Logger.Warning("state IsLocked : {i}", EditorContext.IsLocked);
+        await InvokeAsync(StateHasChanged);
+    }
+    
+    private async Task OnToggleShowPreviewClickAsync(MouseEventArgs obj) {
+        EditorContext.ShowPreview = !EditorContext.ShowPreview;
+        
+        Logger.Warning("state ShowPreview : {i}", EditorContext.ShowPreview);
+        await InvokeAsync(StateHasChanged);
+    }
+    
+    private async Task OnToggleShowInputClickAsync(MouseEventArgs obj) {
+        EditorContext.ShowInput = !EditorContext.ShowInput;
+        
+        Logger.Warning("state ShowInput : {i}", EditorContext.ShowInput);
         await InvokeAsync(StateHasChanged);
     }
 }

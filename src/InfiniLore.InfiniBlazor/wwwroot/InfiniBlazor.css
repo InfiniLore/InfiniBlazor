@@ -2389,6 +2389,12 @@
   .bg-stripes-\(--color-accent\) {
     --stripe-color: var(--color-accent);
   }
+  .bg-stripes-\(--color-base-50\) {
+    --stripe-color: var(--color-base-50);
+  }
+  .bg-stripes-\(--color-base-60\) {
+    --stripe-color: var(--color-base-60);
+  }
   .bg-stripes-\(--color-black\) {
     --stripe-color: var(--color-black);
   }
@@ -3001,6 +3007,21 @@
       --tw-scale-y: 95%;
       --tw-scale-z: 95%;
       scale: var(--tw-scale-x) var(--tw-scale-y);
+    }
+  }
+  .disabled\:cursor-none {
+    &:disabled {
+      cursor: none;
+    }
+  }
+  .disabled\:cursor-not-allowed {
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+  .disabled\:text-\(--color-base-30\) {
+    &:disabled {
+      color: var(--color-base-30);
     }
   }
   .sm\:col-span-1 {

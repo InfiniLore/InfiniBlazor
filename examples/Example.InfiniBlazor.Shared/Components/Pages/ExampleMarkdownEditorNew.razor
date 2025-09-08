@@ -17,7 +17,7 @@
         <InfiniMarkdownEditorNew @bind-EditorContext="Context"/>
         
         <hr>
-        <InfiniCodeBlock @bind-Content="Context.Text" Language="markdown" />
+        <InfiniCodeBlock @bind-Content="Context.Content" Language="markdown" />
         
     </InfiniSection>
 </InfiniPage>
@@ -26,8 +26,8 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     public MdEditorContext Context = new() {
-        IsNotInteractive = true,
-        Text = "- [ ] something"
+        IsInteractive = false,
+        Content = "- [ ] something"
     };
     // public string? Content { get; set; } = "- [ ] something";
 }

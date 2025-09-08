@@ -13,8 +13,11 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdEditorContext {
     public bool IsLocked { get; set; }
-    public bool IsNotInteractive { get; set; }
-    public string Text {
+    public bool IsInteractive { get; set; }
+    public bool ShowPreview { get; set; } = true;
+    public bool ShowInput { get; set; } = true;
+
+    public string Content {
         get => TextSource.Text;
         set => TextSource.UpdateSource(value);
     }
@@ -28,30 +31,29 @@ public class MdEditorContext {
     public event Func<Task>? OnSyntaxTreeChangedAsync;
     public event Func<KeyboardEventArgs, Task>? OnInputKeyDownAsync;
     
-    private Debouncer<string> SourceChangedCallbackDebouncer { get; }
-    private Debouncer SyntaxTreeChangedCallbackDebouncer { get; }
+    private ThrottledDebouncer<string> SourceChangedCallbackDebouncer { get; }
+    private ThrottledDebouncer SyntaxTreeChangedCallbackDebouncer { get; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
     public MdEditorContext() {
-        SourceChangedCallbackDebouncer = Debouncer<string>.FromDelegate(async input => {
+        SourceChangedCallbackDebouncer = ThrottledDebouncer<string>.FromDelegate(async input => {
             if (OnSourceChangedAsync is null) return;
             await OnSourceChangedAsync(input).ConfigureAwait(false);
         });
         
-        SyntaxTreeChangedCallbackDebouncer = Debouncer.FromDelegate(async () => {
+        SyntaxTreeChangedCallbackDebouncer = ThrottledDebouncer.FromDelegate(async () => {
             if (OnSyntaxTreeChangedAsync is null) return;
             await OnSyntaxTreeChangedAsync().ConfigureAwait(false);
         });
     }
     
-    public static MdEditorContext Interactive => new() { IsNotInteractive = false };
-    public static MdEditorContext NotInteractive => new() { IsNotInteractive = true };
-    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    internal bool IsNotInteractive() => IsLocked || !IsInteractive;
+    
     public async Task InvokeSourceChangeAsync(string value) 
         => await SourceChangedCallbackDebouncer.InvokeDebouncedAsync(value);
     

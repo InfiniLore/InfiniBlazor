@@ -9,22 +9,26 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@Class border-2 border-red-500 flex">
-    @* WHY does this work better than onInput ????? https://github.com/dotnet/aspnetcore/issues/39837 *@
-    @* TODO fix this for WASM, very slow *@
-    <textarea 
-        class="focus:outline-none w-full h-full font-mono overflow-y-auto infini-scrollbar"
-        value="@EditorContext.TextSource.Text"
-        @oninput="@OnInputAsync"
-        @ref="@EditorContext.InputElementRef"
-        @onkeydown="@OnKeyDownAsync"
-    >
+<CascadingIsDisabled @bind-Value="EditorContext.IsLocked">
+    <div class="@Class border-2 border-red-500 flex">
+        @* WHY does this work better than onInput ????? https://github.com/dotnet/aspnetcore/issues/39837 *@
+        @* TODO fix this for WASM, very slow *@
+        <textarea
+            disabled="@EditorContext.IsLocked"
+            class="disabled:text-(--color-base-30) disabled:cursor-not-allowed focus:outline-none w-full h-full font-mono overflow-y-auto infini-scrollbar"
+            value="@EditorContext.TextSource.Text"
+            @oninput="@OnInputAsync"
+            @ref="@EditorContext.InputElementRef"
+            @onkeydown="@OnKeyDownAsync"
+        >
     </textarea>
-</div>
+    </div>
+</CascadingIsDisabled>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     [CascadingParameter] protected MdEditorContext EditorContext { get; set; } = null!;
 
@@ -34,13 +38,14 @@
     private async Task OnInputAsync(ChangeEventArgs changeEventArgs) {
         if (EditorContext.IsLocked) return;
         if (changeEventArgs.Value is not string input) return;
+
         await EditorContext.InvokeSourceChangeAsync(input).ConfigureAwait(false);
     }
-    
+
     private async Task OnKeyDownAsync(KeyboardEventArgs args) {
         if (EditorContext.IsLocked) return;
-        if (!args.CtrlKey) return; // quick exit to not have to wait on every key press
-        
+        if (!args.CtrlKey) return;// quick exit to not have to wait on every key press
+
         await EditorContext.InvokeInputKeyDownAsync(args).ConfigureAwait(false);
     }
 }

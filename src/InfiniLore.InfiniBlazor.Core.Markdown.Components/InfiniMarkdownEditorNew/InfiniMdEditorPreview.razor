@@ -12,7 +12,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<CascadingIsDisabled @bind-Value="EditorContext.IsNotInteractive">
+<CascadingIsDisabled Value="EditorContext.IsNotInteractive()">
     <div class="@Class flex min-h-0">
         <div class="border-2 border-green-500 flex-1 overflow-y-auto infini-scrollbar">
             @ComponentConverter.RenderRootComponents(EditorContext.SyntaxTree.VisitTopLevelNodes())
