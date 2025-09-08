@@ -13,6 +13,8 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdEditorContext {
     public bool IsLocked { get; set; }
+    public bool IsInteractive { get; set; } = true;
+    
     public ITextSource TextSource { get; private set; } = new TextSource();
     public ElementReference InputElementRef { get; set; }
 
