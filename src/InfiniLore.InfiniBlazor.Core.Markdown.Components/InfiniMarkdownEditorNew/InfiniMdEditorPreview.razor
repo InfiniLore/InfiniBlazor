@@ -8,14 +8,26 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inject IBlazorMdComponentConverter ComponentConverter
+@inject IMarkdownParser Parser
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingIsDisabled Value="EditorContext.IsNotInteractive()">
-    <div class="@Class flex min-h-0">
-        <div class="border-2 border-green-500 flex-1 overflow-y-auto infini-scrollbar">
-            @ComponentConverter.RenderRootComponents(EditorContext.SyntaxTree.VisitTopLevelNodes())
+    <div class="@Class border-(--border) flex min-h-0">
+        <div class="flex-1 overflow-y-auto infini-scrollbar">
+            @if (!VisualDebugger.IsEnabled()) {
+                @ComponentConverter.RenderRootComponents(EditorContext.SyntaxTree.VisitTopLevelNodes())
+            } else {
+                <InfiniCodeBlock
+                    Language="MdSyntaxTree"
+                    Class="h-full text-(--color-red)"
+                    Content="@Parser.Xml.DeserializeToString(EditorContext.SyntaxTree)"
+                    />
+            }
         </div>
     </div>
 </CascadingIsDisabled>
@@ -23,7 +35,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
     [CascadingParameter] protected MdEditorContext EditorContext { get; set; } = null!;
 

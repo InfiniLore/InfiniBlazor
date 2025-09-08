@@ -38,23 +38,23 @@
                 @* Content *@
                 @switch (EditorContext.ShowInput, EditorContext.ShowPreview) {
                     case (true, true): {
-                        <InfiniMdEditorInput Class="col-start-2 col-end-2 md:col-start-1 md:col-end-1"/>
-                        <InfiniMdEditorPreview Class="col-start-2 col-end-2 md:col-start-2 md:col-end-2"/>
+                        <InfiniMdEditorInput Class="col-start-2 col-end-2 md:col-start-1 md:col-end-1 border-1"/>
+                        <InfiniMdEditorPreview Class="col-start-2 col-end-2 md:col-start-2 md:col-end-2 border-y border-r"/>
                         break;
                     }
 
                     case (true, false): {
-                        <InfiniMdEditorInput Class="col-start-2 col-end-2 md:col-span-2"/>
+                        <InfiniMdEditorInput Class="col-start-2 col-end-2 md:col-span-2 border-1"/>
                         break;
                     }
 
                     case (false, true): {
-                        <InfiniMdEditorPreview Class="col-start-2 col-end-2 md:col-span-2"/>
+                        <InfiniMdEditorPreview Class="col-start-2 col-end-2 md:col-span-2 border-1"/>
                         break;
                     }
                     
                     default : {
-                        <div class="col-start-2 col-end-2 md:col-span-2 flex justify-center items-center text-center text-(--color-base-20) bg-stripes bg-stripes-(--color-base-60)">
+                        <div class="col-start-2 col-end-2 md:col-span-2 flex justify-center items-center text-center text-(--color-base-20) bg-stripes bg-stripes-(--color-base-60) border-1">
                             Nothing to show here.<br/>
                             You should not see this unless the developer messed up the layout.
                         </div>
