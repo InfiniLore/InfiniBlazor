@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions.Debouncers;
 using InfiniLore.InfiniBlazor.Markdown.Editors;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Microsoft.AspNetCore.Components;
@@ -21,15 +22,24 @@ public class MdEditorContext {
     public event Func<string, Task>? OnSourceChangedAsync;
     public event Func<Task>? OnSyntaxTreeChangedAsync;
     public event Func<KeyboardEventArgs, Task>? OnInputKeyDownAsync;
+    
+    private Debouncer<string> SourceChangedCallbackDebouncer { get; init; }
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Constructors
+    // -----------------------------------------------------------------------------------------------------------------
+    public MdEditorContext() {
+        SourceChangedCallbackDebouncer = Debouncer<string>.FromDelegate(async input => {
+            if (OnSourceChangedAsync is null) return;
+            await OnSourceChangedAsync(input).ConfigureAwait(false);
+        });
+    }
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     
-    public async Task InvokeSourceChangeAsync(string value) {
-        if (OnSourceChangedAsync is null) return;
-        await OnSourceChangedAsync(value).ConfigureAwait(false);
-    }
+    public async Task InvokeSourceChangeAsync(string value) => await SourceChangedCallbackDebouncer.InvokeDebouncedAsync(value);
     
     public async Task InvokeSyntaxTreeChangeAsync() {
         if (OnSyntaxTreeChangedAsync is null) return;
