@@ -63,13 +63,11 @@ public class EmoteProviderTests(IEmoteProvider provider) {
         // Act
         #pragma warning disable CS8604// Possible null reference argument.
 
-        bool result = provider.TryGetEntry(key, out IEmoteEntry? entry);
+        IEmoteEntry? entry = provider.GetEntryAsync(key);
 
         #pragma warning restore CS8604// Possible null reference argument.
 
         // Assert
-        await Assert.That(result).IsEqualTo(expectedResult);
-
         var entryCast = entry as EmoteEntry;
         await Assert.That(entryCast).IsEquivalentTo(expectedEntry);
     }

@@ -53,8 +53,6 @@ public class Program {
             .AddInteractiveServerRenderMode()
             .AddInteractiveWebAssemblyRenderMode()
             .AddAdditionalAssemblies(typeof(Client._Imports).Assembly, ISharedEntry.Assembly);
-
-        app.UseInfiniBlazor();
         
         await app.RunAsync();
     }
