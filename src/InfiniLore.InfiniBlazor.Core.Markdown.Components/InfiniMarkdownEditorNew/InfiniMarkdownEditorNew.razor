@@ -26,10 +26,12 @@
                 @* Toolbar Top *@
                 <div class="col-span-1 row-span-2 md:col-span-2 md:row-span-1">
                     <div class="flex flex-col h-full md:h-auto md:flex-row justify-between">
-                        <InfiniButton IconName="@LucideNames.Plus" OnClick="@OnToggleLockedClickAsync"/>
-                        <InfiniButton IconName="@LucideNames.Minus" OnClick="@OnToggleInteractiveModeClickAsync"/>
-                        <InfiniButton IconName="@LucideNames.Eye" OnClick="@OnToggleShowPreviewClickAsync"/>
-                        <InfiniButton IconName="@LucideNames.EyeClosed" OnClick="@OnToggleShowInputClickAsync"/>
+                        @if (VisualDebugger.IsEnabled()) {
+                            <InfiniButtonOutlineSolid Color="Color.Red" IconName="@LucideNames.Plus" OnClick="@OnToggleLockedClickAsync"/>
+                            <InfiniButtonOutlineSolid Color="Color.Red" IconName="@LucideNames.Minus" OnClick="@OnToggleInteractiveModeClickAsync"/>
+                            <InfiniButtonOutlineSolid Color="Color.Red" IconName="@LucideNames.Eye" OnClick="@OnToggleShowPreviewClickAsync"/>
+                            <InfiniButtonOutlineSolid Color="Color.Red" IconName="@LucideNames.EyeClosed" OnClick="@OnToggleShowInputClickAsync"/>
+                        }
                     </div>
                 </div>
 

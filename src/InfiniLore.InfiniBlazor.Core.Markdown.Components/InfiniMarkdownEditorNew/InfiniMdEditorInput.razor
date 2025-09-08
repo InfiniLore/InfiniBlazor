@@ -5,12 +5,14 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using Microsoft.AspNetCore.Components.Forms
 @inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingIsDisabled @bind-Value="EditorContext.IsLocked">
     <div class="@Class border-2 border-red-500 flex">
+        <InputTextArea ></InputTextArea>
         <textarea
             disabled="@EditorContext.IsLocked"
             class="disabled:text-(--color-base-30) disabled:cursor-not-allowed focus:outline-none w-full h-full font-mono overflow-y-auto infini-scrollbar"
