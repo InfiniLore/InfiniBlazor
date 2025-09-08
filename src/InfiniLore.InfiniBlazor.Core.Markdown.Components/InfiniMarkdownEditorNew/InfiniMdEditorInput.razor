@@ -11,8 +11,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingIsDisabled @bind-Value="EditorContext.IsLocked">
     <div class="@Class border-2 border-red-500 flex">
-        @* WHY does this work better than onInput ????? https://github.com/dotnet/aspnetcore/issues/39837 *@
-        @* TODO fix this for WASM, very slow *@
         <textarea
             disabled="@EditorContext.IsLocked"
             class="disabled:text-(--color-base-30) disabled:cursor-not-allowed focus:outline-none w-full h-full font-mono overflow-y-auto infini-scrollbar"
