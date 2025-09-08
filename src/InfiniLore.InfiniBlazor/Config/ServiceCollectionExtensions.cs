@@ -29,6 +29,7 @@ public static class ServiceCollectionExtensions {
         services.AddSingleton(TextEditorFactory.CreateTextEditor);
 
         config.Markdown.WithDefaultEditorComponents();
+        config.Components.AddEmbeddedResourceAssembly<InfiniBlazorAssemblyEntry>();
 
         services.AddHttpClient(HttpClientNames.InfiniBlazor, static (serviceProvider, client) => {
             var config = serviceProvider.GetService<IConfiguration>();

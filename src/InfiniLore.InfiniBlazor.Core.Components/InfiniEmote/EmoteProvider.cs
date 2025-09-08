@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
@@ -13,7 +14,7 @@ namespace InfiniLore.InfiniBlazor.Components;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IEmoteProvider>]
-public class EmoteProvider(ILogger<EmoteProvider> logger, IEmoteDataLoader dataLoader) : IEmoteProvider {
+public class EmoteProvider(ILogger<EmoteProvider> logger, [FromKeyedServices("EmbeddedResource")] IEmoteDataLoader dataLoader) : IEmoteProvider {
     private ConcurrentDictionary<string, EmoteEntry> Entries { get; } = new();
 
     private static JsonSerializerOptions JsonSerializerOptions { get; } = new() {
@@ -29,7 +30,7 @@ public class EmoteProvider(ILogger<EmoteProvider> logger, IEmoteDataLoader dataL
     // -----------------------------------------------------------------------------------------------------------------
     public async Task InitializeAsync(CancellationToken ct = default) {
         Stream[] streams = await dataLoader.LoadEmoteStreamsAsync(ct);
-        
+
         if (streams.Length == 0) {
             logger.Error("Could not load any emote JSON resources");
             return;
