@@ -3,6 +3,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.JsRuntime
 @using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
+@using InfiniLore.Lucide
 
 @namespace InfiniLore.InfiniBlazor.Markdown
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -19,16 +20,23 @@
 <CascadingValue Value="@EditorContext">
     <CascadingValue Value="@RenderContext">
         <CascadingValue Value="@IsInteractive"></CascadingValue>
-        <div class="mdEditor-container flex w-full flex-col h-full">
-            <div class="mdEditor-toolbarTop">
-
+        <div class="grid grid-rows-[1fr_1fr_auto] grid-cols-[auto_1fr] md:grid-rows-[auto_1fr_auto] md:grid-cols-2 gap-0 h-full">
+            @* Toolbar Top *@
+            <div class="col-span-1 row-span-2 md:col-span-2 md:row-span-1">
+                <div class="flex flex-col h-full md:h-auto md:flex-row">
+                    <InfiniButton IconName="@LucideNames.Plus"/>
+                    <InfiniSpacer/>
+                    <InfiniButton IconName="@LucideNames.Minus"/>
+                </div>
             </div>
-            <div class="flex flex-row size-full h-full">
-                <InfiniMdEditorInput Class="max-w-1/2 min-w-1/2 w-1/2"/>
-                <InfiniMdEditorPreview Class="max-w-1/2 min-w-1/2 w-1/2"/>
-            </div>
-            <div class="mdEditor-toolbarBottom">
-
+            
+            @* Content *@
+            <InfiniMdEditorInput Class="col-start-2 col-end-2 md:col-start-1 md:col-end-1" />
+            <InfiniMdEditorPreview Class="col-start-2 col-end-2 md:col-start-2 md:col-end-2"/>
+            
+            @* Toolbar Bottom *@
+            <div class="col-span-2">
+                Toolbar bottom
             </div>
         </div>
     </CascadingValue>
