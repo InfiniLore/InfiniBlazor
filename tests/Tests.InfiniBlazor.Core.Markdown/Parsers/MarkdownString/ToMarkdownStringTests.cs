@@ -10,7 +10,7 @@ namespace Tests.InfiniBlazor.Core.Markdown.Parsers.MarkdownString;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[DiDataSource]
+[InfiniBlazorDiDataSource]
 public class ToMarkdownStringTests(IMarkdownParser parser) {
     [Test]
     [MethodDataSource<MdTestDataSources>(nameof(MdTestDataSources.GetBlankTest))]

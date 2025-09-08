@@ -5,21 +5,22 @@ using InfiniLore.InfiniBlazor;
 using InfiniLore.InfiniBlazor.Components;
 using InfiniLore.InfiniBlazor.Components.DataLoaders;
 using InfiniLore.InfiniBlazor.Config;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NSubstitute;
 
 namespace Tests.InfiniBlazor.Shared;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-// ReSharper disable once InconsistentNaming
-public class DiDataSourceAttribute : DependencyInjectionDataSourceAttribute<IServiceScope> {
+public class InfiniBlazorDiDataSourceAttribute : DependencyInjectionDataSourceAttribute<IServiceScope> {
     private static readonly IServiceProvider ServiceProvider = CreateSharedServiceProvider();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public override IServiceScope CreateScope(DataGeneratorMetadata dataGeneratorMetadata) => ServiceProvider.CreateAsyncScope();
+    public override IServiceScope CreateScope(DataGeneratorMetadata dataGeneratorMetadata) => ServiceProvider.CreateScope();
     public override object? Create(IServiceScope scope, Type type) => scope.ServiceProvider.GetService(type);
 
     private static ServiceProvider CreateSharedServiceProvider() {
@@ -44,6 +45,8 @@ public class DiDataSourceAttribute : DependencyInjectionDataSourceAttribute<ISer
                 provider.GetRequiredService<ILogger<AssemblyEmoteDataLoader>>()
             );
         });
+        
+        services.AddTransient<NavigationManager>(_ => Substitute.For<NavigationManager>());
 
         ServiceProvider provider = services.BuildServiceProvider();
 

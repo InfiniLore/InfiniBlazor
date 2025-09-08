@@ -1,11 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor;
-
+namespace Tests.InfiniBlazor.Core.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-internal static class HttpClientNames {
-    public const string InfiniBlazor = "InfiniBlazor";
+public class InfiniBlazorBunitTest : Bunit.TestContext {
+    public InfiniBlazorBunitTest(IServiceProvider services) {
+        Services.AddFallbackServiceProvider(services);
+    }
 }
