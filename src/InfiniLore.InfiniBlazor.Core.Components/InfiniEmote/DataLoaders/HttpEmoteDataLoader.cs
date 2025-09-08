@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.Components.DataLoaders;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IEmoteDataLoader>]
 public class HttpEmoteDataLoader(
-    [FromKeyedServices(HttpClientNames.InfiniBlazor)] HttpClient client,
+    IHttpClientFactory clientFactory,
     IComponentsConfig componentsConfig, 
     ILogger<HttpEmoteDataLoader> logger
 ) : IEmoteDataLoader {
@@ -23,6 +23,8 @@ public class HttpEmoteDataLoader(
     public async Task<Stream[]> LoadEmoteStreamsAsync(CancellationToken ct = default) {
         ImmutableArray<string> resourceFilepaths = componentsConfig.GetEmoteJsonLibFilePaths();
         if (resourceFilepaths.IsEmpty) return [];
+        
+        using HttpClient client = clientFactory.CreateClient();
         
         Stream[] streams = await Task.WhenAll(
             resourceFilepaths.Select(async resourcePath => {
