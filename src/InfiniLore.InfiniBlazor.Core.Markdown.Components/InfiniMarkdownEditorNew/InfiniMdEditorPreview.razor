@@ -12,7 +12,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<CascadingIsDisabled IsDisabled="@(!IsInteractive)">
+<CascadingIsDisabled @bind-Value="EditorContext.IsNotInteractive">
     <div class="@Class flex min-h-0">
         <div class="border-2 border-green-500 flex-1 overflow-y-auto infini-scrollbar">
             @ComponentConverter.RenderRootComponents(EditorContext.SyntaxTree.VisitTopLevelNodes())
@@ -23,10 +23,10 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     [CascadingParameter] protected MdEditorContext EditorContext { get; set; } = null!;
-    [CascadingParameter] protected bool IsInteractive { get; set; }
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Component lifetime Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -38,11 +38,11 @@
 
     public override async ValueTask DisposeAsync() {
         await base.DisposeAsync();
-        
+
         // help aaa
         EditorContext.OnSyntaxTreeChangedAsync -= OnSourceChangedAsync;
     }
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

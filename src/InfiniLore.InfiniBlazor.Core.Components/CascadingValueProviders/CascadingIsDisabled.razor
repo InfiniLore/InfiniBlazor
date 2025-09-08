@@ -9,7 +9,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<CascadingValue Value="@IsDisabled">
+<CascadingValue Name="CascadedDisabled" Value="@Value">
     @ChildContent
 </CascadingValue>
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -17,10 +17,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     [Parameter] public RenderFragment? ChildContent { get; set; }
-    
-    [Parameter] public bool IsDisabled {
-        get => CascadedDisabled;
-        set => CascadedDisabled = value;
-    }
-    [CascadingParameter(Name = nameof(CascadedDisabled))] public bool CascadedDisabled { get; set; }
+
+    [Parameter] public bool Value { get; set; }
+    [Parameter] public EventCallback<bool> ValueChanged { get; set; }
 }

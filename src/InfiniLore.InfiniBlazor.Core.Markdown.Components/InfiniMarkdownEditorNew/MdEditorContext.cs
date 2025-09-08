@@ -13,6 +13,11 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdEditorContext {
     public bool IsLocked { get; set; }
+    public bool IsNotInteractive { get; set; }
+    public string Text {
+        get => TextSource.Text;
+        set => TextSource.UpdateSource(value);
+    }
     
     public ITextSource TextSource { get; private set; } = new TextSource();
     public ElementReference InputElementRef { get; set; }
@@ -40,6 +45,9 @@ public class MdEditorContext {
             await OnSyntaxTreeChangedAsync().ConfigureAwait(false);
         });
     }
+    
+    public static MdEditorContext Interactive => new() { IsNotInteractive = false };
+    public static MdEditorContext NotInteractive => new() { IsNotInteractive = true };
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

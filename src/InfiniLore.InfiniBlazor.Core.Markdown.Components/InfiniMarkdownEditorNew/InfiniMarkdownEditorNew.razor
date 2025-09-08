@@ -4,41 +4,43 @@
 @using InfiniLore.InfiniBlazor.JsRuntime
 @using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
 @using InfiniLore.Lucide
+@using Microsoft.Extensions.Logging
 
 @namespace InfiniLore.InfiniBlazor.Markdown
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniComponentBase
-@inject IMarkdownParser Parser
 
+@inject IMarkdownParser Parser
 @inject IJsInfiniBlazor JsInfiniBlazor
 @inject ITextEditor TextEditor
+@inject ILogger<InfiniMarkdownEditorNew> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="@EditorContext">
     <CascadingValue Value="@RenderContext">
-        <CascadingValue Value="@IsInteractive"></CascadingValue>
-        <div class="grid grid-rows-[1fr_1fr_auto] grid-cols-[auto_1fr] md:grid-rows-[auto_1fr_auto] md:grid-cols-2 gap-0 h-full">
-            @* Toolbar Top *@
-            <div class="col-span-1 row-span-2 md:col-span-2 md:row-span-1">
-                <div class="flex flex-col h-full md:h-auto md:flex-row">
-                    <InfiniButton IconName="@LucideNames.Plus"/>
-                    <InfiniSpacer/>
-                    <InfiniButton IconName="@LucideNames.Minus"/>
+            <div
+                class="grid grid-rows-[1fr_1fr_auto] grid-cols-[auto_1fr] md:grid-rows-[auto_1fr_auto] md:grid-cols-2 gap-0 h-full">
+                @* Toolbar Top *@
+                <div class="col-span-1 row-span-2 md:col-span-2 md:row-span-1">
+                    <div class="flex flex-col h-full md:h-auto md:flex-row">
+                        <InfiniButton IconName="@LucideNames.Plus"/>
+                        <InfiniSpacer/>
+                        <InfiniButton IconName="@LucideNames.Minus" OnClick="@Callback"/>
+                    </div>
+                </div>
+
+                @* Content *@
+                <InfiniMdEditorInput Class="col-start-2 col-end-2 md:col-start-1 md:col-end-1"/>
+                <InfiniMdEditorPreview Class="col-start-2 col-end-2 md:col-start-2 md:col-end-2"/>
+
+                @* Toolbar Bottom *@
+                <div class="col-span-2">
+                    Toolbar bottom
                 </div>
             </div>
-            
-            @* Content *@
-            <InfiniMdEditorInput Class="col-start-2 col-end-2 md:col-start-1 md:col-end-1" />
-            <InfiniMdEditorPreview Class="col-start-2 col-end-2 md:col-start-2 md:col-end-2"/>
-            
-            @* Toolbar Bottom *@
-            <div class="col-span-2">
-                Toolbar bottom
-            </div>
-        </div>
     </CascadingValue>
 </CascadingValue>
 
@@ -46,15 +48,12 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public string? Content { get; set; }
-    [Parameter] public EventCallback<string?> ContentChanged { get; set; }
-    [Parameter] public bool IsInteractive { get; set; }
-    
-    private MdEditorContext EditorContext { get; } = new();
+    [Parameter] public MdEditorContext EditorContext { get; set; } = new();
+    [Parameter] public EventCallback<MdEditorContext> EditorContextChanged  { get; set; }
     private MdRenderContext RenderContext { get; } = new();
     private InfiniEditorKeyCombo LastPressedCombo { get; set; } = InfiniEditorKeyCombo.Empty;
-    
-    private Dictionary<InfiniEditorKeyCombo, Func<InfiniMarkdownEditorNew,Task>> KeyCombos { get; } = new() {
+
+    private Dictionary<InfiniEditorKeyCombo, Func<InfiniMarkdownEditorNew, Task>> KeyCombos { get; } = new() {
         [InfiniEditorKeyCombo.Bold] = static editor => editor.OnModifierClickAsync("bold"),
         [InfiniEditorKeyCombo.Italic] = static editor => editor.OnModifierClickAsync("italic"),
         [InfiniEditorKeyCombo.Underline] = static editor => editor.OnModifierClickAsync("underline"),
@@ -66,7 +65,7 @@
     // -----------------------------------------------------------------------------------------------------------------
     protected override void OnInitialized() {
         base.OnInitialized();
-        
+
         RenderContext.OnSyntaxNodeChanged += OnSyntaxNodeChangedAsync;
         EditorContext.OnSourceChangedAsync += OnSourceChangedAsync;
         EditorContext.OnInputKeyDownAsync += OnInputKeyDownAsync;
@@ -75,7 +74,7 @@
     protected override async Task OnParametersSetAsync() {
         await base.OnParametersSetAsync();
 
-        EditorContext.TextSource.UpdateSource(Content ?? string.Empty);
+        // EditorContext.TextSource.UpdateSource(Content ?? string.Empty);
 
         EditorContext.SyntaxTree.ReturnToPool();
         EditorContext.SyntaxTree = Parser.MarkdownString.SerializeToSyntaxTree(EditorContext.TextSource.Text);
@@ -95,10 +94,10 @@
         if (TextEditor.TryGetCaretUpdate(out int index))
             await JsInfiniBlazor.TextSelection.SetIndexAsync(EditorContext.InputElementRef, index).ConfigureAwait(false);
     }
-    
+
     public override async ValueTask DisposeAsync() {
         await base.DisposeAsync();
-        
+
         RenderContext.OnSyntaxNodeChanged -= OnSyntaxNodeChangedAsync;
         EditorContext.OnSourceChangedAsync -= OnSourceChangedAsync;
         EditorContext.OnInputKeyDownAsync -= OnInputKeyDownAsync;
@@ -111,19 +110,17 @@
         EditorContext.SyntaxTree.ReturnToPool();
         EditorContext.SyntaxTree = Parser.MarkdownString.SerializeToSyntaxTree(EditorContext.TextSource.Text);
         await EditorContext.InvokeSyntaxTreeChangeAsync().ConfigureAwait(false);
-        
-        Content = EditorContext.TextSource.Text;
-        await ContentChanged.InvokeAsync(Content).ConfigureAwait(false);
-        
+
+        await EditorContextChanged.InvokeAsync(EditorContext).ConfigureAwait(false);
+
         await InvokeAsync(StateHasChanged);
     }
 
     private async Task OnSyntaxNodeChangedAsync(IMdSyntaxNode _) {
         string newContent = Parser.MarkdownString.DeserializeToString(EditorContext.SyntaxTree);
         EditorContext.TextSource.UpdateSource(newContent);
-        
-        Content = EditorContext.TextSource.Text;
-        await ContentChanged.InvokeAsync(Content).ConfigureAwait(false);
+
+        await EditorContextChanged.InvokeAsync(EditorContext).ConfigureAwait(false);
         
         await InvokeAsync(StateHasChanged);
     }
@@ -131,11 +128,11 @@
     private async Task OnInputKeyDownAsync(KeyboardEventArgs args) {
         InfiniEditorKeyCombo combo = InfiniEditorKeyCombo.From(args);
         if (KeyCombos.TryGetValue(combo, out Func<InfiniMarkdownEditorNew, Task>? task)) await task(this);
-        
+
         LastPressedCombo = combo;
         await InvokeAsync(StateHasChanged);
     }
-    
+
     public async Task OnModifierClickAsync(string modifierName) {
         if (EditorContext.IsLocked) return;
 
@@ -164,11 +161,18 @@
             await JsInfiniBlazor.TextSelection.SetRangeAsync(EditorContext.InputElementRef, fullRange).ConfigureAwait(false);
             return;
         }
-        
+
         // when ctrl+a has been pressed only once, select the current line
         int caretIndex = await JsInfiniBlazor.TextSelection.GetStartIndexAsync(EditorContext.InputElementRef);
         if (!TextEditor.TryGetCaretLine(EditorContext.TextSource, caretIndex, out Range lineRange)) return;
 
         await JsInfiniBlazor.TextSelection.SetRangeAsync(EditorContext.InputElementRef, lineRange).ConfigureAwait(false);
+    }
+
+    private async Task Callback(MouseEventArgs obj) {
+        EditorContext.IsNotInteractive = !EditorContext.IsNotInteractive;
+        
+        Logger.Warning("state {i}", EditorContext.IsNotInteractive);
+        await InvokeAsync(StateHasChanged);
     }
 }

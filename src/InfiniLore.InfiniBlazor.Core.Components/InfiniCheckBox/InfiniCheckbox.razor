@@ -27,7 +27,7 @@
         class="@ConcatClasses(BackgroundClasses,ContainerBorderClasses, FocusClasses, Size.ToTailwindRounded()) border-2 p-0.5"
         @onclick="@OnToggleAsync">
         @if (IsChecked) {
-            <LiCheck Size="@Size.ToLucideIconSize()" Class="@WhenDisabled("text-(--color-base-10)", "text-(--color-base-70)")"/>
+            <LiCheck Size="@Size.ToLucideIconSize()" Class="@WhenDisabled("text-(--color-base-10)", "text-(--color-base-20)")"/>
         }
         else {
             <LiSlash Size="@Size.ToLucideIconSize()"  Class="@WhenDisabled("text-(--color-base-50) p-1", "text-(--color-base-70) p-1")"/>
