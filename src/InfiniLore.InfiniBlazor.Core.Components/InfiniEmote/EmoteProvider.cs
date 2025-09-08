@@ -43,6 +43,7 @@ public class EmoteProvider(ILogger<EmoteProvider> logger, [FromKeyedServices("Em
     }
     
     public IEmoteEntry? GetEntryAsync(string key) {
+        if (key.IsNullOrWhiteSpace()) return null;
         if (Entries.IsEmpty) _ = Task.Run(() => InitializeAsync()) ;
         Span<char> lowered = stackalloc char[key.Length];
         key.AsSpan().ToLowerInvariant(lowered);

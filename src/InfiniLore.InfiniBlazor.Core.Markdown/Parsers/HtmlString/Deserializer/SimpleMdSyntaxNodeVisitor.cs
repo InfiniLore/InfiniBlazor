@@ -294,10 +294,11 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                         break;
                     }
 
-                    default: throw new ArgumentOutOfRangeException();
+                    default: {
+                        builder.Append(emoteNode.OriginalEmote);
+                        break;
+                    }
                 }
-
-                builder.Append(emoteNode.OriginalEmote);
                 break;
             }
 

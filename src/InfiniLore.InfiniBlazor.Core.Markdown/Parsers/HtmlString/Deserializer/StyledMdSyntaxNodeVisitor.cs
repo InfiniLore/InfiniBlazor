@@ -356,9 +356,11 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                         break;
                     }
 
-                    default: throw new ArgumentOutOfRangeException();
+                    default: {
+                        builder.Append(emoteNode.OriginalEmote);
+                        break;
+                    }
                 }
-                builder.Append(emoteNode.OriginalEmote);
                 break;
             }
 
