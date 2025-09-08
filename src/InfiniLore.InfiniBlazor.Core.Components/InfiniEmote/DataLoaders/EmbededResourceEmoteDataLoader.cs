@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System.Collections.Immutable;
 using System.Reflection;
 
@@ -11,7 +12,8 @@ namespace InfiniLore.InfiniBlazor.Components.DataLoaders;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IEmoteDataLoader>("EmbeddedResource")]
 public class EmbeddedResourceEmoteDataLoader(
-    IComponentsConfig componentsConfig
+    IComponentsConfig componentsConfig,
+    ILogger<EmbeddedResourceEmoteDataLoader> logger
 ) : IEmoteDataLoader {
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -26,6 +28,8 @@ public class EmbeddedResourceEmoteDataLoader(
             .Replace("/", ".")
         ).ToHashSet();
 
+        logger.Warning("CALLED");
+        
         return Task.FromResult(resourceFilePaths.SelectMany(
                 resourceName => assemblies
                     .Select(assembly => assembly.GetManifestResourceStream(resourceName))

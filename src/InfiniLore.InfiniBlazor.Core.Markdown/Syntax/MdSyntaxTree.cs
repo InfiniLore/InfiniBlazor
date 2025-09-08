@@ -123,6 +123,41 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
             MdSyntaxNodeStackPool.Return(outputStack);
         }
     }
+    public int GetCount() {
+        if (!IsInitialized) return 0;
+
+        ReadOnlySpan<IMdSyntaxNode> rootNodeChildren = RootNode.GetChildrenSpan();
+        int rootNodeChildCount = rootNodeChildren.Length;
+        if (rootNodeChildCount == 0) return 0;// Early exit for empty tree nodes
+
+        int count = 0;
+        Stack<IMdSyntaxNode> stack = MdSyntaxNodeStackPool.Get();
+        try {
+            // Add Root children directly to avoid an extra if call during the while loop
+            for (int i = rootNodeChildCount - 1; i >= 0; i--) {
+                stack.Push(rootNodeChildren[i]);
+            }
+
+            while (stack.TryPop(out IMdSyntaxNode? visitor)) {
+                count++;
+
+                // Push children in reverse order so they're processed in the correct order when popped
+                ReadOnlySpan<IMdSyntaxNode> children = visitor.GetChildrenSpan();
+                int childrenCount = children.Length;
+                stack.EnsureCapacity(stack.Count + childrenCount);
+
+                for (int i = childrenCount - 1; i >= 0; i--) {
+                    stack.Push(children[i]);
+                }
+            }
+        }
+        finally {
+            stack.Clear();
+            MdSyntaxNodeStackPool.Return(stack);
+        }
+
+        return count;
+    }
     #endregion
 
     public void ReturnToPool() {

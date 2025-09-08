@@ -1,68 +1,46 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
-
 @namespace InfiniLore.InfiniBlazor.Markdown
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inject IBlazorMdComponentConverter ComponentConverter
-@inject IMarkdownParser Parser
-@* ------------------------------------------------------------------------------------------------------------------ *@
-@* Descriptors
-@* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniComponentBase
+@inherits InfiniMdEditorToolBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
-<div class="@Class border-(--border) flex min-h-0">
-    <div class="flex-1 overflow-y-auto infini-scrollbar">
-        @if (!VisualDebugger.IsEnabled()) {
-            <CascadingIsDisabled Value="EditorContext.IsNotInteractive()">
-                @ComponentConverter.RenderRootComponents(EditorContext.SyntaxTree.VisitTopLevelNodes())
-            </CascadingIsDisabled>
-        }
-        else {
-            @* Alaways override IsDisabled and dont use the CascadingValue*@
-            <InfiniCodeBlock
-                IsDisabled="false"
-                Language="MdSyntaxTree"
-                Class="h-full text-(--color-red)"
-                Content="@Parser.Xml.DeserializeToString(EditorContext.SyntaxTree)"
-            />
-        }
-    </div>
-</div>
+<span class="text-(--color-base-30)">@WordCount words</span>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
-    [CascadingParameter] protected MdEditorContext EditorContext { get; set; } = null!;
-
+    private int WordCount { get; set; }
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Component lifetime Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override void OnInitialized() {
-        base.OnInitialized();
-
-        EditorContext.OnSyntaxTreeChangedAsync += OnSourceChangedAsync;
+    protected override async Task OnInitializedAsync() {
+        await base.OnInitializedAsync();
+        await OnSyntaxTreeUpdateAsync();
+        EditorContext.OnSyntaxTreeChangedAsync += OnSyntaxTreeUpdateAsync;
     }
 
     public override async ValueTask DisposeAsync() {
         await base.DisposeAsync();
-
-        // help aaa
-        EditorContext.OnSyntaxTreeChangedAsync -= OnSourceChangedAsync;
+        EditorContext.OnSyntaxTreeChangedAsync -= OnSyntaxTreeUpdateAsync;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private async Task OnSourceChangedAsync() {
+    private async Task OnSyntaxTreeUpdateAsync() {
+        char[] splitChars = [' ', ';', '/', ':', '.', '\n'];
+        
+        string text = EditorContext.TextSource.Text;
+        int count = text.Split(splitChars, StringSplitOptions.RemoveEmptyEntries).Length;
+        
+        WordCount = count;
         await InvokeAsync(StateHasChanged).ConfigureAwait(false);
     }
 }

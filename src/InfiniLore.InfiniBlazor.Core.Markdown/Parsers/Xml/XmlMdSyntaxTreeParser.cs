@@ -77,6 +77,10 @@ public class XmlMdSyntaxTreeParser : IXmlMdSyntaxTreeParser {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region Deserialize
+    public string DeserializeToString(IMdSyntaxTree tree) {
+        XElement rootElement = DeserializeToXmlElement(tree);
+        return rootElement.ToString();
+    }
     public XElement DeserializeToXmlElement(IMdSyntaxTree tree) {
         var rootElement = new XElement("MdSyntaxTree");
 

@@ -5,7 +5,6 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -29,49 +28,27 @@ public class EmoteProvider(ILogger<EmoteProvider> logger, [FromKeyedServices("Em
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public async Task InitializeAsync(CancellationToken ct = default) {
-        Stream[] streams = await dataLoader.LoadEmoteStreamsAsync(ct);
+        Stream[] streams = await dataLoader.LoadEmoteStreamsAsync(ct).ConfigureAwait(false);
 
         if (streams.Length == 0) {
             logger.Error("Could not load any emote JSON resources");
             return;
         }
 
-        await Task.WhenAll(streams.Select(stream => TryImportDataAsync(stream, ct)));
+        await Task.WhenAll(streams.Select(stream => TryImportDataAsync(stream, ct))).ConfigureAwait(false);
 
         foreach (Stream stream in streams) {
-            await stream.DisposeAsync();
+            await stream.DisposeAsync().ConfigureAwait(false);
         }
     }
-
-
-    public bool HasKey(string key) => Entries.ContainsKey(key);
-    public bool HasKey(ReadOnlySpan<char> key) => Entries.TryGetAlternateLookup(out ConcurrentDictionary<string, EmoteEntry>.AlternateLookup<ReadOnlySpan<char>> lookup) && lookup.ContainsKey(key);
-
-    public bool TryGetEntry(string? key, [NotNullWhen(true)] out IEmoteEntry? entry) {
-        entry = null;
-        if (key is null) return false;
-
+    
+    public IEmoteEntry? GetEntryAsync(string key) {
+        if (key.IsNullOrWhiteSpace()) return null;
+        if (Entries.IsEmpty) _ = Task.Run(() => InitializeAsync()) ;
         Span<char> lowered = stackalloc char[key.Length];
         key.AsSpan().ToLowerInvariant(lowered);
-
-        if (!Entries.TryGetAlternateLookup(out ConcurrentDictionary<string, EmoteEntry>.AlternateLookup<ReadOnlySpan<char>> lookup)) return false;
-        if (!lookup.TryGetValue(lowered, out EmoteEntry? value)) return false;
-
-        entry = value;
-        return true;
-    }
-
-    public bool TryGetEntry(ReadOnlySpan<char> key, [NotNullWhen(true)] out IEmoteEntry? entry) {
-        entry = null;
-        if (!Entries.TryGetAlternateLookup(out ConcurrentDictionary<string, EmoteEntry>.AlternateLookup<ReadOnlySpan<char>> lookup)) return false;
-
-        Span<char> lowered = stackalloc char[key.Length];
-        key.ToLowerInvariant(lowered);
-
-        if (!lookup.TryGetValue(lowered, out EmoteEntry? value)) return false;
-
-        entry = value;
-        return true;
+        if (!Entries.TryGetAlternateLookup(out ConcurrentDictionary<string, EmoteEntry>.AlternateLookup<ReadOnlySpan<char>> lookup)) return null;
+        return !lookup.TryGetValue(lowered, out EmoteEntry? value) ? null : value;
     }
 
     public async Task<bool> TryImportDataAsync(Stream fileStream, CancellationToken ct = default) {

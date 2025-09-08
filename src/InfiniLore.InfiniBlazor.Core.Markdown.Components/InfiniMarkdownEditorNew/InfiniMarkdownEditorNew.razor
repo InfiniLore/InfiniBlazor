@@ -3,34 +3,73 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.JsRuntime
 @using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
+@using InfiniLore.Lucide
+@using Microsoft.Extensions.Logging
 
 @namespace InfiniLore.InfiniBlazor.Markdown
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniComponentBase
-@inject IMarkdownParser Parser
 
+@inject IMarkdownParser Parser
 @inject IJsInfiniBlazor JsInfiniBlazor
 @inject ITextEditor TextEditor
+@inject ILogger<InfiniMarkdownEditorNew> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="@EditorContext">
     <CascadingValue Value="@RenderContext">
-        <CascadingValue Value="@IsInteractive"></CascadingValue>
-        <div class="mdEditor-container flex w-full flex-col h-full">
-            <div class="mdEditor-toolbarTop">
+            <div
+                class="grid grid-rows-[1fr_1fr_auto] grid-cols-[auto_1fr] md:grid-rows-[auto_1fr_auto] md:grid-cols-2 gap-0 h-full">
+                @* Toolbar Top *@
+                <div class="col-span-1 row-span-2 md:col-span-2 md:row-span-1">
+                    <div class="flex flex-col h-full md:h-auto md:flex-row justify-between">
+                        @ToolbarTop
+                        @if (VisualDebugger.IsEnabled()) {
+                            <InfiniButtonOutlineSolid Color="Color.Red" IconName="@LucideNames.Plus" OnClick="@OnToggleLockedClickAsync"/>
+                            <InfiniButtonOutlineSolid Color="Color.Red" IconName="@LucideNames.Minus" OnClick="@OnToggleInteractiveModeClickAsync"/>
+                            <InfiniButtonOutlineSolid Color="Color.Red" IconName="@LucideNames.Eye" OnClick="@OnToggleShowPreviewClickAsync"/>
+                            <InfiniButtonOutlineSolid Color="Color.Red" IconName="@LucideNames.EyeClosed" OnClick="@OnToggleShowInputClickAsync"/>
+                        }
+                    </div>
+                </div>
 
-            </div>
-            <div class="flex flex-row size-full h-full">
-                <InfiniMdEditorInput Class="max-w-1/2 min-w-1/2 w-1/2"/>
-                <InfiniMdEditorPreview Class="max-w-1/2 min-w-1/2 w-1/2"/>
-            </div>
-            <div class="mdEditor-toolbarBottom">
+                @* Content *@
+                @switch (EditorContext.ShowInput, EditorContext.ShowPreview) {
+                    case (true, true): {
+                        <InfiniMdEditorInput Class="col-start-2 col-end-2 md:col-start-1 md:col-end-1 border-1"/>
+                        <InfiniMdEditorPreview Class="col-start-2 col-end-2 md:col-start-2 md:col-end-2 border-y border-r"/>
+                        break;
+                    }
 
+                    case (true, false): {
+                        <InfiniMdEditorInput Class="col-start-2 col-end-2 md:col-span-2 border-1"/>
+                        break;
+                    }
+
+                    case (false, true): {
+                        <InfiniMdEditorPreview Class="col-start-2 col-end-2 md:col-span-2 border-1"/>
+                        break;
+                    }
+                    
+                    default : {
+                        <div class="col-start-2 col-end-2 md:col-span-2 flex justify-center items-center text-center text-(--color-base-20) bg-stripes bg-stripes-(--color-base-60) border-1">
+                            Nothing to show here.<br/>
+                            You should not see this unless the developer messed up the layout.
+                        </div>
+                        break;
+                    }
+                }
+                
+                @* Toolbar Bottom *@
+                @if (ToolbarBottom is not null) {
+                    <div class="col-span-2 min-h-lh infini-bg-(--color-base-80) rounded-b-md flex gap-2 justify-end w-full px-1">
+                        @ToolbarBottom
+                    </div>
+                }
             </div>
-        </div>
     </CascadingValue>
 </CascadingValue>
 
@@ -38,15 +77,16 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public string? Content { get; set; }
-    [Parameter] public EventCallback<string?> ContentChanged { get; set; }
-    [Parameter] public bool IsInteractive { get; set; }
+    [Parameter] public MdEditorContext EditorContext { get; set; } = new();
+    [Parameter] public EventCallback<MdEditorContext> EditorContextChanged  { get; set; }
     
-    private MdEditorContext EditorContext { get; } = new();
+    [Parameter] public RenderFragment? ToolbarTop { get; set; }
+    [Parameter] public RenderFragment? ToolbarBottom { get; set; }
+    
     private MdRenderContext RenderContext { get; } = new();
     private InfiniEditorKeyCombo LastPressedCombo { get; set; } = InfiniEditorKeyCombo.Empty;
-    
-    private Dictionary<InfiniEditorKeyCombo, Func<InfiniMarkdownEditorNew,Task>> KeyCombos { get; } = new() {
+
+    private Dictionary<InfiniEditorKeyCombo, Func<InfiniMarkdownEditorNew, Task>> KeyCombos { get; } = new() {
         [InfiniEditorKeyCombo.Bold] = static editor => editor.OnModifierClickAsync("bold"),
         [InfiniEditorKeyCombo.Italic] = static editor => editor.OnModifierClickAsync("italic"),
         [InfiniEditorKeyCombo.Underline] = static editor => editor.OnModifierClickAsync("underline"),
@@ -58,7 +98,7 @@
     // -----------------------------------------------------------------------------------------------------------------
     protected override void OnInitialized() {
         base.OnInitialized();
-        
+
         RenderContext.OnSyntaxNodeChanged += OnSyntaxNodeChangedAsync;
         EditorContext.OnSourceChangedAsync += OnSourceChangedAsync;
         EditorContext.OnInputKeyDownAsync += OnInputKeyDownAsync;
@@ -67,7 +107,7 @@
     protected override async Task OnParametersSetAsync() {
         await base.OnParametersSetAsync();
 
-        EditorContext.TextSource.UpdateSource(Content ?? string.Empty);
+        // EditorContext.TextSource.UpdateSource(Content ?? string.Empty);
 
         EditorContext.SyntaxTree.ReturnToPool();
         EditorContext.SyntaxTree = Parser.MarkdownString.SerializeToSyntaxTree(EditorContext.TextSource.Text);
@@ -87,10 +127,10 @@
         if (TextEditor.TryGetCaretUpdate(out int index))
             await JsInfiniBlazor.TextSelection.SetIndexAsync(EditorContext.InputElementRef, index).ConfigureAwait(false);
     }
-    
+
     public override async ValueTask DisposeAsync() {
         await base.DisposeAsync();
-        
+
         RenderContext.OnSyntaxNodeChanged -= OnSyntaxNodeChangedAsync;
         EditorContext.OnSourceChangedAsync -= OnSourceChangedAsync;
         EditorContext.OnInputKeyDownAsync -= OnInputKeyDownAsync;
@@ -103,19 +143,17 @@
         EditorContext.SyntaxTree.ReturnToPool();
         EditorContext.SyntaxTree = Parser.MarkdownString.SerializeToSyntaxTree(EditorContext.TextSource.Text);
         await EditorContext.InvokeSyntaxTreeChangeAsync().ConfigureAwait(false);
-        
-        Content = EditorContext.TextSource.Text;
-        await ContentChanged.InvokeAsync(Content).ConfigureAwait(false);
-        
+
+        await EditorContextChanged.InvokeAsync(EditorContext).ConfigureAwait(false);
+
         await InvokeAsync(StateHasChanged);
     }
 
     private async Task OnSyntaxNodeChangedAsync(IMdSyntaxNode _) {
         string newContent = Parser.MarkdownString.DeserializeToString(EditorContext.SyntaxTree);
         EditorContext.TextSource.UpdateSource(newContent);
-        
-        Content = EditorContext.TextSource.Text;
-        await ContentChanged.InvokeAsync(Content).ConfigureAwait(false);
+
+        await EditorContextChanged.InvokeAsync(EditorContext).ConfigureAwait(false);
         
         await InvokeAsync(StateHasChanged);
     }
@@ -123,11 +161,11 @@
     private async Task OnInputKeyDownAsync(KeyboardEventArgs args) {
         InfiniEditorKeyCombo combo = InfiniEditorKeyCombo.From(args);
         if (KeyCombos.TryGetValue(combo, out Func<InfiniMarkdownEditorNew, Task>? task)) await task(this);
-        
+
         LastPressedCombo = combo;
         await InvokeAsync(StateHasChanged);
     }
-    
+
     public async Task OnModifierClickAsync(string modifierName) {
         if (EditorContext.IsLocked) return;
 
@@ -156,11 +194,39 @@
             await JsInfiniBlazor.TextSelection.SetRangeAsync(EditorContext.InputElementRef, fullRange).ConfigureAwait(false);
             return;
         }
-        
+
         // when ctrl+a has been pressed only once, select the current line
         int caretIndex = await JsInfiniBlazor.TextSelection.GetStartIndexAsync(EditorContext.InputElementRef);
         if (!TextEditor.TryGetCaretLine(EditorContext.TextSource, caretIndex, out Range lineRange)) return;
 
         await JsInfiniBlazor.TextSelection.SetRangeAsync(EditorContext.InputElementRef, lineRange).ConfigureAwait(false);
+    }
+
+    private async Task OnToggleInteractiveModeClickAsync(MouseEventArgs obj) {
+        EditorContext.IsInteractive = !EditorContext.IsInteractive;
+        
+        Logger.Warning("state IsInteractive : {i}", EditorContext.IsInteractive);
+        await InvokeAsync(StateHasChanged);
+    }
+    
+    private async Task OnToggleLockedClickAsync(MouseEventArgs obj) {
+        EditorContext.IsLocked = !EditorContext.IsLocked;
+        
+        Logger.Warning("state IsLocked : {i}", EditorContext.IsLocked);
+        await InvokeAsync(StateHasChanged);
+    }
+    
+    private async Task OnToggleShowPreviewClickAsync(MouseEventArgs obj) {
+        EditorContext.ShowPreview = !EditorContext.ShowPreview;
+        
+        Logger.Warning("state ShowPreview : {i}", EditorContext.ShowPreview);
+        await InvokeAsync(StateHasChanged);
+    }
+    
+    private async Task OnToggleShowInputClickAsync(MouseEventArgs obj) {
+        EditorContext.ShowInput = !EditorContext.ShowInput;
+        
+        Logger.Warning("state ShowInput : {i}", EditorContext.ShowInput);
+        await InvokeAsync(StateHasChanged);
     }
 }

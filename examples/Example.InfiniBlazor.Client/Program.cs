@@ -27,7 +27,6 @@ public static class Program {
         builder.Services.AddAuthenticationStateDeserialization();
 
         WebAssemblyHost app = builder.Build();
-        await app.UseInfiniBlazorAsync();
         await app.RunAsync();
     }
 }

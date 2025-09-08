@@ -20,13 +20,13 @@
             <InfiniButton>Something</InfiniButton>
         </InfiniAutoDocument>
         
-        <InfiniAutoDocument Id="@LucideNames.Baby">
+        <InfiniAutoDocument Id="baby">
             <InfiniButton IsDisabled OnClick="@DoSomething">Something</InfiniButton>
         </InfiniAutoDocument>
         
         <InfiniAutoDocument Id="test">
             <p>Something</p>
-                <p>Something</p>
+            <p>Something</p>
         </InfiniAutoDocument>
         
         <InfiniAutoDocument Id="beta">
@@ -40,9 +40,9 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [AutoDocument(LucideNames.Baby)] private bool _test;
+    [AutoDocument("baby")] private bool _test;
     // ReSharper disable once RedundantDefaultMemberInitializer
-    [AutoDocument(LucideNames.Baby), Parameter] public bool Test {
+    [AutoDocument("baby"), Parameter] public bool Test {
         get => _test;
         set => _test = value;
     }
@@ -54,20 +54,20 @@
     }
 
 
-    [AutoDocument(LucideNames.Baby)] public class LetsDoATest {
+    [AutoDocument("baby")] public class LetsDoATest {
         
     }
     
-    [AutoDocument(LucideNames.Baby)] public record LetsDoATestRecord {
+    [AutoDocument("baby")] public record LetsDoATestRecord {
         
     }
     
     
-    [AutoDocument(LucideNames.Baby)] public struct LetsDoATestStruct {
+    [AutoDocument("baby")] public struct LetsDoATestStruct {
         
     }
     
-    [AutoDocument(LucideNames.Baby)] public record struct LetsDoATestRecordStruct {
+    [AutoDocument("baby")] public record struct LetsDoATestRecordStruct {
         
     }
 }

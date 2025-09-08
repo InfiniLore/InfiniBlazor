@@ -337,30 +337,30 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
             }
 
             case EmoteMdSyntaxNode emoteNode: {
-                if (_emoteProvider.TryGetEntry(emoteNode.EmoteKey, out IEmoteEntry? entry)) {
-                    switch (entry.ContentType) {
-                        case EmoteContentType.Emoji: {
-                            builder.Append(entry.Data);
-                            break;
-                        }
-
-                        case EmoteContentType.LucideIconName when entry.Data is not null: {
-                            string lucideIconSvg = _lucideService.GetIconAsString(entry.Data);
-                            if (lucideIconSvg.IsNullOrWhiteSpace()) break;
-                            builder.Append(lucideIconSvg);
-                            break;
-                        }
-
-                        case EmoteContentType.SvgData when entry.Data is not null: {
-                            builder.Append(entry.Data);
-                            break;
-                        }
-
-                        default: throw new ArgumentOutOfRangeException();
+                IEmoteEntry? entry = _emoteProvider.GetEntryAsync(emoteNode.EmoteKey);
+                switch (entry?.ContentType) {
+                    case EmoteContentType.Emoji: {
+                        builder.Append(entry.Data);
+                        break;
                     }
-                    return;
+
+                    case EmoteContentType.LucideIconName when entry.Data is not null: {
+                        string lucideIconSvg = _lucideService.GetIconAsString(entry.Data);
+                        if (lucideIconSvg.IsNullOrWhiteSpace()) break;
+                        builder.Append(lucideIconSvg);
+                        break;
+                    }
+
+                    case EmoteContentType.SvgData when entry.Data is not null: {
+                        builder.Append(entry.Data);
+                        break;
+                    }
+
+                    default: {
+                        builder.Append(emoteNode.OriginalEmote);
+                        break;
+                    }
                 }
-                builder.Append(emoteNode.OriginalEmote);
                 break;
             }
 

@@ -29,12 +29,13 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 break;
             }
 
-            case CodeBlockMdSyntaxNode {Language: var lang} when lang.IsNotNullOrWhiteSpace(): {
+            case CodeBlockMdSyntaxNode { Language: var lang } when lang.IsNotNullOrWhiteSpace(): {
                 builder.Append("<pre><code class=\"language-");
                 builder.Append(lang.AsSpan());
                 builder.Append("\">");
                 break;
             }
+
             case CodeBlockMdSyntaxNode: {
                 builder.Append("<pre><code>");
                 break;
@@ -44,37 +45,38 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 builder.Append("<code>");
                 break;
             }
-            
-            case HtmlMdSyntaxNode:break;
+
+            case HtmlMdSyntaxNode: break;
             case TextMdSyntaxNode:
-            case EmoteMdSyntaxNode:break;
-            case EscapedCharacterMdSyntaxNode:break;
+            case EmoteMdSyntaxNode: break;
+            case EscapedCharacterMdSyntaxNode: break;
 
             case HeadingSimpleMdSyntaxNode: {
                 builder.Append("<h1>");
                 break;
             }
-            
+
             case HeadingMdSyntaxNode { Level: var level and > 0 }: {
                 builder.Append("<h");
                 builder.Append(level);
                 builder.Append('>');
                 break;
             }
-            
+
             case HtmlSpanMdSyntaxNode { Attributes: var attributes }: {
                 builder.Append("<span");
                 if (attributes.IsNotNullOrEmpty()) {
                     builder.Append(' ');
                     builder.Append(attributes);
                 }
+
                 builder.Append('>');
                 break;
             }
-            
-            case HorizontalRuleMdSyntaxNode:break;
 
-            case ImageMdSyntaxNode {NormalizedAltText: var altText, Href: var href} imgNode: {
+            case HorizontalRuleMdSyntaxNode: break;
+
+            case ImageMdSyntaxNode { NormalizedAltText: var altText, Href: var href } imgNode: {
                 builder.Append("<img class\"inline-block\" src=\"");
                 builder.Append(href.AsSpan());
                 builder.Append('"');
@@ -90,11 +92,11 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                         builder.Append(title.AsSpan());
                         builder.Append('"');
                     }
-                    
+
                     if (modifier.TryGetFit(out bool state) && state) {
                         builder.Append(" style=\"width:auto;height:2em;vertical-align:baseline;object-fit:contain;\"");
                     }
-                    
+
                     else if (modifier.TryGetSize(out (int Width, int Height) size)) {
                         builder.Append(" style=\"width: ");
                         builder.Append(size.Width);
@@ -103,7 +105,7 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                         builder.Append("px;\"");
                     }
                 }
-                
+
                 builder.Append("/>");
                 break;
             }
@@ -113,21 +115,21 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 break;
             }
 
-            case LinkMdSyntaxNode {Href: var href}: {
-                builder.Append("<a href=\"");
-                builder.Append(href.AsSpan());
-                builder.Append("\">");
-                break;
-            }
-            
-            case WikiLinkMdSyntaxNode {Content: var href}: {
+            case LinkMdSyntaxNode { Href: var href }: {
                 builder.Append("<a href=\"");
                 builder.Append(href.AsSpan());
                 builder.Append("\">");
                 break;
             }
 
-            case ListItemMdSyntaxNode {IsCheckable: true, IsChecked: var checkedState}: {
+            case WikiLinkMdSyntaxNode { Content: var href }: {
+                builder.Append("<a href=\"");
+                builder.Append(href.AsSpan());
+                builder.Append("\">");
+                break;
+            }
+
+            case ListItemMdSyntaxNode { IsCheckable: true, IsChecked: var checkedState }: {
                 builder.Append("<li>");
                 builder.Append("<input type=\"checkbox\" disabled");
                 if (checkedState) builder.Append(" checked");
@@ -154,7 +156,8 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 builder.Append("<p>");
                 break;
             }
-            case RootMdSyntaxNode:break;
+
+            case RootMdSyntaxNode: break;
 
             case StrikeMdSyntaxNode: {
                 builder.Append("<s>");
@@ -211,20 +214,21 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 break;
             }
 
-            case CalloutMdSyntaxNode {CalloutType: {} calloutType} calloutNode: {
+            case CalloutMdSyntaxNode { CalloutType: {} calloutType } calloutNode: {
                 builder.Append("<div class=\"md-callout md-callout-");
                 builder.Append(calloutType);
                 if (calloutNode.Modifier is {} modifier && modifier.TryGetIconName(out string? iconName)) {
                     builder.Append(" icon-");
                     builder.Append(iconName);
                 }
+
                 builder.Append("\">");
                 break;
             }
 
             case CalloutMdSyntaxNode: {
                 builder.Append("<div class=\"md-callout\">");
-                break;           
+                break;
             }
 
             case CalloutTitleMdSyntaxNode: {
@@ -238,7 +242,7 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
             }
         }
     }
-    
+
     public virtual void HandleContent(IMdSyntaxNode node, StringBuilder builder) {
         switch (node) {
 
@@ -255,6 +259,7 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 else {
                     builder.Append(codeInlineNode.Content);
                 }
+
                 break;
             }
 
@@ -269,30 +274,31 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
             }
 
             case EmoteMdSyntaxNode emoteNode: {
-                if (emoteProvider.TryGetEntry(emoteNode.EmoteKey, out IEmoteEntry? entry)) {
-                    switch (entry.ContentType) {
-                        case EmoteContentType.Emoji: {
-                            builder.Append(entry.Data);
-                            break;
-                        }
-
-                        case EmoteContentType.LucideIconName when entry.Data is not null: {
-                            string lucideIconSvg = lucideService.GetIconAsString(entry.Data);
-                            if (lucideIconSvg.IsNullOrWhiteSpace()) break;
-                            builder.Append(lucideIconSvg);
-                            break;
-                        }
-
-                        case EmoteContentType.SvgData when entry.Data is not null: {
-                            builder.Append(entry.Data);
-                            break;
-                        }
-
-                        default: throw new ArgumentOutOfRangeException();
+                IEmoteEntry? entry = emoteProvider.GetEntryAsync(emoteNode.EmoteKey);
+                switch (entry?.ContentType) {
+                    case EmoteContentType.Emoji: {
+                        builder.Append(entry.Data);
+                        break;
                     }
-                    return;
+
+                    case EmoteContentType.LucideIconName when entry.Data is not null: {
+                        string lucideIconSvg = lucideService.GetIconAsString(entry.Data);
+                        if (lucideIconSvg.IsNullOrWhiteSpace()) break;
+
+                        builder.Append(lucideIconSvg);
+                        break;
+                    }
+
+                    case EmoteContentType.SvgData when entry.Data is not null: {
+                        builder.Append(entry.Data);
+                        break;
+                    }
+
+                    default: {
+                        builder.Append(emoteNode.OriginalEmote);
+                        break;
+                    }
                 }
-                builder.Append(emoteNode.OriginalEmote);
                 break;
             }
 
@@ -311,7 +317,7 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 builder.Append(contentTag.AsSpan());
                 break;
             }
-            
+
             case UserMdSyntaxNode { Content: var userName }: {
                 builder.Append('@');
                 builder.Append(userName.AsSpan());
@@ -324,7 +330,7 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
             }
         }
     }
-    
+
     public virtual void HandleCloseTag(IMdSyntaxNode node, StringBuilder builder) {
         switch (node) {
             case BlockQuoteMdSyntaxNode: {
@@ -346,33 +352,33 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 builder.Append("</code>");
                 break;
             }
-            
+
             case HtmlMdSyntaxNode:
             case TextMdSyntaxNode:
             case EmoteMdSyntaxNode:
-            case EscapedCharacterMdSyntaxNode:break;
+            case EscapedCharacterMdSyntaxNode: break;
 
-            
+
             case HeadingSimpleMdSyntaxNode: {
                 builder.Append("</h1>");
                 break;
             }
-            
-            case HeadingMdSyntaxNode {Level: var level and > 0 }: {
+
+            case HeadingMdSyntaxNode { Level: var level and > 0 }: {
                 builder.Append("</h");
                 builder.Append(level);
                 builder.Append('>');
                 break;
             }
-            
+
             case HorizontalRuleMdSyntaxNode: break;
 
             case HtmlSpanMdSyntaxNode: {
                 builder.Append("</span>");
                 break;
             }
-            
-            case ImageMdSyntaxNode:break;
+
+            case ImageMdSyntaxNode: break;
 
             case ItalicMdSyntaxNode: {
                 builder.Append("</em>");
@@ -404,7 +410,8 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 builder.Append("</p>");
                 break;
             }
-            case RootMdSyntaxNode:break;
+
+            case RootMdSyntaxNode: break;
 
             case StrikeMdSyntaxNode: {
                 builder.Append("</s>");
