@@ -5,10 +5,9 @@ using InfiniLore.InfiniBlazor;
 using InfiniLore.InfiniBlazor.Components;
 using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Core.Js;
+using InfiniLore.InfiniBlazor.Markdown.Config;
 using InfiniLore.InfiniBlazor.Markdown.Editors;
-using InfiniLore.InfiniBlazor.Markdown.MdBlazorComponents;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer;
-using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Configuration;
 
@@ -28,7 +27,7 @@ public static class ServiceCollectionExtensions {
         services.AddSingleton(MdStringMdSyntaxDeserializerFactory.Create);
         services.AddSingleton(TextEditorFactory.CreateTextEditor);
 
-        RegisterMdBlazorComponents(config);
+        config.Markdown.WithDefaultEditorComponents();
 
         services.AddHttpClient(HttpClientNames.InfiniBlazor, static (serviceProvider, client) => {
             var config = serviceProvider.GetService<IConfiguration>();
@@ -68,58 +67,4 @@ public static class ServiceCollectionExtensions {
 
         return services;
     }
-
-    private static void RegisterMdBlazorComponents(InfiniBlazorConfig config) {
-        config.Markdown.RegisterMdBlazorComponent<BlockQuoteMdSyntaxNode, MdInfiniBlockQuote>();
-        config.Markdown.RegisterMdBlazorComponent<BoldMdSyntaxNode, MdInfiniBold>();
-        config.Markdown.RegisterMdBlazorComponent<CalloutMdSyntaxNode, MdInfiniCallout>();
-        config.Markdown.RegisterMdBlazorComponent<CodeBlockMdSyntaxNode, MdInfiniCodeBlock>();
-        config.Markdown.RegisterMdBlazorComponent<CodeInlineMdSyntaxNode, MdInfiniCodeInline>();
-        config.Markdown.RegisterMdBlazorComponent<HtmlMdSyntaxNode, MdInfiniHtml>();
-        config.Markdown.RegisterMdBlazorComponent<TextMdSyntaxNode, MdInfiniText>();
-        config.Markdown.RegisterMdBlazorComponent<EmoteMdSyntaxNode, MdInfiniEmote>();
-        config.Markdown.RegisterMdBlazorComponent<EscapedCharacterMdSyntaxNode, MdInfiniEscapedCharacter>();
-        config.Markdown.RegisterMdBlazorComponent<HeadingMdSyntaxNode, MdInfiniHeading>();
-        config.Markdown.RegisterMdBlazorComponent<HeadingSimpleMdSyntaxNode, MdInfiniHeadingSimple>();
-        config.Markdown.RegisterMdBlazorComponent<HorizontalRuleMdSyntaxNode, MdInfiniHorizontalRule>();
-        config.Markdown.RegisterMdBlazorComponent<HtmlSpanMdSyntaxNode, MdInfiniHtmlSpan>();
-        config.Markdown.RegisterMdBlazorComponent<ImageMdSyntaxNode, MdInfiniImage>();
-        config.Markdown.RegisterMdBlazorComponent<ItalicMdSyntaxNode, MdInfiniItalic>();
-        config.Markdown.RegisterMdBlazorComponent<LinkMdSyntaxNode, MdInfiniLink>();
-        config.Markdown.RegisterMdBlazorComponent<ListItemMdSyntaxNode, MdInfiniListItem>();
-        config.Markdown.RegisterMdBlazorComponent<ListOrderedMdSyntaxNode, MdInfiniListOrdered>();
-        config.Markdown.RegisterMdBlazorComponent<ListUnOrderedMdSyntaxNode, MdInfiniListUnOrdered>();
-        config.Markdown.RegisterMdBlazorComponent<ParagraphMdSyntaxNode, MdInfiniParagraph>();
-        config.Markdown.RegisterMdBlazorComponent<StrikeMdSyntaxNode, MdInfiniStrike>();
-        config.Markdown.RegisterMdBlazorComponent<SubScriptMdSyntaxNode, MdInfiniSubScript>();
-        config.Markdown.RegisterMdBlazorComponent<SuperScriptMdSyntaxNode, MdInfiniSuperScript>();
-        config.Markdown.RegisterMdBlazorComponent<TableMdSyntaxNode, MdInfiniTable>();
-        config.Markdown.RegisterMdBlazorComponent<TagMdSyntaxNode, MdInfiniTag>();
-        config.Markdown.RegisterMdBlazorComponent<UnderlineMdSyntaxNode, MdInfiniUnderline>();
-        config.Markdown.RegisterMdBlazorComponent<UserMdSyntaxNode, MdInfiniUser>();
-        config.Markdown.RegisterMdBlazorComponent<WikiLinkMdSyntaxNode, MdInfiniWikiLink>();
-        config.Markdown.RegisterMdBlazorComponent<TemplateMdSyntaxNode, MdInfiniTemplate>();
-        // config.Markdown.RegisterBlazorComponent<NewLineMdSyntaxNode, MdInfiniNewLine>(); // Not implemented well yet, only as an example
-    }
-}
-
-class BaseAddressHandler : DelegatingHandler {
-    public BaseAddressHandler(string baseUri) {
-        InnerHandler = new HttpClientHandler();
-        BaseUri = baseUri;
-    }
-
-    public string BaseUri { get; }
-
-    protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken ct) {
-        if (!request.RequestUri!.IsAbsoluteUri) {
-            request.RequestUri = new Uri(new Uri(BaseUri), request.RequestUri);
-        }
-
-        return base.SendAsync(request, ct);
-    }
-}
-
-class PassThroughHandler : DelegatingHandler {
-    public PassThroughHandler() => InnerHandler = new HttpClientHandler();
 }
