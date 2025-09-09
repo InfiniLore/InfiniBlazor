@@ -14,7 +14,7 @@ namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IEmoteProvider>]
 public class EmoteProvider(ILogger<EmoteProvider> logger, [FromKeyedServices("EmbeddedResource")] IEmoteDataLoader dataLoader) : IEmoteProvider {
-    private ConcurrentDictionary<string, EmoteEntry> Entries { get; } = new();
+    private ConcurrentDictionary<string, EmoteEntry> Entries { get; } = new(StringComparer.OrdinalIgnoreCase);
 
     private static JsonSerializerOptions JsonSerializerOptions { get; } = new() {
         WriteIndented = true,
@@ -45,10 +45,7 @@ public class EmoteProvider(ILogger<EmoteProvider> logger, [FromKeyedServices("Em
     public IEmoteEntry? GetEntryAsync(string key) {
         if (key.IsNullOrWhiteSpace()) return null;
         if (Entries.IsEmpty) _ = Task.Run(() => InitializeAsync()) ;
-        Span<char> lowered = stackalloc char[key.Length];
-        key.AsSpan().ToLowerInvariant(lowered);
-        if (!Entries.TryGetAlternateLookup(out ConcurrentDictionary<string, EmoteEntry>.AlternateLookup<ReadOnlySpan<char>> lookup)) return null;
-        return !lookup.TryGetValue(lowered, out EmoteEntry? value) ? null : value;
+        return Entries.GetValueOrDefault(key);
     }
 
     public async Task<bool> TryImportDataAsync(Stream fileStream, CancellationToken ct = default) {
