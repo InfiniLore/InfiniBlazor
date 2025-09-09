@@ -803,6 +803,9 @@
   .min-h-\[1px\] {
     min-height: 1px;
   }
+  .min-h-full {
+    min-height: 100%;
+  }
   .min-h-lh {
     min-height: 1lh;
   }
