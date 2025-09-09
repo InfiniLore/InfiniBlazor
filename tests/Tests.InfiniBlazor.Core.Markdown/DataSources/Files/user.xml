@@ -7,7 +7,7 @@
         <UserMdSyntaxNode xml:space="preserve">default</UserMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;@default&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span class="md-user"&gt;@default&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>@default</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="empty" FileName="user.xml">
@@ -34,7 +34,7 @@
         <UserMdSyntaxNode xml:space="preserve">--username--</UserMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;@username-something&lt;/p&gt;&lt;p&gt;@--username--&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span class="md-user"&gt;@username-something&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span class="md-user"&gt;@--username--&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>@username-something
 
 @--username--</ExpectedMarkdownString>
@@ -53,7 +53,7 @@
         <UserMdSyntaxNode xml:space="preserve">__username__</UserMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;@username_something&lt;/p&gt;&lt;p&gt;@__username__&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span class="md-user"&gt;@username_something&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span class="md-user"&gt;@__username__&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>@username_something
 
 @__username__</ExpectedMarkdownString>

@@ -209,6 +209,11 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
                 break;
             }
 
+            case UserMdSyntaxNode: {
+                builder.Append("<span class=\"md-user\">");
+                break;
+            }
+
             case UnderlineMdSyntaxNode: {
                 builder.Append("<u>");
                 break;
@@ -454,6 +459,11 @@ public class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideServ
             }
 
             case TagMdSyntaxNode: {
+                builder.Append("</span>");
+                break;
+            }
+
+            case UserMdSyntaxNode: {
                 builder.Append("</span>");
                 break;
             }

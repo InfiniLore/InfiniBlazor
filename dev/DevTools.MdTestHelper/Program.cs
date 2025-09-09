@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using DevTools.MdTestHelper.Components;
+using Microsoft.AspNetCore.Components.Web;
 using System.Diagnostics.CodeAnalysis;
 using Tests.InfiniBlazor.Shared.Markdown;
 
@@ -15,13 +16,15 @@ public class Program {
         // -------------------------------------------------------------------------------------------------------------
         // App
         // -------------------------------------------------------------------------------------------------------------
-        var builder = WebApplication.CreateBuilder(args);
+        WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
 
-        builder.Services.AddInfiniBlazor();
+        builder.Services.AddInfiniBlazor(config => {
+            config.Components.SetRenderMode(RenderMode.InteractiveServer);
+        });
 
         builder.Services.RegisterServicesFromDevToolsMdTestHelper();
         builder.Services.RegisterServicesFromTestsInfiniBlazorSharedMarkdown();
@@ -29,7 +32,7 @@ public class Program {
         // -----------------------------------------------------------------------------------------------------------------
         // App
         // -----------------------------------------------------------------------------------------------------------------
-        var app = builder.Build();
+        WebApplication app = builder.Build();
 
         app.UseHttpsRedirection();
 
