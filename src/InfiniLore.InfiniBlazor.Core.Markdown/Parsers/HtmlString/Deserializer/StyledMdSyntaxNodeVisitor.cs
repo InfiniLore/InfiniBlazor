@@ -238,6 +238,13 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 break;
             }
 
+            case UserMdSyntaxNode {Content: var username}: {
+                builder.Append("<span class=\"inline-block infini-bg-(--color-base-95) rounded-xl px-1.5 text-(--color-accent) md-tag md-tag-");
+                builder.Append(username.Replace('/', '-'));
+                builder.Append("\">");
+                break;
+            }
+
             case UnderlineMdSyntaxNode: {
                 builder.Append("<u>");
                 break;
@@ -500,6 +507,11 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
             }
 
             case TagMdSyntaxNode: {
+                builder.Append("</span>");
+                break;
+            }
+
+            case UserMdSyntaxNode: {
                 builder.Append("</span>");
                 break;
             }
