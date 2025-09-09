@@ -25,17 +25,6 @@ public class EmoteProviderTests(IEmoteProvider provider) {
         // Assert
         await Assert.That(result).IsGreaterThanOrEqualTo(expectedMinCount);
     }
-    
-    [Test]
-    public async Task Initialize_ShouldPopulateData() {
-        // Arrange
-
-        // Act
-        await provider.InitializeAsync();
-
-        // Assert
-        await Assert.That(provider.Count).IsGreaterThanOrEqualTo(4);
-    }
 
     public static IEnumerable<Func<(string? Key, bool ExpectedResult, EmoteEntry? ExpectedEntry)>> TryGetEntry_ShouldReturnExpected_DataSources() {
         yield return () => (null, false, null);
@@ -63,12 +52,13 @@ public class EmoteProviderTests(IEmoteProvider provider) {
         // Act
         #pragma warning disable CS8604// Possible null reference argument.
 
-        IEmoteEntry? entry = provider.GetEntryAsync(key);
+        bool result = provider.TryGetEntry(key, out IEmoteEntry? entry);
 
         #pragma warning restore CS8604// Possible null reference argument.
 
         // Assert
         var entryCast = entry as EmoteEntry;
+        await Assert.That(result).IsEqualTo(expectedResult);
         await Assert.That(entryCast).IsEquivalentTo(expectedEntry);
     }
 }

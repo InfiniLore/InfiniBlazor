@@ -7,5 +7,5 @@ namespace InfiniLore.InfiniBlazor.Components;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IEmoteDataLoader {
-    Task<Stream[]> LoadEmoteStreamsAsync(CancellationToken ct = default);
+    IEnumerable<Stream> LoadEmoteStreams();
 }

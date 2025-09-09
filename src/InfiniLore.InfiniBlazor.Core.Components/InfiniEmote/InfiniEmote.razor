@@ -12,7 +12,8 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@switch (_entry) {
+@{ EmoteProvider.TryGetEntry(Name, out IEmoteEntry? entry);}
+@switch (entry) {
     case { ContentType: EmoteContentType.Emoji, Data : {} data }: {
         @data
         break;
@@ -42,14 +43,4 @@
 @code {
     [EditorRequired, Parameter] public required string Name { get; init; }
     [Parameter] public Func<string, RenderFragment>? OnEmoteNotFound { get; init; }
-
-    private IEmoteEntry? _entry = null; 
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
-    protected override async Task OnInitializedAsync() {
-        await base.OnInitializedAsync();
-        _entry = EmoteProvider.GetEntryAsync(Name);
-    }
 }

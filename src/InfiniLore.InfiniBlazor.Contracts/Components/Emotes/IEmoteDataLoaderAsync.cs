@@ -1,15 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Text.Json.Serialization;
-
 namespace InfiniLore.InfiniBlazor.Components;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public record EmoteEntry(
-    [property: JsonPropertyName("keys")] string[] Keys,
-    [property: JsonPropertyName("data")] string? Data,
-    [property: JsonPropertyName("contentType")] EmoteContentType ContentType
-) : IEmoteEntry;
-
+public interface IEmoteDataLoaderAsync {
+    IAsyncEnumerable<Stream> LoadEmoteStreamsAsync(CancellationToken ct = default);
+}

@@ -30,27 +30,9 @@ public class InfiniBlazorDiDataSourceAttribute : DependencyInjectionDataSourceAt
         services.AddLucideIcons();
         services.AddInfiniBlazor();
         
-        // Special case for emoting, as the testing environment isn't a full Blazor app
-        services.AddSingleton<IEmoteDataLoader>(static provider => {
-            IEnumerable<string> paths = provider.GetRequiredService<IComponentsConfig>()
-                .GetEmoteJsonLibFilePaths()
-                .Select(static path => path.TrimStart('/')
-                    .Replace("_content/InfiniLore.InfiniBlazor/", "InfiniLore.InfiniBlazor.wwwroot.")
-                    .Replace("/", ".")
-                );
-            
-            return new AssemblyEmoteDataLoader(
-                typeof(InfiniBlazorConfig).Assembly,
-                paths,
-                provider.GetRequiredService<ILogger<AssemblyEmoteDataLoader>>()
-            );
-        });
-        
         services.AddTransient<NavigationManager>(_ => Substitute.For<NavigationManager>());
 
         ServiceProvider provider = services.BuildServiceProvider();
-
-        provider.GetRequiredService<IEmoteProvider>().InitializeAsync().GetAwaiter().GetResult();
         
         return provider;
     }

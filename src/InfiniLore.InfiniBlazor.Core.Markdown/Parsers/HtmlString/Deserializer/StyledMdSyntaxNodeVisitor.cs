@@ -13,9 +13,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.HtmlString.Deserializer;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IHtmlStringMdSyntaxNodeVisitor>("styled")]
-public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideService lucideService) : SimpleMdSyntaxNodeVisitor(emoteProvider, lucideService) {
-    private readonly ILucideService _lucideService = lucideService;
-    private readonly IEmoteProvider _emoteProvider = emoteProvider;
+public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILucideService lucideService) : IHtmlStringMdSyntaxNodeVisitor {
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -28,7 +26,7 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
     }
     #endregion
     
-    public override void HandleOpenTag(IMdSyntaxNode node, StringBuilder builder) {
+    public void HandleOpenTag(IMdSyntaxNode node, StringBuilder builder) {
         switch (node) {
             case BlockQuoteMdSyntaxNode: {
                 builder.Append("<blockquote class=\"pl-4 border-l-4 border-(--border) my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)\">");
@@ -283,7 +281,7 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
 
                 string? svgData = null;
                 if (parentNode.Modifier is {} modifiers && modifiers.TryGetIconName(out string? name)) {
-                    svgData = _lucideService.GetIconAsString(name);
+                    svgData = lucideService.GetIconAsString(name);
                 }
                 if (svgData.IsNullOrWhiteSpace()) {
                     name = calloutName switch {
@@ -295,7 +293,7 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                         "success" => LucideNames.CircleCheck,
                         _ => string.Empty
                     };
-                    svgData = _lucideService.GetIconAsString(name);
+                    svgData = lucideService.GetIconAsString(name);
                 }
 
                 builder.Append("<div class=\"flex flex-row gap-2 pt-2 ");
@@ -315,7 +313,7 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
         }
     }
     
-    public override void HandleContent(IMdSyntaxNode node, StringBuilder builder) {
+    public void HandleContent(IMdSyntaxNode node, StringBuilder builder) {
         switch (node) {
             case CodeBlockMdSyntaxNode { Content: var code }: {
                 builder.Append(code);
@@ -343,22 +341,24 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 break;
             }
 
-            case EmoteMdSyntaxNode emoteNode: {
-                IEmoteEntry? entry = _emoteProvider.GetEntryAsync(emoteNode.EmoteKey);
-                switch (entry?.ContentType) {
-                    case EmoteContentType.Emoji: {
+
+            case EmoteMdSyntaxNode {EmoteKey : var key } emoteNode: {
+                if (!emoteProvider.TryGetEntry(key, out IEmoteEntry? entry)) break;
+                switch (entry) {
+                    case { ContentType: EmoteContentType.Emoji }: {
                         builder.Append(entry.Data);
                         break;
                     }
 
-                    case EmoteContentType.LucideIconName when entry.Data is not null: {
-                        string lucideIconSvg = _lucideService.GetIconAsString(entry.Data);
+                    case { ContentType: EmoteContentType.LucideIconName, Data: not null }: {
+                        string lucideIconSvg = lucideService.GetIconAsString(entry.Data);
                         if (lucideIconSvg.IsNullOrWhiteSpace()) break;
+
                         builder.Append(lucideIconSvg);
                         break;
                     }
 
-                    case EmoteContentType.SvgData when entry.Data is not null: {
+                    case { ContentType: EmoteContentType.SvgData, Data: not null }: {
                         builder.Append(entry.Data);
                         break;
                     }
@@ -401,7 +401,7 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
         }
     }
     
-    public override void HandleCloseTag(IMdSyntaxNode node, StringBuilder builder) {
+    public void HandleCloseTag(IMdSyntaxNode node, StringBuilder builder) {
         switch (node) {
             case BlockQuoteMdSyntaxNode: {
                 builder.Append("</blockquote>");

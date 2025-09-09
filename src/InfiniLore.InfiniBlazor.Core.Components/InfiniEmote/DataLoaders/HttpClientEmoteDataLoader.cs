@@ -2,46 +2,37 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Immutable;
+using System.Runtime.CompilerServices;
 
 namespace InfiniLore.InfiniBlazor.Components.DataLoaders;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IEmoteDataLoader>]
-public class HttpEmoteDataLoader(
+[InjectableSingleton<IEmoteDataLoaderAsync>]
+public class HttpClientEmoteDataLoader(
     IHttpClientFactory clientFactory,
     IComponentsConfig componentsConfig, 
-    ILogger<HttpEmoteDataLoader> logger
-) : IEmoteDataLoader {
-
+    ILogger<HttpClientEmoteDataLoader> logger
+) : IEmoteDataLoaderAsync {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public async Task<Stream[]> LoadEmoteStreamsAsync(CancellationToken ct = default) {
-        ImmutableArray<string> resourceFilepaths = componentsConfig.GetEmoteJsonLibFilePaths();
-        if (resourceFilepaths.IsEmpty) return [];
+    public async IAsyncEnumerable<Stream> LoadEmoteStreamsAsync([EnumeratorCancellation] CancellationToken ct = default) {
+        ImmutableArray<string> resourceFilePaths = componentsConfig.GetEmoteJsonLibFilePaths();
+        if (resourceFilePaths.IsEmpty) yield break;
         
         using HttpClient client = clientFactory.CreateClient();
-        
-        Stream[] streams = await Task.WhenAll(
-            resourceFilepaths.Select(async resourcePath => {
-                try {
-                    // ReSharper disable once AccessToDisposedClosure
-                    return await client.GetStreamAsync(resourcePath, ct);
-                }
-                catch (Exception ex) {
-                    logger.Warning(ex, "Failed to download emote resource at {resourcePath}", resourcePath);
-                    return null;
-                }
-            })
-        ).ContinueWith<Stream[]>(
-            static t => t.Result.Where(s => s != null).ToArray()!,
-            ct
-        );
-
-        return streams;
+        foreach (string resourcePath in resourceFilePaths) {
+            Stream? stream = null;
+            try {
+                stream = await client.GetStreamAsync(resourcePath, ct);
+            }
+            catch (Exception ex) {
+                logger.Warning(ex, "Failed to download emote resource at {resourcePath}", resourcePath);
+            }
+            if (stream is not null) yield return stream;
+        }
     }
 }
