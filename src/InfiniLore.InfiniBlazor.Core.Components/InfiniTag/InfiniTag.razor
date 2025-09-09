@@ -2,20 +2,19 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Components.Tags
-@using System.Diagnostics.CodeAnalysis
 
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniComponentBase
+@inherits InfiniHrefContentComponentBase
 
 @inject ITagLinkProvider TagLinkProvider
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@if (TryGetValidHref(out string? href)) {
-    <a href="@href" class="@BaseCss cursor-pointer">
+@if (TryAssignValidHref()) {
+    <a href="@ComputedHref" class="@BaseCss cursor-pointer">
         @GetContentFragment
     </a>
 }
@@ -47,13 +46,15 @@ else {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    private bool TryGetValidHref([NotNullWhen(true)] out string? href) {
-        // ReSharper disable once InvertIf
-        if (HrefOverload.IsNotNullOrWhiteSpace()) {
-            href = HrefOverload;
-            return true;
-        }
+    private bool TryAssignValidHref() {
+        string? href;
         
-        return TagLinkProvider.TryGetLink(Content, out href);
+        // ReSharper disable once InvertIf
+        if (HrefOverload.IsNotNullOrWhiteSpace()) href = HrefOverload; 
+        else if (!TagLinkProvider.TryGetLink(Content, out href)) return false;
+
+        Href = href;
+        HrefChanged();
+        return true ;
     }
 }
