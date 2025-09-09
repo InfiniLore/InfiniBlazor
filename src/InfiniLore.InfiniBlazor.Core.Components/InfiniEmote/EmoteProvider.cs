@@ -5,6 +5,7 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -14,7 +15,7 @@ namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IEmoteProvider>]
 public class EmoteProvider(ILogger<EmoteProvider> logger, [FromKeyedServices("EmbeddedResource")] IEmoteDataLoader dataLoader) : IEmoteProvider {
-    private ConcurrentDictionary<string, EmoteEntry> Entries { get; } = new(StringComparer.OrdinalIgnoreCase);
+    private ConcurrentDictionary<string, IEmoteEntry> Entries { get; } = new(StringComparer.OrdinalIgnoreCase);
 
     private static JsonSerializerOptions JsonSerializerOptions { get; } = new() {
         WriteIndented = true,
@@ -42,10 +43,10 @@ public class EmoteProvider(ILogger<EmoteProvider> logger, [FromKeyedServices("Em
         }
     }
     
-    public IEmoteEntry? GetEntryAsync(string key) {
-        if (key.IsNullOrWhiteSpace()) return null;
-        if (Entries.IsEmpty) _ = Task.Run(() => InitializeAsync()) ;
-        return Entries.GetValueOrDefault(key);
+    public bool TryGetEntry(string key, [NotNullWhen(true)] out IEmoteEntry? entry) {
+        entry = null;
+        return !key.IsNullOrWhiteSpace()
+            && Entries.TryGetValue(key, out entry);
     }
 
     public async Task<bool> TryImportDataAsync(Stream fileStream, CancellationToken ct = default) {
