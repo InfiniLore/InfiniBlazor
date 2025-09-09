@@ -1,6 +1,9 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.Components.DataLoaders;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
@@ -11,8 +14,12 @@ namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class EmoteProvider(ILogger<EmoteProvider> logger) : IEmoteProvider {
-    private ConcurrentDictionary<string, IEmoteEntry> Entries { get; } = new(StringComparer.OrdinalIgnoreCase);
+[InjectableSingleton<IEmoteProvider>]
+public class EmoteProvider(
+    ILogger<EmoteProvider> logger, 
+    [FromKeyedServices(EmbeddedResourceEmoteDataLoader.KeyName)] IEmoteDataLoader dataLoader
+    ) : IEmoteProvider {
+    private ConcurrentDictionary<string, IEmoteEntry> Entries { get; } = GetEntries(dataLoader, logger);
 
     private static JsonSerializerOptions JsonSerializerOptions { get; } = new() {
         WriteIndented = true,
@@ -23,100 +30,42 @@ public class EmoteProvider(ILogger<EmoteProvider> logger) : IEmoteProvider {
     public int Count => Entries.Count;
 
     // -----------------------------------------------------------------------------------------------------------------
-    // Methods
+    // Constructors
     // -----------------------------------------------------------------------------------------------------------------
-    public bool TryGetEntry(string key, [NotNullWhen(true)] out IEmoteEntry? entry) {
-        entry = null;
-        return !key.IsNullOrWhiteSpace()
-            && Entries.TryGetValue(key, out entry);
-    }
-    
-    public bool TryImportData(Stream fileStream) {
-        try {
-            int originalCount = Entries.Count;
-            var enumerable = JsonSerializer.Deserialize<IEnumerable<EmoteEntry>>(fileStream, JsonSerializerOptions);
-            if (enumerable is null) return false;
-            
-            int count = 0;
+    private static ConcurrentDictionary<string, IEmoteEntry> GetEntries(IEmoteDataLoader dataLoader, ILogger<EmoteProvider> logger) {
+        var dictionary = new ConcurrentDictionary<string, IEmoteEntry>(-1, 2000, StringComparer.OrdinalIgnoreCase);
+        
+        foreach (Stream stream in dataLoader.LoadEmoteStreams()) {
+            IEnumerable<EmoteEntry>? enumerable;
+            try {
+                enumerable = JsonSerializer.Deserialize<IEnumerable<EmoteEntry>>(stream, JsonSerializerOptions);
+            }
+            catch (Exception e) {
+                logger.Error(e, "Error loading emote data from stream");
+                continue;
+            }
+            if (enumerable is null) continue;
             foreach (EmoteEntry entry in enumerable) {
-                count++;
                 foreach (string key in entry.Keys) {
-                    Entries.AddOrUpdate(
+                    dictionary.AddOrUpdate(
                         key,
                         _ => entry,
                         (_, _) => entry
                     );
                 }
             }
-
-            int newCount = Entries.Count;
-            int offsetCount = newCount - originalCount;
-            if (offsetCount <= 0) {
-                logger.Warning("No new emote entries imported");
-                return false;
-            }
-
-            logger.Information("Imported {emoteCount} emote entries, with a total of {keyCount}", count, offsetCount);
-            return true;
-            
         }
-        catch (Exception ex) {
-            logger.Error(ex, "Error importing emote entries");
-            return false;
-        }
+
+        return dictionary;
     }
 
-    public async Task<bool> TryImportDataAsync(Stream fileStream, CancellationToken ct = default) {
-        try {
-            int originalCount = Entries.Count;
-
-            IAsyncEnumerable<EmoteEntry?> enumerable = JsonSerializer.DeserializeAsyncEnumerable<EmoteEntry>(fileStream, JsonSerializerOptions, ct);
-
-            int count = 0;
-            await foreach (EmoteEntry? emoteEntry in enumerable) {
-                if (emoteEntry is null) continue;
-
-                count++;
-                foreach (string key in emoteEntry.Keys) {
-                    Entries.AddOrUpdate(
-                        key,
-                        _ => emoteEntry,
-                        (_, _) => emoteEntry
-                    );
-                }
-            }
-
-            int newCount = Entries.Count;
-            int offsetCount = newCount - originalCount;
-            if (offsetCount <= 0) {
-                logger.Warning("No new emote entries imported");
-                return false;
-            }
-
-            logger.Information("Imported {emoteCount} emote entries, with a total of {keyCount}", count, offsetCount);
-            return true;
-        }
-        catch (Exception ex) when (ex is not TaskCanceledException) {
-            logger.Error(ex, "Error importing emote entries");
-            return false;
-        }
-    }
-
-    public async Task<bool> TryWriteDataAsync(StreamWriter streamWriter, CancellationToken ct = default) {
-        try {
-            string jsonContent = JsonSerializer.Serialize(Entries, JsonSerializerOptions);
-
-            await streamWriter.WriteAsync(jsonContent.AsMemory(), ct);
-            await streamWriter.FlushAsync(ct);
-
-            logger.Information("Wrote {count} emote entries", Entries.Count);
-
-            return true;
-        }
-        catch (Exception ex) when (ex is not TaskCanceledException) {
-            logger.Error(ex, "Error writing emote entries");
-            return false;
-        }
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    public bool TryGetEntry(string key, [NotNullWhen(true)] out IEmoteEntry? entry) {
+        entry = null;
+        return !key.IsNullOrWhiteSpace()
+            && Entries.TryGetValue(key, out entry);
     }
 
 }
