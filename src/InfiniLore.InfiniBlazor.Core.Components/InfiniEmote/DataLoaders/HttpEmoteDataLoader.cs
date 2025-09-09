@@ -4,23 +4,22 @@
 using CodeOfChaos.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Immutable;
+using System.Runtime.CompilerServices;
 
 namespace InfiniLore.InfiniBlazor.Components.DataLoaders;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IEmoteDataLoader>]
+[InjectableSingleton<IEmoteDataLoaderAsync>]
 public class HttpEmoteDataLoader(
     IHttpClientFactory clientFactory,
     IComponentsConfig componentsConfig, 
     ILogger<HttpEmoteDataLoader> logger
-) : IEmoteDataLoader {
-    public bool EnforceAsyncUsage => true;
-    
+) : IEmoteDataLoaderAsync {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public async IAsyncEnumerable<Stream> LoadEmoteStreamsAsync(CancellationToken ct = default) {
+    public async IAsyncEnumerable<Stream> LoadEmoteStreamsAsync([EnumeratorCancellation] CancellationToken ct = default) {
         ImmutableArray<string> resourceFilePaths = componentsConfig.GetEmoteJsonLibFilePaths();
         if (resourceFilePaths.IsEmpty) yield break;
         
@@ -35,9 +34,5 @@ public class HttpEmoteDataLoader(
             }
             if (stream is not null) yield return stream;
         }
-    }
-    
-    public IEnumerable<Stream> LoadEmoteStreams() {
-        throw new NotSupportedException();
     }
 }

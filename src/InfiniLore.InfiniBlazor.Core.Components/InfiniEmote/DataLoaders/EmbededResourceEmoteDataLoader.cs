@@ -13,16 +13,11 @@ namespace InfiniLore.InfiniBlazor.Components.DataLoaders;
 public class EmbeddedResourceEmoteDataLoader(
     IComponentsConfig componentsConfig
 ) : IEmoteDataLoader {
-    public bool EnforceAsyncUsage => false;
     public const string KeyName = nameof(EmbeddedResourceEmoteDataLoader);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public IAsyncEnumerable<Stream> LoadEmoteStreamsAsync(CancellationToken ct = default) {
-        throw new NotSupportedException();
-    }
-
     public IEnumerable<Stream> LoadEmoteStreams() {
         if (!componentsConfig.TryGetEmbeddedResourceAssemblies(out ImmutableArray<Assembly> assemblies)) return Enumerable.Empty<Stream>();
         
