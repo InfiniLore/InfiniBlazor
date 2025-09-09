@@ -1,19 +1,25 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
-@using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
+@using InfiniLore.InfiniBlazor
+@using JetBrains.Annotations
 
-@namespace InfiniLore.InfiniBlazor.Markdown.MdBlazorComponents
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniBlazorMdComponentBase<TagMdSyntaxNode>
+@rendermode InfiniRenderModeProvider.InfiniRenderMode
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniTag Content="@SyntaxNode.Content"/>
+<InfiniHeading3>Tags</InfiniHeading3>
 
+<InfiniTag HrefOverload="/" Content="tag">text</InfiniTag>
+<br>
+inline <InfiniTag Content="tag"/> tag text
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [UsedImplicitly] bool _isEnabled;
+}

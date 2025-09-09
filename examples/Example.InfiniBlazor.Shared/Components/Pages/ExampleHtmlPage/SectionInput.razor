@@ -11,146 +11,135 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <!-- Basic Text Input Example -->
-<InfiniSection Class="w-full">
-    <InfiniHeading3>Basic Text Input</InfiniHeading3>
-    <div class="space-y-4">
-        <InfiniTextInput
-            @bind-Value="@BasicExample.Value"
-            OnChange="BasicExample.OnChanged"
-            Placeholder="Type something..."/>
+<InfiniHeading3>Basic Text Input</InfiniHeading3>
+<div class="space-y-4">
+    <InfiniTextInput
+        @bind-Value="@BasicExample.Value"
+        OnChange="@BasicExample.OnChanged"
+        Placeholder="Type something..."/>
 
-        <div class="text-sm space-y-1">
-            <p>Bound Value: @BasicExample.Value</p>
-            <p>OnChanged Value: @BasicExample.OnChangedValue</p>
-        </div>
+    <div class="text-sm space-y-1">
+        <p>Bound Value: @BasicExample.Value</p>
+        <p>OnChanged Value: @BasicExample.OnChangedValue</p>
     </div>
-</InfiniSection>
+</div>
 
 <!-- Text Input with Submit Button -->
-<InfiniSection Class="w-full">
-    <InfiniHeading3>Text Input with Submit</InfiniHeading3>
-    <div class="space-y-4" >
-        <InfiniToggleInput
-            Label="Toggle Enabled State"
-            Value="@TextInputDisabled"
-            ValueChanged="@HandleToggleChanged">
-            @TextInputDisabled
-        </InfiniToggleInput>
+<InfiniHeading3>Text Input with Submit</InfiniHeading3>
+<div class="space-y-4">
+    <InfiniToggleInput
+        Label="Toggle Enabled State"
+        Value="@TextInputDisabled"
+        ValueChanged="@HandleToggleChanged">
+        @TextInputDisabled
+    </InfiniToggleInput>
 
-        <InfiniTextInput
-            Label="Do something"
-            @bind-Value="@SubmitExample.Value"
-            Placeholder="Type something else and submit..."
-            IsDisabled="TextInputDisabled"/>
+    <InfiniTextInput
+        Label="Do something"
+        @bind-Value="@SubmitExample.Value"
+        Placeholder="Type something else and submit..."
+        IsDisabled="TextInputDisabled"/>
 
-        <InfiniTextInput
-            Label="Do something with a long label... bla bla bla blabla bla bla blabla bla bla blabla bla bla blabla bla bla blabla bla bla blabla bla bla bla bla bla bla bla bla"
-            LabelLocation="LabelLocation.Left"
-            @bind-Value="@SubmitExample.Value"
-            Placeholder="Type something else and submit..."
-            IsDisabled="TextInputDisabled">
-            <InfiniButton OnClick="@SubmitExample.OnSubmit">Submit</InfiniButton>
-        </InfiniTextInput>
+    <InfiniTextInput
+        Label="Do something with a long label... bla bla bla blabla bla bla blabla bla bla blabla bla bla blabla bla bla blabla bla bla blabla bla bla bla bla bla bla bla bla"
+        LabelLocation="LabelLocation.Left"
+        @bind-Value="@SubmitExample.Value"
+        Placeholder="Type something else and submit..."
+        IsDisabled="TextInputDisabled">
+        <InfiniButton OnClick="@SubmitExample.OnSubmit">Submit</InfiniButton>
+    </InfiniTextInput>
 
-        <InfiniTextAreaInput
-            Label="Do something in a text area"
-            LabelLocation="LabelLocation.Left"
-            @bind-Value="@SubmitExample.Value"
-            Placeholder="Type something else and submit..."
-            IsDisabled="TextInputDisabled">
-            <InfiniButton OnClick="@SubmitExample.OnSubmit">Submit</InfiniButton>
-        </InfiniTextAreaInput>
+    <InfiniTextAreaInput
+        Label="Do something in a text area"
+        LabelLocation="LabelLocation.Left"
+        @bind-Value="@SubmitExample.Value"
+        Placeholder="Type something else and submit..."
+        IsDisabled="TextInputDisabled">
+        <InfiniButton OnClick="@SubmitExample.OnSubmit">Submit</InfiniButton>
+    </InfiniTextAreaInput>
 
-        <InfiniFileInput
-            Label="Upload Files"
-            Accept=".png,.jpg,.jpeg"
-            AllowMultipleFiles
-            IsDisabled="TextInputDisabled"
-            OnFilesChanged="HandleFilesChanged"
-            Placeholder="Choose documents..."/>
-        
-        <InfiniButtonInput Label="Does Something" IsDisabled="TextInputDisabled">
-            Submit
-        </InfiniButtonInput>
+    <InfiniFileInput
+        Label="Upload Files"
+        Accept=".png,.jpg,.jpeg"
+        AllowMultipleFiles
+        IsDisabled="TextInputDisabled"
+        OnFilesChanged="HandleFilesChanged"
+        Placeholder="Choose documents..."/>
 
-        <div class="text-sm space-y-1">
-            <p>Bound Value: @SubmitExample.Value</p>
-            <p>Submitted Value: @SubmitExample.SubmittedValue</p>
+    <InfiniButtonInput Label="Does Something" IsDisabled="TextInputDisabled">
+        Submit
+    </InfiniButtonInput>
 
-            @if (SelectedFiles is not null && SelectedFiles.Any()) {
-                <div class="mt-2 space-y-2">
-                    <p class="text-sm font-medium">Selected Files:</p>
-                    <div class="space-y-1">
-                        @foreach (IBrowserFile file in SelectedFiles) {
-                            <div class="flex items-center gap-2 text-sm p-2 bg-(--color-base-95) rounded">
-                                <span class="font-medium">@file.Name</span>
-                                <span class="text-(--color-base-40)">(@(file.Size / 1024.0) KB)</span>
-                            </div>
-                        }
-                    </div>
+    <div class="text-sm space-y-1">
+        <p>Bound Value: @SubmitExample.Value</p>
+        <p>Submitted Value: @SubmitExample.SubmittedValue</p>
+
+        @if (SelectedFiles is not null && SelectedFiles.Any()) {
+            <div class="mt-2 space-y-2">
+                <p class="text-sm font-medium">Selected Files:</p>
+                <div class="space-y-1">
+                    @foreach (IBrowserFile file in SelectedFiles) {
+                        <div class="flex items-center gap-2 text-sm p-2 bg-(--color-base-95) rounded">
+                            <span class="font-medium">@file.Name</span>
+                            <span class="text-(--color-base-40)">(@(file.Size / 1024.0) KB)</span>
+                        </div>
+                    }
                 </div>
-            }
-
-        </div>
-        
-        
+            </div>
+        }
 
     </div>
-</InfiniSection>
+
+
+</div>
 
 <!-- Text Input with Label -->
-<InfiniSection Class="w-full">
-    <InfiniHeading3>Text Input with Submit</InfiniHeading3>
-    <div class="space-y-4">
-        <InfiniTextInput
-            @bind-Value="@SubmitExample.Value"
-            Placeholder="Type something else and submit..."
-            Label="Test Example"
-        >
-            <InfiniButtonPrimary OnClick="@SubmitExample.OnSubmit">Submit</InfiniButtonPrimary>
-        </InfiniTextInput>
+<InfiniHeading3>Text Input with Submit</InfiniHeading3>
+<div class="space-y-4">
+    <InfiniTextInput
+        @bind-Value="@SubmitExample.Value"
+        Placeholder="Type something else and submit..."
+        Label="Test Example"
+    >
+        <InfiniButtonPrimary OnClick="@SubmitExample.OnSubmit">Submit</InfiniButtonPrimary>
+    </InfiniTextInput>
 
-        <div class="text-sm space-y-1">
-            <p>Bound Value: @SubmitExample.Value</p>
-            <p>Submitted Value: @SubmitExample.SubmittedValue</p>
-        </div>
+    <div class="text-sm space-y-1">
+        <p>Bound Value: @SubmitExample.Value</p>
+        <p>Submitted Value: @SubmitExample.SubmittedValue</p>
     </div>
-</InfiniSection>
+</div>
 
-<InfiniSection Class="w-full">
-    <InfiniHeading3>CheckBox Inputs</InfiniHeading3>
-    <div class="space-y-4">
-        <InfiniCheckBoxInput Data="@Data"/>
-        <InfiniRadioButtonInput 
-            Label="@(SelectedId.ToString())"
-            Data="@RadioButtonDatas" 
-            @bind-SelectedId="SelectedId"/>
-    </div>
-</InfiniSection>
+<InfiniHeading3>CheckBox Inputs</InfiniHeading3>
+<div class="space-y-4">
+    <InfiniCheckBoxInput Data="@Data"/>
+    <InfiniRadioButtonInput
+        Label="@(SelectedId.ToString())"
+        Data="@RadioButtonDatas"
+        @bind-SelectedId="SelectedId"/>
+</div>
 
 <!-- Form Inputs Example -->
-<InfiniSection Class="w-full">
-    <InfiniHeading3>Form Inputs</InfiniHeading3>
-    <div class="space-y-4">
-        <InfiniTextInput
-            Type="email"
-            LabelLocation="LabelLocation.OnTop"
-            Label="Email"
-            Value="@FormExample.Email"
-            ValueChanged="FormExample.HandleEmailChange"
-            ValidationMessage="@FormExample.ValidationMessage"
-            Placeholder="Enter email">
-        </InfiniTextInput>
+<InfiniHeading3>Form Inputs</InfiniHeading3>
+<div class="space-y-4">
+    <InfiniTextInput
+        Type="email"
+        LabelLocation="LabelLocation.OnTop"
+        Label="Email"
+        Value="@FormExample.Email"
+        ValueChanged="FormExample.HandleEmailChange"
+        ValidationMessage="@FormExample.ValidationMessage"
+        Placeholder="Enter email">
+    </InfiniTextInput>
 
-        <InfiniTextInput
-            Label="Password"
-            LabelLocation="LabelLocation.Left"
-            Type="password"
-            Value="@FormExample.Password"
-            ValueChanged="@(value => FormExample.Password = value)"
-            Placeholder="Enter password"/>
-    </div>
-</InfiniSection>
+    <InfiniTextInput
+        Label="Password"
+        LabelLocation="LabelLocation.Left"
+        Type="password"
+        Value="@FormExample.Password"
+        ValueChanged="@(value => FormExample.Password = value)"
+        Placeholder="Enter password"/>
+</div>
 
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -193,7 +182,7 @@
             Label = "Else"
         }
     };
-    private Guid SelectedId { get; set; } 
+    private Guid SelectedId { get; set; }
 
     private class CheckBoxData : ICheckBoxData {
         public string? Label { get; init; }
