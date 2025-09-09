@@ -19,7 +19,7 @@ public class EmbeddedResourceEmoteDataLoader(
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public Task<Stream[]> LoadEmoteStreamsAsync(CancellationToken ct = default) {
+    public IAsyncEnumerable<Stream> LoadEmoteStreamsAsync(CancellationToken ct = default) {
         throw new NotSupportedException();
     }
 
