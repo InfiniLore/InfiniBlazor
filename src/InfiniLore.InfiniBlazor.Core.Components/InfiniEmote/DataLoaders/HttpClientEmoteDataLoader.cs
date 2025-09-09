@@ -11,10 +11,10 @@ namespace InfiniLore.InfiniBlazor.Components.DataLoaders;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IEmoteDataLoaderAsync>]
-public class HttpEmoteDataLoader(
+public class HttpClientEmoteDataLoader(
     IHttpClientFactory clientFactory,
     IComponentsConfig componentsConfig, 
-    ILogger<HttpEmoteDataLoader> logger
+    ILogger<HttpClientEmoteDataLoader> logger
 ) : IEmoteDataLoaderAsync {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
