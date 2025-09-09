@@ -10,8 +10,6 @@ namespace InfiniLore.InfiniBlazor.Components;
 public interface IEmoteProvider {
     int Count { get; }
     
-    Task InitializeAsync(CancellationToken ct = default);
-    
     bool TryGetEntry(string key,[NotNullWhen(true)] out IEmoteEntry? entry);
     
     Task<bool> TryImportDataAsync(Stream fileStream, CancellationToken ct = default);

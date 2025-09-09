@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Immutable;
 
@@ -16,7 +15,8 @@ public class HttpEmoteDataLoader(
     IComponentsConfig componentsConfig, 
     ILogger<HttpEmoteDataLoader> logger
 ) : IEmoteDataLoader {
-
+    public bool EnforceAsyncUsage => true;
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -43,5 +43,9 @@ public class HttpEmoteDataLoader(
         );
 
         return streams;
+    }
+    
+    public IEnumerable<Stream> LoadEmoteStreams() {
+        throw new NotSupportedException();
     }
 }

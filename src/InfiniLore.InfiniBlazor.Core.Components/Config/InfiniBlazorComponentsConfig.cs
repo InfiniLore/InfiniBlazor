@@ -30,6 +30,7 @@ public class InfiniBlazorComponentsConfig : IComponentsConfig {
     public InfiniBlazorComponentsConfig(IServiceCollection serviceCollection) {
         serviceCollection.RegisterServicesFromInfiniLoreInfiniBlazorCoreComponents();
         serviceCollection.AddSingleton<IComponentsConfig>(this);
+        serviceCollection.AddSingleton(EmoteProviderFactory.Create);
         
         EmoteJsonLibFilePathsLazy = new Lazy<ImmutableArray<string>>(() => EmoteJsonLibFiles.ToImmutableArray());
         EmbeddedResourceAssembliesLazy = new Lazy<ImmutableArray<Assembly>>(() => EmbeddedResourceAssemblyEntryPoints.Select(t => t.Assembly).ToImmutableArray());

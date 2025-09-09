@@ -49,8 +49,6 @@ public class InfiniBlazorDiDataSourceAttribute : DependencyInjectionDataSourceAt
         services.AddTransient<NavigationManager>(_ => Substitute.For<NavigationManager>());
 
         ServiceProvider provider = services.BuildServiceProvider();
-
-        provider.GetRequiredService<IEmoteProvider>().InitializeAsync().GetAwaiter().GetResult();
         
         return provider;
     }

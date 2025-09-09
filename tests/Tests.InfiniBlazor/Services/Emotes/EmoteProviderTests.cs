@@ -25,17 +25,6 @@ public class EmoteProviderTests(IEmoteProvider provider) {
         // Assert
         await Assert.That(result).IsGreaterThanOrEqualTo(expectedMinCount);
     }
-    
-    [Test]
-    public async Task Initialize_ShouldPopulateData() {
-        // Arrange
-
-        // Act
-        await provider.InitializeAsync();
-
-        // Assert
-        await Assert.That(provider.Count).IsGreaterThanOrEqualTo(4);
-    }
 
     public static IEnumerable<Func<(string? Key, bool ExpectedResult, EmoteEntry? ExpectedEntry)>> TryGetEntry_ShouldReturnExpected_DataSources() {
         yield return () => (null, false, null);
