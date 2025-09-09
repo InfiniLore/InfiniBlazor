@@ -16,12 +16,12 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @if (TryGetValidHref(out string? href)) {
     <a href="@href" class="@BaseCss cursor-pointer">
-        @Content
+        @GetContentFragment
     </a>
 }
 else {
     <span class="@BaseCss">
-        @Content
+        @GetContentFragment
     </span>   
 }
 
@@ -36,6 +36,14 @@ else {
 
     private const string BaseCss = "inline-block px-2 py-0.5 rounded-full leading-4 infini-bg-(--color-base-90) text-(--color-accent)";
 
+    // ReSharper disable once UnusedParameter.Local
+    private RenderFragment GetContentFragment => __builder => {
+        if (TagLinkContext?.IsRenderedMarkdownComponent ?? false) {
+            <span>#</span>
+        }
+        @Content
+    };
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

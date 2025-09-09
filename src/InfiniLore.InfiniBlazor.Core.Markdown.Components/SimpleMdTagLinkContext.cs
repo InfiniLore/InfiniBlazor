@@ -1,11 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Components.Tags;
+using InfiniLore.InfiniBlazor.Components.Tags;
+
+namespace InfiniLore.InfiniBlazor.Markdown;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface ITagLinkContext {
-    bool IsRenderedMarkdownComponent { get; }
+public class SimpleMdTagLinkContext : ITagLinkContext {
+    public bool IsRenderedMarkdownComponent => true;
 }

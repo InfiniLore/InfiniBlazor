@@ -1,6 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Components.Tags
 @using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
 
 @namespace InfiniLore.InfiniBlazor.Markdown
@@ -21,7 +22,9 @@
     <div class="flex-1 overflow-y-auto infini-scrollbar">
         @if (!VisualDebugger.IsEnabled()) {
             <CascadingIsDisabled Value="EditorContext.IsNotInteractive()">
-                @ComponentConverter.RenderRootComponents(EditorContext.SyntaxTree.VisitTopLevelNodes())
+                <CascadingValue Value="@TagLinkContext">
+                    @ComponentConverter.RenderRootComponents(EditorContext.SyntaxTree.VisitTopLevelNodes())
+                </CascadingValue>
             </CascadingIsDisabled>
         }
         else {
@@ -42,6 +45,8 @@
 
 @code {
     [CascadingParameter] protected MdEditorContext EditorContext { get; set; } = null!;
+
+    private ITagLinkContext TagLinkContext = new SimpleMdTagLinkContext();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Component lifetime Methods
