@@ -1,23 +1,51 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Components.Tags
+@using System.Diagnostics.CodeAnalysis
+
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniComponentBase
+
+@inject ITagLinkProvider TagLinkProvider
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@if (Href.IsNotNullOrWhiteSpace()) {
-    <a href="@Href" class="inline-block cursor-pointer px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 infini-bg-(--color-base-90) text-(--color-accent)">
-        @ChildContent
+@if (TryGetValidHref(out string? href)) {
+    <a href="@href" class="@BaseCss cursor-pointer">
+        @Content
     </a>
+}
+else {
+    <span class="@BaseCss">
+        @Content
+    </span>   
 }
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
+    [EditorRequired, Parameter] public string Content { get; set; } = string.Empty;
     [Parameter] public string? Href { get; set; }
+    
+    [CascadingParameter] public ITagLinkContext? TagLinkContext { get; set; }
+
+    private const string BaseCss = "inline-block px-2 py-0.5 rounded-full leading-4 infini-bg-(--color-base-90) text-(--color-accent)";
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private bool TryGetValidHref([NotNullWhen(true)] out string? href) {
+        // ReSharper disable once InvertIf
+        if (Href.IsNotNullOrWhiteSpace()) {
+            href = Href;
+            return true;
+        }
+        
+        return TagLinkProvider.TryGetLink(Content, out href);
+    }
 }
