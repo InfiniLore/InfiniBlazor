@@ -30,7 +30,7 @@ else {
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     [EditorRequired, Parameter] public string Content { get; set; } = string.Empty;
-    [Parameter] public string? Href { get; set; }
+    [Parameter] public string? HrefOverload { get; set; }
     
     [CascadingParameter] public ITagLinkContext? TagLinkContext { get; set; }
 
@@ -49,8 +49,8 @@ else {
     // -----------------------------------------------------------------------------------------------------------------
     private bool TryGetValidHref([NotNullWhen(true)] out string? href) {
         // ReSharper disable once InvertIf
-        if (Href.IsNotNullOrWhiteSpace()) {
-            href = Href;
+        if (HrefOverload.IsNotNullOrWhiteSpace()) {
+            href = HrefOverload;
             return true;
         }
         

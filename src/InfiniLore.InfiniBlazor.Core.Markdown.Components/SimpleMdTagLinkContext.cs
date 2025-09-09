@@ -10,4 +10,6 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 public class SimpleMdTagLinkContext : ITagLinkContext {
     public bool IsRenderedMarkdownComponent => true;
+    
+    public static SimpleMdTagLinkContext Shared { get; }= new();
 }
