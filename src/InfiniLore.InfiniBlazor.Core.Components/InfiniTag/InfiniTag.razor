@@ -1,27 +1,23 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor
+@namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@page "/html"
-@rendermode InfiniRenderModeProvider.InfiniRenderMode
+@inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniPage Title="HTML" Class="p-4">
-    <SectionButtons/>
-    <SectionToggleButtons/>
-    <SectionInput/>
-    <SectionCodeBlock/>
-    <SectionHeadings/>
-    <SectionSpacers/>
-    <SectionCheckBoxes/>
-    <SectionTags/>
-</InfiniPage>
+@if (Href.IsNotNullOrWhiteSpace()) {
+    <a href="@Href" class="inline-block cursor-pointer px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 infini-bg-(--color-base-90) text-(--color-accent)">
+        @ChildContent
+    </a>
+}
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
+    [Parameter] public string? Href { get; set; }
 }

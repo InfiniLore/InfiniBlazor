@@ -2,26 +2,25 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor
+@using JetBrains.Annotations
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@page "/html"
 @rendermode InfiniRenderModeProvider.InfiniRenderMode
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniPage Title="HTML" Class="p-4">
-    <SectionButtons/>
-    <SectionToggleButtons/>
-    <SectionInput/>
-    <SectionCodeBlock/>
-    <SectionHeadings/>
-    <SectionSpacers/>
-    <SectionCheckBoxes/>
-    <SectionTags/>
-</InfiniPage>
+<InfiniSection Class="flex flex-col gap-4 w-full">
+    <InfiniHeading3>Tags</InfiniHeading3>
+
+    <InfiniTag Href="something">text</InfiniTag>
+
+</InfiniSection>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
+    [UsedImplicitly] bool _isEnabled;
 }
