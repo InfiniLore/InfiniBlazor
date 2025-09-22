@@ -221,6 +221,8 @@
         SkipOnWhitespaceMisMatch = testData.ExpectedMarkdownStringSkipOnWhitespaceMisMatch;
 
         TestDataOrigin = testData;
+
+        await InvokeAsync(StateHasChanged);
     }
 
     private async Task OnSaveAsync() {
