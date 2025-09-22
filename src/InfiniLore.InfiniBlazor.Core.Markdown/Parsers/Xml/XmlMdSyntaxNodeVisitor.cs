@@ -50,18 +50,18 @@ public abstract class XmlMdSyntaxNodeVisitor<TNode> : IXmlMdSyntaxNodeVisitor wh
     
     protected void AddXmlPreserveSpace(XElement element) => element.SetAttributeValue(XNamespace.Xml + "space", "preserve");
         
-    public IMdSyntaxNode SerializeToNode(XElement element, IMdSyntaxNode parentNode) {
+    public IMdSyntaxNode SerializeToNode(IMdSyntaxTree tree, XElement element, IMdSyntaxNode parentNode) {
         TNode node = MdSyntaxNode<TNode>.Pool.Get();
         parentNode.AddChildNode(node);
         
-        SerializeDetails(element, node);
+        SerializeDetails(tree, element, node);
         return node;  
     }
 
     private static MdSyntaxNodeModifier DeserializeModifiers(XElement element) 
         => MdSyntaxNodeModifier.FromString(element.Element(OriginalInput)!.Value);
 
-    protected virtual void SerializeDetails(XElement element, TNode targetNode) {
+    protected virtual void SerializeDetails(IMdSyntaxTree tree, XElement element, TNode targetNode) {
         if (element.Element(Modifiers) is {} modifiersElement) targetNode.WithModifier(DeserializeModifiers(modifiersElement));
     }
 }

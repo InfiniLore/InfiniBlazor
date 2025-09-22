@@ -19,8 +19,8 @@ public sealed class UserXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<UserMdSy
         targetElement.Value = node.Content;
     }
 
-    protected override void SerializeDetails(XElement element, UserMdSyntaxNode targetNode) {
-        base.SerializeDetails(element, targetNode);
+    protected override void SerializeDetails(IMdSyntaxTree tree, XElement element, UserMdSyntaxNode targetNode) {
+        base.SerializeDetails(tree, element, targetNode);
         targetNode.WithContent(element.Value);
     }
 }

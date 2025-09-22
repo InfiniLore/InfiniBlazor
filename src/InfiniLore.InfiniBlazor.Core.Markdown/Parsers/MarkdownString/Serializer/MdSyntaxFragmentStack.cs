@@ -12,8 +12,11 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable {
+    public IMdSyntaxTree TreeReference { get; set; } = null!;
+
     private readonly Stack<MdSyntaxFragment> _stack = new();
     public static ObjectPool<MdSyntaxFragmentStack> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxFragmentStack>(PoolingHelpers.ParsersRetained);
+    
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

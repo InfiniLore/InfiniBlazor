@@ -18,8 +18,8 @@ public sealed class EscapedCharacterXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisi
         targetElement.Value = node.Content.ToString();
     }
 
-    protected override void SerializeDetails(XElement element, EscapedCharacterMdSyntaxNode targetNode) {
-        base.SerializeDetails(element, targetNode);
+    protected override void SerializeDetails(IMdSyntaxTree tree, XElement element, EscapedCharacterMdSyntaxNode targetNode) {
+        base.SerializeDetails(tree, element, targetNode);
         targetNode.WithContent(element.Value.ElementAtOrDefault(0));
     }
 }

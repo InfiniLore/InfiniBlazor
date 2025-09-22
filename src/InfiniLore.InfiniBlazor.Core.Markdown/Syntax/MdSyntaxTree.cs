@@ -37,16 +37,8 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region CachedChildrenReferences
-    public IEnumerable<IMdSyntaxNode> GetCachedChildrenByType<T>() where T : IMdSyntaxNode {
-        Type type = typeof(T);
-        if (!CachedChildrenByType.TryGetValue(type, out List<int[]>? children)) return Enumerable.Empty<IMdSyntaxNode>();
+    public IEnumerable<IMdSyntaxNode> GetCachedChildrenByType<T>() where T : IMdSyntaxNode => GetCachedChildrenByType(typeof(T));
 
-        return children.Select(
-            childIndexLocation => childIndexLocation
-                .Aggregate(RootNode, (current, i) => current.GetChildAt(i))
-        );
-    }
-    
     public IEnumerable<IMdSyntaxNode> GetCachedChildrenByType(Type type) {
         if (!type.IsAssignableTo(typeof(IMdSyntaxNode)) 
             || !CachedChildrenByType.TryGetValue(type, out List<int[]>? children)) return Enumerable.Empty<IMdSyntaxNode>();
@@ -57,7 +49,7 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
         );
     }
 
-    public void StoreCachedChildrenByType<T>(T node) where T : IMdSyntaxNode {
+    public void StoreChildAtCache<T>(T node) where T : IMdSyntaxNode {
         List<int[]> list = CachedChildrenByType.GetOrAdd(typeof(T), new List<int[]>());
         
         int[] array = new int[node.Depth];

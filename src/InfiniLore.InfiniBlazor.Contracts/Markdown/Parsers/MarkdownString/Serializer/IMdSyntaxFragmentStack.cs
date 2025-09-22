@@ -6,6 +6,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMdSyntaxFragmentStack {
+    IMdSyntaxTree TreeReference { get; }
+    
     void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node);
     void PushSingleLineMatchesToStack(string input, IMdSyntaxNode node);
     

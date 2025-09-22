@@ -19,8 +19,8 @@ public sealed class FootnoteReferenceXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVis
         targetElement.SetAttributeValue(Identifier, node.Identifier);
     }
 
-    protected override void SerializeDetails(XElement element, FootnoteReferenceMdSyntaxNode targetNode) {
-        base.SerializeDetails(element, targetNode);
+    protected override void SerializeDetails(IMdSyntaxTree tree, XElement element, FootnoteReferenceMdSyntaxNode targetNode) {
+        base.SerializeDetails(tree, element, targetNode);
         targetNode.WithIdentifier(element.Attribute(Identifier)?.Value ?? string.Empty);
     }
 }

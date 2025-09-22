@@ -11,13 +11,14 @@ using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer;
 
-using MdSyntaxSerializer = Action<IMdSyntaxFragmentStack, IMdSyntaxNode, Match>;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdStringMdSyntaxSerializer>]
 public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerializer> logger) : IMdStringMdSyntaxSerializer {
-    private readonly FrozenDictionary<string, MdSyntaxSerializer> _elementHandlers = new Dictionary<string, MdSyntaxSerializer> {
+    private delegate void MdSyntaxSerializerAction(IMdSyntaxFragmentStack stack, IMdSyntaxNode node, Match match);
+
+    private readonly FrozenDictionary<string, MdSyntaxSerializerAction> _elementHandlers = new Dictionary<string, MdSyntaxSerializerAction> {
         [MdRegexGroupNames.BlockQuote] = BlockQuoteSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.Bold] = BoldSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.Callout] = CalloutSyntaxNodeSerializer.Serialize,
@@ -58,6 +59,7 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
 
     public void SerializeToTree(string markdown, IMdSyntaxTree nodeTree) {
         MdSyntaxFragmentStack runningSerializer = MdSyntaxFragmentStack.Pool.Get();
+        runningSerializer.TreeReference = nodeTree;
 
         string normalized = markdown.ReplaceLineEndings("\n");
 
@@ -101,7 +103,7 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
 
         for (int index = 0; index < length; index++) {
             Group group = groups[index];
-            if (!group.Success || !_elementHandlers.TryGetValue(group.Name, out MdSyntaxSerializer? handler)) continue;
+            if (!group.Success || !_elementHandlers.TryGetValue(group.Name, out MdSyntaxSerializerAction? handler)) continue;
             handler(runningParser, parentNode, match);
         }
     }

@@ -4,6 +4,7 @@
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
+using Microsoft.VisualBasic.CompilerServices;
 using System.Text.RegularExpressions;
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -29,5 +30,6 @@ public static class FootnoteDescriptionSyntaxNodeSerializer {
         parentNode.AddChildNode(node);
         
         stack.PushMultiLineMatchesToStack(body, node);
+        stack.TreeReference.StoreChildAtCache(node);
     }
 }

@@ -25,8 +25,8 @@ public sealed class CalloutXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Callo
         targetElement.SetAttributeValue(LeadingSpaces, node.LeadingSpaces);
     }
 
-    protected override void SerializeDetails(XElement element, CalloutMdSyntaxNode targetNode) {
-        base.SerializeDetails(element, targetNode);
+    protected override void SerializeDetails(IMdSyntaxTree tree, XElement element, CalloutMdSyntaxNode targetNode) {
+        base.SerializeDetails(tree, element, targetNode);
         
         targetNode.WithLeadingSpaces(int.Parse(element.Attribute(LeadingSpaces)?.Value ?? "0"));
         targetNode.WithCalloutType(element.Attribute(CalloutType)?.Value ?? string.Empty);
