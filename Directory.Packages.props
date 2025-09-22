@@ -57,6 +57,6 @@
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageVersion Include="Serilog.Sinks.Debug" Version="3.0.0" />
     <PackageVersion Include="TUnit" Version="0.61.13" />
-    <PackageVersion Include="TUnit.Core" Version="0.57.65" />
+    <PackageVersion Include="TUnit.Core" Version="0.61.13" />
   </ItemGroup>
 </Project>
