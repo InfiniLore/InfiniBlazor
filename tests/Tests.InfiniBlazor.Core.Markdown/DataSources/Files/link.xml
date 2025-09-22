@@ -103,7 +103,7 @@
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
   </MdTestData>
   <MdTestData Id="withSubscript" FileName="link.xml">
-    <MdString>[^transgenderinfo^](https://www.transgenderinfo.be)</MdString>
+    <MdString>[~transgenderinfo~](https://www.transgenderinfo.be)</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
@@ -114,11 +114,11 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;a href="https://www.transgenderinfo.be"&gt;&lt;sub&gt;transgenderinfo&lt;/sub&gt;&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>[^transgenderinfo^](https://www.transgenderinfo.be)</ExpectedMarkdownString>
+    <ExpectedMarkdownString>[~transgenderinfo~](https://www.transgenderinfo.be)</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
   </MdTestData>
   <MdTestData Id="withSuperscript" FileName="link.xml">
-    <MdString>[^^transgenderinfo^^](https://www.transgenderinfo.be)</MdString>
+    <MdString>[^transgenderinfo^](https://www.transgenderinfo.be)</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
@@ -129,7 +129,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;a href="https://www.transgenderinfo.be"&gt;&lt;sup&gt;transgenderinfo&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>[^^transgenderinfo^^](https://www.transgenderinfo.be)</ExpectedMarkdownString>
+    <ExpectedMarkdownString>[^transgenderinfo^](https://www.transgenderinfo.be)</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
   </MdTestData>
 </ArrayOfMdTestData>

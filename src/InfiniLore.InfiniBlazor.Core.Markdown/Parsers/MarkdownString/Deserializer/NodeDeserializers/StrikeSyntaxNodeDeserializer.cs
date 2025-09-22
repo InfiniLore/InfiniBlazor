@@ -11,7 +11,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer.N
 public sealed class StrikeSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<StrikeMdSyntaxNode> {
     protected override void Deserialize(StrikeMdSyntaxNode node, StringBuilder builder) {
         builder.Append('~');
+        builder.Append('~');
         DeserializeChildren(node, builder);
+        builder.Append('~');
         builder.Append('~');
     }
 }
