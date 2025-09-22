@@ -77,13 +77,13 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public MdEditorContext EditorContext { get; set; } = new();
+    [Parameter] public MdEditorContext EditorContext { get; set; } = new MdEditorContext();
     [Parameter] public EventCallback<MdEditorContext> EditorContextChanged  { get; set; }
     
     [Parameter] public RenderFragment? ToolbarTop { get; set; }
     [Parameter] public RenderFragment? ToolbarBottom { get; set; }
     
-    private MdRenderContext RenderContext { get; } = new();
+    private MdRenderContext RenderContext { get; } = new MdRenderContext();
     private InfiniEditorKeyCombo LastPressedCombo { get; set; } = InfiniEditorKeyCombo.Empty;
 
     private Dictionary<InfiniEditorKeyCombo, Func<InfiniMarkdownEditorNew, Task>> KeyCombos { get; } = new() {
