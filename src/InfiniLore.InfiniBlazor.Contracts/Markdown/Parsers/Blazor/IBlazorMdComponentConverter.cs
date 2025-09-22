@@ -13,4 +13,5 @@ public interface IBlazorMdComponentConverter {
     
     RenderFragment RenderChildComponents(IMdSyntaxNode node);
     RenderFragment RenderRootComponents(IEnumerable<IMdSyntaxNode> nodes);
+    RenderFragment RenderRootComponentsWithSkipped(IEnumerable<IMdSyntaxNode> nodes);
 }

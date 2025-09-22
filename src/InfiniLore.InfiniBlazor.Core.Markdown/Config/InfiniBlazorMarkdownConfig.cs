@@ -8,13 +8,14 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Frozen;
 
 namespace InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class InfiniBlazorMarkdownConfig : IMarkdownConfig {
     private Dictionary<Type, MdComponentRecord> ComponentRecords { get; } = new(32);
-    private HashSet<Type> SkippedBlazorComponentTypes { get; } = new(32);
+    private HashSet<Type> SkippedBlazorComponentTypes { get; } = [typeof(FootnoteDescriptionMdSyntaxNode)]; 
     public bool RenderUnknownBlazorComponents { get; set; } = false;
     
     private Lazy<FrozenDictionary<Type, IMdComponentRecord>> ComponentRecordsLazy { get; }

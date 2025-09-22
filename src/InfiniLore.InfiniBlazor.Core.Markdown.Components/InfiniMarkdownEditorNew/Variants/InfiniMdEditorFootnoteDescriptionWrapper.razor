@@ -1,21 +1,24 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
-@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
+@namespace InfiniLore.InfiniBlazor.Markdown
 
-@namespace InfiniLore.InfiniBlazor.Markdown.MdBlazorComponents
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniBlazorMdComponentBase<FootnoteDescriptionMdSyntaxNode>
+@inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div id="md-footnote-@SyntaxNode.Identifier" class="flex flex-row py-2">
-    <div class="mr-2">@SyntaxNode.Identifier :</div>
-    <div class="grow">@RenderChildContent()</div>
+<div class="infini-bg-(--color-base-80)">
+    <hr class="border-(--border)"/>
+    @ChildContent
+    <hr class="border-(--border)"/>
 </div>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+}

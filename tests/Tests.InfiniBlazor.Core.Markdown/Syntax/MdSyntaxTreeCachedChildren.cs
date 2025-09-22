@@ -65,16 +65,16 @@ public class MdSyntaxTreeCachedChildrenTests {
     [Test]
     [MethodDataSource(nameof(GetCachedChildrenByTypeTestCases))]
     public async Task StoreCachedChildrenByType_ShouldCreateCorrectCache(MdSyntaxTree tree, Type cachedType, IMdSyntaxNode[] expectedChildren) {
-        // Arrange
-
-        // Act
-        IMdSyntaxNode[] cachedChildren = tree.GetCachedChildrenByType(cachedType).ToArray();
-
+        // Arrange & Act 
+        bool result = tree.TryGetCachedChildrenByType(cachedType, out IEnumerable<IMdSyntaxNode>? nodes);
+        IMdSyntaxNode[]? cachedChildren = nodes?.ToArray();
+        
         // Assert
+        await Assert.That(result).IsTrue();
         await Assert.That(cachedChildren).HasCount(expectedChildren.Length);
 
         for (int i = 0; i < expectedChildren.Length; i++) {
-            IMdSyntaxNode cached = cachedChildren[i];
+            IMdSyntaxNode cached = cachedChildren![i];
             IMdSyntaxNode expected = expectedChildren[i];
 
             await Assert.That(cached).IsSameReferenceAs(expected);

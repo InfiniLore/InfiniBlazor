@@ -1,8 +1,9 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Markdown;
+using System.Diagnostics.CodeAnalysis;
 
+namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -10,9 +11,9 @@ public interface IMdSyntaxTree : IDisposable, IEquatable<IMdSyntaxTree> {
     IMdSyntaxNode RootNode { get; }
     
     void ReturnToPool();
-    
-    IEnumerable<T> GetCachedChildrenByType<T>() where T : IMdSyntaxNode;
-    IEnumerable<IMdSyntaxNode> GetCachedChildrenByType(Type type);
+
+    bool TryGetCachedChildrenByType<T>([NotNullWhen(true)] out IEnumerable<T>? nodes) where T : IMdSyntaxNode;
+    bool TryGetCachedChildrenByType(Type type, [NotNullWhen(true)] out IEnumerable<IMdSyntaxNode>? nodes);
     void StoreChildAtCache<T>(T node) where T : IMdSyntaxNode;
     
     IEnumerable<IMdSyntaxNode> VisitTopLevelNodes();

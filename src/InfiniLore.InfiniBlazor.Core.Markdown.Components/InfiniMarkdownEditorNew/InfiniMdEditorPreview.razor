@@ -26,8 +26,12 @@
                 <CascadingValue Value="@TagLinkContext" IsFixed>
                     @ComponentConverter.RenderRootComponents(EditorContext.SyntaxTree.VisitTopLevelNodes())
                     
-                    @* TODO THIS NEEDS TO BE WRAPPED IN A CONTAINER *@
-                    @ComponentConverter.RenderRootComponents(EditorContext.SyntaxTree.GetCachedChildrenByType<FootnoteDescriptionMdSyntaxNode>())
+                    @if (EditorContext.SyntaxTree.TryGetCachedChildrenByType(out IEnumerable<FootnoteDescriptionMdSyntaxNode>? footnoteDescriptions)) {
+                        <InfiniMdEditorFootnoteDescriptionWrapper>
+                            @ComponentConverter.RenderRootComponentsWithSkipped(footnoteDescriptions)
+                        </InfiniMdEditorFootnoteDescriptionWrapper>
+                    }
+                    
                 </CascadingValue>
             </CascadingIsDisabled>
 

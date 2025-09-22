@@ -7,6 +7,7 @@ using Microsoft.Extensions.ObjectPool;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
@@ -37,16 +38,25 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region CachedChildrenReferences
-    public IEnumerable<T> GetCachedChildrenByType<T>() where T : IMdSyntaxNode => GetCachedChildrenByType(typeof(T)).Cast<T>();
-
-    public IEnumerable<IMdSyntaxNode> GetCachedChildrenByType(Type type) {
+    public bool TryGetCachedChildrenByType<T>([NotNullWhen(true)] out IEnumerable<T>? nodes) where T : IMdSyntaxNode {
+        if (!TryGetCachedChildrenByType(typeof(T), out IEnumerable<IMdSyntaxNode>? childNodes)) {
+            nodes = null;
+            return false;
+        }
+        
+        nodes = childNodes.Cast<T>();
+        return true;
+    }
+    public bool TryGetCachedChildrenByType(Type type, [NotNullWhen(true)] out IEnumerable<IMdSyntaxNode>? nodes) {
+        nodes = null;
         if (!type.IsAssignableTo(typeof(IMdSyntaxNode)) 
-            || !CachedChildrenByType.TryGetValue(type, out List<int[]>? children)) return Enumerable.Empty<IMdSyntaxNode>();
+            || !CachedChildrenByType.TryGetValue(type, out List<int[]>? children)) return false;
 
-        return children.Select(
+        nodes = children.Select(
         childIndexLocation => childIndexLocation
             .Aggregate(RootNode, (current, i) => current.GetChildAt(i))
         );
+        return children.Count > 0;
     }
 
     public void StoreChildAtCache<T>(T node) where T : IMdSyntaxNode {
