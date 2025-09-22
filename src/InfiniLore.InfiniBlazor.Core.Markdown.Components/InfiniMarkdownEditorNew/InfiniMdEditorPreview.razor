@@ -3,6 +3,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Components.Tags
 @using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
+@using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
 
 @namespace InfiniLore.InfiniBlazor.Markdown
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -24,8 +25,13 @@
             <CascadingIsDisabled Value="EditorContext.IsNotInteractive()">
                 <CascadingValue Value="@TagLinkContext" IsFixed>
                     @ComponentConverter.RenderRootComponents(EditorContext.SyntaxTree.VisitTopLevelNodes())
+                    
+                    @* TODO THIS NEEDS TO BE WRAPPED IN A CONTAINER *@
+                    @ComponentConverter.RenderRootComponents(EditorContext.SyntaxTree.GetCachedChildrenByType<FootnoteDescriptionMdSyntaxNode>())
                 </CascadingValue>
             </CascadingIsDisabled>
+
+            
         }
         else {
             @* Alaways override IsDisabled and dont use the CascadingValue*@

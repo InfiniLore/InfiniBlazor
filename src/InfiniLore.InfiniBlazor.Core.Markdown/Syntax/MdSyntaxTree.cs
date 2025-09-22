@@ -37,7 +37,7 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region CachedChildrenReferences
-    public IEnumerable<IMdSyntaxNode> GetCachedChildrenByType<T>() where T : IMdSyntaxNode => GetCachedChildrenByType(typeof(T));
+    public IEnumerable<T> GetCachedChildrenByType<T>() where T : IMdSyntaxNode => GetCachedChildrenByType(typeof(T)).Cast<T>();
 
     public IEnumerable<IMdSyntaxNode> GetCachedChildrenByType(Type type) {
         if (!type.IsAssignableTo(typeof(IMdSyntaxNode)) 
