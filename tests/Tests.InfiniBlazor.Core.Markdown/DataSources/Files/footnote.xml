@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="footnote.xml">
+    <MdString>test [^1]</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">test </TextMdSyntaxNode>
+        <FootnoteReferenceMdSyntaxNode Identifier="1" />
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>test [^1]</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="default_withDescription" FileName="footnote.xml">
+    <MdString>test [^1]
+
+[^1] : content</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">test </TextMdSyntaxNode>
+        <FootnoteReferenceMdSyntaxNode Identifier="1" />
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <FootnoteDescriptionMdSyntaxNode Identifier="1">
+        <ParagraphMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">content</TextMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+      </FootnoteDescriptionMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;content&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>test [^1]
+
+[^1] : content</ExpectedMarkdownString>
+  </MdTestData>
+</ArrayOfMdTestData>
