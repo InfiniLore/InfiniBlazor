@@ -3,6 +3,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Components.Tags
 @using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
+@using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
 
 @namespace InfiniLore.InfiniBlazor.Markdown
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -17,13 +18,19 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 <div class="@Class border-(--border) flex min-h-0">
     <div class="flex-1 overflow-y-auto infini-scrollbar">
         @if (!VisualDebugger.IsEnabled()) {
             <CascadingIsDisabled Value="EditorContext.IsNotInteractive()">
                 <CascadingValue Value="@TagLinkContext" IsFixed>
                     @ComponentConverter.RenderRootComponents(EditorContext.SyntaxTree.VisitTopLevelNodes())
+                    
+                    @if (EditorContext.SyntaxTree.TryGetCachedChildrenByType(out IEnumerable<FootnoteDescriptionMdSyntaxNode>? footnoteDescriptions)) {
+                        <InfiniMdEditorFootnoteDescriptionWrapper>
+                            @ComponentConverter.RenderRootComponentsWithSkipped(footnoteDescriptions)
+                        </InfiniMdEditorFootnoteDescriptionWrapper>
+                    }
+                    
                 </CascadingValue>
             </CascadingIsDisabled>
         }

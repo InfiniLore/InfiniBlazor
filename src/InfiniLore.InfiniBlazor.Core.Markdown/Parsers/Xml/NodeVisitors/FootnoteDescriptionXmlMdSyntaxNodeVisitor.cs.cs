@@ -8,18 +8,20 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class EscapedCharacterXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<EscapedCharacterMdSyntaxNode> {
+public sealed class FootnoteDescriptionXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<FootnoteDescriptionMdSyntaxNode> {
+    private const string Identifier = nameof(FootnoteDescriptionMdSyntaxNode.Identifier);
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override void DeserializeDetails(EscapedCharacterMdSyntaxNode node, XElement targetElement) {
+    protected override void DeserializeDetails(FootnoteDescriptionMdSyntaxNode node, XElement targetElement) {
         base.DeserializeDetails(node, targetElement);
-        AddXmlPreserveSpace(targetElement);
-        targetElement.Value = node.Content.ToString();
+        targetElement.SetAttributeValue(Identifier, node.Identifier);
     }
 
-    protected override void SerializeDetails(IMdSyntaxTree tree, XElement element, EscapedCharacterMdSyntaxNode targetNode) {
+    protected override void SerializeDetails(IMdSyntaxTree tree, XElement element, FootnoteDescriptionMdSyntaxNode targetNode) {
         base.SerializeDetails(tree, element, targetNode);
-        targetNode.WithContent(element.Value.ElementAtOrDefault(0));
+        targetNode.WithIdentifier(element.Attribute(Identifier)?.Value ?? string.Empty);
+        tree.StoreChildAtCache(targetNode);
     }
 }

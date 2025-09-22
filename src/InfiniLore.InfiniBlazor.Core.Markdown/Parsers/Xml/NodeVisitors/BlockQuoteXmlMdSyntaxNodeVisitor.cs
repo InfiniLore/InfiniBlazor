@@ -19,8 +19,8 @@ public sealed class BlockQuoteXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Bl
         targetElement.SetAttributeValue(LeadingSpaces, node.LeadingSpaces);
     }
 
-    protected override void SerializeDetails(XElement element, BlockQuoteMdSyntaxNode targetNode) {
-        base.SerializeDetails(element, targetNode);
+    protected override void SerializeDetails(IMdSyntaxTree tree, XElement element, BlockQuoteMdSyntaxNode targetNode) {
+        base.SerializeDetails(tree, element, targetNode);
         targetNode.WithLeadingSpaces(int.Parse(element.Attribute(LeadingSpaces)?.Value ?? "0"));
     }
 }

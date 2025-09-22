@@ -18,8 +18,8 @@ public sealed class WikiLinkXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Wiki
         targetElement.Value = node.Content;
     }
 
-    protected override void SerializeDetails(XElement element, WikiLinkMdSyntaxNode targetNode) {
-        base.SerializeDetails(element, targetNode);
+    protected override void SerializeDetails(IMdSyntaxTree tree, XElement element, WikiLinkMdSyntaxNode targetNode) {
+        base.SerializeDetails(tree, element, targetNode);
         targetNode.WithContent(element.Value);
     }
 }

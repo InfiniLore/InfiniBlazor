@@ -20,8 +20,8 @@ public sealed class HtmlSpanXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Html
         targetElement.SetAttributeValue(Attributes, node.Attributes);
     }
 
-    protected override void SerializeDetails(XElement element, HtmlSpanMdSyntaxNode targetNode) {
-        base.SerializeDetails(element, targetNode);
+    protected override void SerializeDetails(IMdSyntaxTree tree, XElement element, HtmlSpanMdSyntaxNode targetNode) {
+        base.SerializeDetails(tree, element, targetNode);
         targetNode.WithAttributes(element.Attribute(Attributes)?.Value ?? string.Empty);
     }
 }

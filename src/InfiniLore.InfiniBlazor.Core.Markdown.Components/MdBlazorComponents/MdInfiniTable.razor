@@ -28,8 +28,9 @@
         @{ ReadOnlySpan<IMdSyntaxNode> nodes = rowNode.GetChildrenSpan(); }
         @for (int index = 0; index < nodes.Length; index++) {
             IMdSyntaxNode node = nodes[index];
-            <InfiniTableCell
-                Alignment="@GetAlignment(index)">@ComponentConverter.RenderChildComponents(node)</InfiniTableCell>
+            <InfiniTableCell Alignment="@GetAlignment(index)">
+                @ComponentConverter.RenderChildComponents(node)
+            </InfiniTableCell>
         }
     </Content>
 </InfiniTable>
@@ -37,9 +38,11 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     private Alignment GetAlignment(int columnIndex) {
         if (!SyntaxNode.HasAlignments) return Alignment.Left;
+
         return SyntaxNode.Alignments[columnIndex] switch {
             TableMdSyntaxNode.Alignment.Left => Alignment.Left,
             TableMdSyntaxNode.Alignment.Center => Alignment.Center,

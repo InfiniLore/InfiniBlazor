@@ -1,25 +1,29 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.NodeSerializers;
+using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
-using System.Xml.Linq;
+using System.Text.RegularExpressions;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed class EscapedCharacterXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<EscapedCharacterMdSyntaxNode> {
+public static class FootnoteReferenceSyntaxNodeSerializer {
+    private static readonly int FootnoteIdentifierId = MdRegexLib.GetGroupId(MdRegexGroupNames.FootnoteReferenceIdentifier);
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override void DeserializeDetails(EscapedCharacterMdSyntaxNode node, XElement targetElement) {
-        base.DeserializeDetails(node, targetElement);
-        AddXmlPreserveSpace(targetElement);
-        targetElement.Value = node.Content.ToString();
-    }
-
-    protected override void SerializeDetails(IMdSyntaxTree tree, XElement element, EscapedCharacterMdSyntaxNode targetNode) {
-        base.SerializeDetails(tree, element, targetNode);
-        targetNode.WithContent(element.Value.ElementAtOrDefault(0));
+    public static void Serialize(
+        IMdSyntaxFragmentStack stack,
+        IMdSyntaxNode parentNode,
+        Match match
+    ) {
+        if (match.Groups[FootnoteIdentifierId] is not {Success: true, Value: var footnoteId}) return ;
+        
+        FootnoteReferenceMdSyntaxNode node = FootnoteReferenceMdSyntaxNode.Pool.Get();
+        node.WithIdentifier(footnoteId);
+        parentNode.AddChildNode(node);
     }
 }

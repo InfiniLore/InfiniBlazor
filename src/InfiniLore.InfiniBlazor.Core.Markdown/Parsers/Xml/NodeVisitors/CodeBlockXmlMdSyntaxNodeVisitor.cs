@@ -21,8 +21,8 @@ public sealed class CodeBlockXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Cod
         targetElement.Value = node.Content;
     }
 
-    protected override void SerializeDetails(XElement element, CodeBlockMdSyntaxNode targetNode) {
-        base.SerializeDetails(element, targetNode);
+    protected override void SerializeDetails(IMdSyntaxTree tree, XElement element, CodeBlockMdSyntaxNode targetNode) {
+        base.SerializeDetails(tree, element, targetNode);
         targetNode.WithLanguage(element.Attribute(Language)?.Value ?? string.Empty);
         targetNode.WithContent(element.Value);
     }

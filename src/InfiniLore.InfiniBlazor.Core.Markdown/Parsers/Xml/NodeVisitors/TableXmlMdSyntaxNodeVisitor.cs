@@ -30,8 +30,8 @@ public sealed class TableXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<TableMd
         }
     }
 
-    protected override void SerializeDetails(XElement element, TableMdSyntaxNode targetNode) {
-        base.SerializeDetails(element, targetNode);
+    protected override void SerializeDetails(IMdSyntaxTree tree, XElement element, TableMdSyntaxNode targetNode) {
+        base.SerializeDetails(tree, element, targetNode);
         
         // ReSharper disable once InvertIf
         if (element.Element(Alignments) is {} alignmentsElement) {

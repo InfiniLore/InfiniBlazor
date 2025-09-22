@@ -12,9 +12,18 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<p class="@(SyntaxNode.Parent is CalloutBodyMdSyntaxNode ? "my-2" : "my-4") leading-relaxed">
+<p class="@GetMarginCss() leading-relaxed">
     @RenderChildContent()
 </p>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    private string GetMarginCss() {
+        return SyntaxNode.Parent switch {
+            CalloutBodyMdSyntaxNode => "my-2",
+            FootnoteDescriptionMdSyntaxNode when SyntaxNode.GetIndexAtParent() is 0 => string.Empty,
+            _ => "my-4"
+        };
+    }
+}

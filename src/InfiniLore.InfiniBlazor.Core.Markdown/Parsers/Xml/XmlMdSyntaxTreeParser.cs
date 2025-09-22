@@ -66,6 +66,8 @@ public class XmlMdSyntaxTreeParser : IXmlMdSyntaxTreeParser {
         RegisterVisitor<UserMdSyntaxNode, UserXmlMdSyntaxNodeVisitor>();
         RegisterVisitor<WikiLinkMdSyntaxNode, WikiLinkXmlMdSyntaxNodeVisitor>();
         RegisterVisitor<TemplateMdSyntaxNode, TemplateXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<FootnoteReferenceMdSyntaxNode, FootnoteReferenceXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<FootnoteDescriptionMdSyntaxNode, FootnoteDescriptionXmlMdSyntaxNodeVisitor>();
     }
 
     private void RegisterVisitor<TNode, TVisitor>() where TNode : MdSyntaxNode<TNode>, new() where TVisitor : XmlMdSyntaxNodeVisitor<TNode>, new() {
@@ -131,7 +133,7 @@ public class XmlMdSyntaxTreeParser : IXmlMdSyntaxTreeParser {
         MdSyntaxTree tree = new();
 
         foreach (XElement child in element.Elements()) {
-            SerializeNode(child, tree.RootNode);
+            SerializeNode(tree, child, tree.RootNode);
         }
 
         return tree;
@@ -155,15 +157,15 @@ public class XmlMdSyntaxTreeParser : IXmlMdSyntaxTreeParser {
         return await SerializeToSyntaxTreeAsync(fileStream, ct);
     }
 
-    private void SerializeNode(XElement element, IMdSyntaxNode parentNode) {
+    private void SerializeNode(IMdSyntaxTree tree, XElement element, IMdSyntaxNode parentNode) {
         if (element.Name.LocalName.IsNotNullOrWhiteSpace()
             && _nodeTypes.TryGetValue(element.Name.LocalName, out Type? nodeType)
             && _visitors.TryGetValue(nodeType, out IXmlMdSyntaxNodeVisitor? visitor)) {
-            parentNode = visitor.SerializeToNode(element, parentNode);
+            parentNode = visitor.SerializeToNode(tree, element, parentNode);
         }
 
         foreach (XElement child in element.Elements()) {
-            SerializeNode(child, parentNode);
+            SerializeNode(tree, child, parentNode);
         }
     }
     #endregion

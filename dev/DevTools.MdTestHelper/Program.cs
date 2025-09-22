@@ -7,6 +7,8 @@ using System.Diagnostics.CodeAnalysis;
 using Tests.InfiniBlazor.Shared.Markdown;
 
 namespace DevTools.MdTestHelper;
+using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -24,6 +26,8 @@ public class Program {
 
         builder.Services.AddInfiniBlazor(config => {
             config.Components.SetRenderMode(RenderMode.InteractiveServer);
+            config.Markdown.RenderUnknownBlazorComponents = true;
+            config.Markdown.SkipBlazorRenderingOnComponent<NewLineMdSyntaxNode>();
         });
 
         builder.Services.RegisterServicesFromDevToolsMdTestHelper();

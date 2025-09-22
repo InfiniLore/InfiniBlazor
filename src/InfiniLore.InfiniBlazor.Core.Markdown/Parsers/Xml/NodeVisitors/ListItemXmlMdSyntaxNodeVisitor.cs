@@ -26,8 +26,8 @@ public sealed class ListItemXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<List
         targetElement.SetAttributeValue(CheckLeadingSpaces, node.CheckLeadingSpaces);
     }
 
-    protected override void SerializeDetails(XElement element, ListItemMdSyntaxNode targetNode) {
-        base.SerializeDetails(element, targetNode);
+    protected override void SerializeDetails(IMdSyntaxTree tree, XElement element, ListItemMdSyntaxNode targetNode) {
+        base.SerializeDetails(tree, element, targetNode);
         targetNode.WithCheckMarker(element.Attribute(CheckMarker)?.Value ?? string.Empty);
         targetNode.WithIndex(element.Attribute(Index)?.Value ?? string.Empty);
         targetNode.WithLeadingSpaces(int.Parse(element.Attribute(LeadingSpaces)?.Value ?? "0"));

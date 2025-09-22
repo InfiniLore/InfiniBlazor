@@ -13,6 +13,7 @@
 @inject IToastingProvider ToastingProvider
 @inject MdTestDataProvider MdTestDataProvider
 
+@implements IDisposable
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -50,20 +51,14 @@
         <div class="h-full w-full flex flex-col gap-1">
             <InfiniHeading4 Class="min-h-6">Markdown Input</InfiniHeading4>
 
-            <InfiniTextAreaInput
-                @bind-Value="@MdString"
-                OnInput="@(async () => {
-                             if (!FreezeAutoUpdates) await OnGenerateAsync();
-                         })"
-                Rows="22"
-                Class="font-mono"/>
+            <InfiniMarkdownEditorNew @bind-EditorContext="Context"/>
 
             <InfiniSpacer/>
             <div class="w-full flex justify-center items-center h-16">
                 <InfiniToggleInput Label="Freeze Auto Updates" @bind-Value="FreezeAutoUpdates"/>
                 @if (FreezeAutoUpdates) {
                     <InfiniSpacerHorizontal Spacing="Size.M"/>
-                    <InfiniButton OnClick="@OnGenerateAsync">Generate Outputs
+                    <InfiniButton OnClick="@(async _ => await OnGenerateAsync())">Generate Outputs
                     </InfiniButton>
                 }
             </div>
@@ -95,11 +90,15 @@
                     <InfiniToggleInput
                         Label="Skip test on whitespace mismatch"
                         @bind-Value="@SkipOnWhitespaceMisMatch"
-                        />
+                    />
+                </InfiniTabContent>
+
+                <InfiniTabContent TabName="Blazor">
+                    <InfiniMdEditorStandalonePreview @bind-EditorContext="@Context"/>
                 </InfiniTabContent>
             </InfiniTabContainer>
 
-            @if (ExpectedMarkdownString.IsNotNullOrWhiteSpace() && !string.Equals(MdString, ExpectedMarkdownString)) {
+            @if (ExpectedMarkdownString.IsNotNullOrWhiteSpace() && !string.Equals(Context.Content, ExpectedMarkdownString)) {
                 <div class="text-red-500 text-center">
                     Markdown does not match expected output.
                     This often means an underlying issue with the markdown parser.
@@ -117,10 +116,8 @@
     [Parameter] public string FileName { get; set; } = string.Empty;
     [Parameter] public string TestId { get; set; } = string.Empty;
     [Parameter] public EventCallback OnSave { get; set; }
-    
-    public string? DeveloperNote { get; set; } = string.Empty;
 
-    private string MdString { get; set; } = string.Empty;
+    public string? DeveloperNote { get; set; } = string.Empty;
 
     private MdTestData? TestDataOrigin { get; set; }
 
@@ -130,35 +127,46 @@
     private bool SkipOnWhitespaceMisMatch { get; set; }
 
     public bool FreezeAutoUpdates { get; set; }
+
+    public MdEditorContext Context = new MdEditorContext {
+        IsInteractive = false,
+        ShowInput = true,
+        ShowPreview = false,
+    };
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    protected override void OnInitialized() {
+        base.OnInitialized();
+
+        Context.OnSyntaxTreeChangedAsync += OnGenerateAsync;
+    }
+    
+    public void Dispose() {
+        Context.OnSyntaxTreeChangedAsync -= OnGenerateAsync;
+    }
+
     public async Task LoadTestData(string fileName, string testId) {
         FileName = fileName;
         TestId = testId;
-        
+
         if (!FileName.IsNullOrWhiteSpace() && !TestId.IsNullOrWhiteSpace()) {
             await OnFetchAsync();
         }
     }
 
     private async Task OnGenerateAsync() {
-        IMdSyntaxTree tree = MarkdownParser.MarkdownString.SerializeToSyntaxTree(MdString);
-
         await Task.WhenAll(
-            GenerateXmlString(tree),
-            GenerateSimpleHtmlString(tree),
-            GenerateMarkdownString(tree)
+            GenerateXmlString(),
+            GenerateSimpleHtmlString(),
+            GenerateMarkdownString()
         );
-
-        await GenerateXmlString(tree);
-
-
-        await InvokeAsync(StateHasChanged);
     }
 
-    private async Task GenerateXmlString(IMdSyntaxTree tree) {
-        using MemoryStream memoryStream = new();
+    private async Task GenerateXmlString() {
+        IMdSyntaxTree tree = Context.SyntaxTree;
+        using var memoryStream = new MemoryStream();
         await MarkdownParser.Xml.DeserializeToXmlStreamAsync(memoryStream, tree);
 
         memoryStream.Position = 0;
@@ -166,12 +174,14 @@
         ExpectedSyntaxTreeString = result;
     }
 
-    private Task GenerateSimpleHtmlString(IMdSyntaxTree tree) {
+    private Task GenerateSimpleHtmlString() {
+        IMdSyntaxTree tree = Context.SyntaxTree;
         ExpectedHtmlStringSimplified = MarkdownParser.HtmlString.DeserializeToString(tree);
         return Task.CompletedTask;
     }
 
-    private Task GenerateMarkdownString(IMdSyntaxTree tree) {
+    private Task GenerateMarkdownString() {
+        IMdSyntaxTree tree = Context.SyntaxTree;
         ExpectedMarkdownString = MarkdownParser.MarkdownString.DeserializeToString(tree);
         return Task.CompletedTask;
     }
@@ -196,10 +206,10 @@
         TestId = testData.Id;
         DeveloperNote = testData.DeveloperNote;
 
-        MdString = testData.MdString;
+        Context.Content = testData.MdString;
 
         if (testData.MdSyntaxTree is {} tree) {
-            using MemoryStream memoryStream = new();
+            using MemoryStream memoryStream = new MemoryStream();
             await MarkdownParser.Xml.DeserializeToXmlStreamAsync(memoryStream, tree);
 
             memoryStream.Position = 0;
@@ -211,6 +221,8 @@
         SkipOnWhitespaceMisMatch = testData.ExpectedMarkdownStringSkipOnWhitespaceMisMatch;
 
         TestDataOrigin = testData;
+
+        await InvokeAsync(StateHasChanged);
     }
 
     private async Task OnSaveAsync() {
@@ -224,8 +236,8 @@
             FileName = FileName,
             Id = TestId,
             DeveloperNote = DeveloperNote,
-            MdString = MdString,
-            MdSyntaxTree = MarkdownParser.MarkdownString.SerializeToSyntaxTree(MdString),
+            MdString = Context.Content,
+            MdSyntaxTree = Context.SyntaxTree,
             ExpectedHtmlStringSimplified = ExpectedHtmlStringSimplified,
             ExpectedMarkdownString = ExpectedMarkdownString,
             ExpectedMarkdownStringSkipOnWhitespaceMisMatch = SkipOnWhitespaceMisMatch
@@ -238,10 +250,10 @@
         }
 
         await ToastingProvider.PublishToastAsync(
-            new ToastingData("Test was saved", TestId),
-            ToastAppearance.Success
+        new ToastingData("Test was saved", TestId),
+        ToastAppearance.Success
         );
-        
+
         // Notify parent component about the rename
         await OnSave.InvokeAsync();
     }
@@ -257,17 +269,17 @@
         FileName = string.Empty;
         TestId = string.Empty;
         DeveloperNote = string.Empty;
-        MdString = string.Empty;
+        Context.Content = string.Empty;
         ExpectedHtmlStringSimplified = string.Empty;
         ExpectedMarkdownString = string.Empty;
         ExpectedSyntaxTreeString = string.Empty;
         TestDataOrigin = null;
 
         await ToastingProvider.PublishToastAsync(
-            new ToastingData("Test was Deleted", TestId),
-            ToastAppearance.Success
+        new ToastingData("Test was Deleted", TestId),
+        ToastAppearance.Success
         );
-        
+
         // Notify parent component about the rename
         await OnSave.InvokeAsync();
     }
@@ -286,13 +298,13 @@
         }
 
         await ToastingProvider.PublishToastAsync(
-            new ToastingData("Test was Renamed", TestId),
-            ToastAppearance.Success
+        new ToastingData("Test was Renamed", TestId),
+        ToastAppearance.Success
         );
 
         // Re-fetch data
         await OnFetchAsync();
-        
+
         // Notify parent component about the rename
         await OnSave.InvokeAsync();
     }
@@ -301,16 +313,15 @@
         FileName = string.Empty;
         TestId = string.Empty;
         DeveloperNote = string.Empty;
-        MdString = string.Empty;
+        Context.Content = string.Empty;
         ExpectedHtmlStringSimplified = string.Empty;
         ExpectedMarkdownString = string.Empty;
         ExpectedSyntaxTreeString = string.Empty;
         TestDataOrigin = null;
 
         await ToastingProvider.PublishToastAsync(
-            new ToastingData("Test Cleared"),
-            ToastAppearance.Info
+        new ToastingData("Test Cleared"),
+        ToastAppearance.Info
         );
     }
-
 }

@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.Nod
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class EmoteSyntaxNodeSerializer  {
+public static class EmoteSyntaxNodeSerializer {
     private static readonly int EmoteBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.EmoteContent);
     private static readonly int EmoteId = MdRegexLib.GetGroupId(MdRegexGroupNames.Emote);
     

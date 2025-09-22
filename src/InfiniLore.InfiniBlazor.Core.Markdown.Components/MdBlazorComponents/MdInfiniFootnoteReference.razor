@@ -1,35 +1,27 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor
-@using InfiniLore.InfiniBlazor.Theming
+@using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
+@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
+
+@namespace InfiniLore.InfiniBlazor.Markdown.MdBlazorComponents
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits LayoutComponentBase
+@inherits InfiniBlazorMdComponentBase<FootnoteReferenceMdSyntaxNode>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniThemeManager/>
-<InfiniDialogManager/>
-
-<InfiniLayout Layout="NavLayout.LeftPrimary">
-    <Left>
-        <LayoutNavBarLeft/>
-    </Left>
-    
-    <Body>
-    <InfiniToastManager/>
-    @Body
-    </Body>
-</InfiniLayout>
-
-<div id="blazor-error-ui" class="hidden fixed bottom-0 left-0 w-full bg-yellow-100 shadow-md p-3 pl-5 @ZIndex.BlazorError">
-    An unhandled error has occurred.
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss cursor-pointer absolute right-3 top-2">🗙</a>
-</div>
-
+<sup>
+    <a 
+        href="#md-footnote-@SyntaxNode.Identifier" 
+        class="cursor-pointer text-(--color-accent) hover:text-(--color-accent-light) hover:underline"
+        onclick="event.preventDefault(); document.getElementById('md-footnote-@SyntaxNode.Identifier')?.scrollIntoView({ behavior: 'smooth' });">
+        @SyntaxNode.Identifier
+    </a>
+</sup>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+}

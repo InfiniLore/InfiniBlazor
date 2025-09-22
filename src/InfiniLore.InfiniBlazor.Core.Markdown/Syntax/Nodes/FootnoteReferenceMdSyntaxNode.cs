@@ -1,14 +1,21 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Xml.Linq;
-
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
+namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IXmlMdSyntaxNodeVisitor {
-    XElement DeserializeToXml(IMdSyntaxNode node, XElement parentElement);
-    IMdSyntaxNode SerializeToNode(IMdSyntaxTree tree, XElement element, IMdSyntaxNode parentNode);
+public sealed class FootnoteReferenceMdSyntaxNode() : MdSyntaxNode<FootnoteReferenceMdSyntaxNode>(initialChildCount: 0) {
+    public string Identifier { get; private set; } = string.Empty;
+    
+    public void WithIdentifier(string identifier) {
+        Identifier = identifier;   
+    }
+    
+    public override bool TryReset() {
+        if (!base.TryReset()) return false;
+        Identifier = string.Empty;
+        return true;   
+    }
 }
