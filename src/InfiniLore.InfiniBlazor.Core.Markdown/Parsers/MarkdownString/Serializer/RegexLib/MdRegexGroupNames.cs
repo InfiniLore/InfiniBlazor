@@ -23,6 +23,11 @@ public static class MdRegexGroupNames {
     public const string CodeInlineContent = "c";
     public const string Emote = "emote";
     public const string EmoteContent = "e";
+    public const string FootnoteDescription = "footnoteDesc";
+    public const string FootnoteDescriptionBody = "fdBody";
+    public const string FootnoteDescriptionIdentifier = "fdId";
+    public const string FootnoteReference = "footnoteRef";
+    public const string FootnoteReferenceIdentifier = "frId";
     public const string NewLine = "newLine";
     public const string Escaped = "escaped";
     public const string Heading = "heading";

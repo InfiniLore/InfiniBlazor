@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor;
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdRenderContext {
     public event Func<IMdSyntaxNode, Task>? OnSyntaxNodeChanged;
-    public static MdRenderContext Empty { get; set; } = new();
+    public static MdRenderContext Empty { get; set; } = new MdRenderContext();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

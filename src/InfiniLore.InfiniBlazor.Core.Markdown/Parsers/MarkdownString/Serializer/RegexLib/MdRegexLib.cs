@@ -32,9 +32,10 @@ public static partial class MdRegexLib {
           )
         | (?<tag>\#(?<tText>[\p{L}\p{N}\-_\/\.]+))
         | (?<user>\@(?<uName>[\p{L}\p{N}\-_\/\.]+))
+        | (?<footnoteRef>\[\^(?<frId>[\d\p{L}\p{N}]+)\])
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex SinglelineStructuresRegex { get; }
-
+    
     [GeneratedRegex("""
           (?<heading>^(?<hLevel>\#{1,6})[\ ]+(?<hText>[^\n]+)$)
         | (?<codeBlock>`{3}(?<cLang>.*?)?\n(?<cBody>[\s\S]*?)`{3})
@@ -53,6 +54,10 @@ public static partial class MdRegexLib {
             (?:\n(?<clBody>>[^\n]*(?:\n>[^\n]*)*)$)?  
           )
         | (?<blockQuote>^>\ *(?<bqBody>.+(?:\n>[^\n]*)*)$)  
+        | (?<footnoteDesc> 
+            ^\[\^(?<fdId>[\d\p{L}\p{N}]+)\]\ ?:\ ?(?<fdBody>.+
+            (?:\n(?!\[)(?:.+))*)
+        )
         | (?:
             (?<htmlPre>.+?)?
               (?<htmlBody>

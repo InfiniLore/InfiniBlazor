@@ -43,6 +43,8 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
         [MdRegexGroupNames.User] = UserSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.WikiLink] = WikiLinkSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.Template] = TemplateSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.FootnoteReference] = FootnoteReferenceSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.FootnoteDescription] = FootnoteDescriptionSyntaxNodeSerializer.Serialize,
     }.ToFrozenDictionary();
     
     // -----------------------------------------------------------------------------------------------------------------
