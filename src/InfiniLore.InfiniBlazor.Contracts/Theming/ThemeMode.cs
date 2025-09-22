@@ -15,7 +15,7 @@ public readonly record struct ThemeMode(
     public const string MutedModeName = "muted-mode";
     public const string OledModeName = "oled-mode";
     
-    public static ThemeMode Empty => default;
+    public static ThemeMode Empty { get; } = new ThemeMode(string.Empty, ThemeModeVariants.Undefined);
 
     public static ThemeMode LightMode { get; } = new(LigtModeName, ThemeModeVariants.Light);
     public static ThemeMode DarkMode { get; } = new(DarkModeName, ThemeModeVariants.Dark);
