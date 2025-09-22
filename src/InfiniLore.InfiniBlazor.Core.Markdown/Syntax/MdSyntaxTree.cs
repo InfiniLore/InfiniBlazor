@@ -6,6 +6,8 @@ using InfiniLore.InfiniBlazor.Pooling;
 using Microsoft.Extensions.ObjectPool;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
+using System.Collections.Concurrent;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -27,11 +29,48 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     private static ObjectPool<Stack<IMdSyntaxNode>> MdSyntaxNodeStackPool { get; } = PoolingHelpers.CreateStackPool<IMdSyntaxNode>(PoolingHelpers.ParsersRetained);
 
     private bool IsInitialized => LazyRootNode.IsValueCreated;
-    public static IMdSyntaxTree Empty { get; set; } = new MdSyntaxTree();
+    public static IMdSyntaxTree Empty => new MdSyntaxTree();
+
+    private ConcurrentDictionary<Type, List<int[]>> CachedChildrenByType { get; } = new ConcurrentDictionary<Type, List<int[]>>();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    #region CachedChildrenReferences
+    public IEnumerable<IMdSyntaxNode> GetCachedChildrenByType<T>() where T : IMdSyntaxNode {
+        Type type = typeof(T);
+        if (!CachedChildrenByType.TryGetValue(type, out List<int[]>? children)) return Enumerable.Empty<IMdSyntaxNode>();
+
+        return children.Select(
+            childIndexLocation => childIndexLocation
+                .Aggregate(RootNode, (current, i) => current.GetChildAt(i))
+        );
+    }
+    
+    public IEnumerable<IMdSyntaxNode> GetCachedChildrenByType(Type type) {
+        if (!type.IsAssignableTo(typeof(IMdSyntaxNode)) 
+            || !CachedChildrenByType.TryGetValue(type, out List<int[]>? children)) return Enumerable.Empty<IMdSyntaxNode>();
+
+        return children.Select(
+        childIndexLocation => childIndexLocation
+            .Aggregate(RootNode, (current, i) => current.GetChildAt(i))
+        );
+    }
+
+    public void StoreCachedChildrenByType<T>(T node) where T : IMdSyntaxNode {
+        List<int[]> list = CachedChildrenByType.GetOrAdd(typeof(T), new List<int[]>());
+        
+        int[] array = new int[node.Depth];
+        IMdSyntaxNode? parent = node;
+        for (int i = array.Length - 1; i >= 0; i--) {
+            if (parent is null) break;
+            array[i] = parent.GetIndexAtParent();
+            parent = parent.Parent;
+        }
+        list.Add(array);
+    }
+    #endregion
+
     #region Visit Nodes
     // ReSharper disable once ConvertIfStatementToReturnStatement
     public IEnumerable<IMdSyntaxNode> VisitTopLevelNodes() {
@@ -159,7 +198,7 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
         return count;
     }
     #endregion
-
+    
     public void ReturnToPool() {
         Pool.Return(this);
     }
@@ -167,6 +206,10 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     public bool TryReset() {
         if (!IsInitialized) return true;// Nothing to reset
         if (RootNode is not RootMdSyntaxNode rootNode) return false;// Cannot reset a non-root node
+
+        foreach (KeyValuePair<Type, List<int[]>> keyValuePair in CachedChildrenByType) {
+            keyValuePair.Value.Clear();
+        }
 
         // Using depth-first traversal with a single stack
         Stack<IMdSyntaxNode> stack = MdSyntaxNodeStackPool.Get();
@@ -213,12 +256,12 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
 
     public override int GetHashCode()
         => HashCode.Combine(RootNode);
-    
+
     public override bool Equals(object? obj)
         => obj is MdSyntaxTree casted
             && Equals(casted);
-    
-    public bool Equals(IMdSyntaxTree? other) 
-        => other is not null 
+
+    public bool Equals(IMdSyntaxTree? other)
+        => other is not null
             && RootNode.Equals(other.RootNode);
 }
