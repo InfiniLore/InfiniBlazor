@@ -33,4 +33,122 @@
 
 [^1] : content</ExpectedMarkdownString>
   </MdTestData>
+  <MdTestData Id="description_withBold" FileName="footnote.xml">
+    <MdString>test [^1]
+
+[^1] : some **content** in description
+</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">test </TextMdSyntaxNode>
+        <FootnoteReferenceMdSyntaxNode Identifier="1" />
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <FootnoteDescriptionMdSyntaxNode Identifier="1">
+        <ParagraphMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">some </TextMdSyntaxNode>
+          <BoldMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">content</TextMdSyntaxNode>
+          </BoldMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve"> in description</TextMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+      </FootnoteDescriptionMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;some &lt;strong&gt;content&lt;/strong&gt; in description&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>test [^1]
+
+[^1] : some **content** in description
+</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="description_withMultipleParagraphs" FileName="footnote.xml">
+    <MdString>test [^1]
+
+[^1] : paragraph 1
+paragraph 2
+paragraph 3
+
+Unrelated paragraph</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">test </TextMdSyntaxNode>
+        <FootnoteReferenceMdSyntaxNode Identifier="1" />
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <FootnoteDescriptionMdSyntaxNode Identifier="1">
+        <ParagraphMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">paragraph 1</TextMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+        <NewLineMdSyntaxNode />
+        <ParagraphMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">paragraph 2</TextMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+        <NewLineMdSyntaxNode />
+        <ParagraphMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">paragraph 3</TextMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+      </FootnoteDescriptionMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Unrelated paragraph</TextMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;paragraph 1&lt;/p&gt;&lt;p&gt;paragraph 2&lt;/p&gt;&lt;p&gt;paragraph 3&lt;/p&gt;&lt;p&gt;Unrelated paragraph&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>test [^1]
+
+[^1] : paragraph 1
+paragraph 2
+paragraph 3
+
+Unrelated paragraph</ExpectedMarkdownString>
+  </MdTestData>
+  <MdTestData Id="multipleDescriptionsSpreadOut" FileName="footnote.xml">
+    <MdString>test [^1]
+
+[^1] : content
+
+test [^2]
+
+[^2] : content
+</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">test </TextMdSyntaxNode>
+        <FootnoteReferenceMdSyntaxNode Identifier="1" />
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <FootnoteDescriptionMdSyntaxNode Identifier="1">
+        <ParagraphMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">content</TextMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+      </FootnoteDescriptionMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">test </TextMdSyntaxNode>
+        <FootnoteReferenceMdSyntaxNode Identifier="2" />
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <FootnoteDescriptionMdSyntaxNode Identifier="2">
+        <ParagraphMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">content</TextMdSyntaxNode>
+        </ParagraphMdSyntaxNode>
+      </FootnoteDescriptionMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;content&lt;/p&gt;&lt;p&gt;test &lt;/p&gt;&lt;p&gt;content&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>test [^1]
+
+[^1] : content
+
+test [^2]
+
+[^2] : content
+</ExpectedMarkdownString>
+  </MdTestData>
 </ArrayOfMdTestData>
