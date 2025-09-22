@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <MdTestData Id="default" FileName="subscript.xml">
-    <MdString>^subscript^</MdString>
+    <MdString>~subscript~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <SubScriptMdSyntaxNode>
@@ -10,55 +10,56 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sub&gt;subscript&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>^subscript^</ExpectedMarkdownString>
+    <ExpectedMarkdownString>~subscript~</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="edgeCase_HrTagPossibility" FileName="subscript.xml">
-    <MdString>some text ^^^^</MdString>
+    <DeveloperNote>I dont know if this is possible anymore</DeveloperNote>
+    <MdString>some text ~~~~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <TextMdSyntaxNode xml:space="preserve">some text </TextMdSyntaxNode>
         <SubScriptMdSyntaxNode>
-          <TextMdSyntaxNode xml:space="preserve">^^</TextMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">~~</TextMdSyntaxNode>
         </SubScriptMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;some text &lt;sub&gt;^^&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>some text ^^^^</ExpectedMarkdownString>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;some text &lt;sub&gt;~~&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>some text ~~~~</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="edgecaseUnbound" FileName="subscript.xml">
-    <MdString>^subscript</MdString>
+    <MdString>~subscript</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <TextMdSyntaxNode xml:space="preserve">^subscript</TextMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">~subscript</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;^subscript&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>^subscript</ExpectedMarkdownString>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;~subscript&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>~subscript</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="empty" FileName="subscript.xml">
-    <MdString>^^</MdString>
+    <MdString>~~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <TextMdSyntaxNode xml:space="preserve">^^</TextMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">~~</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;^^&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>^^</ExpectedMarkdownString>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;~~&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>~~</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="empty_2" FileName="subscript.xml">
-    <MdString>^^^^</MdString>
+    <MdString>~~~~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <SubScriptMdSyntaxNode>
-          <TextMdSyntaxNode xml:space="preserve">^^</TextMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">~~</TextMdSyntaxNode>
         </SubScriptMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sub&gt;^^&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>^^^^</ExpectedMarkdownString>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sub&gt;~~&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>~~~~</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="withBold" FileName="subscript.xml">
-    <MdString>^something **bold** in subscript^</MdString>
+    <MdString>~something **bold** in subscript~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <SubScriptMdSyntaxNode>
@@ -71,76 +72,76 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sub&gt;something &lt;strong&gt;bold&lt;/strong&gt; in subscript&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>^something **bold** in subscript^</ExpectedMarkdownString>
+    <ExpectedMarkdownString>~something **bold** in subscript~</ExpectedMarkdownString>
   </MdTestData>
-  <MdTestData Id="withBoldAndEscapedObelix_1" FileName="subscript.xml">
-    <MdString>^subscript **nested \^ bold**^</MdString>
+  <MdTestData Id="withBoldAndEscapedTilde_1" FileName="subscript.xml">
+    <MdString>~subscript **nested \~ bold**~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <SubScriptMdSyntaxNode>
           <TextMdSyntaxNode xml:space="preserve">subscript **nested </TextMdSyntaxNode>
-          <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
+          <EscapedCharacterMdSyntaxNode xml:space="preserve">~</EscapedCharacterMdSyntaxNode>
           <TextMdSyntaxNode xml:space="preserve"> bold**</TextMdSyntaxNode>
         </SubScriptMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sub&gt;subscript **nested ^ bold**&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>^subscript **nested \^ bold**^</ExpectedMarkdownString>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sub&gt;subscript **nested ~ bold**&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>~subscript **nested \~ bold**~</ExpectedMarkdownString>
   </MdTestData>
-  <MdTestData Id="withEscapedObelix_1" FileName="subscript.xml">
-    <MdString>^\^subscript^</MdString>
+  <MdTestData Id="withEscapedTilde_1" FileName="subscript.xml">
+    <MdString>~\~subscript~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <SubScriptMdSyntaxNode>
-          <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
+          <EscapedCharacterMdSyntaxNode xml:space="preserve">~</EscapedCharacterMdSyntaxNode>
           <TextMdSyntaxNode xml:space="preserve">subscript</TextMdSyntaxNode>
         </SubScriptMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sub&gt;^subscript&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>^\^subscript^</ExpectedMarkdownString>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sub&gt;~subscript&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>~\~subscript~</ExpectedMarkdownString>
   </MdTestData>
-  <MdTestData Id="withEscapedObelix_2" FileName="subscript.xml">
-    <MdString>^subscript\^^</MdString>
+  <MdTestData Id="withEscapedTilde_2" FileName="subscript.xml">
+    <MdString>~subscript\~~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <SubScriptMdSyntaxNode>
           <TextMdSyntaxNode xml:space="preserve">subscript</TextMdSyntaxNode>
-          <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
+          <EscapedCharacterMdSyntaxNode xml:space="preserve">~</EscapedCharacterMdSyntaxNode>
         </SubScriptMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sub&gt;subscript^&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>^subscript\^^</ExpectedMarkdownString>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sub&gt;subscript~&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>~subscript\~~</ExpectedMarkdownString>
   </MdTestData>
-  <MdTestData Id="withEscapedObelix_3" FileName="subscript.xml">
-    <MdString>^^ \^ ^^</MdString>
+  <MdTestData Id="withEscapedTilde_3" FileName="subscript.xml">
+    <MdString>~~ \~ ~~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <SuperScriptMdSyntaxNode>
+        <StrikeMdSyntaxNode>
           <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
-          <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
+          <EscapedCharacterMdSyntaxNode xml:space="preserve">~</EscapedCharacterMdSyntaxNode>
           <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
-        </SuperScriptMdSyntaxNode>
+        </StrikeMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sup&gt; ^ &lt;/sup&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>^^ \^ ^^</ExpectedMarkdownString>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;s&gt; ~ &lt;/s&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>~~ \~ ~~</ExpectedMarkdownString>
   </MdTestData>
-  <MdTestData Id="withEscapedObelix_4" FileName="subscript.xml">
-    <MdString>\^literal little hats\^</MdString>
+  <MdTestData Id="withEscapedTilde_4" FileName="subscript.xml">
+    <MdString>\~literal little tilde\~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
-        <TextMdSyntaxNode xml:space="preserve">literal little hats</TextMdSyntaxNode>
-        <EscapedCharacterMdSyntaxNode xml:space="preserve">^</EscapedCharacterMdSyntaxNode>
+        <EscapedCharacterMdSyntaxNode xml:space="preserve">~</EscapedCharacterMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">literal little tilde</TextMdSyntaxNode>
+        <EscapedCharacterMdSyntaxNode xml:space="preserve">~</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;^literal little hats^&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>\^literal little hats\^</ExpectedMarkdownString>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;~literal little tilde~&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>\~literal little tilde\~</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="withTag" FileName="subscript.xml">
-    <MdString>^#tag^</MdString>
+    <MdString>~#tag~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <SubScriptMdSyntaxNode>
@@ -149,6 +150,6 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sub&gt;&lt;span class="md-tag"&gt;#tag&lt;/span&gt;&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>^#tag^</ExpectedMarkdownString>
+    <ExpectedMarkdownString>~#tag~</ExpectedMarkdownString>
   </MdTestData>
 </ArrayOfMdTestData>

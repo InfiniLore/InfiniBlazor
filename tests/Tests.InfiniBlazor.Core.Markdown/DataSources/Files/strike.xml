@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <MdTestData Id="default" FileName="strike.xml">
-    <MdString>~something~</MdString>
+    <MdString>~~something~~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <StrikeMdSyntaxNode>
@@ -10,23 +10,25 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;s&gt;something&lt;/s&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>~something~</ExpectedMarkdownString>
+    <ExpectedMarkdownString>~~something~~</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="empty" FileName="strike.xml">
-    <MdString>~~</MdString>
+    <MdString>~~~~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <TextMdSyntaxNode xml:space="preserve">~~</TextMdSyntaxNode>
+        <SubScriptMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">~~</TextMdSyntaxNode>
+        </SubScriptMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;~~&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>~~</ExpectedMarkdownString>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sub&gt;~~&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>~~~~</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="multiple" FileName="strike.xml">
-    <MdString>~one~ and ~two~
+    <MdString>~~one~~ and ~~two~~
 
 
-~one~ and ~two~ and ~three~</MdString>
+~~one~~ and ~~two~~ and ~~three~~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <StrikeMdSyntaxNode>
@@ -55,13 +57,13 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;s&gt;one&lt;/s&gt; and &lt;s&gt;two&lt;/s&gt;&lt;/p&gt;&lt;p&gt;&lt;s&gt;one&lt;/s&gt; and &lt;s&gt;two&lt;/s&gt; and &lt;s&gt;three&lt;/s&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>~one~ and ~two~
+    <ExpectedMarkdownString>~~one~~ and ~~two~~
 
 
-~one~ and ~two~ and ~three~</ExpectedMarkdownString>
+~~one~~ and ~~two~~ and ~~three~~</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="nestedInvalid" FileName="strike.xml">
-    <MdString>~nested ~strikethrough~ does not work~</MdString>
+    <MdString>~~nested ~~strikethrough~~ does not work~~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <StrikeMdSyntaxNode>
@@ -74,10 +76,10 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;s&gt;nested &lt;/s&gt;strikethrough&lt;s&gt; does not work&lt;/s&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>~nested ~strikethrough~ does not work~</ExpectedMarkdownString>
+    <ExpectedMarkdownString>~~nested ~~strikethrough~~ does not work~~</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="withBold" FileName="strike.xml">
-    <MdString>~**bold and strike-through**~</MdString>
+    <MdString>~~**bold and strike-through**~~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <StrikeMdSyntaxNode>
@@ -88,28 +90,34 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;s&gt;&lt;strong&gt;bold and strike-through&lt;/strong&gt;&lt;/s&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>~**bold and strike-through**~</ExpectedMarkdownString>
+    <ExpectedMarkdownString>~~**bold and strike-through**~~</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="withEscapedEnd" FileName="strike.xml">
-    <MdString>~escaped\~</MdString>
+    <MdString>~~escaped\~~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <TextMdSyntaxNode xml:space="preserve">~escaped</TextMdSyntaxNode>
-        <EscapedCharacterMdSyntaxNode xml:space="preserve">~</EscapedCharacterMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">~</TextMdSyntaxNode>
+        <SubScriptMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">escaped</TextMdSyntaxNode>
+          <EscapedCharacterMdSyntaxNode xml:space="preserve">~</EscapedCharacterMdSyntaxNode>
+        </SubScriptMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;~escaped~&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>~escaped\~</ExpectedMarkdownString>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;~&lt;sub&gt;escaped~&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>~~escaped\~~</ExpectedMarkdownString>
   </MdTestData>
   <MdTestData Id="withEscapedFront" FileName="strike.xml">
-    <MdString>\~escaped~</MdString>
+    <MdString>\~~escaped~~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <EscapedCharacterMdSyntaxNode xml:space="preserve">~</EscapedCharacterMdSyntaxNode>
-        <TextMdSyntaxNode xml:space="preserve">escaped~</TextMdSyntaxNode>
+        <SubScriptMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">escaped</TextMdSyntaxNode>
+        </SubScriptMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">~</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;~escaped~&lt;/p&gt;</ExpectedHtmlStringSimplified>
-    <ExpectedMarkdownString>\~escaped~</ExpectedMarkdownString>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;~&lt;sub&gt;escaped&lt;/sub&gt;~&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>\~~escaped~~</ExpectedMarkdownString>
   </MdTestData>
 </ArrayOfMdTestData>
