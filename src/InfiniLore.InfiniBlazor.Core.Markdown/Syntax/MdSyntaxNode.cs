@@ -123,6 +123,53 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     }
     #endregion
     
+    #region GetPreviousSibling(s)
+    public bool TryGetPreviousSibling([NotNullWhen(true)] out IMdSyntaxNode? mdSyntaxNode) {
+        mdSyntaxNode = null;
+        if (Parent is null) return false;
+
+        ReadOnlySpan<IMdSyntaxNode> span = Parent.GetChildrenSpan();
+        for (int i = span.Length - 1; i >= 0; i--) {
+            if (!ReferenceEquals(span[i], this)) continue;
+
+            if (i + 1 >= span.Length) return false;
+
+            mdSyntaxNode = span[i + 1];
+            return true;
+        }
+
+        // We should never get here because we are within our own parent
+        return false;
+    }
+
+    public bool HasPreviousSibling() {
+        if (Parent is null) return false;
+
+        ReadOnlySpan<IMdSyntaxNode> span = Parent.GetChildrenSpan();
+        for (int i = span.Length - 1; i >= 0; i--) {
+            if (!ReferenceEquals(span[i], this)) continue;
+
+            return i + 1 < span.Length;
+        }
+
+        // We should never get here because we are within our own parent
+        return false;
+    }
+    #endregion
+    
+    #region Index
+    public int GetIndexAtParent() {
+        if (Parent is null) return -1;
+        ReadOnlySpan<IMdSyntaxNode> span = Parent.GetChildrenSpan();
+        for (int i = 0; i < span.Length; i++) {
+            if (!ReferenceEquals(span[i], this)) continue;
+
+            return i;
+        }
+        return -1;
+    }
+    #endregion
+    
     #region AddChild(ren)
     public void AddChildNode(IMdSyntaxNode childNode) {
         // Check if we need to resize

@@ -1,29 +1,27 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
 @using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
+@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
 
 @namespace InfiniLore.InfiniBlazor.Markdown.MdBlazorComponents
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniBlazorMdComponentBase<ParagraphMdSyntaxNode>
+@inherits InfiniBlazorMdComponentBase<FootnoteReferenceMdSyntaxNode>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<p class="@GetMarginCss() leading-relaxed">
-    @RenderChildContent()
-</p>
+<sup>
+    <a 
+        href="#md-footnote-@SyntaxNode.Identifier" 
+        class="cursor-pointer text-(--color-accent) hover:text-(--color-accent-light) hover:underline"
+        onclick="event.preventDefault(); document.getElementById('md-footnote-@SyntaxNode.Identifier')?.scrollIntoView({ behavior: 'smooth' });">
+        @SyntaxNode.Identifier
+    </a>
+</sup>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private string GetMarginCss() {
-        return SyntaxNode.Parent switch {
-            CalloutBodyMdSyntaxNode => "my-2",
-            FootnoteDescriptionMdSyntaxNode when SyntaxNode.GetIndexAtParent() is 0 => string.Empty,
-            _ => "my-4"
-        };
-    }
 }

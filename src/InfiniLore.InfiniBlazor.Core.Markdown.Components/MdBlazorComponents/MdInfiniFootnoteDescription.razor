@@ -1,0 +1,59 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
+@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
+
+@namespace InfiniLore.InfiniBlazor.Markdown.MdBlazorComponents
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniBlazorMdComponentBase<FootnoteDescriptionMdSyntaxNode>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@{ GetValidSiblingNodes(out FootnoteDescriptionMdSyntaxNode? previousNode, out FootnoteDescriptionMdSyntaxNode? nextNode); }
+@if (previousNode is null) {
+    <hr class="border-(--border)"/>
+}
+<div id="md-footnote-@SyntaxNode.Identifier" class="flex flex-row py-2 infini-bg-(--color-base-80)">
+    <div class="mr-2">@SyntaxNode.Identifier :</div>
+    <div class="grow">@RenderChildContent()</div>
+</div>
+@if (nextNode is null) {
+    <hr class="border-(--border)"/>
+}
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    
+    private void GetValidSiblingNodes<T>(out T? previousNode, out T? nextNode) where T : IMdSyntaxNode {
+        previousNode = default;
+        nextNode = default;
+        if (SyntaxNode.Parent is not {} parent) return;
+        if (parent.ChildCount < 3) return;
+        
+        ReadOnlySpan<IMdSyntaxNode> span = parent.GetChildrenSpan();
+        int length = span.Length;
+        
+        for (int i = 0; i < length; i++) {
+            if (!ReferenceEquals(span[i], SyntaxNode)) continue;
+
+            if (i - 1 >= 0 && span[i - 1] is NewLineMdSyntaxNode) {
+                if (i - 2 >= 0 && span[i - 2] is T node) {
+                    previousNode  = node;
+                }
+            }
+                
+            // ReSharper disable once InvertIf
+            if (i + 1 <= length-1 && span[i + 1] is NewLineMdSyntaxNode) {
+                if (i + 2 <= length-1 && span[i + 2] is T node) {
+                    nextNode  = node;
+                }
+            }
+            return;
+        }
+    }
+}
