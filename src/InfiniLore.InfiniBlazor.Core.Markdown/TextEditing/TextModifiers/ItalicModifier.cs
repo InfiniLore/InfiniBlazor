@@ -5,15 +5,15 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Editors.TextModifiers;
+namespace InfiniLore.InfiniBlazor.Markdown.TextEditing.TextModifiers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ITextModifier>()]
 [SuppressMessage("ReSharper", "ReplaceAutoPropertyWithComputedProperty")]
-public class StrikeModifier(ILogger<StrikeModifier> logger) : SingleInstructionModifiers(logger) {
-    public const string Name = "strike";
+public class ItalicModifier(ILogger<ItalicModifier> logger) : SingleInstructionModifiers(logger) {
+    public const string Name = "italic";
     
     public override string ModifierName { get; } = Name;
-    protected override string Instruction { get; } = "~";
+    protected override string Instruction { get; } = "*";
 }

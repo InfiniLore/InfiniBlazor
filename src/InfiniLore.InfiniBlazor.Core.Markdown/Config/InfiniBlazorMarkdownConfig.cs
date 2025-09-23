@@ -2,8 +2,8 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Core.Markdown;
-using InfiniLore.InfiniBlazor.Markdown.Editors;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor;
+using InfiniLore.InfiniBlazor.Markdown.TextEditing;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Frozen;
 

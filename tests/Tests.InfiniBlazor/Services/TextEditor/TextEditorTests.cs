@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor;
-using InfiniLore.InfiniBlazor.Markdown.Editors;
+using InfiniLore.InfiniBlazor.Markdown.TextEditing;
 using Tests.InfiniBlazor.DataSources.TextEditor;
 using Tests.InfiniBlazor.Shared;
 

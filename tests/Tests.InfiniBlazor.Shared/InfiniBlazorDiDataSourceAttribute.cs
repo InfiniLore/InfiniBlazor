@@ -1,13 +1,8 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor;
-using InfiniLore.InfiniBlazor.Components;
-using InfiniLore.InfiniBlazor.Components.DataLoaders;
-using InfiniLore.InfiniBlazor.Config;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using NSubstitute;
 
 namespace Tests.InfiniBlazor.Shared;

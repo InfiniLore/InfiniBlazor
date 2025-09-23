@@ -3,12 +3,11 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor;
 using InfiniLore.InfiniBlazor.Components;
-using InfiniLore.InfiniBlazor.Components.DataLoaders;
 using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Core.Js;
 using InfiniLore.InfiniBlazor.Markdown.Config;
-using InfiniLore.InfiniBlazor.Markdown.Editors;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer;
+using InfiniLore.InfiniBlazor.Markdown.TextEditing;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Configuration;
 

@@ -5,7 +5,7 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Editors.TextModifiers;
+namespace InfiniLore.InfiniBlazor.Markdown.TextEditing.TextModifiers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

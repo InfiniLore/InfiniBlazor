@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
 
-namespace InfiniLore.InfiniBlazor.Markdown.Editors;
+namespace InfiniLore.InfiniBlazor.Markdown.TextEditing;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
