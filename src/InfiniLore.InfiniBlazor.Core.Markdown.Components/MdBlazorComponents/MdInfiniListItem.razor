@@ -17,12 +17,21 @@
 <li class="my-2 [&:has(>[data-checkbox])]:list-none [&>ul]:mt-2 [&>ol]:mt-2">
     @if (SyntaxNode.IsCheckable) {
         <InfiniCheckbox 
+            IsInapplicable="@SyntaxNode.IsInapplicable"
             Size="Size.S"
             Class="-ml-6 mr-2 align-bottom" 
             IsChecked="@SyntaxNode.IsChecked" 
             IsCheckedChanged="@OnCheckChanged"/>
     }
-    @ComponentConverter.RenderChildComponents(SyntaxNode)
+    @if (SyntaxNode.IsInapplicable) {
+        <CascadingIsDisabled>
+            <span class="text-(--color-base-20) line-through">@ComponentConverter.RenderChildComponents(SyntaxNode)</span>
+        </CascadingIsDisabled>
+    }
+    else {
+        @ComponentConverter.RenderChildComponents(SyntaxNode)
+    }
+    
 </li>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code

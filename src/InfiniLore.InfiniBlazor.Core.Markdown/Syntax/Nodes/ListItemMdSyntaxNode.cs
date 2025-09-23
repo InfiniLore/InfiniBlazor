@@ -8,6 +8,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class ListItemMdSyntaxNode : MdSyntaxNode<ListItemMdSyntaxNode> {
     public bool IsCheckable => OriginalCheckMarker.IsNotNullOrEmpty();
+    public bool IsInapplicable => OriginalCheckMarker.ElementAtOrDefault(0) == '~';
     public bool IsChecked => OriginalCheckMarker.ToLowerInvariant().ElementAtOrDefault(0) == 'x';
     public string Index { get; private set; } = string.Empty;
     public string OriginalCheckMarker { get; private set; } = string.Empty;
