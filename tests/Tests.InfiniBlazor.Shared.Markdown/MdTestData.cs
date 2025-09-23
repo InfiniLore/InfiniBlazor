@@ -20,6 +20,7 @@ public class MdTestData : IXmlSerializable, IEquatable<MdTestData> {
     public required IMdSyntaxTree MdSyntaxTree { get; set; } 
     public string? ExpectedHtmlStringSimplified { get; set; }
     public string? ExpectedMarkdownString { get; set; }
+    public string? ExpectedJsonString { get; set; }
     public bool ExpectedMarkdownStringSkipOnWhitespaceMisMatch { get; set; }
     
     // -----------------------------------------------------------------------------------------------------------------
@@ -45,7 +46,7 @@ public class MdTestData : IXmlSerializable, IEquatable<MdTestData> {
                     DeveloperNote = reader.ReadElementContentAsString();
                     break;
                 }
-                
+
                 case nameof(MdString): {
                     MdString = reader.ReadElementContentAsString();
                     break;
@@ -61,7 +62,7 @@ public class MdTestData : IXmlSerializable, IEquatable<MdTestData> {
                     MdSyntaxTree = XmlMdSyntaxTreeParser.Instance.SerializeToSyntaxTree(syntaxTreeXml);
                     break;
                 }
-                
+
                 case nameof(ExpectedMarkdownString): {
                     ExpectedMarkdownString = reader.ReadElementContentAsString();
                     break;
@@ -69,6 +70,11 @@ public class MdTestData : IXmlSerializable, IEquatable<MdTestData> {
 
                 case nameof(ExpectedMarkdownStringSkipOnWhitespaceMisMatch): {
                     ExpectedMarkdownStringSkipOnWhitespaceMisMatch = bool.Parse(reader.ReadElementContentAsString());
+                    break;
+                }
+
+                case nameof(ExpectedJsonString): {
+                    ExpectedJsonString = reader.ReadElementContentAsString();
                     break;
                 }
 
@@ -100,6 +106,7 @@ public class MdTestData : IXmlSerializable, IEquatable<MdTestData> {
         if (ExpectedHtmlStringSimplified.IsNotNullOrWhiteSpace()) writer.WriteElementString(nameof(ExpectedHtmlStringSimplified), ExpectedHtmlStringSimplified);
         if (ExpectedMarkdownString.IsNotNullOrWhiteSpace()) writer.WriteElementString(nameof(ExpectedMarkdownString), ExpectedMarkdownString);
         if (ExpectedMarkdownStringSkipOnWhitespaceMisMatch) writer.WriteElementString(nameof(ExpectedMarkdownStringSkipOnWhitespaceMisMatch), ExpectedMarkdownStringSkipOnWhitespaceMisMatch.ToString());
+        if (ExpectedJsonString.IsNotNullOrWhiteSpace()) writer.WriteElementString(nameof(ExpectedJsonString), ExpectedJsonString);
     }
     
     public bool Equals(MdTestData? other) {
@@ -114,6 +121,7 @@ public class MdTestData : IXmlSerializable, IEquatable<MdTestData> {
             && ExpectedMarkdownString == other.ExpectedMarkdownString 
             && ExpectedMarkdownStringSkipOnWhitespaceMisMatch == other.ExpectedMarkdownStringSkipOnWhitespaceMisMatch;
     }
+    
     public override bool Equals(object? obj) {
         if (obj is null) return false;
         if (ReferenceEquals(this, obj)) return true;
