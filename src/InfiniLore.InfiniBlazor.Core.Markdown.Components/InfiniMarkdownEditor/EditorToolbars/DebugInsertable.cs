@@ -7,54 +7,56 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 public static class DefaultInsertableTexts {
     public const string TableInsertable = """
+        
         | Column 1 | Column 2 | Column 3 |
         | -------- | -------- | -------- |
         |          |          |          |
-
         """;
     
     public const string BlockQuoteInsertable = """
-        > 
-        > 
-        > 
         
+        > 
+        > 
+        > 
         """;
     
     public const string CalloutInsertable = """
+        
         >[!note] 
         > 
         > 
         """;   
     
     public const string ListInsertable = """
-        - 
-        - 
-        - 
         
+        - 
+        - 
+        - 
         """;      
     
     public const string ListOrderedInsertable = """
+        
         1. 
         2. 
         3. 
-        
         """;      
     
     public const string ListTaskInsertable = """
-        - [ ] 
-        - [ ] 
-        - [ ] 
         
+        - [ ] 
+        - [ ] 
+        - [ ] 
         """;        
     
     public const string CodeBlockInsertable = """
+        
         ```
 
         ```
-        
         """;  
     
     public const string LoremText = """
+        
         Lorem ipsum dolor
         sit amet, consectetur
         adipiscing elit. Sed
@@ -82,6 +84,7 @@ public static class DefaultInsertableTexts {
         """;
     
     public const string MarkdownText = """
+        
         # Heading 1
         ## Heading 2
         ### Heading 3
@@ -155,10 +158,10 @@ public static class DefaultInsertableTexts {
         A paragraph with a #tag word in it.
 
         ---
-        
         """ + MarkdownCallout;
 
     public const string MarkdownCallout = """
+        
         >[!note] Title
         > Body
         
