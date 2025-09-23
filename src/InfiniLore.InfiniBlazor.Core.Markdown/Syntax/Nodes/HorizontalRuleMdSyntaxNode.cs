@@ -23,5 +23,5 @@ public sealed class HorizontalRuleMdSyntaxNode() : MdSyntaxNode<HorizontalRuleMd
 
     protected override bool Equals(HorizontalRuleMdSyntaxNode? other)
         => base.Equals(other)
-            && StringComparer.InvariantCulture.Equals(Identifier, other.Identifier);
+            && StringComparer.Ordinal.Equals(Identifier, other.Identifier);
 }

@@ -23,5 +23,5 @@ public sealed class UserMdSyntaxNode() : MdSyntaxNode<UserMdSyntaxNode>(initialC
 
     protected override bool Equals(UserMdSyntaxNode? other) 
         => base.Equals(other)
-            && StringComparer.InvariantCulture.Equals(Content, other.Content);
+            && StringComparer.Ordinal.Equals(Content, other.Content);
 }

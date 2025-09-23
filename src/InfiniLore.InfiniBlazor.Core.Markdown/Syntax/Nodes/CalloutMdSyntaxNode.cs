@@ -75,7 +75,7 @@ public sealed class CalloutMdSyntaxNode() : MdSyntaxNode<CalloutMdSyntaxNode>(in
         => base.Equals(other)
             && LeadingSpaces == other.LeadingSpaces
             && CollapsedState == other.CollapsedState
-            && StringComparer.InvariantCulture.Equals(CalloutType, other.CalloutType);
+            && StringComparer.Ordinal.Equals(CalloutType, other.CalloutType);
 
     public enum CollapseStateOptions {
         None = 0,
