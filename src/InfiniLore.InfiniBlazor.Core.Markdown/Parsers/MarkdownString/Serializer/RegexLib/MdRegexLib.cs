@@ -28,7 +28,8 @@ public static partial class MdRegexLib {
             \[(?<lnText> (?:\ *!?\[.+?\]\(.+?\)\ *)|(?:[^\\\]]|\\\]|\\[^\]])*?)\]
             \(
               (?<lnHref>\ *https?[^\)\ |]+?)
-              \ ?(?<lnMods>(?:\|.*)?)
+              (?:\ ?""(?<lnTitle>.+)"")?
+              (?<lnMods>\|.*)?
             \)
           )
         | (?<tag>\#(?<tText>[\p{L}\p{N}\-_\/\.]+))

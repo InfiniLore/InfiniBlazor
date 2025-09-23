@@ -49,6 +49,7 @@ public static class MdRegexGroupNames {
     public const string LinkHref = "lnHref";
     public const string LinkModifiers = "lnMods";
     public const string LinkText = "lnText";
+    public const string LinkTitle = "lnTitle";
     public const string List = "list";
     public const string ListBody = "lBody";
     public const string ListHead = "lHead";
