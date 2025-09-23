@@ -19,7 +19,7 @@
 | Value |
 </MdString>
     <MdSyntaxTree>
-      <TableMdSyntaxNode HeaderIndex="0">
+      <TableMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
             <TextMdSyntaxNode xml:space="preserve">Test</TextMdSyntaxNode>
@@ -34,7 +34,7 @@
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
-      <TableMdSyntaxNode HeaderIndex="0">
+      <TableMdSyntaxNode>
         <Alignments>
           <Alignment>Center</Alignment>
         </Alignments>
@@ -51,7 +51,7 @@
       </TableMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
-      <TableMdSyntaxNode HeaderIndex="0">
+      <TableMdSyntaxNode>
         <Alignments>
           <Alignment>Left</Alignment>
         </Alignments>
@@ -68,7 +68,7 @@
       </TableMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
-      <TableMdSyntaxNode HeaderIndex="0">
+      <TableMdSyntaxNode>
         <Alignments>
           <Alignment>Right</Alignment>
         </Alignments>
@@ -103,6 +103,176 @@
 | ----: |
 | Value |
 </ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "TableMdSyntaxNode",
+      "children": [
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Test"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Value "
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "TableMdSyntaxNode",
+      "alignments": [
+        "Center"
+      ],
+      "children": [
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Test"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Value "
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "TableMdSyntaxNode",
+      "alignments": [
+        "Left"
+      ],
+      "children": [
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Test"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Value "
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "TableMdSyntaxNode",
+      "alignments": [
+        "Right"
+      ],
+      "children": [
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Test"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Value "
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="alignmentsAcrossMultipleColums" FileName="table.xml">
     <MdString>| Column 1    | Column 2    | Column 3    |
@@ -110,7 +280,7 @@
 | Row 2 col 1 | Row 2 col 2 | Row 2 col 3 |
 </MdString>
     <MdSyntaxTree>
-      <TableMdSyntaxNode HeaderIndex="0">
+      <TableMdSyntaxNode>
         <Alignments>
           <Alignment>Left</Alignment>
           <Alignment>Center</Alignment>
@@ -146,6 +316,88 @@
 | :---------- | :---------: | ----------: |
 | Row 2 col 1 | Row 2 col 2 | Row 2 col 3 |
 </ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "TableMdSyntaxNode",
+      "alignments": [
+        "Left",
+        "Center",
+        "Right"
+      ],
+      "children": [
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Column 1"
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Column 2"
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Column 3"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Row 2 col 1 "
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Row 2 col 2 "
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Row 2 col 3 "
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="default" FileName="table.xml">
     <MdString>| Test  |
@@ -156,7 +408,7 @@
 | ----------- | ----------- | ----------- |
 | Row 2 col 1 | Row 2 col 2 | Row 2 col 3 |</MdString>
     <MdSyntaxTree>
-      <TableMdSyntaxNode HeaderIndex="0">
+      <TableMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
             <TextMdSyntaxNode xml:space="preserve">Test</TextMdSyntaxNode>
@@ -170,7 +422,7 @@
       </TableMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
-      <TableMdSyntaxNode HeaderIndex="0">
+      <TableMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
             <TextMdSyntaxNode xml:space="preserve">Column 1</TextMdSyntaxNode>
@@ -203,6 +455,119 @@
 | Column 1    | Column 2    | Column 3    |
 | ----------- | ----------- | ----------- |
 | Row 2 col 1 | Row 2 col 2 | Row 2 col 3 |</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "TableMdSyntaxNode",
+      "children": [
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Test"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Value "
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "TableMdSyntaxNode",
+      "children": [
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Column 1"
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Column 2"
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Column 3"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Row 2 col 1 "
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Row 2 col 2 "
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Row 2 col 3 "
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withBoldHeader" FileName="table.xml">
     <MdString>| **Test** |
@@ -214,7 +579,7 @@
 | -------- | ------- |
 | Value    | Value   |</MdString>
     <MdSyntaxTree>
-      <TableMdSyntaxNode HeaderIndex="0">
+      <TableMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
             <BoldMdSyntaxNode>
@@ -231,7 +596,7 @@
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
-      <TableMdSyntaxNode HeaderIndex="0">
+      <TableMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
             <BoldMdSyntaxNode>
@@ -261,6 +626,114 @@
 | **Test** | nothing |
 | -------- | ------- |
 | Value    | Value   |</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "TableMdSyntaxNode",
+      "children": [
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "BoldMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "Test"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Value    "
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "TableMdSyntaxNode",
+      "children": [
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "BoldMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "Test"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "nothing"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Value    "
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Value   "
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withItalicHeader" FileName="table.xml">
     <MdString>| *Test* |
@@ -272,7 +745,7 @@
 | ------ | ------- |
 | Value  | Value   |</MdString>
     <MdSyntaxTree>
-      <TableMdSyntaxNode HeaderIndex="0">
+      <TableMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
             <ItalicMdSyntaxNode>
@@ -289,7 +762,7 @@
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
-      <TableMdSyntaxNode HeaderIndex="0">
+      <TableMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
             <ItalicMdSyntaxNode>
@@ -319,6 +792,114 @@
 | *Test* | nothing |
 | ------ | ------- |
 | Value  | Value   |</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "TableMdSyntaxNode",
+      "children": [
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "ItalicMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "Test"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Value  "
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "TableMdSyntaxNode",
+      "children": [
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "ItalicMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "Test"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "nothing"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Value  "
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Value   "
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withMissingColumnData" FileName="table.xml">
     <MdString>| Column 1    | Column 2 | Column 3    |
@@ -329,7 +910,7 @@
 | ----------- | -------- | -------- |
 | Row 2 col 1 |          |          |</MdString>
     <MdSyntaxTree>
-      <TableMdSyntaxNode HeaderIndex="0">
+      <TableMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
             <TextMdSyntaxNode xml:space="preserve">Column 1</TextMdSyntaxNode>
@@ -353,7 +934,7 @@
       </TableMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
-      <TableMdSyntaxNode HeaderIndex="0">
+      <TableMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
             <TextMdSyntaxNode xml:space="preserve">Column 1</TextMdSyntaxNode>
@@ -382,5 +963,136 @@
 | Column 1    | Column 2 | Column 3 |
 | ----------- | -------- | -------- |
 | Row 2 col 1 |          |          |</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "TableMdSyntaxNode",
+      "children": [
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Column 1"
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Column 2"
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Column 3"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Row 2 col 1 "
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode"
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Row 2 col 3 "
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "TableMdSyntaxNode",
+      "children": [
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Column 1"
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Column 2"
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Column 3"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Row 2 col 1 "
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode"
+            },
+            {
+              "type": "TableCellMdSyntaxNode"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
 </ArrayOfMdTestData>

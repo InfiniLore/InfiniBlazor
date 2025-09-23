@@ -80,6 +80,11 @@ public class JsonMdSyntaxTreeParser : IJsonMdSyntaxTreeParser {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region Deserialize
+    public string DeserializeToString(IMdSyntaxTree input) {
+        var element = DeserializeToJsonElement(input);
+        return JsonSerializer.Serialize(element, SerializerOptions);
+    }
+    
     public JsonElement DeserializeToJsonElement(IMdSyntaxTree tree) {
         using var stream = new MemoryStream();
         using var writer = new Utf8JsonWriter(stream, WriterOptions);

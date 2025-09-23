@@ -11,6 +11,25 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sup&gt;superscript&lt;/sup&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>^superscript^</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "SuperScriptMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "superscript"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="edgecaseUnbound" FileName="superscript.xml">
     <MdString>^superscript</MdString>
@@ -21,6 +40,20 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;^superscript&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>^superscript</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "^superscript"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="empty" FileName="superscript.xml">
     <MdString>^^</MdString>
@@ -31,6 +64,20 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;^^&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>^^</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "^^"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withBold" FileName="superscript.xml">
     <MdString>^something **bold** in superscript^</MdString>
@@ -47,6 +94,38 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sup&gt;something &lt;strong&gt;bold&lt;/strong&gt; in superscript&lt;/sup&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>^something **bold** in superscript^</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "SuperScriptMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "something "
+            },
+            {
+              "type": "BoldMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "bold"
+                }
+              ]
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " in superscript"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withBoldAndEscapedObelix_1" FileName="superscript.xml">
     <MdString>^superscript **nested \^^ bold**^</MdString>
@@ -61,6 +140,33 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sup&gt;superscript **nested ^&lt;/sup&gt; bold**^&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>^superscript **nested \^^ bold**^</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "SuperScriptMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "superscript **nested "
+            },
+            {
+              "type": "EscapedCharacterMdSyntaxNode",
+              "content": "^"
+            }
+          ]
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " bold**^"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withEscapedObelix_1" FileName="superscript.xml">
     <MdString>\^superscript^</MdString>
@@ -72,6 +178,24 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;^superscript^&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>\^superscript^</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "^"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "superscript^"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withEscapedObelix_2" FileName="superscript.xml">
     <MdString>^superscript\^</MdString>
@@ -83,6 +207,24 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;^superscript^&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>^superscript\^</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "^superscript"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "^"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withEscapedObelix_3" FileName="superscript.xml">
     <MdString>^ \^ ^</MdString>
@@ -97,6 +239,33 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sup&gt; ^ &lt;/sup&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>^ \^ ^</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "SuperScriptMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " "
+            },
+            {
+              "type": "EscapedCharacterMdSyntaxNode",
+              "content": "^"
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " "
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withEscapedObelix_4" FileName="superscript.xml">
     <MdString>\^literal little hats\^</MdString>
@@ -109,6 +278,28 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;^literal little hats^&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>\^literal little hats\^</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "^"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "literal little hats"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "^"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withTag" FileName="superscript.xml">
     <MdString>^#tag^</MdString>
@@ -121,5 +312,24 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sup&gt;&lt;span class="md-tag"&gt;#tag&lt;/span&gt;&lt;/sup&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>^#tag^</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "SuperScriptMdSyntaxNode",
+          "children": [
+            {
+              "type": "TagMdSyntaxNode",
+              "content": "tag"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
 </ArrayOfMdTestData>

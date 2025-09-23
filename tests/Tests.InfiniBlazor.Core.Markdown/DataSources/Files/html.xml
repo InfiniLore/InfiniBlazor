@@ -9,6 +9,20 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;br/&gt; test&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>test &lt;br/&gt; test</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "test &lt;br/&gt; test"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="default" FileName="html.xml">
     <MdString>&lt;div&gt;&lt;/div&gt;</MdString>
@@ -17,6 +31,15 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;div&gt;&lt;/div&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>&lt;div&gt;&lt;/div&gt;</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "HtmlMdSyntaxNode",
+      "content": "&lt;div&gt;&lt;/div&gt;"
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="empty" FileName="html.xml">
     <MdString>&lt;&gt;&lt;/&gt;</MdString>
@@ -27,6 +50,20 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;&gt;&lt;/&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>&lt;&gt;&lt;/&gt;</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "&lt;&gt;&lt;/&gt;"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="inline" FileName="html.xml">
     <MdString>external &lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt; external</MdString>
@@ -39,6 +76,28 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;external &lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt; external&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>external &lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt; external</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "external "
+        },
+        {
+          "type": "HtmlMdSyntaxNode",
+          "content": "&lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt;"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " external"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="inlineAndMultipleLines" FileName="html.xml">
     <MdString>test &lt;div&gt;
@@ -58,6 +117,24 @@
     <ExpectedMarkdownString>test &lt;div&gt;
 &lt;strong&gt;something&lt;/strong&gt;
 &lt;/div&gt;</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "test "
+        },
+        {
+          "type": "HtmlMdSyntaxNode",
+          "content": "&lt;div&gt;\n&lt;strong&gt;something&lt;/strong&gt;\n&lt;/div&gt;"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="inlineWithMarkdown" FileName="html.xml">
     <MdString>*test* &lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt; **bold this**</MdString>
@@ -76,6 +153,46 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;em&gt;test&lt;/em&gt; &lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt; &lt;strong&gt;bold this&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>*test* &lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt; **bold this**</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "ItalicMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "test"
+            }
+          ]
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        },
+        {
+          "type": "HtmlMdSyntaxNode",
+          "content": "&lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt;"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        },
+        {
+          "type": "BoldMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "bold this"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="inlineWithMultipleLinesAndMarkdown" FileName="html.xml">
     <MdString>*test* &lt;div&gt;
@@ -102,6 +219,46 @@
     <ExpectedMarkdownString>*test* &lt;div&gt;
 &lt;strong&gt;something&lt;/strong&gt;
 &lt;/div&gt; **bold this**</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "ItalicMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "test"
+            }
+          ]
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        },
+        {
+          "type": "HtmlMdSyntaxNode",
+          "content": "&lt;div&gt;\n&lt;strong&gt;something&lt;/strong&gt;\n&lt;/div&gt;"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        },
+        {
+          "type": "BoldMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "bold this"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="longInput" FileName="html.xml">
     <MdString>&lt;pre&gt;
@@ -158,6 +315,15 @@ he was a handsome man
 how do you like your blueeyed boy
 Mister Death
 &lt;/pre&gt;</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "HtmlMdSyntaxNode",
+      "content": "&lt;pre&gt;\nBuffalo Bill ’s\ndefunct\n       who used to\n       ride a watersmooth-silver\n                                stallion\nand break onetwothreefourfive pigeonsjustlikethat\n                                                 Jesus\nhe was a handsome man\n                     and what i want to know is\nhow do you like your blueeyed boy\nMister Death\n&lt;/pre&gt;"
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="longInputTable" FileName="html.xml">
     <MdString>Unrelated previous paragraph followed by a blank line
@@ -216,5 +382,26 @@ Mister Death
         &lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "Unrelated previous paragraph followed by a blank line"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "HtmlMdSyntaxNode",
+      "content": "&lt;table&gt;\n    &lt;tr&gt;\n        &lt;td&gt;Table cell&lt;/td&gt;\n        &lt;td&gt;\n            &lt;table&gt;\n                &lt;tr&gt;\n                    &lt;td&gt;*Tables in tables*&lt;/td&gt;\n                &lt;/tr&gt;\n            &lt;/table&gt;\n        &lt;/td&gt;\n    &lt;/tr&gt;\n&lt;/table&gt;"
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
 </ArrayOfMdTestData>

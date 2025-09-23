@@ -86,17 +86,17 @@ You can visit [Google](https://www.google.com) or check out the following image:
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <ListUnOrderedMdSyntaxNode LeadingSpaces="2">
-        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
+        <ListItemMdSyntaxNode CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
           <TextMdSyntaxNode xml:space="preserve">Point one</TextMdSyntaxNode>
         </ListItemMdSyntaxNode>
-        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
+        <ListItemMdSyntaxNode CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
           <TextMdSyntaxNode xml:space="preserve">Point two</TextMdSyntaxNode>
           <NewLineMdSyntaxNode />
           <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
-            <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
+            <ListItemMdSyntaxNode CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
               <TextMdSyntaxNode xml:space="preserve">Subpoint A</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
-            <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
+            <ListItemMdSyntaxNode CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
               <TextMdSyntaxNode xml:space="preserve">Subpoint B</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
           </ListUnOrderedMdSyntaxNode>
@@ -123,7 +123,7 @@ You can visit [Google](https://www.google.com) or check out the following image:
         <TextMdSyntaxNode xml:space="preserve">Table Example</TextMdSyntaxNode>
       </HeadingMdSyntaxNode>
       <NewLineMdSyntaxNode />
-      <TableMdSyntaxNode HeaderIndex="0">
+      <TableMdSyntaxNode>
         <TableRowMdSyntaxNode>
           <TableCellMdSyntaxNode>
             <TextMdSyntaxNode xml:space="preserve">Column 1</TextMdSyntaxNode>
@@ -217,6 +217,439 @@ Here are some bullet points:
 ### Links and Images
 You can visit [Google](https://www.google.com) or check out the following image:
 ![Placeholder Image](https://via.placeholder.com/150)</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "HeadingMdSyntaxNode",
+      "level": 2,
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "Longer Example with Multiple Sections"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "HeadingMdSyntaxNode",
+      "level": 3,
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "Introduction"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "Welcome to this test. This section introduces the topic, along with "
+        },
+        {
+          "type": "BoldMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "bold"
+            }
+          ]
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": ", "
+        },
+        {
+          "type": "ItalicMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "italic"
+            }
+          ]
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": ", and "
+        },
+        {
+          "type": "CodeInlineMdSyntaxNode",
+          "backTickCount": 1,
+          "content": "code"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " formatting."
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "HeadingMdSyntaxNode",
+      "level": 3,
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "Code Snippet"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "Below is an example of a C# code snippet:"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "CodeBlockMdSyntaxNode",
+      "language": "csharp",
+      "content": "public class Program {\n    public static void Main() {\n        Console.WriteLine(\"Hello, World!\");\n    }\n}\n"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "HeadingMdSyntaxNode",
+      "level": 3,
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "Bullet Points"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "Here are some bullet points:"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ListUnOrderedMdSyntaxNode",
+      "leadingSpaces": 2,
+      "children": [
+        {
+          "type": "ListItemMdSyntaxNode",
+          "checkMarker": "",
+          "index": "",
+          "leadingSpaces": 1,
+          "checkLeadingSpaces": 0,
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "Point one"
+            }
+          ]
+        },
+        {
+          "type": "ListItemMdSyntaxNode",
+          "checkMarker": "",
+          "index": "",
+          "leadingSpaces": 1,
+          "checkLeadingSpaces": 0,
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "Point two"
+            },
+            {
+              "type": "NewLineMdSyntaxNode"
+            },
+            {
+              "type": "ListUnOrderedMdSyntaxNode",
+              "leadingSpaces": 0,
+              "children": [
+                {
+                  "type": "ListItemMdSyntaxNode",
+                  "checkMarker": "",
+                  "index": "",
+                  "leadingSpaces": 1,
+                  "checkLeadingSpaces": 0,
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "Subpoint A"
+                    }
+                  ]
+                },
+                {
+                  "type": "ListItemMdSyntaxNode",
+                  "checkMarker": "",
+                  "index": "",
+                  "leadingSpaces": 1,
+                  "checkLeadingSpaces": 0,
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "Subpoint B"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "HeadingMdSyntaxNode",
+      "level": 3,
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "Blockquote"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "This is a blockquote. It can contain multiple lines of text"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "and demonstrates how Markdown handles quoted content."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "HeadingMdSyntaxNode",
+      "level": 3,
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "Table Example"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "TableMdSyntaxNode",
+      "children": [
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Column 1"
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Column 2"
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Column 3"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Data 1   "
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Data 2   "
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Data 3   "
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TableRowMdSyntaxNode",
+          "children": [
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Data 4   "
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Data 5   "
+                }
+              ]
+            },
+            {
+              "type": "TableCellMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Data 6   "
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "HeadingMdSyntaxNode",
+      "level": 3,
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "Links and Images"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "You can visit "
+        },
+        {
+          "type": "LinkMdSyntaxNode",
+          "href": "https://www.google.com",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "Google"
+            }
+          ]
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " or check out the following image:"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "ImageMdSyntaxNode",
+          "href": "https://via.placeholder.com/150",
+          "altText": "Placeholder Image"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="test2" FileName="aggregate.xml">
     <MdString>## Nested Lists and Complex Formatting
@@ -237,52 +670,52 @@ You can visit [Google](https://www.google.com) or check out the following image:
       </HeadingMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <ListUnOrderedMdSyntaxNode LeadingSpaces="2">
-        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
+        <ListItemMdSyntaxNode CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
           <BoldMdSyntaxNode>
             <TextMdSyntaxNode xml:space="preserve">Main Topic 1</TextMdSyntaxNode>
           </BoldMdSyntaxNode>
           <NewLineMdSyntaxNode />
           <ListUnOrderedMdSyntaxNode LeadingSpaces="2">
-            <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
+            <ListItemMdSyntaxNode CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
               <TextMdSyntaxNode xml:space="preserve">Subtopic 1.1</TextMdSyntaxNode>
               <NewLineMdSyntaxNode />
               <ListUnOrderedMdSyntaxNode LeadingSpaces="2">
-                <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
+                <ListItemMdSyntaxNode CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
                   <TextMdSyntaxNode xml:space="preserve">Detail 1.1.1</TextMdSyntaxNode>
                 </ListItemMdSyntaxNode>
-                <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
+                <ListItemMdSyntaxNode CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
                   <TextMdSyntaxNode xml:space="preserve">Detail 1.1.2</TextMdSyntaxNode>
                   <NewLineMdSyntaxNode />
                   <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
-                    <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
+                    <ListItemMdSyntaxNode CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
                       <TextMdSyntaxNode xml:space="preserve">Extra Detail 1.1.2.1</TextMdSyntaxNode>
                     </ListItemMdSyntaxNode>
                   </ListUnOrderedMdSyntaxNode>
                 </ListItemMdSyntaxNode>
               </ListUnOrderedMdSyntaxNode>
             </ListItemMdSyntaxNode>
-            <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
+            <ListItemMdSyntaxNode CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
               <TextMdSyntaxNode xml:space="preserve">Subtopic 1.2</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
           </ListUnOrderedMdSyntaxNode>
         </ListItemMdSyntaxNode>
-        <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
+        <ListItemMdSyntaxNode CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
           <BoldMdSyntaxNode>
             <TextMdSyntaxNode xml:space="preserve">Main Topic 2</TextMdSyntaxNode>
           </BoldMdSyntaxNode>
           <NewLineMdSyntaxNode />
           <ListOrderedMdSyntaxNode LeadingSpaces="3">
-            <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="1" LeadingSpaces="1" CheckLeadingSpaces="0">
+            <ListItemMdSyntaxNode CheckMarker="" Index="1" LeadingSpaces="1" CheckLeadingSpaces="0">
               <TextMdSyntaxNode xml:space="preserve">Item 2.1</TextMdSyntaxNode>
             </ListItemMdSyntaxNode>
-            <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="2" LeadingSpaces="1" CheckLeadingSpaces="0">
+            <ListItemMdSyntaxNode CheckMarker="" Index="2" LeadingSpaces="1" CheckLeadingSpaces="0">
               <TextMdSyntaxNode xml:space="preserve">Item 2.2</TextMdSyntaxNode>
               <NewLineMdSyntaxNode />
               <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
-                <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
+                <ListItemMdSyntaxNode CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
                   <TextMdSyntaxNode xml:space="preserve">Sub-Item 2.2.1</TextMdSyntaxNode>
                 </ListItemMdSyntaxNode>
-                <ListItemMdSyntaxNode IsCheckable="false" CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
+                <ListItemMdSyntaxNode CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
                   <TextMdSyntaxNode xml:space="preserve">Sub-Item 2.2.2</TextMdSyntaxNode>
                 </ListItemMdSyntaxNode>
               </ListUnOrderedMdSyntaxNode>
@@ -304,5 +737,227 @@ You can visit [Google](https://www.google.com) or check out the following image:
   2. Item 2.2
      - Sub-Item 2.2.1
      - Sub-Item 2.2.2</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "HeadingMdSyntaxNode",
+      "level": 2,
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "Nested Lists and Complex Formatting"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ListUnOrderedMdSyntaxNode",
+      "leadingSpaces": 2,
+      "children": [
+        {
+          "type": "ListItemMdSyntaxNode",
+          "checkMarker": "",
+          "index": "",
+          "leadingSpaces": 1,
+          "checkLeadingSpaces": 0,
+          "children": [
+            {
+              "type": "BoldMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Main Topic 1"
+                }
+              ]
+            },
+            {
+              "type": "NewLineMdSyntaxNode"
+            },
+            {
+              "type": "ListUnOrderedMdSyntaxNode",
+              "leadingSpaces": 2,
+              "children": [
+                {
+                  "type": "ListItemMdSyntaxNode",
+                  "checkMarker": "",
+                  "index": "",
+                  "leadingSpaces": 1,
+                  "checkLeadingSpaces": 0,
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "Subtopic 1.1"
+                    },
+                    {
+                      "type": "NewLineMdSyntaxNode"
+                    },
+                    {
+                      "type": "ListUnOrderedMdSyntaxNode",
+                      "leadingSpaces": 2,
+                      "children": [
+                        {
+                          "type": "ListItemMdSyntaxNode",
+                          "checkMarker": "",
+                          "index": "",
+                          "leadingSpaces": 1,
+                          "checkLeadingSpaces": 0,
+                          "children": [
+                            {
+                              "type": "TextMdSyntaxNode",
+                              "content": "Detail 1.1.1"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "ListItemMdSyntaxNode",
+                          "checkMarker": "",
+                          "index": "",
+                          "leadingSpaces": 1,
+                          "checkLeadingSpaces": 0,
+                          "children": [
+                            {
+                              "type": "TextMdSyntaxNode",
+                              "content": "Detail 1.1.2"
+                            },
+                            {
+                              "type": "NewLineMdSyntaxNode"
+                            },
+                            {
+                              "type": "ListUnOrderedMdSyntaxNode",
+                              "leadingSpaces": 0,
+                              "children": [
+                                {
+                                  "type": "ListItemMdSyntaxNode",
+                                  "checkMarker": "",
+                                  "index": "",
+                                  "leadingSpaces": 1,
+                                  "checkLeadingSpaces": 0,
+                                  "children": [
+                                    {
+                                      "type": "TextMdSyntaxNode",
+                                      "content": "Extra Detail 1.1.2.1"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "ListItemMdSyntaxNode",
+                  "checkMarker": "",
+                  "index": "",
+                  "leadingSpaces": 1,
+                  "checkLeadingSpaces": 0,
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "Subtopic 1.2"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ListItemMdSyntaxNode",
+          "checkMarker": "",
+          "index": "",
+          "leadingSpaces": 1,
+          "checkLeadingSpaces": 0,
+          "children": [
+            {
+              "type": "BoldMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Main Topic 2"
+                }
+              ]
+            },
+            {
+              "type": "NewLineMdSyntaxNode"
+            },
+            {
+              "type": "ListOrderedMdSyntaxNode",
+              "leadingSpaces": 3,
+              "children": [
+                {
+                  "type": "ListItemMdSyntaxNode",
+                  "checkMarker": "",
+                  "index": "1",
+                  "leadingSpaces": 1,
+                  "checkLeadingSpaces": 0,
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "Item 2.1"
+                    }
+                  ]
+                },
+                {
+                  "type": "ListItemMdSyntaxNode",
+                  "checkMarker": "",
+                  "index": "2",
+                  "leadingSpaces": 1,
+                  "checkLeadingSpaces": 0,
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "Item 2.2"
+                    },
+                    {
+                      "type": "NewLineMdSyntaxNode"
+                    },
+                    {
+                      "type": "ListUnOrderedMdSyntaxNode",
+                      "leadingSpaces": 0,
+                      "children": [
+                        {
+                          "type": "ListItemMdSyntaxNode",
+                          "checkMarker": "",
+                          "index": "",
+                          "leadingSpaces": 1,
+                          "checkLeadingSpaces": 0,
+                          "children": [
+                            {
+                              "type": "TextMdSyntaxNode",
+                              "content": "Sub-Item 2.2.1"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "ListItemMdSyntaxNode",
+                          "checkMarker": "",
+                          "index": "",
+                          "leadingSpaces": 1,
+                          "checkLeadingSpaces": 0,
+                          "children": [
+                            {
+                              "type": "TextMdSyntaxNode",
+                              "content": "Sub-Item 2.2.2"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
 </ArrayOfMdTestData>

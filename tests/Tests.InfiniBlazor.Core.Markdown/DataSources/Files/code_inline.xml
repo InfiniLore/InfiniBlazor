@@ -9,6 +9,21 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;code&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>`code`</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "CodeInlineMdSyntaxNode",
+          "backTickCount": 1,
+          "content": "code"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="edgecaseNestedInvalid" FileName="code_inline.xml">
     <MdString>`Nested ` is not valid syntax.`</MdString>
@@ -20,6 +35,25 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;Nested &lt;/code&gt; is not valid syntax.`&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>`Nested ` is not valid syntax.`</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "CodeInlineMdSyntaxNode",
+          "backTickCount": 1,
+          "content": "Nested "
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " is not valid syntax.`"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="edgecaseNestedValid" FileName="code_inline.xml">
     <MdString>``Nested ` is not valid syntax.``</MdString>
@@ -30,6 +64,21 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;Nested ` is not valid syntax.&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>``Nested ` is not valid syntax.``</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "CodeInlineMdSyntaxNode",
+          "backTickCount": 2,
+          "content": "Nested ` is not valid syntax."
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="empty_2" FileName="code_inline.xml">
     <MdString>``</MdString>
@@ -40,6 +89,20 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;``&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>``</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "``"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="empty_3" FileName="code_inline.xml">
     <MdString>```</MdString>
@@ -50,6 +113,20 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;```&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>```</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "```"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="empty_4" FileName="code_inline.xml">
     <MdString>````</MdString>
@@ -60,6 +137,20 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;````&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>````</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "````"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="empty_5" FileName="code_inline.xml">
     <MdString>`````</MdString>
@@ -70,6 +161,20 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;`````&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>`````</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "`````"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="multiple_2" FileName="code_inline.xml">
     <MdString>Backticks inside inline code: ``Code with `backticks` inside``.</MdString>
@@ -82,6 +187,29 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;Backticks inside inline code: &lt;code&gt;Code with `backticks` inside&lt;/code&gt;.&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>Backticks inside inline code: ``Code with `backticks` inside``.</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "Backticks inside inline code: "
+        },
+        {
+          "type": "CodeInlineMdSyntaxNode",
+          "backTickCount": 2,
+          "content": "Code with `backticks` inside"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "."
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="multiple_3" FileName="code_inline.xml">
     <MdString>Backticks inside inline code: ```Code with `backticks` inside```.</MdString>
@@ -94,6 +222,29 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;Backticks inside inline code: &lt;code&gt;Code with `backticks` inside&lt;/code&gt;.&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>Backticks inside inline code: ```Code with `backticks` inside```.</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "Backticks inside inline code: "
+        },
+        {
+          "type": "CodeInlineMdSyntaxNode",
+          "backTickCount": 3,
+          "content": "Code with `backticks` inside"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "."
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="multiple_3offset" FileName="code_inline.xml">
     <MdString>```outer `inner` outer``</MdString>
@@ -104,6 +255,21 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;`outer `inner` outer&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>```outer `inner` outer``</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "CodeInlineMdSyntaxNode",
+          "backTickCount": 2,
+          "content": "`outer `inner` outer"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="paragraph" FileName="code_inline.xml">
     <MdString>This is an `example` of some inline code.</MdString>
@@ -116,6 +282,29 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;This is an &lt;code&gt;example&lt;/code&gt; of some inline code.&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>This is an `example` of some inline code.</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "This is an "
+        },
+        {
+          "type": "CodeInlineMdSyntaxNode",
+          "backTickCount": 1,
+          "content": "example"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " of some inline code."
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="paragraph_end" FileName="code_inline.xml">
     <MdString>This is the `last example`.</MdString>
@@ -128,6 +317,29 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;This is the &lt;code&gt;last example&lt;/code&gt;.&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>This is the `last example`.</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "This is the "
+        },
+        {
+          "type": "CodeInlineMdSyntaxNode",
+          "backTickCount": 1,
+          "content": "last example"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "."
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="paragraph_multiple" FileName="code_inline.xml">
     <MdString>"Multiple `inline` `code` segments.</MdString>
@@ -142,6 +354,38 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;"Multiple &lt;code&gt;inline&lt;/code&gt; &lt;code&gt;code&lt;/code&gt; segments.&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>"Multiple `inline` `code` segments.</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "\"Multiple "
+        },
+        {
+          "type": "CodeInlineMdSyntaxNode",
+          "backTickCount": 1,
+          "content": "inline"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        },
+        {
+          "type": "CodeInlineMdSyntaxNode",
+          "backTickCount": 1,
+          "content": "code"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " segments."
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="paragraph_start" FileName="code_inline.xml">
     <MdString>`code` at the start of the line.</MdString>
@@ -153,6 +397,25 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;code&lt;/code&gt; at the start of the line.&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>`code` at the start of the line.</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "CodeInlineMdSyntaxNode",
+          "backTickCount": 1,
+          "content": "code"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " at the start of the line."
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withEscapedBacktick" FileName="code_inline.xml">
     <MdString>`\``
@@ -172,6 +435,37 @@
     <ExpectedMarkdownString>`\``
 
 ``code with \`escaped backticks\```</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "CodeInlineMdSyntaxNode",
+          "backTickCount": 1,
+          "content": "\\`"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "CodeInlineMdSyntaxNode",
+          "backTickCount": 2,
+          "content": "code with \\`escaped backticks\\`"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withSpecialCharacters" FileName="code_inline.xml">
     <MdString>`inline code with special characters !@#$%^&amp;*()`</MdString>
@@ -182,6 +476,21 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;inline code with special characters !@#$%^&amp;*()&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>`inline code with special characters !@#$%^&amp;*()`</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "CodeInlineMdSyntaxNode",
+          "backTickCount": 1,
+          "content": "inline code with special characters !@#$%^&amp;*()"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withUser" FileName="code_inline.xml">
     <DeveloperNote>should not be caught by the codeInline as a user node</DeveloperNote>
@@ -193,5 +502,20 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;@username&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>`@username`</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "CodeInlineMdSyntaxNode",
+          "backTickCount": 1,
+          "content": "@username"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
 </ArrayOfMdTestData>

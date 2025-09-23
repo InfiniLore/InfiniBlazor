@@ -82,6 +82,13 @@
                         Class="font-mono w-full"/>
                 </InfiniTabContent>
 
+                <InfiniTabContent TabName="Json">
+                    <InfiniTextAreaInput
+                        @bind-Value="@ExpectedJsonString"
+                        Rows="22"
+                        Class="font-mono w-full"/>
+                </InfiniTabContent>
+
                 <InfiniTabContent TabName="Markdown">
                     <InfiniTextAreaInput
                         @bind-Value="@ExpectedMarkdownString"
@@ -124,6 +131,7 @@
     private string ExpectedSyntaxTreeString { get; set; } = string.Empty;
     private string? ExpectedHtmlStringSimplified { get; set; } = string.Empty;
     private string? ExpectedMarkdownString { get; set; } = string.Empty;
+    private string? ExpectedJsonString { get; set; } = string.Empty;
     private bool SkipOnWhitespaceMisMatch { get; set; }
 
     public bool FreezeAutoUpdates { get; set; }
@@ -159,6 +167,7 @@
     private async Task OnGenerateAsync() {
         await Task.WhenAll(
             GenerateXmlString(),
+            GenerateJsonString(),
             GenerateSimpleHtmlString(),
             GenerateMarkdownString()
         );
@@ -172,6 +181,17 @@
         memoryStream.Position = 0;
         string result = await new StreamReader(memoryStream).ReadToEndAsync();
         ExpectedSyntaxTreeString = result;
+    }
+
+    private async Task GenerateJsonString() {
+        IMdSyntaxTree tree = Context.SyntaxTree;
+        using var memoryStream = new MemoryStream();
+        await MarkdownParser.Json.DeserializeToJsonStreamAsync(memoryStream, tree);
+        
+        memoryStream.Position = 0;
+        string result = await new StreamReader(memoryStream).ReadToEndAsync();
+        ExpectedJsonString = result.ReplaceLineEndings("\n");
+        
     }
 
     private Task GenerateSimpleHtmlString() {
@@ -219,6 +239,7 @@
         ExpectedHtmlStringSimplified = testData.ExpectedHtmlStringSimplified;
         ExpectedMarkdownString = testData.ExpectedMarkdownString;
         SkipOnWhitespaceMisMatch = testData.ExpectedMarkdownStringSkipOnWhitespaceMisMatch;
+        ExpectedJsonString = testData.ExpectedJsonString;
 
         TestDataOrigin = testData;
 
@@ -240,7 +261,8 @@
             MdSyntaxTree = Context.SyntaxTree,
             ExpectedHtmlStringSimplified = ExpectedHtmlStringSimplified,
             ExpectedMarkdownString = ExpectedMarkdownString,
-            ExpectedMarkdownStringSkipOnWhitespaceMisMatch = SkipOnWhitespaceMisMatch
+            ExpectedMarkdownStringSkipOnWhitespaceMisMatch = SkipOnWhitespaceMisMatch,
+            ExpectedJsonString = ExpectedJsonString
         };
 
         if (!await MdTestDataProvider.TryAddOrUpdateAsync(xmlData.FileName, xmlData)) {

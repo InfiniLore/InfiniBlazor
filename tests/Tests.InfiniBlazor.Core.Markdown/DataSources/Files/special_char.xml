@@ -9,6 +9,20 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;$&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>$</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "$"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="emoji" FileName="special_char.xml">
     <MdString>This contains an emoji: 😀</MdString>
@@ -19,6 +33,20 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;This contains an emoji: 😀&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>This contains an emoji: 😀</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "This contains an emoji: \uD83D\uDE00"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="greaterthan" FileName="special_char.xml">
     <MdString>&gt;</MdString>
@@ -29,6 +57,20 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>&gt;</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "&gt;"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="lessthan" FileName="special_char.xml">
     <MdString>&lt;</MdString>
@@ -39,5 +81,19 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>&lt;</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "&lt;"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
 </ArrayOfMdTestData>

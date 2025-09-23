@@ -18,10 +18,16 @@ public class MdTestDataSources {
             MdSyntaxTree = new MdSyntaxTree(),
             DeveloperNote = "Ensure Test is at least ran once to exist in the view",
             ExpectedHtmlStringSimplified = "",
-            ExpectedMarkdownString = ""       
+            ExpectedMarkdownString = "",
+            ExpectedJsonString = """
+                {
+                  "type": "MdSyntaxTree",
+                  "children": []
+                }
+                """
         };
     }
-    
+
     public static async IAsyncEnumerable<Func<MdTestData>> GetTestDataAsync([EnumeratorCancellation] CancellationToken ct = default) {
         string[]? allFiles = MdTestDataProvider.TestInstance.TryGetFileNames();
         if (allFiles is null) throw new Exception("Could not get file names");
@@ -29,7 +35,7 @@ public class MdTestDataSources {
         foreach (string file in allFiles) {
             List<MdTestData>? dataEntries = await MdTestDataProvider.TestInstance.TryGetXmlMdTestDataAsync(file, ct);
             if (dataEntries is null) throw new Exception($"Could not get data for file {file}");
-            
+
             foreach (MdTestData dataEntry in dataEntries) {
                 yield return () => dataEntry;
             }

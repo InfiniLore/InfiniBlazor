@@ -9,6 +9,21 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;🏳️‍⚧️&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>:flag-transgender:</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "EmoteMdSyntaxNode",
+          "emoteKey": "flag-transgender",
+          "originalEmote": ":flag-transgender:"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="empty" FileName="emote.xml">
     <MdString>::</MdString>
@@ -19,6 +34,20 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;::&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>::</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "::"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="notValid" FileName="emote.xml">
     <MdString>:not/an/emote:</MdString>
@@ -29,5 +58,19 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;:not/an/emote:&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>:not/an/emote:</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": ":not/an/emote:"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
 </ArrayOfMdTestData>
