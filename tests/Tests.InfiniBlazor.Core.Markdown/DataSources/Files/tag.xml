@@ -10,6 +10,20 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span class="md-tag"&gt;#tag&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>#tag</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TagMdSyntaxNode",
+          "content": "tag"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="edgecasesNonBreakingSpace" FileName="tag.xml">
     <MdString># </MdString>
@@ -21,6 +35,20 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;# &lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString># </ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "# "
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="empty" FileName="tag.xml">
     <MdString>#</MdString>
@@ -32,6 +60,20 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;#&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>#</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "#"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="invalid" FileName="tag.xml">
     <MdString>#this is not a valid tag
@@ -56,6 +98,49 @@
 
 #[link](https://www.transgenderinfo.be)</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TagMdSyntaxNode",
+          "content": "this"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " is not a valid tag"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "#"
+        },
+        {
+          "type": "LinkMdSyntaxNode",
+          "href": "https://www.transgenderinfo.be",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "link"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="unicode" FileName="tag.xml">
     <MdString>#不
@@ -76,6 +161,35 @@
 
 #öäüÖÄÜß</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TagMdSyntaxNode",
+          "content": "不"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TagMdSyntaxNode",
+          "content": "öäüÖÄÜß"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withSubTags" FileName="tag.xml">
     <MdString>#tag/subtag</MdString>
@@ -87,5 +201,19 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span class="md-tag"&gt;#tag/subtag&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>#tag/subtag</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TagMdSyntaxNode",
+          "content": "tag/subtag"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
 </ArrayOfMdTestData>

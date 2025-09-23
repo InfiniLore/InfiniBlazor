@@ -12,6 +12,25 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;u&gt;underline&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>_underline_</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "UnderlineMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "underline"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="edgecaseCodeInlineShouldBeSkipped" FileName="underline.xml">
     <DeveloperNote>Because we traverse the input text from left to right</DeveloperNote>
@@ -26,6 +45,29 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;u&gt; `&lt;/u&gt;`&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>_ `_`</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "UnderlineMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " `"
+            }
+          ]
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "`"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="edgecaseShouldBeCaughtByCodeInlines" FileName="underline.xml">
     <MdString>`_` `_`</MdString>
@@ -38,6 +80,30 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;_&lt;/code&gt; &lt;code&gt;_&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>`_` `_`</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "CodeInlineMdSyntaxNode",
+          "backTickCount": 1,
+          "content": "_"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        },
+        {
+          "type": "CodeInlineMdSyntaxNode",
+          "backTickCount": 1,
+          "content": "_"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="empty" FileName="underline.xml">
     <MdString>__</MdString>
@@ -49,6 +115,20 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;__&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>__</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "__"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withBold" FileName="underline.xml">
     <MdString>_**bold and underlined**_</MdString>
@@ -64,6 +144,30 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;u&gt;&lt;strong&gt;bold and underlined&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>_**bold and underlined**_</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "UnderlineMdSyntaxNode",
+          "children": [
+            {
+              "type": "BoldMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "bold and underlined"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withBoldAndItalic" FileName="underline.xml">
     <MdString>_***bold, italic, and underlined***_</MdString>
@@ -81,6 +185,35 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;em&gt;bold, italic, and underlined&lt;/em&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>_***bold, italic, and underlined***_</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "UnderlineMdSyntaxNode",
+          "children": [
+            {
+              "type": "BoldMdSyntaxNode",
+              "children": [
+                {
+                  "type": "ItalicMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "bold, italic, and underlined"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withBoldAndLink" FileName="underline.xml">
     <MdString>_**[bold link](https://example.com)**_</MdString>
@@ -98,6 +231,36 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a href="https://example.com"&gt;bold link&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>_**[bold link](https://example.com)**_</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "UnderlineMdSyntaxNode",
+          "children": [
+            {
+              "type": "BoldMdSyntaxNode",
+              "children": [
+                {
+                  "type": "LinkMdSyntaxNode",
+                  "href": "https://example.com",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "bold link"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withEscaped" FileName="underline.xml">
     <MdString>_underlined with an \_ escaped_</MdString>
@@ -113,6 +276,33 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;u&gt;underlined with an _ escaped&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>_underlined with an \_ escaped_</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "UnderlineMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "underlined with an "
+            },
+            {
+              "type": "EscapedCharacterMdSyntaxNode",
+              "content": "_"
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " escaped"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withEscapedEnd" FileName="underline.xml">
     <MdString>_escaped\_</MdString>
@@ -125,6 +315,24 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;_escaped_&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>_escaped\_</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "_escaped"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "_"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withEscapedStart" FileName="underline.xml">
     <MdString>\_escaped_</MdString>
@@ -137,6 +345,24 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;_escaped_&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>\_escaped_</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "_"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "escaped_"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withEscapedStartAndEnd" FileName="underline.xml">
     <MdString>\_escaped\_</MdString>
@@ -150,6 +376,28 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;_escaped_&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>\_escaped\_</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "_"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "escaped"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "_"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withItalic" FileName="underline.xml">
     <MdString>_*italic and underlined*_</MdString>
@@ -165,6 +413,30 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;u&gt;&lt;em&gt;italic and underlined&lt;/em&gt;&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>_*italic and underlined*_</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "UnderlineMdSyntaxNode",
+          "children": [
+            {
+              "type": "ItalicMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "italic and underlined"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withMultipleMarkdownSections" FileName="underline.xml">
     <MdString>_**multiple** elements to *underline*_</MdString>
@@ -184,5 +456,42 @@
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;u&gt;&lt;strong&gt;multiple&lt;/strong&gt; elements to &lt;em&gt;underline&lt;/em&gt;&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>_**multiple** elements to *underline*_</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "UnderlineMdSyntaxNode",
+          "children": [
+            {
+              "type": "BoldMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "multiple"
+                }
+              ]
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " elements to "
+            },
+            {
+              "type": "ItalicMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "underline"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
 </ArrayOfMdTestData>

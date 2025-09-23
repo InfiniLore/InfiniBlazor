@@ -10,6 +10,24 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;A backslash at the end of a line: This is a line\&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>A backslash at the end of a line: This is a line\\</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "A backslash at the end of a line: This is a line"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "\\"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="backslashStart" FileName="escaped_char.xml">
     <MdString>\\Start</MdString>
@@ -21,6 +39,24 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;\Start&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>\\Start</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "\\"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "Start"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="bold" FileName="escaped_char.xml">
     <MdString>\*\*not bold\*\*</MdString>
@@ -35,6 +71,36 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;**not bold**&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>\*\*not bold\*\*</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "*"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "*"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "not bold"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "*"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "*"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="code" FileName="escaped_char.xml">
     <MdString>Escape characters like backticks: \`code\`</MdString>
@@ -48,6 +114,32 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;Escape characters like backticks: `code`&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>Escape characters like backticks: \`code\`</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "Escape characters like backticks: "
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "`"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "code"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "`"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="italic" FileName="escaped_char.xml">
     <MdString>\*not italic\*</MdString>
@@ -60,6 +152,28 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;*not italic*&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>\*not italic\*</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "*"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "not italic"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "*"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="link" FileName="escaped_char.xml">
     <MdString>\[link text\]\(https://example.com\)</MdString>
@@ -75,6 +189,40 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;[link text](https://example.com)&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>\[link text\]\(https://example.com\)</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "["
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "link text"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "]"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "("
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "https://example.com"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": ")"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="quotedLine" FileName="escaped_char.xml">
     <MdString>\"She told me that \'he isn't here right *now*\' - so I left.\"</MdString>
@@ -94,6 +242,53 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;"She told me that 'he isn't here right &lt;em&gt;now&lt;/em&gt;' - so I left."&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>\"She told me that \'he isn't here right *now*\' - so I left.\"</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "\""
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "She told me that "
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "'"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "he isn't here right "
+        },
+        {
+          "type": "ItalicMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "now"
+            }
+          ]
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "'"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " - so I left."
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "\""
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="special" FileName="escaped_char.xml">
     <MdString>\!\""\#\$\%\&amp;\'\(\)\*\+\,\-\.\/\:\;\&lt;\=\&gt;\?\@\[\\\]\^\_\`\{\|\}\~</MdString>
@@ -136,6 +331,148 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;!""#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>\!\""\#\$\%\&amp;\'\(\)\*\+\,\-\.\/\:\;\&lt;\=\&gt;\?\@\[\\\]\^\_\`\{\|\}\~</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "!"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "\""
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "\""
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "#"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "$"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "%"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "&amp;"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "'"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "("
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": ")"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "*"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "+"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": ","
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "-"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "."
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "/"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": ":"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": ";"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "&lt;"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "="
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "&gt;"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "?"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "@"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "["
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "\\"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "]"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "^"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "_"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "`"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "{"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "|"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "}"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "~"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="underscore" FileName="escaped_char.xml">
     <MdString>Escaping underscores:\_This is not underscored\_</MdString>
@@ -149,5 +486,31 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;Escaping underscores:_This is not underscored_&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>Escaping underscores:\_This is not underscored\_</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "Escaping underscores:"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "_"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "This is not underscored"
+        },
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "_"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
 </ArrayOfMdTestData>

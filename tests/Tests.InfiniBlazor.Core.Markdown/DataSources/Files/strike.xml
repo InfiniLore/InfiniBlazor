@@ -11,6 +11,25 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;s&gt;something&lt;/s&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>~~something~~</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "StrikeMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "something"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="empty" FileName="strike.xml">
     <MdString>~~~~</MdString>
@@ -23,6 +42,25 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;sub&gt;~~&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>~~~~</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "SubScriptMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "~~"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="multiple" FileName="strike.xml">
     <MdString>~~one~~ and ~~two~~
@@ -61,6 +99,87 @@
 
 
 ~~one~~ and ~~two~~ and ~~three~~</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "StrikeMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "one"
+            }
+          ]
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " and "
+        },
+        {
+          "type": "StrikeMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "two"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "StrikeMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "one"
+            }
+          ]
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " and "
+        },
+        {
+          "type": "StrikeMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "two"
+            }
+          ]
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " and "
+        },
+        {
+          "type": "StrikeMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "three"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="nestedInvalid" FileName="strike.xml">
     <MdString>~~nested ~~strikethrough~~ does not work~~</MdString>
@@ -77,6 +196,38 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;s&gt;nested &lt;/s&gt;strikethrough&lt;s&gt; does not work&lt;/s&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>~~nested ~~strikethrough~~ does not work~~</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "StrikeMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "nested "
+            }
+          ]
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "strikethrough"
+        },
+        {
+          "type": "StrikeMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " does not work"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withBold" FileName="strike.xml">
     <MdString>~~**bold and strike-through**~~</MdString>
@@ -91,6 +242,30 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;s&gt;&lt;strong&gt;bold and strike-through&lt;/strong&gt;&lt;/s&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>~~**bold and strike-through**~~</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "StrikeMdSyntaxNode",
+          "children": [
+            {
+              "type": "BoldMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "bold and strike-through"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withEscapedEnd" FileName="strike.xml">
     <MdString>~~escaped\~~</MdString>
@@ -105,6 +280,33 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;~&lt;sub&gt;escaped~&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>~~escaped\~~</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "~"
+        },
+        {
+          "type": "SubScriptMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "escaped"
+            },
+            {
+              "type": "EscapedCharacterMdSyntaxNode",
+              "content": "~"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withEscapedFront" FileName="strike.xml">
     <MdString>\~~escaped~~</MdString>
@@ -119,5 +321,32 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;~&lt;sub&gt;escaped&lt;/sub&gt;~&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>\~~escaped~~</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "EscapedCharacterMdSyntaxNode",
+          "content": "~"
+        },
+        {
+          "type": "SubScriptMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "escaped"
+            }
+          ]
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "~"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
 </ArrayOfMdTestData>

@@ -26,6 +26,27 @@ const code = sample();
 ```javascript
 const code = sample();
 ```</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "CodeBlockMdSyntaxNode",
+      "language": "",
+      "content": "const code = sample();\n"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "CodeBlockMdSyntaxNode",
+      "language": "javascript",
+      "content": "const code = sample();\n"
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="empty" FileName="code_block.xml">
     <MdString>```
@@ -40,6 +61,16 @@ const code = sample();
     <ExpectedMarkdownString>```
 
 ```</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "CodeBlockMdSyntaxNode",
+      "language": "",
+      "content": "\n"
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="languages" FileName="code_block.xml">
     <MdString>```javascript
@@ -93,6 +124,49 @@ content
 ```csharp
 content
 ```</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "CodeBlockMdSyntaxNode",
+      "language": "javascript",
+      "content": "content\n"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "CodeBlockMdSyntaxNode",
+      "language": "typescript",
+      "content": "content\n"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "CodeBlockMdSyntaxNode",
+      "language": "python",
+      "content": "content\n"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "CodeBlockMdSyntaxNode",
+      "language": "csharp",
+      "content": "content\n"
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withValidMarkdown" FileName="code_block.xml">
     <MdString>```
@@ -107,6 +181,16 @@ content
     <ExpectedMarkdownString>```
 **some valid markdown**
 ```</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "CodeBlockMdSyntaxNode",
+      "language": "",
+      "content": "**some valid markdown**\n"
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withWhiteSpaceInContent" FileName="code_block.xml">
     <MdString>```
@@ -129,5 +213,15 @@ tell application "Foo"
     beep
 end tell
 ```</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "CodeBlockMdSyntaxNode",
+      "language": "",
+      "content": "tell application \"Foo\"\n    beep\nend tell\n"
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
 </ArrayOfMdTestData>

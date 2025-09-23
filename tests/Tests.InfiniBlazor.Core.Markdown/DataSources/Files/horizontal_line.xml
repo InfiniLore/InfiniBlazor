@@ -18,6 +18,35 @@ _</MdString>
     <ExpectedMarkdownString>-
 
 _</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "-"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "_"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="2" FileName="horizontal_line.xml">
     <MdString>--
@@ -37,6 +66,35 @@ __</MdString>
     <ExpectedMarkdownString>--
 
 __</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "--"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "__"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="3" FileName="horizontal_line.xml">
     <MdString>---
@@ -52,6 +110,25 @@ ___</MdString>
     <ExpectedMarkdownString>---
 
 ___</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "HorizontalRuleMdSyntaxNode",
+      "identifier": "---"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "HorizontalRuleMdSyntaxNode",
+      "identifier": "___"
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="4" FileName="horizontal_line.xml">
     <MdString>----
@@ -67,6 +144,25 @@ ____</MdString>
     <ExpectedMarkdownString>----
 
 ____</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "HorizontalRuleMdSyntaxNode",
+      "identifier": "----"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "HorizontalRuleMdSyntaxNode",
+      "identifier": "____"
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="5" FileName="horizontal_line.xml">
     <MdString>-----
@@ -82,6 +178,25 @@ _____</MdString>
     <ExpectedMarkdownString>-----
 
 _____</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "HorizontalRuleMdSyntaxNode",
+      "identifier": "-----"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "HorizontalRuleMdSyntaxNode",
+      "identifier": "_____"
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="edgecaseUnknown" FileName="horizontal_line.xml">
     <DeveloperNote>This is an older test that was once related to horizontal lines</DeveloperNote>
@@ -105,5 +220,43 @@ _____</ExpectedMarkdownString>
     <ExpectedMarkdownString>1234
 1234
 123</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "1234"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "1234"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "123"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
 </ArrayOfMdTestData>

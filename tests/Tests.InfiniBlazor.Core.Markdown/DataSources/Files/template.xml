@@ -9,6 +9,21 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;something.Fetch()&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>{{something.Fetch()}}</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TemplateMdSyntaxNode",
+          "bracesCount": 2,
+          "content": "something.Fetch()"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="empty" FileName="template.xml">
     <MdString>{{}}</MdString>
@@ -19,5 +34,19 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;{{}}&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>{{}}</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "{{}}"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
 </ArrayOfMdTestData>

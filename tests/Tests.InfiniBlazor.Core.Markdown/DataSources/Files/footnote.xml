@@ -10,6 +10,23 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>test [^1]</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "test "
+        },
+        {
+          "type": "FootnoteReferenceMdSyntaxNode"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="default_withDescription" FileName="footnote.xml">
     <MdString>test [^1]
@@ -32,6 +49,43 @@
     <ExpectedMarkdownString>test [^1]
 
 [^1] : content</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "test "
+        },
+        {
+          "type": "FootnoteReferenceMdSyntaxNode"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "FootnoteDescriptionMdSyntaxNode",
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "content"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="description_withBold" FileName="footnote.xml">
     <MdString>test [^1]
@@ -61,6 +115,59 @@
 
 [^1] : some **content** in description
 </ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "test "
+        },
+        {
+          "type": "FootnoteReferenceMdSyntaxNode"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "FootnoteDescriptionMdSyntaxNode",
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "some "
+            },
+            {
+              "type": "BoldMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "content"
+                }
+              ]
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " in description"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="description_withItalic" FileName="footnote.xml">
     <MdString>test [^1]
@@ -90,6 +197,59 @@
 
 [^1] : some *content* in description
 </ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "test "
+        },
+        {
+          "type": "FootnoteReferenceMdSyntaxNode"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "FootnoteDescriptionMdSyntaxNode",
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "some "
+            },
+            {
+              "type": "ItalicMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "content"
+                }
+              ]
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " in description"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="description_withMultipleParagraphs" FileName="footnote.xml">
     <MdString>test [^1]
@@ -133,6 +293,82 @@ paragraph 2
 paragraph 3
 
 Unrelated paragraph</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "test "
+        },
+        {
+          "type": "FootnoteReferenceMdSyntaxNode"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "FootnoteDescriptionMdSyntaxNode",
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "paragraph 1"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "paragraph 2"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "paragraph 3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "Unrelated paragraph"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="description_withSubscript" FileName="footnote.xml">
     <MdString>test [^1]
@@ -162,6 +398,59 @@ Unrelated paragraph</ExpectedMarkdownString>
 
 [^1] : some ~content~ in description
 </ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "test "
+        },
+        {
+          "type": "FootnoteReferenceMdSyntaxNode"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "FootnoteDescriptionMdSyntaxNode",
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "some "
+            },
+            {
+              "type": "SubScriptMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "content"
+                }
+              ]
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " in description"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="description_withSuperscript" FileName="footnote.xml">
     <MdString>test [^1]
@@ -191,6 +480,59 @@ Unrelated paragraph</ExpectedMarkdownString>
 
 [^1] : some ^content^ in description
 </ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "test "
+        },
+        {
+          "type": "FootnoteReferenceMdSyntaxNode"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "FootnoteDescriptionMdSyntaxNode",
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "some "
+            },
+            {
+              "type": "SuperScriptMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "content"
+                }
+              ]
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " in description"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="multipleDescriptionsSpreadOut" FileName="footnote.xml">
     <MdString>test [^1]
@@ -237,6 +579,84 @@ test [^2]
 
 [^2] : content
 </ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "test "
+        },
+        {
+          "type": "FootnoteReferenceMdSyntaxNode"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "FootnoteDescriptionMdSyntaxNode",
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "content"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "test "
+        },
+        {
+          "type": "FootnoteReferenceMdSyntaxNode"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "FootnoteDescriptionMdSyntaxNode",
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "content"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="reference_withSuperscript" FileName="footnote.xml">
     <MdString>test [^1] ^ something
@@ -278,5 +698,90 @@ test ^super^ [^1] ^super^
 
 [^1] : some content in description
 </ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "test "
+        },
+        {
+          "type": "FootnoteReferenceMdSyntaxNode"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " ^ something"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "test "
+        },
+        {
+          "type": "SuperScriptMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "super"
+            }
+          ]
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        },
+        {
+          "type": "FootnoteReferenceMdSyntaxNode"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        },
+        {
+          "type": "SuperScriptMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "super"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "FootnoteDescriptionMdSyntaxNode",
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "some content in description"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
 </ArrayOfMdTestData>

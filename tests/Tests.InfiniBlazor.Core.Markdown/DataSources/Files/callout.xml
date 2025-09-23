@@ -50,6 +50,99 @@
 &gt;[!note|icon=undefined] Title
 &gt; Body</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "CalloutMdSyntaxNode",
+      "Modifiers": {
+        "Attributes": [
+          {
+            "key": "icon",
+            "Start": 6,
+            "End": 15
+          }
+        ],
+        "OriginalInput": "|icon=signature"
+      },
+      "calloutType": "note",
+      "collapsedState": "None",
+      "leadingSpaces": 0,
+      "children": [
+        {
+          "type": "CalloutTitleMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "Title"
+            }
+          ]
+        },
+        {
+          "type": "CalloutBodyMdSyntaxNode",
+          "children": [
+            {
+              "type": "ParagraphMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Body"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "CalloutMdSyntaxNode",
+      "Modifiers": {
+        "Attributes": [
+          {
+            "key": "icon",
+            "Start": 6,
+            "End": 15
+          }
+        ],
+        "OriginalInput": "|icon=undefined"
+      },
+      "calloutType": "note",
+      "collapsedState": "None",
+      "leadingSpaces": 0,
+      "children": [
+        {
+          "type": "CalloutTitleMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "Title"
+            }
+          ]
+        },
+        {
+          "type": "CalloutBodyMdSyntaxNode",
+          "children": [
+            {
+              "type": "ParagraphMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Body"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="default" FileName="callout.xml">
     <MdString>&gt;[!note] Title
@@ -69,6 +162,42 @@
     <ExpectedHtmlStringSimplified>&lt;div class="md-callout md-callout-note"&gt;&lt;div class="md-callout-title"&gt;Title&lt;/div&gt;&lt;div class="md-callout-body"&gt;&lt;p&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>&gt;[!note] Title
 &gt; Body</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "CalloutMdSyntaxNode",
+      "calloutType": "note",
+      "collapsedState": "None",
+      "leadingSpaces": 0,
+      "children": [
+        {
+          "type": "CalloutTitleMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "Title"
+            }
+          ]
+        },
+        {
+          "type": "CalloutBodyMdSyntaxNode",
+          "children": [
+            {
+              "type": "ParagraphMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Body"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="edgecaseUnknownState" FileName="callout.xml">
     <MdString>&gt;[!note] Title
@@ -98,6 +227,57 @@
 
 [a]</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "CalloutMdSyntaxNode",
+      "calloutType": "note",
+      "collapsedState": "None",
+      "leadingSpaces": 0,
+      "children": [
+        {
+          "type": "CalloutTitleMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "Title"
+            }
+          ]
+        },
+        {
+          "type": "CalloutBodyMdSyntaxNode",
+          "children": [
+            {
+              "type": "ParagraphMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Body"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "[a]"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="empty" FileName="callout.xml">
     <MdString>&gt;[!]
@@ -114,6 +294,29 @@
     <ExpectedMarkdownString>&gt;[!]
 &gt; </ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 0,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "[!]"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withBlockQuoteBlody" FileName="callout.xml">
     <MdString>&gt;[!note] Title
@@ -141,6 +344,60 @@
     <ExpectedMarkdownString>&gt;[!note] Title
 &gt; &gt; Body
 &gt; &gt; Body</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "CalloutMdSyntaxNode",
+      "calloutType": "note",
+      "collapsedState": "None",
+      "leadingSpaces": 0,
+      "children": [
+        {
+          "type": "CalloutTitleMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "Title"
+            }
+          ]
+        },
+        {
+          "type": "CalloutBodyMdSyntaxNode",
+          "children": [
+            {
+              "type": "BlockQuoteMdSyntaxNode",
+              "leadingSpaces": 1,
+              "children": [
+                {
+                  "type": "ParagraphMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "Body"
+                    }
+                  ]
+                },
+                {
+                  "type": "NewLineMdSyntaxNode"
+                },
+                {
+                  "type": "ParagraphMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "Body"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withCallout" FileName="callout.xml">
     <MdString>&gt;[!note] Title
@@ -169,6 +426,64 @@
     <ExpectedMarkdownString>&gt;[!note] Title
 &gt; &gt;[!note] Title
 &gt; &gt; Body</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "CalloutMdSyntaxNode",
+      "calloutType": "note",
+      "collapsedState": "None",
+      "leadingSpaces": 0,
+      "children": [
+        {
+          "type": "CalloutTitleMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "Title"
+            }
+          ]
+        },
+        {
+          "type": "CalloutBodyMdSyntaxNode",
+          "children": [
+            {
+              "type": "CalloutMdSyntaxNode",
+              "calloutType": "note",
+              "collapsedState": "None",
+              "leadingSpaces": 0,
+              "children": [
+                {
+                  "type": "CalloutTitleMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "Title"
+                    }
+                  ]
+                },
+                {
+                  "type": "CalloutBodyMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "ParagraphMdSyntaxNode",
+                      "children": [
+                        {
+                          "type": "TextMdSyntaxNode",
+                          "content": "Body"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withCollapsedStates" FileName="callout.xml">
     <MdString>&gt;[!note]+ Title
@@ -207,6 +522,79 @@
 &gt;[!note]- Title
 &gt; Body</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "CalloutMdSyntaxNode",
+      "calloutType": "note",
+      "collapsedState": "Open",
+      "leadingSpaces": 0,
+      "children": [
+        {
+          "type": "CalloutTitleMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "Title"
+            }
+          ]
+        },
+        {
+          "type": "CalloutBodyMdSyntaxNode",
+          "children": [
+            {
+              "type": "ParagraphMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Body"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "CalloutMdSyntaxNode",
+      "calloutType": "note",
+      "collapsedState": "Closed",
+      "leadingSpaces": 0,
+      "children": [
+        {
+          "type": "CalloutTitleMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "Title"
+            }
+          ]
+        },
+        {
+          "type": "CalloutBodyMdSyntaxNode",
+          "children": [
+            {
+              "type": "ParagraphMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Body"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withNestedCalloutAndCustomIcons" FileName="callout.xml">
     <MdString>&gt;[!note|icon=signature] **Do Something**
@@ -252,6 +640,94 @@
 &gt; &gt;[!note|icon=signature] **Do Something**
 &gt; &gt; Body Content</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "CalloutMdSyntaxNode",
+      "Modifiers": {
+        "Attributes": [
+          {
+            "key": "icon",
+            "Start": 6,
+            "End": 15
+          }
+        ],
+        "OriginalInput": "|icon=signature"
+      },
+      "calloutType": "note",
+      "collapsedState": "None",
+      "leadingSpaces": 0,
+      "children": [
+        {
+          "type": "CalloutTitleMdSyntaxNode",
+          "children": [
+            {
+              "type": "BoldMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Do Something"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "CalloutBodyMdSyntaxNode",
+          "children": [
+            {
+              "type": "CalloutMdSyntaxNode",
+              "Modifiers": {
+                "Attributes": [
+                  {
+                    "key": "icon",
+                    "Start": 6,
+                    "End": 15
+                  }
+                ],
+                "OriginalInput": "|icon=signature"
+              },
+              "calloutType": "note",
+              "collapsedState": "None",
+              "leadingSpaces": 0,
+              "children": [
+                {
+                  "type": "CalloutTitleMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "BoldMdSyntaxNode",
+                      "children": [
+                        {
+                          "type": "TextMdSyntaxNode",
+                          "content": "Do Something"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "CalloutBodyMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "ParagraphMdSyntaxNode",
+                      "children": [
+                        {
+                          "type": "TextMdSyntaxNode",
+                          "content": "Body Content"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withTitleMarkdown" FileName="callout.xml">
     <MdString>&gt;[!note] **Do Something**
@@ -273,5 +749,46 @@
     <ExpectedHtmlStringSimplified>&lt;div class="md-callout md-callout-note"&gt;&lt;div class="md-callout-title"&gt;&lt;strong&gt;Do Something&lt;/strong&gt;&lt;/div&gt;&lt;div class="md-callout-body"&gt;&lt;p&gt;Body Content&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>&gt;[!note] **Do Something**
 &gt; Body Content</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "CalloutMdSyntaxNode",
+      "calloutType": "note",
+      "collapsedState": "None",
+      "leadingSpaces": 0,
+      "children": [
+        {
+          "type": "CalloutTitleMdSyntaxNode",
+          "children": [
+            {
+              "type": "BoldMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Do Something"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "CalloutBodyMdSyntaxNode",
+          "children": [
+            {
+              "type": "ParagraphMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Body Content"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
 </ArrayOfMdTestData>

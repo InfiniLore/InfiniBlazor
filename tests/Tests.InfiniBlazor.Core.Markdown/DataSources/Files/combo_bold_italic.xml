@@ -13,6 +13,30 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;&lt;em&gt;bold and italic&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>***bold and italic***</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "BoldMdSyntaxNode",
+          "children": [
+            {
+              "type": "ItalicMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "bold and italic"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="empty" FileName="combo_bold_italic.xml">
     <MdString>******</MdString>
@@ -25,6 +49,25 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;**&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>******</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "BoldMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "**"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withEscapedCharMultiple" FileName="combo_bold_italic.xml">
     <MdString>*** \* \* \* ***</MdString>
@@ -45,6 +88,54 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;&lt;em&gt; * * * &lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>*** \* \* \* ***</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "BoldMdSyntaxNode",
+          "children": [
+            {
+              "type": "ItalicMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " "
+                },
+                {
+                  "type": "EscapedCharacterMdSyntaxNode",
+                  "content": "*"
+                },
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " "
+                },
+                {
+                  "type": "EscapedCharacterMdSyntaxNode",
+                  "content": "*"
+                },
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " "
+                },
+                {
+                  "type": "EscapedCharacterMdSyntaxNode",
+                  "content": "*"
+                },
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " "
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withEscapedCharStart" FileName="combo_bold_italic.xml">
     <MdString>"***\*bold and italic***</MdString>
@@ -61,5 +152,37 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;"&lt;strong&gt;&lt;em&gt;*bold and italic&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>"***\*bold and italic***</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "\""
+        },
+        {
+          "type": "BoldMdSyntaxNode",
+          "children": [
+            {
+              "type": "ItalicMdSyntaxNode",
+              "children": [
+                {
+                  "type": "EscapedCharacterMdSyntaxNode",
+                  "content": "*"
+                },
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "bold and italic"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
 </ArrayOfMdTestData>
