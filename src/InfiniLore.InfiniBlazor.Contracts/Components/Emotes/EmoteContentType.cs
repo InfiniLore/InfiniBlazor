@@ -8,5 +8,6 @@ namespace InfiniLore.InfiniBlazor.Components;
 public enum EmoteContentType {
     Emoji,
     LucideIconName,
-    SvgData
+    SvgData,
+    PngResourcePath
 }

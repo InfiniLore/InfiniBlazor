@@ -2,13 +2,18 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.Lucide
+@using Microsoft.Extensions.Logging
+@using System.Collections.Immutable
+@using System.Reflection
 
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniComponentBase
+@inject IComponentsConfig ComponentsConfig
 @inject IEmoteProvider EmoteProvider
+@inject ILogger<InfiniEmote> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -29,6 +34,11 @@
         break;
     }
 
+    case { ContentType: EmoteContentType.PngResourcePath, Data: {} data }: {
+        <img src="data:image/png;base64,@GetBase64Image(data)" alt="@Name" class="inline-block rounded-lg shadow-lg h-full w-auto object-contain" style="width:auto;height:1.5em;vertical-align:text-bottom;object-fit:contain;transform:translate(0,0.15em);" />
+        break;
+    }
+
     // ReSharper disable once RedundantEmptySwitchSection
     default: {
         @OnEmoteNotFound?.Invoke(Name)
@@ -43,4 +53,27 @@
 @code {
     [EditorRequired, Parameter] public required string Name { get; init; }
     [Parameter] public Func<string, RenderFragment>? OnEmoteNotFound { get; init; }
+
+    private string GetBase64Image(string resourcePath) {
+        if (!ComponentsConfig.TryGetEmbeddedResourceAssemblies(out ImmutableArray<Assembly> assemblies)) return string.Empty;
+
+        foreach (Assembly assembly in assemblies) {
+            try {
+                using Stream? stream = assembly.GetManifestResourceStream(resourcePath);
+                if (stream is null) continue; 
+                
+                using var memoryStream = new MemoryStream();
+                stream.CopyTo(memoryStream);
+                
+                return Convert.ToBase64String(memoryStream.ToArray());
+                
+            }
+            catch (Exception exception) {
+                Logger.Error(exception, "Error loading emote resource at {resourcePath}", resourcePath);
+            }
+        }
+        
+        Logger.Warning("Emote resource not found at {resourcePath}", resourcePath);
+        return string.Empty;
+    }
 }

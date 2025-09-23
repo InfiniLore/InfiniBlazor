@@ -44,6 +44,9 @@
     </ItemGroup>
     
     <ItemGroup>
+      <EmbeddedResource Include="..\..\assets\easteregg-ducky-trans.png">
+        <Link>wwwroot\libs\emotes\easteregg-ducky-trans.png</Link>
+      </EmbeddedResource>
       <EmbeddedResource Include="wwwroot\InfiniBlazor.css" />
       <EmbeddedResource Include="wwwroot\InfiniBlazor.js" />
       <EmbeddedResource Include="wwwroot\libs\emotes\emotes_lucide.json" />
