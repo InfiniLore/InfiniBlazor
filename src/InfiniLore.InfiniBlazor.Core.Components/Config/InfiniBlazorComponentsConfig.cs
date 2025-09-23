@@ -15,7 +15,8 @@ namespace InfiniLore.InfiniBlazor.Components.Config;
 public class InfiniBlazorComponentsConfig : IComponentsConfig {
     private List<string> EmoteJsonLibFiles { get; } = [
         "/_content/InfiniLore.InfiniBlazor/libs/emotes/emotes_standard.json",
-        "/_content/InfiniLore.InfiniBlazor/libs/emotes/emotes_lucide.json"
+        "/_content/InfiniLore.InfiniBlazor/libs/emotes/emotes_lucide.json",
+        "/_content/InfiniLore.InfiniBlazor/libs/emotes/emotes_duckies.json",
     ];
     
     private List<Type> EmbeddedResourceAssemblyEntryPoints { get; } = [];

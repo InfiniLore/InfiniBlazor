@@ -9,5 +9,5 @@ public enum EmoteContentType {
     Emoji,
     LucideIconName,
     SvgData,
-    PngResourcePath
+    ResourcePathPng
 }
