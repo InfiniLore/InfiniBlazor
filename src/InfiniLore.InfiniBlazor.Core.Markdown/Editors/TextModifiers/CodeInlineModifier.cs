@@ -12,7 +12,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.Editors.TextModifiers;
 [InjectableSingleton<ITextModifier>()]
 [SuppressMessage("ReSharper", "ReplaceAutoPropertyWithComputedProperty")]
 public class CodeInlineModifier(ILogger<CodeInlineModifier> logger) : SingleInstructionModifiers(logger) {
+    public const string Name = "code-inline";
+    
     public override string IconName { get; } = "code";
-    public override string ModifierName { get; } = "code-inline";
+    public override string ModifierName { get; } = Name;
     protected override string Instruction { get; } = "`";
 }

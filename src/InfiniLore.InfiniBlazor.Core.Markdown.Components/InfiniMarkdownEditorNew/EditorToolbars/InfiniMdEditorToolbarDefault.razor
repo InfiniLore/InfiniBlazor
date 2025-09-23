@@ -1,6 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Markdown.Editors.TextModifiers
 @using InfiniLore.Lucide
 @using Microsoft.Extensions.Logging
 
@@ -13,12 +14,14 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniMdEditorToolButtonModifier IconName="@LucideNames.Bold" ModifierName="bold" Tooltip="Bold" />
-<InfiniMdEditorToolButtonModifier IconName="@LucideNames.Italic" ModifierName="italic" Tooltip="Italic" />
-<InfiniMdEditorToolButtonModifier IconName="@LucideNames.Underline" ModifierName="underline" Tooltip="Underline" />
-<InfiniMdEditorToolButtonModifier IconName="@LucideNames.Strikethrough" ModifierName="strike" Tooltip="Strikethrough" />
-<InfiniMdEditorToolButtonModifier IconName="@LucideNames.Subscript" ModifierName="subscript" Tooltip="Subscript" />
-<InfiniMdEditorToolButtonModifier IconName="@LucideNames.Superscript" ModifierName="superscript" Tooltip="Superscript" />
+<InfiniMdEditorToolButtonModifier IconName="@LucideNames.Bold" ModifierName="@BoldModifier.Name" Tooltip="Bold" />
+<InfiniMdEditorToolButtonModifier IconName="@LucideNames.Italic" ModifierName="@ItalicModifier.Name" Tooltip="Italic" />
+<InfiniMdEditorToolButtonModifier IconName="@LucideNames.Underline" ModifierName="@UnderlineModifier.Name" Tooltip="Underline" />
+<InfiniMdEditorToolButtonModifier IconName="@LucideNames.Strikethrough" ModifierName="@StrikeModifier.Name" Tooltip="Strikethrough" />
+<InfiniMdEditorToolButtonModifier IconName="@LucideNames.Subscript" ModifierName="@SubscriptModifier.Name" Tooltip="Subscript" />
+<InfiniMdEditorToolButtonModifier IconName="@LucideNames.Superscript" ModifierName="@SuperscriptModifier.Name" Tooltip="Superscript" />
+<InfiniMdEditorToolButtonModifier IconName="@LucideNames.Highlighter" ModifierName="@HighlightModifier.Name" Tooltip="Highlight" />
+<InfiniMdEditorToolButtonModifier IconName="@LucideNames.Code" ModifierName="@CodeInlineModifier.Name" Tooltip="Inline code" />
 
 <InfiniSpacerHorizontal Spacing="Size.M"/>
 
@@ -26,6 +29,10 @@
 <InfiniMdEditorToolButtonInsert IconName="@LucideNames.Table" Insertable="@TableInsertable" Tooltip="Link"/>
 <InfiniMdEditorToolButtonInsert IconName="@LucideNames.TextQuote" Insertable="@BlockQuoteInsertable" Tooltip="Blockquote"/>
 <InfiniMdEditorToolButtonInsert IconName="@LucideNames.Quote" Insertable="@CalloutInsertable" Tooltip="Callout"/>
+<InfiniMdEditorToolButtonInsert IconName="@LucideNames.List" Insertable="@ListInsertable" Tooltip="Unordered List"/>
+<InfiniMdEditorToolButtonInsert IconName="@LucideNames.ListOrdered" Insertable="@ListOrderedInsertable" Tooltip="Ordered List"/>
+<InfiniMdEditorToolButtonInsert IconName="@LucideNames.ListTodo" Insertable="@ListTaskInsertable" Tooltip="Task List"/>
+<InfiniMdEditorToolButtonInsert IconName="@LucideNames.Binary" Insertable="@CodeBlockInsertable" Tooltip="Code block"/>
 
 @if (VisualDebugger.IsEnabled()) {
     <InfiniSpacer/>
@@ -42,6 +49,7 @@
 
     // ReSharper disable once UseRawString
     private const string TableInsertable = @"
+
 | Column 1 | Column 2 | Column 3 |
 | -------- | -------- | -------- |
 |          |          |          |
@@ -49,6 +57,7 @@
     
     // ReSharper disable once UseRawString
     private const string BlockQuoteInsertable = @"
+
 > 
 > 
 > 
@@ -56,10 +65,43 @@
     
     // ReSharper disable once UseRawString
     private const string CalloutInsertable = @"
+
 >[!note] 
 > 
 > 
 ";   
+    
+    // ReSharper disable once UseRawString
+    private const string ListInsertable = @"
+
+- 
+- 
+- 
+";      
+    
+    // ReSharper disable once UseRawString
+    private const string ListOrderedInsertable = @"
+
+1. 
+2. 
+3. 
+";      
+    
+    // ReSharper disable once UseRawString
+    private const string ListTaskInsertable = @"
+
+- [ ] 
+- [ ] 
+- [ ] 
+";        
+    
+    // ReSharper disable once UseRawString
+    private const string CodeBlockInsertable = @"
+
+```
+
+```
+";  
     
     private async Task OnToggleInteractiveModeClickAsync(MouseEventArgs obj) {
         EditorContext.IsInteractive = !EditorContext.IsInteractive;

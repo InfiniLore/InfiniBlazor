@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.Lucide;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 
@@ -11,10 +12,10 @@ namespace InfiniLore.InfiniBlazor.Markdown.Editors.TextModifiers;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<ITextModifier>()]
 [SuppressMessage("ReSharper", "ReplaceAutoPropertyWithComputedProperty")]
-public class BoldModifier(ILogger<BoldModifier> logger) : SingleInstructionModifiers(logger) {
-    public const string Name = "bold";
+public class HighlightModifier(ILogger<HighlightModifier> logger) : SingleInstructionModifiers(logger) {
+    public const string Name = "highlight";
     
-    public override string IconName { get; } = "bold";
+    public override string IconName { get; } = LucideNames.Highlighter;
     public override string ModifierName { get; } = Name;
     protected override string Instruction { get; } = "**";
 }
