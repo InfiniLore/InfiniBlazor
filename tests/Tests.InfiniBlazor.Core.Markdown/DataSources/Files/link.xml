@@ -4,7 +4,7 @@
     <MdString>[transgenderinfo](https://www.transgenderinfo.be)</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
+        <LinkMdSyntaxNode Href="https://www.transgenderinfo.be" Title="">
           <TextMdSyntaxNode xml:space="preserve">transgenderinfo</TextMdSyntaxNode>
         </LinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
@@ -39,7 +39,7 @@
     <MdString>[**transgenderinfo**](https://www.transgenderinfo.be)</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
+        <LinkMdSyntaxNode Href="https://www.transgenderinfo.be" Title="">
           <BoldMdSyntaxNode>
             <TextMdSyntaxNode xml:space="preserve">transgenderinfo</TextMdSyntaxNode>
           </BoldMdSyntaxNode>
@@ -54,7 +54,7 @@
     <MdString>[:flag-transgender:](https://www.twitch.tv/annasasdev)</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <LinkMdSyntaxNode Href="https://www.twitch.tv/annasasdev">
+        <LinkMdSyntaxNode Href="https://www.twitch.tv/annasasdev" Title="">
           <EmoteMdSyntaxNode EmoteKey="flag-transgender" OriginalEmote=":flag-transgender:" />
         </LinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
@@ -69,14 +69,14 @@
 [\[](https://localhost:7210/icon.png)</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <LinkMdSyntaxNode Href="https://localhost:7210/icon.png">
+        <LinkMdSyntaxNode Href="https://localhost:7210/icon.png" Title="">
           <EscapedCharacterMdSyntaxNode xml:space="preserve">]</EscapedCharacterMdSyntaxNode>
         </LinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
       <NewLineMdSyntaxNode />
       <NewLineMdSyntaxNode />
       <ParagraphMdSyntaxNode>
-        <LinkMdSyntaxNode Href="https://localhost:7210/icon.png">
+        <LinkMdSyntaxNode Href="https://localhost:7210/icon.png" Title="">
           <EscapedCharacterMdSyntaxNode xml:space="preserve">[</EscapedCharacterMdSyntaxNode>
         </LinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
@@ -91,7 +91,7 @@
     <MdString>[*transgenderinfo*](https://www.transgenderinfo.be)</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
+        <LinkMdSyntaxNode Href="https://www.transgenderinfo.be" Title="">
           <ItalicMdSyntaxNode>
             <TextMdSyntaxNode xml:space="preserve">transgenderinfo</TextMdSyntaxNode>
           </ItalicMdSyntaxNode>
@@ -106,7 +106,7 @@
     <MdString>[~transgenderinfo~](https://www.transgenderinfo.be)</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
+        <LinkMdSyntaxNode Href="https://www.transgenderinfo.be" Title="">
           <SubScriptMdSyntaxNode>
             <TextMdSyntaxNode xml:space="preserve">transgenderinfo</TextMdSyntaxNode>
           </SubScriptMdSyntaxNode>
@@ -121,7 +121,7 @@
     <MdString>[^transgenderinfo^](https://www.transgenderinfo.be)</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <LinkMdSyntaxNode Href="https://www.transgenderinfo.be">
+        <LinkMdSyntaxNode Href="https://www.transgenderinfo.be" Title="">
           <SuperScriptMdSyntaxNode>
             <TextMdSyntaxNode xml:space="preserve">transgenderinfo</TextMdSyntaxNode>
           </SuperScriptMdSyntaxNode>
@@ -130,6 +130,65 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;a href="https://www.transgenderinfo.be"&gt;&lt;sup&gt;transgenderinfo&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>[^transgenderinfo^](https://www.transgenderinfo.be)</ExpectedMarkdownString>
+    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+  </MdTestData>
+  <MdTestData Id="withTitle" FileName="link.xml">
+    <MdString>Modifier Title definition
+[transgenderinfo](https://www.transgenderinfo.be|title="hrt all day!")
+
+Direct Title definition, with space:
+[transgenderinfo](https://www.transgenderinfo.be "hrt all day!")
+
+Direct Title definition, without space: 
+[transgenderinfo](https://www.transgenderinfo.be"hrt all day!")</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Modifier Title definition</TextMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <LinkMdSyntaxNode Href="https://www.transgenderinfo.be" Title="">
+          <Modifiers>
+            <Attributes>
+              <Entry Key="title" Start="7" End="21" />
+            </Attributes>
+            <OriginalInput>|title="hrt all day!"</OriginalInput>
+          </Modifiers>
+          <TextMdSyntaxNode xml:space="preserve">transgenderinfo</TextMdSyntaxNode>
+        </LinkMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Direct Title definition, with space:</TextMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <LinkMdSyntaxNode Href="https://www.transgenderinfo.be" Title="hrt all day!">
+          <TextMdSyntaxNode xml:space="preserve">transgenderinfo</TextMdSyntaxNode>
+        </LinkMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">Direct Title definition, without space: </TextMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <LinkMdSyntaxNode Href="https://www.transgenderinfo.be" Title="hrt all day!">
+          <TextMdSyntaxNode xml:space="preserve">transgenderinfo</TextMdSyntaxNode>
+        </LinkMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;Modifier Title definition&lt;/p&gt;&lt;p&gt;&lt;a href="https://www.transgenderinfo.be"&gt;transgenderinfo&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Direct Title definition, with space:&lt;/p&gt;&lt;p&gt;&lt;a href="https://www.transgenderinfo.be"&gt;transgenderinfo&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Direct Title definition, without space: &lt;/p&gt;&lt;p&gt;&lt;a href="https://www.transgenderinfo.be"&gt;transgenderinfo&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>Modifier Title definition
+[transgenderinfo](https://www.transgenderinfo.be|title="hrt all day!")
+
+Direct Title definition, with space:
+[transgenderinfo](https://www.transgenderinfo.be "hrt all day!")
+
+Direct Title definition, without space: 
+[transgenderinfo](https://www.transgenderinfo.be "hrt all day!")</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
   </MdTestData>
 </ArrayOfMdTestData>

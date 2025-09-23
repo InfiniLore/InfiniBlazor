@@ -10,7 +10,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Json.NodeVisitors;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class LinkJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<LinkMdSyntaxNode> {
-    public static readonly string Href = nameof(LinkMdSyntaxNode.Href).ToCamelCase();
+    private static readonly string Href = nameof(LinkMdSyntaxNode.Href).ToCamelCase();
+    private static readonly string Title = nameof(LinkMdSyntaxNode.Title).ToCamelCase();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -19,6 +20,7 @@ public sealed class LinkJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<LinkMd
         base.DeserializeDetails(node, writer);
         
         if (node.Href.IsNotNullOrEmpty()) writer.WriteString(Href, node.Href);
+        if (node.Title.IsNotNullOrEmpty()) writer.WriteString(Title, node.Title);
     }
 
     protected override void SerializeDetails(JsonElement element, LinkMdSyntaxNode targetNode) {
@@ -26,6 +28,10 @@ public sealed class LinkJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<LinkMd
         
         if (element.TryGetProperty(Href, out JsonElement hrefProperty)) {
             targetNode.WithHref(hrefProperty.GetString() ?? string.Empty);
+        }
+        
+        if (element.TryGetProperty(Title, out JsonElement titleProperty)) {
+            targetNode.WithTitle(titleProperty.GetString() ?? string.Empty);
         }
     }
 }

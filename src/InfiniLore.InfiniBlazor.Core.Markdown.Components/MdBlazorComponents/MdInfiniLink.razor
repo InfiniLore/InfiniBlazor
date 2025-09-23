@@ -2,6 +2,7 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
+@using InfiniLore.InfiniBlazor.Markdown.Syntax
 @using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
 
 @namespace InfiniLore.InfiniBlazor.Markdown.MdBlazorComponents
@@ -12,7 +13,9 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<a href="@SyntaxNode.Href" class="text-(--color-accent) hover:text-(--color-accent-light) hover:underline">
+<a href="@SyntaxNode.Href"
+   title="@GetTitle()"
+   class="text-(--color-accent) hover:text-(--color-accent-light) hover:underline">
     @RenderChildContent()
 </a>
 
@@ -20,5 +23,9 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-
+    public string? GetTitle() {
+        if (SyntaxNode.Title.IsNotNullOrWhiteSpace()) return SyntaxNode.Title;
+        if (SyntaxNode.Modifier != null && SyntaxNode.Modifier.TryGetTitle(out string? title)) return title;
+        return null;   
+    }
 }

@@ -29,6 +29,6 @@ public sealed class EmoteMdSyntaxNode() : MdSyntaxNode<EmoteMdSyntaxNode>(initia
 
     protected override bool Equals(EmoteMdSyntaxNode? other)
         => base.Equals(other)
-            && StringComparer.InvariantCulture.Equals(EmoteKey, other.EmoteKey)
-            && StringComparer.InvariantCulture.Equals(OriginalEmote, other.OriginalEmote);
+            && StringComparer.Ordinal.Equals(EmoteKey, other.EmoteKey)
+            && StringComparer.Ordinal.Equals(OriginalEmote, other.OriginalEmote);
 }

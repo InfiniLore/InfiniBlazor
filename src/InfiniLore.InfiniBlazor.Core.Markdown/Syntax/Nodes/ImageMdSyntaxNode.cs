@@ -11,6 +11,7 @@ public sealed partial class ImageMdSyntaxNode : MdSyntaxNode<ImageMdSyntaxNode> 
     public string Href { get; private set; } = string.Empty;
     public string NormalizedAltText => NormalizeAltText.Replace(OriginalAltText, string.Empty);
     public string OriginalAltText { get; private set; } = string.Empty;
+    public string Title { get; private set; } = string.Empty;
 
     [GeneratedRegex(@"\\(?!\\)")]
     private static partial Regex NormalizeAltText { get; }
@@ -28,15 +29,22 @@ public sealed partial class ImageMdSyntaxNode : MdSyntaxNode<ImageMdSyntaxNode> 
         return this;
     }   
     
+    public ImageMdSyntaxNode WithTitle(string title) {
+        Title = title;
+        return this;
+    }
+    
     public override bool TryReset() {
         Href = string.Empty;
         OriginalAltText = string.Empty;
+        Title = string.Empty;
 
         return base.TryReset();
     }
 
     protected override bool Equals(ImageMdSyntaxNode? other)
         => base.Equals(other)
-            && StringComparer.InvariantCulture.Equals(OriginalAltText, other.OriginalAltText)
-            && StringComparer.InvariantCulture.Equals(Href, other.Href);
+            && StringComparer.Ordinal.Equals(OriginalAltText, other.OriginalAltText)
+            && StringComparer.Ordinal.Equals(Href, other.Href)
+            && StringComparer.Ordinal.Equals(Title, other.Title);
 }

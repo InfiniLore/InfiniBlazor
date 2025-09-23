@@ -23,5 +23,5 @@ public sealed class HtmlSpanMdSyntaxNode : MdSyntaxNode<HtmlSpanMdSyntaxNode> {
 
     protected override bool Equals(HtmlSpanMdSyntaxNode? other)
         => base.Equals(other)
-            && StringComparer.InvariantCulture.Equals(Attributes, other.Attributes);
+            && StringComparer.Ordinal.Equals(Attributes, other.Attributes);
 }

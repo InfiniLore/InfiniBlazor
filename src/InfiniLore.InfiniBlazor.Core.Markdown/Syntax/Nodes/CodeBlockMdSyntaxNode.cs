@@ -30,6 +30,6 @@ public sealed class CodeBlockMdSyntaxNode() : MdSyntaxNode<CodeBlockMdSyntaxNode
 
     protected override bool Equals(CodeBlockMdSyntaxNode? other)
         => base.Equals(other)
-            && StringComparer.InvariantCulture.Equals(Content, other.Content)
-            && StringComparer.InvariantCulture.Equals(Language, other.Language);
+            && StringComparer.Ordinal.Equals(Content, other.Content)
+            && StringComparer.Ordinal.Equals(Language, other.Language);
 }
