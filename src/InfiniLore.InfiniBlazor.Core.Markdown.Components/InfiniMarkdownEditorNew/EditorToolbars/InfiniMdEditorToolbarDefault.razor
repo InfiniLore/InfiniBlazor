@@ -1,0 +1,91 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.Lucide
+@using Microsoft.Extensions.Logging
+
+@namespace InfiniLore.InfiniBlazor.Markdown
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inject ILogger<InfiniMdEditorToolbarDefault> Logger
+@inherits InfiniComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniMdEditorToolButtonModifier IconName="@LucideNames.Bold" ModifierName="bold" Tooltip="Bold" />
+<InfiniMdEditorToolButtonModifier IconName="@LucideNames.Italic" ModifierName="italic" Tooltip="Italic" />
+<InfiniMdEditorToolButtonModifier IconName="@LucideNames.Underline" ModifierName="underline" Tooltip="Underline" />
+<InfiniMdEditorToolButtonModifier IconName="@LucideNames.Strikethrough" ModifierName="strike" Tooltip="Strikethrough" />
+<InfiniMdEditorToolButtonModifier IconName="@LucideNames.Subscript" ModifierName="subscript" Tooltip="Subscript" />
+<InfiniMdEditorToolButtonModifier IconName="@LucideNames.Superscript" ModifierName="superscript" Tooltip="Superscript" />
+
+<InfiniSpacerHorizontal Spacing="Size.M"/>
+
+<InfiniMdEditorToolButtonInsert IconName="@LucideNames.Link" Insertable="[ ]( )" Tooltip="Link"/>
+<InfiniMdEditorToolButtonInsert IconName="@LucideNames.Table" Insertable="@TableInsertable" Tooltip="Link"/>
+<InfiniMdEditorToolButtonInsert IconName="@LucideNames.TextQuote" Insertable="@BlockQuoteInsertable" Tooltip="Blockquote"/>
+<InfiniMdEditorToolButtonInsert IconName="@LucideNames.Quote" Insertable="@CalloutInsertable" Tooltip="Callout"/>
+
+@if (VisualDebugger.IsEnabled()) {
+    <InfiniSpacer/>
+    <InfiniButtonTransparent Color="Color.Red" IconName="@LucideNames.Plus" OnClick="@OnToggleLockedClickAsync"/>
+    <InfiniButtonTransparent Color="Color.Red" IconName="@LucideNames.Minus" OnClick="@OnToggleInteractiveModeClickAsync"/>
+    <InfiniButtonTransparent Color="Color.Red" IconName="@LucideNames.Eye" OnClick="@OnToggleShowPreviewClickAsync"/>
+    <InfiniButtonTransparent Color="Color.Red" IconName="@LucideNames.EyeClosed" OnClick="@OnToggleShowInputClickAsync"/>
+}
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [CascadingParameter] protected MdEditorContext EditorContext { get; set; } = null!;
+
+    // ReSharper disable once UseRawString
+    private const string TableInsertable = @"
+| Column 1 | Column 2 | Column 3 |
+| -------- | -------- | -------- |
+|          |          |          |
+";
+    
+    // ReSharper disable once UseRawString
+    private const string BlockQuoteInsertable = @"
+> 
+> 
+> 
+";
+    
+    // ReSharper disable once UseRawString
+    private const string CalloutInsertable = @"
+>[!note] 
+> 
+> 
+";   
+    
+    private async Task OnToggleInteractiveModeClickAsync(MouseEventArgs obj) {
+        EditorContext.IsInteractive = !EditorContext.IsInteractive;
+        
+        Logger.Warning("state IsInteractive : {i}", EditorContext.IsInteractive);
+        await InvokeAsync(StateHasChanged);
+    }
+    
+    private async Task OnToggleLockedClickAsync(MouseEventArgs obj) {
+        EditorContext.IsLocked = !EditorContext.IsLocked;
+        
+        Logger.Warning("state IsLocked : {i}", EditorContext.IsLocked);
+        await InvokeAsync(StateHasChanged);
+    }
+    
+    private async Task OnToggleShowPreviewClickAsync(MouseEventArgs obj) {
+        EditorContext.ShowPreview = !EditorContext.ShowPreview;
+        
+        Logger.Warning("state ShowPreview : {i}", EditorContext.ShowPreview);
+        await InvokeAsync(StateHasChanged);
+    }
+    
+    private async Task OnToggleShowInputClickAsync(MouseEventArgs obj) {
+        EditorContext.ShowInput = !EditorContext.ShowInput;
+        
+        Logger.Warning("state ShowInput : {i}", EditorContext.ShowInput);
+        await InvokeAsync(StateHasChanged);
+    }
+}

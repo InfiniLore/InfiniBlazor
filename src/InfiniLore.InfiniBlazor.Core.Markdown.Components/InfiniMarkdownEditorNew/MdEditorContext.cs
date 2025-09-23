@@ -30,6 +30,8 @@ public class MdEditorContext {
     public event Func<string, Task>? OnSourceChangedAsync;
     public event Func<Task>? OnSyntaxTreeChangedAsync;
     public event Func<KeyboardEventArgs, Task>? OnInputKeyDownAsync;
+    public event Func<string, Task>? OnModifierActionAsync;
+    public event Func<string, Task>? OnInsertActionAsync;
     
     private ThrottledDebouncer<string> SourceChangedCallbackDebouncer { get; }
     private ThrottledDebouncer SyntaxTreeChangedCallbackDebouncer { get; }
@@ -63,5 +65,15 @@ public class MdEditorContext {
     public async Task InvokeInputKeyDownAsync(KeyboardEventArgs e) {
         if (OnInputKeyDownAsync is null) return;
         await OnInputKeyDownAsync(e).ConfigureAwait(false);   
+    }
+    
+    public async Task InvokeModifierAsync(string modifierName) {
+        if (OnModifierActionAsync is null) return;
+        await OnModifierActionAsync(modifierName).ConfigureAwait(false);   
+    }
+    
+    public async Task InvokeInsertAsync(string content) {
+        if (OnInsertActionAsync is null) return;
+        await OnInsertActionAsync(content).ConfigureAwait(false);   
     }
 }
