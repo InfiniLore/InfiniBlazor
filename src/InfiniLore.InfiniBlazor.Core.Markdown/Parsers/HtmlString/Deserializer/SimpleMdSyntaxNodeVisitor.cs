@@ -29,6 +29,11 @@ public sealed class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 break;
             }
 
+            case HighlightMdSyntaxNode: {
+                builder.Append("<mark>");
+                break;
+            }
+
             case CodeBlockMdSyntaxNode { Language: var lang } when lang.IsNotNullOrWhiteSpace(): {
                 builder.Append("<pre><code class=\"language-");
                 builder.Append(lang.AsSpan());
@@ -345,6 +350,11 @@ public sealed class SimpleMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
 
             case BoldMdSyntaxNode: {
                 builder.Append("</strong>");
+                break;
+            }
+
+            case HighlightMdSyntaxNode: {
+                builder.Append("</mark>");
                 break;
             }
 
