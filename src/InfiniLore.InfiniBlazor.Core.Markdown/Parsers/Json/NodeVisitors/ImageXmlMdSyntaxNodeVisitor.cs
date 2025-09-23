@@ -21,8 +21,8 @@ public sealed class ImageJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<Image
         base.DeserializeDetails(node, writer);
 
         writer.WriteString(Href, node.Href);
-        writer.WriteString(Title, node.Title);
         writer.WriteString(AltText, node.OriginalAltText);
+        if (node.Title.IsNotNullOrEmpty()) writer.WriteString(Title, node.Title);
     }
 
     protected override void SerializeDetails(JsonElement element, ImageMdSyntaxNode targetNode) {

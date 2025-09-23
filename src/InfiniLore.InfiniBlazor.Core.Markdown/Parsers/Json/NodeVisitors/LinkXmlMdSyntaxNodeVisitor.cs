@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Json.NodeVisitors;
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class LinkJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<LinkMdSyntaxNode> {
     private static readonly string Href = nameof(LinkMdSyntaxNode.Href).ToCamelCase();
-    private static readonly string Title = nameof(LinkMdSyntaxNode.Href).ToCamelCase();
+    private static readonly string Title = nameof(LinkMdSyntaxNode.Title).ToCamelCase();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

@@ -10,6 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class ImageXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<ImageMdSyntaxNode> {
     private const string Href = nameof(ImageMdSyntaxNode.Href);
+    private const string Title = nameof(ImageMdSyntaxNode.Title);
     private const string AltText = nameof(AltText);
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -19,6 +20,7 @@ public sealed class ImageXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<ImageMd
         base.DeserializeDetails(node, targetElement);
         targetElement.SetAttributeValue(Href, node.Href);
         targetElement.SetAttributeValue(AltText, node.OriginalAltText);
+        if (node.Title.IsNotNullOrEmpty()) targetElement.SetAttributeValue(Title, node.Title);
     }
 
     protected override void SerializeDetails(IMdSyntaxTree tree, XElement element, ImageMdSyntaxNode targetNode) {
