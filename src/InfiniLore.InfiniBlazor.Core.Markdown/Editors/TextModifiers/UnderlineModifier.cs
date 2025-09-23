@@ -12,7 +12,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Editors.TextModifiers;
 [InjectableSingleton<ITextModifier>()]
 [SuppressMessage("ReSharper", "ReplaceAutoPropertyWithComputedProperty")]
 public class UnderlineModifier(ILogger<UnderlineModifier> logger) : SingleInstructionModifiers(logger) {
-    public override string IconName { get; } = "underline";
-    public override string ModifierName { get; } = "underline";
+    public const string Name = "underline";
+    
+    public override string ModifierName { get; } = Name;
     protected override string Instruction { get; } = "_";
 }

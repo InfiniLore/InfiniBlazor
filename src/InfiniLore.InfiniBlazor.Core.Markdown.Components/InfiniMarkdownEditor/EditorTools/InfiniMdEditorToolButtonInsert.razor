@@ -1,23 +1,34 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@* ReSharper disable once CheckNamespace *@
-@namespace InfiniLore.InfiniBlazor.Components
+@namespace InfiniLore.InfiniBlazor.Markdown
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits ComponentBase
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@Class flex justify-between items-stretch bg-(--editor-header) border-x border-t border-(--editor-header-border) px-4 py-2 overflow-auto gap-2 rounded-tl-lg rounded-tr-lg infini-scrollbar">
-    @ToolbarButtons
-</div>
+<InfiniMdEditorToolButton 
+    OnClick="@OnClickAsync"
+    IconName="@IconName"
+    Tooltip="@Tooltip"/>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
-    [Parameter] public RenderFragment? ToolbarButtons { get; set; }
-    [Parameter] public string? Class { get; set; }
+    [CascadingParameter] protected MdEditorContext EditorContext { get; set; } = null!;
+    [EditorRequired, Parameter] public string IconName { get; set; } = string.Empty;
+    [EditorRequired, Parameter] public string Insertable { get; set; } = string.Empty;
+    [Parameter] public string Tooltip { get; set; } = string.Empty;
+    
+    private async Task OnClickAsync(MouseEventArgs obj) {
+        await EditorContext.InvokeInsertAsync(Insertable);
+    }
 }

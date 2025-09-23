@@ -5,23 +5,30 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits ComponentBase
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniButton
-    OnClick="@(async () => await Editor.OnInsertClickAsync(Content))"
+<InfiniMdEditorToolButton 
+    OnClick="@OnClickAsync"
     IconName="@IconName"
->
-    @ChildContent
-</InfiniButton>
+    Tooltip="@Tooltip"/>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
-    [CascadingParameter] public InfiniMarkdownEditor Editor { get; set; } = null!;
-    [Parameter] [EditorRequired] public string Content { get; set; } = null!;
-    [Parameter] public string? IconName { get; set; }
-    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [CascadingParameter] protected MdEditorContext EditorContext { get; set; } = null!;
+    [EditorRequired, Parameter] public string IconName { get; set; } = string.Empty;
+    [EditorRequired, Parameter] public string ModifierName { get; set; } = string.Empty;
+    [Parameter] public string Tooltip { get; set; } = string.Empty;
+    
+    private async Task OnClickAsync(MouseEventArgs obj) {
+        await EditorContext.InvokeModifierAsync(ModifierName);
+    }
 }

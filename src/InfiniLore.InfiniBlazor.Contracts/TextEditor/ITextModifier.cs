@@ -6,7 +6,6 @@ namespace InfiniLore.InfiniBlazor;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface ITextModifier {
-    string IconName { get; }
     string ModifierName { get; }
     bool IsSingleLineStructure { get; }
 

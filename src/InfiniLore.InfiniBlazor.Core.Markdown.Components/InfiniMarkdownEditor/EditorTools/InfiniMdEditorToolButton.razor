@@ -5,26 +5,32 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits ComponentBase
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="flex items-center">
-    <InfiniButtonOutline
-        OnClick="@(async () => await Editor.OnModifierClickAsync(Modifier))"
-        Size="Size.S"
-        IconName="@IconName"
-    >
-        @ChildContent
-    </InfiniButtonOutline>
-</div>
+<InfiniButtonTransparentToolTipped
+    OnClick="@OnClick"
+    IconName="@IconName">
+    <Tooltip>
+        @Tooltip
+    </Tooltip>
+    <Content>
+        
+    </Content>
+</InfiniButtonTransparentToolTipped>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
-    [CascadingParameter] public InfiniMarkdownEditor Editor { get; set; } = null!;
-    [Parameter] [EditorRequired] public string Modifier { get; set; } = null!;
+    [CascadingParameter] protected MdEditorContext EditorContext { get; set; } = null!;
     [Parameter] public string? IconName { get; set; }
-    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string? Tooltip { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+
 }

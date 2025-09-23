@@ -12,7 +12,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Editors.TextModifiers;
 [InjectableSingleton<ITextModifier>()]
 [SuppressMessage("ReSharper", "ReplaceAutoPropertyWithComputedProperty")]
 public class BoldModifier(ILogger<BoldModifier> logger) : SingleInstructionModifiers(logger) {
-    public override string IconName { get; } = "bold";
-    public override string ModifierName { get; } = "bold";
+    public const string Name = "bold";
+    
+    public override string ModifierName { get; } = Name;
     protected override string Instruction { get; } = "**";
 }
