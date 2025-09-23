@@ -74,6 +74,149 @@
 &gt; four lines
 &gt; four lines
 &gt; four lines</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "One line"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "two lines"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "two lines"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "three lines"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "three lines"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "three lines"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "four lines"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "four lines"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "four lines"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="edgecase_emptyParagraphAfterText" FileName="blockquote.xml">
     <MdString>&gt; text
@@ -90,6 +233,29 @@
     <ExpectedMarkdownString>&gt; text
 &gt;  </ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "text"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="edgecase_UnMatchedSpaces" FileName="blockquote.xml">
     <MdString>&gt; 1
@@ -199,6 +365,233 @@
 &gt; 1
 &gt; &gt; 2
 &gt; &gt; &gt; 3</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 0,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " 1"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "BlockQuoteMdSyntaxNode",
+          "leadingSpaces": 0,
+          "children": [
+            {
+              "type": "ParagraphMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " 2"
+                }
+              ]
+            },
+            {
+              "type": "NewLineMdSyntaxNode"
+            },
+            {
+              "type": "BlockQuoteMdSyntaxNode",
+              "leadingSpaces": 1,
+              "children": [
+                {
+                  "type": "ParagraphMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "3"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 0,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " 1"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " &gt; 2"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "BlockQuoteMdSyntaxNode",
+          "leadingSpaces": 0,
+          "children": [
+            {
+              "type": "BlockQuoteMdSyntaxNode",
+              "leadingSpaces": 1,
+              "children": [
+                {
+                  "type": "ParagraphMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "3"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 0,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " 1"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " &gt; 2"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "BlockQuoteMdSyntaxNode",
+          "leadingSpaces": 1,
+          "children": [
+            {
+              "type": "BlockQuoteMdSyntaxNode",
+              "leadingSpaces": 1,
+              "children": [
+                {
+                  "type": "ParagraphMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "3"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "1"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "BlockQuoteMdSyntaxNode",
+          "leadingSpaces": 1,
+          "children": [
+            {
+              "type": "ParagraphMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "2"
+                }
+              ]
+            },
+            {
+              "type": "NewLineMdSyntaxNode"
+            },
+            {
+              "type": "BlockQuoteMdSyntaxNode",
+              "leadingSpaces": 1,
+              "children": [
+                {
+                  "type": "ParagraphMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "3"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="edgecaseLooseList" FileName="blockquote.xml">
     <MdString>&gt; This is a blockquote
@@ -219,6 +612,48 @@
     <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;This is a blockquote&lt;/p&gt;&lt;/blockquote&gt;&lt;ul&gt;&lt;li&gt;List item&lt;/li&gt;&lt;/ul&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>&gt; This is a blockquote
 - List item</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "This is a blockquote"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ListUnOrderedMdSyntaxNode",
+      "leadingSpaces": 0,
+      "children": [
+        {
+          "type": "ListItemMdSyntaxNode",
+          "checkMarker": "",
+          "index": "",
+          "leadingSpaces": 1,
+          "checkLeadingSpaces": 0,
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "List item"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="empty" FileName="blockquote.xml">
     <MdString>&gt; 
@@ -240,6 +675,41 @@
     <ExpectedMarkdownString>&gt; 
 
 &gt;</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 0,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " "
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "&gt;"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="nested" FileName="blockquote.xml">
     <MdString>&gt; line
@@ -322,6 +792,176 @@
 &gt; &gt; line
 &gt; &gt; &gt; line
 &gt; &gt; &gt; &gt; line</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "line"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "BlockQuoteMdSyntaxNode",
+          "leadingSpaces": 1,
+          "children": [
+            {
+              "type": "ParagraphMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "line"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "line"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "BlockQuoteMdSyntaxNode",
+          "leadingSpaces": 1,
+          "children": [
+            {
+              "type": "ParagraphMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "line"
+                }
+              ]
+            },
+            {
+              "type": "NewLineMdSyntaxNode"
+            },
+            {
+              "type": "BlockQuoteMdSyntaxNode",
+              "leadingSpaces": 1,
+              "children": [
+                {
+                  "type": "ParagraphMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "line"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "line"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "BlockQuoteMdSyntaxNode",
+          "leadingSpaces": 1,
+          "children": [
+            {
+              "type": "ParagraphMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "line"
+                }
+              ]
+            },
+            {
+              "type": "NewLineMdSyntaxNode"
+            },
+            {
+              "type": "BlockQuoteMdSyntaxNode",
+              "leadingSpaces": 1,
+              "children": [
+                {
+                  "type": "ParagraphMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "line"
+                    }
+                  ]
+                },
+                {
+                  "type": "NewLineMdSyntaxNode"
+                },
+                {
+                  "type": "BlockQuoteMdSyntaxNode",
+                  "leadingSpaces": 1,
+                  "children": [
+                    {
+                      "type": "ParagraphMdSyntaxNode",
+                      "children": [
+                        {
+                          "type": "TextMdSyntaxNode",
+                          "content": "line"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="nestedBackwards" FileName="blockquote.xml">
     <MdString>&gt; line
@@ -434,6 +1074,236 @@
 &gt; &gt; &gt; line
 &gt; &gt; line
 &gt; line</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "line"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "BlockQuoteMdSyntaxNode",
+          "leadingSpaces": 1,
+          "children": [
+            {
+              "type": "ParagraphMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "line"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "line"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "BlockQuoteMdSyntaxNode",
+          "leadingSpaces": 1,
+          "children": [
+            {
+              "type": "ParagraphMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "line"
+                }
+              ]
+            },
+            {
+              "type": "NewLineMdSyntaxNode"
+            },
+            {
+              "type": "BlockQuoteMdSyntaxNode",
+              "leadingSpaces": 1,
+              "children": [
+                {
+                  "type": "ParagraphMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "line"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "NewLineMdSyntaxNode"
+            },
+            {
+              "type": "ParagraphMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "line"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "line"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "line"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "BlockQuoteMdSyntaxNode",
+          "leadingSpaces": 1,
+          "children": [
+            {
+              "type": "ParagraphMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "line"
+                }
+              ]
+            },
+            {
+              "type": "NewLineMdSyntaxNode"
+            },
+            {
+              "type": "BlockQuoteMdSyntaxNode",
+              "leadingSpaces": 1,
+              "children": [
+                {
+                  "type": "ParagraphMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "line"
+                    }
+                  ]
+                },
+                {
+                  "type": "NewLineMdSyntaxNode"
+                },
+                {
+                  "type": "BlockQuoteMdSyntaxNode",
+                  "leadingSpaces": 1,
+                  "children": [
+                    {
+                      "type": "ParagraphMdSyntaxNode",
+                      "children": [
+                        {
+                          "type": "TextMdSyntaxNode",
+                          "content": "line"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "NewLineMdSyntaxNode"
+                },
+                {
+                  "type": "ParagraphMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "line"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "NewLineMdSyntaxNode"
+            },
+            {
+              "type": "ParagraphMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "line"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "line"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="nestedVaried" FileName="blockquote.xml">
     <MdString>&gt; Level 1
@@ -503,6 +1373,149 @@
 &gt;&gt; Line 2
 &gt;&gt;&gt; Line 3
 &gt; Line 4</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "Level 1"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "BlockQuoteMdSyntaxNode",
+          "leadingSpaces": 1,
+          "children": [
+            {
+              "type": "ParagraphMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Level 2"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "Back to Level 1"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "BlockQuoteMdSyntaxNode",
+          "leadingSpaces": 1,
+          "children": [
+            {
+              "type": "BlockQuoteMdSyntaxNode",
+              "leadingSpaces": 1,
+              "children": [
+                {
+                  "type": "ParagraphMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "Level 3"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 0,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " Line 1"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "BlockQuoteMdSyntaxNode",
+          "leadingSpaces": 0,
+          "children": [
+            {
+              "type": "ParagraphMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " Line 2"
+                }
+              ]
+            },
+            {
+              "type": "NewLineMdSyntaxNode"
+            },
+            {
+              "type": "BlockQuoteMdSyntaxNode",
+              "leadingSpaces": 1,
+              "children": [
+                {
+                  "type": "ParagraphMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "Line 3"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " Line 4"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withCallout" FileName="blockquote.xml">
     <DeveloperNote>by Zykov</DeveloperNote>
@@ -561,6 +1574,127 @@
 &gt; Something
 &gt;&gt;&gt;[!note] Title
 &gt;&gt;&gt; Body</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "Something"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "BlockQuoteMdSyntaxNode",
+          "leadingSpaces": 1,
+          "children": [
+            {
+              "type": "CalloutMdSyntaxNode",
+              "calloutType": "note",
+              "collapsedState": "None",
+              "leadingSpaces": 0,
+              "children": [
+                {
+                  "type": "CalloutTitleMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "Title"
+                    }
+                  ]
+                },
+                {
+                  "type": "CalloutBodyMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "ParagraphMdSyntaxNode",
+                      "children": [
+                        {
+                          "type": "TextMdSyntaxNode",
+                          "content": "Body"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 0,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " Something"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "BlockQuoteMdSyntaxNode",
+          "leadingSpaces": 0,
+          "children": [
+            {
+              "type": "CalloutMdSyntaxNode",
+              "calloutType": "note",
+              "collapsedState": "None",
+              "leadingSpaces": 0,
+              "children": [
+                {
+                  "type": "CalloutTitleMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "Title"
+                    }
+                  ]
+                },
+                {
+                  "type": "CalloutBodyMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "ParagraphMdSyntaxNode",
+                      "children": [
+                        {
+                          "type": "TextMdSyntaxNode",
+                          "content": "Body"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withEscapedCharacters" FileName="blockquote.xml">
     <MdString>&gt; This is a blockquote with escaped characters: \*, \&gt;, `\``</MdString>
@@ -578,6 +1712,47 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;This is a blockquote with escaped characters: *, &gt;, &lt;code&gt;`&lt;/code&gt;&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>&gt; This is a blockquote with escaped characters: \*, \&gt;, `\``</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "This is a blockquote with escaped characters: "
+            },
+            {
+              "type": "EscapedCharacterMdSyntaxNode",
+              "content": "*"
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": ", "
+            },
+            {
+              "type": "EscapedCharacterMdSyntaxNode",
+              "content": "&gt;"
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": ", "
+            },
+            {
+              "type": "CodeInlineMdSyntaxNode",
+              "backTickCount": 1,
+              "content": "\\`"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withExtraContent" FileName="blockquote.xml">
     <MdString>&gt; # test
@@ -611,6 +1786,80 @@
 &gt; &gt; test
 &gt; - test
 &gt; - test</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "HeadingMdSyntaxNode",
+          "level": 1,
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "test"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "BlockQuoteMdSyntaxNode",
+          "leadingSpaces": 1,
+          "children": [
+            {
+              "type": "ParagraphMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "test"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "ListUnOrderedMdSyntaxNode",
+          "leadingSpaces": 0,
+          "children": [
+            {
+              "type": "ListItemMdSyntaxNode",
+              "checkMarker": "",
+              "index": "",
+              "leadingSpaces": 1,
+              "checkLeadingSpaces": 0,
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "test"
+                }
+              ]
+            },
+            {
+              "type": "ListItemMdSyntaxNode",
+              "checkMarker": "",
+              "index": "",
+              "leadingSpaces": 1,
+              "checkLeadingSpaces": 0,
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "test"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withHtml" FileName="blockquote.xml">
     <MdString>&gt; &lt;div&gt;This is a div inside a blockquote.&lt;/div&gt;</MdString>
@@ -621,6 +1870,21 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;div&gt;This is a div inside a blockquote.&lt;/div&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>&gt; &lt;div&gt;This is a div inside a blockquote.&lt;/div&gt;</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "HtmlMdSyntaxNode",
+          "content": "&lt;div&gt;This is a div inside a blockquote.&lt;/div&gt;"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withInlineCodeTagsAndAnotherBlockQuote" FileName="blockquote.xml">
     <DeveloperNote>by Zykov</DeveloperNote>
@@ -634,6 +1898,27 @@
     </MdSyntaxTree>
     <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;&lt;code&gt;&gt; Block Quote&lt;/code&gt;&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
     <ExpectedMarkdownString>&gt; `&gt; Block Quote`</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "CodeInlineMdSyntaxNode",
+              "backTickCount": 1,
+              "content": "&gt; Block Quote"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withLists" FileName="blockquote.xml">
     <MdString>&gt; Mixed levels and lists:
@@ -713,6 +1998,198 @@
 &gt; - First item
 &gt;    - Nested item with **bold text**.
 &gt; - Second item</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "Mixed levels and lists:"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "ListOrderedMdSyntaxNode",
+          "leadingSpaces": 3,
+          "children": [
+            {
+              "type": "ListItemMdSyntaxNode",
+              "checkMarker": "",
+              "index": "1",
+              "leadingSpaces": 1,
+              "checkLeadingSpaces": 0,
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "First"
+                },
+                {
+                  "type": "NewLineMdSyntaxNode"
+                },
+                {
+                  "type": "BlockQuoteMdSyntaxNode",
+                  "leadingSpaces": 1,
+                  "children": [
+                    {
+                      "type": "ParagraphMdSyntaxNode",
+                      "children": [
+                        {
+                          "type": "TextMdSyntaxNode",
+                          "content": "Nested blockquote with text."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "ListItemMdSyntaxNode",
+              "checkMarker": "",
+              "index": "2",
+              "leadingSpaces": 1,
+              "checkLeadingSpaces": 0,
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Second"
+                },
+                {
+                  "type": "NewLineMdSyntaxNode"
+                },
+                {
+                  "type": "ListUnOrderedMdSyntaxNode",
+                  "leadingSpaces": 3,
+                  "children": [
+                    {
+                      "type": "ListItemMdSyntaxNode",
+                      "checkMarker": "",
+                      "index": "",
+                      "leadingSpaces": 1,
+                      "checkLeadingSpaces": 0,
+                      "children": [
+                        {
+                          "type": "TextMdSyntaxNode",
+                          "content": "Sub-item"
+                        },
+                        {
+                          "type": "NewLineMdSyntaxNode"
+                        },
+                        {
+                          "type": "BlockQuoteMdSyntaxNode",
+                          "leadingSpaces": 1,
+                          "children": [
+                            {
+                              "type": "ParagraphMdSyntaxNode",
+                              "children": [
+                                {
+                                  "type": "TextMdSyntaxNode",
+                                  "content": "Another nested quote."
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ListUnOrderedMdSyntaxNode",
+          "leadingSpaces": 3,
+          "children": [
+            {
+              "type": "ListItemMdSyntaxNode",
+              "checkMarker": "",
+              "index": "",
+              "leadingSpaces": 1,
+              "checkLeadingSpaces": 0,
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "First item"
+                },
+                {
+                  "type": "NewLineMdSyntaxNode"
+                },
+                {
+                  "type": "ListUnOrderedMdSyntaxNode",
+                  "leadingSpaces": 0,
+                  "children": [
+                    {
+                      "type": "ListItemMdSyntaxNode",
+                      "checkMarker": "",
+                      "index": "",
+                      "leadingSpaces": 1,
+                      "checkLeadingSpaces": 0,
+                      "children": [
+                        {
+                          "type": "TextMdSyntaxNode",
+                          "content": "Nested item with "
+                        },
+                        {
+                          "type": "BoldMdSyntaxNode",
+                          "children": [
+                            {
+                              "type": "TextMdSyntaxNode",
+                              "content": "bold text"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "TextMdSyntaxNode",
+                          "content": "."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "ListItemMdSyntaxNode",
+              "checkMarker": "",
+              "index": "",
+              "leadingSpaces": 1,
+              "checkLeadingSpaces": 0,
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Second item"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withMarkdown" FileName="blockquote.xml">
     <MdString>&gt; This is a blockquote with **bold text** and *italic text*.
@@ -812,6 +2289,238 @@
 &gt; ```
 &gt; Code block inside a blockquote.
 &gt; ```</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "This is a blockquote with "
+            },
+            {
+              "type": "BoldMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "bold text"
+                }
+              ]
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " and "
+            },
+            {
+              "type": "ItalicMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "italic text"
+                }
+              ]
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "Inline formatting:"
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "BoldMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Bold"
+                }
+              ]
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": ", "
+            },
+            {
+              "type": "ItalicMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "italic"
+                }
+              ]
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": ", "
+            },
+            {
+              "type": "CodeInlineMdSyntaxNode",
+              "backTickCount": 1,
+              "content": "code"
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": ", and "
+            },
+            {
+              "type": "LinkMdSyntaxNode",
+              "href": "https://example.com",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "link"
+                }
+              ]
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "BoldMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Bold text"
+                }
+              ]
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": ", "
+            },
+            {
+              "type": "ItalicMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "italic text"
+                }
+              ]
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": ", "
+            },
+            {
+              "type": "CodeInlineMdSyntaxNode",
+              "backTickCount": 1,
+              "content": "inline code"
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": ", "
+            },
+            {
+              "type": "StrikeMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "strikethrough"
+                }
+              ]
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": ", and "
+            },
+            {
+              "type": "LinkMdSyntaxNode",
+              "href": "https://example.com",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "link"
+                }
+              ]
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "This is a paragraph."
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "CodeBlockMdSyntaxNode",
+          "language": "",
+          "content": "Code block inside a blockquote.\n"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withMarkdownAndListOrdered" FileName="blockquote.xml">
     <MdString>&gt; This is a blockquote with **bold text** and *italic text*.
@@ -853,5 +2562,108 @@
 &gt; 1. First item
 &gt; 2. Second item
 &gt;    - Sub-item</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "BlockQuoteMdSyntaxNode",
+      "leadingSpaces": 1,
+      "children": [
+        {
+          "type": "ParagraphMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "This is a blockquote with "
+            },
+            {
+              "type": "BoldMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "bold text"
+                }
+              ]
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " and "
+            },
+            {
+              "type": "ItalicMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "italic text"
+                }
+              ]
+            },
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "."
+            }
+          ]
+        },
+        {
+          "type": "NewLineMdSyntaxNode"
+        },
+        {
+          "type": "ListOrderedMdSyntaxNode",
+          "leadingSpaces": 3,
+          "children": [
+            {
+              "type": "ListItemMdSyntaxNode",
+              "checkMarker": "",
+              "index": "1",
+              "leadingSpaces": 1,
+              "checkLeadingSpaces": 0,
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "First item"
+                }
+              ]
+            },
+            {
+              "type": "ListItemMdSyntaxNode",
+              "checkMarker": "",
+              "index": "2",
+              "leadingSpaces": 1,
+              "checkLeadingSpaces": 0,
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "Second item"
+                },
+                {
+                  "type": "NewLineMdSyntaxNode"
+                },
+                {
+                  "type": "ListUnOrderedMdSyntaxNode",
+                  "leadingSpaces": 0,
+                  "children": [
+                    {
+                      "type": "ListItemMdSyntaxNode",
+                      "checkMarker": "",
+                      "index": "",
+                      "leadingSpaces": 1,
+                      "checkLeadingSpaces": 0,
+                      "children": [
+                        {
+                          "type": "TextMdSyntaxNode",
+                          "content": "Sub-item"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
   </MdTestData>
 </ArrayOfMdTestData>
