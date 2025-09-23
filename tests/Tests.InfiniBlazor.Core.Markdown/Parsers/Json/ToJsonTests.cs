@@ -18,12 +18,12 @@ public class ToJsonTests(IMarkdownParser parser) {
     public async Task FromSyntaxTree_ToJson_ShouldBeExpected(MdTestData data) {
         // Arrange
         IMdSyntaxTree input = data.MdSyntaxTree;
-        string? expectedOutput = data.ExpectedJsonString;
+        string? expectedOutput = data.ExpectedJsonString?.ReplaceLineEndings("\n");
         Skip.When(expectedOutput is null, "The expected output is null.");
 
         // Act
         string foundOutput = parser.Json.DeserializeToString(input);
-        var foundOutputNormalized = foundOutput.ReplaceLineEndings("\n");
+        string foundOutputNormalized = foundOutput.ReplaceLineEndings("\n");
         
         // Assert
         await Assert.That(foundOutputNormalized)
