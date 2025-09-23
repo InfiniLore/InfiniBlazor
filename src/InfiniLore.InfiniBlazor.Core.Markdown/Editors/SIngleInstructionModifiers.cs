@@ -11,7 +11,6 @@ namespace InfiniLore.InfiniBlazor.Markdown.Editors;
 public abstract class SingleInstructionModifiers(ILogger logger) : ITextModifier {
 
     protected abstract string Instruction { get; }
-    public abstract string IconName { get; }
     public abstract string ModifierName { get; }
     public bool IsSingleLineStructure { get; } = true;
 

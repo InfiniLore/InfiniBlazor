@@ -14,7 +14,6 @@ namespace InfiniLore.InfiniBlazor.Markdown.Editors.TextModifiers;
 public class SuperscriptModifier(ILogger<SuperscriptModifier> logger) : SingleInstructionModifiers(logger) {
     public const string Name = "superscript";
     
-    public override string IconName { get; } = "superscript";
     public override string ModifierName { get; } = Name;
     protected override string Instruction { get; } = "^";
 }

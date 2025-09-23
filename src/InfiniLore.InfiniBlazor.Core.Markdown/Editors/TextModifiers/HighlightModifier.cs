@@ -15,7 +15,6 @@ namespace InfiniLore.InfiniBlazor.Markdown.Editors.TextModifiers;
 public class HighlightModifier(ILogger<HighlightModifier> logger) : SingleInstructionModifiers(logger) {
     public const string Name = "highlight";
     
-    public override string IconName { get; } = LucideNames.Highlighter;
     public override string ModifierName { get; } = Name;
-    protected override string Instruction { get; } = "**";
+    protected override string Instruction { get; } = "==";
 }

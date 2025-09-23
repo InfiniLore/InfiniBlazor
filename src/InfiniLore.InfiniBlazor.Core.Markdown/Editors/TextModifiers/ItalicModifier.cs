@@ -14,7 +14,6 @@ namespace InfiniLore.InfiniBlazor.Markdown.Editors.TextModifiers;
 public class ItalicModifier(ILogger<ItalicModifier> logger) : SingleInstructionModifiers(logger) {
     public const string Name = "italic";
     
-    public override string IconName { get; } = "italic";
     public override string ModifierName { get; } = Name;
     protected override string Instruction { get; } = "*";
 }

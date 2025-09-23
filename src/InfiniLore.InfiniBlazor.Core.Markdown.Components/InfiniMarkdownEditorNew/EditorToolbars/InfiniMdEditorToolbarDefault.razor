@@ -60,48 +60,42 @@
 
 > 
 > 
-> 
-";
+> ";
     
     // ReSharper disable once UseRawString
     private const string CalloutInsertable = @"
 
 >[!note] 
 > 
-> 
-";   
+> ";   
     
     // ReSharper disable once UseRawString
     private const string ListInsertable = @"
 
 - 
 - 
-- 
-";      
+- ";      
     
     // ReSharper disable once UseRawString
     private const string ListOrderedInsertable = @"
 
 1. 
 2. 
-3. 
-";      
+3. ";      
     
     // ReSharper disable once UseRawString
     private const string ListTaskInsertable = @"
 
 - [ ] 
 - [ ] 
-- [ ] 
-";        
+- [ ] ";        
     
     // ReSharper disable once UseRawString
     private const string CodeBlockInsertable = @"
 
 ```
 
-```
-";  
+```";  
     
     private async Task OnToggleInteractiveModeClickAsync(MouseEventArgs obj) {
         EditorContext.IsInteractive = !EditorContext.IsInteractive;

@@ -14,7 +14,6 @@ namespace InfiniLore.InfiniBlazor.Markdown.Editors.TextModifiers;
 public class StrikeModifier(ILogger<StrikeModifier> logger) : SingleInstructionModifiers(logger) {
     public const string Name = "strike";
     
-    public override string IconName { get; } = "strikethrough";
     public override string ModifierName { get; } = Name;
     protected override string Instruction { get; } = "~";
 }

@@ -14,7 +14,6 @@ namespace InfiniLore.InfiniBlazor.Markdown.Editors.TextModifiers;
 public class UnderlineModifier(ILogger<UnderlineModifier> logger) : SingleInstructionModifiers(logger) {
     public const string Name = "underline";
     
-    public override string IconName { get; } = "underline";
     public override string ModifierName { get; } = Name;
     protected override string Instruction { get; } = "_";
 }

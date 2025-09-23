@@ -14,7 +14,6 @@ namespace InfiniLore.InfiniBlazor.Markdown.Editors.TextModifiers;
 public class BoldModifier(ILogger<BoldModifier> logger) : SingleInstructionModifiers(logger) {
     public const string Name = "bold";
     
-    public override string IconName { get; } = "bold";
     public override string ModifierName { get; } = Name;
     protected override string Instruction { get; } = "**";
 }
