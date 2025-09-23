@@ -11,6 +11,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Json.NodeVisitors;
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class ImageJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<ImageMdSyntaxNode> {
     private static readonly string Href = nameof(ImageMdSyntaxNode.Href).ToCamelCase();
+    private static readonly string Title = nameof(ImageMdSyntaxNode.Title).ToCamelCase();
     private static readonly string AltText = nameof(AltText).ToCamelCase();
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -20,6 +21,7 @@ public sealed class ImageJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<Image
         base.DeserializeDetails(node, writer);
 
         writer.WriteString(Href, node.Href);
+        writer.WriteString(Title, node.Title);
         writer.WriteString(AltText, node.OriginalAltText);
     }
 
@@ -32,6 +34,10 @@ public sealed class ImageJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<Image
 
         if (element.TryGetProperty(Href, out JsonElement hrefProperty)) {
             targetNode.WithHref(hrefProperty.GetString() ?? string.Empty);
+        }
+
+        if (element.TryGetProperty(Title, out JsonElement titleProperty)) {
+            targetNode.WithTitle(titleProperty.GetString() ?? string.Empty);
         }
     }
 

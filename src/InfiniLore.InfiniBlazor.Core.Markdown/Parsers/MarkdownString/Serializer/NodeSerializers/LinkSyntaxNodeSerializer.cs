@@ -38,6 +38,7 @@ public static class LinkSyntaxNodeSerializer  {
             imgNode.WithHref(linkHref);
             
             if (mods.IsNotNullOrWhiteSpace()) imgNode.WithModifier(MdSyntaxNodeModifier.FromString(mods));
+            if (title.IsNotNullOrEmpty()) imgNode.WithTitle(title);
             
             parentNode.AddChildNode(imgNode);
             return ;
@@ -46,6 +47,7 @@ public static class LinkSyntaxNodeSerializer  {
         LinkMdSyntaxNode linkNode = LinkMdSyntaxNode.Pool.Get();
         linkNode.WithHref(linkHref);
         if (mods.IsNotNullOrWhiteSpace()) linkNode.WithModifier(MdSyntaxNodeModifier.FromString(mods));
+        if (title.IsNotNullOrEmpty()) linkNode.WithTitle(title);
         
         parentNode.AddChildNode(linkNode);
         stack.PushSingleLineMatchesToStack(linkText, linkNode);

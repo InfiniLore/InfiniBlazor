@@ -16,6 +16,7 @@
 <img
     src="@SyntaxNode.Href"
     class="inline-block rounded-lg shadow-lg h-full w-auto object-contain"
+    title="@GetTitle()"
     alt="@SyntaxNode.NormalizedAltText"
     @attributes="GetExtraModifiers()"
 >
@@ -37,6 +38,11 @@
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
 
+    private string? GetTitle() {
+        if (SyntaxNode.Title.IsNotNullOrWhiteSpace()) return SyntaxNode.Title;
+        if (SyntaxNode.Modifier != null && SyntaxNode.Modifier.TryGetTitle(out string? title)) return title;
+        return null;   
+    }
     // ReSharper disable UnusedParameter.Local
     private Dictionary<string, object> GetExtraModifiers() {
         var dict = new Dictionary<string, object>();

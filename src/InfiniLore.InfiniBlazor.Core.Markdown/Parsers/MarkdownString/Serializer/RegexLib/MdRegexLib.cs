@@ -28,7 +28,7 @@ public static partial class MdRegexLib {
             \[(?<lnText> (?:\ *!?\[.+?\]\(.+?\)\ *)|(?:[^\\\]]|\\\]|\\[^\]])*?)\]
             \(
               (?<lnHref>\ *https?[^\)\ |]+?)
-              (?:\ ?""(?<lnTitle>.+)"")?
+              (?:\ ?\"(?<lnTitle>.+)\")?
               (?<lnMods>\|.*)?
             \)
           )
