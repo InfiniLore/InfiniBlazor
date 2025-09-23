@@ -1106,6 +1106,96 @@ something
   ]
 }</ExpectedJsonString>
   </MdTestData>
+  <MdTestData Id="taskWithInapplicable" FileName="list_unordered.xml">
+    <MdString>- [~] something this does not work
+- [ ] empty
+- [x] checked
+- [X] checked</MdString>
+    <MdSyntaxTree>
+      <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
+        <ListItemMdSyntaxNode CheckMarker="~" Index="" LeadingSpaces="1" CheckLeadingSpaces="1">
+          <TextMdSyntaxNode xml:space="preserve">something this does not work</TextMdSyntaxNode>
+        </ListItemMdSyntaxNode>
+        <ListItemMdSyntaxNode CheckMarker=" " Index="" LeadingSpaces="1" CheckLeadingSpaces="1">
+          <TextMdSyntaxNode xml:space="preserve">empty</TextMdSyntaxNode>
+        </ListItemMdSyntaxNode>
+        <ListItemMdSyntaxNode CheckMarker="x" Index="" LeadingSpaces="1" CheckLeadingSpaces="1">
+          <TextMdSyntaxNode xml:space="preserve">checked</TextMdSyntaxNode>
+        </ListItemMdSyntaxNode>
+        <ListItemMdSyntaxNode CheckMarker="X" Index="" LeadingSpaces="1" CheckLeadingSpaces="1">
+          <TextMdSyntaxNode xml:space="preserve">checked</TextMdSyntaxNode>
+        </ListItemMdSyntaxNode>
+      </ListUnOrderedMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;ul&gt;&lt;li&gt;&lt;input type="checkbox" disabled/&gt;something this does not work&lt;/li&gt;&lt;li&gt;&lt;input type="checkbox" disabled/&gt;empty&lt;/li&gt;&lt;li&gt;&lt;input type="checkbox" disabled checked/&gt;checked&lt;/li&gt;&lt;li&gt;&lt;input type="checkbox" disabled checked/&gt;checked&lt;/li&gt;&lt;/ul&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>- [~] something this does not work
+- [ ] empty
+- [x] checked
+- [X] checked</ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ListUnOrderedMdSyntaxNode",
+      "leadingSpaces": 0,
+      "children": [
+        {
+          "type": "ListItemMdSyntaxNode",
+          "checkMarker": "~",
+          "index": "",
+          "leadingSpaces": 1,
+          "checkLeadingSpaces": 1,
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "something this does not work"
+            }
+          ]
+        },
+        {
+          "type": "ListItemMdSyntaxNode",
+          "checkMarker": " ",
+          "index": "",
+          "leadingSpaces": 1,
+          "checkLeadingSpaces": 1,
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "empty"
+            }
+          ]
+        },
+        {
+          "type": "ListItemMdSyntaxNode",
+          "checkMarker": "x",
+          "index": "",
+          "leadingSpaces": 1,
+          "checkLeadingSpaces": 1,
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "checked"
+            }
+          ]
+        },
+        {
+          "type": "ListItemMdSyntaxNode",
+          "checkMarker": "X",
+          "index": "",
+          "leadingSpaces": 1,
+          "checkLeadingSpaces": 1,
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "checked"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
+  </MdTestData>
   <MdTestData Id="taskWithRelatedParagraph" FileName="list_unordered.xml">
     <MdString>- Normal item
 - [ ] Task item without sublist
