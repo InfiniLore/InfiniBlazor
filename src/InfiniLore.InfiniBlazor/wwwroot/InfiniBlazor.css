@@ -1117,6 +1117,12 @@
   .columns-4 {
     columns: 4;
   }
+  .auto-cols-auto {
+    grid-auto-columns: auto;
+  }
+  .auto-rows-auto {
+    grid-auto-rows: auto;
+  }
   .grid-cols-1 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
@@ -1140,6 +1146,9 @@
   }
   .grid-cols-\[repeat\(auto-fit\,minmax\(0\,1fr\)\)\] {
     grid-template-columns: repeat(auto-fit,minmax(0,1fr));
+  }
+  .grid-cols-\[repeat\(auto-fit\,minmax\(2rem\,1fr\)\)\] {
+    grid-template-columns: repeat(auto-fit,minmax(2rem,1fr));
   }
   .grid-rows-1 {
     grid-template-rows: repeat(1, minmax(0, 1fr));
@@ -1296,6 +1305,15 @@
   .overflow-x-auto {
     overflow-x: auto;
   }
+  .overflow-x-clip {
+    overflow-x: clip;
+  }
+  .overflow-x-hidden {
+    overflow-x: hidden;
+  }
+  .overflow-x-visible {
+    overflow-x: visible;
+  }
   .overflow-y-auto {
     overflow-y: auto;
   }
@@ -1304,6 +1322,9 @@
   }
   .overflow-y-scroll {
     overflow-y: scroll;
+  }
+  .overflow-y-visible {
+    overflow-y: visible;
   }
   .rounded {
     border-radius: 0.25rem;
@@ -1347,6 +1368,10 @@
   .rounded-l-2xl {
     border-top-left-radius: var(--radius-2xl);
     border-bottom-left-radius: var(--radius-2xl);
+  }
+  .rounded-l-lg {
+    border-top-left-radius: var(--radius-lg);
+    border-bottom-left-radius: var(--radius-lg);
   }
   .rounded-l-md {
     border-top-left-radius: var(--radius-md);
@@ -3028,6 +3053,26 @@
       width: calc(var(--spacing) * 150);
     }
   }
+  .sm\:overflow-x-auto {
+    @media (width >= 40rem) {
+      overflow-x: auto;
+    }
+  }
+  .sm\:overflow-x-hidden {
+    @media (width >= 40rem) {
+      overflow-x: hidden;
+    }
+  }
+  .sm\:overflow-y-auto {
+    @media (width >= 40rem) {
+      overflow-y: auto;
+    }
+  }
+  .sm\:overflow-y-hidden {
+    @media (width >= 40rem) {
+      overflow-y: hidden;
+    }
+  }
   .md\:col-span-2 {
     @media (width >= 48rem) {
       grid-column: span 2 / span 2;
@@ -3068,6 +3113,11 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
+  .md\:grid-cols-\[1fr_auto\] {
+    @media (width >= 48rem) {
+      grid-template-columns: 1fr auto;
+    }
+  }
   .md\:grid-rows-\[auto_1fr_auto\] {
     @media (width >= 48rem) {
       grid-template-rows: auto 1fr auto;
@@ -3076,6 +3126,57 @@
   .md\:flex-row {
     @media (width >= 48rem) {
       flex-direction: row;
+    }
+  }
+  .md\:flex-wrap {
+    @media (width >= 48rem) {
+      flex-wrap: wrap;
+    }
+  }
+  .md\:overflow-visible {
+    @media (width >= 48rem) {
+      overflow: visible;
+    }
+  }
+  .md\:overflow-x-auto {
+    @media (width >= 48rem) {
+      overflow-x: auto;
+    }
+  }
+  .md\:overflow-x-scroll {
+    @media (width >= 48rem) {
+      overflow-x: scroll;
+    }
+  }
+  .md\:overflow-x-visible {
+    @media (width >= 48rem) {
+      overflow-x: visible;
+    }
+  }
+  .md\:overflow-y-clip {
+    @media (width >= 48rem) {
+      overflow-y: clip;
+    }
+  }
+  .md\:overflow-y-hidden {
+    @media (width >= 48rem) {
+      overflow-y: hidden;
+    }
+  }
+  .md\:overflow-y-scroll {
+    @media (width >= 48rem) {
+      overflow-y: scroll;
+    }
+  }
+  .md\:overflow-y-visible {
+    @media (width >= 48rem) {
+      overflow-y: visible;
+    }
+  }
+  .md\:rounded-t-lg {
+    @media (width >= 48rem) {
+      border-top-left-radius: var(--radius-lg);
+      border-top-right-radius: var(--radius-lg);
     }
   }
   .lg\:w-full {
