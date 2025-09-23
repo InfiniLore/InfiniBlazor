@@ -38,6 +38,11 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
                 break;
             }
 
+            case HighlightMdSyntaxNode: {
+                builder.Append("<mark>");
+                break;
+            }
+
             case CodeBlockMdSyntaxNode {Language: var lang} when lang.IsNotNullOrWhiteSpace(): {
                 builder.Append("<div class=\"flex overflow-hidden min-h-0\">");
                 builder.Append("<div class=\"relative infini-bg-(--codeblock) text-(--color-base-20) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar\">");
@@ -410,6 +415,11 @@ public sealed class StyledMdSyntaxNodeVisitor(IEmoteProvider emoteProvider, ILuc
 
             case BoldMdSyntaxNode: {
                 builder.Append("</strong>");
+                break;
+            }
+
+            case HighlightMdSyntaxNode: {
+                builder.Append("</mark>");
                 break;
             }
 

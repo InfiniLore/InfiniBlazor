@@ -19,6 +19,7 @@ public static partial class MdRegexLib {
         | (?<code>(?<open>`+)(?<c>(?>[^`\\]+|\\.|`(?!\k<open>))+?)\k<open>)
         | (?<strike>~~(?<s>(?>[^\\~]+|\\~|~|(?<open>~~)|(?<-open>~~))+?~?)(?(open)(?!))~~)
         | (?<underline>_(?<u>.+?)(?<!\\)_)
+        | (?<highlight>==(?<h>.+?)(?<!\\)==)
         | (?<emote>:(?<e>[\p{L}\p{N}\-_]+):)
         | (?<wikiLink>\[\[(?<wHref>[^\]\[\ ]+)\]\])
         | (?<template>(?<!\])(?<open>\{)+(?<t>[^\s{}]+)(?<-open>\})+(?(open)(?!)))

@@ -42,6 +42,7 @@ public static class InfiniBlazorMarkdownConfigExtensions {
         config.RegisterMdBlazorComponent<TemplateMdSyntaxNode, MdInfiniTemplate>();
         config.RegisterMdBlazorComponent<FootnoteReferenceMdSyntaxNode, MdInfiniFootnoteReference>();
         config.RegisterMdBlazorComponent<FootnoteDescriptionMdSyntaxNode, MdInfiniFootnoteDescription>();
+        config.RegisterMdBlazorComponent<HighlightMdSyntaxNode, MdInfiniHighlight>();
         // config.RegisterBlazorComponent<NewLineMdSyntaxNode, MdInfiniNewLine>(); // Not implemented well yet, only as an example
         
         return config;

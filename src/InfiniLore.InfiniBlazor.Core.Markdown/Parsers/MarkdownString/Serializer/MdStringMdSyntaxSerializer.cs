@@ -46,6 +46,7 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
         [MdRegexGroupNames.Template] = TemplateSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.FootnoteReference] = FootnoteReferenceSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.FootnoteDescription] = FootnoteDescriptionSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.Highlight] = HighlightSyntaxNodeSerializer.Serialize,
     }.ToFrozenDictionary();
     
     // -----------------------------------------------------------------------------------------------------------------
