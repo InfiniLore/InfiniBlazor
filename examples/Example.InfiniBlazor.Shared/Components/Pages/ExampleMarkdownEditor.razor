@@ -3,33 +3,35 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor
 @using InfiniLore.InfiniBlazor.Markdown
-@using InfiniLore.InfiniBlazor.Markdown.Editors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@page "/markdown-dual"
+@page "/markdown-editor"
 @rendermode InfiniRenderModeProvider.InfiniRenderMode
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniPage Title="Markdown Editor" Class="p-4 w-full">
-    <InfiniSection Class="grow flex flex-col gap-2 overflow-auto infini-scrollbar h-128 w-full">
-        <InfiniHeading1>Markdown Editor Example</InfiniHeading1>
-        <InfiniMarkdownEditor Source="@TextSource0"/>
+    <InfiniSection Class="grow flex flex-col gap-2 overflow-auto infini-scrollbar min-h-128 w-full">
+        <InfiniHeading1>Markdown Editor 2</InfiniHeading1>
+        <InfiniMarkdownEditor @bind-EditorContext="Context">
+            <ToolbarBottom>
+                <InfiniMdEditorToolNodeCounter/>
+                <InfiniMdEditorToolWordCounter/>
+            </ToolbarBottom>
+        </InfiniMarkdownEditor>
+        <hr class="my-4 border-t border-(--border)"/>
+        <InfiniCodeBlock @bind-Content="Context.Content" Language="markdown" />
     </InfiniSection>
-
-    @* <InfiniSection Class="flex flex-col gap-2 overflow-auto infini-scrollbar h-128"> *@
-    @*     <InfiniHeading1>Markdown Editor Example</InfiniHeading1> *@
-    @*     <InfiniMarkdownEditor @bind-Content="@TextContent1" ShowSidePreview="@false"/> *@
-    @* </InfiniSection> *@
 </InfiniPage>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private ITextSource TextSource0 { get; set; } = new TextSource();
-    // private ITextSource TextSource1 { get; set; } = new TextSource {
-    //     Text = "Some Initial text..."
-    // };
+    public MdEditorContext Context = new() {
+        IsInteractive = true,
+        Content = "- [ ] something"
+    };
+    // public string? Content { get; set; } = "- [ ] something";
 }
 

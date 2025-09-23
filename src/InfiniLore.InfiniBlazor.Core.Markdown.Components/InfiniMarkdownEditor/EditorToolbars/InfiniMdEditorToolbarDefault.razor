@@ -26,15 +26,19 @@
 <InfiniSpacerHorizontal Spacing="Size.M"/>
 
 <InfiniMdEditorToolButtonInsert IconName="@LucideNames.Link" Insertable="[ ]( )" Tooltip="Link"/>
-<InfiniMdEditorToolButtonInsert IconName="@LucideNames.Table" Insertable="@TableInsertable" Tooltip="Link"/>
-<InfiniMdEditorToolButtonInsert IconName="@LucideNames.TextQuote" Insertable="@BlockQuoteInsertable" Tooltip="Blockquote"/>
-<InfiniMdEditorToolButtonInsert IconName="@LucideNames.Quote" Insertable="@CalloutInsertable" Tooltip="Callout"/>
-<InfiniMdEditorToolButtonInsert IconName="@LucideNames.List" Insertable="@ListInsertable" Tooltip="Unordered List"/>
-<InfiniMdEditorToolButtonInsert IconName="@LucideNames.ListOrdered" Insertable="@ListOrderedInsertable" Tooltip="Ordered List"/>
-<InfiniMdEditorToolButtonInsert IconName="@LucideNames.ListTodo" Insertable="@ListTaskInsertable" Tooltip="Task List"/>
-<InfiniMdEditorToolButtonInsert IconName="@LucideNames.Binary" Insertable="@CodeBlockInsertable" Tooltip="Code block"/>
+<InfiniMdEditorToolButtonInsert IconName="@LucideNames.Table" Insertable="@DefaultInsertableTexts.TableInsertable" Tooltip="Link"/>
+<InfiniMdEditorToolButtonInsert IconName="@LucideNames.TextQuote" Insertable="@DefaultInsertableTexts.BlockQuoteInsertable" Tooltip="Blockquote"/>
+<InfiniMdEditorToolButtonInsert IconName="@LucideNames.Quote" Insertable="@DefaultInsertableTexts.CalloutInsertable" Tooltip="Callout"/>
+<InfiniMdEditorToolButtonInsert IconName="@LucideNames.List" Insertable="@DefaultInsertableTexts.ListInsertable" Tooltip="Unordered List"/>
+<InfiniMdEditorToolButtonInsert IconName="@LucideNames.ListOrdered" Insertable="@DefaultInsertableTexts.ListOrderedInsertable" Tooltip="Ordered List"/>
+<InfiniMdEditorToolButtonInsert IconName="@LucideNames.ListTodo" Insertable="@DefaultInsertableTexts.ListTaskInsertable" Tooltip="Task List"/>
+<InfiniMdEditorToolButtonInsert IconName="@LucideNames.Binary" Insertable="@DefaultInsertableTexts.CodeBlockInsertable" Tooltip="Code block"/>
 
 @if (VisualDebugger.IsEnabled()) {
+    <InfiniSpacer/>
+    <InfiniMdEditorToolButtonInsert IconName="@LucideNames.BookA" Insertable="@DefaultInsertableTexts.LoremText" Tooltip="Lorem Ipsum Text"/>
+    <InfiniMdEditorToolButtonInsert IconName="@LucideNames.Album" Insertable="@DefaultInsertableTexts.MarkdownText" Tooltip="Lorem Ipsum Text"/>
+    <InfiniMdEditorToolButtonInsert IconName="@LucideNames.Captions" Insertable="@DefaultInsertableTexts.MarkdownCallout" Tooltip="Lorem Ipsum Text"/>
     <InfiniSpacer/>
     <InfiniButtonTransparent Color="Color.Red" IconName="@LucideNames.Plus" OnClick="@OnToggleLockedClickAsync"/>
     <InfiniButtonTransparent Color="Color.Red" IconName="@LucideNames.Minus" OnClick="@OnToggleInteractiveModeClickAsync"/>
@@ -46,56 +50,6 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     [CascadingParameter] protected MdEditorContext EditorContext { get; set; } = null!;
-
-    // ReSharper disable once UseRawString
-    private const string TableInsertable = @"
-
-| Column 1 | Column 2 | Column 3 |
-| -------- | -------- | -------- |
-|          |          |          |
-";
-    
-    // ReSharper disable once UseRawString
-    private const string BlockQuoteInsertable = @"
-
-> 
-> 
-> ";
-    
-    // ReSharper disable once UseRawString
-    private const string CalloutInsertable = @"
-
->[!note] 
-> 
-> ";   
-    
-    // ReSharper disable once UseRawString
-    private const string ListInsertable = @"
-
-- 
-- 
-- ";      
-    
-    // ReSharper disable once UseRawString
-    private const string ListOrderedInsertable = @"
-
-1. 
-2. 
-3. ";      
-    
-    // ReSharper disable once UseRawString
-    private const string ListTaskInsertable = @"
-
-- [ ] 
-- [ ] 
-- [ ] ";        
-    
-    // ReSharper disable once UseRawString
-    private const string CodeBlockInsertable = @"
-
-```
-
-```";  
     
     private async Task OnToggleInteractiveModeClickAsync(MouseEventArgs obj) {
         EditorContext.IsInteractive = !EditorContext.IsInteractive;

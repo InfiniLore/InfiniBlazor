@@ -5,7 +5,55 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class InfiniMarkdownEditorDebugInserts {
+public static class DefaultInsertableTexts {
+    public const string TableInsertable = """
+        | Column 1 | Column 2 | Column 3 |
+        | -------- | -------- | -------- |
+        |          |          |          |
+
+        """;
+    
+    public const string BlockQuoteInsertable = """
+        > 
+        > 
+        > 
+        
+        """;
+    
+    public const string CalloutInsertable = """
+        >[!note] 
+        > 
+        > 
+        """;   
+    
+    public const string ListInsertable = """
+        - 
+        - 
+        - 
+        
+        """;      
+    
+    public const string ListOrderedInsertable = """
+        1. 
+        2. 
+        3. 
+        
+        """;      
+    
+    public const string ListTaskInsertable = """
+        - [ ] 
+        - [ ] 
+        - [ ] 
+        
+        """;        
+    
+    public const string CodeBlockInsertable = """
+        ```
+
+        ```
+        
+        """;  
+    
     public const string LoremText = """
         Lorem ipsum dolor
         sit amet, consectetur
@@ -32,13 +80,7 @@ public static class InfiniMarkdownEditorDebugInserts {
         deserunt mollit anim id
         est laborum.
         """;
-
-    public const string TableText = """
-        | test  | something |
-        | ----- | --------- |
-        | alpha | beta      |
-        """;
-
+    
     public const string MarkdownText = """
         # Heading 1
         ## Heading 2
@@ -117,25 +159,25 @@ public static class InfiniMarkdownEditorDebugInserts {
         """ + MarkdownCallout;
 
     public const string MarkdownCallout = """
-        > [!note] Title
+        >[!note] Title
         > Body
         
-        > [!warning] Title
+        >[!warning] Title
         > Body
         
-        > [!tip] Title
+        >[!tip] Title
         > Body
         
-        > [!danger] Title
+        >[!danger] Title
         > Body
         
-        > [!info] Title
+        >[!info] Title
         > Body
         
-        > [!success] Title
+        >[!success] Title
         > Body
         
-        > [!unknown|icon=signature] Title
+        >[!unknown|icon=signature] Title
         > Body
         """;
 }
