@@ -17,11 +17,11 @@ public class EmoteProviderTests(IEmoteProvider provider) {
     [Test]
     public async Task CountShouldReturnExpected() {
         // Arrange
-        const int expectedMinCount = 1600; // Lucide has around 1600 icons and those should all be loaded.
-        
+        const int expectedMinCount = 1600;// Lucide has around 1600 icons and those should all be loaded.
+
         // Act
         int result = provider.Count;
-        
+
         // Assert
         await Assert.That(result).IsGreaterThanOrEqualTo(expectedMinCount);
     }
@@ -41,6 +41,12 @@ public class EmoteProviderTests(IEmoteProvider provider) {
             ["flag-transgender", "flag-trans"],
             "\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f",
             EmoteContentType.Emoji
+        ));
+
+        yield return () => ("ducky-trans", true, new EmoteEntry(
+            ["ducky-trans"],
+            "InfiniLore.InfiniBlazor.wwwroot.libs.emotes.assets.ducky-trans.png",
+            EmoteContentType.ResourcePathPng
         ));
     }
 

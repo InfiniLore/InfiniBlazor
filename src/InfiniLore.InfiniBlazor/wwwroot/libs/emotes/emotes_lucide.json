@@ -113,14 +113,6 @@
   },
   {
     "keys": [
-      "lialigncenter",
-      "li-align-center"
-    ],
-    "data": "align-center",
-    "contentType": "LucideIconName"
-  },
-  {
-    "keys": [
       "lialigncenterhorizontal",
       "li-align-center-horizontal"
     ],
@@ -213,30 +205,6 @@
       "li-align-horizontal-space-between"
     ],
     "data": "align-horizontal-space-between",
-    "contentType": "LucideIconName"
-  },
-  {
-    "keys": [
-      "lialignjustify",
-      "li-align-justify"
-    ],
-    "data": "align-justify",
-    "contentType": "LucideIconName"
-  },
-  {
-    "keys": [
-      "lialignleft",
-      "li-align-left"
-    ],
-    "data": "align-left",
-    "contentType": "LucideIconName"
-  },
-  {
-    "keys": [
-      "lialignright",
-      "li-align-right"
-    ],
-    "data": "align-right",
     "contentType": "LucideIconName"
   },
   {
@@ -4465,6 +4433,14 @@
   },
   {
     "keys": [
+      "lievcharger",
+      "li-ev-charger"
+    ],
+    "data": "ev-charger",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
       "liexpand",
       "li-expand"
     ],
@@ -6369,6 +6345,14 @@
   },
   {
     "keys": [
+      "lihouseheart",
+      "li-house-heart"
+    ],
+    "data": "house-heart",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
       "lihouseplug",
       "li-house-plug"
     ],
@@ -6509,22 +6493,6 @@
       "li-inbox"
     ],
     "data": "inbox",
-    "contentType": "LucideIconName"
-  },
-  {
-    "keys": [
-      "liindentdecrease",
-      "li-indent-decrease"
-    ],
-    "data": "indent-decrease",
-    "contentType": "LucideIconName"
-  },
-  {
-    "keys": [
-      "liindentincrease",
-      "li-indent-increase"
-    ],
-    "data": "indent-increase",
     "contentType": "LucideIconName"
   },
   {
@@ -6881,14 +6849,6 @@
   },
   {
     "keys": [
-      "lilettertext",
-      "li-letter-text"
-    ],
-    "data": "letter-text",
-    "contentType": "LucideIconName"
-  },
-  {
-    "keys": [
       "lilibrary",
       "li-library"
     ],
@@ -7001,6 +6961,22 @@
   },
   {
     "keys": [
+      "lilistchevronsdownup",
+      "li-list-chevrons-down-up"
+    ],
+    "data": "list-chevrons-down-up",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
+      "lilistchevronsupdown",
+      "li-list-chevrons-up-down"
+    ],
+    "data": "list-chevrons-up-down",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
       "lilistcollapse",
       "li-list-collapse"
     ],
@@ -7029,6 +7005,22 @@
       "li-list-filter-plus"
     ],
     "data": "list-filter-plus",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
+      "lilistindentdecrease",
+      "li-list-indent-decrease"
+    ],
+    "data": "list-indent-decrease",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
+      "lilistindentincrease",
+      "li-list-indent-increase"
+    ],
+    "data": "list-indent-increase",
     "contentType": "LucideIconName"
   },
   {
@@ -11721,10 +11713,34 @@
   },
   {
     "keys": [
-      "litext",
-      "li-text"
+      "litextaligncenter",
+      "li-text-align-center"
     ],
-    "data": "text",
+    "data": "text-align-center",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
+      "litextalignend",
+      "li-text-align-end"
+    ],
+    "data": "text-align-end",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
+      "litextalignjustify",
+      "li-text-align-justify"
+    ],
+    "data": "text-align-justify",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
+      "litextalignstart",
+      "li-text-align-start"
+    ],
+    "data": "text-align-start",
     "contentType": "LucideIconName"
   },
   {
@@ -11741,6 +11757,14 @@
       "li-text-cursor-input"
     ],
     "data": "text-cursor-input",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
+      "litextinitial",
+      "li-text-initial"
+    ],
+    "data": "text-initial",
     "contentType": "LucideIconName"
   },
   {
@@ -11765,6 +11789,14 @@
       "li-text-select"
     ],
     "data": "text-select",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
+      "litextwrap",
+      "li-text-wrap"
+    ],
+    "data": "text-wrap",
     "contentType": "LucideIconName"
   },
   {
@@ -12997,14 +13029,6 @@
       "li-worm"
     ],
     "data": "worm",
-    "contentType": "LucideIconName"
-  },
-  {
-    "keys": [
-      "liwraptext",
-      "li-wrap-text"
-    ],
-    "data": "wrap-text",
     "contentType": "LucideIconName"
   },
   {
