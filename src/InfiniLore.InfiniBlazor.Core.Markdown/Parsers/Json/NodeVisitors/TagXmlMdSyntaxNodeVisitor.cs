@@ -17,13 +17,13 @@ public sealed class TagJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<TagMdSy
     // -----------------------------------------------------------------------------------------------------------------
     protected override void DeserializeDetails(TagMdSyntaxNode node, Utf8JsonWriter writer) {
         base.DeserializeDetails(node, writer);
-        
+
         writer.WriteString(Content, node.Content);
     }
 
     protected override void SerializeDetails(JsonElement element, TagMdSyntaxNode targetNode) {
         base.SerializeDetails(element, targetNode);
-        
+
         if (element.TryGetProperty(Content, out JsonElement contentProperty)) {
             targetNode.WithContent(contentProperty.GetString() ?? string.Empty);
         }

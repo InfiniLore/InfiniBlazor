@@ -14,7 +14,7 @@ public readonly record struct MdSyntaxFragment(IMdSyntaxNode? ParentNode, IMdSyn
     // -----------------------------------------------------------------------------------------------------------------
     public static MdSyntaxFragment AsUnhandledMatch(Match match, IMdSyntaxNode node)
         => new(node, null, match);
-    
-    public static MdSyntaxFragment AsProcessedNode(IMdSyntaxNode parentNode, IMdSyntaxNode childNode) 
+
+    public static MdSyntaxFragment AsProcessedNode(IMdSyntaxNode parentNode, IMdSyntaxNode childNode)
         => new(parentNode, childNode, null);
 }

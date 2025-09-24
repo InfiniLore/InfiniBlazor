@@ -15,4 +15,3 @@ public sealed class UnderlineSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeseri
         builder.Append('_');
     }
 }
-

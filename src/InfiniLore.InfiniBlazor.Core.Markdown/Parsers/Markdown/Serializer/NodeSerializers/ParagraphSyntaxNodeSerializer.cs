@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class ParagraphSyntaxNodeSerializer  {
+public static class ParagraphSyntaxNodeSerializer {
     private static readonly int PId = MdRegexLib.GetGroupId(MdRegexGroupNames.ParagraphContent);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

@@ -10,14 +10,13 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class CalloutSyntaxNodeSerializer  {
-    // private static readonly int CalloutId = MdRegexLib.GetGroupId(MdRegexGroupNames.Callout);
+public static class CalloutSyntaxNodeSerializer {
     private static readonly int CalloutTypeId = MdRegexLib.GetGroupId(MdRegexGroupNames.CalloutType);
     private static readonly int CalloutModId = MdRegexLib.GetGroupId(MdRegexGroupNames.CalloutMod);
     private static readonly int CalloutTitleId = MdRegexLib.GetGroupId(MdRegexGroupNames.CalloutTitle);
     private static readonly int CalloutBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.CalloutBody);
     private static readonly int CalloutOptionId = MdRegexLib.GetGroupId(MdRegexGroupNames.CalloutOption);
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -29,14 +28,14 @@ public static class CalloutSyntaxNodeSerializer  {
         CalloutMdSyntaxNode node = CalloutMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
 
-        if (match.Groups[CalloutOptionId] is { Success: true, ValueSpan: {Length: > 0} option }) {
+        if (match.Groups[CalloutOptionId] is { Success: true, ValueSpan: { Length: > 0 } option }) {
             node.WithExpandOption(option);
         }
 
         if (match.Groups[CalloutTypeId] is { Success: true, Value: {} typeName }) {
             node.WithCalloutType(typeName);
         }
-        
+
         if (match.Groups[CalloutModId] is { Success: true, Value: {} mods }) {
             node.WithModifier(MdSyntaxNodeModifier.FromString(mods));
         }
@@ -44,7 +43,7 @@ public static class CalloutSyntaxNodeSerializer  {
         if (match.Groups[CalloutTitleId] is { Success: true, Value: {} title }) {
             CalloutTitleMdSyntaxNode titleNode = CalloutTitleMdSyntaxNode.Pool.Get();
             node.TrySetTitle(titleNode);
-            
+
             stack.PushSingleLineMatchesToStack(title, titleNode);
         }
 
@@ -52,7 +51,7 @@ public static class CalloutSyntaxNodeSerializer  {
         if (match.Groups[CalloutBodyId] is { Success: true, ValueSpan: var calloutBody }) {
             CalloutBodyMdSyntaxNode bodyNode = CalloutBodyMdSyntaxNode.Pool.Get();
             node.TrySetBody(bodyNode);
-            
+
             stack.PushMultiLineMatchesToStack(
                 LineNormalization.NormalizeBlockQuote(calloutBody, out _),
                 bodyNode

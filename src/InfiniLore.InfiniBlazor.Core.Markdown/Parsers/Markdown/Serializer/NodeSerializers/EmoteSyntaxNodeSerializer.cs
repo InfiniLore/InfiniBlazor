@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 public static class EmoteSyntaxNodeSerializer {
     private static readonly int EmoteBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.EmoteContent);
     private static readonly int EmoteId = MdRegexLib.GetGroupId(MdRegexGroupNames.Emote);
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -21,9 +21,9 @@ public static class EmoteSyntaxNodeSerializer {
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (match.Groups[EmoteId] is not {Success: true, Value: var originalEmote}) return ;
-        if (match.Groups[EmoteBodyId] is not {Success: true, Value: var emoteBody}) return ;
-        
+        if (match.Groups[EmoteId] is not { Success: true, Value: var originalEmote }) return;
+        if (match.Groups[EmoteBodyId] is not { Success: true, Value: var emoteBody }) return;
+
         EmoteMdSyntaxNode node = EmoteMdSyntaxNode.Pool.Get();
         node.WithOriginalEmote(originalEmote)
             .WithEmoteKey(emoteBody);

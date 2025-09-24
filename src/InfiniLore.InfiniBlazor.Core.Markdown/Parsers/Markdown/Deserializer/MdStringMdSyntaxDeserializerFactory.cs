@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Frozen;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Deserializer;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -54,9 +53,8 @@ public static class MdStringMdSyntaxDeserializerFactory {
             .Register<FootnoteReferenceMdSyntaxNode, FootnoteReferenceSyntaxNodeDeserializer>(instance)
             .Register<FootnoteDescriptionMdSyntaxNode, FootnoteDescriptionSyntaxNodeDeserializer>(instance)
             .Register<HighlightMdSyntaxNode, HighlightSyntaxNodeDeserializer>(instance)
-            .Register<WrapperMdSyntaxNode, WrapperSyntaxNodeDeserializer>(instance)
-        ;
-        
+            .Register<WrapperMdSyntaxNode, WrapperSyntaxNodeDeserializer>(instance);
+
         instance.Deserializers = deserializers.ToFrozenDictionary();
         return instance;
     }

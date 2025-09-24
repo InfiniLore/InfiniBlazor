@@ -9,9 +9,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class SubScriptSyntaxNodeSerializer  {
+public static class SubScriptSyntaxNodeSerializer {
     private static readonly int SbId = MdRegexLib.GetGroupId(MdRegexGroupNames.SubScriptContent);
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ public static class SubScriptSyntaxNodeSerializer  {
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[SbId].TryGetValue(out string? subValue)) return ;
+        if (!match.Groups[SbId].TryGetValue(out string? subValue)) return;
 
         SubScriptMdSyntaxNode node = SubScriptMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);

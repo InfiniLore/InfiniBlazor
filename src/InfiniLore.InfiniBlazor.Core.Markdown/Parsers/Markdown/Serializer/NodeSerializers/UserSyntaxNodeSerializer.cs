@@ -9,9 +9,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class UserSyntaxNodeSerializer  {
+public static class UserSyntaxNodeSerializer {
     private static readonly int UsernameId = MdRegexLib.GetGroupId(MdRegexGroupNames.UserName);
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ public static class UserSyntaxNodeSerializer  {
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[UsernameId].TryGetValue(out string? username)) return ;
+        if (!match.Groups[UsernameId].TryGetValue(out string? username)) return;
 
         UserMdSyntaxNode node = UserMdSyntaxNode.Pool.Get();
         node.WithContent(username);

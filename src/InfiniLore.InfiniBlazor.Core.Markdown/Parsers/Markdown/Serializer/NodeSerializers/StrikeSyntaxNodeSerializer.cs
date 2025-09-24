@@ -9,9 +9,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class StrikeSyntaxNodeSerializer  {
+public static class StrikeSyntaxNodeSerializer {
     private static readonly int StrikeContentId = MdRegexLib.GetGroupId(MdRegexGroupNames.StrikeContent);
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -20,11 +20,11 @@ public static class StrikeSyntaxNodeSerializer  {
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[StrikeContentId].TryGetValue(out string? strikeValue)) return ;
-        
+        if (!match.Groups[StrikeContentId].TryGetValue(out string? strikeValue)) return;
+
         StrikeMdSyntaxNode node = StrikeMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
-        
+
         stack.PushSingleLineMatchesToStack(strikeValue, node);
     }
 }

@@ -11,7 +11,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 // ---------------------------------------------------------------------------------------------------------------------
 public static class FootnoteReferenceSyntaxNodeSerializer {
     private static readonly int FootnoteIdentifierId = MdRegexLib.GetGroupId(MdRegexGroupNames.FootnoteReferenceIdentifier);
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -20,8 +20,8 @@ public static class FootnoteReferenceSyntaxNodeSerializer {
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (match.Groups[FootnoteIdentifierId] is not {Success: true, Value: var footnoteId}) return ;
-        
+        if (match.Groups[FootnoteIdentifierId] is not { Success: true, Value: var footnoteId }) return;
+
         FootnoteReferenceMdSyntaxNode node = FootnoteReferenceMdSyntaxNode.Pool.Get();
         node.WithIdentifier(footnoteId);
         parentNode.AddChildNode(node);

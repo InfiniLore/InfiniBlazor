@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class HeadingSimpleSyntaxNodeSerializer  {
+public static class HeadingSimpleSyntaxNodeSerializer {
     private static readonly int HsTextId = MdRegexLib.GetGroupId(MdRegexGroupNames.HeadingSimpleText);
     private static readonly int HsIdentifierId = MdRegexLib.GetGroupId(MdRegexGroupNames.HeadingSimpleIdentifier);
     // -----------------------------------------------------------------------------------------------------------------
@@ -25,9 +25,9 @@ public static class HeadingSimpleSyntaxNodeSerializer  {
 
         HeadingSimpleMdSyntaxNode headingNode = HeadingSimpleMdSyntaxNode.Pool.Get();
         headingNode.WithIdentifier(headerIdentifierText);
-        
+
         parentNode.AddChildNode(headingNode);
-        
+
         stack.PushSingleLineMatchesToStack(headerSimpleText, headingNode);
     }
 }

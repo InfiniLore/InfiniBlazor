@@ -9,9 +9,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class WikiLinkSyntaxNodeSerializer  {
+public static class WikiLinkSyntaxNodeSerializer {
     private static readonly int WikiLinkHrefId = MdRegexLib.GetGroupId(MdRegexGroupNames.WikiLinkHref);
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ public static class WikiLinkSyntaxNodeSerializer  {
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[WikiLinkHrefId].TryGetValue(out string? href)) return ;
+        if (!match.Groups[WikiLinkHrefId].TryGetValue(out string? href)) return;
 
         WikiLinkMdSyntaxNode node = WikiLinkMdSyntaxNode.Pool.Get();
         node.WithContent(href);

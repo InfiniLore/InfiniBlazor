@@ -10,17 +10,17 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class WrapperSyntaxNodeSerializer  {
+public static class WrapperSyntaxNodeSerializer {
     private static readonly int WId = MdRegexLib.GetGroupId(MdRegexGroupNames.WrapperContent);
     private static readonly int WModsId = MdRegexLib.GetGroupId(MdRegexGroupNames.WrapperMods);
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public static void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
         if (!match.Groups[WId].TryGetValue(out string? wrapperValue)) return;
-        if (!match.Groups[WModsId].TryGetValue(out string? mods)) return; // Mods are required for this match
-        
+        if (!match.Groups[WModsId].TryGetValue(out string? mods)) return;// Mods are required for this match
+
         WrapperMdSyntaxNode node = WrapperMdSyntaxNode.Pool.Get();
         node.WithModifier(MdSyntaxNodeModifier.FromString(mods));
         parentNode.AddChildNode(node);

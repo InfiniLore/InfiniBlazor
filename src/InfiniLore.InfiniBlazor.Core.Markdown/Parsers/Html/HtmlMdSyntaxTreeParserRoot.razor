@@ -16,20 +16,21 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="@RenderContext">
     @ComponentConverter.RenderRootComponents(SyntaxTree.VisitTopLevelNodes())
-    
+
     @if (SyntaxTree.TryGetCachedChildrenByType(out IEnumerable<FootnoteDescriptionMdSyntaxNode>? footnoteDescriptions)) {
         <DynamicComponent
-            Type="@MarkdownConfig.HtmlRendererFootnoteWrapperType" 
+            Type="@MarkdownConfig.HtmlRendererFootnoteWrapperType"
             Parameters="@GetFootnoteWrapperParameters(footnoteDescriptions)"/>
     }
 </CascadingValue>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     [Parameter] public IMdSyntaxTree SyntaxTree { get; set; } = MdSyntaxTree.Empty;
     private MdRenderContext RenderContext { get; } = MdRenderContext.NonInteractive;
-    
+
     private Dictionary<string, object> GetFootnoteWrapperParameters(IEnumerable<FootnoteDescriptionMdSyntaxNode> footnoteDescriptions) => new() {
         ["ChildContent"] = ComponentConverter.RenderRootComponentsWithSkipped(footnoteDescriptions),
     };

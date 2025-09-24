@@ -13,12 +13,13 @@ public sealed class ListUnOrderedSyntaxNodeDeserializer : MdStringMdSyntaxNodeDe
     protected override void Deserialize(ListUnOrderedMdSyntaxNode node, StringBuilder builder) {
         foreach (IMdSyntaxNode child in node.GetChildrenSpan()) {
             if (!Deserializer.TryGetNodeDeserializer(child, out IMdStringMdSyntaxNodeDeserializer? deserializer)) continue;
+
             StringBuilder localBuilder = GlobalPools.StringBuilder.Get();
-            try { 
+            try {
                 deserializer.Deserialize(child, localBuilder);
-                
-                localBuilder.Replace("\n", node.LeadingSpaces > 0 
-                    ? $"\n{new string(' ', node.LeadingSpaces)}" 
+
+                localBuilder.Replace("\n", node.LeadingSpaces > 0
+                    ? $"\n{new string(' ', node.LeadingSpaces)}"
                     : "\n"
                 );
                 builder.Append(localBuilder);
@@ -28,8 +29,9 @@ public sealed class ListUnOrderedSyntaxNodeDeserializer : MdStringMdSyntaxNodeDe
                 GlobalPools.StringBuilder.Return(localBuilder);
             }
         }
-        
+
         if (builder.Length == 0) return;
+
         builder.Remove(builder.Length - 1, 1);
     }
 }

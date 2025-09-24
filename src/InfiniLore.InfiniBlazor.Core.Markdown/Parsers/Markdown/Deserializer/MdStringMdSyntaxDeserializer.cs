@@ -8,7 +8,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Deserializer;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -24,17 +23,17 @@ public class MdStringMdSyntaxDeserializer(ILogger<MdStringMdSyntaxDeserializer> 
         try {
             foreach (IMdSyntaxNode node in tree.VisitTopLevelNodes()) {
                 if (!TryGetNodeDeserializer(node, out IMdStringMdSyntaxNodeDeserializer? deserializer)) continue;
+
                 deserializer.Deserialize(node, builder);
             }
-            
+
             return builder.ToString();
         }
         finally {
             GlobalPools.StringBuilder.Return(builder);
         }
     }
-    
-    // ReSharper disable once ConvertIfStatementToReturnStatement
+
     public bool TryGetNodeDeserializer(IMdSyntaxNode node, [NotNullWhen(true)] out IMdStringMdSyntaxNodeDeserializer? deserializer) {
         if (Deserializers.TryGetValue(node.Type, out deserializer)) return true;
 

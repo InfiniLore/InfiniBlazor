@@ -33,9 +33,9 @@ public sealed class BlockQuoteSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeser
             if (node.ChildCount == 0) {
                 builder.Append('>');
                 builder.Append(' ');
-                return;           
+                return;
             }
-            
+
             // First, deserialize all children to get the raw content
             DeserializeChildren(node, contentBuilder);
 
@@ -49,7 +49,7 @@ public sealed class BlockQuoteSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeser
 
             for (int i = 0; i <= content.Length; i++) {
                 if (i != content.Length && content[i] != '\n') continue;
-                
+
                 ReadOnlySpan<char> line = content.Slice(lineStart, i - lineStart);
                 if (!isFirstLine) builder.Append('\n');
                 builder.Append('>');
@@ -59,7 +59,7 @@ public sealed class BlockQuoteSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeser
                 else builder.Append(line);
 
                 // Move to the next line
-                lineStart = i+1;
+                lineStart = i + 1;
                 isFirstLine = false;
             }
         }

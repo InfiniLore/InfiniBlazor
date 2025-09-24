@@ -1,5 +1,4 @@
-﻿
-// ---------------------------------------------------------------------------------------------------------------------
+﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
@@ -16,8 +15,6 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Json;
 public class JsonMdSyntaxTreeParser : IJsonMdSyntaxTreeParser {
     private readonly Dictionary<Type, IJsonMdSyntaxNodeVisitor> _visitors = new();
     private readonly Dictionary<string, Type> _nodeTypes = new();
-    
-    public static IJsonMdSyntaxTreeParser Instance { get; } = new JsonMdSyntaxTreeParser();
 
     private static readonly JsonWriterOptions WriterOptions = new() {
         Indented = true,
@@ -29,7 +26,7 @@ public class JsonMdSyntaxTreeParser : IJsonMdSyntaxTreeParser {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
     };
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
@@ -85,11 +82,11 @@ public class JsonMdSyntaxTreeParser : IJsonMdSyntaxTreeParser {
         var element = DeserializeToJsonElement(input);
         return JsonSerializer.Serialize(element, SerializerOptions);
     }
-    
+
     public JsonElement DeserializeToJsonElement(IMdSyntaxTree tree) {
         using var stream = new MemoryStream();
         using var writer = new Utf8JsonWriter(stream, WriterOptions);
-        
+
         writer.WriteStartObject();
         writer.WriteString("type", "MdSyntaxTree");
         writer.WriteStartArray("children");
@@ -183,9 +180,9 @@ public class JsonMdSyntaxTreeParser : IJsonMdSyntaxTreeParser {
             if (!string.IsNullOrWhiteSpace(typeName)
                 && _nodeTypes.TryGetValue(typeName, out Type? nodeType)
                 && _visitors.TryGetValue(nodeType, out IJsonMdSyntaxNodeVisitor? visitor)) {
-                
+
                 var newNode = visitor.SerializeToNode(element, parentNode);
-                
+
                 if (element.TryGetProperty("children", out var childrenProperty) && childrenProperty.ValueKind == JsonValueKind.Array) {
                     foreach (JsonElement child in childrenProperty.EnumerateArray()) {
                         SerializeNode(child, newNode);

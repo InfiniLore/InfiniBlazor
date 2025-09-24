@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class ListSyntaxNodeSerializer  {
+public static class ListSyntaxNodeSerializer {
     private static readonly int LsId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListIdentifier);
     private static readonly int LTaskId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListTask);
     private static readonly int LHeadId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListHead);
@@ -28,12 +28,13 @@ public static class ListSyntaxNodeSerializer  {
         Match match
     ) {
         if (!match.TryGetValue(out string? listBody)) return;
+
         bool isOrdered = !match.Groups[LsId].ValueSpan.Contains('-');
 
         MatchCollection matchCollection = MdRegexLib.ListItemBodyRegex.Matches(listBody);
         int matchCount = matchCollection.Count;
         Match[] matchArray = ArrayPool<Match>.Shared.Rent(matchCount);
-        
+
         try {
             matchCollection.CopyTo(matchArray, 0);
 
@@ -41,19 +42,19 @@ public static class ListSyntaxNodeSerializer  {
                 ? ListOrderedMdSyntaxNode.Pool.Get()
                 : ListUnOrderedMdSyntaxNode.Pool.Get();
             parentNode.AddChildNode(listNode);
-            
+
             for (int i = 0; i < matchCount; i++) {
                 GroupCollection groups = matchArray[i].Groups;
 
                 ListItemMdSyntaxNode listItemNode = ListItemMdSyntaxNode.Pool.Get();
                 listNode.AddChildNode(listItemNode);
-                
+
                 groups[ListItemLeadingSpaces].TryGetLength(out int listItemLeadingSpaces);
                 listItemNode.WithLeadingSpaces(Math.Max(listItemLeadingSpaces, 0));
-                
+
                 groups[ListTaskItemLeadingSpaces].TryGetLength(out int listTaskItemLeadingSpaces);
                 listItemNode.WithCheckLeadingSpaces(Math.Max(listTaskItemLeadingSpaces, 0));
-                
+
                 if (groups[LBodyId].TryGetValueSpan(out ReadOnlySpan<char> itemBody) && !itemBody.IsEmpty) {
                     string normalizedBody = LineNormalization.NormalizeLineIndentation(itemBody, out int leadingSpaces);
                     stack.PushMultiLineMatchesToStack(normalizedBody, listItemNode);
@@ -70,7 +71,7 @@ public static class ListSyntaxNodeSerializer  {
                 if (groups[LHeadId].TryGetValue(out string? listHeader)) {
                     stack.PushSingleLineMatchesToStack(listHeader, listItemNode);
                 }
-                
+
                 if (groups[LIndexId].TryGetValue(out string? listIndex)) {
                     listItemNode.WithIndex(listIndex);
                 }

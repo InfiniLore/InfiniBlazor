@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class EscapedSyntaxNodeSerializer  {
+public static class EscapedSyntaxNodeSerializer {
     private static readonly int EscapedId = MdRegexLib.GetGroupId(MdRegexGroupNames.Escaped);
 
     // -----------------------------------------------------------------------------------------------------------------

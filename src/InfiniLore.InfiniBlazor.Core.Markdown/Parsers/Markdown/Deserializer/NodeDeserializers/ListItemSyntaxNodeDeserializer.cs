@@ -11,18 +11,18 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Deserializer.NodeDes
 public sealed class ListItemSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<ListItemMdSyntaxNode> {
     protected override void Deserialize(ListItemMdSyntaxNode node, StringBuilder builder) {
         switch (node) {
-            case {Parent:ListUnOrderedMdSyntaxNode, IsCheckable: false}:
+            case { Parent: ListUnOrderedMdSyntaxNode, IsCheckable: false }:
                 builder.Append('-');
                 builder.Append(' ', node.LeadingSpaces);
                 break;
-            
-            case {Parent:ListOrderedMdSyntaxNode, IsCheckable: false}:
+
+            case { Parent: ListOrderedMdSyntaxNode, IsCheckable: false }:
                 builder.Append(node.Index);
                 builder.Append('.');
                 builder.Append(' ', node.LeadingSpaces);
                 break;
-            
-            case {Parent:ListUnOrderedMdSyntaxNode, IsCheckable: true}:
+
+            case { Parent: ListUnOrderedMdSyntaxNode, IsCheckable: true }:
                 builder.Append('-');
                 builder.Append(' ', node.CheckLeadingSpaces);
                 builder.Append('[');
@@ -30,8 +30,8 @@ public sealed class ListItemSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeseria
                 builder.Append(']');
                 builder.Append(' ', node.LeadingSpaces);
                 break;
-            
-            case {Parent:ListOrderedMdSyntaxNode, IsCheckable: true}:
+
+            case { Parent: ListOrderedMdSyntaxNode, IsCheckable: true }:
                 builder.Append(node.Index);
                 builder.Append('.');
                 builder.Append(' ', node.CheckLeadingSpaces);
@@ -41,7 +41,7 @@ public sealed class ListItemSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeseria
                 builder.Append(' ', node.LeadingSpaces);
                 break;
         }
-        
+
         DeserializeChildren(node, builder);
     }
 }

@@ -22,7 +22,7 @@ public sealed class BlockQuoteJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<
 
     protected override void SerializeDetails(JsonElement element, BlockQuoteMdSyntaxNode targetNode) {
         base.SerializeDetails(element, targetNode);
-        
+
         if (element.TryGetProperty(LeadingSpaces, out JsonElement leadingSpacesProperty)) {
             targetNode.WithLeadingSpaces(leadingSpacesProperty.GetInt32());
         }

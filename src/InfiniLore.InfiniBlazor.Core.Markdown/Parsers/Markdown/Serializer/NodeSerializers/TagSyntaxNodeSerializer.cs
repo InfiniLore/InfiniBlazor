@@ -9,9 +9,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class TagSyntaxNodeSerializer  {
+public static class TagSyntaxNodeSerializer {
     private static readonly int TextId = MdRegexLib.GetGroupId(MdRegexGroupNames.TagText);
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ public static class TagSyntaxNodeSerializer  {
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[TextId].TryGetValue(out string? tagValue)) return ;
+        if (!match.Groups[TextId].TryGetValue(out string? tagValue)) return;
 
         TagMdSyntaxNode node = TagMdSyntaxNode.Pool.Get();
         node.WithContent(tagValue);

@@ -18,18 +18,18 @@ public sealed class CodeBlockJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<C
     // -----------------------------------------------------------------------------------------------------------------
     protected override void DeserializeDetails(CodeBlockMdSyntaxNode node, Utf8JsonWriter writer) {
         base.DeserializeDetails(node, writer);
-        
+
         writer.WriteString(Language, node.Language);
         writer.WriteString(Content, node.Content);
     }
 
     protected override void SerializeDetails(JsonElement element, CodeBlockMdSyntaxNode targetNode) {
         base.SerializeDetails(element, targetNode);
-        
+
         if (element.TryGetProperty(Language, out JsonElement languageProperty)) {
             targetNode.WithLanguage(languageProperty.GetString() ?? string.Empty);
         }
-        
+
         if (element.TryGetProperty(Content, out JsonElement contentProperty)) {
             targetNode.WithContent(contentProperty.GetString() ?? string.Empty);
         }

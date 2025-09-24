@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class CodeBlockSyntaxNodeSerializer  {
+public static class CodeBlockSyntaxNodeSerializer {
     private static readonly int CBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeBlockContent);
     private static readonly int CLangId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeBlockLang);
 
@@ -71,10 +71,12 @@ public static class CodeBlockSyntaxNodeSerializer  {
                     if (i + 2 < content.Length) {
                         result[destinationIndex++] = '\n';
                     }
-                    i++; // Skip the \n
+                    i++;// Skip the \n
                     break;
                 }
-                default: result[destinationIndex++] = content[i];
+
+                default:
+                    result[destinationIndex++] = content[i];
                     break;
 
                 // Skip the last single \n if present

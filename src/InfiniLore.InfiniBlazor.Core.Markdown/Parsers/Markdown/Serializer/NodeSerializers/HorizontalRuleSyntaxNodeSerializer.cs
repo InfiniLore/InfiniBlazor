@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class HorizontalRuleSyntaxNodeSerializer  {
+public static class HorizontalRuleSyntaxNodeSerializer {
     private static readonly int HrId = MdRegexLib.GetGroupId(MdRegexGroupNames.HorizontalRuleContent);
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -21,7 +21,7 @@ public static class HorizontalRuleSyntaxNodeSerializer  {
         Match match
     ) {
         if (!match.Groups[HrId].TryGetValue(out string? hrContent)) return;
-        
+
         HorizontalRuleMdSyntaxNode node = HorizontalRuleMdSyntaxNode.Pool.Get();
         node.WithIdentifier(hrContent);
         parentNode.AddChildNode(node);

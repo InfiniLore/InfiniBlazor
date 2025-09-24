@@ -9,9 +9,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class HighlightSyntaxNodeSerializer  {
+public static class HighlightSyntaxNodeSerializer {
     private static readonly int HId = MdRegexLib.GetGroupId(MdRegexGroupNames.HighlightContent);
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
