@@ -8,6 +8,7 @@ using InfiniLore.InfiniBlazor.Config;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.JSInterop;
 using NSubstitute;
 
 namespace Tests.InfiniBlazor.Shared;
@@ -29,6 +30,9 @@ public class InfiniBlazorDiDataSourceAttribute : DependencyInjectionDataSourceAt
         services.AddLogging();
         services.AddLucideIcons();
         services.AddInfiniBlazor();
+        
+        // Resolves and issue with the JSRuntime dependency on the HtmlRenderer for Markdown
+        services.AddSingleton(Substitute.For<IJSRuntime>());
         
         services.AddTransient<NavigationManager>(_ => Substitute.For<NavigationManager>());
 

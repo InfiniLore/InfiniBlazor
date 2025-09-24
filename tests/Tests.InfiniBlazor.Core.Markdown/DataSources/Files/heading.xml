@@ -37,7 +37,7 @@
         <TextMdSyntaxNode xml:space="preserve">####### Not A Heading</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;h1&gt;Heading 1&lt;/h1&gt;&lt;h2&gt;Heading 2&lt;/h2&gt;&lt;h3&gt;Heading 3&lt;/h3&gt;&lt;h4&gt;Heading 4&lt;/h4&gt;&lt;h5&gt;Heading 5&lt;/h5&gt;&lt;h6&gt;Heading 6&lt;/h6&gt;&lt;p&gt;####### Not A Heading&lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading 1&lt;/h1&gt;&lt;h2 class=" text-5xl font-semibold mb-5"&gt;Heading 2&lt;/h2&gt;&lt;h3 class=" text-4xl font-semibold mb-4"&gt;Heading 3&lt;/h3&gt;&lt;h4 class=" text-3xl font-semibold mb-3"&gt;Heading 4&lt;/h4&gt;&lt;h5 class=" text-2xl font-semibold mb-2"&gt;Heading 5&lt;/h5&gt;&lt;h6 class=" text-xl font-semibold mb-1"&gt;Heading 6&lt;/h6&gt;&lt;p class="my-4 leading-relaxed"&gt;####### Not A Heading&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString># Heading 1
 ## Heading 2
 ### Heading 3
@@ -150,7 +150,7 @@ Something</MdString>
         <TextMdSyntaxNode xml:space="preserve">Something</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt;#&lt;/p&gt;&lt;p&gt;Something&lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;#&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;Something&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>#
 Something</ExpectedMarkdownString>
     <ExpectedJsonString>{
@@ -189,7 +189,7 @@ Something</ExpectedMarkdownString>
       </HeadingMdSyntaxNode>
       <NewLineMdSyntaxNode />
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString># Heading
 </ExpectedMarkdownString>
     <ExpectedJsonString>{
@@ -218,7 +218,7 @@ Something</ExpectedMarkdownString>
         <TextMdSyntaxNode xml:space="preserve">Heading 1 # Not a heading</TextMdSyntaxNode>
       </HeadingMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;h1&gt;Heading 1 # Not a heading&lt;/h1&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading 1 # Not a heading&lt;/h1&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString># Heading 1 # Not a heading</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -248,7 +248,7 @@ Something</ExpectedMarkdownString>
         <TextMdSyntaxNode xml:space="preserve">=</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt;Not A Heading&lt;/p&gt;&lt;p&gt;=&lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;Not A Heading&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;=&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Not A Heading
 =</ExpectedMarkdownString>
     <ExpectedJsonString>{
@@ -290,7 +290,7 @@ Something</ExpectedMarkdownString>
         <TextMdSyntaxNode xml:space="preserve">==</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt;Not A Heading&lt;/p&gt;&lt;p&gt;==&lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;Not A Heading&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;==&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Not A Heading
 ==</ExpectedMarkdownString>
     <ExpectedJsonString>{
@@ -328,7 +328,7 @@ Something</ExpectedMarkdownString>
         <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Heading
 ===</ExpectedMarkdownString>
     <ExpectedJsonString>{
@@ -355,7 +355,7 @@ Something</ExpectedMarkdownString>
         <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Heading
 ====</ExpectedMarkdownString>
     <ExpectedJsonString>{
@@ -382,7 +382,7 @@ Something</ExpectedMarkdownString>
         <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Heading
 =====</ExpectedMarkdownString>
     <ExpectedJsonString>{
@@ -409,7 +409,7 @@ Something</ExpectedMarkdownString>
         <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Heading
 ======</ExpectedMarkdownString>
     <ExpectedJsonString>{
@@ -436,7 +436,7 @@ Something</ExpectedMarkdownString>
         <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Heading
 =======</ExpectedMarkdownString>
     <ExpectedJsonString>{
@@ -467,7 +467,7 @@ Something</ExpectedMarkdownString>
         <TextMdSyntaxNode xml:space="preserve">-</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt;Not A Heading&lt;/p&gt;&lt;p&gt;-&lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;Not A Heading&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;-&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Not A Heading
 -</ExpectedMarkdownString>
     <ExpectedJsonString>{
@@ -509,7 +509,7 @@ Something</ExpectedMarkdownString>
         <TextMdSyntaxNode xml:space="preserve">--</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt;Not A Heading&lt;/p&gt;&lt;p&gt;--&lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;Not A Heading&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;--&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Not A Heading
 --</ExpectedMarkdownString>
     <ExpectedJsonString>{
@@ -547,7 +547,7 @@ Something</ExpectedMarkdownString>
         <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Heading
 ---</ExpectedMarkdownString>
     <ExpectedJsonString>{
@@ -574,7 +574,7 @@ Something</ExpectedMarkdownString>
         <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Heading
 ----</ExpectedMarkdownString>
     <ExpectedJsonString>{
@@ -601,7 +601,7 @@ Something</ExpectedMarkdownString>
         <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Heading
 -----</ExpectedMarkdownString>
     <ExpectedJsonString>{
@@ -628,7 +628,7 @@ Something</ExpectedMarkdownString>
         <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Heading
 ------</ExpectedMarkdownString>
     <ExpectedJsonString>{
@@ -655,7 +655,7 @@ Something</ExpectedMarkdownString>
         <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Heading
 -------</ExpectedMarkdownString>
     <ExpectedJsonString>{
@@ -682,7 +682,7 @@ Something</ExpectedMarkdownString>
         <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Heading
                 ========</ExpectedMarkdownString>
     <ExpectedJsonString>{
@@ -709,7 +709,7 @@ Something</ExpectedMarkdownString>
         <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Heading
                 ========</ExpectedMarkdownString>
     <ExpectedJsonString>{
@@ -736,7 +736,7 @@ Something</ExpectedMarkdownString>
         <TextMdSyntaxNode xml:space="preserve">Heading</TextMdSyntaxNode>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;h1&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Heading
                 --------</ExpectedMarkdownString>
     <ExpectedJsonString>{

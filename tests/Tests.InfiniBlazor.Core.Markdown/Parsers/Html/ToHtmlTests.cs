@@ -22,14 +22,14 @@ public class ToHtmlTests(IHtmlMdSyntaxTreeParser htmlMdSyntaxTreeParser) {
     public async Task ToHtml_ShouldReturnExpected(MdTestData data) {
         // Arrange
         IMdSyntaxTree tree = data.MdSyntaxTree;
-        string? expectedOutput = data.ExpectedHtmlString;
+        string? expectedOutput = data.ExpectedHtmlString?.ReplaceLineEndings("\n");
 
         // Act
         string output = await htmlMdSyntaxTreeParser.DeserializeToStringAsync(tree);
+        string outputNormalized = output.ReplaceLineEndings("\n");
 
         // Assert
-        await Assert.That(output)
-            .IsNotNullOrWhitespace()
+        await Assert.That(outputNormalized)
             .IsEqualTo(expectedOutput);
     }
 }

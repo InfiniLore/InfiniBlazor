@@ -20,6 +20,10 @@ public class HtmlMdSyntaxTreeParser(IServiceProvider provider, ILoggerFactory lo
         await using AsyncServiceScope scope = provider.CreateAsyncScope();
         await using var htmlRenderer = new HtmlRenderer(scope.ServiceProvider, loggerFactory);
         string output = await htmlRenderer.Dispatcher.InvokeAsync(async () => {
+            // WTF why does thiw rok
+            var temp = InfiniRenderModeProvider.InfiniRenderMode;
+            InfiniRenderModeProvider.InfiniRenderMode = null!;
+            
             await using var textWriter = new StringWriter();
             
             var parameters = new Dictionary<string, object?> {
@@ -28,6 +32,7 @@ public class HtmlMdSyntaxTreeParser(IServiceProvider provider, ILoggerFactory lo
             
             HtmlRootComponent output = await htmlRenderer.RenderComponentAsync<HtmlMdSyntaxTreeParserRoot>(ParameterView.FromDictionary(parameters));
             output.WriteHtmlTo(textWriter);
+            InfiniRenderModeProvider.InfiniRenderMode = temp;
             return textWriter.ToString();
         });
         return output;

@@ -7,7 +7,7 @@
         <WikiLinkMdSyntaxNode>test</WikiLinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt;&lt;a href="test"&gt;&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;a href="test" class="text-(--color-accent) hover:text-(--color-accent-light) hover:underline"&gt;test&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>[[test]]</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -38,7 +38,7 @@
         <TextMdSyntaxNode xml:space="preserve">[[ ]]</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt;[[]]&lt;/p&gt;&lt;p&gt;[[ ]]&lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;[[]]&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;[[ ]]&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>[[]]
 
 [[ ]]</ExpectedMarkdownString>

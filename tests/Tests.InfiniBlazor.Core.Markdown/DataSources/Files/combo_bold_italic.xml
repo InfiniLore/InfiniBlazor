@@ -11,7 +11,7 @@
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt;&lt;strong&gt;&lt;em&gt;bold and italic&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;strong&gt;&lt;em&gt;bold and italic&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>***bold and italic***</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -47,7 +47,7 @@
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt;&lt;strong&gt;**&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;strong&gt;**&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>******</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -86,7 +86,7 @@
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt;&lt;strong&gt;&lt;em&gt; * * * &lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;strong&gt;&lt;em&gt; * * * &lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>*** \* \* \* ***</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -150,7 +150,7 @@
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt;"&lt;strong&gt;&lt;em&gt;*bold and italic&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&amp;quot;&lt;strong&gt;&lt;em&gt;*bold and italic&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>"***\*bold and italic***</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",

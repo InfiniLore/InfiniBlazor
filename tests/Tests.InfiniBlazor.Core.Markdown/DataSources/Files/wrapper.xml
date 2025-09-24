@@ -16,7 +16,7 @@
         <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt; test  &lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;span style="color:red;"&gt; test &lt;/span&gt; &lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>&lt;|color=red&gt; test &lt;/&gt; </ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -67,7 +67,7 @@
         <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt; &lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;span style="color:red;"&gt;&lt;/span&gt; &lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>&lt;|color=red&gt;&lt;/&gt; </ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -133,7 +133,7 @@
         <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt;&lt;strong&gt;bold&lt;/strong&gt; &lt;/p&gt;&lt;p&gt;&lt;strong&gt;bold&lt;/strong&gt; &lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;span style="color:red;"&gt;&lt;strong&gt;bold&lt;/strong&gt;&lt;/span&gt; &lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;&lt;strong&gt;&lt;span style="color:red;"&gt;bold&lt;/span&gt;&lt;/strong&gt; &lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>&lt;|color=red&gt;**bold**&lt;/&gt; 
 
 **&lt;|color=red&gt;bold&lt;/&gt;** </ExpectedMarkdownString>

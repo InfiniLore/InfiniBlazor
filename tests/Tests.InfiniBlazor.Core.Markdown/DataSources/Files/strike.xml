@@ -9,7 +9,7 @@
         </StrikeMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt;&lt;s&gt;something&lt;/s&gt;&lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;s&gt;something&lt;/s&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>~~something~~</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -40,7 +40,7 @@
         </SubScriptMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt;&lt;sub&gt;~~&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;sub&gt;~~&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>~~~~</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -94,7 +94,7 @@
         </StrikeMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt;&lt;s&gt;one&lt;/s&gt; and &lt;s&gt;two&lt;/s&gt;&lt;/p&gt;&lt;p&gt;&lt;s&gt;one&lt;/s&gt; and &lt;s&gt;two&lt;/s&gt; and &lt;s&gt;three&lt;/s&gt;&lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;s&gt;one&lt;/s&gt; and &lt;s&gt;two&lt;/s&gt;&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;&lt;s&gt;one&lt;/s&gt; and &lt;s&gt;two&lt;/s&gt; and &lt;s&gt;three&lt;/s&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>~~one~~ and ~~two~~
 
 
@@ -194,7 +194,7 @@
         </StrikeMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt;&lt;s&gt;nested &lt;/s&gt;strikethrough&lt;s&gt; does not work&lt;/s&gt;&lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;s&gt;nested &lt;/s&gt;strikethrough&lt;s&gt; does not work&lt;/s&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>~~nested ~~strikethrough~~ does not work~~</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -240,7 +240,7 @@
         </StrikeMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt;&lt;s&gt;&lt;strong&gt;bold and strike-through&lt;/strong&gt;&lt;/s&gt;&lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;s&gt;&lt;strong&gt;bold and strike-through&lt;/strong&gt;&lt;/s&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>~~**bold and strike-through**~~</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -278,7 +278,7 @@
         </SubScriptMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt;~&lt;sub&gt;escaped~&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;~&lt;sub&gt;escaped~&lt;/sub&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>~~escaped\~~</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -319,7 +319,7 @@
         <TextMdSyntaxNode xml:space="preserve">~</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p&gt;~&lt;sub&gt;escaped&lt;/sub&gt;~&lt;/p&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;~&lt;sub&gt;escaped&lt;/sub&gt;~&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>\~~escaped~~</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
