@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class FootnoteReferenceXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<FootnoteReferenceMdSyntaxNode> {
     private const string Identifier = nameof(FootnoteReferenceMdSyntaxNode.Identifier);
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

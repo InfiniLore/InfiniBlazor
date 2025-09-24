@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class BlockQuoteXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<BlockQuoteMdSyntaxNode> {
     private const string LeadingSpaces = nameof(BlockQuoteMdSyntaxNode.LeadingSpaces);
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

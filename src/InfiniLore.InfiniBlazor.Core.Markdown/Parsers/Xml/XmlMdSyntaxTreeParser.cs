@@ -17,7 +17,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
 public class XmlMdSyntaxTreeParser : IXmlMdSyntaxTreeParser {
     private readonly Dictionary<Type, IXmlMdSyntaxNodeVisitor> _visitors = new();
     private readonly Dictionary<string, Type> _nodeTypes = new();
-    
+
     public static IXmlMdSyntaxTreeParser Instance { get; } = new XmlMdSyntaxTreeParser();
 
     private static readonly XmlWriterSettings WriterSettings = new() {
@@ -26,7 +26,7 @@ public class XmlMdSyntaxTreeParser : IXmlMdSyntaxTreeParser {
         OmitXmlDeclaration = false,
         Async = true,
     };
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------

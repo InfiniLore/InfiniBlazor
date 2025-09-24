@@ -21,6 +21,6 @@ public sealed class HeadingXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<Headi
 
     protected override void SerializeDetails(IMdSyntaxTree tree, XElement element, HeadingMdSyntaxNode targetNode) {
         base.SerializeDetails(tree, element, targetNode);
-        targetNode.WithLevel(int.Parse(element.Attribute(Level)?.Value ?? "0"));   
+        targetNode.WithLevel(int.Parse(element.Attribute(Level)?.Value ?? "0"));
     }
 }
