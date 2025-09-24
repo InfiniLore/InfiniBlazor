@@ -110,40 +110,40 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public bool TryGetValue(string key, [NotNullWhen(true)] out string? value) {
-        if (Attributes.TryGetValue(key, out Range range)) {
-            ReadOnlySpan<char> original = OriginalInputSpan[range];
-            Span<char> span = stackalloc char[original.Length];
-            int destinationIndex = 0;
-
-            int startIndex = original.Length > 0 && original[0] == '"' ? 1 : 0;
-            int endIndex = original.Length;
-
-            if (original.Length > 1 && original[^1] == '"') {
-                int backslashCount = 0;
-                for (int j = original.Length - 2; j >= 0 && original[j] == '\\'; j--) {
-                    backslashCount++;
-                }
-
-                if (backslashCount % 2 == 0) endIndex--;
-            }
-
-            for (int i = startIndex; i < endIndex; i++) {
-                char c = original[i];
-                if (i + 1 < endIndex && c == '\\' && original[i + 1] == '"' && original.IsNotEscapedCharacterAtIndex(i)) {
-                    i++;
-                    span[destinationIndex++] = original[i];
-                }
-                else {
-                    span[destinationIndex++] = c;
-                }
-            }
-
-            value = new string(span[..destinationIndex]);
-            return true;
+        if (!Attributes.TryGetValue(key, out Range range)) {
+            value = null;
+            return false;
         }
 
-        value = null;
-        return false;
+        ReadOnlySpan<char> original = OriginalInputSpan[range];
+        Span<char> span = stackalloc char[original.Length];
+        int destinationIndex = 0;
+
+        int startIndex = original.Length > 0 && original[0] == '"' ? 1 : 0;
+        int endIndex = original.Length;
+
+        if (original.Length > 1 && original[^1] == '"') {
+            int backslashCount = 0;
+            for (int j = original.Length - 2; j >= 0 && original[j] == '\\'; j--) {
+                backslashCount++;
+            }
+
+            if (backslashCount % 2 == 0) endIndex--;
+        }
+
+        for (int i = startIndex; i < endIndex; i++) {
+            char c = original[i];
+            if (i + 1 < endIndex && c == '\\' && original[i + 1] == '"' && original.IsNotEscapedCharacterAtIndex(i)) {
+                i++;
+                span[destinationIndex++] = original[i];
+            }
+            else {
+                span[destinationIndex++] = c;
+            }
+        }
+
+        value = new string(span[..destinationIndex]);
+        return true;
     }
 
     // ReSharper disable once InvertIf
