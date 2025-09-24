@@ -28,7 +28,7 @@
         </ListItemMdSyntaxNode>
       </ListOrderedMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;ol&gt;&lt;li&gt;Ordered item 1&lt;/li&gt;&lt;li&gt;Ordered item 2&lt;ol&gt;&lt;li&gt;Nested ordered item 2.1&lt;/li&gt;&lt;li&gt;Nested ordered item 2.2&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li&gt;Ordered item 3&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;ol&gt;&lt;li&gt;Ordered item 1&lt;/li&gt;&lt;li&gt;Ordered item 2&lt;ol&gt;&lt;li&gt;Nested ordered item 2.1&lt;/li&gt;&lt;li&gt;Nested ordered item 2.2&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li&gt;Ordered item 3&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>1. Ordered item 1
 2. Ordered item 2
    1. Nested ordered item 2.1
@@ -172,7 +172,7 @@
         </ListItemMdSyntaxNode>
       </ListOrderedMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;ol&gt;&lt;li&gt;this&lt;/li&gt;&lt;li&gt;is&lt;/li&gt;&lt;li&gt;a&lt;ul&gt;&lt;li&gt;nested&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;list&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;First ordered item&lt;ul&gt;&lt;li&gt;Subitem A&lt;/li&gt;&lt;li&gt;Subitem B&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;Second ordered item&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;ol&gt;&lt;li&gt;this&lt;/li&gt;&lt;li&gt;is&lt;/li&gt;&lt;li&gt;a&lt;ul&gt;&lt;li&gt;nested&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;list&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;First ordered item&lt;ul&gt;&lt;li&gt;Subitem A&lt;/li&gt;&lt;li&gt;Subitem B&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;Second ordered item&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>1. this
 2. is
 3. a
@@ -402,7 +402,7 @@
         </ListItemMdSyntaxNode>
       </ListOrderedMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;ol&gt;&lt;li&gt;list item&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;ol&gt;&lt;li&gt;list item&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>1. list item
 
 1. list item
@@ -614,7 +614,7 @@
         </ListItemMdSyntaxNode>
       </ListOrderedMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;ol&gt;&lt;li&gt;Extra spaces for alignment&lt;ul&gt;&lt;li&gt;This is a sublist&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;Another item&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;ol&gt;&lt;li&gt;Extra spaces for alignment&lt;ul&gt;&lt;li&gt;This is a sublist&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;Another item&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>1.    Extra spaces for alignment
       - This is a sublist
 2.    Another item</ExpectedMarkdownString>
@@ -718,7 +718,7 @@ something
         </ListItemMdSyntaxNode>
       </ListOrderedMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;h1&gt;Should be a Paragrah&lt;/h1&gt;&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled/&gt;a task&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;something&lt;/p&gt;&lt;h1&gt;Should be List SubContent&lt;/h1&gt;&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled/&gt;a task&lt;p&gt;something&lt;/p&gt;&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;h1&gt;Should be a Paragrah&lt;/h1&gt;&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled/&gt;a task&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;something&lt;/p&gt;&lt;h1&gt;Should be List SubContent&lt;/h1&gt;&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled/&gt;a task&lt;p&gt;something&lt;/p&gt;&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString># Should be a Paragrah
 1. [ ] a task
 something
@@ -848,7 +848,7 @@ something
         <TextMdSyntaxNode xml:space="preserve">1234</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;1234&lt;/p&gt;&lt;p&gt;1234&lt;/p&gt;&lt;p&gt;1234&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;1234&lt;/p&gt;&lt;p&gt;1234&lt;/p&gt;&lt;p&gt;1234&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>1234
 1234
 1234</ExpectedMarkdownString>
@@ -907,7 +907,7 @@ something
         </ListItemMdSyntaxNode>
       </ListOrderedMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;1.&lt;/p&gt;&lt;ol&gt;&lt;li&gt; &lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;1.&lt;/p&gt;&lt;ol&gt;&lt;li&gt; &lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>1.
 
 1. </ExpectedMarkdownString>
@@ -1011,7 +1011,7 @@ something
         </ListItemMdSyntaxNode>
       </ListOrderedMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;ol&gt;&lt;li&gt;list item&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;ol&gt;&lt;li&gt;list item&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;li&gt;list item&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>1. list item
 
 2. list item
@@ -1233,7 +1233,7 @@ something
         </ListItemMdSyntaxNode>
       </ListOrderedMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;ol&gt;&lt;li&gt;Top-level item&lt;ol&gt;&lt;li&gt;Subitem level 1&lt;ol&gt;&lt;li&gt;Subitem level 2&lt;ol&gt;&lt;li&gt;Subitem level 3&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;ol&gt;&lt;li&gt;Top-level item&lt;ol&gt;&lt;li&gt;Subitem level 1&lt;ol&gt;&lt;li&gt;Subitem level 2&lt;ol&gt;&lt;li&gt;Subitem level 3&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>1. Top-level item
     1. Subitem level 1
         1. Subitem level 2
@@ -1410,7 +1410,7 @@ something
         </ListItemMdSyntaxNode>
       </ListOrderedMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled/&gt;tasklist&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled checked/&gt;tasklist&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled checked/&gt;tasklist&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled/&gt;tasklist&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled checked/&gt;tasklist&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled checked/&gt;tasklist&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled/&gt;tasklist&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled checked/&gt;tasklist&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled checked/&gt;tasklist&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled/&gt;tasklist&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled checked/&gt;tasklist&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled checked/&gt;tasklist&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled/&gt;tasklist&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled checked/&gt;tasklist&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled checked/&gt;tasklist&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled/&gt;tasklist&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled checked/&gt;tasklist&lt;/li&gt;&lt;/ol&gt;&lt;ol&gt;&lt;li&gt;&lt;input type="checkbox" disabled checked/&gt;tasklist&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>1. [ ] tasklist
 
 1. [x] tasklist
@@ -1681,7 +1681,7 @@ something
         </ListItemMdSyntaxNode>
       </ListOrderedMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;ol&gt;&lt;li&gt;this&lt;/li&gt;&lt;li&gt;&lt;input type="checkbox" disabled/&gt;is&lt;/li&gt;&lt;li&gt;&lt;input type="checkbox" disabled checked/&gt;a&lt;ul&gt;&lt;li&gt;&lt;input type="checkbox" disabled checked/&gt;nested&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;todo list&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;ol&gt;&lt;li&gt;this&lt;/li&gt;&lt;li&gt;&lt;input type="checkbox" disabled/&gt;is&lt;/li&gt;&lt;li&gt;&lt;input type="checkbox" disabled checked/&gt;a&lt;ul&gt;&lt;li&gt;&lt;input type="checkbox" disabled checked/&gt;nested&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;todo list&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>1. this
 2. [ ] is
 3. [x] a
@@ -1790,7 +1790,7 @@ something
         </ListItemMdSyntaxNode>
       </ListOrderedMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;ol&gt;&lt;li&gt;Ordered task list&lt;/li&gt;&lt;li&gt;&lt;input type="checkbox" disabled/&gt;Incomplete task in ordered list&lt;/li&gt;&lt;li&gt;&lt;input type="checkbox" disabled checked/&gt;Completed task in ordered list&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;ol&gt;&lt;li&gt;Ordered task list&lt;/li&gt;&lt;li&gt;&lt;input type="checkbox" disabled/&gt;Incomplete task in ordered list&lt;/li&gt;&lt;li&gt;&lt;input type="checkbox" disabled checked/&gt;Completed task in ordered list&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>1. Ordered task list
 2. [ ] Incomplete task in ordered list
 3. [x] Completed task in ordered list</ExpectedMarkdownString>
@@ -1869,7 +1869,7 @@ something
         </ListItemMdSyntaxNode>
       </ListOrderedMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;ol&gt;&lt;li&gt;A list item with &lt;strong&gt;bold text&lt;/strong&gt;&lt;/li&gt;&lt;li&gt;A list item with &lt;em&gt;italic text&lt;/em&gt;&lt;/li&gt;&lt;li&gt;A list item with &lt;code&gt;inline code&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;ol&gt;&lt;li&gt;A list item with &lt;strong&gt;bold text&lt;/strong&gt;&lt;/li&gt;&lt;li&gt;A list item with &lt;em&gt;italic text&lt;/em&gt;&lt;/li&gt;&lt;li&gt;A list item with &lt;code&gt;inline code&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>1. A list item with **bold text**
 2. A list item with *italic text*
 3. A list item with `inline code`</ExpectedMarkdownString>

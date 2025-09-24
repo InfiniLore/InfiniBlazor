@@ -61,7 +61,7 @@
         </ParagraphMdSyntaxNode>
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;One line&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;two lines&lt;/p&gt;&lt;p&gt;two lines&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;three lines&lt;/p&gt;&lt;p&gt;three lines&lt;/p&gt;&lt;p&gt;three lines&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;four lines&lt;/p&gt;&lt;p&gt;four lines&lt;/p&gt;&lt;p&gt;four lines&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;blockquote&gt;&lt;p&gt;One line&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;two lines&lt;/p&gt;&lt;p&gt;two lines&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;three lines&lt;/p&gt;&lt;p&gt;three lines&lt;/p&gt;&lt;p&gt;three lines&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;four lines&lt;/p&gt;&lt;p&gt;four lines&lt;/p&gt;&lt;p&gt;four lines&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>&gt; One line
 
 &gt; two lines
@@ -229,7 +229,7 @@
         <NewLineMdSyntaxNode />
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;text&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;blockquote&gt;&lt;p&gt;text&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>&gt; text
 &gt;  </ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
@@ -349,7 +349,7 @@
         </BlockQuoteMdSyntaxNode>
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt; 1&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt; 2&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt; 1&lt;/p&gt;&lt;p&gt; &gt; 2&lt;/p&gt;&lt;blockquote&gt;&lt;blockquote&gt;&lt;p&gt;3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt; 1&lt;/p&gt;&lt;p&gt; &gt; 2&lt;/p&gt;&lt;blockquote&gt;&lt;blockquote&gt;&lt;p&gt;3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;1&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;2&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;blockquote&gt;&lt;p&gt; 1&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt; 2&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt; 1&lt;/p&gt;&lt;p&gt; &gt; 2&lt;/p&gt;&lt;blockquote&gt;&lt;blockquote&gt;&lt;p&gt;3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt; 1&lt;/p&gt;&lt;p&gt; &gt; 2&lt;/p&gt;&lt;blockquote&gt;&lt;blockquote&gt;&lt;p&gt;3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;1&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;2&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>&gt; 1
 &gt;&gt; 2
 &gt;&gt;&gt; 3
@@ -609,7 +609,7 @@
         </ListItemMdSyntaxNode>
       </ListUnOrderedMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;This is a blockquote&lt;/p&gt;&lt;/blockquote&gt;&lt;ul&gt;&lt;li&gt;List item&lt;/li&gt;&lt;/ul&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;blockquote&gt;&lt;p&gt;This is a blockquote&lt;/p&gt;&lt;/blockquote&gt;&lt;ul&gt;&lt;li&gt;List item&lt;/li&gt;&lt;/ul&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>&gt; This is a blockquote
 - List item</ExpectedMarkdownString>
     <ExpectedJsonString>{
@@ -671,7 +671,7 @@
         <TextMdSyntaxNode xml:space="preserve">&gt;</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt; &lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;blockquote&gt;&lt;p&gt; &lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>&gt; 
 
 &gt;</ExpectedMarkdownString>
@@ -780,7 +780,7 @@
         </BlockQuoteMdSyntaxNode>
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>&gt; line
 &gt; &gt; line
 
@@ -1057,7 +1057,7 @@
         </ParagraphMdSyntaxNode>
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;line&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>&gt; line
 &gt; &gt; line
 
@@ -1363,7 +1363,7 @@
         </ParagraphMdSyntaxNode>
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;Level 1&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;Level 2&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;Back to Level 1&lt;/p&gt;&lt;blockquote&gt;&lt;blockquote&gt;&lt;p&gt;Level 3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt; Line 1&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt; Line 2&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;Line 3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;p&gt; Line 4&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;blockquote&gt;&lt;p&gt;Level 1&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;Level 2&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;Back to Level 1&lt;/p&gt;&lt;blockquote&gt;&lt;blockquote&gt;&lt;p&gt;Level 3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt; Line 1&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt; Line 2&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;Line 3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;p&gt; Line 4&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>&gt; Level 1
 &gt; &gt; Level 2
 &gt; Back to Level 1
@@ -1566,7 +1566,7 @@
         </BlockQuoteMdSyntaxNode>
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;Something&lt;/p&gt;&lt;blockquote&gt;&lt;div class="md-callout md-callout-note"&gt;&lt;div class="md-callout-title"&gt;Title&lt;/div&gt;&lt;div class="md-callout-body"&gt;&lt;p&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt; Something&lt;/p&gt;&lt;blockquote&gt;&lt;div class="md-callout md-callout-note"&gt;&lt;div class="md-callout-title"&gt;Title&lt;/div&gt;&lt;div class="md-callout-body"&gt;&lt;p&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;blockquote&gt;&lt;p&gt;Something&lt;/p&gt;&lt;blockquote&gt;&lt;div class="md-callout md-callout-note"&gt;&lt;div class="md-callout-title"&gt;Title&lt;/div&gt;&lt;div class="md-callout-body"&gt;&lt;p&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt; Something&lt;/p&gt;&lt;blockquote&gt;&lt;div class="md-callout md-callout-note"&gt;&lt;div class="md-callout-title"&gt;Title&lt;/div&gt;&lt;div class="md-callout-body"&gt;&lt;p&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>&gt; Something
 &gt; &gt; &gt;[!note] Title
 &gt; &gt; &gt; Body
@@ -1710,7 +1710,7 @@
         </ParagraphMdSyntaxNode>
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;This is a blockquote with escaped characters: *, &gt;, &lt;code&gt;`&lt;/code&gt;&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;blockquote&gt;&lt;p&gt;This is a blockquote with escaped characters: *, &gt;, &lt;code&gt;`&lt;/code&gt;&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>&gt; This is a blockquote with escaped characters: \*, \&gt;, `\``</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -1781,7 +1781,7 @@
         </ListUnOrderedMdSyntaxNode>
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;h1&gt;test&lt;/h1&gt;&lt;blockquote&gt;&lt;p&gt;test&lt;/p&gt;&lt;/blockquote&gt;&lt;ul&gt;&lt;li&gt;test&lt;/li&gt;&lt;li&gt;test&lt;/li&gt;&lt;/ul&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;blockquote&gt;&lt;h1&gt;test&lt;/h1&gt;&lt;blockquote&gt;&lt;p&gt;test&lt;/p&gt;&lt;/blockquote&gt;&lt;ul&gt;&lt;li&gt;test&lt;/li&gt;&lt;li&gt;test&lt;/li&gt;&lt;/ul&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>&gt; # test
 &gt; &gt; test
 &gt; - test
@@ -1868,7 +1868,7 @@
         <HtmlMdSyntaxNode xml:space="preserve">&lt;div&gt;This is a div inside a blockquote.&lt;/div&gt;</HtmlMdSyntaxNode>
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;div&gt;This is a div inside a blockquote.&lt;/div&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;blockquote&gt;&lt;div&gt;This is a div inside a blockquote.&lt;/div&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>&gt; &lt;div&gt;This is a div inside a blockquote.&lt;/div&gt;</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -1896,7 +1896,7 @@
         </ParagraphMdSyntaxNode>
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;&lt;code&gt;&gt; Block Quote&lt;/code&gt;&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;blockquote&gt;&lt;p&gt;&lt;code&gt;&gt; Block Quote&lt;/code&gt;&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>&gt; `&gt; Block Quote`</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -1987,7 +1987,7 @@
         </ListUnOrderedMdSyntaxNode>
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;Mixed levels and lists:&lt;/p&gt;&lt;ol&gt;&lt;li&gt;First&lt;blockquote&gt;&lt;p&gt;Nested blockquote with text.&lt;/p&gt;&lt;/blockquote&gt;&lt;/li&gt;&lt;li&gt;Second&lt;ul&gt;&lt;li&gt;Sub-item&lt;blockquote&gt;&lt;p&gt;Another nested quote.&lt;/p&gt;&lt;/blockquote&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;ul&gt;&lt;li&gt;First item&lt;ul&gt;&lt;li&gt;Nested item with &lt;strong&gt;bold text&lt;/strong&gt;.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;Second item&lt;/li&gt;&lt;/ul&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;blockquote&gt;&lt;p&gt;Mixed levels and lists:&lt;/p&gt;&lt;ol&gt;&lt;li&gt;First&lt;blockquote&gt;&lt;p&gt;Nested blockquote with text.&lt;/p&gt;&lt;/blockquote&gt;&lt;/li&gt;&lt;li&gt;Second&lt;ul&gt;&lt;li&gt;Sub-item&lt;blockquote&gt;&lt;p&gt;Another nested quote.&lt;/p&gt;&lt;/blockquote&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;ul&gt;&lt;li&gt;First item&lt;ul&gt;&lt;li&gt;Nested item with &lt;strong&gt;bold text&lt;/strong&gt;.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;Second item&lt;/li&gt;&lt;/ul&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>&gt; Mixed levels and lists:
 &gt; 1. First
 &gt;    &gt; Nested blockquote with text.
@@ -2276,8 +2276,8 @@
 </CodeBlockMdSyntaxNode>
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;This is a blockquote with &lt;strong&gt;bold text&lt;/strong&gt; and &lt;em&gt;italic text&lt;/em&gt;.&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;Inline formatting:&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Bold&lt;/strong&gt;, &lt;em&gt;italic&lt;/em&gt;, &lt;code&gt;code&lt;/code&gt;, and &lt;a href="https://example.com"&gt;link&lt;/a&gt;.&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;&lt;strong&gt;Bold text&lt;/strong&gt;, &lt;em&gt;italic text&lt;/em&gt;, &lt;code&gt;inline code&lt;/code&gt;, &lt;s&gt;strikethrough&lt;/s&gt;, and &lt;a href="https://example.com"&gt;link&lt;/a&gt;.&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;This is a paragraph.&lt;/p&gt;&lt;pre&gt;&lt;code&gt;Code block inside a blockquote.
-&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;blockquote&gt;&lt;p&gt;This is a blockquote with &lt;strong&gt;bold text&lt;/strong&gt; and &lt;em&gt;italic text&lt;/em&gt;.&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;Inline formatting:&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Bold&lt;/strong&gt;, &lt;em&gt;italic&lt;/em&gt;, &lt;code&gt;code&lt;/code&gt;, and &lt;a href="https://example.com"&gt;link&lt;/a&gt;.&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;&lt;strong&gt;Bold text&lt;/strong&gt;, &lt;em&gt;italic text&lt;/em&gt;, &lt;code&gt;inline code&lt;/code&gt;, &lt;s&gt;strikethrough&lt;/s&gt;, and &lt;a href="https://example.com"&gt;link&lt;/a&gt;.&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;This is a paragraph.&lt;/p&gt;&lt;pre&gt;&lt;code&gt;Code block inside a blockquote.
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>&gt; This is a blockquote with **bold text** and *italic text*.
 
 &gt; Inline formatting:
@@ -2557,7 +2557,7 @@
         </ListOrderedMdSyntaxNode>
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;blockquote&gt;&lt;p&gt;This is a blockquote with &lt;strong&gt;bold text&lt;/strong&gt; and &lt;em&gt;italic text&lt;/em&gt;.&lt;/p&gt;&lt;ol&gt;&lt;li&gt;First item&lt;/li&gt;&lt;li&gt;Second item&lt;ul&gt;&lt;li&gt;Sub-item&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/blockquote&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;blockquote&gt;&lt;p&gt;This is a blockquote with &lt;strong&gt;bold text&lt;/strong&gt; and &lt;em&gt;italic text&lt;/em&gt;.&lt;/p&gt;&lt;ol&gt;&lt;li&gt;First item&lt;/li&gt;&lt;li&gt;Second item&lt;ul&gt;&lt;li&gt;Sub-item&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>&gt; This is a blockquote with **bold text** and *italic text*.
 &gt; 1. First item
 &gt; 2. Second item

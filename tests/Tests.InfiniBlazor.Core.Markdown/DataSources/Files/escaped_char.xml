@@ -8,7 +8,7 @@
         <EscapedCharacterMdSyntaxNode xml:space="preserve">\</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;A backslash at the end of a line: This is a line\&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;A backslash at the end of a line: This is a line\&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>A backslash at the end of a line: This is a line\\</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -37,7 +37,7 @@
         <TextMdSyntaxNode xml:space="preserve">Start</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;\Start&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;\Start&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>\\Start</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -69,7 +69,7 @@
         <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;**not bold**&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;**not bold**&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>\*\*not bold\*\*</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -112,7 +112,7 @@
         <EscapedCharacterMdSyntaxNode xml:space="preserve">`</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;Escape characters like backticks: `code`&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;Escape characters like backticks: `code`&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Escape characters like backticks: \`code\`</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -150,7 +150,7 @@
         <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;*not italic*&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;*not italic*&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>\*not italic\*</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -187,7 +187,7 @@
         <EscapedCharacterMdSyntaxNode xml:space="preserve">)</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;[link text](https://example.com)&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;[link text](https://example.com)&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>\[link text\]\(https://example.com\)</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -240,7 +240,7 @@
         <EscapedCharacterMdSyntaxNode xml:space="preserve">"</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;"She told me that 'he isn't here right &lt;em&gt;now&lt;/em&gt;' - so I left."&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;"She told me that 'he isn't here right &lt;em&gt;now&lt;/em&gt;' - so I left."&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>\"She told me that \'he isn't here right *now*\' - so I left.\"</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -329,7 +329,7 @@
         <EscapedCharacterMdSyntaxNode xml:space="preserve">~</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;!""#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;!""#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>\!\""\#\$\%\&amp;\'\(\)\*\+\,\-\.\/\:\;\&lt;\=\&gt;\?\@\[\\\]\^\_\`\{\|\}\~</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -484,7 +484,7 @@
         <EscapedCharacterMdSyntaxNode xml:space="preserve">_</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;Escaping underscores:_This is not underscored_&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;Escaping underscores:_This is not underscored_&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Escaping underscores:\_This is not underscored\_</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",

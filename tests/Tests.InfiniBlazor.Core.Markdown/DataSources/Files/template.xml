@@ -7,7 +7,7 @@
         <TemplateMdSyntaxNode BracesCount="2">something.Fetch()</TemplateMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;something.Fetch()&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;something.Fetch()&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>{{something.Fetch()}}</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -32,7 +32,7 @@
         <TextMdSyntaxNode xml:space="preserve">{{}}</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;{{}}&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;{{}}&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>{{}}</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",

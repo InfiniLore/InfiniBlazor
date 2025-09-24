@@ -8,7 +8,7 @@
         <FootnoteReferenceMdSyntaxNode Identifier="1" />
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;test &lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>test [^1]</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -45,7 +45,7 @@
         </ParagraphMdSyntaxNode>
       </FootnoteDescriptionMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;content&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;content&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>test [^1]
 
 [^1] : content</ExpectedMarkdownString>
@@ -110,7 +110,7 @@
       </FootnoteDescriptionMdSyntaxNode>
       <NewLineMdSyntaxNode />
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;some &lt;strong&gt;content&lt;/strong&gt; in description&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;some &lt;strong&gt;content&lt;/strong&gt; in description&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>test [^1]
 
 [^1] : some **content** in description
@@ -192,7 +192,7 @@
       </FootnoteDescriptionMdSyntaxNode>
       <NewLineMdSyntaxNode />
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;some &lt;em&gt;content&lt;/em&gt; in description&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;some &lt;em&gt;content&lt;/em&gt; in description&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>test [^1]
 
 [^1] : some *content* in description
@@ -285,7 +285,7 @@ Unrelated paragraph</MdString>
         <TextMdSyntaxNode xml:space="preserve">Unrelated paragraph</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;paragraph 1&lt;/p&gt;&lt;p&gt;paragraph 2&lt;/p&gt;&lt;p&gt;paragraph 3&lt;/p&gt;&lt;p&gt;Unrelated paragraph&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;paragraph 1&lt;/p&gt;&lt;p&gt;paragraph 2&lt;/p&gt;&lt;p&gt;paragraph 3&lt;/p&gt;&lt;p&gt;Unrelated paragraph&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>test [^1]
 
 [^1] : paragraph 1
@@ -393,7 +393,7 @@ Unrelated paragraph</ExpectedMarkdownString>
       </FootnoteDescriptionMdSyntaxNode>
       <NewLineMdSyntaxNode />
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;some &lt;sub&gt;content&lt;/sub&gt; in description&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;some &lt;sub&gt;content&lt;/sub&gt; in description&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>test [^1]
 
 [^1] : some ~content~ in description
@@ -475,7 +475,7 @@ Unrelated paragraph</ExpectedMarkdownString>
       </FootnoteDescriptionMdSyntaxNode>
       <NewLineMdSyntaxNode />
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;some &lt;sup&gt;content&lt;/sup&gt; in description&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;some &lt;sup&gt;content&lt;/sup&gt; in description&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>test [^1]
 
 [^1] : some ^content^ in description
@@ -570,7 +570,7 @@ test [^2]
       </FootnoteDescriptionMdSyntaxNode>
       <NewLineMdSyntaxNode />
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;content&lt;/p&gt;&lt;p&gt;test &lt;/p&gt;&lt;p&gt;content&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;content&lt;/p&gt;&lt;p&gt;test &lt;/p&gt;&lt;p&gt;content&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>test [^1]
 
 [^1] : content
@@ -692,7 +692,7 @@ test ^super^ [^1] ^super^
       </FootnoteDescriptionMdSyntaxNode>
       <NewLineMdSyntaxNode />
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;test  ^ something&lt;/p&gt;&lt;p&gt;test &lt;sup&gt;super&lt;/sup&gt;  &lt;sup&gt;super&lt;/sup&gt;&lt;/p&gt;&lt;p&gt;some content in description&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;test  ^ something&lt;/p&gt;&lt;p&gt;test &lt;sup&gt;super&lt;/sup&gt;  &lt;sup&gt;super&lt;/sup&gt;&lt;/p&gt;&lt;p&gt;some content in description&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>test [^1] ^ something
 test ^super^ [^1] ^super^
 

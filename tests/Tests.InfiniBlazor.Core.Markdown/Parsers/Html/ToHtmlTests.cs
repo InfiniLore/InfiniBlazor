@@ -1,10 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Html;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
+using Tests.InfiniBlazor.Core.Markdown.DataSources;
 using Tests.InfiniBlazor.Shared;
+using Tests.InfiniBlazor.Shared.Markdown;
 
 namespace Tests.InfiniBlazor.Core.Markdown.Parsers.Html;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -14,14 +17,12 @@ namespace Tests.InfiniBlazor.Core.Markdown.Parsers.Html;
 public class ToHtmlTests(IHtmlMdSyntaxTreeParser htmlMdSyntaxTreeParser) {
 
     [Test]
-    public async Task ToHtml_ShouldReturnExpected() {
+    [MethodDataSource<MdTestDataSources>(nameof(MdTestDataSources.GetBlankTest))]
+    [MethodDataSource(typeof(MdTestDataSources), nameof(MdTestDataSources.GetTestDataAsync))]
+    public async Task ToHtml_ShouldReturnExpected(MdTestData data) {
         // Arrange
-        var tree = new MdSyntaxTree {
-            RootNode = new RootMdSyntaxNode().WithChild(
-            new BoldMdSyntaxNode()
-                .WithText("Example Content")
-            )
-        };
+        IMdSyntaxTree tree = data.MdSyntaxTree;
+        string? expectedOutput = data.ExpectedHtmlString;
 
         // Act
         string output = await htmlMdSyntaxTreeParser.DeserializeToStringAsync(tree);
@@ -29,6 +30,6 @@ public class ToHtmlTests(IHtmlMdSyntaxTreeParser htmlMdSyntaxTreeParser) {
         // Assert
         await Assert.That(output)
             .IsNotNullOrWhitespace()
-            .IsEqualTo("<strong>Example Content</strong>");
+            .IsEqualTo(expectedOutput);
     }
 }

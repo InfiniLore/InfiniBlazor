@@ -78,7 +78,7 @@
 
                 <InfiniTabContent TabName="Simplified HTML">
                     <InfiniTextAreaInput
-                        @bind-Value="@ExpectedHtmlStringSimplified"
+                        @bind-Value="@ExpectedHtmlString"
                         Rows="22"
                         Class="font-mono w-full"/>
                 </InfiniTabContent>
@@ -130,7 +130,7 @@
     private MdTestData? TestDataOrigin { get; set; }
 
     private string ExpectedSyntaxTreeString { get; set; } = string.Empty;
-    private string? ExpectedHtmlStringSimplified { get; set; } = string.Empty;
+    private string? ExpectedHtmlString { get; set; } = string.Empty;
     private string? ExpectedMarkdownString { get; set; } = string.Empty;
     private string? ExpectedJsonString { get; set; } = string.Empty;
     private bool SkipOnWhitespaceMisMatch { get; set; }
@@ -195,10 +195,9 @@
         
     }
 
-    private Task GenerateSimpleHtmlString() {
+    private async Task GenerateSimpleHtmlString() {
         IMdSyntaxTree tree = EditorContext.SyntaxTree;
-        ExpectedHtmlStringSimplified = MarkdownParser.HtmlString.DeserializeToString(tree);
-        return Task.CompletedTask;
+        ExpectedHtmlString = await MarkdownParser.Html.DeserializeToStringAsync(tree);
     }
 
     private Task GenerateMarkdownString() {
@@ -237,7 +236,7 @@
             ExpectedSyntaxTreeString = await new StreamReader(memoryStream).ReadToEndAsync();
         }
 
-        ExpectedHtmlStringSimplified = testData.ExpectedHtmlStringSimplified;
+        ExpectedHtmlString = testData.ExpectedHtmlString;
         ExpectedMarkdownString = testData.ExpectedMarkdownString;
         SkipOnWhitespaceMisMatch = testData.ExpectedMarkdownStringSkipOnWhitespaceMisMatch;
         ExpectedJsonString = testData.ExpectedJsonString;
@@ -260,7 +259,7 @@
             DeveloperNote = DeveloperNote,
             MdString = EditorContext.Content,
             MdSyntaxTree = EditorContext.SyntaxTree,
-            ExpectedHtmlStringSimplified = ExpectedHtmlStringSimplified,
+            ExpectedHtmlString = ExpectedHtmlString,
             ExpectedMarkdownString = ExpectedMarkdownString,
             ExpectedMarkdownStringSkipOnWhitespaceMisMatch = SkipOnWhitespaceMisMatch,
             ExpectedJsonString = ExpectedJsonString
@@ -293,7 +292,7 @@
         TestId = string.Empty;
         DeveloperNote = string.Empty;
         EditorContext.Content = string.Empty;
-        ExpectedHtmlStringSimplified = string.Empty;
+        ExpectedHtmlString = string.Empty;
         ExpectedMarkdownString = string.Empty;
         ExpectedSyntaxTreeString = string.Empty;
         TestDataOrigin = null;
@@ -337,7 +336,7 @@
         TestId = string.Empty;
         DeveloperNote = string.Empty;
         EditorContext.Content = string.Empty;
-        ExpectedHtmlStringSimplified = string.Empty;
+        ExpectedHtmlString = string.Empty;
         ExpectedMarkdownString = string.Empty;
         ExpectedSyntaxTreeString = string.Empty;
         TestDataOrigin = null;

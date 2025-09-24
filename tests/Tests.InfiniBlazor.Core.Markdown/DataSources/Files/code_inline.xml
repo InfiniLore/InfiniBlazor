@@ -7,7 +7,7 @@
         <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">code</CodeInlineMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;code&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;&lt;code&gt;code&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>`code`</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -33,7 +33,7 @@
         <TextMdSyntaxNode xml:space="preserve"> is not valid syntax.`</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;Nested &lt;/code&gt; is not valid syntax.`&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;&lt;code&gt;Nested &lt;/code&gt; is not valid syntax.`&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>`Nested ` is not valid syntax.`</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -62,7 +62,7 @@
         <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="2">Nested ` is not valid syntax.</CodeInlineMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;Nested ` is not valid syntax.&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;&lt;code&gt;Nested ` is not valid syntax.&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>``Nested ` is not valid syntax.``</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -87,7 +87,7 @@
         <TextMdSyntaxNode xml:space="preserve">``</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;``&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;``&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>``</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -111,7 +111,7 @@
         <TextMdSyntaxNode xml:space="preserve">```</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;```&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;```&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>```</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -135,7 +135,7 @@
         <TextMdSyntaxNode xml:space="preserve">````</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;````&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;````&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>````</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -159,7 +159,7 @@
         <TextMdSyntaxNode xml:space="preserve">`````</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;`````&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;`````&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>`````</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -185,7 +185,7 @@
         <TextMdSyntaxNode xml:space="preserve">.</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;Backticks inside inline code: &lt;code&gt;Code with `backticks` inside&lt;/code&gt;.&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;Backticks inside inline code: &lt;code&gt;Code with `backticks` inside&lt;/code&gt;.&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Backticks inside inline code: ``Code with `backticks` inside``.</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -220,7 +220,7 @@
         <TextMdSyntaxNode xml:space="preserve">.</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;Backticks inside inline code: &lt;code&gt;Code with `backticks` inside&lt;/code&gt;.&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;Backticks inside inline code: &lt;code&gt;Code with `backticks` inside&lt;/code&gt;.&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>Backticks inside inline code: ```Code with `backticks` inside```.</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -253,7 +253,7 @@
         <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="2">`outer `inner` outer</CodeInlineMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;`outer `inner` outer&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;&lt;code&gt;`outer `inner` outer&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>```outer `inner` outer``</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -280,7 +280,7 @@
         <TextMdSyntaxNode xml:space="preserve"> of some inline code.</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;This is an &lt;code&gt;example&lt;/code&gt; of some inline code.&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;This is an &lt;code&gt;example&lt;/code&gt; of some inline code.&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>This is an `example` of some inline code.</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -315,7 +315,7 @@
         <TextMdSyntaxNode xml:space="preserve">.</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;This is the &lt;code&gt;last example&lt;/code&gt;.&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;This is the &lt;code&gt;last example&lt;/code&gt;.&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>This is the `last example`.</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -352,7 +352,7 @@
         <TextMdSyntaxNode xml:space="preserve"> segments.</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;"Multiple &lt;code&gt;inline&lt;/code&gt; &lt;code&gt;code&lt;/code&gt; segments.&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;"Multiple &lt;code&gt;inline&lt;/code&gt; &lt;code&gt;code&lt;/code&gt; segments.&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>"Multiple `inline` `code` segments.</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -395,7 +395,7 @@
         <TextMdSyntaxNode xml:space="preserve"> at the start of the line.</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;code&lt;/code&gt; at the start of the line.&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;&lt;code&gt;code&lt;/code&gt; at the start of the line.&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>`code` at the start of the line.</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -431,7 +431,7 @@
         <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="2">code with \`escaped backticks\`</CodeInlineMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;`&lt;/code&gt;&lt;/p&gt;&lt;p&gt;&lt;code&gt;code with `escaped backticks`&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;&lt;code&gt;`&lt;/code&gt;&lt;/p&gt;&lt;p&gt;&lt;code&gt;code with `escaped backticks`&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>`\``
 
 ``code with \`escaped backticks\```</ExpectedMarkdownString>
@@ -474,7 +474,7 @@
         <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">inline code with special characters !@#$%^&amp;*()</CodeInlineMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;inline code with special characters !@#$%^&amp;*()&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;&lt;code&gt;inline code with special characters !@#$%^&amp;*()&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>`inline code with special characters !@#$%^&amp;*()`</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -500,7 +500,7 @@
         <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="1">@username</CodeInlineMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;code&gt;@username&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;&lt;code&gt;@username&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>`@username`</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",

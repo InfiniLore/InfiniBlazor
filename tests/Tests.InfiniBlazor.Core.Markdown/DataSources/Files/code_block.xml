@@ -16,9 +16,9 @@ const code = sample();
       <CodeBlockMdSyntaxNode xml:space="preserve" Language="javascript">const code = sample();
 </CodeBlockMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;pre&gt;&lt;code&gt;const code = sample();
+    <ExpectedHtmlString>&lt;pre&gt;&lt;code&gt;const code = sample();
 &lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code class="language-javascript"&gt;const code = sample();
-&lt;/code&gt;&lt;/pre&gt;</ExpectedHtmlStringSimplified>
+&lt;/code&gt;&lt;/pre&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>```
 const code = sample();
 ```
@@ -56,8 +56,8 @@ const code = sample();
       <CodeBlockMdSyntaxNode xml:space="preserve" Language="">
 </CodeBlockMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;pre&gt;&lt;code&gt;
-&lt;/code&gt;&lt;/pre&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;pre&gt;&lt;code&gt;
+&lt;/code&gt;&lt;/pre&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>```
 
 ```</ExpectedMarkdownString>
@@ -104,11 +104,11 @@ content
       <CodeBlockMdSyntaxNode xml:space="preserve" Language="csharp">content
 </CodeBlockMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;pre&gt;&lt;code class="language-javascript"&gt;content
+    <ExpectedHtmlString>&lt;pre&gt;&lt;code class="language-javascript"&gt;content
 &lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code class="language-typescript"&gt;content
 &lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code class="language-python"&gt;content
 &lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code class="language-csharp"&gt;content
-&lt;/code&gt;&lt;/pre&gt;</ExpectedHtmlStringSimplified>
+&lt;/code&gt;&lt;/pre&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>```javascript
 content
 ```
@@ -176,8 +176,8 @@ content
       <CodeBlockMdSyntaxNode xml:space="preserve" Language="">**some valid markdown**
 </CodeBlockMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;pre&gt;&lt;code&gt;**some valid markdown**
-&lt;/code&gt;&lt;/pre&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;pre&gt;&lt;code&gt;**some valid markdown**
+&lt;/code&gt;&lt;/pre&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>```
 **some valid markdown**
 ```</ExpectedMarkdownString>
@@ -204,10 +204,10 @@ end tell
 end tell
 </CodeBlockMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;pre&gt;&lt;code&gt;tell application "Foo"
+    <ExpectedHtmlString>&lt;pre&gt;&lt;code&gt;tell application "Foo"
     beep
 end tell
-&lt;/code&gt;&lt;/pre&gt;</ExpectedHtmlStringSimplified>
+&lt;/code&gt;&lt;/pre&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>```
 tell application "Foo"
     beep

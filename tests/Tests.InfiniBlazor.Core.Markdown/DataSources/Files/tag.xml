@@ -7,7 +7,7 @@
         <TagMdSyntaxNode xml:space="preserve">tag</TagMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span class="md-tag"&gt;#tag&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;&lt;span class="md-tag"&gt;#tag&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>#tag</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
@@ -32,7 +32,7 @@
         <TextMdSyntaxNode xml:space="preserve"># </TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;# &lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;# &lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString># </ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
@@ -57,7 +57,7 @@
         <TextMdSyntaxNode xml:space="preserve">#</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;#&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;#&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>#</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
@@ -93,7 +93,7 @@
         </LinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span class="md-tag"&gt;#this&lt;/span&gt; is not a valid tag&lt;/p&gt;&lt;p&gt;#&lt;a href="https://www.transgenderinfo.be"&gt;link&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;&lt;span class="md-tag"&gt;#this&lt;/span&gt; is not a valid tag&lt;/p&gt;&lt;p&gt;#&lt;a href="https://www.transgenderinfo.be"&gt;link&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>#this is not a valid tag
 
 #[link](https://www.transgenderinfo.be)</ExpectedMarkdownString>
@@ -156,7 +156,7 @@
         <TagMdSyntaxNode xml:space="preserve">öäüÖÄÜß</TagMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span class="md-tag"&gt;#不&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span class="md-tag"&gt;#öäüÖÄÜß&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;&lt;span class="md-tag"&gt;#不&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span class="md-tag"&gt;#öäüÖÄÜß&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>#不
 
 #öäüÖÄÜß</ExpectedMarkdownString>
@@ -198,7 +198,7 @@
         <TagMdSyntaxNode xml:space="preserve">tag/subtag</TagMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span class="md-tag"&gt;#tag/subtag&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;&lt;span class="md-tag"&gt;#tag/subtag&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>#tag/subtag</ExpectedMarkdownString>
     <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{

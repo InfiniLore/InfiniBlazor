@@ -191,12 +191,13 @@
             if (testData is null) continue;
             foreach (MdTestData mdTestData in testData) {
                 IMdSyntaxTree tree = mdTestData.MdSyntaxTree;
-                using var memoryStream = new MemoryStream();
-                await MarkdownParser.Json.DeserializeToJsonStreamAsync(memoryStream, tree);
-        
-                memoryStream.Position = 0;
-                string json = await new StreamReader(memoryStream).ReadToEndAsync();
-                mdTestData.ExpectedJsonString = json;
+                mdTestData.ExpectedHtmlString = await MarkdownParser.Html.DeserializeToStringAsync(tree);
+                // using var memoryStream = new MemoryStream();
+                // await MarkdownParser.Json.DeserializeToJsonStreamAsync(memoryStream, tree);
+
+                // memoryStream.Position = 0;
+                // string json = await new StreamReader(memoryStream).ReadToEndAsync();
+                // mdTestData.ExpectedJsonString = json;
             }
             await MdTestDataProvider.TryWriteXmlMdTestDataAsync(fileName, testData);
         }

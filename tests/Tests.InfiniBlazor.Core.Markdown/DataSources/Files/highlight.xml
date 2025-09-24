@@ -9,7 +9,7 @@
         </HighlightMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;mark&gt;test&lt;/mark&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;&lt;mark&gt;test&lt;/mark&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>==test==</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -38,7 +38,7 @@
         <TextMdSyntaxNode xml:space="preserve">====</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;====&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;====&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>====</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",

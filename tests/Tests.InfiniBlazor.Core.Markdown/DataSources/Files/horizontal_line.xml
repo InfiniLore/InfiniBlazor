@@ -14,7 +14,7 @@ _</MdString>
         <TextMdSyntaxNode xml:space="preserve">_</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;-&lt;/p&gt;&lt;p&gt;_&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;-&lt;/p&gt;&lt;p&gt;_&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>-
 
 _</ExpectedMarkdownString>
@@ -62,7 +62,7 @@ __</MdString>
         <TextMdSyntaxNode xml:space="preserve">__</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;--&lt;/p&gt;&lt;p&gt;__&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;--&lt;/p&gt;&lt;p&gt;__&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>--
 
 __</ExpectedMarkdownString>
@@ -106,7 +106,7 @@ ___</MdString>
       <NewLineMdSyntaxNode />
       <HorizontalRuleMdSyntaxNode Identifier="___" />
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;hr&gt;&lt;hr&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;hr&gt;&lt;hr&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>---
 
 ___</ExpectedMarkdownString>
@@ -140,7 +140,7 @@ ____</MdString>
       <NewLineMdSyntaxNode />
       <HorizontalRuleMdSyntaxNode Identifier="____" />
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;hr&gt;&lt;hr&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;hr&gt;&lt;hr&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>----
 
 ____</ExpectedMarkdownString>
@@ -174,7 +174,7 @@ _____</MdString>
       <NewLineMdSyntaxNode />
       <HorizontalRuleMdSyntaxNode Identifier="_____" />
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;hr&gt;&lt;hr&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;hr&gt;&lt;hr&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>-----
 
 _____</ExpectedMarkdownString>
@@ -216,7 +216,7 @@ _____</ExpectedMarkdownString>
         <TextMdSyntaxNode xml:space="preserve">123</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;1234&lt;/p&gt;&lt;p&gt;1234&lt;/p&gt;&lt;p&gt;123&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p&gt;1234&lt;/p&gt;&lt;p&gt;1234&lt;/p&gt;&lt;p&gt;123&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>1234
 1234
 123</ExpectedMarkdownString>
