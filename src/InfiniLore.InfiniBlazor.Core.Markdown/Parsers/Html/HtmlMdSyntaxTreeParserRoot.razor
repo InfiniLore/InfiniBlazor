@@ -19,7 +19,7 @@
     
     @if (SyntaxTree.TryGetCachedChildrenByType(out IEnumerable<FootnoteDescriptionMdSyntaxNode>? footnoteDescriptions)) {
         <DynamicComponent
-            Type="@MarkdownConfig.FootnoteDescriptionWrapperComponentType" 
+            Type="@MarkdownConfig.HtmlRendererFootnoteWrapperType" 
             Parameters="@GetFootnoteWrapperParameters(footnoteDescriptions)"/>
     }
 </CascadingValue>

@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Editors.TextModifiers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ITextModifier>()]
+[InjectableSingleton<ITextModifier>]
 [SuppressMessage("ReSharper", "ReplaceAutoPropertyWithComputedProperty")]
 public class BoldModifier(ILogger<BoldModifier> logger) : SingleInstructionModifiers(logger) {
     public const string Name = "bold";

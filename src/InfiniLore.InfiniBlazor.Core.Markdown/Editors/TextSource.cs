@@ -21,7 +21,6 @@ public class TextSource : ITextSource {
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
-    public static TextSource Empty => new(string.Empty);
     public TextSource(string? source = null) {
         UpdateSource(source ?? string.Empty);   
     }

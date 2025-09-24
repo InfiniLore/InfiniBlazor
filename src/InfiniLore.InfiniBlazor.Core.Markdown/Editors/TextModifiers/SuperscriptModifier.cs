@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Editors.TextModifiers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<ITextModifier>()]
+[InjectableSingleton<ITextModifier>]
 [SuppressMessage("ReSharper", "ReplaceAutoPropertyWithComputedProperty")]
 public class SuperscriptModifier(ILogger<SuperscriptModifier> logger) : SingleInstructionModifiers(logger) {
     public const string Name = "superscript";

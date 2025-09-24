@@ -1,14 +1,11 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using Microsoft.Extensions.Logging
-
 @namespace InfiniLore.InfiniBlazor.Markdown
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniComponentBase
-@inject ILogger<InfiniMdEditorInput> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -45,7 +42,7 @@
 
     private async Task OnKeyDownAsync(KeyboardEventArgs args) {
         if (EditorContext.IsLocked) return;
-        if (!args.CtrlKey) return;// quick exit to not have to wait on every key press
+        if (!args.CtrlKey) return;// quick exit to doesn't have to wait on every key press
 
         await EditorContext.InvokeInputKeyDownAsync(args).ConfigureAwait(false);
     }
