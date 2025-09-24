@@ -5,13 +5,12 @@ using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Xml.Linq;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class ListOrderedXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<ListOrderedMdSyntaxNode> {
     private const string LeadingSpaces = nameof(ListOrderedMdSyntaxNode.LeadingSpaces);
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

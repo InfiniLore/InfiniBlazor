@@ -5,7 +5,6 @@ using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Xml.Linq;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -18,7 +17,7 @@ public sealed class TableXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<TableMd
     // -----------------------------------------------------------------------------------------------------------------
     protected override void DeserializeDetails(TableMdSyntaxNode node, XElement targetElement) {
         base.DeserializeDetails(node, targetElement);
-        
+
         // ReSharper disable once InvertIf
         if (node.HasAlignments) {
             XElement alignmentsElement = new(Alignments);
@@ -32,7 +31,7 @@ public sealed class TableXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<TableMd
 
     protected override void SerializeDetails(IMdSyntaxTree tree, XElement element, TableMdSyntaxNode targetNode) {
         base.SerializeDetails(tree, element, targetNode);
-        
+
         // ReSharper disable once InvertIf
         if (element.Element(Alignments) is {} alignmentsElement) {
             XElement[] alignmentElements = alignmentsElement.Elements(Alignment).ToArray();

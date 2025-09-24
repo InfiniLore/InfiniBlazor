@@ -27,7 +27,7 @@ public sealed class TableSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializ
                 foreach (IMdSyntaxNode child in cell.GetChildrenSpan()) {
                     if (!Deserializer.TryGetNodeDeserializer(child, out IMdStringMdSyntaxNodeDeserializer? deserializer)) continue;
 
-                    deserializer.Deserialize(child, headCellBuilder); // Use headCellBuilder, not builder
+                    deserializer.Deserialize(child, headCellBuilder);// Use headCellBuilder, not builder
                 }
 
                 tableGrid[0, col] = headCellBuilder.ToString();
@@ -47,7 +47,7 @@ public sealed class TableSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializ
                     foreach (IMdSyntaxNode childNode in cell.GetChildrenSpan()) {
                         if (!Deserializer.TryGetNodeDeserializer(childNode, out IMdStringMdSyntaxNodeDeserializer? deserializer)) continue;
 
-                        deserializer.Deserialize(childNode, cellBuilder); // Use cellBuilder, not builder
+                        deserializer.Deserialize(childNode, cellBuilder);// Use cellBuilder, not builder
                     }
 
                     tableGrid[row + 1, col] = cellBuilder.ToString();
@@ -67,7 +67,7 @@ public sealed class TableSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializ
 
             // Pad all cells in this column
             for (int row = 0; row <= totalRows; row++) {
-                tableGrid[row, col] = tableGrid[row, col].Trim().PadRight(maxCellWidth );
+                tableGrid[row, col] = tableGrid[row, col].Trim().PadRight(maxCellWidth);
             }
         }
 
@@ -93,7 +93,7 @@ public sealed class TableSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializ
                 TableMdSyntaxNode.Alignment.Center => (':', ':'),
                 _ => ('-', '-')
             };
-            
+
             builder.Append('|');
             builder.Append(' ');
             builder.Append(left);
@@ -116,7 +116,7 @@ public sealed class TableSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializ
 
             builder.Append('|');
         }
-        
-        if (node.TryGetNextSibling(out IMdSyntaxNode? syntaxNode) && syntaxNode.Type != typeof(NewLineMdSyntaxNode)){ builder.Append('\n');}
+
+        if (node.TryGetNextSibling(out IMdSyntaxNode? syntaxNode) && syntaxNode.Type != typeof(NewLineMdSyntaxNode)) { builder.Append('\n'); }
     }
 }

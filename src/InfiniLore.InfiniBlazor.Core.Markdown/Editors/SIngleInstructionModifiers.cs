@@ -9,10 +9,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.Editors;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class SingleInstructionModifiers(ILogger logger) : ITextModifier {
-
     protected abstract string Instruction { get; }
     public abstract string ModifierName { get; }
-    public bool IsSingleLineStructure { get; } = true;
+    public bool IsSingleLineStructure => true;
 
     public void Modify(ITextSource source, Range range, ITextEditor editor) {
         ReadOnlySpan<char> inputSpan = source.TextSpan;

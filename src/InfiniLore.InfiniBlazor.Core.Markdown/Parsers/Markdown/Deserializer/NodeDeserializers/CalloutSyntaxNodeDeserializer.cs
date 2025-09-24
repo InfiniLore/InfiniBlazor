@@ -27,12 +27,12 @@ public sealed class CalloutSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserial
     protected override void Deserialize(CalloutMdSyntaxNode node, StringBuilder builder) {
         builder.Append(">[!");
         builder.Append(node.CalloutType);
-        if (node.Modifier is {OriginalInputSpan: var inputSpan}) {
+        if (node.Modifier is { OriginalInputSpan: var inputSpan }) {
             builder.Append(inputSpan);
         }
 
         builder.Append(']');
-       
+
         // Add a collapsed state when present
         string collapsedState = node.CollapsedState switch {
             CalloutMdSyntaxNode.CollapseStateOptions.Closed => "-",

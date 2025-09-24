@@ -10,7 +10,6 @@ using System.Collections.Frozen;
 using System.Text.RegularExpressions;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -49,7 +48,7 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
         [MdRegexGroupNames.Highlight] = HighlightSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.Wrapper] = WrapperSyntaxNodeSerializer.Serialize,
     }.ToFrozenDictionary();
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -75,16 +74,17 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
                         ProcessMatch(match, parentNode, runningSerializer);
                         break;
                     }
+
                     // Already processed and simply needs to be added in correct location
-                    case {ParentNode: {} parentNode, ChildNode: {} childNode} : {
+                    case { ParentNode: {} parentNode, ChildNode: {} childNode }: {
                         parentNode.AddChildNode(childNode);
                         break;
                     }
-                    
+
                     // Unhandled state which should never happen
                     default: {
                         logger.Error("Unhandled state in MarkdownMdSyntaxSerializer.SerializeToTree with fragment '{fragment}'.", fragment);
-                        break;   
+                        break;
                     }
                 }
             }
@@ -106,6 +106,7 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
         for (int index = 0; index < length; index++) {
             Group group = groups[index];
             if (!group.Success || !_elementHandlers.TryGetValue(group.Name, out MdSyntaxSerializerAction? handler)) continue;
+
             handler(runningParser, parentNode, match);
         }
     }

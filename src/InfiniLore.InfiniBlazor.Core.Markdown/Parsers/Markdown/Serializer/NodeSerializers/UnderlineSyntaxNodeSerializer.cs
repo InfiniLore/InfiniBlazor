@@ -9,9 +9,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class UnderlineSyntaxNodeSerializer  {
+public static class UnderlineSyntaxNodeSerializer {
     private static readonly int UId = MdRegexLib.GetGroupId(MdRegexGroupNames.UnderlineContent);
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -20,8 +20,8 @@ public static class UnderlineSyntaxNodeSerializer  {
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[UId].TryGetValue(out string? underlineValue)) return ;
-        
+        if (!match.Groups[UId].TryGetValue(out string? underlineValue)) return;
+
         UnderlineMdSyntaxNode node = UnderlineMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);
         stack.PushSingleLineMatchesToStack(underlineValue, node);

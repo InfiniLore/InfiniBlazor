@@ -9,9 +9,9 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class BoldSyntaxNodeSerializer  {
+public static class BoldSyntaxNodeSerializer {
     private static readonly int BId = MdRegexLib.GetGroupId(MdRegexGroupNames.BoldContent);
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

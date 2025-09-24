@@ -21,7 +21,7 @@ public sealed class LinkSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserialize
             builder.Append(node.Title);
             builder.Append('"');
         }
-        if (node.Modifier is {OriginalInputSpan: var inputSpan}) builder.Append(inputSpan);
+        if (node.Modifier is { OriginalInputSpan: var inputSpan }) builder.Append(inputSpan);
         builder.Append(')');
     }
 }

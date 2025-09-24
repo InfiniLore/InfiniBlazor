@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class HtmlSyntaxNodeSerializer  {
+public static class HtmlSyntaxNodeSerializer {
     private static readonly int HtmlPreId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlPre);
     private static readonly int HtmlBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlBody);
     private static readonly int HtmlPostId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlPost);
@@ -24,7 +24,7 @@ public static class HtmlSyntaxNodeSerializer  {
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        // Only add paragraph wrapper if there's trailing content (pre or post)
+        // Only add a paragraph wrapper if there's trailing content (pre or post)
         bool hasTrailingContent = match.Groups[HtmlPreId].Success || match.Groups[HtmlPostId].Success;
 
         Match? spanMatch = null;
@@ -36,7 +36,7 @@ public static class HtmlSyntaxNodeSerializer  {
                 hasTrailingContent = true;
             }
         }
-        
+
         if (hasTrailingContent && parentNode is not (ParagraphMdSyntaxNode or HtmlSpanMdSyntaxNode)) {
             parentNode = parentNode.AddChildNode(ParagraphMdSyntaxNode.Pool.Get());
         }

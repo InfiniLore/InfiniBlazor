@@ -10,7 +10,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class TableSyntaxNodeSerializer  {
+public static class TableSyntaxNodeSerializer {
     private const int StackAllocThreshold = 16;
 
     private static readonly int BodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.TableBody);
@@ -31,11 +31,11 @@ public static class TableSyntaxNodeSerializer  {
         int headerColumnCount = header.Split(headerColumns, '|', StringSplitOptions.TrimEntries);
 
         ReadOnlySpan<char> separator = match.Groups[SepId].ValueSpan;
-        Span<Range> separatorColumns = stackalloc Range[separator.Length-1];
+        Span<Range> separatorColumns = stackalloc Range[separator.Length - 1];
         int separatorColumnCount = separator.Split(separatorColumns, '|', StringSplitOptions.TrimEntries);
         Span<TableMdSyntaxNode.Alignment> separatorColumData = stackalloc TableMdSyntaxNode.Alignment[separatorColumnCount];
-        bool hasSeparatorData = ParseSeparatorData(separator,separatorColumns[..separatorColumnCount], separatorColumData);
-        
+        bool hasSeparatorData = ParseSeparatorData(separator, separatorColumns[..separatorColumnCount], separatorColumData);
+
         ReadOnlySpan<char> rows = match.Groups[BodyId].ValueSpan;
         Span<Range> rowRanges = stackalloc Range[rows.Length];
         int rowCount = rows.Split(rowRanges, '\n', StringSplitOptions.TrimEntries);
@@ -48,21 +48,21 @@ public static class TableSyntaxNodeSerializer  {
         // Add headers
         TableRowMdSyntaxNode tableHeadRow = TableRowMdSyntaxNode.Pool.Get();
         tableNode.TrySetHeader(tableHeadRow);
-        
+
         for (int index = 0; index < headerColumnCount; index++) {
             TableCellMdSyntaxNode tableHeadCellNode = TableCellMdSyntaxNode.Pool.Get();
             tableHeadRow.AddChildNode(tableHeadCellNode);
-            
+
             ReadOnlySpan<char> column = header[headerColumns[index]];
             stack.PushSingleLineMatchesToStack(column.ToString(), tableHeadCellNode);
         }
 
         // Add rows
         Range[]? rowColumnRanges = null;
-        Span<Range> columnBuffer = headerColumnCount <= StackAllocThreshold 
+        Span<Range> columnBuffer = headerColumnCount <= StackAllocThreshold
             ? stackalloc Range[StackAllocThreshold]
             : rowColumnRanges = ArrayPool<Range>.Shared.Rent(headerColumnCount);
-        
+
         try {
             for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
                 ReadOnlySpan<char> row = rows[rowRanges[rowIndex]].Trim();
@@ -72,14 +72,14 @@ public static class TableSyntaxNodeSerializer  {
 
                 TableRowMdSyntaxNode tableRow = TableRowMdSyntaxNode.Pool.Get();
                 tableNode.TryAddRow(tableRow);
-                
+
                 for (int columnIndex = 0; columnIndex < rowColumnCount; columnIndex++) {
                     TableCellMdSyntaxNode tableCell = TableCellMdSyntaxNode.Pool.Get();
                     tableRow.AddChildNode(tableCell);
-                    
+
                     ReadOnlySpan<char> column = row[columnBuffer[columnIndex]];
                     if (column.IsEmpty || column.IsWhiteSpace()) continue;
-                    
+
                     stack.PushSingleLineMatchesToStack(column.ToString(), tableCell);
                 }
             }
@@ -88,7 +88,7 @@ public static class TableSyntaxNodeSerializer  {
             if (rowColumnRanges != null) ArrayPool<Range>.Shared.Return(rowColumnRanges);
         }
     }
-    
+
     /// <summary>
     /// Parses separator data from a line of input and determines column alignments.
     /// </summary>
@@ -108,24 +108,24 @@ public static class TableSyntaxNodeSerializer  {
         if (columnRanges.IsEmpty) return false;
 
         bool hasSeparatorData = false;
-        
+
         for (int index = 0; index < columnRanges.Length; index++) {
             Range range = columnRanges[index];
             var alignment = TableMdSyntaxNode.Alignment.Unknown;
             ReadOnlySpan<char> columnSlice = lineInput[range].Trim();
             alignment = (columnSlice[0], columnSlice[^1]) switch {
-                (':',':') => TableMdSyntaxNode.Alignment.Center,
-                ('-',':') => TableMdSyntaxNode.Alignment.Right,
-                (':','-') => TableMdSyntaxNode.Alignment.Left,
-                
+                (':', ':') => TableMdSyntaxNode.Alignment.Center,
+                ('-', ':') => TableMdSyntaxNode.Alignment.Right,
+                (':', '-') => TableMdSyntaxNode.Alignment.Left,
+
                 _ => alignment
             };
-            
+
             if (alignment is not TableMdSyntaxNode.Alignment.Unknown) hasSeparatorData = true;
             target[index] = alignment;
         }
-        
-        
+
+
         return hasSeparatorData;
     }
 }

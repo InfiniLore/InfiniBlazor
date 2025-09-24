@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Html;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -18,18 +17,18 @@ public class HtmlMdSyntaxTreeParser(IServiceProvider provider, ILoggerFactory lo
     public async Task<string> DeserializeToStringAsync(IMdSyntaxTree tree, CancellationToken ct = default) {
         await using AsyncServiceScope scope = provider.CreateAsyncScope();
         await using var htmlRenderer = new HtmlRenderer(scope.ServiceProvider, loggerFactory);
-        
+
         string output = await htmlRenderer.Dispatcher.InvokeAsync(async () => {
             await using var textWriter = new StringWriter();
-            
+
             var parameters = new Dictionary<string, object?> {
                 [nameof(HtmlMdSyntaxTreeParserRoot.SyntaxTree)] = tree
             };
-            
+
             HtmlRootComponent output = await htmlRenderer.RenderComponentAsync<HtmlMdSyntaxTreeParserRoot>(ParameterView.FromDictionary(parameters));
             output.WriteHtmlTo(textWriter);
             await textWriter.FlushAsync(ct);
-            
+
             return textWriter.ToString();
         });
         return output;

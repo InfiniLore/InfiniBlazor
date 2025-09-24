@@ -19,8 +19,6 @@ public class BlazorMdComponentConverter(IMarkdownConfig config) : IBlazorMdCompo
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-
-    // ReSharper disable once UnusedVariable
     private void RenderNodeAsComponent(RenderTreeBuilder builder, IMdSyntaxNode node, bool ignoreSkipComponents = false) {
         if (!ignoreSkipComponents && SkippedComponentTypes.Contains(node.Type)) return;
 
@@ -32,46 +30,39 @@ public class BlazorMdComponentConverter(IMarkdownConfig config) : IBlazorMdCompo
 
         int sequence = 0;
         builder.OpenComponent(sequence++, data.ComponentType);
-        int newSequence = data.Builder(builder, sequence, node);// newSequence is not used so far
+        int _ = data.Builder(builder, sequence, node);// newSequence is not used so far
         builder.SetKey(node.Id);
 
         builder.CloseComponent();
     }
 
-    // ReSharper disable once InconsistentNaming
     public RenderFragment RenderComponent(IMdSyntaxNode node)
-        => __builder => RenderNodeAsComponent(__builder, node);
+        => builder => RenderNodeAsComponent(builder, node);
 
-    // ReSharper disable once InconsistentNaming
-    public RenderFragment RenderComponentDebug(IMdSyntaxNode node) => __builder => {
+    public RenderFragment RenderComponentDebug(IMdSyntaxNode node) => builder => {
         var data = MdComponentRecord.Empty;
         int sequence = 0;
 
-        __builder.OpenComponent(sequence++, data.ComponentType);
-        data.Builder(__builder, sequence, node);// newSequence is not used so far
-        __builder.CloseComponent();
+        builder.OpenComponent(sequence++, data.ComponentType);
+        data.Builder(builder, sequence, node);// newSequence is not used so far
+        builder.CloseComponent();
     };
 
-    // ReSharper disable once InconsistentNaming
-    public RenderFragment RenderChildComponents(IMdSyntaxNode node) => __builder => {
+    public RenderFragment RenderChildComponents(IMdSyntaxNode node) => builder => {
         int childCount = node.ChildCount;
         if (childCount == 0) return;
 
         ReadOnlySpan<IMdSyntaxNode> childSpan = node.GetChildrenSpan();
         for (int i = 0; i < childCount; i++) {
-            RenderNodeAsComponent(__builder, childSpan[i]);
+            RenderNodeAsComponent(builder, childSpan[i]);
         }
     };
 
-    // ReSharper disable once InconsistentNaming
-    public RenderFragment RenderRootComponents(IEnumerable<IMdSyntaxNode> nodes) => __builder => {
-        foreach (IMdSyntaxNode child in nodes) RenderNodeAsComponent(__builder, child);
+    public RenderFragment RenderRootComponents(IEnumerable<IMdSyntaxNode> nodes) => builder => {
+        foreach (IMdSyntaxNode child in nodes) RenderNodeAsComponent(builder, child);
     };
 
-    // ReSharper disable once InconsistentNaming
-    public RenderFragment RenderRootComponentsWithSkipped(IEnumerable<IMdSyntaxNode> nodes) => __builder => {
-        foreach (IMdSyntaxNode child in nodes) RenderNodeAsComponent(__builder, child, true);
+    public RenderFragment RenderRootComponentsWithSkipped(IEnumerable<IMdSyntaxNode> nodes) => builder => {
+        foreach (IMdSyntaxNode child in nodes) RenderNodeAsComponent(builder, child, true);
     };
 }
-
-

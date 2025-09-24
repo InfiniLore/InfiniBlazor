@@ -31,13 +31,14 @@ else {
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     private string SyntaxNodeTypeName => SyntaxNode.Type.Name;
-    
+
     private string GetDepthClass => (SyntaxNode.Depth % 5) switch {
         0 => "text-rose-300",
         1 => "text-sky-300",
-        2 => "text-emerald-300", 
+        2 => "text-emerald-300",
         3 => "text-amber-300",
         4 => "text-violet-300",
         _ => "text-slate-300"
