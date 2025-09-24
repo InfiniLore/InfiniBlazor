@@ -1,8 +1,8 @@
-﻿@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
-@using InfiniLore.InfiniBlazor.Markdown.Syntax
-@* ------------------------------------------------------------------------------------------------------------------ *@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
+@using InfiniLore.InfiniBlazor.Markdown.Syntax
 
 @namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -12,11 +12,13 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@ComponentConverter.RenderRootComponents(SyntaxTree.VisitTopLevelNodes())
-
+<CascadingValue Value="@RenderContext">
+    @ComponentConverter.RenderRootComponents(SyntaxTree.VisitTopLevelNodes())
+</CascadingValue>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     [Parameter] public IMdSyntaxTree SyntaxTree { get; set; } = MdSyntaxTree.Empty;
+    private MdRenderContext RenderContext { get; } = MdRenderContext.NonInteractive;
 }

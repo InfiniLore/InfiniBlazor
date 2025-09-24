@@ -2,6 +2,7 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Markdown.Editors.TextModifiers
+@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
 @using InfiniLore.Lucide
 @using Microsoft.Extensions.Logging
 
@@ -50,11 +51,12 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     [CascadingParameter] protected MdEditorContext EditorContext { get; set; } = null!;
+    [CascadingParameter] protected MdRenderContext RenderContext { get; set; } = null!;
     
     private async Task OnToggleInteractiveModeClickAsync(MouseEventArgs obj) {
-        EditorContext.IsInteractive = !EditorContext.IsInteractive;
+        RenderContext.IsInteractive = !RenderContext.IsInteractive;
         
-        Logger.Warning("state IsInteractive : {i}", EditorContext.IsInteractive);
+        Logger.Warning("state IsInteractive : {i}", RenderContext.IsInteractive);
         await InvokeAsync(StateHasChanged);
     }
     
