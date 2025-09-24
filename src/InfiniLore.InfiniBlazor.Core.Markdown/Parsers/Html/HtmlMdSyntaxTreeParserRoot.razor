@@ -3,17 +3,23 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
 @using InfiniLore.InfiniBlazor.Markdown.Syntax
+@using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
 
 @namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inject IBlazorMdComponentConverter ComponentConverter
+@inject IMarkdownConfig MarkdownConfig
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <CascadingValue Value="@RenderContext">
     @ComponentConverter.RenderRootComponents(SyntaxTree.VisitTopLevelNodes())
+    
+    @if (SyntaxTree.TryGetCachedChildrenByType(out IEnumerable<FootnoteDescriptionMdSyntaxNode>? footnoteDescriptions)) {
+        <DynamicComponent Type="@MarkdownConfig.FootnoteDescriptionWrapperComponentType" Parameters="@GetParameters(footnoteDescriptions)"/>
+    }
 </CascadingValue>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
@@ -21,4 +27,8 @@
 @code {
     [Parameter] public IMdSyntaxTree SyntaxTree { get; set; } = MdSyntaxTree.Empty;
     private MdRenderContext RenderContext { get; } = MdRenderContext.NonInteractive;
+    
+    private Dictionary<string, object> GetParameters(IEnumerable<FootnoteDescriptionMdSyntaxNode> footnoteDescriptions) => new() {
+        ["ChildContent"] = ComponentConverter.RenderRootComponentsWithSkipped(footnoteDescriptions),
+    };
 }

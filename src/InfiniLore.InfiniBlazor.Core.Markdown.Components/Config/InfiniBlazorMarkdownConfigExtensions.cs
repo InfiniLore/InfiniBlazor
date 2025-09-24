@@ -11,6 +11,8 @@ namespace InfiniLore.InfiniBlazor.Markdown.Config;
 // ---------------------------------------------------------------------------------------------------------------------
 public static class InfiniBlazorMarkdownConfigExtensions {
     public static InfiniBlazorMarkdownConfig WithDefaultEditorComponents(this InfiniBlazorMarkdownConfig config) {
+        config.FootnoteDescriptionWrapperComponentType = typeof(InfiniMdEditorFootnoteDescriptionWrapper);
+        
         config.RegisterMdBlazorComponent<BlockQuoteMdSyntaxNode, MdInfiniBlockQuote>();
         config.RegisterMdBlazorComponent<BoldMdSyntaxNode, MdInfiniBold>();
         config.RegisterMdBlazorComponent<CalloutMdSyntaxNode, MdInfiniCallout>();

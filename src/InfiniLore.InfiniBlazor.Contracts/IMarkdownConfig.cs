@@ -13,4 +13,5 @@ public interface IMarkdownConfig {
     FrozenDictionary<Type, IMdComponentRecord> GetComponentRecords();
     FrozenSet<Type> GetSkippedBlazorComponentTypes();
     bool RenderUnknownBlazorComponents { get; }
+    Type? FootnoteDescriptionWrapperComponentType { get; }
 }

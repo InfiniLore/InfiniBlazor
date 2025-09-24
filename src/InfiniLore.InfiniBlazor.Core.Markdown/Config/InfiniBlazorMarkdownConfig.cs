@@ -4,6 +4,7 @@
 using InfiniLore.InfiniBlazor.Core.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.Editors;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Frozen;
 
@@ -17,10 +18,12 @@ public sealed class InfiniBlazorMarkdownConfig : IMarkdownConfig {
     private Dictionary<Type, MdComponentRecord> ComponentRecords { get; } = new(32);
     private HashSet<Type> SkippedBlazorComponentTypes { get; } = [typeof(FootnoteDescriptionMdSyntaxNode)]; 
     public bool RenderUnknownBlazorComponents { get; set; } = false;
-    
+    public Type? FootnoteDescriptionWrapperComponentType { get; set; }
+
     private Lazy<FrozenDictionary<Type, IMdComponentRecord>> ComponentRecordsLazy { get; }
     private Lazy<FrozenSet<Type>> SkippedBlazorComponentTypesLazy { get; }
-
+    
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
