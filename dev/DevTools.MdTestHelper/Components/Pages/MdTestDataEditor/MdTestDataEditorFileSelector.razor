@@ -2,6 +2,7 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Markdown
+@using InfiniLore.InfiniBlazor.Toasting
 @using Tests.InfiniBlazor.Shared.Markdown
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
@@ -9,12 +10,15 @@
 @inject MdTestDataProvider MdTestDataProvider
 @inject ILogger<MdTestDataEditorFileSelector> Logger
 @inject IMarkdownParser MarkdownParser
+@inject IToastingProvider ToastingProvider
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="h-full w-full flex flex-col gap-1 p-4">
-    <InfiniButtonInput Label="Re evaluate all files and implement JSON structures" OnClick="@ReInterpretAllFilesAsync">
-        Process files
+    <InfiniButtonInput Label="Reinterpret test data" OnClick="@ReInterpretAllFilesAsync">
+        Process all files
     </InfiniButtonInput>
 </div>
 <div class="h-full w-full flex flex-col gap-1 p-4">
@@ -86,6 +90,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     [Parameter] public EventCallback<(string fileName, string testId)> OnTestSelected { get; set; }
 
@@ -182,28 +187,43 @@
     }
 
     private async Task ReInterpretAllFilesAsync() {
-        if (_fileNames is null) return;
+        try {
+            if (_fileNames is null) return;
 
-        foreach (string fileName in _fileNames) {
-            List<MdTestData>? testData = await MdTestDataProvider.TryGetXmlMdTestDataAsync(fileName);
-            if (testData is null) continue;
-            foreach (MdTestData mdTestData in testData) {
-                IMdSyntaxTree tree = mdTestData.MdSyntaxTree;
-                // Reset HtmlString
-                mdTestData.ExpectedHtmlString = await MarkdownParser.Html.DeserializeToStringAsync(tree);
-                
-                // Reset JsonString
-                using var memoryStream = new MemoryStream();
-                await MarkdownParser.Json.DeserializeToJsonStreamAsync(memoryStream, tree);
+            foreach (string fileName in _fileNames) {
+                List<MdTestData>? testData = await MdTestDataProvider.TryGetXmlMdTestDataAsync(fileName);
+                if (testData is null) continue;
 
-                memoryStream.Position = 0;
-                string json = await new StreamReader(memoryStream).ReadToEndAsync();
-                mdTestData.ExpectedJsonString = json;
-                
-                // Reset MarkdownString
-                mdTestData.ExpectedMarkdownString = MarkdownParser.MarkdownString.DeserializeToString(tree);
+                foreach (MdTestData mdTestData in testData) {
+                    IMdSyntaxTree tree = mdTestData.MdSyntaxTree;
+                    // Reset HtmlString
+                    mdTestData.ExpectedHtmlString = await MarkdownParser.Html.DeserializeToStringAsync(tree);
+
+                    // Reset JsonString
+                    using var memoryStream = new MemoryStream();
+                    await MarkdownParser.Json.DeserializeToJsonStreamAsync(memoryStream, tree);
+
+                    memoryStream.Position = 0;
+                    string json = await new StreamReader(memoryStream).ReadToEndAsync();
+                    mdTestData.ExpectedJsonString = json;
+
+                    // Reset MarkdownString
+                    mdTestData.ExpectedMarkdownString = MarkdownParser.MarkdownString.DeserializeToString(tree);
+                }
+                await MdTestDataProvider.TryWriteXmlMdTestDataAsync(fileName, testData);
             }
-            await MdTestDataProvider.TryWriteXmlMdTestDataAsync(fileName, testData);
+
+            await ToastingProvider.PublishToastAsync(
+                new ToastingData("All files Processed"),
+                ToastAppearance.Info
+            );
+        }
+        catch (Exception e) {
+            Logger.Error(e, "Error processing all files");
+            await ToastingProvider.PublishToastAsync(
+                new ToastingData("Error processing all files", "Please check the console"),
+                ToastAppearance.Error
+            );
         }
     }
 }
