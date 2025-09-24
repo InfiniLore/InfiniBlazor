@@ -1,12 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.HtmlString;
+namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Html;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IHtmlStringMdSyntaxTreeParser {
-    // IMdSyntaxTree SerializeToSyntaxTree(string input); // plain HTML to syntax tree is not supported 
-    string DeserializeToString(IMdSyntaxTree tree);
+public interface IHtmlMdSyntaxTreeParser {
+    Task<string> DeserializeToStringAsync(IMdSyntaxTree tree, CancellationToken ct = default);
 }

@@ -2,31 +2,32 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.Parsers.Html;
 using Tests.InfiniBlazor.Core.Markdown.DataSources;
 using Tests.InfiniBlazor.Shared;
 using Tests.InfiniBlazor.Shared.Markdown;
 
-namespace Tests.InfiniBlazor.Core.Markdown.Parsers.HtmlSimplified;
+namespace Tests.InfiniBlazor.Core.Markdown.Parsers.Html;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InfiniBlazorDiDataSource]
-public class ToHtmlSimplifiedTests(IMarkdownParser parser) {
+public class ToHtmlTests(IHtmlMdSyntaxTreeParser htmlMdSyntaxTreeParser) {
+
     [Test]
     [MethodDataSource<MdTestDataSources>(nameof(MdTestDataSources.GetBlankTest))]
     [MethodDataSource(typeof(MdTestDataSources), nameof(MdTestDataSources.GetTestDataAsync))]
-    public async Task FromSyntaxTree_ToHtmlSimplified_ShouldBeExpected(MdTestData data) {
+    public async Task ToHtml_ShouldReturnExpected(MdTestData data) {
         // Arrange
-        IMdSyntaxTree input = data.MdSyntaxTree;
-        string? expectedOutput = data.ExpectedHtmlStringSimplified;
-        Skip.When(expectedOutput is null, "The expected output is null.");
+        IMdSyntaxTree tree = data.MdSyntaxTree;
+        string? expectedOutput = data.ExpectedHtmlString?.ReplaceLineEndings("\n");
 
         // Act
-        string foundOutput = parser.HtmlString.DeserializeToString(input);
+        string output = await htmlMdSyntaxTreeParser.DeserializeToStringAsync(tree);
+        string outputNormalized = output.ReplaceLineEndings("\n");
 
         // Assert
-        await Assert.That(foundOutput)
-            .IsNotNull()
+        await Assert.That(outputNormalized)
             .IsEqualTo(expectedOutput);
     }
 }

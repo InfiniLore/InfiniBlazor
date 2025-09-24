@@ -7,7 +7,9 @@
         <TemplateMdSyntaxNode BracesCount="2">something.Fetch()</TemplateMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;something.Fetch()&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;
+        Variable "something.Fetch()" Not Found
+    &lt;/code&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>{{something.Fetch()}}</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -32,7 +34,7 @@
         <TextMdSyntaxNode xml:space="preserve">{{}}</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;{{}}&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;{{}}&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>{{}}</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",

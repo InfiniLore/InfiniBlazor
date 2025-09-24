@@ -7,7 +7,7 @@
         <UserMdSyntaxNode xml:space="preserve">default</UserMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span class="md-user"&gt;@default&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;span class="inline-block infini-bg-(--color-base-95) rounded-xl px-1.5 text-(--color-accent) md-tag md-username-default"&gt;@default&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>@default</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -31,7 +31,7 @@
         <TextMdSyntaxNode xml:space="preserve">@</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;@&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;@&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>@</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -62,7 +62,7 @@
         <UserMdSyntaxNode xml:space="preserve">--username--</UserMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span class="md-user"&gt;@username-something&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span class="md-user"&gt;@--username--&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;span class="inline-block infini-bg-(--color-base-95) rounded-xl px-1.5 text-(--color-accent) md-tag md-username-username-something"&gt;@username-something&lt;/span&gt;&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;&lt;span class="inline-block infini-bg-(--color-base-95) rounded-xl px-1.5 text-(--color-accent) md-tag md-username---username--"&gt;@--username--&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>@username-something
 
 @--username--</ExpectedMarkdownString>
@@ -110,7 +110,7 @@
         <UserMdSyntaxNode xml:space="preserve">__username__</UserMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;span class="md-user"&gt;@username_something&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span class="md-user"&gt;@__username__&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;span class="inline-block infini-bg-(--color-base-95) rounded-xl px-1.5 text-(--color-accent) md-tag md-username-username_something"&gt;@username_something&lt;/span&gt;&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;&lt;span class="inline-block infini-bg-(--color-base-95) rounded-xl px-1.5 text-(--color-accent) md-tag md-username-__username__"&gt;@__username__&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>@username_something
 
 @__username__</ExpectedMarkdownString>

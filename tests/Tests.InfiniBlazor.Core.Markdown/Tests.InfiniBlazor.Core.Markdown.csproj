@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
         <LangVersion>latest</LangVersion>
@@ -15,6 +15,7 @@
         <PackageReference Include="CodeOfChaos.Testing.TUnit" />
         <PackageReference Include="JetBrains.Annotations"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
         <PackageReference Include="NSubstitute" />
         <PackageReference Include="TUnit" />
     </ItemGroup>

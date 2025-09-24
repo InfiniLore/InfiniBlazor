@@ -8,7 +8,7 @@
         <FootnoteReferenceMdSyntaxNode Identifier="1" />
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;test &lt;sup&gt;&lt;a href="#md-footnote-1" class="cursor-pointer text-(--color-accent) hover:text-(--color-accent-light) hover:underline" onclick="event.preventDefault(); document.getElementById(&amp;#x27;md-footnote-1&amp;#x27;)?.scrollIntoView({ behavior: &amp;#x27;smooth&amp;#x27; });"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>test [^1]</ExpectedMarkdownString>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -45,7 +45,10 @@
         </ParagraphMdSyntaxNode>
       </FootnoteDescriptionMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;content&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;test &lt;sup&gt;&lt;a href="#md-footnote-1" class="cursor-pointer text-(--color-accent) hover:text-(--color-accent-light) hover:underline" onclick="event.preventDefault(); document.getElementById(&amp;#x27;md-footnote-1&amp;#x27;)?.scrollIntoView({ behavior: &amp;#x27;smooth&amp;#x27; });"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;&lt;div class="infini-bg-(--color-base-80)"&gt;&lt;hr class="border-(--border)"&gt;
+    &lt;div id="md-footnote-1" class="flex flex-row py-2"&gt;&lt;div class="mr-2"&gt;1 :&lt;/div&gt;
+    &lt;div class="grow"&gt;&lt;p class=" leading-relaxed"&gt;content&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;hr class="border-(--border)"&gt;&lt;/div&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>test [^1]
 
 [^1] : content</ExpectedMarkdownString>
@@ -110,7 +113,10 @@
       </FootnoteDescriptionMdSyntaxNode>
       <NewLineMdSyntaxNode />
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;some &lt;strong&gt;content&lt;/strong&gt; in description&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;test &lt;sup&gt;&lt;a href="#md-footnote-1" class="cursor-pointer text-(--color-accent) hover:text-(--color-accent-light) hover:underline" onclick="event.preventDefault(); document.getElementById(&amp;#x27;md-footnote-1&amp;#x27;)?.scrollIntoView({ behavior: &amp;#x27;smooth&amp;#x27; });"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;&lt;div class="infini-bg-(--color-base-80)"&gt;&lt;hr class="border-(--border)"&gt;
+    &lt;div id="md-footnote-1" class="flex flex-row py-2"&gt;&lt;div class="mr-2"&gt;1 :&lt;/div&gt;
+    &lt;div class="grow"&gt;&lt;p class=" leading-relaxed"&gt;some &lt;strong&gt;content&lt;/strong&gt; in description&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;hr class="border-(--border)"&gt;&lt;/div&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>test [^1]
 
 [^1] : some **content** in description
@@ -192,7 +198,10 @@
       </FootnoteDescriptionMdSyntaxNode>
       <NewLineMdSyntaxNode />
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;some &lt;em&gt;content&lt;/em&gt; in description&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;test &lt;sup&gt;&lt;a href="#md-footnote-1" class="cursor-pointer text-(--color-accent) hover:text-(--color-accent-light) hover:underline" onclick="event.preventDefault(); document.getElementById(&amp;#x27;md-footnote-1&amp;#x27;)?.scrollIntoView({ behavior: &amp;#x27;smooth&amp;#x27; });"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;&lt;div class="infini-bg-(--color-base-80)"&gt;&lt;hr class="border-(--border)"&gt;
+    &lt;div id="md-footnote-1" class="flex flex-row py-2"&gt;&lt;div class="mr-2"&gt;1 :&lt;/div&gt;
+    &lt;div class="grow"&gt;&lt;p class=" leading-relaxed"&gt;some &lt;em&gt;content&lt;/em&gt; in description&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;hr class="border-(--border)"&gt;&lt;/div&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>test [^1]
 
 [^1] : some *content* in description
@@ -285,7 +294,10 @@ Unrelated paragraph</MdString>
         <TextMdSyntaxNode xml:space="preserve">Unrelated paragraph</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;paragraph 1&lt;/p&gt;&lt;p&gt;paragraph 2&lt;/p&gt;&lt;p&gt;paragraph 3&lt;/p&gt;&lt;p&gt;Unrelated paragraph&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;test &lt;sup&gt;&lt;a href="#md-footnote-1" class="cursor-pointer text-(--color-accent) hover:text-(--color-accent-light) hover:underline" onclick="event.preventDefault(); document.getElementById(&amp;#x27;md-footnote-1&amp;#x27;)?.scrollIntoView({ behavior: &amp;#x27;smooth&amp;#x27; });"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;Unrelated paragraph&lt;/p&gt;&lt;div class="infini-bg-(--color-base-80)"&gt;&lt;hr class="border-(--border)"&gt;
+    &lt;div id="md-footnote-1" class="flex flex-row py-2"&gt;&lt;div class="mr-2"&gt;1 :&lt;/div&gt;
+    &lt;div class="grow"&gt;&lt;p class=" leading-relaxed"&gt;paragraph 1&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;paragraph 2&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;paragraph 3&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;hr class="border-(--border)"&gt;&lt;/div&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>test [^1]
 
 [^1] : paragraph 1
@@ -393,7 +405,10 @@ Unrelated paragraph</ExpectedMarkdownString>
       </FootnoteDescriptionMdSyntaxNode>
       <NewLineMdSyntaxNode />
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;some &lt;sub&gt;content&lt;/sub&gt; in description&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;test &lt;sup&gt;&lt;a href="#md-footnote-1" class="cursor-pointer text-(--color-accent) hover:text-(--color-accent-light) hover:underline" onclick="event.preventDefault(); document.getElementById(&amp;#x27;md-footnote-1&amp;#x27;)?.scrollIntoView({ behavior: &amp;#x27;smooth&amp;#x27; });"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;&lt;div class="infini-bg-(--color-base-80)"&gt;&lt;hr class="border-(--border)"&gt;
+    &lt;div id="md-footnote-1" class="flex flex-row py-2"&gt;&lt;div class="mr-2"&gt;1 :&lt;/div&gt;
+    &lt;div class="grow"&gt;&lt;p class=" leading-relaxed"&gt;some &lt;sub&gt;content&lt;/sub&gt; in description&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;hr class="border-(--border)"&gt;&lt;/div&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>test [^1]
 
 [^1] : some ~content~ in description
@@ -475,7 +490,10 @@ Unrelated paragraph</ExpectedMarkdownString>
       </FootnoteDescriptionMdSyntaxNode>
       <NewLineMdSyntaxNode />
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;some &lt;sup&gt;content&lt;/sup&gt; in description&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;test &lt;sup&gt;&lt;a href="#md-footnote-1" class="cursor-pointer text-(--color-accent) hover:text-(--color-accent-light) hover:underline" onclick="event.preventDefault(); document.getElementById(&amp;#x27;md-footnote-1&amp;#x27;)?.scrollIntoView({ behavior: &amp;#x27;smooth&amp;#x27; });"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;&lt;div class="infini-bg-(--color-base-80)"&gt;&lt;hr class="border-(--border)"&gt;
+    &lt;div id="md-footnote-1" class="flex flex-row py-2"&gt;&lt;div class="mr-2"&gt;1 :&lt;/div&gt;
+    &lt;div class="grow"&gt;&lt;p class=" leading-relaxed"&gt;some &lt;sup&gt;content&lt;/sup&gt; in description&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;hr class="border-(--border)"&gt;&lt;/div&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>test [^1]
 
 [^1] : some ^content^ in description
@@ -570,7 +588,11 @@ test [^2]
       </FootnoteDescriptionMdSyntaxNode>
       <NewLineMdSyntaxNode />
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;test &lt;/p&gt;&lt;p&gt;content&lt;/p&gt;&lt;p&gt;test &lt;/p&gt;&lt;p&gt;content&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;test &lt;sup&gt;&lt;a href="#md-footnote-1" class="cursor-pointer text-(--color-accent) hover:text-(--color-accent-light) hover:underline" onclick="event.preventDefault(); document.getElementById(&amp;#x27;md-footnote-1&amp;#x27;)?.scrollIntoView({ behavior: &amp;#x27;smooth&amp;#x27; });"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;test &lt;sup&gt;&lt;a href="#md-footnote-2" class="cursor-pointer text-(--color-accent) hover:text-(--color-accent-light) hover:underline" onclick="event.preventDefault(); document.getElementById(&amp;#x27;md-footnote-2&amp;#x27;)?.scrollIntoView({ behavior: &amp;#x27;smooth&amp;#x27; });"&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;&lt;div class="infini-bg-(--color-base-80)"&gt;&lt;hr class="border-(--border)"&gt;
+    &lt;div id="md-footnote-1" class="flex flex-row py-2"&gt;&lt;div class="mr-2"&gt;1 :&lt;/div&gt;
+    &lt;div class="grow"&gt;&lt;p class=" leading-relaxed"&gt;content&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;div id="md-footnote-2" class="flex flex-row py-2"&gt;&lt;div class="mr-2"&gt;2 :&lt;/div&gt;
+    &lt;div class="grow"&gt;&lt;p class=" leading-relaxed"&gt;content&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;hr class="border-(--border)"&gt;&lt;/div&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>test [^1]
 
 [^1] : content
@@ -692,7 +714,10 @@ test ^super^ [^1] ^super^
       </FootnoteDescriptionMdSyntaxNode>
       <NewLineMdSyntaxNode />
     </MdSyntaxTree>
-    <ExpectedHtmlStringSimplified>&lt;p&gt;test  ^ something&lt;/p&gt;&lt;p&gt;test &lt;sup&gt;super&lt;/sup&gt;  &lt;sup&gt;super&lt;/sup&gt;&lt;/p&gt;&lt;p&gt;some content in description&lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;test &lt;sup&gt;&lt;a href="#md-footnote-1" class="cursor-pointer text-(--color-accent) hover:text-(--color-accent-light) hover:underline" onclick="event.preventDefault(); document.getElementById(&amp;#x27;md-footnote-1&amp;#x27;)?.scrollIntoView({ behavior: &amp;#x27;smooth&amp;#x27; });"&gt;1&lt;/a&gt;&lt;/sup&gt; ^ something&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;test &lt;sup&gt;super&lt;/sup&gt; &lt;sup&gt;&lt;a href="#md-footnote-1" class="cursor-pointer text-(--color-accent) hover:text-(--color-accent-light) hover:underline" onclick="event.preventDefault(); document.getElementById(&amp;#x27;md-footnote-1&amp;#x27;)?.scrollIntoView({ behavior: &amp;#x27;smooth&amp;#x27; });"&gt;1&lt;/a&gt;&lt;/sup&gt; &lt;sup&gt;super&lt;/sup&gt;&lt;/p&gt;&lt;div class="infini-bg-(--color-base-80)"&gt;&lt;hr class="border-(--border)"&gt;
+    &lt;div id="md-footnote-1" class="flex flex-row py-2"&gt;&lt;div class="mr-2"&gt;1 :&lt;/div&gt;
+    &lt;div class="grow"&gt;&lt;p class=" leading-relaxed"&gt;some content in description&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;hr class="border-(--border)"&gt;&lt;/div&gt;</ExpectedHtmlString>
     <ExpectedMarkdownString>test [^1] ^ something
 test ^super^ [^1] ^super^
 

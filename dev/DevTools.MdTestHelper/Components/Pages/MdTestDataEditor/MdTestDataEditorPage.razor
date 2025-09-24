@@ -21,7 +21,6 @@
         <InfiniSection Class="h-full" Location="SectionLocation.Right">
             <MdTestDataEditorFileSelector
                 @ref="_fileSelectorComponent"
-                OnFileSelected="@HandleFileSelected"
                 OnTestSelected="@HandleTestSelected"/>
         </InfiniSection>
     </div>
@@ -34,14 +33,6 @@
 @code {
     private MdTestDataEditorData? _editorDataComponent;
     private MdTestDataEditorFileSelector? _fileSelectorComponent;
-
-    private void HandleFileSelected(string fileName) {
-        // _selectedFileName = fileName;
-        // _selectedTestId = string.Empty;// Clear test selection when file changes
-
-        // Trigger the editor to update
-        // StateHasChanged();
-    }
 
     private async Task HandleTestSelected((string fileName, string testId) selection) {
         // Trigger the editor to update and fetch the selected test

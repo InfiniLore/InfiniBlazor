@@ -3,6 +3,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor
 @using InfiniLore.InfiniBlazor.Markdown
+@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -14,7 +15,7 @@
 <InfiniPage Title="Markdown Editor" Class="p-4 w-full">
     <InfiniSection Class="grow flex flex-col gap-2 overflow-auto infini-scrollbar min-h-128 w-full">
         <InfiniHeading1>Markdown Editor</InfiniHeading1>
-        <InfiniMarkdownEditor @bind-EditorContext="Context">
+        <InfiniMarkdownEditor @bind-EditorContext="Context" @bind-RenderContext="RenderContext">
             <ToolbarBottom>
                 <InfiniMdEditorToolNodeCounter/>
                 <InfiniMdEditorToolWordCounter/>
@@ -29,9 +30,9 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     public MdEditorContext Context = new() {
-        IsInteractive = true,
         Content = "- [ ] something"
     };
+    public MdRenderContext RenderContext = MdRenderContext.Interactive;
     // public string? Content { get; set; } = "- [ ] something";
 }
 

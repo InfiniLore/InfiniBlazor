@@ -40,9 +40,9 @@ public class MarkdownBenchmarks {
     }
 
     [Benchmark(Baseline = true)]
-    public string RenderMarkdown() {
+    public async Task<string> RenderMarkdown() {
         IMdSyntaxTree tree = Parser.MarkdownString.SerializeToSyntaxTree(Markdown);
-        string? output = Parser.HtmlString.DeserializeToString(tree);
+        string? output = await Parser.Html.DeserializeToStringAsync(tree);
         return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
     }
     

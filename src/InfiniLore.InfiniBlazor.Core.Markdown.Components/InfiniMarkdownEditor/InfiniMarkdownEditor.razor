@@ -78,10 +78,12 @@
     [Parameter] public MdEditorContext EditorContext { get; set; } = new();
     [Parameter] public EventCallback<MdEditorContext> EditorContextChanged  { get; set; }
     
+    [Parameter] public MdRenderContext RenderContext { get; set; } = new();
+    [Parameter] public EventCallback<MdRenderContext> RenderContextChanged  { get; set; }
+    
     [Parameter] public RenderFragment? ToolbarTop { get; set; }
     [Parameter] public RenderFragment? ToolbarBottom { get; set; }
     
-    private MdRenderContext RenderContext { get; } = new();
     private InfiniEditorKeyCombo LastPressedCombo { get; set; } = InfiniEditorKeyCombo.Empty;
 
     private Dictionary<InfiniEditorKeyCombo, Func<InfiniMarkdownEditor, Task>> KeyCombos { get; } = new() {

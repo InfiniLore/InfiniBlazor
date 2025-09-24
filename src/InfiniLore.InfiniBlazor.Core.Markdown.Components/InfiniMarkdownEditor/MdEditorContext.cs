@@ -13,7 +13,6 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdEditorContext {
     public bool IsLocked { get; set; }
-    public bool IsInteractive { get; set; }
     public bool ShowPreview { get; set; } = true;
     public bool ShowInput { get; set; } = true;
 
@@ -54,8 +53,6 @@ public class MdEditorContext {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    internal bool IsNotInteractive() => IsLocked || !IsInteractive;
-    
     public async Task InvokeSourceChangeAsync(string value) 
         => await SourceChangedCallbackDebouncer.InvokeDebouncedAsync(value);
     

@@ -23,7 +23,9 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
-    [Parameter] public MdEditorContext EditorContext { get; set; } = new MdEditorContext();
+    [Parameter] public MdEditorContext EditorContext { get; set; } = new();
     [Parameter] public EventCallback<MdEditorContext> EditorContextChanged  { get; set; }
-    private MdRenderContext RenderContext { get; set; } = MdRenderContext.Empty;
+    
+    [Parameter] public MdRenderContext RenderContext { get; set; } = new();
+    [Parameter] public EventCallback<MdRenderContext> RenderContextChanged  { get; set; }
 }

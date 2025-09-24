@@ -3,6 +3,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor
 @using InfiniLore.InfiniBlazor.Markdown
+@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
 @using InfiniLore.InfiniBlazor.Toasting
 @using Tests.InfiniBlazor.Shared.Markdown
 
@@ -51,7 +52,7 @@
         <div class="h-full w-full flex flex-col gap-1">
             <InfiniHeading4 Class="min-h-6">Markdown Input</InfiniHeading4>
 
-            <InfiniMarkdownEditor @bind-EditorContext="Context"/>
+            <InfiniMarkdownEditor @bind-EditorContext="EditorContext"/>
 
             <InfiniSpacer/>
             <div class="w-full flex justify-center items-center h-16">
@@ -75,13 +76,6 @@
                         Class="font-mono w-full"/>
                 </InfiniTabContent>
 
-                <InfiniTabContent TabName="Simplified HTML">
-                    <InfiniTextAreaInput
-                        @bind-Value="@ExpectedHtmlStringSimplified"
-                        Rows="22"
-                        Class="font-mono w-full"/>
-                </InfiniTabContent>
-
                 <InfiniTabContent TabName="Json">
                     <InfiniTextAreaInput
                         @bind-Value="@ExpectedJsonString"
@@ -100,12 +94,23 @@
                     />
                 </InfiniTabContent>
 
+                <InfiniTabContent TabName="HTML string">
+                    <InfiniTextAreaInput
+                        @bind-Value="@ExpectedHtmlString"
+                        Rows="22"
+                        Class="font-mono w-full"/>
+                </InfiniTabContent>
+
+                <InfiniTabContent TabName="HTML render">
+                    @(new MarkupString(ExpectedHtmlString ?? string.Empty))
+                </InfiniTabContent>
+
                 <InfiniTabContent TabName="Blazor">
-                    <InfiniMdEditorStandalonePreview @bind-EditorContext="@Context"/>
+                    <InfiniMdEditorStandalonePreview @bind-EditorContext="@EditorContext" @bind-RenderContext="@RenderContext"/>
                 </InfiniTabContent>
             </InfiniTabContainer>
 
-            @if (ExpectedMarkdownString.IsNotNullOrWhiteSpace() && !string.Equals(Context.Content, ExpectedMarkdownString)) {
+            @if (ExpectedMarkdownString.IsNotNullOrWhiteSpace() && !string.Equals(EditorContext.Content, ExpectedMarkdownString)) {
                 <div class="text-red-500 text-center">
                     Markdown does not match expected output.
                     This often means an underlying issue with the markdown parser.
@@ -129,18 +134,18 @@
     private MdTestData? TestDataOrigin { get; set; }
 
     private string ExpectedSyntaxTreeString { get; set; } = string.Empty;
-    private string? ExpectedHtmlStringSimplified { get; set; } = string.Empty;
+    private string? ExpectedHtmlString { get; set; } = string.Empty;
     private string? ExpectedMarkdownString { get; set; } = string.Empty;
     private string? ExpectedJsonString { get; set; } = string.Empty;
     private bool SkipOnWhitespaceMisMatch { get; set; }
 
     public bool FreezeAutoUpdates { get; set; }
 
-    public MdEditorContext Context = new MdEditorContext {
-        IsInteractive = false,
+    public MdEditorContext EditorContext = new() {
         ShowInput = true,
         ShowPreview = false,
     };
+    public MdRenderContext RenderContext = MdRenderContext.NonInteractive;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -148,11 +153,11 @@
     protected override void OnInitialized() {
         base.OnInitialized();
 
-        Context.OnSyntaxTreeChangedAsync += OnGenerateAsync;
+        EditorContext.OnSyntaxTreeChangedAsync += OnGenerateAsync;
     }
     
     public void Dispose() {
-        Context.OnSyntaxTreeChangedAsync -= OnGenerateAsync;
+        EditorContext.OnSyntaxTreeChangedAsync -= OnGenerateAsync;
     }
 
     public async Task LoadTestData(string fileName, string testId) {
@@ -174,7 +179,7 @@
     }
 
     private async Task GenerateXmlString() {
-        IMdSyntaxTree tree = Context.SyntaxTree;
+        IMdSyntaxTree tree = EditorContext.SyntaxTree;
         using var memoryStream = new MemoryStream();
         await MarkdownParser.Xml.DeserializeToXmlStreamAsync(memoryStream, tree);
 
@@ -184,7 +189,7 @@
     }
 
     private async Task GenerateJsonString() {
-        IMdSyntaxTree tree = Context.SyntaxTree;
+        IMdSyntaxTree tree = EditorContext.SyntaxTree;
         using var memoryStream = new MemoryStream();
         await MarkdownParser.Json.DeserializeToJsonStreamAsync(memoryStream, tree);
         
@@ -194,14 +199,13 @@
         
     }
 
-    private Task GenerateSimpleHtmlString() {
-        IMdSyntaxTree tree = Context.SyntaxTree;
-        ExpectedHtmlStringSimplified = MarkdownParser.HtmlString.DeserializeToString(tree);
-        return Task.CompletedTask;
+    private async Task GenerateSimpleHtmlString() {
+        IMdSyntaxTree tree = EditorContext.SyntaxTree;
+        ExpectedHtmlString = await MarkdownParser.Html.DeserializeToStringAsync(tree);
     }
 
     private Task GenerateMarkdownString() {
-        IMdSyntaxTree tree = Context.SyntaxTree;
+        IMdSyntaxTree tree = EditorContext.SyntaxTree;
         ExpectedMarkdownString = MarkdownParser.MarkdownString.DeserializeToString(tree);
         return Task.CompletedTask;
     }
@@ -226,7 +230,7 @@
         TestId = testData.Id;
         DeveloperNote = testData.DeveloperNote;
 
-        Context.Content = testData.MdString;
+        EditorContext.Content = testData.MdString;
 
         if (testData.MdSyntaxTree is {} tree) {
             using MemoryStream memoryStream = new MemoryStream();
@@ -236,7 +240,7 @@
             ExpectedSyntaxTreeString = await new StreamReader(memoryStream).ReadToEndAsync();
         }
 
-        ExpectedHtmlStringSimplified = testData.ExpectedHtmlStringSimplified;
+        ExpectedHtmlString = testData.ExpectedHtmlString;
         ExpectedMarkdownString = testData.ExpectedMarkdownString;
         SkipOnWhitespaceMisMatch = testData.ExpectedMarkdownStringSkipOnWhitespaceMisMatch;
         ExpectedJsonString = testData.ExpectedJsonString;
@@ -257,9 +261,9 @@
             FileName = FileName,
             Id = TestId,
             DeveloperNote = DeveloperNote,
-            MdString = Context.Content,
-            MdSyntaxTree = Context.SyntaxTree,
-            ExpectedHtmlStringSimplified = ExpectedHtmlStringSimplified,
+            MdString = EditorContext.Content,
+            MdSyntaxTree = EditorContext.SyntaxTree,
+            ExpectedHtmlString = ExpectedHtmlString,
             ExpectedMarkdownString = ExpectedMarkdownString,
             ExpectedMarkdownStringSkipOnWhitespaceMisMatch = SkipOnWhitespaceMisMatch,
             ExpectedJsonString = ExpectedJsonString
@@ -291,8 +295,8 @@
         FileName = string.Empty;
         TestId = string.Empty;
         DeveloperNote = string.Empty;
-        Context.Content = string.Empty;
-        ExpectedHtmlStringSimplified = string.Empty;
+        EditorContext.Content = string.Empty;
+        ExpectedHtmlString = string.Empty;
         ExpectedMarkdownString = string.Empty;
         ExpectedSyntaxTreeString = string.Empty;
         TestDataOrigin = null;
@@ -335,8 +339,8 @@
         FileName = string.Empty;
         TestId = string.Empty;
         DeveloperNote = string.Empty;
-        Context.Content = string.Empty;
-        ExpectedHtmlStringSimplified = string.Empty;
+        EditorContext.Content = string.Empty;
+        ExpectedHtmlString = string.Empty;
         ExpectedMarkdownString = string.Empty;
         ExpectedSyntaxTreeString = string.Empty;
         TestDataOrigin = null;
