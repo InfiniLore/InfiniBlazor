@@ -20,7 +20,7 @@ public abstract class BaseHtmlStringMdSyntaxDeserializer(IHtmlStringMdSyntaxNode
     public string DeserializeToString(IMdSyntaxTree tree) {
         StringBuilder builder;
         Dictionary<int, IMdSyntaxNode> depthCache;
-    
+        
         // WTF why is a lock needed here? This makes no sense!
         //      Yes, it does, but poor Anna forgot why
         lock (PoolLock) {

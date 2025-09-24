@@ -18,18 +18,14 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
         get => LazyRootNode.Value;
         init {
             ArgumentNullException.ThrowIfNull(value);
-
-            // This check is kind of dumb, but it's a good sanity check
-            if (IsInitialized) throw new InvalidOperationException("Cannot set the root node once the tree has been initialized.");
-
             LazyRootNode = new Lazy<IMdSyntaxNode>(() => value);
+            _ = LazyRootNode.Value;
         }
     }
 
     public static ObjectPool<MdSyntaxTree> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxTree>(16);
     private static ObjectPool<Stack<IMdSyntaxNode>> MdSyntaxNodeStackPool { get; } = PoolingHelpers.CreateStackPool<IMdSyntaxNode>(PoolingHelpers.ParsersRetained);
-
-    private bool IsInitialized => LazyRootNode.IsValueCreated;
+    
     public static IMdSyntaxTree Empty => new MdSyntaxTree();
 
     private ConcurrentDictionary<Type, List<int[]>> CachedChildrenByType { get; } = new ConcurrentDictionary<Type, List<int[]>>();
@@ -76,10 +72,7 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     #region Visit Nodes
     // ReSharper disable once ConvertIfStatementToReturnStatement
     public IEnumerable<IMdSyntaxNode> VisitTopLevelNodes() {
-        if (!IsInitialized) return Enumerable.Empty<IMdSyntaxNode>();
-
         int childCount = RootNode.ChildCount;
-
         if (childCount == 0) return Enumerable.Empty<IMdSyntaxNode>();
 
         return RootNode.GetChildren();
@@ -87,8 +80,6 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     }
 
     public IEnumerable<IMdSyntaxNode> VisitNodesBreadthFirst() {
-        if (!IsInitialized) yield break;
-
         ReadOnlySpan<IMdSyntaxNode> rootNodeChildren = RootNode.GetChildrenSpan();
         int rootNodeChildCount = rootNodeChildren.Length;
         if (rootNodeChildCount == 0) yield break;// Early exit for empty tree nodes
@@ -120,8 +111,6 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     }
 
     public IEnumerable<IMdSyntaxNode> VisitNodesDeepestFirst() {
-        if (!IsInitialized) yield break;
-
         ReadOnlySpan<IMdSyntaxNode> rootNodeChildren = RootNode.GetChildrenSpan();
         int rootNodeChildCount = rootNodeChildren.Length;
         if (rootNodeChildCount == 0) yield break;// Early exit for empty trees
@@ -165,8 +154,6 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
         }
     }
     public int GetCount() {
-        if (!IsInitialized) return 0;
-
         ReadOnlySpan<IMdSyntaxNode> rootNodeChildren = RootNode.GetChildrenSpan();
         int rootNodeChildCount = rootNodeChildren.Length;
         if (rootNodeChildCount == 0) return 0;// Early exit for empty tree nodes
@@ -206,7 +193,6 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     }
 
     public bool TryReset() {
-        if (!IsInitialized) return true;// Nothing to reset
         if (RootNode is not RootMdSyntaxNode rootNode) return false;// Cannot reset a non-root node
 
         foreach (KeyValuePair<Type, List<int[]>> keyValuePair in CachedChildrenByType) {
