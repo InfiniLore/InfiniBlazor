@@ -76,13 +76,6 @@
                         Class="font-mono w-full"/>
                 </InfiniTabContent>
 
-                <InfiniTabContent TabName="Simplified HTML">
-                    <InfiniTextAreaInput
-                        @bind-Value="@ExpectedHtmlString"
-                        Rows="22"
-                        Class="font-mono w-full"/>
-                </InfiniTabContent>
-
                 <InfiniTabContent TabName="Json">
                     <InfiniTextAreaInput
                         @bind-Value="@ExpectedJsonString"
@@ -99,6 +92,13 @@
                         Label="Skip test on whitespace mismatch"
                         @bind-Value="@SkipOnWhitespaceMisMatch"
                     />
+                </InfiniTabContent>
+
+                <InfiniTabContent TabName="HTML">
+                    <InfiniTextAreaInput
+                        @bind-Value="@ExpectedHtmlString"
+                        Rows="22"
+                        Class="font-mono w-full"/>
                 </InfiniTabContent>
 
                 <InfiniTabContent TabName="Blazor">
