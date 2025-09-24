@@ -54,4 +54,7 @@ public static class MdSyntaxNodeModifierExtensions {
         return VerticalAlignImageUtilities.TryGetFromString(align, out _) || align.IsNotNullOrWhiteSpace();
     }
     
+    public static bool TryGetColor(this IMdSyntaxNodeModifier mod, [NotNullWhen(true)] out string? color) 
+        => mod.TryGetValue("color", out color);
+    
 }

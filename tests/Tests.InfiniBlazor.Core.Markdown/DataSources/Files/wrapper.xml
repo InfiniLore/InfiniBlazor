@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="wrapper.xml">
+    <MdString>&lt;|color=red&gt; test &lt;/&gt; </MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <WrapperMdSyntaxNode>
+          <Modifiers>
+            <Attributes>
+              <Entry Key="color" Start="7" End="10" />
+            </Attributes>
+            <OriginalInput>|color=red</OriginalInput>
+          </Modifiers>
+          <TextMdSyntaxNode xml:space="preserve"> test </TextMdSyntaxNode>
+        </WrapperMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt; test  &lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&lt;|color=red&gt; test &lt;/&gt; </ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "WrapperMdSyntaxNode",
+          "Modifiers": {
+            "Attributes": [
+              {
+                "key": "color",
+                "Start": 7,
+                "End": 10
+              }
+            ],
+            "OriginalInput": "|color=red"
+          },
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": " test "
+            }
+          ]
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
+  </MdTestData>
+  <MdTestData Id="empty" FileName="wrapper.xml">
+    <MdString>&lt;|color=red&gt;&lt;/&gt; </MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <WrapperMdSyntaxNode>
+          <Modifiers>
+            <Attributes>
+              <Entry Key="color" Start="7" End="10" />
+            </Attributes>
+            <OriginalInput>|color=red</OriginalInput>
+          </Modifiers>
+        </WrapperMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt; &lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&lt;|color=red&gt;&lt;/&gt; </ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "WrapperMdSyntaxNode",
+          "Modifiers": {
+            "Attributes": [
+              {
+                "key": "color",
+                "Start": 7,
+                "End": 10
+              }
+            ],
+            "OriginalInput": "|color=red"
+          }
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
+  </MdTestData>
+  <MdTestData Id="withBold" FileName="wrapper.xml">
+    <MdString>&lt;|color=red&gt;**bold**&lt;/&gt; 
+
+**&lt;|color=red&gt;bold&lt;/&gt;** </MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <WrapperMdSyntaxNode>
+          <Modifiers>
+            <Attributes>
+              <Entry Key="color" Start="7" End="10" />
+            </Attributes>
+            <OriginalInput>|color=red</OriginalInput>
+          </Modifiers>
+          <BoldMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">bold</TextMdSyntaxNode>
+          </BoldMdSyntaxNode>
+        </WrapperMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <WrapperMdSyntaxNode>
+            <Modifiers>
+              <Attributes>
+                <Entry Key="color" Start="7" End="10" />
+              </Attributes>
+              <OriginalInput>|color=red</OriginalInput>
+            </Modifiers>
+            <TextMdSyntaxNode xml:space="preserve">bold</TextMdSyntaxNode>
+          </WrapperMdSyntaxNode>
+        </BoldMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedHtmlStringSimplified>&lt;p&gt;&lt;strong&gt;bold&lt;/strong&gt; &lt;/p&gt;&lt;p&gt;&lt;strong&gt;bold&lt;/strong&gt; &lt;/p&gt;</ExpectedHtmlStringSimplified>
+    <ExpectedMarkdownString>&lt;|color=red&gt;**bold**&lt;/&gt; 
+
+**&lt;|color=red&gt;bold&lt;/&gt;** </ExpectedMarkdownString>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "WrapperMdSyntaxNode",
+          "Modifiers": {
+            "Attributes": [
+              {
+                "key": "color",
+                "Start": 7,
+                "End": 10
+              }
+            ],
+            "OriginalInput": "|color=red"
+          },
+          "children": [
+            {
+              "type": "BoldMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "bold"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "BoldMdSyntaxNode",
+          "children": [
+            {
+              "type": "WrapperMdSyntaxNode",
+              "Modifiers": {
+                "Attributes": [
+                  {
+                    "key": "color",
+                    "Start": 7,
+                    "End": 10
+                  }
+                ],
+                "OriginalInput": "|color=red"
+              },
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "bold"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
+  </MdTestData>
+</ArrayOfMdTestData>
