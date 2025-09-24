@@ -18,10 +18,10 @@ public static class IMarkdownParserExtensions {
     public static MarkdownParserContext FromJson(this IMarkdownParser parser, JsonElement element)
         => MarkdownParserContext.Create(parser, parser.Json.SerializeToSyntaxTree(element));
     
-    public static async Task<MarkdownParserContext> FromJson(this IMarkdownParser parser, Stream stream, CancellationToken ct = default)
+    public static async Task<MarkdownParserContext> FromJsonAsync(this IMarkdownParser parser, Stream stream, CancellationToken ct = default)
         => MarkdownParserContext.Create(parser, await parser.Json.SerializeToSyntaxTreeAsync(stream, ct).ConfigureAwait(false));
     
-    public static async Task<MarkdownParserContext> FromJson(this IMarkdownParser parser, string filePath, CancellationToken ct = default)
+    public static async Task<MarkdownParserContext> FromJsonAsync(this IMarkdownParser parser, string filePath, CancellationToken ct = default)
         => MarkdownParserContext.Create(parser, await parser.Json.SerializeToSyntaxTreeAsync(filePath, ct).ConfigureAwait(false));
     #endregion
     
