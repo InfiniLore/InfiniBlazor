@@ -19,9 +19,9 @@ public class MdTestData : IXmlSerializable, IEquatable<MdTestData> {
     public required string MdString { get; set; } = string.Empty;
     public required IMdSyntaxTree MdSyntaxTree { get; set; } 
     public string? ExpectedHtmlString { get; set; }
-    public string? ExpectedMarkdownString { get; set; }
+    public string? ExpectedMarkdown { get; set; }
     public string? ExpectedJsonString { get; set; }
-    public bool ExpectedMarkdownStringSkipOnWhitespaceMisMatch { get; set; }
+    public bool ExpectedMarkdownSkipOnWhitespaceMisMatch { get; set; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -63,13 +63,13 @@ public class MdTestData : IXmlSerializable, IEquatable<MdTestData> {
                     break;
                 }
 
-                case nameof(ExpectedMarkdownString): {
-                    ExpectedMarkdownString = reader.ReadElementContentAsString();
+                case nameof(ExpectedMarkdown): {
+                    ExpectedMarkdown = reader.ReadElementContentAsString();
                     break;
                 }
 
-                case nameof(ExpectedMarkdownStringSkipOnWhitespaceMisMatch): {
-                    ExpectedMarkdownStringSkipOnWhitespaceMisMatch = bool.Parse(reader.ReadElementContentAsString());
+                case nameof(ExpectedMarkdownSkipOnWhitespaceMisMatch): {
+                    ExpectedMarkdownSkipOnWhitespaceMisMatch = bool.Parse(reader.ReadElementContentAsString());
                     break;
                 }
 
@@ -104,8 +104,8 @@ public class MdTestData : IXmlSerializable, IEquatable<MdTestData> {
         syntaxTreeElement.WriteTo(writer);
         
         if (ExpectedHtmlString.IsNotNullOrWhiteSpace()) writer.WriteElementString(nameof(ExpectedHtmlString), ExpectedHtmlString);
-        if (ExpectedMarkdownString.IsNotNullOrWhiteSpace()) writer.WriteElementString(nameof(ExpectedMarkdownString), ExpectedMarkdownString);
-        if (ExpectedMarkdownStringSkipOnWhitespaceMisMatch) writer.WriteElementString(nameof(ExpectedMarkdownStringSkipOnWhitespaceMisMatch), ExpectedMarkdownStringSkipOnWhitespaceMisMatch.ToString());
+        if (ExpectedMarkdown.IsNotNullOrWhiteSpace()) writer.WriteElementString(nameof(ExpectedMarkdown), ExpectedMarkdown);
+        if (ExpectedMarkdownSkipOnWhitespaceMisMatch) writer.WriteElementString(nameof(ExpectedMarkdownSkipOnWhitespaceMisMatch), ExpectedMarkdownSkipOnWhitespaceMisMatch.ToString());
         if (ExpectedJsonString.IsNotNullOrWhiteSpace()) writer.WriteElementString(nameof(ExpectedJsonString), ExpectedJsonString);
     }
     
@@ -118,8 +118,8 @@ public class MdTestData : IXmlSerializable, IEquatable<MdTestData> {
             && MdString == other.MdString 
             && MdSyntaxTree.Equals(other.MdSyntaxTree) 
             && ExpectedHtmlString == other.ExpectedHtmlString 
-            && ExpectedMarkdownString == other.ExpectedMarkdownString 
-            && ExpectedMarkdownStringSkipOnWhitespaceMisMatch == other.ExpectedMarkdownStringSkipOnWhitespaceMisMatch;
+            && ExpectedMarkdown == other.ExpectedMarkdown 
+            && ExpectedMarkdownSkipOnWhitespaceMisMatch == other.ExpectedMarkdownSkipOnWhitespaceMisMatch;
     }
     
     public override bool Equals(object? obj) {
@@ -129,6 +129,6 @@ public class MdTestData : IXmlSerializable, IEquatable<MdTestData> {
     }
     
     // ReSharper disable NonReadonlyMemberInGetHashCode
-    public override int GetHashCode() => HashCode.Combine(FileName, Id, DeveloperNote, MdString, MdSyntaxTree, ExpectedHtmlString, ExpectedMarkdownString, ExpectedMarkdownStringSkipOnWhitespaceMisMatch);
+    public override int GetHashCode() => HashCode.Combine(FileName, Id, DeveloperNote, MdString, MdSyntaxTree, ExpectedHtmlString, ExpectedMarkdown, ExpectedMarkdownSkipOnWhitespaceMisMatch);
     // ReSharper restore NonReadonlyMemberInGetHashCode
 }

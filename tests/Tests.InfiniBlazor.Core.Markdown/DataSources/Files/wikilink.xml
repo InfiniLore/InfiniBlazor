@@ -8,7 +8,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;a href="test" class="text-(--color-accent) hover:text-(--color-accent-light) hover:underline"&gt;test&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>[[test]]</ExpectedMarkdownString>
+    <ExpectedMarkdown>[[test]]</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -39,9 +39,9 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;[[]]&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;[[ ]]&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>[[]]
+    <ExpectedMarkdown>[[]]
 
-[[ ]]</ExpectedMarkdownString>
+[[ ]]</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [

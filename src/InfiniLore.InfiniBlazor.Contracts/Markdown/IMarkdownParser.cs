@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Html;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Json;
-using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString;
+using InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;
 
 namespace InfiniLore.InfiniBlazor.Markdown;
@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMarkdownParser {
     IHtmlMdSyntaxTreeParser Html { get; }
-    IMsStringMdSyntaxTreeParser MarkdownString { get; }
+    IMarkdownMdSyntaxTreeParser Markdown { get; }
     IXmlMdSyntaxTreeParser Xml { get; }
     IJsonMdSyntaxTreeParser Json { get; }
 }

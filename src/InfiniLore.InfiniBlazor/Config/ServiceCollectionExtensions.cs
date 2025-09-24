@@ -8,7 +8,7 @@ using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Core.Js;
 using InfiniLore.InfiniBlazor.Markdown.Config;
 using InfiniLore.InfiniBlazor.Markdown.Editors;
-using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Deserializer;
+using InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Deserializer;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Configuration;
 

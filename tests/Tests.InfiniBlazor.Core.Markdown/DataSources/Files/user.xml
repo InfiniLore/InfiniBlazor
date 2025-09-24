@@ -8,7 +8,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;span class="inline-block infini-bg-(--color-base-95) rounded-xl px-1.5 text-(--color-accent) md-tag md-username-default"&gt;@default&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>@default</ExpectedMarkdownString>
+    <ExpectedMarkdown>@default</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -32,7 +32,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;@&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>@</ExpectedMarkdownString>
+    <ExpectedMarkdown>@</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -63,9 +63,9 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;span class="inline-block infini-bg-(--color-base-95) rounded-xl px-1.5 text-(--color-accent) md-tag md-username-username-something"&gt;@username-something&lt;/span&gt;&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;&lt;span class="inline-block infini-bg-(--color-base-95) rounded-xl px-1.5 text-(--color-accent) md-tag md-username---username--"&gt;@--username--&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>@username-something
+    <ExpectedMarkdown>@username-something
 
-@--username--</ExpectedMarkdownString>
+@--username--</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -111,9 +111,9 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;span class="inline-block infini-bg-(--color-base-95) rounded-xl px-1.5 text-(--color-accent) md-tag md-username-username_something"&gt;@username_something&lt;/span&gt;&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;&lt;span class="inline-block infini-bg-(--color-base-95) rounded-xl px-1.5 text-(--color-accent) md-tag md-username-__username__"&gt;@__username__&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>@username_something
+    <ExpectedMarkdown>@username_something
 
-@__username__</ExpectedMarkdownString>
+@__username__</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [

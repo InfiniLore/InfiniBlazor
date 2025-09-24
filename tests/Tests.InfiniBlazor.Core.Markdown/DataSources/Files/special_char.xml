@@ -8,7 +8,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;$&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>$</ExpectedMarkdownString>
+    <ExpectedMarkdown>$</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -32,7 +32,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;This contains an emoji: &amp;#x1F600;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>This contains an emoji: 😀</ExpectedMarkdownString>
+    <ExpectedMarkdown>This contains an emoji: 😀</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -56,7 +56,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&amp;gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt;</ExpectedMarkdownString>
+    <ExpectedMarkdown>&gt;</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -80,7 +80,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&amp;lt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&lt;</ExpectedMarkdownString>
+    <ExpectedMarkdown>&lt;</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [

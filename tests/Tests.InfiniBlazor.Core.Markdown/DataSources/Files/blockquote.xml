@@ -62,7 +62,7 @@
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;One line&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;two lines&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;two lines&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;three lines&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;three lines&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;three lines&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;four lines&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;four lines&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;four lines&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt; One line
+    <ExpectedMarkdown>&gt; One line
 
 &gt; two lines
 &gt; two lines
@@ -73,7 +73,7 @@
 
 &gt; four lines
 &gt; four lines
-&gt; four lines</ExpectedMarkdownString>
+&gt; four lines</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -230,9 +230,9 @@
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;text&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt; text
-&gt;  </ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedMarkdown>&gt; text
+&gt;  </ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -350,7 +350,7 @@
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt; 1&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt; 2&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt; 1&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt; &amp;gt; 2&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt; 1&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt; &amp;gt; 2&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;1&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;2&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt; 1
+    <ExpectedMarkdown>&gt; 1
 &gt;&gt; 2
 &gt;&gt;&gt; 3
 
@@ -364,7 +364,7 @@
 
 &gt; 1
 &gt; &gt; 2
-&gt; &gt; &gt; 3</ExpectedMarkdownString>
+&gt; &gt; &gt; 3</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -610,8 +610,8 @@
       </ListUnOrderedMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;This is a blockquote&lt;/p&gt;&lt;/blockquote&gt;&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;List item&lt;/li&gt;&lt;/ul&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt; This is a blockquote
-- List item</ExpectedMarkdownString>
+    <ExpectedMarkdown>&gt; This is a blockquote
+- List item</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -672,9 +672,9 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt; &lt;/p&gt;&lt;/blockquote&gt;&lt;p class="my-4 leading-relaxed"&gt;&amp;gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt; 
+    <ExpectedMarkdown>&gt; 
 
-&gt;</ExpectedMarkdownString>
+&gt;</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -781,7 +781,7 @@
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt; line
+    <ExpectedMarkdown>&gt; line
 &gt; &gt; line
 
 &gt; line
@@ -791,7 +791,7 @@
 &gt; line
 &gt; &gt; line
 &gt; &gt; &gt; line
-&gt; &gt; &gt; &gt; line</ExpectedMarkdownString>
+&gt; &gt; &gt; &gt; line</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -1058,7 +1058,7 @@
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;/blockquote&gt;&lt;p class="my-4 leading-relaxed"&gt;line&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt; line
+    <ExpectedMarkdown>&gt; line
 &gt; &gt; line
 
 &gt; line
@@ -1073,7 +1073,7 @@
 &gt; &gt; &gt; &gt; line
 &gt; &gt; &gt; line
 &gt; &gt; line
-&gt; line</ExpectedMarkdownString>
+&gt; line</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -1364,7 +1364,7 @@
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;Level 1&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;Level 2&lt;/p&gt;&lt;/blockquote&gt;&lt;p class="my-4 leading-relaxed"&gt;Back to Level 1&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;Level 3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt; Line 1&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt; Line 2&lt;/p&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;Line 3&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;p class="my-4 leading-relaxed"&gt; Line 4&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt; Level 1
+    <ExpectedMarkdown>&gt; Level 1
 &gt; &gt; Level 2
 &gt; Back to Level 1
 &gt; &gt; &gt; Level 3
@@ -1372,7 +1372,7 @@
 &gt; Line 1
 &gt;&gt; Line 2
 &gt;&gt;&gt; Line 3
-&gt; Line 4</ExpectedMarkdownString>
+&gt; Line 4</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -1577,13 +1577,13 @@
         &lt;div class="flex grow w-full text-xl"&gt;Title&lt;/div&gt;&lt;/div&gt;
 
     &lt;div class="border-neutral-600 text-neutral-400 h-auto opacity-100 border-t-1 pt-2 mt-1 flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;p class="my-2 leading-relaxed"&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt; Something
+    <ExpectedMarkdown>&gt; Something
 &gt; &gt; &gt;[!note] Title
 &gt; &gt; &gt; Body
 
 &gt; Something
 &gt;&gt;&gt;[!note] Title
-&gt;&gt;&gt; Body</ExpectedMarkdownString>
+&gt;&gt;&gt; Body</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -1721,7 +1721,7 @@
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;This is a blockquote with escaped characters: *, &amp;gt;, &lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;`&lt;/code&gt;&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt; This is a blockquote with escaped characters: \*, \&gt;, `\``</ExpectedMarkdownString>
+    <ExpectedMarkdown>&gt; This is a blockquote with escaped characters: \*, \&gt;, `\``</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -1792,10 +1792,10 @@
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;h1 class=" text-6xl font-semibold mb-6"&gt;test&lt;/h1&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;test&lt;/p&gt;&lt;/blockquote&gt;&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;test&lt;/li&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;test&lt;/li&gt;&lt;/ul&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt; # test
+    <ExpectedMarkdown>&gt; # test
 &gt; &gt; test
 &gt; - test
-&gt; - test</ExpectedMarkdownString>
+&gt; - test</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -1879,7 +1879,7 @@
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;div&gt;This is a div inside a blockquote.&lt;/div&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt; &lt;div&gt;This is a div inside a blockquote.&lt;/div&gt;</ExpectedMarkdownString>
+    <ExpectedMarkdown>&gt; &lt;div&gt;This is a div inside a blockquote.&lt;/div&gt;</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -1907,7 +1907,7 @@
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;&lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;&amp;gt; Block Quote&lt;/code&gt;&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt; `&gt; Block Quote`</ExpectedMarkdownString>
+    <ExpectedMarkdown>&gt; `&gt; Block Quote`</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -1998,7 +1998,7 @@
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;Mixed levels and lists:&lt;/p&gt;&lt;ol class="list-decimal pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;First&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;Nested blockquote with text.&lt;/p&gt;&lt;/blockquote&gt;&lt;/li&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Second&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Sub-item&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;Another nested quote.&lt;/p&gt;&lt;/blockquote&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/blockquote&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;First item&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Nested item with &lt;strong&gt;bold text&lt;/strong&gt;.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Second item&lt;/li&gt;&lt;/ul&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt; Mixed levels and lists:
+    <ExpectedMarkdown>&gt; Mixed levels and lists:
 &gt; 1. First
 &gt;    &gt; Nested blockquote with text.
 &gt; 2. Second
@@ -2007,7 +2007,7 @@
 
 &gt; - First item
 &gt;    - Nested item with **bold text**.
-&gt; - Second item</ExpectedMarkdownString>
+&gt; - Second item</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -2290,7 +2290,7 @@
     &lt;/svg&gt;&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;
     &lt;div class="hidden  anchored-left/anchor-tooltip z-20 absolute anchored shadow-md/30"&gt;&lt;div class="before:content-[&amp;#x27;&amp;#x27;] before:absolute before:w-2 before:h-2 before:rotate-45 before:infini-bg-(--color-base-90) before:-right-1 before:top-1/2 before:-translate-y-1/2 shadow-md/30 transform px-3 py-1 infini-bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md transition-opacity duration-200 whitespace-nowrap pointer-events-none"&gt;Copy to clipboard&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
     &lt;div class="infini-bg-(--codeblock) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar"&gt;&lt;div class="relative"&gt;&lt;pre class="whitespace-pre m-0 font-mono min-h-0"&gt;&lt;code&gt;Code block inside a blockquote. &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt; This is a blockquote with **bold text** and *italic text*.
+    <ExpectedMarkdown>&gt; This is a blockquote with **bold text** and *italic text*.
 
 &gt; Inline formatting:
 &gt; **Bold**, *italic*, `code`, and [link](https://example.com).
@@ -2300,7 +2300,7 @@
 &gt; This is a paragraph.
 &gt; ```
 &gt; Code block inside a blockquote.
-&gt; ```</ExpectedMarkdownString>
+&gt; ```</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -2570,10 +2570,10 @@
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;This is a blockquote with &lt;strong&gt;bold text&lt;/strong&gt; and &lt;em&gt;italic text&lt;/em&gt;.&lt;/p&gt;&lt;ol class="list-decimal pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;First item&lt;/li&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Second item&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Sub-item&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt; This is a blockquote with **bold text** and *italic text*.
+    <ExpectedMarkdown>&gt; This is a blockquote with **bold text** and *italic text*.
 &gt; 1. First item
 &gt; 2. Second item
-&gt;    - Sub-item</ExpectedMarkdownString>
+&gt;    - Sub-item</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [

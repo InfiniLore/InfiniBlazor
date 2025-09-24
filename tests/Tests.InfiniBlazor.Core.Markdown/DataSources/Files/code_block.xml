@@ -23,13 +23,13 @@ const code = sample();
     &lt;/svg&gt;javascript&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;
     &lt;div class="hidden  anchored-left/anchor-tooltip z-20 absolute anchored shadow-md/30"&gt;&lt;div class="before:content-[&amp;#x27;&amp;#x27;] before:absolute before:w-2 before:h-2 before:rotate-45 before:infini-bg-(--color-base-90) before:-right-1 before:top-1/2 before:-translate-y-1/2 shadow-md/30 transform px-3 py-1 infini-bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md transition-opacity duration-200 whitespace-nowrap pointer-events-none"&gt;Copy to clipboard&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
     &lt;div class="infini-bg-(--codeblock) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar"&gt;&lt;div class="relative"&gt;&lt;pre class="whitespace-pre m-0 font-mono min-h-0"&gt;&lt;code&gt;const code = sample(); &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>```
+    <ExpectedMarkdown>```
 const code = sample();
 ```
 
 ```javascript
 const code = sample();
-```</ExpectedMarkdownString>
+```</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -64,9 +64,9 @@ const code = sample();
     &lt;/svg&gt;&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;
     &lt;div class="hidden  anchored-left/anchor-tooltip z-20 absolute anchored shadow-md/30"&gt;&lt;div class="before:content-[&amp;#x27;&amp;#x27;] before:absolute before:w-2 before:h-2 before:rotate-45 before:infini-bg-(--color-base-90) before:-right-1 before:top-1/2 before:-translate-y-1/2 shadow-md/30 transform px-3 py-1 infini-bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md transition-opacity duration-200 whitespace-nowrap pointer-events-none"&gt;Copy to clipboard&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
     &lt;div class="infini-bg-(--codeblock) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar"&gt;&lt;div class="relative"&gt;&lt;pre class="whitespace-pre m-0 font-mono min-h-0"&gt;&lt;code&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>```
+    <ExpectedMarkdown>```
 
-```</ExpectedMarkdownString>
+```</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -123,7 +123,7 @@ content
     &lt;/svg&gt;csharp&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;
     &lt;div class="hidden  anchored-left/anchor-tooltip z-20 absolute anchored shadow-md/30"&gt;&lt;div class="before:content-[&amp;#x27;&amp;#x27;] before:absolute before:w-2 before:h-2 before:rotate-45 before:infini-bg-(--color-base-90) before:-right-1 before:top-1/2 before:-translate-y-1/2 shadow-md/30 transform px-3 py-1 infini-bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md transition-opacity duration-200 whitespace-nowrap pointer-events-none"&gt;Copy to clipboard&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
     &lt;div class="infini-bg-(--codeblock) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar"&gt;&lt;div class="relative"&gt;&lt;pre class="whitespace-pre m-0 font-mono min-h-0"&gt;&lt;code&gt;content &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>```javascript
+    <ExpectedMarkdown>```javascript
 content
 ```
 
@@ -137,7 +137,7 @@ content
 
 ```csharp
 content
-```</ExpectedMarkdownString>
+```</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -194,9 +194,9 @@ content
     &lt;/svg&gt;&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;
     &lt;div class="hidden  anchored-left/anchor-tooltip z-20 absolute anchored shadow-md/30"&gt;&lt;div class="before:content-[&amp;#x27;&amp;#x27;] before:absolute before:w-2 before:h-2 before:rotate-45 before:infini-bg-(--color-base-90) before:-right-1 before:top-1/2 before:-translate-y-1/2 shadow-md/30 transform px-3 py-1 infini-bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md transition-opacity duration-200 whitespace-nowrap pointer-events-none"&gt;Copy to clipboard&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
     &lt;div class="infini-bg-(--codeblock) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar"&gt;&lt;div class="relative"&gt;&lt;pre class="whitespace-pre m-0 font-mono min-h-0"&gt;&lt;code&gt;**some valid markdown** &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>```
+    <ExpectedMarkdown>```
 **some valid markdown**
-```</ExpectedMarkdownString>
+```</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -224,11 +224,11 @@ end tell
     &lt;/svg&gt;&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;
     &lt;div class="hidden  anchored-left/anchor-tooltip z-20 absolute anchored shadow-md/30"&gt;&lt;div class="before:content-[&amp;#x27;&amp;#x27;] before:absolute before:w-2 before:h-2 before:rotate-45 before:infini-bg-(--color-base-90) before:-right-1 before:top-1/2 before:-translate-y-1/2 shadow-md/30 transform px-3 py-1 infini-bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md transition-opacity duration-200 whitespace-nowrap pointer-events-none"&gt;Copy to clipboard&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
     &lt;div class="infini-bg-(--codeblock) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar"&gt;&lt;div class="relative"&gt;&lt;pre class="whitespace-pre m-0 font-mono min-h-0"&gt;&lt;code&gt;tell application &amp;quot;Foo&amp;quot;&amp;#xA;    beep&amp;#xA;end tell &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>```
+    <ExpectedMarkdown>```
 tell application "Foo"
     beep
 end tell
-```</ExpectedMarkdownString>
+```</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [

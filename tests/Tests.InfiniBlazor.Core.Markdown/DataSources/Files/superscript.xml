@@ -10,7 +10,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;sup&gt;superscript&lt;/sup&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>^superscript^</ExpectedMarkdownString>
+    <ExpectedMarkdown>^superscript^</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -39,7 +39,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;^superscript&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>^superscript</ExpectedMarkdownString>
+    <ExpectedMarkdown>^superscript</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -63,7 +63,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;^^&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>^^</ExpectedMarkdownString>
+    <ExpectedMarkdown>^^</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -93,7 +93,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;sup&gt;something &lt;strong&gt;bold&lt;/strong&gt; in superscript&lt;/sup&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>^something **bold** in superscript^</ExpectedMarkdownString>
+    <ExpectedMarkdown>^something **bold** in superscript^</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -139,7 +139,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;sup&gt;superscript **nested ^&lt;/sup&gt; bold**^&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>^superscript **nested \^^ bold**^</ExpectedMarkdownString>
+    <ExpectedMarkdown>^superscript **nested \^^ bold**^</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -177,7 +177,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;^superscript^&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>\^superscript^</ExpectedMarkdownString>
+    <ExpectedMarkdown>\^superscript^</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -206,7 +206,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;^superscript^&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>^superscript\^</ExpectedMarkdownString>
+    <ExpectedMarkdown>^superscript\^</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -238,7 +238,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;sup&gt; ^ &lt;/sup&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>^ \^ ^</ExpectedMarkdownString>
+    <ExpectedMarkdown>^ \^ ^</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -277,7 +277,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;^literal little hats^&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>\^literal little hats\^</ExpectedMarkdownString>
+    <ExpectedMarkdown>\^literal little hats\^</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -311,7 +311,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;sup&gt;&lt;span class="inline-block px-2 py-0.5 rounded-full leading-4 infini-bg-(--color-base-90) text-(--color-accent)"&gt;tag&lt;/span&gt;&lt;/sup&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>^#tag^</ExpectedMarkdownString>
+    <ExpectedMarkdown>^#tag^</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [

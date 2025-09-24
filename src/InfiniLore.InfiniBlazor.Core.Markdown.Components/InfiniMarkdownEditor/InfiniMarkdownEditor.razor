@@ -112,7 +112,7 @@
         // EditorContext.TextSource.UpdateSource(Content ?? string.Empty);
 
         EditorContext.SyntaxTree.ReturnToPool();
-        EditorContext.SyntaxTree = Parser.MarkdownString.SerializeToSyntaxTree(EditorContext.TextSource.Text);
+        EditorContext.SyntaxTree = Parser.Markdown.SerializeToSyntaxTree(EditorContext.TextSource.Text);
         await EditorContext.InvokeSyntaxTreeChangeAsync().ConfigureAwait(false);
         await InvokeAsync(StateHasChanged);
     }
@@ -146,7 +146,7 @@
         EditorContext.TextSource.UpdateSource(newSource);
 
         EditorContext.SyntaxTree.ReturnToPool();
-        EditorContext.SyntaxTree = Parser.MarkdownString.SerializeToSyntaxTree(EditorContext.TextSource.Text);
+        EditorContext.SyntaxTree = Parser.Markdown.SerializeToSyntaxTree(EditorContext.TextSource.Text);
         await EditorContext.InvokeSyntaxTreeChangeAsync().ConfigureAwait(false);
 
         await EditorContextChanged.InvokeAsync(EditorContext).ConfigureAwait(false);
@@ -155,7 +155,7 @@
     }
 
     private async Task OnSyntaxNodeChangedAsync(IMdSyntaxNode _) {
-        string newContent = Parser.MarkdownString.DeserializeToString(EditorContext.SyntaxTree);
+        string newContent = Parser.Markdown.DeserializeToString(EditorContext.SyntaxTree);
         EditorContext.TextSource.UpdateSource(newContent);
 
         await EditorContextChanged.InvokeAsync(EditorContext).ConfigureAwait(false);

@@ -38,13 +38,13 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading 1&lt;/h1&gt;&lt;h2 class=" text-5xl font-semibold mb-5"&gt;Heading 2&lt;/h2&gt;&lt;h3 class=" text-4xl font-semibold mb-4"&gt;Heading 3&lt;/h3&gt;&lt;h4 class=" text-3xl font-semibold mb-3"&gt;Heading 4&lt;/h4&gt;&lt;h5 class=" text-2xl font-semibold mb-2"&gt;Heading 5&lt;/h5&gt;&lt;h6 class=" text-xl font-semibold mb-1"&gt;Heading 6&lt;/h6&gt;&lt;p class="my-4 leading-relaxed"&gt;####### Not A Heading&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString># Heading 1
+    <ExpectedMarkdown># Heading 1
 ## Heading 2
 ### Heading 3
 #### Heading 4
 ##### Heading 5
 ###### Heading 6
-####### Not A Heading</ExpectedMarkdownString>
+####### Not A Heading</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -151,8 +151,8 @@ Something</MdString>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;#&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;Something&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>#
-Something</ExpectedMarkdownString>
+    <ExpectedMarkdown>#
+Something</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -190,8 +190,8 @@ Something</ExpectedMarkdownString>
       <NewLineMdSyntaxNode />
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString># Heading
-</ExpectedMarkdownString>
+    <ExpectedMarkdown># Heading
+</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -219,7 +219,7 @@ Something</ExpectedMarkdownString>
       </HeadingMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading 1 # Not a heading&lt;/h1&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString># Heading 1 # Not a heading</ExpectedMarkdownString>
+    <ExpectedMarkdown># Heading 1 # Not a heading</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -249,8 +249,8 @@ Something</ExpectedMarkdownString>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;Not A Heading&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;=&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>Not A Heading
-=</ExpectedMarkdownString>
+    <ExpectedMarkdown>Not A Heading
+=</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -291,8 +291,8 @@ Something</ExpectedMarkdownString>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;Not A Heading&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;==&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>Not A Heading
-==</ExpectedMarkdownString>
+    <ExpectedMarkdown>Not A Heading
+==</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -329,8 +329,8 @@ Something</ExpectedMarkdownString>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>Heading
-===</ExpectedMarkdownString>
+    <ExpectedMarkdown>Heading
+===</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -356,8 +356,8 @@ Something</ExpectedMarkdownString>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>Heading
-====</ExpectedMarkdownString>
+    <ExpectedMarkdown>Heading
+====</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -383,8 +383,8 @@ Something</ExpectedMarkdownString>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>Heading
-=====</ExpectedMarkdownString>
+    <ExpectedMarkdown>Heading
+=====</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -410,8 +410,8 @@ Something</ExpectedMarkdownString>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>Heading
-======</ExpectedMarkdownString>
+    <ExpectedMarkdown>Heading
+======</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -437,8 +437,8 @@ Something</ExpectedMarkdownString>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>Heading
-=======</ExpectedMarkdownString>
+    <ExpectedMarkdown>Heading
+=======</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -468,8 +468,8 @@ Something</ExpectedMarkdownString>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;Not A Heading&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;-&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>Not A Heading
--</ExpectedMarkdownString>
+    <ExpectedMarkdown>Not A Heading
+-</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -510,8 +510,8 @@ Something</ExpectedMarkdownString>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;Not A Heading&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;--&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>Not A Heading
---</ExpectedMarkdownString>
+    <ExpectedMarkdown>Not A Heading
+--</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -548,8 +548,8 @@ Something</ExpectedMarkdownString>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>Heading
----</ExpectedMarkdownString>
+    <ExpectedMarkdown>Heading
+---</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -575,8 +575,8 @@ Something</ExpectedMarkdownString>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>Heading
-----</ExpectedMarkdownString>
+    <ExpectedMarkdown>Heading
+----</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -602,8 +602,8 @@ Something</ExpectedMarkdownString>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>Heading
------</ExpectedMarkdownString>
+    <ExpectedMarkdown>Heading
+-----</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -629,8 +629,8 @@ Something</ExpectedMarkdownString>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>Heading
-------</ExpectedMarkdownString>
+    <ExpectedMarkdown>Heading
+------</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -656,8 +656,8 @@ Something</ExpectedMarkdownString>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>Heading
--------</ExpectedMarkdownString>
+    <ExpectedMarkdown>Heading
+-------</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -683,8 +683,8 @@ Something</ExpectedMarkdownString>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>Heading
-                ========</ExpectedMarkdownString>
+    <ExpectedMarkdown>Heading
+                ========</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -710,8 +710,8 @@ Something</ExpectedMarkdownString>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>Heading
-                ========</ExpectedMarkdownString>
+    <ExpectedMarkdown>Heading
+                ========</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -737,8 +737,8 @@ Something</ExpectedMarkdownString>
       </HeadingSimpleMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;h1 class=" text-6xl font-semibold mb-6"&gt;Heading&lt;/h1&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>Heading
-                --------</ExpectedMarkdownString>
+    <ExpectedMarkdown>Heading
+                --------</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [

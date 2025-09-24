@@ -8,8 +8,8 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;span class="inline-block px-2 py-0.5 rounded-full leading-4 infini-bg-(--color-base-90) text-(--color-accent)"&gt;tag&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>#tag</ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedMarkdown>#tag</ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -33,8 +33,8 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;# &lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString># </ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedMarkdown># </ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -58,8 +58,8 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;#&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>#</ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedMarkdown>#</ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -94,10 +94,10 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;span class="inline-block px-2 py-0.5 rounded-full leading-4 infini-bg-(--color-base-90) text-(--color-accent)"&gt;this&lt;/span&gt; is not a valid tag&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;#&lt;a href="https://www.transgenderinfo.be" class="text-(--color-accent) hover:text-(--color-accent-light) hover:underline"&gt;link&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>#this is not a valid tag
+    <ExpectedMarkdown>#this is not a valid tag
 
-#[link](https://www.transgenderinfo.be)</ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+#[link](https://www.transgenderinfo.be)</ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -157,10 +157,10 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;span class="inline-block px-2 py-0.5 rounded-full leading-4 infini-bg-(--color-base-90) text-(--color-accent)"&gt;&amp;#x4E0D;&lt;/span&gt;&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;&lt;span class="inline-block px-2 py-0.5 rounded-full leading-4 infini-bg-(--color-base-90) text-(--color-accent)"&gt;&amp;#xF6;&amp;#xE4;&amp;#xFC;&amp;#xD6;&amp;#xC4;&amp;#xDC;&amp;#xDF;&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>#不
+    <ExpectedMarkdown>#不
 
-#öäüÖÄÜß</ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+#öäüÖÄÜß</ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -199,8 +199,8 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;span class="inline-block px-2 py-0.5 rounded-full leading-4 infini-bg-(--color-base-90) text-(--color-accent)"&gt;tag/subtag&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>#tag/subtag</ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedMarkdown>#tag/subtag</ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [

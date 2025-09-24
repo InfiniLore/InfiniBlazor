@@ -54,12 +54,12 @@
         &lt;div class="flex grow w-full text-xl"&gt;Title&lt;/div&gt;&lt;/div&gt;
 
     &lt;div class="border-neutral-600 text-neutral-400 h-auto opacity-100 border-t-1 pt-2 mt-1 flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;p class="my-2 leading-relaxed"&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt;[!note|icon=signature] Title
+    <ExpectedMarkdown>&gt;[!note|icon=signature] Title
 &gt; Body
 
 &gt;[!note|icon=undefined] Title
-&gt; Body</ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+&gt; Body</ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -175,8 +175,8 @@
         &lt;div class="flex grow w-full text-xl"&gt;Title&lt;/div&gt;&lt;/div&gt;
 
     &lt;div class="border-neutral-600 text-neutral-400 h-auto opacity-100 border-t-1 pt-2 mt-1 flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;p class="my-2 leading-relaxed"&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt;[!note] Title
-&gt; Body</ExpectedMarkdownString>
+    <ExpectedMarkdown>&gt;[!note] Title
+&gt; Body</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -242,11 +242,11 @@
         &lt;div class="flex grow w-full text-xl"&gt;Title&lt;/div&gt;&lt;/div&gt;
 
     &lt;div class="border-neutral-600 text-neutral-400 h-auto opacity-100 border-t-1 pt-2 mt-1 flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;p class="my-2 leading-relaxed"&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;p class="my-4 leading-relaxed"&gt;[a]&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt;[!note] Title
+    <ExpectedMarkdown>&gt;[!note] Title
 &gt; Body
 
-[a]</ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+[a]</ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -311,9 +311,9 @@
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;[!]&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt;[!]
-&gt; </ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedMarkdown>&gt;[!]
+&gt; </ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -366,9 +366,9 @@
         &lt;div class="flex grow w-full text-xl"&gt;Title&lt;/div&gt;&lt;/div&gt;
 
     &lt;div class="border-neutral-600 text-neutral-400 h-auto opacity-100 border-t-1 pt-2 mt-1 flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;Body&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;Body&lt;/p&gt;&lt;/blockquote&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt;[!note] Title
+    <ExpectedMarkdown>&gt;[!note] Title
 &gt; &gt; Body
-&gt; &gt; Body</ExpectedMarkdownString>
+&gt; &gt; Body</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -458,9 +458,9 @@
         &lt;div class="flex grow w-full text-xl"&gt;Title&lt;/div&gt;&lt;/div&gt;
 
     &lt;div class="border-neutral-600 text-neutral-400 h-auto opacity-100 border-t-1 pt-2 mt-1 flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;p class="my-2 leading-relaxed"&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt;[!note] Title
+    <ExpectedMarkdown>&gt;[!note] Title
 &gt; &gt;[!note] Title
-&gt; &gt; Body</ExpectedMarkdownString>
+&gt; &gt; Body</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -563,12 +563,12 @@
     &lt;div class="hidden  anchored-left/anchor-tooltip z-20 absolute anchored shadow-md/30"&gt;&lt;div class="before:content-[&amp;#x27;&amp;#x27;] before:absolute before:w-2 before:h-2 before:rotate-45 before:infini-bg-(--color-base-90) before:-right-1 before:top-1/2 before:-translate-y-1/2 shadow-md/30 transform px-3 py-1 infini-bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md transition-opacity duration-200 whitespace-nowrap pointer-events-none"&gt;Open Callout&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
 
     &lt;div class="border-neutral-600 text-neutral-400 h-0 overflow-hidden opacity-0 pointer-events-none border-none flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;p class="my-2 leading-relaxed"&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt;[!note]+ Title
+    <ExpectedMarkdown>&gt;[!note]+ Title
 &gt; Body
 
 &gt;[!note]- Title
-&gt; Body</ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+&gt; Body</ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -693,10 +693,10 @@
         &lt;div class="flex grow w-full text-xl"&gt;&lt;strong&gt;Do Something&lt;/strong&gt;&lt;/div&gt;&lt;/div&gt;
 
     &lt;div class="border-neutral-600 text-neutral-400 h-auto opacity-100 border-t-1 pt-2 mt-1 flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;p class="my-2 leading-relaxed"&gt;Body Content&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt;[!note|icon=signature] **Do Something**
+    <ExpectedMarkdown>&gt;[!note|icon=signature] **Do Something**
 &gt; &gt;[!note|icon=signature] **Do Something**
-&gt; &gt; Body Content</ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+&gt; &gt; Body Content</ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -809,8 +809,8 @@
         &lt;div class="flex grow w-full text-xl"&gt;&lt;strong&gt;Do Something&lt;/strong&gt;&lt;/div&gt;&lt;/div&gt;
 
     &lt;div class="border-neutral-600 text-neutral-400 h-auto opacity-100 border-t-1 pt-2 mt-1 flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;p class="my-2 leading-relaxed"&gt;Body Content&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&gt;[!note] **Do Something**
-&gt; Body Content</ExpectedMarkdownString>
+    <ExpectedMarkdown>&gt;[!note] **Do Something**
+&gt; Body Content</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [

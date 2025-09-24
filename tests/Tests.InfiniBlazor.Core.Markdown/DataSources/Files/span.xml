@@ -10,7 +10,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;span&gt;sometext&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&lt;span style=\"color: red\"&gt;sometext&lt;/span&gt;</ExpectedMarkdownString>
+    <ExpectedMarkdown>&lt;span style=\"color: red\"&gt;sometext&lt;/span&gt;</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -49,9 +49,9 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;&lt;span&gt; &lt;/span&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&lt;span style=\"color: red\"&gt;&lt;/span&gt;
+    <ExpectedMarkdown>&lt;span style=\"color: red\"&gt;&lt;/span&gt;
 
-&lt;span style=\"color: red\"&gt; &lt;/span&gt;</ExpectedMarkdownString>
+&lt;span style=\"color: red\"&gt; &lt;/span&gt;</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -106,7 +106,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;em&gt;test&lt;/em&gt; &lt;span&gt; something &lt;/span&gt; &lt;strong&gt;bold this&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>*test* &lt;span&gt; something &lt;/span&gt; **bold this**</ExpectedMarkdownString>
+    <ExpectedMarkdown>*test* &lt;span&gt; something &lt;/span&gt; **bold this**</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -172,7 +172,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;em&gt;test&lt;/em&gt; &lt;span class="text-red-500"&gt; something &lt;/span&gt; &lt;strong&gt;bold this&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>*test* &lt;span class="text-red-500"&gt; something &lt;/span&gt; **bold this**</ExpectedMarkdownString>
+    <ExpectedMarkdown>*test* &lt;span class="text-red-500"&gt; something &lt;/span&gt; **bold this**</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -232,7 +232,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;span&gt;&lt;strong&gt;red bold?&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>&lt;span style=\"color: red\"&gt;**red bold?**&lt;/span&gt;</ExpectedMarkdownString>
+    <ExpectedMarkdown>&lt;span style=\"color: red\"&gt;**red bold?**&lt;/span&gt;</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [

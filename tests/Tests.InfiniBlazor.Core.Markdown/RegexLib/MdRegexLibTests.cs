@@ -2,7 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using System.Text.RegularExpressions;
-using InfiniLore.InfiniBlazor.Markdown.Parsers.MarkdownString.Serializer.RegexLib;
+using InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 
 namespace Tests.InfiniBlazor.Core.Markdown.RegexLib;
 
