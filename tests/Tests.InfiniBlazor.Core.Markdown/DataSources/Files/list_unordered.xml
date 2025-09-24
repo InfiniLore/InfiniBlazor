@@ -57,7 +57,7 @@
       </ListUnOrderedMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;list item&lt;/li&gt;&lt;/ul&gt;&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;list item&lt;/li&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;list item&lt;/li&gt;&lt;/ul&gt;&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;list item&lt;/li&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;list item&lt;/li&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;list item&lt;/li&gt;&lt;/ul&gt;&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;list item&lt;/li&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;list item&lt;/li&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;list item&lt;/li&gt;&lt;/ul&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>- list item
+    <ExpectedMarkdown>- list item
 
 - list item
 - list item
@@ -68,7 +68,7 @@
 
 - list item
 - list item
-- list item</ExpectedMarkdownString>
+- list item</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -255,9 +255,9 @@
       </ListUnOrderedMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Extra spaces for alignment&lt;ol class="list-decimal pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;This is a sublist&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Another item&lt;/li&gt;&lt;/ul&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>-    Extra spaces for alignment
+    <ExpectedMarkdown>-    Extra spaces for alignment
       1. This is a sublist
--    Another item</ExpectedMarkdownString>
+-    Another item</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -365,14 +365,14 @@ something
     
     &lt;div class="infini-bg-(--color-base-80) border-(--border) hover:border-(--color-accent) cursor-pointer  rounded border-2 p-0.5"&gt;&lt;svg class="text-(--color-base-50) p-1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M22 2 2 22"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;
     &lt;/div&gt;a task&lt;p class="my-4 leading-relaxed"&gt;something&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString># Should be a Paragrah
+    <ExpectedMarkdown># Should be a Paragrah
 - [ ] a task
 something
 
 
 # Should be List SubContent
 - [ ] a task
- something</ExpectedMarkdownString>
+ something</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -493,9 +493,9 @@ something
       </ListUnOrderedMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;-&lt;/p&gt;&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt; &lt;/li&gt;&lt;/ul&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>-
+    <ExpectedMarkdown>-
 
-- </ExpectedMarkdownString>
+- </ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -597,7 +597,7 @@ something
       </ListUnOrderedMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Top-level item&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Subitem level 1&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Subitem level 2&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Subitem level 3&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;This list has&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Uneven indentation&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;But still renders&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Correctly!&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>- Top-level item
+    <ExpectedMarkdown>- Top-level item
     - Subitem level 1
         - Subitem level 2
             - Subitem level 3
@@ -605,7 +605,7 @@ something
 - This list has
   - Uneven indentation
     - But still renders
-      - Correctly!</ExpectedMarkdownString>
+      - Correctly!</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -841,7 +841,7 @@ something
       </ListUnOrderedMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Item 1&lt;ol class="list-decimal pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Subitem 1.1&lt;/li&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Subitem 1.2&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Item 2&lt;/li&gt;&lt;/ul&gt;&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Unordered item 1&lt;/li&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Unordered item 2&lt;ol class="list-decimal pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Mixed nested ordered item 2.1&lt;/li&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Mixed nested ordered item 2.2&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Unordered item 3&lt;/li&gt;&lt;/ul&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>- Item 1
+    <ExpectedMarkdown>- Item 1
   1. Subitem 1.1
   2. Subitem 1.2
 - Item 2
@@ -850,7 +850,7 @@ something
 - Unordered item 2
   1. Mixed nested ordered item 2.1
   2. Mixed nested ordered item 2.2
-- Unordered item 3</ExpectedMarkdownString>
+- Unordered item 3</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -1035,10 +1035,10 @@ something
       </ListUnOrderedMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Item 1&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Subitem 1.1&lt;/li&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Subitem 1.2&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Item 2&lt;/li&gt;&lt;/ul&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>- Item 1
+    <ExpectedMarkdown>- Item 1
   - Subitem 1.1
   - Subitem 1.2
-- Item 2</ExpectedMarkdownString>
+- Item 2</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -1146,10 +1146,10 @@ something
     
     &lt;div class="infini-bg-(--color-base-60) border-(--border) hover:border-(--color-accent) cursor-pointer  rounded border-2 p-0.5"&gt;&lt;svg class="text-(--color-base-10)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M20 6 9 17l-5-5"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;
     &lt;/div&gt;checked&lt;/li&gt;&lt;/ul&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>- [~] something this does not work
+    <ExpectedMarkdown>- [~] something this does not work
 - [ ] empty
 - [x] checked
-- [X] checked</ExpectedMarkdownString>
+- [X] checked</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -1248,11 +1248,11 @@ something
     
     &lt;div class="infini-bg-(--color-base-60) border-(--border) hover:border-(--color-accent) cursor-pointer  rounded border-2 p-0.5"&gt;&lt;svg class="text-(--color-base-10)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M20 6 9 17l-5-5"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;
     &lt;/div&gt;Another completed task&lt;/li&gt;&lt;/ul&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>- Normal item
+    <ExpectedMarkdown>- Normal item
 - [ ] Task item without sublist
      related paragraph between list items.
 
-- [x] Another completed task</ExpectedMarkdownString>
+- [x] Another completed task</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -1403,7 +1403,7 @@ something
     
     &lt;div class="infini-bg-(--color-base-60) border-(--border) hover:border-(--color-accent) cursor-pointer  rounded border-2 p-0.5"&gt;&lt;svg class="text-(--color-base-10)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M20 6 9 17l-5-5"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;
     &lt;/div&gt;Subtask 2&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;Another item&lt;/li&gt;&lt;/ul&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>- [ ] Task with sublist
+    <ExpectedMarkdown>- [ ] Task with sublist
   - SubItem A
   - SubItem B
 - [x] Completed task with sublist
@@ -1413,7 +1413,7 @@ something
 - [x] Mixed list
   1. [ ] Subtask 1
   2. [x] Subtask 2
-- Another item</ExpectedMarkdownString>
+- Another item</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -1631,12 +1631,12 @@ something
     
     &lt;div class="infini-bg-(--color-base-60) border-(--border) hover:border-(--color-accent) cursor-pointer  rounded border-2 p-0.5"&gt;&lt;svg class="text-(--color-base-10)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M20 6 9 17l-5-5"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;
     &lt;/div&gt;Another completed task&lt;/li&gt;&lt;/ul&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>- Normal item
+    <ExpectedMarkdown>- Normal item
 - [ ] Task item without sublist
 
     Unrelated paragraph between list items.
 
-- [x] Another completed task</ExpectedMarkdownString>
+- [x] Another completed task</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -1740,9 +1740,9 @@ something
       </ListUnOrderedMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;ul class="list-disc pl-8 my-4"&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;A list item with &lt;strong&gt;bold text&lt;/strong&gt;&lt;/li&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;A list item with &lt;em&gt;italic text&lt;/em&gt;&lt;/li&gt;&lt;li class="my-2 [&amp;amp;:has(&amp;gt;[data-checkbox])]:list-none [&amp;amp;&amp;gt;ul]:mt-2 [&amp;amp;&amp;gt;ol]:mt-2"&gt;A list item with &lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;inline code&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>- A list item with **bold text**
+    <ExpectedMarkdown>- A list item with **bold text**
 - A list item with *italic text*
-- A list item with `inline code`</ExpectedMarkdownString>
+- A list item with `inline code`</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [

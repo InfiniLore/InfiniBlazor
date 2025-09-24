@@ -90,7 +90,7 @@
             &lt;tbody&gt;&lt;tr class="group infini-bg-(--table-row) p hover:infini-bg-(--table-row-hover) transition h-4"&gt;&lt;td class="p-3"&gt;&lt;div class=" text-center text-sm"&gt; Value &lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=" shadow-sm rounded-2xl border border-(--border) flex flex-col overflow-hidden"&gt;&lt;div class="w-full h-full overflow-auto relative infini-scrollbar"&gt;&lt;table class="w-full h-full table-auto"&gt;&lt;thead class="sticky top-0 infini-bg-(--table-header) border-(--border) border-b p-4 z-15"&gt;&lt;tr&gt;&lt;th class=" text-left p-3 text-sm font-semibold"&gt;Test&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
             &lt;tbody&gt;&lt;tr class="group infini-bg-(--table-row) p hover:infini-bg-(--table-row-hover) transition h-4"&gt;&lt;td class="p-3"&gt;&lt;div class=" text-left text-sm"&gt; Value &lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=" shadow-sm rounded-2xl border border-(--border) flex flex-col overflow-hidden"&gt;&lt;div class="w-full h-full overflow-auto relative infini-scrollbar"&gt;&lt;table class="w-full h-full table-auto"&gt;&lt;thead class="sticky top-0 infini-bg-(--table-header) border-(--border) border-b p-4 z-15"&gt;&lt;tr&gt;&lt;th class=" text-right p-3 text-sm font-semibold"&gt;Test&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
             &lt;tbody&gt;&lt;tr class="group infini-bg-(--table-row) p hover:infini-bg-(--table-row-hover) transition h-4"&gt;&lt;td class="p-3"&gt;&lt;div class=" text-right text-sm"&gt; Value &lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>| Test  |
+    <ExpectedMarkdown>| Test  |
 | ----- |
 | Value |
 
@@ -106,7 +106,7 @@
 | Test  |
 | ----: |
 | Value |
-</ExpectedMarkdownString>
+</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -317,10 +317,10 @@
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;div class=" shadow-sm rounded-2xl border border-(--border) flex flex-col overflow-hidden"&gt;&lt;div class="w-full h-full overflow-auto relative infini-scrollbar"&gt;&lt;table class="w-full h-full table-auto"&gt;&lt;thead class="sticky top-0 infini-bg-(--table-header) border-(--border) border-b p-4 z-15"&gt;&lt;tr&gt;&lt;th class=" text-left p-3 text-sm font-semibold"&gt;Column 1&lt;/th&gt;&lt;th class=" text-center p-3 text-sm font-semibold"&gt;Column 2&lt;/th&gt;&lt;th class=" text-right p-3 text-sm font-semibold"&gt;Column 3&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
             &lt;tbody&gt;&lt;tr class="group infini-bg-(--table-row) p hover:infini-bg-(--table-row-hover) transition h-4"&gt;&lt;td class="p-3"&gt;&lt;div class=" text-left text-sm"&gt; Row 2 col 1 &lt;/div&gt;&lt;/td&gt;&lt;td class="p-3"&gt;&lt;div class=" text-center text-sm"&gt; Row 2 col 2 &lt;/div&gt;&lt;/td&gt;&lt;td class="p-3"&gt;&lt;div class=" text-right text-sm"&gt; Row 2 col 3 &lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>| Column 1    | Column 2    | Column 3    |
+    <ExpectedMarkdown>| Column 1    | Column 2    | Column 3    |
 | :---------- | :---------: | ----------: |
 | Row 2 col 1 | Row 2 col 2 | Row 2 col 3 |
-</ExpectedMarkdownString>
+</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -455,13 +455,13 @@
     <ExpectedHtmlString>&lt;div class=" shadow-sm rounded-2xl border border-(--border) flex flex-col overflow-hidden"&gt;&lt;div class="w-full h-full overflow-auto relative infini-scrollbar"&gt;&lt;table class="w-full h-full table-auto"&gt;&lt;thead class="sticky top-0 infini-bg-(--table-header) border-(--border) border-b p-4 z-15"&gt;&lt;tr&gt;&lt;th class=" text-left p-3 text-sm font-semibold"&gt;Test&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
             &lt;tbody&gt;&lt;tr class="group infini-bg-(--table-row) p hover:infini-bg-(--table-row-hover) transition h-4"&gt;&lt;td class="p-3"&gt;&lt;div class=" text-left text-sm"&gt; Value &lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=" shadow-sm rounded-2xl border border-(--border) flex flex-col overflow-hidden"&gt;&lt;div class="w-full h-full overflow-auto relative infini-scrollbar"&gt;&lt;table class="w-full h-full table-auto"&gt;&lt;thead class="sticky top-0 infini-bg-(--table-header) border-(--border) border-b p-4 z-15"&gt;&lt;tr&gt;&lt;th class=" text-left p-3 text-sm font-semibold"&gt;Column 1&lt;/th&gt;&lt;th class=" text-left p-3 text-sm font-semibold"&gt;Column 2&lt;/th&gt;&lt;th class=" text-left p-3 text-sm font-semibold"&gt;Column 3&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
             &lt;tbody&gt;&lt;tr class="group infini-bg-(--table-row) p hover:infini-bg-(--table-row-hover) transition h-4"&gt;&lt;td class="p-3"&gt;&lt;div class=" text-left text-sm"&gt; Row 2 col 1 &lt;/div&gt;&lt;/td&gt;&lt;td class="p-3"&gt;&lt;div class=" text-left text-sm"&gt; Row 2 col 2 &lt;/div&gt;&lt;/td&gt;&lt;td class="p-3"&gt;&lt;div class=" text-left text-sm"&gt; Row 2 col 3 &lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>| Test  |
+    <ExpectedMarkdown>| Test  |
 | ----- |
 | Value |
 
 | Column 1    | Column 2    | Column 3    |
 | ----------- | ----------- | ----------- |
-| Row 2 col 1 | Row 2 col 2 | Row 2 col 3 |</ExpectedMarkdownString>
+| Row 2 col 1 | Row 2 col 2 | Row 2 col 3 |</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -627,14 +627,14 @@
     <ExpectedHtmlString>&lt;div class=" shadow-sm rounded-2xl border border-(--border) flex flex-col overflow-hidden"&gt;&lt;div class="w-full h-full overflow-auto relative infini-scrollbar"&gt;&lt;table class="w-full h-full table-auto"&gt;&lt;thead class="sticky top-0 infini-bg-(--table-header) border-(--border) border-b p-4 z-15"&gt;&lt;tr&gt;&lt;th class=" text-left p-3 text-sm font-semibold"&gt;&lt;strong&gt;Test&lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
             &lt;tbody&gt;&lt;tr class="group infini-bg-(--table-row) p hover:infini-bg-(--table-row-hover) transition h-4"&gt;&lt;td class="p-3"&gt;&lt;div class=" text-left text-sm"&gt; Value    &lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=" shadow-sm rounded-2xl border border-(--border) flex flex-col overflow-hidden"&gt;&lt;div class="w-full h-full overflow-auto relative infini-scrollbar"&gt;&lt;table class="w-full h-full table-auto"&gt;&lt;thead class="sticky top-0 infini-bg-(--table-header) border-(--border) border-b p-4 z-15"&gt;&lt;tr&gt;&lt;th class=" text-left p-3 text-sm font-semibold"&gt;&lt;strong&gt;Test&lt;/strong&gt;&lt;/th&gt;&lt;th class=" text-left p-3 text-sm font-semibold"&gt;nothing&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
             &lt;tbody&gt;&lt;tr class="group infini-bg-(--table-row) p hover:infini-bg-(--table-row-hover) transition h-4"&gt;&lt;td class="p-3"&gt;&lt;div class=" text-left text-sm"&gt; Value    &lt;/div&gt;&lt;/td&gt;&lt;td class="p-3"&gt;&lt;div class=" text-left text-sm"&gt; Value   &lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>| **Test** |
+    <ExpectedMarkdown>| **Test** |
 | -------- |
 | Value    |
 
 
 | **Test** | nothing |
 | -------- | ------- |
-| Value    | Value   |</ExpectedMarkdownString>
+| Value    | Value   |</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -795,14 +795,14 @@
     <ExpectedHtmlString>&lt;div class=" shadow-sm rounded-2xl border border-(--border) flex flex-col overflow-hidden"&gt;&lt;div class="w-full h-full overflow-auto relative infini-scrollbar"&gt;&lt;table class="w-full h-full table-auto"&gt;&lt;thead class="sticky top-0 infini-bg-(--table-header) border-(--border) border-b p-4 z-15"&gt;&lt;tr&gt;&lt;th class=" text-left p-3 text-sm font-semibold"&gt;&lt;em&gt;Test&lt;/em&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
             &lt;tbody&gt;&lt;tr class="group infini-bg-(--table-row) p hover:infini-bg-(--table-row-hover) transition h-4"&gt;&lt;td class="p-3"&gt;&lt;div class=" text-left text-sm"&gt; Value  &lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=" shadow-sm rounded-2xl border border-(--border) flex flex-col overflow-hidden"&gt;&lt;div class="w-full h-full overflow-auto relative infini-scrollbar"&gt;&lt;table class="w-full h-full table-auto"&gt;&lt;thead class="sticky top-0 infini-bg-(--table-header) border-(--border) border-b p-4 z-15"&gt;&lt;tr&gt;&lt;th class=" text-left p-3 text-sm font-semibold"&gt;&lt;em&gt;Test&lt;/em&gt;&lt;/th&gt;&lt;th class=" text-left p-3 text-sm font-semibold"&gt;nothing&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
             &lt;tbody&gt;&lt;tr class="group infini-bg-(--table-row) p hover:infini-bg-(--table-row-hover) transition h-4"&gt;&lt;td class="p-3"&gt;&lt;div class=" text-left text-sm"&gt; Value  &lt;/div&gt;&lt;/td&gt;&lt;td class="p-3"&gt;&lt;div class=" text-left text-sm"&gt; Value   &lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>| *Test* |
+    <ExpectedMarkdown>| *Test* |
 | ------ |
 | Value  |
 
 
 | *Test* | nothing |
 | ------ | ------- |
-| Value  | Value   |</ExpectedMarkdownString>
+| Value  | Value   |</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -969,13 +969,13 @@
     <ExpectedHtmlString>&lt;div class=" shadow-sm rounded-2xl border border-(--border) flex flex-col overflow-hidden"&gt;&lt;div class="w-full h-full overflow-auto relative infini-scrollbar"&gt;&lt;table class="w-full h-full table-auto"&gt;&lt;thead class="sticky top-0 infini-bg-(--table-header) border-(--border) border-b p-4 z-15"&gt;&lt;tr&gt;&lt;th class=" text-left p-3 text-sm font-semibold"&gt;Column 1&lt;/th&gt;&lt;th class=" text-left p-3 text-sm font-semibold"&gt;Column 2&lt;/th&gt;&lt;th class=" text-left p-3 text-sm font-semibold"&gt;Column 3&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
             &lt;tbody&gt;&lt;tr class="group infini-bg-(--table-row) p hover:infini-bg-(--table-row-hover) transition h-4"&gt;&lt;td class="p-3"&gt;&lt;div class=" text-left text-sm"&gt; Row 2 col 1 &lt;/div&gt;&lt;/td&gt;&lt;td class="p-3"&gt;&lt;div class=" text-left text-sm"&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="p-3"&gt;&lt;div class=" text-left text-sm"&gt; Row 2 col 3 &lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=" shadow-sm rounded-2xl border border-(--border) flex flex-col overflow-hidden"&gt;&lt;div class="w-full h-full overflow-auto relative infini-scrollbar"&gt;&lt;table class="w-full h-full table-auto"&gt;&lt;thead class="sticky top-0 infini-bg-(--table-header) border-(--border) border-b p-4 z-15"&gt;&lt;tr&gt;&lt;th class=" text-left p-3 text-sm font-semibold"&gt;Column 1&lt;/th&gt;&lt;th class=" text-left p-3 text-sm font-semibold"&gt;Column 2&lt;/th&gt;&lt;th class=" text-left p-3 text-sm font-semibold"&gt;Column 3&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
             &lt;tbody&gt;&lt;tr class="group infini-bg-(--table-row) p hover:infini-bg-(--table-row-hover) transition h-4"&gt;&lt;td class="p-3"&gt;&lt;div class=" text-left text-sm"&gt; Row 2 col 1 &lt;/div&gt;&lt;/td&gt;&lt;td class="p-3"&gt;&lt;div class=" text-left text-sm"&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="p-3"&gt;&lt;div class=" text-left text-sm"&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>| Column 1    | Column 2 | Column 3    |
+    <ExpectedMarkdown>| Column 1    | Column 2 | Column 3    |
 | ----------- | -------- | ----------- |
 | Row 2 col 1 |          | Row 2 col 3 |
 
 | Column 1    | Column 2 | Column 3 |
 | ----------- | -------- | -------- |
-| Row 2 col 1 |          |          |</ExpectedMarkdownString>
+| Row 2 col 1 |          |          |</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [

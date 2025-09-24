@@ -18,7 +18,7 @@ public class MdTestDataSources {
             MdSyntaxTree = new MdSyntaxTree(),
             DeveloperNote = "Ensure Test is at least ran once to exist in the view",
             ExpectedHtmlString = "",
-            ExpectedMarkdownString = "",
+            ExpectedMarkdown = "",
             ExpectedJsonString = """
                 {
                   "type": "MdSyntaxTree",

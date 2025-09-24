@@ -8,7 +8,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;code&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>`code`</ExpectedMarkdownString>
+    <ExpectedMarkdown>`code`</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -34,7 +34,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;Nested &lt;/code&gt; is not valid syntax.`&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>`Nested ` is not valid syntax.`</ExpectedMarkdownString>
+    <ExpectedMarkdown>`Nested ` is not valid syntax.`</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -63,7 +63,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;Nested ` is not valid syntax.&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>``Nested ` is not valid syntax.``</ExpectedMarkdownString>
+    <ExpectedMarkdown>``Nested ` is not valid syntax.``</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -88,7 +88,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;``&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>``</ExpectedMarkdownString>
+    <ExpectedMarkdown>``</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -112,7 +112,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;```&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>```</ExpectedMarkdownString>
+    <ExpectedMarkdown>```</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -136,7 +136,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;````&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>````</ExpectedMarkdownString>
+    <ExpectedMarkdown>````</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -160,7 +160,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;`````&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>`````</ExpectedMarkdownString>
+    <ExpectedMarkdown>`````</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -186,7 +186,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;Backticks inside inline code: &lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;Code with `backticks` inside&lt;/code&gt;.&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>Backticks inside inline code: ``Code with `backticks` inside``.</ExpectedMarkdownString>
+    <ExpectedMarkdown>Backticks inside inline code: ``Code with `backticks` inside``.</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -221,7 +221,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;Backticks inside inline code: &lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;Code with `backticks` inside&lt;/code&gt;.&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>Backticks inside inline code: ```Code with `backticks` inside```.</ExpectedMarkdownString>
+    <ExpectedMarkdown>Backticks inside inline code: ```Code with `backticks` inside```.</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -254,7 +254,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;`outer `inner` outer&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>```outer `inner` outer``</ExpectedMarkdownString>
+    <ExpectedMarkdown>```outer `inner` outer``</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -281,7 +281,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;This is an &lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;example&lt;/code&gt; of some inline code.&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>This is an `example` of some inline code.</ExpectedMarkdownString>
+    <ExpectedMarkdown>This is an `example` of some inline code.</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -316,7 +316,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;This is the &lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;last example&lt;/code&gt;.&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>This is the `last example`.</ExpectedMarkdownString>
+    <ExpectedMarkdown>This is the `last example`.</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -353,7 +353,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&amp;quot;Multiple &lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;inline&lt;/code&gt; &lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;code&lt;/code&gt; segments.&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>"Multiple `inline` `code` segments.</ExpectedMarkdownString>
+    <ExpectedMarkdown>"Multiple `inline` `code` segments.</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -396,7 +396,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;code&lt;/code&gt; at the start of the line.&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>`code` at the start of the line.</ExpectedMarkdownString>
+    <ExpectedMarkdown>`code` at the start of the line.</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -432,9 +432,9 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;`&lt;/code&gt;&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;&lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;code with `escaped backticks`&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>`\``
+    <ExpectedMarkdown>`\``
 
-``code with \`escaped backticks\```</ExpectedMarkdownString>
+``code with \`escaped backticks\```</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -475,7 +475,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;inline code with special characters !@#$%^&amp;amp;*()&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>`inline code with special characters !@#$%^&amp;*()`</ExpectedMarkdownString>
+    <ExpectedMarkdown>`inline code with special characters !@#$%^&amp;*()`</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -501,7 +501,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;@username&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>`@username`</ExpectedMarkdownString>
+    <ExpectedMarkdown>`@username`</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [

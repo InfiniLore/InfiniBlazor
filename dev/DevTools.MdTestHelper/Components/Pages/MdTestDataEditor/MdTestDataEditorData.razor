@@ -85,7 +85,7 @@
 
                 <InfiniTabContent TabName="Markdown">
                     <InfiniTextAreaInput
-                        @bind-Value="@ExpectedMarkdownString"
+                        @bind-Value="@ExpectedMarkdown"
                         Rows="22"
                         Class="font-mono w-full"/>
                     <InfiniToggleInput
@@ -110,7 +110,7 @@
                 </InfiniTabContent>
             </InfiniTabContainer>
 
-            @if (ExpectedMarkdownString.IsNotNullOrWhiteSpace() && !string.Equals(EditorContext.Content, ExpectedMarkdownString)) {
+            @if (ExpectedMarkdown.IsNotNullOrWhiteSpace() && !string.Equals(EditorContext.Content, ExpectedMarkdown)) {
                 <div class="text-red-500 text-center">
                     Markdown does not match expected output.
                     This often means an underlying issue with the markdown parser.
@@ -135,7 +135,7 @@
 
     private string ExpectedSyntaxTreeString { get; set; } = string.Empty;
     private string? ExpectedHtmlString { get; set; } = string.Empty;
-    private string? ExpectedMarkdownString { get; set; } = string.Empty;
+    private string? ExpectedMarkdown { get; set; } = string.Empty;
     private string? ExpectedJsonString { get; set; } = string.Empty;
     private bool SkipOnWhitespaceMisMatch { get; set; }
 
@@ -174,7 +174,7 @@
             GenerateXmlString(),
             GenerateJsonString(),
             GenerateSimpleHtmlString(),
-            GenerateMarkdownString()
+            GenerateMarkdown()
         );
     }
 
@@ -204,9 +204,9 @@
         ExpectedHtmlString = await MarkdownParser.Html.DeserializeToStringAsync(tree);
     }
 
-    private Task GenerateMarkdownString() {
+    private Task GenerateMarkdown() {
         IMdSyntaxTree tree = EditorContext.SyntaxTree;
-        ExpectedMarkdownString = MarkdownParser.MarkdownString.DeserializeToString(tree);
+        ExpectedMarkdown = MarkdownParser.Markdown.DeserializeToString(tree);
         return Task.CompletedTask;
     }
 
@@ -241,8 +241,8 @@
         }
 
         ExpectedHtmlString = testData.ExpectedHtmlString;
-        ExpectedMarkdownString = testData.ExpectedMarkdownString;
-        SkipOnWhitespaceMisMatch = testData.ExpectedMarkdownStringSkipOnWhitespaceMisMatch;
+        ExpectedMarkdown = testData.ExpectedMarkdown;
+        SkipOnWhitespaceMisMatch = testData.ExpectedMarkdownSkipOnWhitespaceMisMatch;
         ExpectedJsonString = testData.ExpectedJsonString;
 
         TestDataOrigin = testData;
@@ -264,8 +264,8 @@
             MdString = EditorContext.Content,
             MdSyntaxTree = EditorContext.SyntaxTree,
             ExpectedHtmlString = ExpectedHtmlString,
-            ExpectedMarkdownString = ExpectedMarkdownString,
-            ExpectedMarkdownStringSkipOnWhitespaceMisMatch = SkipOnWhitespaceMisMatch,
+            ExpectedMarkdown = ExpectedMarkdown,
+            ExpectedMarkdownSkipOnWhitespaceMisMatch = SkipOnWhitespaceMisMatch,
             ExpectedJsonString = ExpectedJsonString
         };
 
@@ -297,7 +297,7 @@
         DeveloperNote = string.Empty;
         EditorContext.Content = string.Empty;
         ExpectedHtmlString = string.Empty;
-        ExpectedMarkdownString = string.Empty;
+        ExpectedMarkdown = string.Empty;
         ExpectedSyntaxTreeString = string.Empty;
         TestDataOrigin = null;
 
@@ -341,7 +341,7 @@
         DeveloperNote = string.Empty;
         EditorContext.Content = string.Empty;
         ExpectedHtmlString = string.Empty;
-        ExpectedMarkdownString = string.Empty;
+        ExpectedMarkdown = string.Empty;
         ExpectedSyntaxTreeString = string.Empty;
         TestDataOrigin = null;
 

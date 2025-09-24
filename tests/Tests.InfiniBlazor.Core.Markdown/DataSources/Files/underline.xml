@@ -10,8 +10,8 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;u&gt;underline&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>_underline_</ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedMarkdown>_underline_</ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -44,7 +44,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;u&gt; `&lt;/u&gt;`&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>_ `_`</ExpectedMarkdownString>
+    <ExpectedMarkdown>_ `_`</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -79,7 +79,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;_&lt;/code&gt; &lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;_&lt;/code&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>`_` `_`</ExpectedMarkdownString>
+    <ExpectedMarkdown>`_` `_`</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -113,8 +113,8 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;__&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>__</ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedMarkdown>__</ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -142,8 +142,8 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;u&gt;&lt;strong&gt;bold and underlined&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>_**bold and underlined**_</ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedMarkdown>_**bold and underlined**_</ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -183,8 +183,8 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;u&gt;&lt;strong&gt;&lt;em&gt;bold, italic, and underlined&lt;/em&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>_***bold, italic, and underlined***_</ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedMarkdown>_***bold, italic, and underlined***_</ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -229,8 +229,8 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;u&gt;&lt;strong&gt;&lt;a href="https://example.com" class="text-(--color-accent) hover:text-(--color-accent-light) hover:underline"&gt;bold link&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>_**[bold link](https://example.com)**_</ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedMarkdown>_**[bold link](https://example.com)**_</ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -274,8 +274,8 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;u&gt;underlined with an _ escaped&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>_underlined with an \_ escaped_</ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedMarkdown>_underlined with an \_ escaped_</ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -313,8 +313,8 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;_escaped_&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>_escaped\_</ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedMarkdown>_escaped\_</ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -343,8 +343,8 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;_escaped_&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>\_escaped_</ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedMarkdown>\_escaped_</ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -374,8 +374,8 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;_escaped_&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>\_escaped\_</ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedMarkdown>\_escaped\_</ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -411,8 +411,8 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;u&gt;&lt;em&gt;italic and underlined&lt;/em&gt;&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>_*italic and underlined*_</ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedMarkdown>_*italic and underlined*_</ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -454,8 +454,8 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;u&gt;&lt;strong&gt;multiple&lt;/strong&gt; elements to &lt;em&gt;underline&lt;/em&gt;&lt;/u&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>_**multiple** elements to *underline*_</ExpectedMarkdownString>
-    <ExpectedMarkdownStringSkipOnWhitespaceMisMatch>True</ExpectedMarkdownStringSkipOnWhitespaceMisMatch>
+    <ExpectedMarkdown>_**multiple** elements to *underline*_</ExpectedMarkdown>
+    <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [

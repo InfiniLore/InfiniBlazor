@@ -15,9 +15,9 @@ _</MdString>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;-&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;_&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>-
+    <ExpectedMarkdown>-
 
-_</ExpectedMarkdownString>
+_</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -63,9 +63,9 @@ __</MdString>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;--&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;__&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>--
+    <ExpectedMarkdown>--
 
-__</ExpectedMarkdownString>
+__</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -107,9 +107,9 @@ ___</MdString>
       <HorizontalRuleMdSyntaxNode Identifier="___" />
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;hr class="my-8 border-t border-(--border)"&gt;&lt;hr class="my-8 border-t border-(--border)"&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>---
+    <ExpectedMarkdown>---
 
-___</ExpectedMarkdownString>
+___</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -141,9 +141,9 @@ ____</MdString>
       <HorizontalRuleMdSyntaxNode Identifier="____" />
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;hr class="my-8 border-t border-(--border)"&gt;&lt;hr class="my-8 border-t border-(--border)"&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>----
+    <ExpectedMarkdown>----
 
-____</ExpectedMarkdownString>
+____</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -175,9 +175,9 @@ _____</MdString>
       <HorizontalRuleMdSyntaxNode Identifier="_____" />
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;hr class="my-8 border-t border-(--border)"&gt;&lt;hr class="my-8 border-t border-(--border)"&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>-----
+    <ExpectedMarkdown>-----
 
-_____</ExpectedMarkdownString>
+_____</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -217,9 +217,9 @@ _____</ExpectedMarkdownString>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;1234&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;1234&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;123&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>1234
+    <ExpectedMarkdown>1234
 1234
-123</ExpectedMarkdownString>
+123</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [

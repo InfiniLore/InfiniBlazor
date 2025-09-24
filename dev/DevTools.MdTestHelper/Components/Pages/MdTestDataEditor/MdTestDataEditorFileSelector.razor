@@ -207,8 +207,8 @@
                     string json = await new StreamReader(memoryStream).ReadToEndAsync();
                     mdTestData.ExpectedJsonString = json;
 
-                    // Reset MarkdownString
-                    mdTestData.ExpectedMarkdownString = MarkdownParser.MarkdownString.DeserializeToString(tree);
+                    // Reset Markdown
+                    mdTestData.ExpectedMarkdown = MarkdownParser.Markdown.DeserializeToString(tree);
                 }
                 await MdTestDataProvider.TryWriteXmlMdTestDataAsync(fileName, testData);
             }

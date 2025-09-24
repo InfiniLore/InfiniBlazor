@@ -10,7 +10,7 @@
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;code class="infini-bg-(--codeblock) text-(--color-base-20) rounded px-1 font-mono text-sm"&gt;
         Variable "something.Fetch()" Not Found
     &lt;/code&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>{{something.Fetch()}}</ExpectedMarkdownString>
+    <ExpectedMarkdown>{{something.Fetch()}}</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -35,7 +35,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;{{}}&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>{{}}</ExpectedMarkdownString>
+    <ExpectedMarkdown>{{}}</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [

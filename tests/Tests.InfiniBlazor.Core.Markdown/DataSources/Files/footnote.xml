@@ -9,7 +9,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;test &lt;sup&gt;&lt;a href="#md-footnote-1" class="cursor-pointer text-(--color-accent) hover:text-(--color-accent-light) hover:underline" onclick="event.preventDefault(); document.getElementById(&amp;#x27;md-footnote-1&amp;#x27;)?.scrollIntoView({ behavior: &amp;#x27;smooth&amp;#x27; });"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>test [^1]</ExpectedMarkdownString>
+    <ExpectedMarkdown>test [^1]</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -49,9 +49,9 @@
     &lt;div id="md-footnote-1" class="flex flex-row py-2"&gt;&lt;div class="mr-2"&gt;1 :&lt;/div&gt;
     &lt;div class="grow"&gt;&lt;p class=" leading-relaxed"&gt;content&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
     &lt;hr class="border-(--border)"&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>test [^1]
+    <ExpectedMarkdown>test [^1]
 
-[^1] : content</ExpectedMarkdownString>
+[^1] : content</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -117,10 +117,10 @@
     &lt;div id="md-footnote-1" class="flex flex-row py-2"&gt;&lt;div class="mr-2"&gt;1 :&lt;/div&gt;
     &lt;div class="grow"&gt;&lt;p class=" leading-relaxed"&gt;some &lt;strong&gt;content&lt;/strong&gt; in description&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
     &lt;hr class="border-(--border)"&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>test [^1]
+    <ExpectedMarkdown>test [^1]
 
 [^1] : some **content** in description
-</ExpectedMarkdownString>
+</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -202,10 +202,10 @@
     &lt;div id="md-footnote-1" class="flex flex-row py-2"&gt;&lt;div class="mr-2"&gt;1 :&lt;/div&gt;
     &lt;div class="grow"&gt;&lt;p class=" leading-relaxed"&gt;some &lt;em&gt;content&lt;/em&gt; in description&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
     &lt;hr class="border-(--border)"&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>test [^1]
+    <ExpectedMarkdown>test [^1]
 
 [^1] : some *content* in description
-</ExpectedMarkdownString>
+</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -298,13 +298,13 @@ Unrelated paragraph</MdString>
     &lt;div id="md-footnote-1" class="flex flex-row py-2"&gt;&lt;div class="mr-2"&gt;1 :&lt;/div&gt;
     &lt;div class="grow"&gt;&lt;p class=" leading-relaxed"&gt;paragraph 1&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;paragraph 2&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;paragraph 3&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
     &lt;hr class="border-(--border)"&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>test [^1]
+    <ExpectedMarkdown>test [^1]
 
 [^1] : paragraph 1
 paragraph 2
 paragraph 3
 
-Unrelated paragraph</ExpectedMarkdownString>
+Unrelated paragraph</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -409,10 +409,10 @@ Unrelated paragraph</ExpectedMarkdownString>
     &lt;div id="md-footnote-1" class="flex flex-row py-2"&gt;&lt;div class="mr-2"&gt;1 :&lt;/div&gt;
     &lt;div class="grow"&gt;&lt;p class=" leading-relaxed"&gt;some &lt;sub&gt;content&lt;/sub&gt; in description&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
     &lt;hr class="border-(--border)"&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>test [^1]
+    <ExpectedMarkdown>test [^1]
 
 [^1] : some ~content~ in description
-</ExpectedMarkdownString>
+</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -494,10 +494,10 @@ Unrelated paragraph</ExpectedMarkdownString>
     &lt;div id="md-footnote-1" class="flex flex-row py-2"&gt;&lt;div class="mr-2"&gt;1 :&lt;/div&gt;
     &lt;div class="grow"&gt;&lt;p class=" leading-relaxed"&gt;some &lt;sup&gt;content&lt;/sup&gt; in description&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
     &lt;hr class="border-(--border)"&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>test [^1]
+    <ExpectedMarkdown>test [^1]
 
 [^1] : some ^content^ in description
-</ExpectedMarkdownString>
+</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -593,14 +593,14 @@ test [^2]
     &lt;div class="grow"&gt;&lt;p class=" leading-relaxed"&gt;content&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;div id="md-footnote-2" class="flex flex-row py-2"&gt;&lt;div class="mr-2"&gt;2 :&lt;/div&gt;
     &lt;div class="grow"&gt;&lt;p class=" leading-relaxed"&gt;content&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
     &lt;hr class="border-(--border)"&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>test [^1]
+    <ExpectedMarkdown>test [^1]
 
 [^1] : content
 
 test [^2]
 
 [^2] : content
-</ExpectedMarkdownString>
+</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -718,11 +718,11 @@ test ^super^ [^1] ^super^
     &lt;div id="md-footnote-1" class="flex flex-row py-2"&gt;&lt;div class="mr-2"&gt;1 :&lt;/div&gt;
     &lt;div class="grow"&gt;&lt;p class=" leading-relaxed"&gt;some content in description&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
     &lt;hr class="border-(--border)"&gt;&lt;/div&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>test [^1] ^ something
+    <ExpectedMarkdown>test [^1] ^ something
 test ^super^ [^1] ^super^
 
 [^1] : some content in description
-</ExpectedMarkdownString>
+</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [

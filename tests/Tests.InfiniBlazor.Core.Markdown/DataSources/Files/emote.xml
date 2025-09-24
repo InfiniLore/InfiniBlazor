@@ -8,7 +8,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&amp;#x1F3F3;&amp;#xFE0F;&amp;#x200D;&amp;#x26A7;&amp;#xFE0F;&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>:flag-transgender:</ExpectedMarkdownString>
+    <ExpectedMarkdown>:flag-transgender:</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -33,7 +33,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;::&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>::</ExpectedMarkdownString>
+    <ExpectedMarkdown>::</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -57,7 +57,7 @@
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
     <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;:not/an/emote:&lt;/p&gt;</ExpectedHtmlString>
-    <ExpectedMarkdownString>:not/an/emote:</ExpectedMarkdownString>
+    <ExpectedMarkdown>:not/an/emote:</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
