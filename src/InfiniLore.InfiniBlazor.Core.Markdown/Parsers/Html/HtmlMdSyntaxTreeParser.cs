@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.Web.HtmlRendering;
@@ -19,11 +18,8 @@ public class HtmlMdSyntaxTreeParser(IServiceProvider provider, ILoggerFactory lo
     public async Task<string> DeserializeToStringAsync(IMdSyntaxTree tree, CancellationToken ct = default) {
         await using AsyncServiceScope scope = provider.CreateAsyncScope();
         await using var htmlRenderer = new HtmlRenderer(scope.ServiceProvider, loggerFactory);
+        
         string output = await htmlRenderer.Dispatcher.InvokeAsync(async () => {
-            // WTF why does thiw rok
-            var temp = InfiniRenderModeProvider.InfiniRenderMode;
-            InfiniRenderModeProvider.InfiniRenderMode = null!;
-            
             await using var textWriter = new StringWriter();
             
             var parameters = new Dictionary<string, object?> {
@@ -32,7 +28,8 @@ public class HtmlMdSyntaxTreeParser(IServiceProvider provider, ILoggerFactory lo
             
             HtmlRootComponent output = await htmlRenderer.RenderComponentAsync<HtmlMdSyntaxTreeParserRoot>(ParameterView.FromDictionary(parameters));
             output.WriteHtmlTo(textWriter);
-            InfiniRenderModeProvider.InfiniRenderMode = temp;
+            await textWriter.FlushAsync(ct);
+            
             return textWriter.ToString();
         });
         return output;
