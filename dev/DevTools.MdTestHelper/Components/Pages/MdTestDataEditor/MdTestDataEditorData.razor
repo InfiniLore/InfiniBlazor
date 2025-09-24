@@ -94,11 +94,15 @@
                     />
                 </InfiniTabContent>
 
-                <InfiniTabContent TabName="HTML">
+                <InfiniTabContent TabName="HTML string">
                     <InfiniTextAreaInput
                         @bind-Value="@ExpectedHtmlString"
                         Rows="22"
                         Class="font-mono w-full"/>
+                </InfiniTabContent>
+
+                <InfiniTabContent TabName="HTML render">
+                    @(new MarkupString(ExpectedHtmlString ?? string.Empty))
                 </InfiniTabContent>
 
                 <InfiniTabContent TabName="Blazor">
