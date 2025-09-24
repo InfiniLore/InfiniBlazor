@@ -86,9 +86,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
-    [Parameter] public EventCallback<string> OnFileSelected { get; set; }
     [Parameter] public EventCallback<(string fileName, string testId)> OnTestSelected { get; set; }
 
     private string[]? _fileNames;
@@ -191,13 +189,19 @@
             if (testData is null) continue;
             foreach (MdTestData mdTestData in testData) {
                 IMdSyntaxTree tree = mdTestData.MdSyntaxTree;
+                // Reset HtmlString
                 mdTestData.ExpectedHtmlString = await MarkdownParser.Html.DeserializeToStringAsync(tree);
-                // using var memoryStream = new MemoryStream();
-                // await MarkdownParser.Json.DeserializeToJsonStreamAsync(memoryStream, tree);
+                
+                // Reset JsonString
+                using var memoryStream = new MemoryStream();
+                await MarkdownParser.Json.DeserializeToJsonStreamAsync(memoryStream, tree);
 
-                // memoryStream.Position = 0;
-                // string json = await new StreamReader(memoryStream).ReadToEndAsync();
-                // mdTestData.ExpectedJsonString = json;
+                memoryStream.Position = 0;
+                string json = await new StreamReader(memoryStream).ReadToEndAsync();
+                mdTestData.ExpectedJsonString = json;
+                
+                // Reset MarkdownString
+                mdTestData.ExpectedMarkdownString = MarkdownParser.MarkdownString.DeserializeToString(tree);
             }
             await MdTestDataProvider.TryWriteXmlMdTestDataAsync(fileName, testData);
         }
