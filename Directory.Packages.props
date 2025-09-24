@@ -4,7 +4,7 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="BenchmarkDotNet" Version="0.15.3" />
+    <PackageVersion Include="BenchmarkDotNet" Version="0.15.4" />
     <PackageVersion Include="bunit" Version="1.40.0" />
     <PackageVersion Include="CodeOfChaos.CliArgsParser.Generators" Version="5.1.0" />
     <PackageVersion Include="CodeOfChaos.CliArgsParser.Library" Version="5.1.0" />
@@ -56,7 +56,7 @@
     <PackageVersion Include="Serilog.Extensions.Logging" Version="9.0.2" />
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageVersion Include="Serilog.Sinks.Debug" Version="3.0.0" />
-    <PackageVersion Include="TUnit" Version="0.61.13" />
-    <PackageVersion Include="TUnit.Core" Version="0.61.13" />
+    <PackageVersion Include="TUnit" Version="0.61.31" />
+    <PackageVersion Include="TUnit.Core" Version="0.61.31" />
   </ItemGroup>
 </Project>
