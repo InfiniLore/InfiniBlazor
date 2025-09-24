@@ -9,23 +9,26 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniBlazorMdComponentBase<LinkMdSyntaxNode>
+@inherits InfiniBlazorMdComponentBase<WrapperMdSyntaxNode>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<a href="@SyntaxNode.Href"
-   title="@GetTitle()"
-   class="text-(--color-accent) hover:text-(--color-accent-light) hover:underline">
+<span @attributes="GetAttributes()">
     @RenderChildContent()
-</a>
+</span>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    private string? GetTitle() {
-        if (SyntaxNode.Title.IsNotNullOrWhiteSpace()) return SyntaxNode.Title;
-        if (SyntaxNode.Modifier != null && SyntaxNode.Modifier.TryGetTitle(out string? title)) return title;
-        return null;   
+    private Dictionary<string, object> GetAttributes() {
+        var dict = new Dictionary<string, object>();
+        if (SyntaxNode.Modifier is not {} modifier) return dict;
+        
+        if (modifier.TryGetColor(out string? color)) {
+            dict.AddOrUpdate("style", $"color:{color};");
+        }
+        
+        return dict;
     }
 }

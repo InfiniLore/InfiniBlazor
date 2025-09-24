@@ -83,4 +83,7 @@ public static class MdRegexGroupNames {
     public const string UserName = "uName";
     public const string WikiLink = "wikiLink";
     public const string WikiLinkHref = "wHref";
+    public const string Wrapper = "wrapper";
+    public const string WrapperContent = "w";
+    public const string WrapperMods = "wMods";
 }

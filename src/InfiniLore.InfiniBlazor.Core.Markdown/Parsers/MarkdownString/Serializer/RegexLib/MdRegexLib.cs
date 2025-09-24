@@ -35,6 +35,7 @@ public static partial class MdRegexLib {
         | (?<tag>\#(?<tText>[\p{L}\p{N}\-_\/\.]+))
         | (?<user>\@(?<uName>[\p{L}\p{N}\-_\/\.]+))
         | (?<footnoteRef>\[\^(?<frId>[\d\p{L}\p{N}]+)\])
+        | (?<wrapper><(?<wMods>\|.*?)>(?<w>.*)</>)
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex SinglelineStructuresRegex { get; }
     
