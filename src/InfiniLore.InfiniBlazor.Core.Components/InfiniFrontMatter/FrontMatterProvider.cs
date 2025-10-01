@@ -33,7 +33,6 @@ public class FrontMatterProvider(ILogger<FrontMatterProvider> logger) : IFrontMa
         entries = null;
         if (value.IsNullOrWhiteSpace()) return false;
         
-
         try {
             switch (lang) {
                 case null or "" or "yaml" or "yml": {
