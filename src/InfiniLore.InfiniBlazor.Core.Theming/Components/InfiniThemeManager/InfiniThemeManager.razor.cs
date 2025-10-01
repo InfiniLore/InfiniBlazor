@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.JsRuntime;
 using InfiniLore.InfiniBlazor.Pooling;
-using InfiniLore.InfiniBlazor.Theming.CssData;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
@@ -18,8 +17,6 @@ public partial class InfiniThemeManager(
     IJsInfiniBlazor jsInfiniBlazor,
     ILogger<InfiniThemeManager> logger
 ) : ComponentBase, IAsyncDisposable {
-
-    private const string BaseId = "infiniThemeManager-base";
     private const string ThemeId = "infiniThemeManager-selected";
     private bool _isUpdatingTheme;
     private string? InitialCss { get; set; }
@@ -32,10 +29,6 @@ public partial class InfiniThemeManager(
 
         if (firstRender) {
             themeStateProvider.OnChangedAsync += OnThemeStateChanged;
-            
-            // Fixes and issue when used in MAUI BlazorHybrid as there is not good HeadContent operations
-            // just need to add <style id="infiniThemeManager-base-css"></style> at the desired location in the index.html of a MAUI app
-            await jsInfiniBlazor.Document.AddOrUpdateElementAtHead(BaseId, GetBaseThemeCss());
         }
     }
 
@@ -136,11 +129,5 @@ public partial class InfiniThemeManager(
         finally {
             GlobalPools.StringBuilder.Return(sb);
         }
-    }
-
-    private string GetBaseThemeCss() {
-        if (TryGetCssString(InfiniBlazorCssData.Instance, out string? css)) return css;
-        logger.Warning("Could not create base theme CSS.");
-        return ":root{}";
     }
 }

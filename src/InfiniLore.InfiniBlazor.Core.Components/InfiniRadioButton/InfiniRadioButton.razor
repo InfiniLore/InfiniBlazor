@@ -27,10 +27,10 @@
         class="@ConcatClasses(BackgroundClasses,ContainerBorderClasses, FocusClasses, SizeClasses) rounded-full border-2 flex justify-center items-center"
         @onclick="@OnToggleAsync">
         @if (IsChecked) {
-            <div class="@WhenDisabled("infini-bg-(--color-accent)", "text-(--color-base-70)") min-w-9/10 min-h-9/10 max-w-9/10 max-h-9/10 rounded-full" ></div>
+            <div class="@WhenDisabled("overload-bg-infini-accent", "text-infini-base-70") min-w-9/10 min-h-9/10 max-w-9/10 max-h-9/10 rounded-full" ></div>
         }
         else {
-            <LiSlash Size="@Size.ToLucideIconSize()"  Class="@WhenDisabled("text-(--color-base-50) p-1", "text-(--color-base-70)")"/>
+            <LiSlash Size="@Size.ToLucideIconSize()"  Class="@WhenDisabled("text-infini-base-50 p-1", "text-infini-base-70")"/>
         }
     </div>
     @ChildContent
@@ -54,15 +54,15 @@
     private bool _isFocused;
     
     private string BackgroundClasses => IsDisabled
-        ? "infini-bg-(--color-base-90)"
+        ? "overload-bg-infini-base-90"
         : IsChecked
-            ? "infini-bg-(--color-base-60)"
-            : "infini-bg-(--color-base-80)";
+            ? "overload-bg-infini-base-60"
+            : "overload-bg-infini-base-80";
         
-    private string FocusClasses => _isFocused && !IsDisabled ? "border-(--color-accent)" : string.Empty;
+    private string FocusClasses => _isFocused && !IsDisabled ? "border-infini-accent" : string.Empty;
     private string ContainerBorderClasses => WhenDisabled(
-        "border-(--border) hover:border-(--color-accent) cursor-pointer",
-        "border-(--color-base-50) cursor-not-allowed"
+        "border-infini-border hover:border-infini-accent cursor-pointer",
+        "border-infini-base-50 cursor-not-allowed"
     );
 
     private string SizeClasses => Size switch {

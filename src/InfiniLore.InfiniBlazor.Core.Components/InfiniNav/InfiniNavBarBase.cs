@@ -15,10 +15,10 @@ public abstract class InfiniNavBarBase : InfiniComponentBase {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected string NavLocationClasses => Location switch {
-        NavBarLocation.Top => "border-b infini-bg-(--nav-top)",
-        NavBarLocation.Left => "border-r infini-bg-(--nav-left)",
-        NavBarLocation.Right => "border-l infini-bg-(--nav-right)",
-        NavBarLocation.Bottom => "border-t infini-bg-(--nav-bottom)",
+        NavBarLocation.Top => "border-b overload-bg-infini-nav-top",
+        NavBarLocation.Left => "border-r overload-bg-infini-nav-left",
+        NavBarLocation.Right => "border-l overload-bg-infini-nav-right",
+        NavBarLocation.Bottom => "border-t overload-bg-infini-nav-bottom",
         _ => string.Empty
     };
 }

@@ -79,9 +79,9 @@
                 <p class="text-sm font-medium">Selected Files:</p>
                 <div class="space-y-1">
                     @foreach (IBrowserFile file in SelectedFiles) {
-                        <div class="flex items-center gap-2 text-sm p-2 bg-(--color-base-95) rounded">
+                        <div class="flex items-center gap-2 text-sm p-2 bg-infini-base-95 rounded">
                             <span class="font-medium">@file.Name</span>
-                            <span class="text-(--color-base-40)">(@(file.Size / 1024.0) KB)</span>
+                            <span class="text-infini-base-40">(@(file.Size / 1024.0) KB)</span>
                         </div>
                     }
                 </div>

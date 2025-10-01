@@ -22,7 +22,7 @@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <InfiniNavBar Location="NavBarLocation.Left" Size="Size" Class="@Class" @bind-NavBarCollapsed="CollapsedState">
-    <div class="flex flex-row justify-between sticky top-0 z-10 infini-bg-(--nav-top) border-b-1 border-(--nav-border)">
+    <div class="flex flex-row justify-between sticky top-0 z-10 overload-bg-infini-nav-top border-b-1 border-infini-nav-border">
         <InfiniNavLink
             Href="/"
             Text="InfiniBlazor"
@@ -161,7 +161,7 @@
         UserName="InfiniLore"
         Href="/"
         UserImageUrl="@_currentUserImage"
-        Class="sticky bottom-0 z-10 infini-bg-(--nav-bottom) border-t-1 border-(--nav-border) rounded-none">
+        Class="sticky bottom-0 z-10 overload-bg-infini-nav-bottom border-t-1 border-infini-nav-border rounded-none">
         <Additional>
             <InfiniToggleButton OnToggle="@(_ => SwitchUserImage())" Size="Size.Xxs"/>
             <InfiniNavUserAdditonalLink Href="/#logout" Class="text-red-500">logout</InfiniNavUserAdditonalLink>

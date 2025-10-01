@@ -17,7 +17,7 @@
     <LucideIcon Size="24" Name="@IconName"/>
     <div class="w-1/5">
         <InfiniTextInput
-            Class="infini-bg-(--color-base-90) border-none hover:infini-bg-(--color-base-80) focus:infini-bg-(--color-base-80) hover:border-(--color-base-60)"
+            Class="overload-bg-infini-base-90 border-none hover:overload-bg-infini-base-80 focus:overload-bg-infini-base-80 hover:border-infini-base-60"
             Value="@Key"
             ValueChanged="@KeyChanged"
         />
@@ -26,14 +26,14 @@
         @switch (Value) {
             case int intValue: {
                 <InfiniTextInput
-                    Class="infini-bg-(--color-base-80) border-(--color-base-60)"
+                    Class="overload-bg-infini-base-80 border-infini-base-60"
                     Value="@intValue.ToString()"
                     ValueChanged="@(async (string? s) => await ValueChanged.InvokeAsync(s))"/>
                 break;
             }
             case string stringValue: {
                 <InfiniTextInput
-                    Class="infini-bg-(--color-base-80) border-(--color-base-60)"
+                    Class="overload-bg-infini-base-80 border-infini-base-60"
                     Value="@stringValue"
                     ValueChanged="@(async (string? s) => await ValueChanged.InvokeAsync(s))"/>
                 break;
@@ -41,7 +41,7 @@
 
             case bool boolValue: {
                 <InfiniToggleInput
-                    Class="infini-bg-(--color-base-80) border-(--color-base-60)"
+                    Class="overload-bg-infini-base-80 border-infini-base-60"
                     Value="@boolValue"
                     ValueChanged="@(async b => await ValueChanged.InvokeAsync(b))"/>
                 break;
@@ -52,7 +52,7 @@
                     object? item = listValue[index];
                     int i = index;
                     <InfiniTextInput
-                        Class="infini-bg-(--color-base-80) border-(--color-base-60)"
+                        Class="overload-bg-infini-base-80 border-infini-base-60"
                         Value="@item?.ToString()"
                         ValueChanged="@(async (string? s) => await OnListValueChanged(s, i, listValue))">
                         

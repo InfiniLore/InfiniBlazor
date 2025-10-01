@@ -75,9 +75,9 @@ public static class CalloutStyleProviderFactory {
                 string.Empty,
                 [],
                 LucideNames.Info,
-                "border-(--border) bg-(--color-base-90)",
-                "text-(--color-base-20)",
-                "border-(--color-base-50) text-(--color-base-30)"
+                "border-infini-border bg-infini-base-90",
+                "text-infini-base-20",
+                "border-infini-base-50 text-infini-base-30"
             )
         };
     }

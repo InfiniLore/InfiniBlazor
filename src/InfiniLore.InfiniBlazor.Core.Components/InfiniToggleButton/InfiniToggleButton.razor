@@ -75,7 +75,7 @@
 
         return ConcatClasses(
             sizeClasses,
-            "rounded-full infini-bg-(--toggle-container) transition-colors duration-300 relative overflow-hidden"
+            "rounded-full overload-bg-infini-toggle-container transition-colors duration-300 relative overflow-hidden"
         );
     }
 
@@ -104,12 +104,12 @@
 
         string background = Color is not Color.Default
             ? Color.ToCssClassBackground()
-            : "bg-(--color-base-10)";
+            : "bg-infini-base-10";
 
         return ConcatClasses(
             sizeClasses,
             "flex items-center justify-center",
-            WithValue(background, "bg-(--toggle-slider)"),
+            WithValue(background, "bg-infini-toggle-slider"),
             "rounded-full transition-transform duration-300",
             WithValue(translateX, "translate-x-0")
         );
@@ -130,13 +130,13 @@
 
         string textColor = Color is not Color.Default
             ? Color.ToCssClassTextColorReadableForeground()
-            : "text-(--toggle-icon-on)";
+            : "text-infini-toggle-icon-on";
         
         return ConcatClasses(
             "absolute",
             sizeClasses,
             "transform transition-all duration-300",
-            WithValue(textColor, "text-(--toggle-icon-off)" )
+            WithValue(textColor, "text-infini-toggle-icon-off" )
         );
     }
 

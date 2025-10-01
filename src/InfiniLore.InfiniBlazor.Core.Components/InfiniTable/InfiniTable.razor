@@ -10,10 +10,10 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@Class shadow-sm rounded-2xl border border-(--border) flex flex-col overflow-hidden">
+<div class="@Class shadow-sm rounded-2xl border border-infini-border flex flex-col overflow-hidden">
     <div class="w-full h-full overflow-auto relative infini-scrollbar">
         <table class="w-full h-full table-auto">
-            <thead class="sticky top-0 infini-bg-(--table-header) border-(--border) border-b p-4 @ZIndex.TableHeader">
+            <thead class="sticky top-0 overload-bg-infini-table-header border-infini-border border-b p-4 @ZIndex.TableHeader">
             <tr>
                 @Header
             </tr>
@@ -52,7 +52,7 @@
     private RenderFragment RenderItem(TItem item, int index) => __builder => {
         int seq = 0; // Sequence for RenderTreeBuilder
         __builder.OpenElement(seq++, "tr");
-        __builder.AddAttribute(seq++, "class", "group infini-bg-(--table-row) p hover:infini-bg-(--table-row-hover) transition h-4");
+        __builder.AddAttribute(seq++, "class", "group overload-bg-infini-table-row p hover:overload-bg-infini-table-row-hover transition h-4");
 
         if (Content is not null) {
             __builder.AddContent(seq, Content(item));

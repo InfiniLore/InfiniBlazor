@@ -20,7 +20,7 @@
         attributes="@(AutoFocus ? new Dictionary<string, object> { { "autofocus", "autofocus" } } : null)"
         maxlength="@MaxLength"
         rows="@Rows"
-        class="@Class @DisabledClasses min-w-24 w-full placeholder-(--color-base-40) rounded-md border border-(--border) focus:ring-2 outline-none ring-(--color-accent) text-sm p-2 shadow-sm transition infini-scrollbar resize-@ResizeMode">
+        class="@Class @DisabledClasses min-w-24 w-full placeholder-infini-base-40 rounded-md border border-infini-border focus:ring-2 outline-none ring-infini-accent text-sm p-2 shadow-sm transition infini-scrollbar resize-@ResizeMode">
     </textarea>
 
     @ChildContent
@@ -42,8 +42,8 @@
     [Parameter] public string ResizeMode { get; set; } = "vertical";// Can be "none", "both", "horizontal", "vertical"
 
     private string DisabledClasses => IsDisabled
-        ? "opacity-50 cursor-not-allowed infini-bg-(--color-base-90)"
-        : "hover:ring-2 infini-bg-(--color-base-60)";
+        ? "opacity-50 cursor-not-allowed overload-bg-infini-base-90"
+        : "hover:ring-2 overload-bg-infini-base-60";
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

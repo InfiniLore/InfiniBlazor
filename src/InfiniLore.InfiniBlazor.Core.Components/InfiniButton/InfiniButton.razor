@@ -45,7 +45,7 @@ else {
     public const string ContainerReaction = "cursor-pointer active:scale-95 hover:transform hover:transition hover:ease-in hover:duration-200 overflow-visible";
     private const string Rounding = "rounded-md";
 
-    public const string DefaultCssClasses = "infini-bg-(--button-default) text-(--button-default-text) hover:text-(--button-default-text-hover) hover:infini-bg-(--button-default-hover)";
+    public const string DefaultCssClasses = "overload-bg-infini-button-default text-infini-button-default-text hover:text-infini-button-default-text-hover hover:overload-bg-infini-button-default-hover";
     protected virtual string CssDefault => DefaultCssClasses;
     protected virtual string CssColor => ConcatClasses(Color.ToCssClassBackground(), Color.ToCssClassTextColorReadableForeground());
     
@@ -53,7 +53,7 @@ else {
         _ when IsDisabled => ConcatClasses(
             ContainerSizeClasses,
             Rounding,
-            "infini-bg-(--button-disabled) text-(--button-disabled-text) opacity-50 cursor-not-allowed"
+            "overload-bg-infini-button-disabled text-infini-button-disabled-text opacity-50 cursor-not-allowed"
         ),
         
         Color.Default =>  ConcatClasses(

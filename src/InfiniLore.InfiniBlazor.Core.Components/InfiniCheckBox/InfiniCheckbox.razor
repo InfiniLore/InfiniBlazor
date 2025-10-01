@@ -27,13 +27,13 @@
         class="@ConcatClasses(BackgroundClasses, ContainerBorderClasses, FocusClasses, Size.ToTailwindRounded()) border-2 p-0.5"
         @onclick="@OnToggleAsync">
         @if (IsInapplicable) {
-            <LiMinus Size="@Size.ToLucideIconSize()" Class="@WhenDisabled("text-(--color-base-50)", "text-(--color-base-20)")"/>
+            <LiMinus Size="@Size.ToLucideIconSize()" Class="@WhenDisabled("text-base-50", "text-base-20")"/>
         }
         else if (IsChecked) {
-            <LiCheck Size="@Size.ToLucideIconSize()" Class="@WhenDisabled("text-(--color-base-10)", "text-(--color-base-20)")"/>
+            <LiCheck Size="@Size.ToLucideIconSize()" Class="@WhenDisabled("text-base-10", "text-base-20")"/>
         }
         else {
-            <LiSlash Size="@Size.ToLucideIconSize()" Class="@WhenDisabled("text-(--color-base-50) p-1", "text-(--color-base-70) p-1")"/>
+            <LiSlash Size="@Size.ToLucideIconSize()" Class="@WhenDisabled("text-base-50 p-1", "text-base-70 p-1")"/>
         }
     </div>
     @ChildContent
@@ -51,15 +51,15 @@
     private bool _isFocused;
     
     private string BackgroundClasses => IsDisabled
-        ? "infini-bg-(--color-base-90)"
+        ? "overload-bg-infini-base-90"
         : IsChecked
-            ? "infini-bg-(--color-base-60)"
-            : "infini-bg-(--color-base-80)";
+            ? "overload-bg-infini-base-60"
+            : "overload-bg-infini-base-80";
         
-    private string FocusClasses => _isFocused && !IsDisabled ? "border-(--color-accent)" : string.Empty;
+    private string FocusClasses => _isFocused && !IsDisabled ? "border-infini-accent" : string.Empty;
     private string ContainerBorderClasses => WhenDisabled(
-        "border-(--border) hover:border-(--color-accent) cursor-pointer",
-        "border-(--color-base-50) cursor-not-allowed"
+        "border-infini-border hover:border-infini-accent cursor-pointer",
+        "border-infini-base-50 cursor-not-allowed"
     );
     
     // -----------------------------------------------------------------------------------------------------------------
