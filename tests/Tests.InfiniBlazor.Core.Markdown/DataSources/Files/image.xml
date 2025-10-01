@@ -7,7 +7,6 @@
         <ImageMdSyntaxNode Href="https://www.transgenderinfo.be" AltText="transgenderinfo" />
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;img src="https://www.transgenderinfo.be" class="inline-block rounded-lg shadow-lg h-full w-auto object-contain" alt="transgenderinfo" /&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>![transgenderinfo](https://www.transgenderinfo.be)</ExpectedMarkdown>
     <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
@@ -33,7 +32,6 @@
         <TextMdSyntaxNode xml:space="preserve">![]()</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;![]()&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>![]()</ExpectedMarkdown>
     <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
@@ -58,7 +56,6 @@
         <ImageMdSyntaxNode Href="https://www.transgenderinfo.be" AltText="**transgenderinfo**" />
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;img src="https://www.transgenderinfo.be" class="inline-block rounded-lg shadow-lg h-full w-auto object-contain" alt="**transgenderinfo**" /&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>![**transgenderinfo**](https://www.transgenderinfo.be)</ExpectedMarkdown>
     <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
@@ -91,7 +88,6 @@
         <ImageMdSyntaxNode Href="https://localhost:7210/icon.png" AltText="\[" />
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;img src="https://localhost:7210/icon.png" class="inline-block rounded-lg shadow-lg h-full w-auto object-contain" alt="]" /&gt;&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;&lt;img src="https://localhost:7210/icon.png" class="inline-block rounded-lg shadow-lg h-full w-auto object-contain" alt="[" /&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>![\]](https://localhost:7210/icon.png)
 
 ![\[](https://localhost:7210/icon.png)</ExpectedMarkdown>
@@ -135,7 +131,6 @@
         <ImageMdSyntaxNode Href="https://www.transgenderinfo.be" AltText="*transgenderinfo*" />
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;img src="https://www.transgenderinfo.be" class="inline-block rounded-lg shadow-lg h-full w-auto object-contain" alt="*transgenderinfo*" /&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>![*transgenderinfo*](https://www.transgenderinfo.be)</ExpectedMarkdown>
     <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
@@ -196,7 +191,6 @@
         </ImageMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;img src="https://localhost:7210/icon.png" class="inline-block rounded-lg shadow-lg h-full w-auto object-contain" alt="" style="width:100px;height:100px;" /&gt;&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;&lt;img src="https://localhost:7210/icon.png" class="inline-block rounded-lg shadow-lg h-full w-auto object-contain" alt="" title="something" /&gt;&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;&lt;img src="https://localhost:7210/icon.png" class="inline-block rounded-lg shadow-lg h-full w-auto object-contain" alt="" style="width:auto;height:1em;vertical-align:text-top;object-fit:contain;transform:translate(0,0.15em);" /&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>![](https://localhost:7210/icon.png|size=100x100)
 
 ![](https://localhost:7210/icon.png|title=something)
@@ -288,7 +282,6 @@
         <ImageMdSyntaxNode Href="https://www.transgenderinfo.be" AltText="^transgenderinfo^" />
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;img src="https://www.transgenderinfo.be" class="inline-block rounded-lg shadow-lg h-full w-auto object-contain" alt="^transgenderinfo^" /&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>![^transgenderinfo^](https://www.transgenderinfo.be)</ExpectedMarkdown>
     <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
@@ -314,7 +307,6 @@
         <ImageMdSyntaxNode Href="https://www.transgenderinfo.be" AltText="^^transgenderinfo^^" />
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;img src="https://www.transgenderinfo.be" class="inline-block rounded-lg shadow-lg h-full w-auto object-contain" alt="^^transgenderinfo^^" /&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>![^^transgenderinfo^^](https://www.transgenderinfo.be)</ExpectedMarkdown>
     <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{

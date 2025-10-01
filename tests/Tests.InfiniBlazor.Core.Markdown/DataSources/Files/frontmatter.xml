@@ -7,12 +7,6 @@ test : data
     <MdSyntaxTree>
       <FrontMatterMdSyntaxNode xml:space="preserve" Language="" DashesCount="3" LeadingSpaces="0">test : data</FrontMatterMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;div class="flex flex-col gap-0.5 infini-bg-(--color-base-90) p-2 rounded-xl"&gt;&lt;h6 class=" text-xl font-semibold mb-1"&gt;Properties&lt;/h6&gt;&lt;div class="flex flex-row items-center gap-1"&gt;&lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="m9 18 6-6-6-6" /&gt;
-    &lt;/svg&gt;
-    &lt;div class="w-1/5"&gt;&lt;div class="flex flex-col w-full min-h-10"&gt;&lt;div class="flex grow justify-between items-center gap-2"&gt;&lt;div class="flex flex-row w-full min-w-0  items-center gap-2"&gt;&lt;input id="369465956d0848aa9802a08de8a2e4ef" type="text" value="test" placeholder="" class="infini-bg-(--color-base-80) border-(--color-base-60) hover:ring-2 infini-bg-(--color-base-60) w-full placeholder-(--color-base-40) rounded-md border border-(--border) focus:ring-2 outline-none ring-(--color-accent) text-sm p-2 shadow-sm transition max-h-10 " /&gt;
-    &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
-    &lt;div class="w-4/5"&gt;&lt;div class="flex flex-col w-full min-h-10"&gt;&lt;div class="flex grow justify-between items-center gap-2"&gt;&lt;div class="flex flex-row w-full min-w-0  items-center gap-2"&gt;&lt;input id="6b418085978b474eb89f3fc604652f7b" type="text" value="data" placeholder="" class="infini-bg-(--color-base-80) border-(--color-base-60) hover:ring-2 infini-bg-(--color-base-60) w-full placeholder-(--color-base-40) rounded-md border border-(--border) focus:ring-2 outline-none ring-(--color-accent) text-sm p-2 shadow-sm transition max-h-10 " /&gt;
-    &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>---
 test : data
 ---</ExpectedMarkdown>
@@ -36,12 +30,6 @@ test : data
     <MdSyntaxTree>
       <FrontMatterMdSyntaxNode xml:space="preserve" Language="json" DashesCount="3" LeadingSpaces="1">"something" : "0"</FrontMatterMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;div class="flex flex-col gap-0.5 infini-bg-(--color-base-90) p-2 rounded-xl"&gt;&lt;h6 class=" text-xl font-semibold mb-1"&gt;Properties&lt;/h6&gt;&lt;div class="flex flex-row items-center gap-1"&gt;&lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="m9 18 6-6-6-6" /&gt;
-    &lt;/svg&gt;
-    &lt;div class="w-1/5"&gt;&lt;div class="flex flex-col w-full min-h-10"&gt;&lt;div class="flex grow justify-between items-center gap-2"&gt;&lt;div class="flex flex-row w-full min-w-0  items-center gap-2"&gt;&lt;input id="4311c76f66284548a1e72bcbef74de27" type="text" value="something" placeholder="" class="infini-bg-(--color-base-80) border-(--color-base-60) hover:ring-2 infini-bg-(--color-base-60) w-full placeholder-(--color-base-40) rounded-md border border-(--border) focus:ring-2 outline-none ring-(--color-accent) text-sm p-2 shadow-sm transition max-h-10 " /&gt;
-    &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
-    &lt;div class="w-4/5"&gt;&lt;div class="flex flex-col w-full min-h-10"&gt;&lt;div class="flex grow justify-between items-center gap-2"&gt;&lt;div class="flex flex-row w-full min-w-0  items-center gap-2"&gt;&lt;input id="50112609a3d144dfbada95dd6a6f26f1" type="text" value="0" placeholder="" class="infini-bg-(--color-base-80) border-(--color-base-60) hover:ring-2 infini-bg-(--color-base-60) w-full placeholder-(--color-base-40) rounded-md border border-(--border) focus:ring-2 outline-none ring-(--color-accent) text-sm p-2 shadow-sm transition max-h-10 " /&gt;
-    &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>--- json
 "something" : "0"
 ---</ExpectedMarkdown>

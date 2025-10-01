@@ -9,7 +9,6 @@
         </ItalicMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;em&gt;italic&lt;/em&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>*italic*</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -41,7 +40,6 @@
         </ItalicMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;some text &lt;em&gt;**&lt;/em&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>some text ****</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -74,7 +72,6 @@
         <TextMdSyntaxNode xml:space="preserve">*italic</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;*italic&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>*italic</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -98,7 +95,6 @@
         <TextMdSyntaxNode xml:space="preserve">**</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;**&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>**</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -124,7 +120,6 @@
         </ItalicMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;em&gt;**&lt;/em&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>****</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -159,7 +154,6 @@
         </ItalicMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;em&gt;something &lt;strong&gt;bold&lt;/strong&gt; in italic&lt;/em&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>*something **bold** in italic*</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -206,7 +200,6 @@
         <TextMdSyntaxNode xml:space="preserve"> bold**</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;em&gt;italic &lt;/em&gt;nested * bold**&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>*italic *nested \* bold**</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -250,7 +243,6 @@
         </ItalicMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;em&gt;*italic&lt;/em&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>*\*italic*</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -286,7 +278,6 @@
         </ItalicMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;em&gt;italic*&lt;/em&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>*italic\**</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -323,7 +314,6 @@
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;strong&gt; * &lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>** \* **</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -362,7 +352,6 @@
         <EscapedCharacterMdSyntaxNode xml:space="preserve">*</EscapedCharacterMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;*literal asterisks*&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>\*literal asterisks\*</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -396,7 +385,6 @@
         </ItalicMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;em&gt;&lt;span class="inline-block px-2 py-0.5 rounded-full leading-4 infini-bg-(--color-base-90) text-(--color-accent)"&gt;tag&lt;/span&gt;&lt;/em&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>*#tag*</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",

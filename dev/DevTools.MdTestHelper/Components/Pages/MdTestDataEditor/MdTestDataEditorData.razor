@@ -94,17 +94,6 @@
                     />
                 </InfiniTabContent>
 
-                <InfiniTabContent TabName="HTML string">
-                    <InfiniTextAreaInput
-                        @bind-Value="@ExpectedHtmlString"
-                        Rows="22"
-                        Class="font-mono w-full"/>
-                </InfiniTabContent>
-
-                <InfiniTabContent TabName="HTML render">
-                    @(new MarkupString(ExpectedHtmlString ?? string.Empty))
-                </InfiniTabContent>
-
                 <InfiniTabContent TabName="Blazor">
                     <InfiniMdEditorStandalonePreview @bind-EditorContext="@EditorContext" @bind-RenderContext="@RenderContext"/>
                 </InfiniTabContent>
@@ -134,7 +123,6 @@
     private MdTestData? TestDataOrigin { get; set; }
 
     private string ExpectedSyntaxTreeString { get; set; } = string.Empty;
-    private string? ExpectedHtmlString { get; set; } = string.Empty;
     private string? ExpectedMarkdown { get; set; } = string.Empty;
     private string? ExpectedJsonString { get; set; } = string.Empty;
     private bool SkipOnWhitespaceMisMatch { get; set; }
@@ -173,7 +161,6 @@
         await Task.WhenAll(
             GenerateXmlString(),
             GenerateJsonString(),
-            GenerateSimpleHtmlString(),
             GenerateMarkdown()
         );
     }
@@ -197,11 +184,6 @@
         string result = await new StreamReader(memoryStream).ReadToEndAsync();
         ExpectedJsonString = result.ReplaceLineEndings("\n");
         
-    }
-
-    private async Task GenerateSimpleHtmlString() {
-        IMdSyntaxTree tree = EditorContext.SyntaxTree;
-        ExpectedHtmlString = await MarkdownParser.Html.DeserializeToStringAsync(tree);
     }
 
     private Task GenerateMarkdown() {
@@ -240,7 +222,6 @@
             ExpectedSyntaxTreeString = await new StreamReader(memoryStream).ReadToEndAsync();
         }
 
-        ExpectedHtmlString = testData.ExpectedHtmlString;
         ExpectedMarkdown = testData.ExpectedMarkdown;
         SkipOnWhitespaceMisMatch = testData.ExpectedMarkdownSkipOnWhitespaceMisMatch;
         ExpectedJsonString = testData.ExpectedJsonString;
@@ -263,7 +244,6 @@
             DeveloperNote = DeveloperNote,
             MdString = EditorContext.Content,
             MdSyntaxTree = EditorContext.SyntaxTree,
-            ExpectedHtmlString = ExpectedHtmlString,
             ExpectedMarkdown = ExpectedMarkdown,
             ExpectedMarkdownSkipOnWhitespaceMisMatch = SkipOnWhitespaceMisMatch,
             ExpectedJsonString = ExpectedJsonString
@@ -296,7 +276,6 @@
         TestId = string.Empty;
         DeveloperNote = string.Empty;
         EditorContext.Content = string.Empty;
-        ExpectedHtmlString = string.Empty;
         ExpectedMarkdown = string.Empty;
         ExpectedSyntaxTreeString = string.Empty;
         TestDataOrigin = null;
@@ -340,7 +319,6 @@
         TestId = string.Empty;
         DeveloperNote = string.Empty;
         EditorContext.Content = string.Empty;
-        ExpectedHtmlString = string.Empty;
         ExpectedMarkdown = string.Empty;
         ExpectedSyntaxTreeString = string.Empty;
         TestDataOrigin = null;
