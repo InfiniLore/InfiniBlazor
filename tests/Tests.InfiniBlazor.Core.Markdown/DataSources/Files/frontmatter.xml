@@ -2,17 +2,19 @@
 <ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <MdTestData Id="default" FileName="frontmatter.xml">
     <MdString>---
-- test
+test : data
 ---</MdString>
     <MdSyntaxTree>
-      <FrontMatterMdSyntaxNode xml:space="preserve" Language="" DashesCount="3" LeadingSpaces="0">- test</FrontMatterMdSyntaxNode>
+      <FrontMatterMdSyntaxNode xml:space="preserve" Language="" DashesCount="3" LeadingSpaces="0">test : data</FrontMatterMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;div class=" relative flex overflow-hidden min-h-0 text-(--color-base-10)"&gt;&lt;div class="absolute top-2 right-4 flex justify-end z-10"&gt;&lt;div class="relative"&gt;&lt;div class="anchor/anchor-tooltip relative"&gt;&lt;button onclick:stopPropagation type="button" class=" cursor-pointer active:scale-95 hover:transform hover:transition hover:ease-in hover:duration-200 overflow-visible rounded-md px-2 py-1 text-lg infini-bg-(--button-outline-solid) hover:infini-bg-(--button-outline-solid-hover) text-(--button-outline-solid-text) hover:text-(--button-outline-solid-text-hover) ring-1 ring-(--button-outline-solid-ring) hover:ring-(--button-outline-solid-ring-hover) flex-none w-fit inline-flex items-center justify-center transition-all duration-150 transform overflow-visible"&gt;&lt;span class="inline-flex items-center gap-2"&gt;&lt;svg class="w-6 h-6 my-0.5 pointer-events-none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;rect width="14" height="14" x="8" y="8" rx="2" ry="2" /&gt;&lt;path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /&gt;
-    &lt;/svg&gt;&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;
-    &lt;div class="hidden  anchored-left/anchor-tooltip z-20 absolute anchored shadow-md/30"&gt;&lt;div class="before:content-[&amp;#x27;&amp;#x27;] before:absolute before:w-2 before:h-2 before:rotate-45 before:infini-bg-(--color-base-90) before:-right-1 before:top-1/2 before:-translate-y-1/2 shadow-md/30 transform px-3 py-1 infini-bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md transition-opacity duration-200 whitespace-nowrap pointer-events-none"&gt;Copy to clipboard&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
-    &lt;div class="infini-bg-(--codeblock) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar"&gt;&lt;div class="relative"&gt;&lt;pre class="whitespace-pre m-0 font-mono min-h-0"&gt;&lt;code&gt;- test &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;div class="flex flex-col gap-0.5 infini-bg-(--color-base-90) p-2 rounded-xl"&gt;&lt;h6 class=" text-xl font-semibold mb-1"&gt;Properties&lt;/h6&gt;&lt;div class="flex flex-row items-center gap-1"&gt;&lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="m9 18 6-6-6-6" /&gt;
+    &lt;/svg&gt;
+    &lt;div class="w-1/5"&gt;&lt;div class="flex flex-col w-full min-h-10"&gt;&lt;div class="flex grow justify-between items-center gap-2"&gt;&lt;div class="flex flex-row w-full min-w-0  items-center gap-2"&gt;&lt;input id="369465956d0848aa9802a08de8a2e4ef" type="text" value="test" placeholder="" class="infini-bg-(--color-base-80) border-(--color-base-60) hover:ring-2 infini-bg-(--color-base-60) w-full placeholder-(--color-base-40) rounded-md border border-(--border) focus:ring-2 outline-none ring-(--color-accent) text-sm p-2 shadow-sm transition max-h-10 " /&gt;
+    &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;div class="w-4/5"&gt;&lt;div class="flex flex-col w-full min-h-10"&gt;&lt;div class="flex grow justify-between items-center gap-2"&gt;&lt;div class="flex flex-row w-full min-w-0  items-center gap-2"&gt;&lt;input id="6b418085978b474eb89f3fc604652f7b" type="text" value="data" placeholder="" class="infini-bg-(--color-base-80) border-(--color-base-60) hover:ring-2 infini-bg-(--color-base-60) w-full placeholder-(--color-base-40) rounded-md border border-(--border) focus:ring-2 outline-none ring-(--color-accent) text-sm p-2 shadow-sm transition max-h-10 " /&gt;
+    &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>---
-- test
+test : data
 ---</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -20,7 +22,7 @@
     {
       "type": "FrontMatterMdSyntaxNode",
       "language": "",
-      "content": "- test",
+      "content": "test : data",
       "leadingSpaces": "0",
       "dashesCount": "3"
     }
@@ -29,17 +31,19 @@
   </MdTestData>
   <MdTestData Id="withLang" FileName="frontmatter.xml">
     <MdString>--- json
-"something" : 0
+"something" : "0"
 ---</MdString>
     <MdSyntaxTree>
-      <FrontMatterMdSyntaxNode xml:space="preserve" Language="json" DashesCount="3" LeadingSpaces="1">"something" : 0</FrontMatterMdSyntaxNode>
+      <FrontMatterMdSyntaxNode xml:space="preserve" Language="json" DashesCount="3" LeadingSpaces="1">"something" : "0"</FrontMatterMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;div class=" relative flex overflow-hidden min-h-0 text-(--color-base-10)"&gt;&lt;div class="absolute top-2 right-4 flex justify-end z-10"&gt;&lt;div class="relative"&gt;&lt;div class="anchor/anchor-tooltip relative"&gt;&lt;button onclick:stopPropagation type="button" class=" cursor-pointer active:scale-95 hover:transform hover:transition hover:ease-in hover:duration-200 overflow-visible rounded-md px-2 py-1 text-lg infini-bg-(--button-outline-solid) hover:infini-bg-(--button-outline-solid-hover) text-(--button-outline-solid-text) hover:text-(--button-outline-solid-text-hover) ring-1 ring-(--button-outline-solid-ring) hover:ring-(--button-outline-solid-ring-hover) flex-none w-fit inline-flex items-center justify-center transition-all duration-150 transform overflow-visible"&gt;&lt;span class="inline-flex items-center gap-2"&gt;&lt;svg class="w-6 h-6 my-0.5 pointer-events-none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;rect width="14" height="14" x="8" y="8" rx="2" ry="2" /&gt;&lt;path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /&gt;
-    &lt;/svg&gt;json&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;
-    &lt;div class="hidden  anchored-left/anchor-tooltip z-20 absolute anchored shadow-md/30"&gt;&lt;div class="before:content-[&amp;#x27;&amp;#x27;] before:absolute before:w-2 before:h-2 before:rotate-45 before:infini-bg-(--color-base-90) before:-right-1 before:top-1/2 before:-translate-y-1/2 shadow-md/30 transform px-3 py-1 infini-bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md transition-opacity duration-200 whitespace-nowrap pointer-events-none"&gt;Copy to clipboard&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
-    &lt;div class="infini-bg-(--codeblock) text-sm border border-(--border) rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar"&gt;&lt;div class="relative"&gt;&lt;pre class="whitespace-pre m-0 font-mono min-h-0"&gt;&lt;code&gt;&amp;quot;something&amp;quot; : 0 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
+    <ExpectedHtmlString>&lt;div class="flex flex-col gap-0.5 infini-bg-(--color-base-90) p-2 rounded-xl"&gt;&lt;h6 class=" text-xl font-semibold mb-1"&gt;Properties&lt;/h6&gt;&lt;div class="flex flex-row items-center gap-1"&gt;&lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="m9 18 6-6-6-6" /&gt;
+    &lt;/svg&gt;
+    &lt;div class="w-1/5"&gt;&lt;div class="flex flex-col w-full min-h-10"&gt;&lt;div class="flex grow justify-between items-center gap-2"&gt;&lt;div class="flex flex-row w-full min-w-0  items-center gap-2"&gt;&lt;input id="4311c76f66284548a1e72bcbef74de27" type="text" value="something" placeholder="" class="infini-bg-(--color-base-80) border-(--color-base-60) hover:ring-2 infini-bg-(--color-base-60) w-full placeholder-(--color-base-40) rounded-md border border-(--border) focus:ring-2 outline-none ring-(--color-accent) text-sm p-2 shadow-sm transition max-h-10 " /&gt;
+    &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;div class="w-4/5"&gt;&lt;div class="flex flex-col w-full min-h-10"&gt;&lt;div class="flex grow justify-between items-center gap-2"&gt;&lt;div class="flex flex-row w-full min-w-0  items-center gap-2"&gt;&lt;input id="50112609a3d144dfbada95dd6a6f26f1" type="text" value="0" placeholder="" class="infini-bg-(--color-base-80) border-(--color-base-60) hover:ring-2 infini-bg-(--color-base-60) w-full placeholder-(--color-base-40) rounded-md border border-(--border) focus:ring-2 outline-none ring-(--color-accent) text-sm p-2 shadow-sm transition max-h-10 " /&gt;
+    &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>--- json
-"something" : 0
+"something" : "0"
 ---</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -47,7 +51,7 @@
     {
       "type": "FrontMatterMdSyntaxNode",
       "language": "json",
-      "content": "\"something\" : 0",
+      "content": "\"something\" : \"0\"",
       "leadingSpaces": "1",
       "dashesCount": "3"
     }
