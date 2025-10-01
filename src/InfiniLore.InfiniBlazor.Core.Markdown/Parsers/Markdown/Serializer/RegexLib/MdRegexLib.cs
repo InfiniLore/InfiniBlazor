@@ -114,6 +114,7 @@ public static partial class MdRegexLib {
         MultilineStructuresRegex,
         FindSpanHtmlRegex,
         ListItemBodyRegex,
+        FindFrontmatterRegex
     ];
     
     private static FrozenDictionary<string, int> GetGroupNames() {

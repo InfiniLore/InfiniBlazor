@@ -48,6 +48,7 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
         [MdRegexGroupNames.FootnoteDescription] = FootnoteDescriptionSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.Highlight] = HighlightSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.Wrapper] = WrapperSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.Frontmatter] = FrontmatterSyntaxNodeSerializer.Serialize,
     }.ToFrozenDictionary();
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -60,20 +61,20 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
     }
 
     public void SerializeToTree(string markdown, IMdSyntaxTree nodeTree) {
-        MdSyntaxFragmentStack runningSerializer = MdSyntaxFragmentStack.Pool.Get();
-        runningSerializer.TreeReference = nodeTree;
+        MdSyntaxFragmentStack fragmentStack = MdSyntaxFragmentStack.Pool.Get();
+        fragmentStack.TreeReference = nodeTree;
 
         string normalized = markdown.ReplaceLineEndings("\n");
 
         try {
-            TryExtractFrontMatter(normalized, nodeTree, out int newStartAtIndex);
-            runningSerializer.PushMultiLineMatchesToStack(normalized, nodeTree.RootNode, newStartAtIndex);
+            TryExtractFrontMatter(fragmentStack, normalized, nodeTree, out int newStartAtIndex);
+            fragmentStack.PushMultiLineMatchesToStack(normalized, nodeTree.RootNode, newStartAtIndex);
 
-            while (runningSerializer.TryPopDto(out MdSyntaxFragment fragment)) {
+            while (fragmentStack.TryPopDto(out MdSyntaxFragment fragment)) {
                 switch (fragment) {
                     // Not yet processed
                     case { ParentNode: {} parentNode, Match: {} match }: {
-                        ProcessMatch(match, parentNode, runningSerializer);
+                        ProcessMatch(match, parentNode, fragmentStack);
                         break;
                     }
 
@@ -96,44 +97,18 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
             throw;
         }
         finally {
-            MdSyntaxFragmentStack.Pool.Return(runningSerializer);
+            MdSyntaxFragmentStack.Pool.Return(fragmentStack);
         }
     }
 
-    // TODO needs to be optional
-    private static void TryExtractFrontMatter(string markdown, IMdSyntaxTree nodeTree, out int newStartAtIndex) {
+    private void TryExtractFrontMatter(MdSyntaxFragmentStack fragmentStack, string markdown, IMdSyntaxTree nodeTree, out int newStartAtIndex) {
         newStartAtIndex = 0;
+        if (!_elementHandlers.TryGetValue(MdRegexGroupNames.Frontmatter, out MdSyntaxSerializerAction? handler)) return;
         Match match = MdRegexLib.FindFrontmatterRegex.Match(markdown);
         if (!match.Success) return;
-
+        
         newStartAtIndex = match.Index + match.Length;
-
-        FrontMatterMdSyntaxNode node = FrontMatterMdSyntaxNode.Pool.Get();
-        if (match.Groups[MdRegexGroupNames.FrontmatterLang].TryGetValue(out string? lang)) {
-            node.WithContent(lang);
-        }
-        if (match.Groups[MdRegexGroupNames.FrontmatterBody].TryGetValue(out string? body)) {
-            node.WithContent(body);
-        }
-        
-        ReadOnlySpan<char> span = match.ValueSpan;
-        int dashCount = 0;
-        int spaceCount = 0;
-        foreach (char t in span) {
-            switch (t) {
-                case '-':
-                    dashCount++;
-                    continue;
-                case ' ':
-                    spaceCount++;
-                    continue;
-            }
-            break;
-        }
-        node.WithDashesCount(dashCount);
-        node.WithLeadingSpaces(spaceCount);
-        
-        nodeTree.RootNode.AddChildNode(node);
+        handler(fragmentStack, nodeTree.RootNode, match);
     }
 
     private void ProcessMatch(Match match, IMdSyntaxNode parentNode, IMdSyntaxFragmentStack runningParser) {
