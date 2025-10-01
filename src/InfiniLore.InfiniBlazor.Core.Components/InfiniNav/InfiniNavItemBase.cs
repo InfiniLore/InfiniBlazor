@@ -22,6 +22,6 @@ public abstract class InfiniNavItemBase : InfiniComponentBase {
     
     protected bool CollapsedState => NavBarCollapsed && (!SubMenuContext?.IgnoreCascadeCollapsedState ?? true);
     
-    protected static string ContainerClasses => ConcatClasses(ContainerClassesNoHover, "hover:bg-(--nav-button-hover)");
-    protected static string ContainerClassesNoHover => "flex flex-nowrap items-center infini-bg-(--nav-button) rounded group justify-start p-2";
+    protected static string ContainerClasses => ConcatClasses(ContainerClassesNoHover, "hover:bg-infini-nav-button-hover");
+    protected static string ContainerClassesNoHover => "flex flex-nowrap items-center overload-bg-infini-nav-button rounded group justify-start p-2";
 }

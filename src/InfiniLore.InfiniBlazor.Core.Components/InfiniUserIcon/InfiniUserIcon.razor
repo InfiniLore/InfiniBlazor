@@ -17,12 +17,12 @@
         @if (!_imageLoadFailed) {
             <img src="@ImageUrl"
                  alt="Profile"
-                 class="w-full h-full rounded-full object-cover group-hover:ring-2 ring-(--usericon-ring)"
+                 class="w-full h-full rounded-full object-cover group-hover:ring-2 ring-infini-usericon-ring"
                  crossorigin="anonymous"
                  @onerror="@HandleImageError"/>
         } else {
             <span class="w-8 h-8 flex justify-center items-center">
-                <LiCircleUser class="w-8 h-8 text-(--usericon-alt) group-hover:text-(--usericon-alt-hover)"/>
+                <LiCircleUser class="w-8 h-8 text-infini-usericon-alt group-hover:text-infini-usericon-alt-hover"/>
             </span>
         }
     </a>
@@ -34,7 +34,7 @@
         case UserIconStatus.Busy:
         case UserIconStatus.DoNotDisturb: {
             <div class="absolute -bottom-1 -right-1 flex items-center justify-center">
-                <div class="@StatusClasses w-3.5 h-3.5 rounded-full border-1 border-(--usericon-status)"></div>
+                <div class="@StatusClasses w-3.5 h-3.5 rounded-full border-1 border-infini-usericon-status"></div>
             </div>
             break;
         }
@@ -65,10 +65,10 @@
 
     private string StatusClasses => Status switch {
         UserIconStatus.Undefined or UserIconStatus.Custom => string.Empty,
-        UserIconStatus.Online => "bg-(--color-green)",
-        UserIconStatus.Offline => "bg-(--color-gray)",
-        UserIconStatus.Busy => "bg-(--color-orange)",
-        UserIconStatus.DoNotDisturb => "bg-(--color-red)",
+        UserIconStatus.Online => "bg-infini-green",
+        UserIconStatus.Offline => "bg-infini-gray",
+        UserIconStatus.Busy => "bg-infini-orange",
+        UserIconStatus.DoNotDisturb => "bg-infini-red",
         _ => string.Empty
     };
     

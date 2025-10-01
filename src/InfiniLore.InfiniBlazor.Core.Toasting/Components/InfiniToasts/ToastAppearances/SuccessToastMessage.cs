@@ -9,7 +9,7 @@ namespace InfiniLore.InfiniBlazor.Toasting.ToastAppearances;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class SuccessToastMessage : ToastMessageBase {
-    protected override string HeaderClasses => "text-(--color-green-light) [&_svg]:text-(--color-green-light) [&_svg:hover]:text-(--color-accent)";
-    protected override string BodyClasses => "infini-bg-(--color-green-dark) border-(--color-green) text-(--color-base-10)";
+    protected override string HeaderClasses => "text-infini-green-light [&_svg]:text-infini-green-light [&_svg:hover]:text-infini-accent";
+    protected override string BodyClasses => "overload-bg-infini-green-dark border-infini-green text-infini-base-10";
     protected override string IconName => LucideNames.CircleCheckBig;
 }

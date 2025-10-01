@@ -14,7 +14,7 @@
         @Content
     </div>
     <div class="@ConcatClasses(HiddenIfNot(ShowTooltip), Class, AnchorClasses) @ZIndex.Tooltip absolute anchored shadow-md/30">
-        <div class="@TriangleClasses shadow-md/30 transform px-3 py-1 infini-bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md transition-opacity duration-200 whitespace-nowrap pointer-events-none">
+        <div class="@TriangleClasses shadow-md/30 transform px-3 py-1 overload-bg-infini-base-90 text-infini-base-10 text-sm rounded-md transition-opacity duration-200 whitespace-nowrap pointer-events-none">
             @Tooltip
         </div>
     </div>
@@ -54,6 +54,6 @@
         _ => string.Empty
     };
 
-    private const string TriangleCommonClasses = "before:content-[''] before:absolute before:w-2 before:h-2 before:rotate-45 before:infini-bg-(--color-base-90)";
+    private const string TriangleCommonClasses = "before:content-[''] before:absolute before:w-2 before:h-2 before:rotate-45 before:overload-bg-infini-base-90";
     public const string AnchorClass = "anchor/anchor-tooltip";
 }

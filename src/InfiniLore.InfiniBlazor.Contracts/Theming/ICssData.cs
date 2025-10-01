@@ -13,137 +13,137 @@ public interface ICssData {
     #endregion
     
     #region Colors
-    [CssData] string ColorRed { get; }
-    [CssData] string ColorRedLight { get; }
-    [CssData] string ColorRedDark { get; }
-    [CssData] string ColorOrange { get; }
-    [CssData] string ColorOrangeLight { get; }
-    [CssData] string ColorOrangeDark { get; }
-    [CssData] string ColorYellow { get; }
-    [CssData] string ColorYellowLight { get; }
-    [CssData] string ColorYellowDark { get; }
-    [CssData] string ColorGreen { get; }
-    [CssData] string ColorGreenLight { get; }
-    [CssData] string ColorGreenDark { get; }
-    [CssData] string ColorCyan { get; }
-    [CssData] string ColorCyanLight { get; }
-    [CssData] string ColorCyanDark { get; }
-    [CssData] string ColorBlue { get; }
-    [CssData] string ColorBlueLight { get; }
-    [CssData] string ColorBlueDark { get; }
-    [CssData] string ColorPurple { get; }
-    [CssData] string ColorPurpleLight { get; }
-    [CssData] string ColorPurpleDark { get; }
-    [CssData] string ColorPink { get; }
-    [CssData] string ColorPinkLight { get; }
-    [CssData] string ColorPinkDark { get; }
-    [CssData] string ColorGray { get; }
-    [CssData] string ColorGrayLight { get; }
-    [CssData] string ColorGrayDark { get; }
-    [CssData] string ColorWhite { get; }
-    [CssData] string ColorBlack { get; }
+    [CssData] string ColorInfiniRed { get; }
+    [CssData] string ColorInfiniRedLight { get; }
+    [CssData] string ColorInfiniRedDark { get; }
+    [CssData] string ColorInfiniOrange { get; }
+    [CssData] string ColorInfiniOrangeLight { get; }
+    [CssData] string ColorInfiniOrangeDark { get; }
+    [CssData] string ColorInfiniYellow { get; }
+    [CssData] string ColorInfiniYellowLight { get; }
+    [CssData] string ColorInfiniYellowDark { get; }
+    [CssData] string ColorInfiniGreen { get; }
+    [CssData] string ColorInfiniGreenLight { get; }
+    [CssData] string ColorInfiniGreenDark { get; }
+    [CssData] string ColorInfiniCyan { get; }
+    [CssData] string ColorInfiniCyanLight { get; }
+    [CssData] string ColorInfiniCyanDark { get; }
+    [CssData] string ColorInfiniBlue { get; }
+    [CssData] string ColorInfiniBlueLight { get; }
+    [CssData] string ColorInfiniBlueDark { get; }
+    [CssData] string ColorInfiniPurple { get; }
+    [CssData] string ColorInfiniPurpleLight { get; }
+    [CssData] string ColorInfiniPurpleDark { get; }
+    [CssData] string ColorInfiniPink { get; }
+    [CssData] string ColorInfiniPinkLight { get; }
+    [CssData] string ColorInfiniPinkDark { get; }
+    [CssData] string ColorInfiniGray { get; }
+    [CssData] string ColorInfiniGrayLight { get; }
+    [CssData] string ColorInfiniGrayDark { get; }
+    [CssData] string ColorInfiniWhite { get; }
+    [CssData] string ColorInfiniBlack { get; }
     
-    [CssData] string ColorAccent { get; }
-    [CssData] string ColorAccentDark { get; }
-    [CssData] string ColorAccentLight { get; }
+    [CssData] string ColorInfiniAccent { get; }
+    [CssData] string ColorInfiniAccentDark { get; }
+    [CssData] string ColorInfiniAccentLight { get; }
     
-    [CssData] string ColorBase00 { get; }
-    [CssData] string ColorBase05 { get; }
-    [CssData] string ColorBase10 { get; }
-    [CssData] string ColorBase20 { get; }
-    [CssData] string ColorBase30 { get; }
-    [CssData] string ColorBase40 { get; }
-    [CssData] string ColorBase50 { get; }
-    [CssData] string ColorBase60 { get; }
-    [CssData] string ColorBase70 { get; }
-    [CssData] string ColorBase80 { get; }
-    [CssData] string ColorBase90 { get; }
-    [CssData] string ColorBase95 { get; }
-    [CssData] string ColorBase100 { get; }
+    [CssData] string ColorInfiniBase00 { get; }
+    [CssData] string ColorInfiniBase05 { get; }
+    [CssData] string ColorInfiniBase10 { get; }
+    [CssData] string ColorInfiniBase20 { get; }
+    [CssData] string ColorInfiniBase30 { get; }
+    [CssData] string ColorInfiniBase40 { get; }
+    [CssData] string ColorInfiniBase50 { get; }
+    [CssData] string ColorInfiniBase60 { get; }
+    [CssData] string ColorInfiniBase70 { get; }
+    [CssData] string ColorInfiniBase80 { get; }
+    [CssData] string ColorInfiniBase90 { get; }
+    [CssData] string ColorInfiniBase95 { get; }
+    [CssData] string ColorInfiniBase100 { get; }
     #endregion
 
     #region CascadedValues
     
-    [CssData] string Text { get; }
-    [CssData] string TextError { get; }
-    [CssData] string Border { get; }
+    [CssData] string ColorInfiniText { get; }
+    [CssData] string ColorInfiniTextError { get; }
+    [CssData] string ColorInfiniBorder { get; }
     
-    [CssData] string NavHamburger { get; }
-    [CssData] string NavText { get; }
-    [CssData] string NavTextHover { get; }
-    [CssData] string NavButton { get; }
-    [CssData] string NavButtonHover { get; }
-    [CssData] string NavBorder { get; }
-    [CssData] string Nav { get; }
-    [CssData] string NavHorizontal { get; }
-    [CssData] string NavVertical { get; }
-    [CssData] string NavLeft { get; }
-    [CssData] string NavRight { get; }
-    [CssData] string NavBottom { get; }
-    [CssData] string NavTop { get; }
-    [CssData] string NavHover { get; }
+    [CssData] string ColorInfiniNavHamburger { get; }
+    [CssData] string ColorInfiniNavText { get; }
+    [CssData] string ColorInfiniNavTextHover { get; }
+    [CssData] string ColorInfiniNavButton { get; }
+    [CssData] string ColorInfiniNavButtonHover { get; }
+    [CssData] string ColorInfiniNavBorder { get; }
+    [CssData] string ColorInfiniNav { get; }
+    [CssData] string ColorInfiniNavHorizontal { get; }
+    [CssData] string ColorInfiniNavVertical { get; }
+    [CssData] string ColorInfiniNavLeft { get; }
+    [CssData] string ColorInfiniNavRight { get; }
+    [CssData] string ColorInfiniNavBottom { get; }
+    [CssData] string ColorInfiniNavTop { get; }
+    [CssData] string ColorInfiniNavHover { get; }
     
-    [CssData] string UsericonAlt { get; }
-    [CssData] string UsericonAltHover { get; }
-    [CssData] string UsericonRing { get; }
-    [CssData] string UsericonStatus { get; }
+    [CssData] string ColorInfiniUsericonAlt { get; }
+    [CssData] string ColorInfiniUsericonAltHover { get; }
+    [CssData] string ColorInfiniUsericonRing { get; }
+    [CssData] string ColorInfiniUsericonStatus { get; }
     
-    [CssData] string Page { get; }
-    [CssData] string PageText { get; }
+    [CssData] string ColorInfiniPage { get; }
+    [CssData] string ColorInfiniPageText { get; }
     
-    [CssData] string Section { get; }
-    [CssData] string SectionBorder { get; }
+    [CssData] string ColorInfiniSection { get; }
+    [CssData] string ColorInfiniSectionBorder { get; }
     
-    [CssData] string TableHeader { get; }
-    [CssData] string TableRow { get; }
-    [CssData] string TableRowHover { get; }
+    [CssData] string ColorInfiniTableHeader { get; }
+    [CssData] string ColorInfiniTableRow { get; }
+    [CssData] string ColorInfiniTableRowHover { get; }
     
-    [CssData] string EditorHeader { get; }
-    [CssData] string EditorHeaderBorder { get; }
+    [CssData] string ColorInfiniEditorHeader { get; }
+    [CssData] string ColorInfiniEditorHeaderBorder { get; }
     
-    [CssData] string ToggleContainer { get; }
-    [CssData] string ToggleSlider { get; }
-    [CssData] string ToggleIconOn { get; }
-    [CssData] string ToggleIconOff { get; }
+    [CssData] string ColorInfiniToggleContainer { get; }
+    [CssData] string ColorInfiniToggleSlider { get; }
+    [CssData] string ColorInfiniToggleIconOn { get; }
+    [CssData] string ColorInfiniToggleIconOff { get; }
     
-    [CssData] public string ButtonDisabled { get; }
-    [CssData] public string ButtonDisabledText { get; }
-    [CssData] public string ButtonDefault { get; }
-    [CssData] public string ButtonDefaultText { get; }
-    [CssData] public string ButtonDefaultHover { get; }
-    [CssData] public string ButtonDefaultTextHover { get; }
-    [CssData] public string ButtonPrimary { get; }
-    [CssData] public string ButtonPrimaryText { get; }
-    [CssData] public string ButtonPrimaryHover { get; }
-    [CssData] public string ButtonPrimaryTextHover { get; }
-    [CssData] public string ButtonTransparent { get; }
-    [CssData] public string ButtonTransparentText { get; }
-    [CssData] public string ButtonTransparentHover { get; }
-    [CssData] public string ButtonTransparentTextHover { get; }
-    [CssData] public string ButtonDark { get; }
-    [CssData] public string ButtonDarkText { get; }
-    [CssData] public string ButtonDarkHover { get; }
-    [CssData] public string ButtonDarkTextHover { get; }
-    [CssData] public string ButtonDarkRingHover { get; }
-    [CssData] public string ButtonLight { get; }
-    [CssData] public string ButtonLightText { get; }
-    [CssData] public string ButtonLightHover { get; }
-    [CssData] public string ButtonLightTextHover { get; }
-    [CssData] public string ButtonLightRingHover { get; }
-    [CssData] public string ButtonOutline { get; }
-    [CssData] public string ButtonOutlineText { get; }
-    [CssData] public string ButtonOutlineHover { get; }
-    [CssData] public string ButtonOutlineTextHover { get; }
-    [CssData] public string ButtonOutlineRing { get; }
-    [CssData] public string ButtonOutlineRingHover { get; }
+    [CssData] public string ColorInfiniButtonDisabled { get; }
+    [CssData] public string ColorInfiniButtonDisabledText { get; }
+    [CssData] public string ColorInfiniButtonDefault { get; }
+    [CssData] public string ColorInfiniButtonDefaultText { get; }
+    [CssData] public string ColorInfiniButtonDefaultHover { get; }
+    [CssData] public string ColorInfiniButtonDefaultTextHover { get; }
+    [CssData] public string ColorInfiniButtonPrimary { get; }
+    [CssData] public string ColorInfiniButtonPrimaryText { get; }
+    [CssData] public string ColorInfiniButtonPrimaryHover { get; }
+    [CssData] public string ColorInfiniButtonPrimaryTextHover { get; }
+    [CssData] public string ColorInfiniButtonTransparent { get; }
+    [CssData] public string ColorInfiniButtonTransparentText { get; }
+    [CssData] public string ColorInfiniButtonTransparentHover { get; }
+    [CssData] public string ColorInfiniButtonTransparentTextHover { get; }
+    [CssData] public string ColorInfiniButtonDark { get; }
+    [CssData] public string ColorInfiniButtonDarkText { get; }
+    [CssData] public string ColorInfiniButtonDarkHover { get; }
+    [CssData] public string ColorInfiniButtonDarkTextHover { get; }
+    [CssData] public string ColorInfiniButtonDarkRingHover { get; }
+    [CssData] public string ColorInfiniButtonLight { get; }
+    [CssData] public string ColorInfiniButtonLightText { get; }
+    [CssData] public string ColorInfiniButtonLightHover { get; }
+    [CssData] public string ColorInfiniButtonLightTextHover { get; }
+    [CssData] public string ColorInfiniButtonLightRingHover { get; }
+    [CssData] public string ColorInfiniButtonOutline { get; }
+    [CssData] public string ColorInfiniButtonOutlineText { get; }
+    [CssData] public string ColorInfiniButtonOutlineHover { get; }
+    [CssData] public string ColorInfiniButtonOutlineTextHover { get; }
+    [CssData] public string ColorInfiniButtonOutlineRing { get; }
+    [CssData] public string ColorInfiniButtonOutlineRingHover { get; }
     
-    [CssData] string ButtonOutlineSolid { get; }
-    [CssData] string ButtonOutlineSolidText { get; }
-    [CssData] string ButtonOutlineSolidHover { get; }
-    [CssData] string ButtonOutlineSolidTextHover { get; }
-    [CssData] string ButtonOutlineSolidRing { get; }
-    [CssData] string ButtonOutlineSolidRingHover { get; }
+    [CssData] string ColorInfiniButtonOutlineSolid { get; }
+    [CssData] string ColorInfiniButtonOutlineSolidText { get; }
+    [CssData] string ColorInfiniButtonOutlineSolidHover { get; }
+    [CssData] string ColorInfiniButtonOutlineSolidTextHover { get; }
+    [CssData] string ColorInfiniButtonOutlineSolidRing { get; }
+    [CssData] string ColorInfiniButtonOutlineSolidRingHover { get; }
     
-    [CssData] public string Codeblock { get; }
+    [CssData] public string ColorInfiniCodeblock { get; }
     #endregion
 }

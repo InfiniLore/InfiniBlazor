@@ -13,8 +13,8 @@ public partial class ToastMessageBase : InfiniComponentBase, IToastMessageBase, 
     [Inject] protected IToastingProvider ToastingProvider { get; set; } = null!;
     [Parameter, EditorRequired] public IToastingData ToastData { get; set; }
     
-    protected virtual string HeaderClasses => "text-(--text)";
-    protected virtual string BodyClasses => "infini-bg-(--color-base-90) border-(--border) text-(--text)";
+    protected virtual string HeaderClasses => "text-infini-text";
+    protected virtual string BodyClasses => "overload-bg-infini-base-90 border-infini-border text-infini-text";
     protected virtual string IconName => LucideNames.CircleQuestionMark;
 
     private bool IsClosing { get; set; }

@@ -19,7 +19,7 @@
                 @Component.Label
             </InfiniLabel>
             <InfiniSpacer/>
-            <div class="text-(--color-red) text-sm">@Component.ValidationMessage</div>
+            <div class="text-infini-red text-sm">@Component.ValidationMessage</div>
         </div>
     }
 
@@ -41,7 +41,7 @@
     </div>
 
     @if (Component.Label.IsNullOrWhiteSpace() && Component.ValidationMessage.IsNotNullOrEmpty()) {
-        <div class="text-(--color-red) text-sm mt-1">@Component.ValidationMessage</div>
+        <div class="text-infini-red text-sm mt-1">@Component.ValidationMessage</div>
     }
 </div>
 @* ------------------------------------------------------------------------------------------------------------------ *@

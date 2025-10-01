@@ -23,12 +23,11 @@
 @code {
     private Dictionary<string, object> GetAttributes() {
         var dict = new Dictionary<string, object>();
-        if (SyntaxNode.Modifier is not {} modifier) return dict;
-        
-        if (modifier.TryGetColor(out string? color)) {
-            dict.AddOrUpdate("style", $"color:{color};");
-        }
-        
+        if (SyntaxNode.Modifier is not {} modifier || !modifier.TryGetColor(out string? color)) return dict;
+
+        if (color is "accent") color = "var(--color-infini-accent)";
+        dict.AddOrUpdate("style", $"color:{color};");
+
         return dict;
     }
 }

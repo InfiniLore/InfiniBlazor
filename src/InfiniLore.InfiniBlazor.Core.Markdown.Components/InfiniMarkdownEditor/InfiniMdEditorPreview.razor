@@ -18,7 +18,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@Class border-(--border) flex min-h-0">
+<div class="@Class border-infini-border flex min-h-0">
     <div class="flex-1 overflow-y-auto infini-scrollbar">
         @if (!VisualDebugger.IsEnabled()) {
             <CascadingIsDisabled Value="@(EditorContext.IsLocked || !RenderContext.IsInteractive)">
@@ -39,7 +39,7 @@
             <InfiniCodeBlock
                 IsDisabled="false"
                 Language="MdSyntaxTree"
-                Class="h-full text-(--color-red)"
+                Class="h-full text-infini-red"
                 Content="@Parser.Xml.DeserializeToString(EditorContext.SyntaxTree)"
             />
         }

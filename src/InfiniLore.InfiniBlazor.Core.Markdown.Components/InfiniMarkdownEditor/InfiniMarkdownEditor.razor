@@ -24,7 +24,7 @@
                 class="grid grid-rows-[1fr_1fr_auto] grid-cols-[auto_1fr] md:grid-rows-[auto_1fr_auto] md:grid-cols-2 gap-0 h-full">
                 @* Toolbar Top *@
                 <div class="col-span-1 row-span-2 md:col-span-2 md:row-span-1">
-                    <div class="flex flex-col flex-nowrap md:flex-row md:flex-wrap gap-2 items-center w-full infini-bg-(--color-base-90) rounded-l-lg md:rounded-t-lg">
+                    <div class="flex flex-col flex-nowrap md:flex-row md:flex-wrap gap-2 items-center w-full overload-bg-infini-base-90 rounded-l-lg md:rounded-t-lg">
                         @if (ToolbarTop is null) {
                             <InfiniMdEditorToolbarDefault/>
                         }
@@ -53,7 +53,7 @@
                     }
                     
                     default : {
-                        <div class="col-start-2 col-end-2 md:col-span-2 flex justify-center items-center text-center text-(--color-base-20) bg-stripes bg-stripes-(--color-base-60) border-1">
+                        <div class="col-start-2 col-end-2 md:col-span-2 flex justify-center items-center text-center text-infini-base-20 bg-stripes bg-stripes-infini-base-60 border-1">
                             Nothing to show here.<br/>
                             You should not see this unless the developer messed up the layout.
                         </div>
@@ -63,7 +63,7 @@
                 
                 @* Toolbar Bottom *@
                 @if (ToolbarBottom is not null) {
-                    <div class="col-span-2 min-h-lh infini-bg-(--color-base-80) rounded-b-md flex gap-2 justify-end w-full px-1">
+                    <div class="col-span-2 min-h-lh overload-bg-infini-base-80 rounded-b-md flex gap-2 justify-end w-full px-1">
                         @ToolbarBottom
                     </div>
                 }

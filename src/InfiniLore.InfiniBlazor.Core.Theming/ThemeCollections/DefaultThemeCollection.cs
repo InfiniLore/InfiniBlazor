@@ -17,24 +17,22 @@ public class DefaultThemeCollection : ThemeCollection {
         [ThemeMode.DarkMode] = EmptyCssData.Instance,
         
         [ThemeMode.LightMode] = EmptyCssData.Instance with {
-            ColorBase00 = InfiniBlazorCssData.Instance.ColorBase100,
-            ColorBase05 = InfiniBlazorCssData.Instance.ColorBase95,
-            ColorBase10 = InfiniBlazorCssData.Instance.ColorBase90,
-            ColorBase20 = InfiniBlazorCssData.Instance.ColorBase80,
-            ColorBase30 = InfiniBlazorCssData.Instance.ColorBase70,
-            ColorBase40 = InfiniBlazorCssData.Instance.ColorBase60,
-            ColorBase50 = InfiniBlazorCssData.Instance.ColorBase50,
-            ColorBase60 = InfiniBlazorCssData.Instance.ColorBase40,
-            ColorBase70 = InfiniBlazorCssData.Instance.ColorBase30,
-            ColorBase80 = InfiniBlazorCssData.Instance.ColorBase20,
-            ColorBase90 = InfiniBlazorCssData.Instance.ColorBase10,
-            ColorBase95 = InfiniBlazorCssData.Instance.ColorBase05,
-            ColorBase100 = InfiniBlazorCssData.Instance.ColorBase00,
+            ColorInfiniBase00 = "#000000", 
+            ColorInfiniBase05 = "#090b0a", 
+            ColorInfiniBase10 = "#111413", 
+            ColorInfiniBase20 = "#1a1e1d", 
+            ColorInfiniBase30 = "#222826", 
+            ColorInfiniBase40 = "#2b3230", 
+            ColorInfiniBase50 = "#333c39", 
+            ColorInfiniBase60 = "#555c5a", 
+            ColorInfiniBase70 = "#767d7a", 
+            ColorInfiniBase80 = "#989d9b", 
+            ColorInfiniBase90 = "#b9bdbc", 
+            ColorInfiniBase95 = "#dbdddc", 
+            ColorInfiniBase100 = "#ffffff", 
         
-            ButtonDefault = InfiniBlazorCssData.Instance.ColorBase10,
-            ButtonPrimary = InfiniBlazorCssData.Instance.ColorBase80,
-            
-            Section = InfiniBlazorCssData.Instance.ColorBase10,
+            ColorInfiniButtonDefault = "var(--color-infini-base-10)",
+            ColorInfiniButtonPrimary = "var(--color-infini-base-80)",
         }
     };
 }

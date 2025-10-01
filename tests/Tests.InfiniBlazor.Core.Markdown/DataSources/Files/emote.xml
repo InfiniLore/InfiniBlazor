@@ -24,6 +24,30 @@
   ]
 }</ExpectedJsonString>
   </MdTestData>
+  <MdTestData Id="easteregg_duckyTrans" FileName="emote.xml">
+    <MdString>:ducky-trans:</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <EmoteMdSyntaxNode EmoteKey="ducky-trans" OriginalEmote=":ducky-trans:" />
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedMarkdown>:ducky-trans:</ExpectedMarkdown>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "EmoteMdSyntaxNode",
+          "emoteKey": "ducky-trans",
+          "originalEmote": ":ducky-trans:"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
+  </MdTestData>
   <MdTestData Id="empty" FileName="emote.xml">
     <MdString>::</MdString>
     <MdSyntaxTree>

@@ -23,24 +23,24 @@
 </div>
 <div class="h-full w-full flex flex-col gap-1 p-4">
     @if (_isLoading) {
-        <div class="text-(--text)">Loading files...</div>
+        <div class="text-infini-text">Loading files...</div>
     }
     else if (_fileNames == null) {
         <div class="text-red-500">Failed to load files</div>
     }
     else if (_fileNames.Length == 0) {
-        <div class="text-(--border)">No files found</div>
+        <div class="text-infini-border">No files found</div>
     }
     else {
-        <div class="text-(--text) text-lg font-semibold mb-2">Test Data Files</div>
+        <div class="text-infini-text text-lg font-semibold mb-2">Test Data Files</div>
 
         <div class="flex flex-col gap-2 overflow-y-auto infini-scrollbar pr-1">
             @foreach (string fileName in _fileNames) {
-                <div class="rounded-lg border border-(--border)">
+                <div class="rounded-lg border border-infini-border">
                     <!-- File Header -->
-                    <div class="p-3 border-b border-(--border) hover:bg-slate-750 transition-colors">
+                    <div class="p-3 border-b border-infini-border hover:bg-slate-750 transition-colors">
                         <div class="flex items-center justify-between">
-                            <span class="text-(--text) font-medium">@fileName</span>
+                            <span class="text-infini-text font-medium">@fileName</span>
                             <InfiniButton
                                 IconName="@(IsFileExpanded(fileName) ? LucideNames.ChevronDown : LucideNames.ChevronRight)"
                                 OnClick="@(() => ToggleFileExpanded(fileName))"/>
@@ -55,16 +55,16 @@
                                     <div class="text-slate-400 text-sm p-2">No tests found in this file</div>
                                 }
                                 else {
-                                    <div class="text-sm text-(--color-base-20) mb-2">Tests (@tests.Count):</div>
+                                    <div class="text-sm text-infini-base-20 mb-2">Tests (@tests.Count):</div>
                                     <div class="flex flex-col gap-1">
                                         @foreach (MdTestData test in tests) {
                                             <div
-                                                class="rounded p-2 cursor-pointer hover:bg-(--color-base-50) transition-colors"
+                                                class="rounded p-2 cursor-pointer hover:overload-bg-infini-base-50 transition-colors"
                                                 onclick="@(() => OnTestClick(fileName, test))">
                                                 <div class="text-white text-sm font-medium">@test.Id</div>
                                                 @if (!string.IsNullOrWhiteSpace(test.MdString)) {
                                                     <div
-                                                        class="text-(--color-base-30) text-xs mt-1 whitespace-break-spaces overflow-hidden line-clamp-3">
+                                                        class="text-infini-base-30 text-xs mt-1 whitespace-break-spaces overflow-hidden line-clamp-3">
                                                         @test.MdString
                                                     </div>
                                                 }

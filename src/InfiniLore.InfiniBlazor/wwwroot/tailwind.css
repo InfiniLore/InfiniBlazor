@@ -14,14 +14,139 @@
             transform: translateY(0);
         }   
     }
-}
+    
+    --color-infini-base-00: #ffffff;
+    --color-infini-base-05: #dbdddc;
+    --color-infini-base-10: #b9bdbc;
+    --color-infini-base-20: #989d9b;
+    --color-infini-base-30: #767d7a;
+    --color-infini-base-40: #555c5a;
+    --color-infini-base-50: #333c39;
+    --color-infini-base-60: #2b3230;
+    --color-infini-base-70: #222826;
+    --color-infini-base-80: #1a1e1d;
+    --color-infini-base-90: #111413;
+    --color-infini-base-95: #090b0a;
+    --color-infini-base-100: #000000;
+    
+    --color-infini-accent : #fa9f3e;
+    --color-infini-accent-dark : #965f25;
+    --color-infini-accent-light : #faa951;
 
-@utility infini-bg-* {
-    background: --value([*]); 
+    --color-infini-red : #ef4444;
+    --color-infini-red-light : #f15e5e;
+    --color-infini-red-dark : #500707;
+    --color-infini-orange : #f97316;
+    --color-infini-orange-light : #fa9247;
+    --color-infini-orange-dark : #5e2902;
+    --color-infini-yellow : #eab308;
+    --color-infini-yellow-light : #f8cb45;
+    --color-infini-yellow-dark : #423202;
+    --color-infini-green : #22c55e;
+    --color-infini-green-light : #31dc70;
+    --color-infini-green-dark : #072a14;
+    --color-infini-cyan : #06b6d4;
+    --color-infini-cyan-light : #36dbf9;
+    --color-infini-cyan-dark : #01272e;
+    --color-infini-blue : #3b82f6;
+    --color-infini-blue-light : #669ef8;
+    --color-infini-blue-dark : #031a3f;
+    --color-infini-purple : #a855f7;
+    --color-infini-purple-light : #bb79f9;
+    --color-infini-purple-dark : #31045a;
+    --color-infini-pink : #ec4899;
+    --color-infini-pink-light : #f17bb6;
+    --color-infini-pink-dark : #4f082c;
+    --color-infini-gray : #4b5563;
+    --color-infini-gray-light : #9ca3af;
+    --color-infini-gray-dark : #1f2937;
+    --color-infini-white : #ffffff;
+    --color-infini-black : #000000;
+    
+    --color-infini-transparent : transparent;
+    --color-infini-text: var(--color-infini-base-00);
+    --color-infini-section : var(--color-infini-base-70);
+    --color-infini-section-border : var(--color-infini-base-40);
+
+    --color-infini-text-error : var(--color-infini-red);
+    --color-infini-border : var(--color-infini-base-40);
+    --color-infini-nav-hamburger: var(--color-infini-text);
+    --color-infini-nav-text: var(--color-infini-base-10);
+    --color-infini-nav-text-hover : var(--color-infini-accent);
+    --color-infini-nav-button: var(--color-infini-transparent);
+    --color-infini-nav-button-hover : var(--color-infini-base-70);
+    --color-infini-nav-border: var(--color-infini-border);
+    --color-infini-nav : var(--color-infini-base-90);
+    --color-infini-nav-horizontal : var(--color-infini-nav);
+    --color-infini-nav-vertical : var(--color-infini-nav);
+    --color-infini-nav-left : var(--color-infini-nav-vertical);
+    --color-infini-nav-right : var(--color-infini-nav-vertical);
+    --color-infini-nav-bottom : var(--color-infini-nav-horizontal);
+    --color-infini-nav-top : var(--color-infini-nav-horizontal);
+    --color-infini-nav-hover : var(--color-infini-base-70);
+    --color-infini-usericon-alt : var(--color-infini-base-10);
+    --color-infini-usericon-alt-hover : var(--color-infini-accent);
+    --color-infini-usericon-ring : var(--color-infini-accent);
+    --color-infini-usericon-status: var(--color-infini-base-70);
+    --color-infini-page : var(--color-infini-base-95);
+    --color-infini-page-text : var(--color-infini-text);
+    --color-infini-table-header : var(--color-infini-base-60);
+    --color-infini-table-row : var(--color-infini-base-50);
+    --color-infini-table-row-hover : var(--color-infini-base-60);
+    --color-infini-editor-header : var(--color-infini-base-80);
+    --color-infini-editor-header-border : var(--color-infini-border);
+    --color-infini-toggle-container : var(--color-infini-base-40);
+    --color-infini-toggle-slider : var(--color-infini-base-80);
+    --color-infini-toggle-icon-on : var(--color-infini-base-70);
+    --color-infini-toggle-icon-off : var(--color-infini-base-30);
+    --color-infini-button-disabled : var(--color-infini-base-90);
+    --color-infini-button-disabled-text : var(--color-infini-base-10);
+    --color-infini-button-default : var(--color-infini-base-40);
+    --color-infini-button-default-text : var(--color-infini-base-05);
+    --color-infini-button-default-hover : var(--color-infini-base-50);
+    --color-infini-button-default-text-hover : var(--color-infini-accent);
+    --color-infini-button-primary : var(--color-infini-accent);
+    --color-infini-button-primary-text : var(--color-infini-base-80);
+    --color-infini-button-primary-hover : var(--color-infini-accent);
+    --color-infini-button-primary-text-hover : var(--color-infini-base-90);
+    --color-infini-button-transparent : var(--color-infini-transparent);
+    --color-infini-button-transparent-text : var(--color-infini-base-05);
+    --color-infini-button-transparent-hover : var(--color-infini-transparent);
+    --color-infini-button-transparent-text-hover : var(--color-infini-accent);
+    --color-infini-button-dark : var(--color-infini-base-95);
+    --color-infini-button-dark-text : var(--color-infini-base-10);
+    --color-infini-button-dark-hover : var(--color-infini-base-95);
+    --color-infini-button-dark-text-hover : var(--color-infini-base-10);
+    --color-infini-button-darkRing-hover : var(--color-infini-base-10);
+    --color-infini-button-light : var(--color-infini-base-00);
+    --color-infini-button-light-text : var(--color-infini-base-80);
+    --color-infini-button-light-hover : var(--color-infini-base-00);
+    --color-infini-button-light-text-hover : var(--color-infini-base-70);
+    --color-infini-button-light-ring-hover : var(--color-infini-base-70);
+    --color-infini-button-outline : var(--color-infini-transparent);
+    --color-infini-button-outline-text : var(--color-infini-base-05);
+    --color-infini-button-outline-hover : var(--color-infini-transparent);
+    --color-infini-button-outline-text-hover : var(--color-infini-accent);
+    --color-infini-button-outline-ring : var(--color-infini-base-40);
+    --color-infini-button-outline-ring-hover : var(--color-infini-accent);
+    --color-infini-button-outline-solid : var(--color-infini-section);
+    --color-infini-button-outline-solid-text : var(--color-infini-button-outline-text);
+    --color-infini-button-outline-solid-hover : var(--color-infini-section);
+    --color-infini-button-outline-solid-text-hover : var(--color-infini-button-outline-text-hover);
+    --color-infini-button-outline-solid-ring : var(--color-infini-button-outline-ring);
+    --color-infini-button-outline-solid-ring-hover : var(--color-infini-button-outline-ring-hover);
+    --color-infini-codeblock : var(--color-infini-base-50);
 }
 
 /* ------------------------------------------------------------------------------------------------------------------ */
-/* Sizes                                                                                                   */
+/* Utilities */
+/* ------------------------------------------------------------------------------------------------------------------ */
+@utility overload-bg-* {
+    background: --value(--color-*); 
+}
+
+/* ------------------------------------------------------------------------------------------------------------------ */
+/* Sizes */
 /* ------------------------------------------------------------------------------------------------------------------ */
 @utility size-screen {
     width: 100vw;
@@ -42,7 +167,7 @@
 /* Custom Scrollbar                                                                                                   */
 /* ------------------------------------------------------------------------------------------------------------------ */
 @utility infini-scrollbar-* {
-    --infini-scrollbar-background: --value([*]);
+    --infini-scrollbar-background: --value(--color-*);
 }
 
 @utility infini-scrollbar-left {
@@ -74,7 +199,7 @@
     }
 
     &::-webkit-scrollbar-thumb {
-        background: var(--color-base-40);
+        background: var(--color-infini-base-40);
         border-radius: 8px;
 
         border: 2px solid transparent; /* "fake" padding */
@@ -89,7 +214,7 @@
     &::-webkit-scrollbar-thumb:hover,
     &::-webkit-scrollbar-thumb:active {
         cursor: pointer;
-        background: var(--color-base-30);
+        background: var(--color-infini-base-30);
         border: 1px solid transparent;
         background-clip: content-box;
         box-sizing: border-box;
@@ -109,28 +234,28 @@
     }
 
     &::-webkit-scrollbar-button:vertical:start:decrement {
-        color: var(--color-base-10);
+        color: var(--color-infini-base-10);
         background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWNoZXZyb24tdXAtaWNvbiBsdWNpZGUtY2hldnJvbi11cCI+PHBhdGggZD0ibTE4IDE1LTYtNi02IDYiLz48L3N2Zz4=');
         background-repeat: no-repeat;
         background-position: center;
     }
 
     &::-webkit-scrollbar-button:vertical:end:increment {
-        color: var(--color-base-10);
+        color: var(--color-infini-base-10);
         background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWNoZXZyb24tZG93bi1pY29uIGx1Y2lkZS1jaGV2cm9uLWRvd24iPjxwYXRoIGQ9Im02IDkgNiA2IDYtNiIvPjwvc3ZnPg==');
         background-repeat: no-repeat;
         background-position: center;
     }
 
     &::-webkit-scrollbar-button:horizontal:start:decrement {
-        color: var(--color-base-10);
+        color: var(--color-infini-base-10);
         background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWNoZXZyb24tbGVmdC1pY29uIGx1Y2lkZS1jaGV2cm9uLWxlZnQiPjxwYXRoIGQ9Im0xNSAxOC02LTYgNi02Ii8+PC9zdmc+');
         background-repeat: no-repeat;
         background-position: center;
     }
 
     &::-webkit-scrollbar-button:horizontal:end:increment {
-        color: var(--color-base-10);
+        color: var(--color-infini-base-10);
         background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWNoZXZyb24tcmlnaHQtaWNvbiBsdWNpZGUtY2hldnJvbi1yaWdodCI+PHBhdGggZD0ibTkgMTggNi02LTYtNiIvPjwvc3ZnPg==');
         background-repeat: no-repeat;
         background-position: center;
@@ -164,7 +289,7 @@
 }
 
 @utility bg-stripes-*  {
-    --stripe-color: --value([*]);
+    --stripe-color: --value(--color-*);;
 }
 
 @utility bg-stripes-direction-* {
