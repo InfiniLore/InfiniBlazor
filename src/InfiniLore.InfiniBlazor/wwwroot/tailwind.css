@@ -14,9 +14,7 @@
             transform: translateY(0);
         }   
     }
-}
-
-@theme {
+    
     --color-infini-base-00: #ffffff;
     --color-infini-base-05: #dbdddc;
     --color-infini-base-10: #b9bdbc;

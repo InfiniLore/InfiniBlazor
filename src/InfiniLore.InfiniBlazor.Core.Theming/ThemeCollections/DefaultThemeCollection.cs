@@ -17,24 +17,22 @@ public class DefaultThemeCollection : ThemeCollection {
         [ThemeMode.DarkMode] = EmptyCssData.Instance,
         
         [ThemeMode.LightMode] = EmptyCssData.Instance with {
-            ColorInfiniBase00 = "var(--color-infini-base-100)",
-            ColorInfiniBase05 = "var(--color-infini-base-95)",
-            ColorInfiniBase10 = "var(--color-infini-base-90)",
-            ColorInfiniBase20 = "var(--color-infini-base-80)",
-            ColorInfiniBase30 = "var(--color-infini-base-70)",
-            ColorInfiniBase40 = "var(--color-infini-base-60)",
-            ColorInfiniBase50 = "var(--color-infini-base-50)",
-            ColorInfiniBase60 = "var(--color-infini-base-40)",
-            ColorInfiniBase70 = "var(--color-infini-base-30)",
-            ColorInfiniBase80 = "var(--color-infini-base-20)",
-            ColorInfiniBase90 = "var(--color-infini-base-10)",
-            ColorInfiniBase95 = "var(--color-infini-base-05)",
-            ColorInfiniBase100 = "var(--color-infini-base-00)",
+            ColorInfiniBase00 = "#000000", 
+            ColorInfiniBase05 = "#090b0a", 
+            ColorInfiniBase10 = "#111413", 
+            ColorInfiniBase20 = "#1a1e1d", 
+            ColorInfiniBase30 = "#222826", 
+            ColorInfiniBase40 = "#2b3230", 
+            ColorInfiniBase50 = "#333c39", 
+            ColorInfiniBase60 = "#555c5a", 
+            ColorInfiniBase70 = "#767d7a", 
+            ColorInfiniBase80 = "#989d9b", 
+            ColorInfiniBase90 = "#b9bdbc", 
+            ColorInfiniBase95 = "#dbdddc", 
+            ColorInfiniBase100 = "#ffffff", 
         
             ColorInfiniButtonDefault = "var(--color-infini-base-10)",
             ColorInfiniButtonPrimary = "var(--color-infini-base-80)",
-            
-            ColorInfiniSection = "var(--color-infini-base-10)",
         }
     };
 }
