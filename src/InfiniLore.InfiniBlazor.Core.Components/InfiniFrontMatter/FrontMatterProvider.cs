@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using YamlDotNet.Serialization;
 
 namespace InfiniLore.InfiniBlazor.Components;
