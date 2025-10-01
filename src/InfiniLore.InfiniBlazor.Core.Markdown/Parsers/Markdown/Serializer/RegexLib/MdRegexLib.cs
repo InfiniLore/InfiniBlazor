@@ -101,6 +101,9 @@ public static partial class MdRegexLib {
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.Compiled)]
     public static partial Regex FindSpanHtmlRegex { get; }
     
+    [GeneratedRegex(@"(?<frontmatter>(?<open>^-{3,}) *(?<fLang>.+)?\r?\n(?<fBody>[\s\S]*?)\r?\n\k<open>)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    public static partial Regex FindFrontmatterRegex { get; }
+    
     private static FrozenDictionary<string, int> GroupNameToGroupId { get; } = GetGroupNames();
     
     // -----------------------------------------------------------------------------------------------------------------
