@@ -5,7 +5,6 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
-using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
 using System.Text.RegularExpressions;
