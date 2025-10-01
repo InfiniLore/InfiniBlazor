@@ -7,7 +7,6 @@
         <TextMdSyntaxNode xml:space="preserve">$</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;$&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>$</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -31,7 +30,6 @@
         <TextMdSyntaxNode xml:space="preserve">This contains an emoji: 😀</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;This contains an emoji: &amp;#x1F600;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>This contains an emoji: 😀</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -55,7 +53,6 @@
         <TextMdSyntaxNode xml:space="preserve">&gt;</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&amp;gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>&gt;</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -79,7 +76,6 @@
         <TextMdSyntaxNode xml:space="preserve">&lt;</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&amp;lt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>&lt;</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",

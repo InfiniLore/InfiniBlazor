@@ -9,7 +9,6 @@
         </LinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;a href="https://www.transgenderinfo.be" class="text-(--color-accent) hover:text-(--color-accent-light) hover:underline"&gt;transgenderinfo&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>[transgenderinfo](https://www.transgenderinfo.be)</ExpectedMarkdown>
     <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
@@ -40,7 +39,6 @@
         <TextMdSyntaxNode xml:space="preserve">[link](https://example.com</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;[link](https://example.com&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>[link](https://example.com</ExpectedMarkdown>
     <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
@@ -65,7 +63,6 @@
         <TextMdSyntaxNode xml:space="preserve">[]()</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;[]()&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>[]()</ExpectedMarkdown>
     <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
@@ -94,7 +91,6 @@
         </LinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;a href="https://www.transgenderinfo.be" class="text-(--color-accent) hover:text-(--color-accent-light) hover:underline"&gt;&lt;strong&gt;transgenderinfo&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>[**transgenderinfo**](https://www.transgenderinfo.be)</ExpectedMarkdown>
     <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
@@ -132,7 +128,6 @@
         </LinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;a href="https://www.twitch.tv/annasasdev" class="text-(--color-accent) hover:text-(--color-accent-light) hover:underline"&gt;&amp;#x1F3F3;&amp;#xFE0F;&amp;#x200D;&amp;#x26A7;&amp;#xFE0F;&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>[:flag-transgender:](https://www.twitch.tv/annasasdev)</ExpectedMarkdown>
     <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
@@ -175,7 +170,6 @@
         </LinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;a href="https://localhost:7210/icon.png" class="text-(--color-accent) hover:text-(--color-accent-light) hover:underline"&gt;]&lt;/a&gt;&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;&lt;a href="https://localhost:7210/icon.png" class="text-(--color-accent) hover:text-(--color-accent-light) hover:underline"&gt;[&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>[\]](https://localhost:7210/icon.png)
 
 [\[](https://localhost:7210/icon.png)</ExpectedMarkdown>
@@ -233,7 +227,6 @@
         </LinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;a href="https://www.transgenderinfo.be" class="text-(--color-accent) hover:text-(--color-accent-light) hover:underline"&gt;&lt;em&gt;transgenderinfo&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>[*transgenderinfo*](https://www.transgenderinfo.be)</ExpectedMarkdown>
     <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
@@ -273,7 +266,6 @@
         </LinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;a href="https://www.transgenderinfo.be" class="text-(--color-accent) hover:text-(--color-accent-light) hover:underline"&gt;&lt;sub&gt;transgenderinfo&lt;/sub&gt;&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>[~transgenderinfo~](https://www.transgenderinfo.be)</ExpectedMarkdown>
     <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
@@ -313,7 +305,6 @@
         </LinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;a href="https://www.transgenderinfo.be" class="text-(--color-accent) hover:text-(--color-accent-light) hover:underline"&gt;&lt;sup&gt;transgenderinfo&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>[^transgenderinfo^](https://www.transgenderinfo.be)</ExpectedMarkdown>
     <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
@@ -390,7 +381,6 @@ Direct Title definition, without space:
         </LinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;Modifier Title definition&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;&lt;a href="https://www.transgenderinfo.be" title="hrt all day!" class="text-(--color-accent) hover:text-(--color-accent-light) hover:underline"&gt;transgenderinfo&lt;/a&gt;&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;Direct Title definition, with space:&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;&lt;a href="https://www.transgenderinfo.be" title="hrt all day!" class="text-(--color-accent) hover:text-(--color-accent-light) hover:underline"&gt;transgenderinfo&lt;/a&gt;&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;Direct Title definition, without space: &lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;&lt;a href="https://www.transgenderinfo.be" title="hrt all day!" class="text-(--color-accent) hover:text-(--color-accent-light) hover:underline"&gt;transgenderinfo&lt;/a&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>Modifier Title definition
 [transgenderinfo](https://www.transgenderinfo.be|title="hrt all day!")
 

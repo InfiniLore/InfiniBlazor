@@ -47,6 +47,7 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
         [MdRegexGroupNames.FootnoteDescription] = FootnoteDescriptionSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.Highlight] = HighlightSyntaxNodeSerializer.Serialize,
         [MdRegexGroupNames.Wrapper] = WrapperSyntaxNodeSerializer.Serialize,
+        [MdRegexGroupNames.Frontmatter] = FrontmatterSyntaxNodeSerializer.Serialize,
     }.ToFrozenDictionary();
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -59,19 +60,20 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
     }
 
     public void SerializeToTree(string markdown, IMdSyntaxTree nodeTree) {
-        MdSyntaxFragmentStack runningSerializer = MdSyntaxFragmentStack.Pool.Get();
-        runningSerializer.TreeReference = nodeTree;
+        MdSyntaxFragmentStack fragmentStack = MdSyntaxFragmentStack.Pool.Get();
+        fragmentStack.TreeReference = nodeTree;
 
         string normalized = markdown.ReplaceLineEndings("\n");
 
         try {
-            runningSerializer.PushMultiLineMatchesToStack(normalized, nodeTree.RootNode);
+            TryExtractFrontMatter(fragmentStack, normalized, nodeTree, out int newStartAtIndex);
+            fragmentStack.PushMultiLineMatchesToStack(normalized, nodeTree.RootNode, newStartAtIndex);
 
-            while (runningSerializer.TryPopDto(out MdSyntaxFragment fragment)) {
+            while (fragmentStack.TryPopDto(out MdSyntaxFragment fragment)) {
                 switch (fragment) {
                     // Not yet processed
                     case { ParentNode: {} parentNode, Match: {} match }: {
-                        ProcessMatch(match, parentNode, runningSerializer);
+                        ProcessMatch(match, parentNode, fragmentStack);
                         break;
                     }
 
@@ -94,8 +96,18 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
             throw;
         }
         finally {
-            MdSyntaxFragmentStack.Pool.Return(runningSerializer);
+            MdSyntaxFragmentStack.Pool.Return(fragmentStack);
         }
+    }
+
+    private void TryExtractFrontMatter(MdSyntaxFragmentStack fragmentStack, string markdown, IMdSyntaxTree nodeTree, out int newStartAtIndex) {
+        newStartAtIndex = 0;
+        if (!_elementHandlers.TryGetValue(MdRegexGroupNames.Frontmatter, out MdSyntaxSerializerAction? handler)) return;
+        Match match = MdRegexLib.FindFrontmatterRegex.Match(markdown);
+        if (!match.Success) return;
+        
+        newStartAtIndex = match.Index + match.Length;
+        handler(fragmentStack, nodeTree.RootNode, match);
     }
 
     private void ProcessMatch(Match match, IMdSyntaxNode parentNode, IMdSyntaxFragmentStack runningParser) {

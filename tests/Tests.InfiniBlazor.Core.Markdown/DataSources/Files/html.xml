@@ -7,7 +7,6 @@
         <TextMdSyntaxNode xml:space="preserve">test &lt;br/&gt; test</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;test &amp;lt;br/&amp;gt; test&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>test &lt;br/&gt; test</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -29,7 +28,6 @@
     <MdSyntaxTree>
       <HtmlMdSyntaxNode xml:space="preserve">&lt;div&gt;&lt;/div&gt;</HtmlMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;div&gt;&lt;/div&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>&lt;div&gt;&lt;/div&gt;</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -48,7 +46,6 @@
         <TextMdSyntaxNode xml:space="preserve">&lt;&gt;&lt;/&gt;</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&amp;lt;&amp;gt;&amp;lt;/&amp;gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>&lt;&gt;&lt;/&gt;</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -74,7 +71,6 @@
         <TextMdSyntaxNode xml:space="preserve"> external</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;external &lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt; external&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>external &lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt; external</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -111,9 +107,6 @@
 &lt;/div&gt;</HtmlMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;test &lt;div&gt;
-&lt;strong&gt;something&lt;/strong&gt;
-&lt;/div&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>test &lt;div&gt;
 &lt;strong&gt;something&lt;/strong&gt;
 &lt;/div&gt;</ExpectedMarkdown>
@@ -151,7 +144,6 @@
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;em&gt;test&lt;/em&gt; &lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt; &lt;strong&gt;bold this&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>*test* &lt;div&gt;&lt;strong&gt;something&lt;/strong&gt;&lt;/div&gt; **bold this**</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -213,9 +205,6 @@
         </BoldMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;&lt;em&gt;test&lt;/em&gt; &lt;div&gt;
-&lt;strong&gt;something&lt;/strong&gt;
-&lt;/div&gt; &lt;strong&gt;bold this&lt;/strong&gt;&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>*test* &lt;div&gt;
 &lt;strong&gt;something&lt;/strong&gt;
 &lt;/div&gt; **bold this**</ExpectedMarkdown>
@@ -289,19 +278,6 @@ how do you like your blueeyed boy
 Mister Death
 &lt;/pre&gt;</HtmlMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;pre&gt;
-Buffalo Bill ’s
-defunct
-       who used to
-       ride a watersmooth-silver
-                                stallion
-and break onetwothreefourfive pigeonsjustlikethat
-                                                 Jesus
-he was a handsome man
-                     and what i want to know is
-how do you like your blueeyed boy
-Mister Death
-&lt;/pre&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>&lt;pre&gt;
 Buffalo Bill ’s
 defunct
@@ -357,18 +333,6 @@ Mister Death
     &lt;/tr&gt;
 &lt;/table&gt;</HtmlMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;Unrelated previous paragraph followed by a blank line&lt;/p&gt;&lt;table&gt;
-    &lt;tr&gt;
-        &lt;td&gt;Table cell&lt;/td&gt;
-        &lt;td&gt;
-            &lt;table&gt;
-                &lt;tr&gt;
-                    &lt;td&gt;*Tables in tables*&lt;/td&gt;
-                &lt;/tr&gt;
-            &lt;/table&gt;
-        &lt;/td&gt;
-    &lt;/tr&gt;
-&lt;/table&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>Unrelated previous paragraph followed by a blank line
 &lt;table&gt;
     &lt;tr&gt;

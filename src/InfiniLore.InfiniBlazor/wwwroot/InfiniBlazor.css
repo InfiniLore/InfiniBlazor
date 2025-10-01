@@ -26,13 +26,10 @@
     --color-green-950: oklch(26.6% 0.065 152.934);
     --color-emerald-300: oklch(84.5% 0.143 164.978);
     --color-sky-300: oklch(82.8% 0.111 230.318);
-    --color-blue-100: oklch(93.2% 0.032 255.585);
     --color-blue-300: oklch(80.9% 0.105 251.813);
     --color-blue-400: oklch(70.7% 0.165 254.624);
     --color-blue-500: oklch(62.3% 0.214 259.815);
-    --color-blue-600: oklch(54.6% 0.245 262.881);
     --color-blue-700: oklch(48.8% 0.243 264.376);
-    --color-blue-800: oklch(42.4% 0.199 265.638);
     --color-blue-950: oklch(28.2% 0.091 267.935);
     --color-violet-300: oklch(81.1% 0.111 293.571);
     --color-violet-400: oklch(70.2% 0.183 293.541);
@@ -264,10 +261,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-LvRuAxTRBS: auto;
-      --toolwind-toggle-0BdV8IC01G: transparent;
-      --toolwind-toggle-U43dO1nJyf: inherit;
-      --toolwind-toggle-6m7ENwam2V: 0px;
+      --toolwind-toggle-XX8grNXc2R: auto;
+      --toolwind-toggle-tBVLSmc6LH: transparent;
+      --toolwind-toggle-zT9hLfQyQv: inherit;
+      --toolwind-toggle-09x3N3aWUx: 0px;
     }
   }
   .anchored-bottom-left\/anchor-tooltip {
@@ -276,10 +273,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-LvRuAxTRBS: auto;
-      --toolwind-toggle-0BdV8IC01G: transparent;
-      --toolwind-toggle-U43dO1nJyf: inherit;
-      --toolwind-toggle-6m7ENwam2V: 0px;
+      --toolwind-toggle-XX8grNXc2R: auto;
+      --toolwind-toggle-tBVLSmc6LH: transparent;
+      --toolwind-toggle-zT9hLfQyQv: inherit;
+      --toolwind-toggle-09x3N3aWUx: 0px;
     }
   }
   .anchored-bottom-right\/anchor-tooltip {
@@ -288,10 +285,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-LvRuAxTRBS: auto;
-      --toolwind-toggle-0BdV8IC01G: transparent;
-      --toolwind-toggle-U43dO1nJyf: inherit;
-      --toolwind-toggle-6m7ENwam2V: 0px;
+      --toolwind-toggle-XX8grNXc2R: auto;
+      --toolwind-toggle-tBVLSmc6LH: transparent;
+      --toolwind-toggle-zT9hLfQyQv: inherit;
+      --toolwind-toggle-09x3N3aWUx: 0px;
     }
   }
   .anchored-bottom\/anchor-nav-bar-menu {
@@ -300,10 +297,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w333619322p3a192q2p3619312t3239;
-      --toolwind-toggle-LvRuAxTRBS: auto;
-      --toolwind-toggle-0BdV8IC01G: transparent;
-      --toolwind-toggle-U43dO1nJyf: inherit;
-      --toolwind-toggle-6m7ENwam2V: 0px;
+      --toolwind-toggle-XX8grNXc2R: auto;
+      --toolwind-toggle-tBVLSmc6LH: transparent;
+      --toolwind-toggle-zT9hLfQyQv: inherit;
+      --toolwind-toggle-09x3N3aWUx: 0px;
     }
   }
   .anchored-left\/anchor-tooltip {
@@ -312,10 +309,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-LvRuAxTRBS: auto;
-      --toolwind-toggle-0BdV8IC01G: transparent;
-      --toolwind-toggle-U43dO1nJyf: inherit;
-      --toolwind-toggle-6m7ENwam2V: 0px;
+      --toolwind-toggle-XX8grNXc2R: auto;
+      --toolwind-toggle-tBVLSmc6LH: transparent;
+      --toolwind-toggle-zT9hLfQyQv: inherit;
+      --toolwind-toggle-09x3N3aWUx: 0px;
     }
   }
   .anchored-right\/anchor-tooltip {
@@ -324,10 +321,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-LvRuAxTRBS: auto;
-      --toolwind-toggle-0BdV8IC01G: transparent;
-      --toolwind-toggle-U43dO1nJyf: inherit;
-      --toolwind-toggle-6m7ENwam2V: 0px;
+      --toolwind-toggle-XX8grNXc2R: auto;
+      --toolwind-toggle-tBVLSmc6LH: transparent;
+      --toolwind-toggle-zT9hLfQyQv: inherit;
+      --toolwind-toggle-09x3N3aWUx: 0px;
     }
   }
   .anchored-top-center\/anchor-tooltip {
@@ -336,10 +333,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-LvRuAxTRBS: auto;
-      --toolwind-toggle-0BdV8IC01G: transparent;
-      --toolwind-toggle-U43dO1nJyf: inherit;
-      --toolwind-toggle-6m7ENwam2V: 0px;
+      --toolwind-toggle-XX8grNXc2R: auto;
+      --toolwind-toggle-tBVLSmc6LH: transparent;
+      --toolwind-toggle-zT9hLfQyQv: inherit;
+      --toolwind-toggle-09x3N3aWUx: 0px;
     }
   }
   .anchored-top-left\/anchor-tooltip {
@@ -348,10 +345,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-LvRuAxTRBS: auto;
-      --toolwind-toggle-0BdV8IC01G: transparent;
-      --toolwind-toggle-U43dO1nJyf: inherit;
-      --toolwind-toggle-6m7ENwam2V: 0px;
+      --toolwind-toggle-XX8grNXc2R: auto;
+      --toolwind-toggle-tBVLSmc6LH: transparent;
+      --toolwind-toggle-zT9hLfQyQv: inherit;
+      --toolwind-toggle-09x3N3aWUx: 0px;
     }
   }
   .anchored-top-right\/anchor-tooltip {
@@ -360,10 +357,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-LvRuAxTRBS: auto;
-      --toolwind-toggle-0BdV8IC01G: transparent;
-      --toolwind-toggle-U43dO1nJyf: inherit;
-      --toolwind-toggle-6m7ENwam2V: 0px;
+      --toolwind-toggle-XX8grNXc2R: auto;
+      --toolwind-toggle-tBVLSmc6LH: transparent;
+      --toolwind-toggle-zT9hLfQyQv: inherit;
+      --toolwind-toggle-09x3N3aWUx: 0px;
     }
   }
   .anchored\/anchor-tooltip {
@@ -371,10 +368,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-LvRuAxTRBS: auto;
-      --toolwind-toggle-0BdV8IC01G: transparent;
-      --toolwind-toggle-U43dO1nJyf: inherit;
-      --toolwind-toggle-6m7ENwam2V: 0px;
+      --toolwind-toggle-XX8grNXc2R: auto;
+      --toolwind-toggle-tBVLSmc6LH: transparent;
+      --toolwind-toggle-zT9hLfQyQv: inherit;
+      --toolwind-toggle-09x3N3aWUx: 0px;
     }
   }
   .absolute {
@@ -807,6 +804,9 @@
   .w-1\/2 {
     width: calc(1/2 * 100%);
   }
+  .w-1\/5 {
+    width: calc(1/5 * 100%);
+  }
   .w-2 {
     width: calc(var(--spacing) * 2);
   }
@@ -824,6 +824,9 @@
   }
   .w-4 {
     width: calc(var(--spacing) * 4);
+  }
+  .w-4\/5 {
+    width: calc(4/5 * 100%);
   }
   .w-5 {
     width: calc(var(--spacing) * 5);
@@ -1157,6 +1160,9 @@
   .gap-0 {
     gap: calc(var(--spacing) * 0);
   }
+  .gap-0\.5 {
+    gap: calc(var(--spacing) * 0.5);
+  }
   .gap-1 {
     gap: calc(var(--spacing) * 1);
   }
@@ -1307,10 +1313,6 @@
     border-top-right-radius: var(--radius-2xl);
     border-bottom-right-radius: var(--radius-2xl);
   }
-  .rounded-r-lg {
-    border-top-right-radius: var(--radius-lg);
-    border-bottom-right-radius: var(--radius-lg);
-  }
   .rounded-r-md {
     border-top-right-radius: var(--radius-md);
     border-bottom-right-radius: var(--radius-md);
@@ -1407,6 +1409,15 @@
   }
   .border-\(--color-base-50\) {
     border-color: var(--color-base-50);
+  }
+  .border-\(--color-base-60\) {
+    border-color: var(--color-base-60);
+  }
+  .border-\(--color-base-70\) {
+    border-color: var(--color-base-70);
+  }
+  .border-\(--color-base-80\) {
+    border-color: var(--color-base-80);
   }
   .border-\(--color-black\) {
     border-color: var(--color-black);
@@ -1769,9 +1780,6 @@
   .pl-2 {
     padding-left: calc(var(--spacing) * 2);
   }
-  .pl-3 {
-    padding-left: calc(var(--spacing) * 3);
-  }
   .pl-4 {
     padding-left: calc(var(--spacing) * 4);
   }
@@ -1801,9 +1809,6 @@
   }
   .align-bottom {
     vertical-align: bottom;
-  }
-  .align-middle {
-    vertical-align: middle;
   }
   .font-mono {
     font-family: var(--font-mono);
@@ -2023,9 +2028,6 @@
   }
   .text-blue-400 {
     color: var(--color-blue-400);
-  }
-  .text-blue-600 {
-    color: var(--color-blue-600);
   }
   .text-emerald-300 {
     color: var(--color-emerald-300);
@@ -2555,6 +2557,13 @@
       }
     }
   }
+  .hover\:border-\(--color-base-60\) {
+    &:hover {
+      @media (hover: hover) {
+        border-color: var(--color-base-60);
+      }
+    }
+  }
   .hover\:bg-\(--color-base-50\) {
     &:hover {
       @media (hover: hover) {
@@ -2847,6 +2856,20 @@
       }
     }
   }
+  .hover\:infini-bg-\(--color-base-70\) {
+    &:hover {
+      @media (hover: hover) {
+        background: var(--color-base-70);
+      }
+    }
+  }
+  .hover\:infini-bg-\(--color-base-80\) {
+    &:hover {
+      @media (hover: hover) {
+        background: var(--color-base-80);
+      }
+    }
+  }
   .hover\:infini-bg-\(--table-row-hover\) {
     &:hover {
       @media (hover: hover) {
@@ -2860,15 +2883,20 @@
       box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     }
   }
-  .focus\:ring-blue-500 {
-    &:focus {
-      --tw-ring-color: var(--color-blue-500);
-    }
-  }
   .focus\:outline-none {
     &:focus {
       --tw-outline-style: none;
       outline-style: none;
+    }
+  }
+  .focus\:infini-bg-\(--color-base-70\) {
+    &:focus {
+      background: var(--color-base-70);
+    }
+  }
+  .focus\:infini-bg-\(--color-base-80\) {
+    &:focus {
+      background: var(--color-base-80);
     }
   }
   .active\:scale-95 {
@@ -2992,11 +3020,6 @@
   }
   .\[\&\:has\(\>\[data-checkbox\]\)\]\:list-none {
     &:has(>[data-checkbox]) {
-      list-style-type: none;
-    }
-  }
-  .\[\&\:has\(\>input\[type\=checkbox\]\)\]\:list-none {
-    &:has(>input[type=checkbox]) {
       list-style-type: none;
     }
   }
@@ -3206,10 +3229,10 @@
 }
 @layer base {
   [popover] {
-    inset: var(--toolwind-toggle-LvRuAxTRBS, 0px);
-    background-color: var(--toolwind-toggle-0BdV8IC01G, canvas);
-    color: var(--toolwind-toggle-U43dO1nJyf, canvastext);
-    margin: var(--toolwind-toggle-6m7ENwam2V, auto);
+    inset: var(--toolwind-toggle-XX8grNXc2R, 0px);
+    background-color: var(--toolwind-toggle-tBVLSmc6LH, canvas);
+    color: var(--toolwind-toggle-zT9hLfQyQv, canvastext);
+    margin: var(--toolwind-toggle-09x3N3aWUx, auto);
   }
 }
 @property --tw-translate-x {

@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="frontmatter.xml">
+    <MdString>---
+test : data
+---</MdString>
+    <MdSyntaxTree>
+      <FrontMatterMdSyntaxNode xml:space="preserve" Language="" DashesCount="3" LeadingSpaces="0">test : data</FrontMatterMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedMarkdown>---
+test : data
+---</ExpectedMarkdown>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "FrontMatterMdSyntaxNode",
+      "language": "",
+      "content": "test : data",
+      "leadingSpaces": "0",
+      "dashesCount": "3"
+    }
+  ]
+}</ExpectedJsonString>
+  </MdTestData>
+  <MdTestData Id="withLang" FileName="frontmatter.xml">
+    <MdString>--- json
+"something" : "0"
+---</MdString>
+    <MdSyntaxTree>
+      <FrontMatterMdSyntaxNode xml:space="preserve" Language="json" DashesCount="3" LeadingSpaces="1">"something" : "0"</FrontMatterMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedMarkdown>--- json
+"something" : "0"
+---</ExpectedMarkdown>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "FrontMatterMdSyntaxNode",
+      "language": "json",
+      "content": "\"something\" : \"0\"",
+      "leadingSpaces": "1",
+      "dashesCount": "3"
+    }
+  ]
+}</ExpectedJsonString>
+  </MdTestData>
+</ArrayOfMdTestData>

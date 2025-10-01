@@ -196,8 +196,6 @@
 
                 foreach (MdTestData mdTestData in testData) {
                     IMdSyntaxTree tree = mdTestData.MdSyntaxTree;
-                    // Reset HtmlString
-                    mdTestData.ExpectedHtmlString = await MarkdownParser.Html.DeserializeToStringAsync(tree);
 
                     // Reset JsonString
                     using var memoryStream = new MemoryStream();

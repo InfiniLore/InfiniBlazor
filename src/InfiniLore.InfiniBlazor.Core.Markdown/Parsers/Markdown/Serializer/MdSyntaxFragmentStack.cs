@@ -22,8 +22,8 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region PushToStack
-    public void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node) {
-        MatchCollection matches = MdRegexLib.MultilineStructuresRegex.Matches(input);
+    public void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node, int startIndex = 0) {
+        MatchCollection matches = MdRegexLib.MultilineStructuresRegex.Matches(input, startIndex);
         int count = matches.Count;
         _stack.EnsureCapacity(_stack.Count + count);
 

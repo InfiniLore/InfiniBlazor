@@ -14,7 +14,6 @@ _</MdString>
         <TextMdSyntaxNode xml:space="preserve">_</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;-&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;_&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>-
 
 _</ExpectedMarkdown>
@@ -62,7 +61,6 @@ __</MdString>
         <TextMdSyntaxNode xml:space="preserve">__</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;--&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;__&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>--
 
 __</ExpectedMarkdown>
@@ -106,7 +104,6 @@ ___</MdString>
       <NewLineMdSyntaxNode />
       <HorizontalRuleMdSyntaxNode Identifier="___" />
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;hr class="my-8 border-t border-(--border)"&gt;&lt;hr class="my-8 border-t border-(--border)"&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>---
 
 ___</ExpectedMarkdown>
@@ -140,7 +137,6 @@ ____</MdString>
       <NewLineMdSyntaxNode />
       <HorizontalRuleMdSyntaxNode Identifier="____" />
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;hr class="my-8 border-t border-(--border)"&gt;&lt;hr class="my-8 border-t border-(--border)"&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>----
 
 ____</ExpectedMarkdown>
@@ -174,7 +170,6 @@ _____</MdString>
       <NewLineMdSyntaxNode />
       <HorizontalRuleMdSyntaxNode Identifier="_____" />
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;hr class="my-8 border-t border-(--border)"&gt;&lt;hr class="my-8 border-t border-(--border)"&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>-----
 
 _____</ExpectedMarkdown>
@@ -216,7 +211,6 @@ _____</ExpectedMarkdown>
         <TextMdSyntaxNode xml:space="preserve">123</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;p class="my-4 leading-relaxed"&gt;1234&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;1234&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;123&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>1234
 1234
 123</ExpectedMarkdown>

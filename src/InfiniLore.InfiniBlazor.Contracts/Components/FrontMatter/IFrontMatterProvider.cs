@@ -1,15 +1,16 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
+using System.Diagnostics.CodeAnalysis;
+
+namespace InfiniLore.InfiniBlazor.Components.FrontMatter;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMdSyntaxFragmentStack {
-    IMdSyntaxTree TreeReference { get; }
+public interface IFrontMatterProvider {
+    bool TryGetIconName(string key, [NotNullWhen(true)] out string? icon);
     
-    void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node, int startIndex = 0);
-    void PushSingleLineMatchesToStack(string input, IMdSyntaxNode node);
-    
-    void PushProcessedNodeToStack(IMdSyntaxNode parentNode, IMdSyntaxNode childNode);
+    bool TryParse(string? value, string? lang, [NotNullWhen(true)] out IEnumerable<IFrontMatterEntry>? entries);
+    bool TryParse(IEnumerable<IFrontMatterEntry> entries, string? lang, [NotNullWhen(true)] out string? value);
 }

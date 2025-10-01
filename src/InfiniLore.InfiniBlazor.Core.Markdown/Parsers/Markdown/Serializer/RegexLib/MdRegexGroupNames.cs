@@ -28,6 +28,9 @@ public static class MdRegexGroupNames {
     public const string FootnoteDescriptionIdentifier = "fdId";
     public const string FootnoteReference = "footnoteRef";
     public const string FootnoteReferenceIdentifier = "frId";
+    public const string Frontmatter = "frontmatter";
+    public const string FrontmatterLang = "fLang";
+    public const string FrontmatterBody = "fBody";
     public const string Heading = "heading";
     public const string HeadingLevel = "hLevel";
     public const string HeadingSimple = "headingSimple";

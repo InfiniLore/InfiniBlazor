@@ -43,17 +43,6 @@
         </CalloutBodyMdSyntaxNode>
       </CalloutMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;div class=" border-neutral-400 bg-zinc-900 my-2 flex flex-col min-w-full min-h-lh pt-2 pb-3 px-3 border-l-4 border-y-1 border-r-1 rounded-r-xl"&gt;&lt;div class="text-neutral-300 flex flex-row w-full gap-2 items-center"&gt;&lt;div class="flex shrink"&gt;&lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="m21 17-2.156-1.868A.5.5 0 0 0 18 15.5v.5a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1c0-2.545-3.991-3.97-8.5-4a1 1 0 0 0 0 5c4.153 0 4.745-11.295 5.708-13.5a2.5 2.5 0 1 1 3.31 3.284" /&gt;&lt;path d="M3 21h18" /&gt;
-    &lt;/svg&gt;&lt;/div&gt;
-
-        &lt;div class="flex grow w-full text-xl"&gt;Title&lt;/div&gt;&lt;/div&gt;
-
-    &lt;div class="border-neutral-600 text-neutral-400 h-auto opacity-100 border-t-1 pt-2 mt-1 flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;p class="my-2 leading-relaxed"&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=" border-neutral-400 bg-zinc-900 my-2 flex flex-col min-w-full min-h-lh pt-2 pb-3 px-3 border-l-4 border-y-1 border-r-1 rounded-r-xl"&gt;&lt;div class="text-neutral-300 flex flex-row w-full gap-2 items-center"&gt;&lt;div class="flex shrink"&gt;&lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;
-    &lt;/svg&gt;&lt;/div&gt;
-
-        &lt;div class="flex grow w-full text-xl"&gt;Title&lt;/div&gt;&lt;/div&gt;
-
-    &lt;div class="border-neutral-600 text-neutral-400 h-auto opacity-100 border-t-1 pt-2 mt-1 flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;p class="my-2 leading-relaxed"&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>&gt;[!note|icon=signature] Title
 &gt; Body
 
@@ -169,12 +158,6 @@
         </CalloutBodyMdSyntaxNode>
       </CalloutMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;div class=" border-neutral-400 bg-zinc-900 my-2 flex flex-col min-w-full min-h-lh pt-2 pb-3 px-3 border-l-4 border-y-1 border-r-1 rounded-r-xl"&gt;&lt;div class="text-neutral-300 flex flex-row w-full gap-2 items-center"&gt;&lt;div class="flex shrink"&gt;&lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" /&gt;&lt;path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" /&gt;
-    &lt;/svg&gt;&lt;/div&gt;
-
-        &lt;div class="flex grow w-full text-xl"&gt;Title&lt;/div&gt;&lt;/div&gt;
-
-    &lt;div class="border-neutral-600 text-neutral-400 h-auto opacity-100 border-t-1 pt-2 mt-1 flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;p class="my-2 leading-relaxed"&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>&gt;[!note] Title
 &gt; Body</ExpectedMarkdown>
     <ExpectedJsonString>{
@@ -236,12 +219,6 @@
         <TextMdSyntaxNode xml:space="preserve">[a]</TextMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;div class=" border-neutral-400 bg-zinc-900 my-2 flex flex-col min-w-full min-h-lh pt-2 pb-3 px-3 border-l-4 border-y-1 border-r-1 rounded-r-xl"&gt;&lt;div class="text-neutral-300 flex flex-row w-full gap-2 items-center"&gt;&lt;div class="flex shrink"&gt;&lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" /&gt;&lt;path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" /&gt;
-    &lt;/svg&gt;&lt;/div&gt;
-
-        &lt;div class="flex grow w-full text-xl"&gt;Title&lt;/div&gt;&lt;/div&gt;
-
-    &lt;div class="border-neutral-600 text-neutral-400 h-auto opacity-100 border-t-1 pt-2 mt-1 flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;p class="my-2 leading-relaxed"&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;p class="my-4 leading-relaxed"&gt;[a]&lt;/p&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>&gt;[!note] Title
 &gt; Body
 
@@ -310,7 +287,6 @@
         <NewLineMdSyntaxNode />
       </BlockQuoteMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;[!]&lt;/p&gt;&lt;/blockquote&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>&gt;[!]
 &gt; </ExpectedMarkdown>
     <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
@@ -360,12 +336,6 @@
         </CalloutBodyMdSyntaxNode>
       </CalloutMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;div class=" border-neutral-400 bg-zinc-900 my-2 flex flex-col min-w-full min-h-lh pt-2 pb-3 px-3 border-l-4 border-y-1 border-r-1 rounded-r-xl"&gt;&lt;div class="text-neutral-300 flex flex-row w-full gap-2 items-center"&gt;&lt;div class="flex shrink"&gt;&lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" /&gt;&lt;path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" /&gt;
-    &lt;/svg&gt;&lt;/div&gt;
-
-        &lt;div class="flex grow w-full text-xl"&gt;Title&lt;/div&gt;&lt;/div&gt;
-
-    &lt;div class="border-neutral-600 text-neutral-400 h-auto opacity-100 border-t-1 pt-2 mt-1 flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;blockquote class="pl-4 border-l-4 border-(--border) min-h-lh my-4 bg-(--color-base-90) rounded-r text-(--color-base-20)"&gt;&lt;p class="my-4 leading-relaxed"&gt;Body&lt;/p&gt;&lt;p class="my-4 leading-relaxed"&gt;Body&lt;/p&gt;&lt;/blockquote&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>&gt;[!note] Title
 &gt; &gt; Body
 &gt; &gt; Body</ExpectedMarkdown>
@@ -447,17 +417,6 @@
         </CalloutBodyMdSyntaxNode>
       </CalloutMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;div class=" border-neutral-400 bg-zinc-900 my-2 flex flex-col min-w-full min-h-lh pt-2 pb-3 px-3 border-l-4 border-y-1 border-r-1 rounded-r-xl"&gt;&lt;div class="text-neutral-300 flex flex-row w-full gap-2 items-center"&gt;&lt;div class="flex shrink"&gt;&lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" /&gt;&lt;path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" /&gt;
-    &lt;/svg&gt;&lt;/div&gt;
-
-        &lt;div class="flex grow w-full text-xl"&gt;Title&lt;/div&gt;&lt;/div&gt;
-
-    &lt;div class="border-neutral-600 text-neutral-400 h-auto opacity-100 border-t-1 pt-2 mt-1 flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;div class=" border-neutral-400 bg-zinc-900 my-2 flex flex-col min-w-full min-h-lh pt-2 pb-3 px-3 border-l-4 border-y-1 border-r-1 rounded-r-xl"&gt;&lt;div class="text-neutral-300 flex flex-row w-full gap-2 items-center"&gt;&lt;div class="flex shrink"&gt;&lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" /&gt;&lt;path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" /&gt;
-    &lt;/svg&gt;&lt;/div&gt;
-
-        &lt;div class="flex grow w-full text-xl"&gt;Title&lt;/div&gt;&lt;/div&gt;
-
-    &lt;div class="border-neutral-600 text-neutral-400 h-auto opacity-100 border-t-1 pt-2 mt-1 flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;p class="my-2 leading-relaxed"&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>&gt;[!note] Title
 &gt; &gt;[!note] Title
 &gt; &gt; Body</ExpectedMarkdown>
@@ -550,19 +509,6 @@
         </CalloutBodyMdSyntaxNode>
       </CalloutMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;div class=" border-neutral-400 bg-zinc-900 my-2 flex flex-col min-w-full min-h-lh pt-2 pb-3 px-3 border-l-4 border-y-1 border-r-1 rounded-r-xl"&gt;&lt;div class="text-neutral-300 flex flex-row w-full gap-2 items-center"&gt;&lt;div class="flex shrink"&gt;&lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" /&gt;&lt;path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" /&gt;
-    &lt;/svg&gt;&lt;/div&gt;
-
-        &lt;div class="flex grow w-full text-xl"&gt;Title&lt;/div&gt;&lt;div class="relative"&gt;&lt;div class="anchor/anchor-tooltip relative"&gt;&lt;button onclick:stopPropagation type="button" class=" cursor-pointer active:scale-95 hover:transform hover:transition hover:ease-in hover:duration-200 overflow-visible rounded-md px-2 py-1 text-base infini-bg-(--button-transparent) text-(--button-transparent-text) hover:text-(--button-transparent-text-hover) hover:infini-bg-(--button-transparent-hover) flex-none w-fit inline-flex items-center justify-center transition-all duration-150 transform overflow-visible"&gt;&lt;span class="inline-flex items-center gap-2"&gt;&lt;svg class="text-neutral-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="m18 15-6-6-6 6"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;
-    &lt;div class="hidden  anchored-left/anchor-tooltip z-20 absolute anchored shadow-md/30"&gt;&lt;div class="before:content-[&amp;#x27;&amp;#x27;] before:absolute before:w-2 before:h-2 before:rotate-45 before:infini-bg-(--color-base-90) before:-right-1 before:top-1/2 before:-translate-y-1/2 shadow-md/30 transform px-3 py-1 infini-bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md transition-opacity duration-200 whitespace-nowrap pointer-events-none"&gt;Close Callout&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
-
-    &lt;div class="border-neutral-600 text-neutral-400 h-auto opacity-100 border-t-1 pt-2 mt-1 flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;p class="my-2 leading-relaxed"&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=" border-neutral-400 bg-zinc-900 my-2 flex flex-col min-w-full min-h-lh pt-2 pb-3 px-3 border-l-4 border-y-1 border-r-1 rounded-r-xl"&gt;&lt;div class="text-neutral-300 flex flex-row w-full gap-2 items-center"&gt;&lt;div class="flex shrink"&gt;&lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" /&gt;&lt;path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" /&gt;
-    &lt;/svg&gt;&lt;/div&gt;
-
-        &lt;div class="flex grow w-full text-xl"&gt;Title&lt;/div&gt;&lt;div class="relative"&gt;&lt;div class="anchor/anchor-tooltip relative"&gt;&lt;button onclick:stopPropagation type="button" class=" cursor-pointer active:scale-95 hover:transform hover:transition hover:ease-in hover:duration-200 overflow-visible rounded-md px-2 py-1 text-base infini-bg-(--button-transparent) text-(--button-transparent-text) hover:text-(--button-transparent-text-hover) hover:infini-bg-(--button-transparent-hover) flex-none w-fit inline-flex items-center justify-center transition-all duration-150 transform overflow-visible"&gt;&lt;span class="inline-flex items-center gap-2"&gt;&lt;svg class="text-neutral-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="m6 9 6 6 6-6"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;
-    &lt;div class="hidden  anchored-left/anchor-tooltip z-20 absolute anchored shadow-md/30"&gt;&lt;div class="before:content-[&amp;#x27;&amp;#x27;] before:absolute before:w-2 before:h-2 before:rotate-45 before:infini-bg-(--color-base-90) before:-right-1 before:top-1/2 before:-translate-y-1/2 shadow-md/30 transform px-3 py-1 infini-bg-(--color-base-90) text-(--color-base-10) text-sm rounded-md transition-opacity duration-200 whitespace-nowrap pointer-events-none"&gt;Open Callout&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
-
-    &lt;div class="border-neutral-600 text-neutral-400 h-0 overflow-hidden opacity-0 pointer-events-none border-none flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;p class="my-2 leading-relaxed"&gt;Body&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>&gt;[!note]+ Title
 &gt; Body
 
@@ -682,17 +628,6 @@
         </CalloutBodyMdSyntaxNode>
       </CalloutMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;div class=" border-neutral-400 bg-zinc-900 my-2 flex flex-col min-w-full min-h-lh pt-2 pb-3 px-3 border-l-4 border-y-1 border-r-1 rounded-r-xl"&gt;&lt;div class="text-neutral-300 flex flex-row w-full gap-2 items-center"&gt;&lt;div class="flex shrink"&gt;&lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="m21 17-2.156-1.868A.5.5 0 0 0 18 15.5v.5a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1c0-2.545-3.991-3.97-8.5-4a1 1 0 0 0 0 5c4.153 0 4.745-11.295 5.708-13.5a2.5 2.5 0 1 1 3.31 3.284" /&gt;&lt;path d="M3 21h18" /&gt;
-    &lt;/svg&gt;&lt;/div&gt;
-
-        &lt;div class="flex grow w-full text-xl"&gt;&lt;strong&gt;Do Something&lt;/strong&gt;&lt;/div&gt;&lt;/div&gt;
-
-    &lt;div class="border-neutral-600 text-neutral-400 h-auto opacity-100 border-t-1 pt-2 mt-1 flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;div class=" border-neutral-400 bg-zinc-900 my-2 flex flex-col min-w-full min-h-lh pt-2 pb-3 px-3 border-l-4 border-y-1 border-r-1 rounded-r-xl"&gt;&lt;div class="text-neutral-300 flex flex-row w-full gap-2 items-center"&gt;&lt;div class="flex shrink"&gt;&lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="m21 17-2.156-1.868A.5.5 0 0 0 18 15.5v.5a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1c0-2.545-3.991-3.97-8.5-4a1 1 0 0 0 0 5c4.153 0 4.745-11.295 5.708-13.5a2.5 2.5 0 1 1 3.31 3.284" /&gt;&lt;path d="M3 21h18" /&gt;
-    &lt;/svg&gt;&lt;/div&gt;
-
-        &lt;div class="flex grow w-full text-xl"&gt;&lt;strong&gt;Do Something&lt;/strong&gt;&lt;/div&gt;&lt;/div&gt;
-
-    &lt;div class="border-neutral-600 text-neutral-400 h-auto opacity-100 border-t-1 pt-2 mt-1 flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;p class="my-2 leading-relaxed"&gt;Body Content&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>&gt;[!note|icon=signature] **Do Something**
 &gt; &gt;[!note|icon=signature] **Do Something**
 &gt; &gt; Body Content</ExpectedMarkdown>
@@ -803,12 +738,6 @@
         </CalloutBodyMdSyntaxNode>
       </CalloutMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedHtmlString>&lt;div class=" border-neutral-400 bg-zinc-900 my-2 flex flex-col min-w-full min-h-lh pt-2 pb-3 px-3 border-l-4 border-y-1 border-r-1 rounded-r-xl"&gt;&lt;div class="text-neutral-300 flex flex-row w-full gap-2 items-center"&gt;&lt;div class="flex shrink"&gt;&lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" /&gt;&lt;path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z" /&gt;
-    &lt;/svg&gt;&lt;/div&gt;
-
-        &lt;div class="flex grow w-full text-xl"&gt;&lt;strong&gt;Do Something&lt;/strong&gt;&lt;/div&gt;&lt;/div&gt;
-
-    &lt;div class="border-neutral-600 text-neutral-400 h-auto opacity-100 border-t-1 pt-2 mt-1 flex flex-col transition-all duration-300 ease-in-out"&gt;&lt;p class="my-2 leading-relaxed"&gt;Body Content&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</ExpectedHtmlString>
     <ExpectedMarkdown>&gt;[!note] **Do Something**
 &gt; Body Content</ExpectedMarkdown>
     <ExpectedJsonString>{
