@@ -28,7 +28,7 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     
     public static IMdSyntaxTree Empty => new MdSyntaxTree();
 
-    private ConcurrentDictionary<Type, List<int[]>> CachedChildrenByType { get; } = new ConcurrentDictionary<Type, List<int[]>>();
+    private ConcurrentDictionary<Type, List<int[]>> CachedChildrenByType { get; } = new();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

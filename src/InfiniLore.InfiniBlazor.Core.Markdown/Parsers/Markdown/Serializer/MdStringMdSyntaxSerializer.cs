@@ -5,6 +5,7 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
+using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
 using System.Text.RegularExpressions;
@@ -65,7 +66,8 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
         string normalized = markdown.ReplaceLineEndings("\n");
 
         try {
-            runningSerializer.PushMultiLineMatchesToStack(normalized, nodeTree.RootNode);
+            TryExtractFrontMatter(normalized, nodeTree, out int newStartAtIndex);
+            runningSerializer.PushMultiLineMatchesToStack(normalized, nodeTree.RootNode, newStartAtIndex);
 
             while (runningSerializer.TryPopDto(out MdSyntaxFragment fragment)) {
                 switch (fragment) {
@@ -96,6 +98,42 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
         finally {
             MdSyntaxFragmentStack.Pool.Return(runningSerializer);
         }
+    }
+
+    // TODO needs to be optional
+    private static void TryExtractFrontMatter(string markdown, IMdSyntaxTree nodeTree, out int newStartAtIndex) {
+        newStartAtIndex = 0;
+        Match match = MdRegexLib.FindFrontmatterRegex.Match(markdown);
+        if (!match.Success) return;
+
+        newStartAtIndex = match.Index + match.Length;
+
+        FrontMatterMdSyntaxNode node = FrontMatterMdSyntaxNode.Pool.Get();
+        if (match.Groups[MdRegexGroupNames.FrontmatterLang].TryGetValue(out string? lang)) {
+            node.WithContent(lang);
+        }
+        if (match.Groups[MdRegexGroupNames.FrontmatterBody].TryGetValue(out string? body)) {
+            node.WithContent(body);
+        }
+        
+        ReadOnlySpan<char> span = match.ValueSpan;
+        int dashCount = 0;
+        int spaceCount = 0;
+        foreach (char t in span) {
+            switch (t) {
+                case '-':
+                    dashCount++;
+                    continue;
+                case ' ':
+                    spaceCount++;
+                    continue;
+            }
+            break;
+        }
+        node.WithDashesCount(dashCount);
+        node.WithLeadingSpaces(spaceCount);
+        
+        nodeTree.RootNode.AddChildNode(node);
     }
 
     private void ProcessMatch(Match match, IMdSyntaxNode parentNode, IMdSyntaxFragmentStack runningParser) {
