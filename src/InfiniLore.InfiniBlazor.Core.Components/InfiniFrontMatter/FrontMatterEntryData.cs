@@ -8,4 +8,4 @@ namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public record FrontMatterEntryData(string Key, string? Value) : IFrontMatterEntry;
+public record FrontMatterEntryData(string Key, object? Value) : IFrontMatterEntry;

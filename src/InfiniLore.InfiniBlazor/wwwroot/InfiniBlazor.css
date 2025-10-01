@@ -2557,6 +2557,13 @@
       }
     }
   }
+  .hover\:border-\(--color-base-60\) {
+    &:hover {
+      @media (hover: hover) {
+        border-color: var(--color-base-60);
+      }
+    }
+  }
   .hover\:bg-\(--color-base-50\) {
     &:hover {
       @media (hover: hover) {
@@ -2849,6 +2856,20 @@
       }
     }
   }
+  .hover\:infini-bg-\(--color-base-70\) {
+    &:hover {
+      @media (hover: hover) {
+        background: var(--color-base-70);
+      }
+    }
+  }
+  .hover\:infini-bg-\(--color-base-80\) {
+    &:hover {
+      @media (hover: hover) {
+        background: var(--color-base-80);
+      }
+    }
+  }
   .hover\:infini-bg-\(--table-row-hover\) {
     &:hover {
       @media (hover: hover) {
@@ -2866,6 +2887,16 @@
     &:focus {
       --tw-outline-style: none;
       outline-style: none;
+    }
+  }
+  .focus\:infini-bg-\(--color-base-70\) {
+    &:focus {
+      background: var(--color-base-70);
+    }
+  }
+  .focus\:infini-bg-\(--color-base-80\) {
+    &:focus {
+      background: var(--color-base-80);
     }
   }
   .active\:scale-95 {

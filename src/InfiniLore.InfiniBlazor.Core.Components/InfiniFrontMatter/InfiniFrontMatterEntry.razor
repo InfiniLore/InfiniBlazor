@@ -2,12 +2,14 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.Lucide
+@using Microsoft.Extensions.Logging
 
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniComponentBase
+@inject ILogger<InfiniFrontMatterEntry> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -15,20 +17,54 @@
     <LucideIcon Size="24" Name="@IconName"/>
     <div class="w-1/5">
         <InfiniTextInput
-            Class="infini-bg-(--color-base-80) border-(--color-base-60)"
+            Class="infini-bg-(--color-base-90) border-none hover:infini-bg-(--color-base-80) focus:infini-bg-(--color-base-80) hover:border-(--color-base-60)"
             Value="@Key"
             ValueChanged="@KeyChanged"
-            />
+        />
     </div>
-    <div class="w-4/5">
-        <InfiniTextInput 
-            Class="infini-bg-(--color-base-80) border-(--color-base-60)"
-            Value="@Value"
-            ValueChanged="@ValueChanged"
-            />
+    <div class="w-4/5 flex flex-row items-center gap-1">
+        @switch (Value) {
+            case int intValue: {
+                <InfiniTextInput
+                    Class="infini-bg-(--color-base-80) border-(--color-base-60)"
+                    Value="@intValue.ToString()"
+                    ValueChanged="@(async (string? s) => await ValueChanged.InvokeAsync(s))"/>
+                break;
+            }
+            case string stringValue: {
+                <InfiniTextInput
+                    Class="infini-bg-(--color-base-80) border-(--color-base-60)"
+                    Value="@stringValue"
+                    ValueChanged="@(async (string? s) => await ValueChanged.InvokeAsync(s))"/>
+                break;
+            }
+
+            case bool boolValue: {
+                <InfiniToggleInput
+                    Class="infini-bg-(--color-base-80) border-(--color-base-60)"
+                    Value="@boolValue"
+                    ValueChanged="@(async b => await ValueChanged.InvokeAsync(b))"/>
+                break;
+            }
+
+            case List<object?> listValue: {
+                for (int index = 0; index < listValue.Count; index++) {
+                    object? item = listValue[index];
+                    int i = index;
+                    <InfiniTextInput
+                        Class="infini-bg-(--color-base-80) border-(--color-base-60)"
+                        Value="@item?.ToString()"
+                        ValueChanged="@(async (string? s) => await OnListValueChanged(s, i, listValue))">
+                        
+                        <InfiniButtonTransparent Size="Size.Xs" IconName="@LucideNames.Minus" OnClick="@(async _ => await OnListValueRemove(listValue, i))"/>
+                    </InfiniTextInput>
+                }
+                <InfiniButtonTransparent IconName="@LucideNames.Plus" OnClick="@(async _ => await OnListValueAdd(listValue))"/>
+                break;
+            } 
+        }
     </div>
 </div>
-
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
@@ -36,10 +72,32 @@
 @code {
     [EditorRequired, Parameter] public string? Key { get; set; } = string.Empty;
     [Parameter] public EventCallback<string?> KeyChanged { get; set; }
-    
-    [Parameter] public string? Value { get; set; } 
-    [Parameter] public EventCallback<string?> ValueChanged { get; set; }
-    
+
+    [Parameter] public object? Value { get; set; }
+    [Parameter] public EventCallback<object?> ValueChanged { get; set; }
+
     [Parameter] public string IconName { get; set; } = DefaultIconName;
     public const string DefaultIconName = LucideNames.ChevronRight;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private async Task OnListValueChanged(string? s, int index, List<object?> list) {
+        if (index == -1) {
+            Logger.Warning("Could not find index of value {value}", s);
+            return;
+        }
+        
+        list[index] = s;
+        await ValueChanged.InvokeAsync(list);
+    }
+    private async Task OnListValueAdd(List<object?> list) {
+        list.Add(string.Empty);
+        await ValueChanged.InvokeAsync(list);
+    }
+
+    private async Task OnListValueRemove(List<object?> list, int index) {
+        list.RemoveAt(index);
+        await ValueChanged.InvokeAsync(list);
+    }
 }

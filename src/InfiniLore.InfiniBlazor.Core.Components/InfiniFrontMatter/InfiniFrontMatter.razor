@@ -22,7 +22,7 @@
                 Key="@entry.Key"
                 KeyChanged="@(async (string? s) => await OnKeyChanged(s, entry))"
                 Value="@entry.Value"
-                ValueChanged="@(async (string? s) => await OnValueChanged(s, entry))"
+                ValueChanged="@(async (object? s) => await OnValueChanged(s, entry))"
                 />
         }
     }
@@ -58,7 +58,7 @@
         await InvokeAsync(StateHasChanged);
     }
 
-    private async Task OnValueChanged(string? newValue, IFrontMatterEntry oldEntry) {
+    private async Task OnValueChanged(object? newValue, IFrontMatterEntry oldEntry) {
         if (_entries is null) return;
         int index = _entries.FindIndex(e => e.Equals(oldEntry));
         if (index == -1) return;

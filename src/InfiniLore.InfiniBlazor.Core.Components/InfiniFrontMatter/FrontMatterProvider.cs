@@ -37,14 +37,14 @@ public class FrontMatterProvider(ILogger<FrontMatterProvider> logger) : IFrontMa
         try {
             switch (lang) {
                 case null or "" or "yaml" or "yml": {
-                    var data = YamlDeserializer.Deserialize<Dictionary<string, string?>>(value);
+                    var data = YamlDeserializer.Deserialize<Dictionary<string, object?>>(value);
                     entries = data.Select(kvp => new FrontMatterEntryData(kvp.Key, kvp.Value));
                     return !entries.IsEmpty();
                 }
 
                 case "json": {
                     if (!value.StartsWith('{') && !value.EndsWith('}')) value = $"{{{value}}}";
-                    var data = JsonSerializer.Deserialize<Dictionary<string, string?>>(value);
+                    var data = JsonSerializer.Deserialize<Dictionary<string, object?>>(value);
                     entries = data?.Select(kvp => new FrontMatterEntryData(kvp.Key, kvp.Value));
                     return !entries?.IsEmpty() ?? false;
                 }
@@ -67,13 +67,13 @@ public class FrontMatterProvider(ILogger<FrontMatterProvider> logger) : IFrontMa
         try {
             switch (lang) {
                 case null or "" or "yaml" or "yml": {
-                    Dictionary<string, string?> dict = entries.ToDictionary(entry => entry.Key, entry => entry.Value);
+                    Dictionary<string, object?> dict = entries.ToDictionary(entry => entry.Key, entry => entry.Value);
                     value = YamlSerializer.Serialize(dict);
                     return value.IsNotNullOrWhiteSpace();
                 }
 
                 case "json": {
-                    Dictionary<string, string?> dict = entries.ToDictionary(entry => entry.Key, entry => entry.Value);
+                    Dictionary<string, object?> dict = entries.ToDictionary(entry => entry.Key, entry => entry.Value);
                     value = JsonSerializer.Serialize(dict);
                     return value.IsNotNullOrWhiteSpace();
                 }

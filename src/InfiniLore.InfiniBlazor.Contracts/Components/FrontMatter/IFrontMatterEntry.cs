@@ -8,5 +8,5 @@ namespace InfiniLore.InfiniBlazor.Components.FrontMatter;
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IFrontMatterEntry {
     string Key { get; }
-    string? Value { get; }
+    object? Value { get; }
 }
