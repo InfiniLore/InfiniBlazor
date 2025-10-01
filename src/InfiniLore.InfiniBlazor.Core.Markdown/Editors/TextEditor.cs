@@ -93,7 +93,6 @@ public class TextEditor : ITextEditor {
     public bool TryGetCaretUpdate(out int caretIndex) {
         caretIndex = _caretIndexToUpdate;
         if (_caretIndexToUpdate < 0) return false;
-
         _caretIndexToUpdate = -1;
         return true;
     }

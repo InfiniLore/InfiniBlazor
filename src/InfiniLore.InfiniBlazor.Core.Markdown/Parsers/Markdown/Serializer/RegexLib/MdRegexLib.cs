@@ -132,6 +132,7 @@ public static partial class MdRegexLib {
         return dictionary.ToFrozenDictionary();
     }
 
+    // ReSharper disable once ConvertIfStatementToReturnStatement
     public static int GetGroupId(string groupName) {
         if (GroupNameToGroupId.TryGetValue(groupName, out int groupId)) return groupId;
         throw new ArgumentException($"No group name '{groupName}' found in any of the regexes.");

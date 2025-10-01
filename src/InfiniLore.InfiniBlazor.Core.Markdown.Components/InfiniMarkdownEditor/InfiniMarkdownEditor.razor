@@ -92,7 +92,8 @@
         [InfiniEditorKeyCombo.Underline] = static editor => editor.OnModifierActivatedAsync("underline"),
         [InfiniEditorKeyCombo.SelectAll] = static editor => editor.HandleSelectAllAsync()
     };
-
+    private int _valueHashCode;
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -116,6 +117,12 @@
         await EditorContext.InvokeSyntaxTreeChangeAsync().ConfigureAwait(false);
         await InvokeAsync(StateHasChanged);
     }
+    
+    protected override bool ShouldRender() {
+        int lastHashCode = _valueHashCode;
+        _valueHashCode = EditorContext.TextSource.Text.GetHashCode();
+        return _valueHashCode != lastHashCode;
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender) {
         await base.OnAfterRenderAsync(firstRender);
@@ -123,7 +130,7 @@
             // Only add the "prevent default listener" once.
             await JsInfiniBlazor.KeyDownListener.AddPreventDefaultListenerAsync().ConfigureAwait(false);
             return;
-        }
+        } 
 
         // place the caret in a newly requested location
         if (TextEditor.TryGetCaretUpdate(out int index))
@@ -150,6 +157,7 @@
         await EditorContext.InvokeSyntaxTreeChangeAsync().ConfigureAwait(false);
 
         await EditorContextChanged.InvokeAsync(EditorContext).ConfigureAwait(false);
+        Logger.Information("Source changed");
 
         await InvokeAsync(StateHasChanged);
     }
@@ -173,7 +181,6 @@
 
     public async Task OnModifierActivatedAsync(string modifierName) {
         if (EditorContext.IsLocked) return;
-        Logger.Warning("ACTIVATED : {modifierName}", modifierName);
     
         Range range = await JsInfiniBlazor.TextSelection.GetRangeAsync(EditorContext.InputElementRef);
         TextEditor.Modify(EditorContext.TextSource, modifierName, range);

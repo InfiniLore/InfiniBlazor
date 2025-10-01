@@ -14,11 +14,12 @@
         <textarea
             disabled="@EditorContext.IsLocked"
             class="disabled:text-infini-base-30 disabled:cursor-not-allowed focus:outline-none w-full h-full font-mono overflow-y-auto infini-scrollbar"
-            value="@EditorContext.TextSource.Text"
             @oninput="@OnInputAsync"
             @ref="@EditorContext.InputElementRef"
             @onkeydown="@OnKeyDownAsync"
         >
+            @* WHY DOES VALUE SETTING NOT WORK? and this is the solutions that solves the jumping cursor! *@
+            @EditorContext.TextSource.Text 
         </textarea>
     </div>
 </CascadingIsDisabled>
@@ -29,7 +30,13 @@
 
 @code {
     [CascadingParameter] protected MdEditorContext EditorContext { get; set; } = null!;
+    private int _valueHashCode;
 
+    protected override bool ShouldRender() {
+        int lastHashCode = _valueHashCode;
+        _valueHashCode = EditorContext.TextSource.Text.GetHashCode();
+        return _valueHashCode != lastHashCode;
+    }
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
