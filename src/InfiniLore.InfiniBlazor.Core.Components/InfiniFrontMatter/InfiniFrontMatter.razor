@@ -1,0 +1,40 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Components.FrontMatter
+@using Microsoft.Extensions.Logging
+
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniComponentBase
+@inject ILogger<InfiniFrontMatter> Logger
+@inject IFrontMatterProvider FrontMatterProvider
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniHeading3>@Title</InfiniHeading3>
+@{Logger.Information("HERE {@entries}", Source);}
+<div class="flex flex-col gap-2">
+    @if (FrontMatterProvider.TryParse(Source ?? string.Empty,SourceLang, out IEnumerable<IFrontMatterEntry>? entries) ) {
+        Logger.Information("HERE {@entries}", entries);
+        foreach (IFrontMatterEntry entry in entries) {
+            Logger.Warning("ENTRY {@entry}", entry);
+            string iconName = FrontMatterProvider.TryGetIconName(entry.Key, out string? icon) ? icon : InfiniFrontMatterEntry.DefaultIconName;
+            <InfiniFrontMatterEntry IconName="@iconName" Key="@entry.Key" Value="@entry.Value" />
+        }
+    }
+    else {
+        @ChildContent
+    }
+</div>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter] public string Title { get; set; } = "Properties";
+    [Parameter] public string? Source { get; set; } 
+    [Parameter] public string? SourceLang { get; set; } 
+}

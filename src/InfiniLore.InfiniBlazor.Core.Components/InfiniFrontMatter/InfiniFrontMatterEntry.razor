@@ -1,20 +1,39 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
-@using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
+@using InfiniLore.Lucide
+@using Microsoft.Extensions.Logging
 
-@namespace InfiniLore.InfiniBlazor.Markdown.MdBlazorComponents
+@namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniBlazorMdComponentBase<FrontMatterMdSyntaxNode>
+@inherits InfiniComponentBase
+@inject ILogger<InfiniFrontMatterEntry> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniFrontMatter Source="@SyntaxNode.Content" SourceLang="@SyntaxNode.Language"/>
+<div>
+    <LucideIcon Name="@IconName"/>
+    <div>
+        <InfiniTextInput @bind-Value="Key"></InfiniTextInput>
+    </div>
+    <div>
+        <InfiniTextInput @bind-Value="Value"></InfiniTextInput>
+    </div>   
+</div>
+
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
+    [EditorRequired, Parameter] public string Key { get; set; } = string.Empty;
+    [Parameter] public EventCallback<string> KeyChanged { get; set; }
+    
+    [Parameter] public string? Value { get; set; } 
+    [Parameter] public EventCallback<string?> ValueChanged { get; set; }
+    
+    [Parameter] public string IconName { get; set; } = DefaultIconName;
+    public const string DefaultIconName = LucideNames.ChevronRight;
 }
