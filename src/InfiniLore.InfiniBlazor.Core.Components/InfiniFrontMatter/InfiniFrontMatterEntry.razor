@@ -13,8 +13,20 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="flex flex-row items-center gap-1">
     <LucideIcon Size="24" Name="@IconName"/>
-    <div class="w-1/5"><InfiniTextInput Value="@Key" ValueChanged="@KeyChanged" Class="w-1/5"/></div>
-    <div class="w-4/5"><InfiniTextInput Value="@Value" ValueChanged="@ValueChanged" Class="w-4/5"/></div>
+    <div class="w-1/5">
+        <InfiniTextInput
+            Class="infini-bg-(--color-base-80) border-(--color-base-60)"
+            Value="@Key"
+            ValueChanged="@KeyChanged"
+            />
+    </div>
+    <div class="w-4/5">
+        <InfiniTextInput 
+            Class="infini-bg-(--color-base-80) border-(--color-base-60)"
+            Value="@Value"
+            ValueChanged="@ValueChanged"
+            />
+    </div>
 </div>
 
 
@@ -22,7 +34,7 @@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [EditorRequired, Parameter] public string Key { get; set; } = string.Empty;
+    [EditorRequired, Parameter] public string? Key { get; set; } = string.Empty;
     [Parameter] public EventCallback<string?> KeyChanged { get; set; }
     
     [Parameter] public string? Value { get; set; } 

@@ -1410,6 +1410,15 @@
   .border-\(--color-base-50\) {
     border-color: var(--color-base-50);
   }
+  .border-\(--color-base-60\) {
+    border-color: var(--color-base-60);
+  }
+  .border-\(--color-base-70\) {
+    border-color: var(--color-base-70);
+  }
+  .border-\(--color-base-80\) {
+    border-color: var(--color-base-80);
+  }
   .border-\(--color-black\) {
     border-color: var(--color-black);
   }

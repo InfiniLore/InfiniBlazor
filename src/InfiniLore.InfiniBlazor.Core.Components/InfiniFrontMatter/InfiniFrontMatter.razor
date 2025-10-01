@@ -2,35 +2,29 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Components.FrontMatter
-@using Microsoft.Extensions.Logging
 
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniComponentBase
-@inject ILogger<InfiniFrontMatter> Logger
 @inject IFrontMatterProvider FrontMatterProvider
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniHeading3>@Title</InfiniHeading3>
-@{Logger.Information("HERE {@entries}", Source);}
-<div class="flex flex-col gap-0.5">
+<div class="flex flex-col gap-0.5 infini-bg-(--color-base-90) p-2 rounded-xl">
+    <InfiniHeading6>@Title</InfiniHeading6>
     @if (_entries is not null) {
         foreach (IFrontMatterEntry entry in _entries) {
             string iconName = FrontMatterProvider.TryGetIconName(entry.Key, out string? icon) ? icon : InfiniFrontMatterEntry.DefaultIconName;
             <InfiniFrontMatterEntry
                 IconName="@iconName"
                 Key="@entry.Key"
-                KeyChanged="@(async s => await OnKeyChanged(s, entry))"
+                KeyChanged="@(async (string? s) => await OnKeyChanged(s, entry))"
                 Value="@entry.Value"
-                ValueChanged="@(async s => await OnValueChanged(s, entry))"
+                ValueChanged="@(async (string? s) => await OnValueChanged(s, entry))"
                 />
         }
-    }
-    else {
-        @ChildContent
     }
 </div>
 
@@ -60,7 +54,6 @@
 
         _entries[index] = new FrontMatterEntryData(newKey ?? string.Empty, oldEntry.Value);
         
-        Logger.Information("Front matter entries change requested");
         await OnEntriesChanged.InvokeAsync(_entries);
         await InvokeAsync(StateHasChanged);
     }
@@ -72,7 +65,6 @@
 
         _entries[index] = new FrontMatterEntryData(oldEntry.Key, newValue);
 
-        Logger.Information("Front matter entries change requested");
         await OnEntriesChanged.InvokeAsync(_entries);
         await InvokeAsync(StateHasChanged);
     }

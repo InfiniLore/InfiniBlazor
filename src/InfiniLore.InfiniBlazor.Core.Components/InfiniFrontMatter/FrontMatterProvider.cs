@@ -30,23 +30,19 @@ public class FrontMatterProvider(ILogger<FrontMatterProvider> logger) : IFrontMa
         => KeyIconMap.TryGetValue(key, out icon);
 
     public bool TryParse(string? value, string? lang, [NotNullWhen(true)] out IEnumerable<IFrontMatterEntry>? entries) {
-        logger.Information("Parsing front matter {value}, {lang}", value, lang);
         entries = null;
         if (value.IsNullOrWhiteSpace()) return false;
-
-        logger.Information("Parsing front matter");
+        
 
         try {
             switch (lang) {
                 case null or "" or "yaml" or "yml": {
-                    logger.Information("Parsing YAML front matter");
                     var data = YamlDeserializer.Deserialize<Dictionary<string, string?>>(value);
                     entries = data.Select(kvp => new FrontMatterEntryData(kvp.Key, kvp.Value));
                     return !entries.IsEmpty();
                 }
 
                 case "json": {
-                    logger.Information("Parsing JSON front matter");
                     if (!value.StartsWith('{') && !value.EndsWith('}')) value = $"{{{value}}}";
                     var data = JsonSerializer.Deserialize<Dictionary<string, string?>>(value);
                     entries = data?.Select(kvp => new FrontMatterEntryData(kvp.Key, kvp.Value));
@@ -71,16 +67,12 @@ public class FrontMatterProvider(ILogger<FrontMatterProvider> logger) : IFrontMa
         try {
             switch (lang) {
                 case null or "" or "yaml" or "yml": {
-                    logger.Information("Parsing YAML front matter");
-                    
                     Dictionary<string, string?> dict = entries.ToDictionary(entry => entry.Key, entry => entry.Value);
                     value = YamlSerializer.Serialize(dict);
-                    logger.Information("Result: {result}", value);
                     return value.IsNotNullOrWhiteSpace();
                 }
 
                 case "json": {
-                    logger.Information("Parsing JSON front matter");
                     Dictionary<string, string?> dict = entries.ToDictionary(entry => entry.Key, entry => entry.Value);
                     value = JsonSerializer.Serialize(dict);
                     return value.IsNotNullOrWhiteSpace();
