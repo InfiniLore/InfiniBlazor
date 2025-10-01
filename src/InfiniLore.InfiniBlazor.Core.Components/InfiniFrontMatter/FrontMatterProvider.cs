@@ -17,6 +17,7 @@ namespace InfiniLore.InfiniBlazor.Components;
 [InjectableSingleton<IFrontMatterProvider>]
 public class FrontMatterProvider(ILogger<FrontMatterProvider> logger) : IFrontMatterProvider {
     private static readonly IDeserializer YamlDeserializer = new DeserializerBuilder().Build();
+    private static readonly ISerializer YamlSerializer = new SerializerBuilder().Build();
 
     private FrozenDictionary<string, string> KeyIconMap { get; } = new Dictionary<string, string> {
         ["key"] = LucideNames.Lock
@@ -61,6 +62,39 @@ public class FrontMatterProvider(ILogger<FrontMatterProvider> logger) : IFrontMa
         catch (Exception ex) {
             logger.Warning(ex, "Error parsing front matter");
             entries = null;// Just to ensure we don't return a value that has been wrongly set
+            return false;
+        }
+    }
+    public bool TryParse(IEnumerable<IFrontMatterEntry> entries, string? lang, [NotNullWhen(true)] out string? value) {
+        value = null;
+        
+        try {
+            switch (lang) {
+                case null or "" or "yaml" or "yml": {
+                    logger.Information("Parsing YAML front matter");
+                    
+                    Dictionary<string, string?> dict = entries.ToDictionary(entry => entry.Key, entry => entry.Value);
+                    value = YamlSerializer.Serialize(dict);
+                    logger.Information("Result: {result}", value);
+                    return value.IsNotNullOrWhiteSpace();
+                }
+
+                case "json": {
+                    logger.Information("Parsing JSON front matter");
+                    Dictionary<string, string?> dict = entries.ToDictionary(entry => entry.Key, entry => entry.Value);
+                    value = JsonSerializer.Serialize(dict);
+                    return value.IsNotNullOrWhiteSpace();
+                }
+
+                default:
+                    logger.Warning("Unsupported front matter language: {lang}", lang);
+                    return false;
+            }
+
+        }
+        catch (Exception ex) {
+            logger.Warning(ex, "Error parsing front matter");
+            value = null;// Just to ensure we don't return a value that has been wrongly set
             return false;
         }
     }

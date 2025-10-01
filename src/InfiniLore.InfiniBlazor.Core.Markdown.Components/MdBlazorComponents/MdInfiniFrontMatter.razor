@@ -1,20 +1,34 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Components.FrontMatter
 @using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
 @using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes
+@using Microsoft.Extensions.Logging
 
 @namespace InfiniLore.InfiniBlazor.Markdown.MdBlazorComponents
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniBlazorMdComponentBase<FrontMatterMdSyntaxNode>
+@inject IFrontMatterProvider FrontMatterProvider
+@inject ILogger<MdInfiniFrontMatter> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniFrontMatter Source="@SyntaxNode.Content" SourceLang="@SyntaxNode.Language"/>
+<InfiniFrontMatter Source="@SyntaxNode.Content" SourceLang="@SyntaxNode.Language" OnEntriesChanged="@OnEntriesChanged"/>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
+    private async Task OnEntriesChanged(IEnumerable<IFrontMatterEntry> entries) {
+        Logger.Information("Front matter entries changed");
+        if (!FrontMatterProvider.TryParse(entries, SyntaxNode.Language, out string? value)) return;
+        
+        SyntaxNode.WithContent(value.TrimEnd('\n', '\r'));
+        Logger.Information("Front matter content changed to {a}", value);
+        
+        if (RenderContext is null) return;
+        await RenderContext.InvokeSyntaxNodeChange(SyntaxNode);
+    }
 }
