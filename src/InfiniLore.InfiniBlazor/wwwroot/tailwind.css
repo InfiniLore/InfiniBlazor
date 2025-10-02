@@ -305,3 +305,85 @@
 .infini-md-heading4 {@apply text-3xl font-semibold mb-2;}
 .infini-md-heading5 {@apply text-2xl font-semibold mb-1;}
 .infini-md-heading6 {@apply text-xl font-semibold mb-1;}
+
+/* ------------------------------------------------------------------------------------------------------------------ */
+/* Highlight.js style configuration */
+/* ------------------------------------------------------------------------------------------------------------------ */
+
+.hljs,
+.hljs-subst,
+.hljs-formula,
+.hljs-attr,
+.hljs-property,
+.hljs-params {
+    /* Ignored */;
+}
+.hljs-comment {
+    color: var(--color-infini-base-30);
+}
+.hljs-tag,
+.hljs-punctuation {
+    color: var(--color-infini-base-60);
+}
+.hljs-tag .hljs-name,
+.hljs-tag .hljs-attr {
+    color: var(--color-infini-base-50);
+}
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-meta .hljs-keyword,
+.hljs-doctag,
+.hljs-name {
+    font-weight: bold
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-number,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+    color: var(--color-infini-red-light);
+}
+.hljs-title,
+.hljs-section {
+    color: var(--color-infini-red-dark);
+    font-weight: bold
+}
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-operator,
+.hljs-selector-pseudo {
+    color: var(--color-infini-red-light);
+}
+
+.hljs-literal {
+    color: var(--color-infini-green-light);
+}
+.hljs-built_in,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+    color: var(--color-infini-green);
+}
+
+.hljs-meta {
+    color: var(--color-infini-blue);
+}
+.hljs-meta .hljs-string {
+    color: var(--color-infini-blue-light);
+}
+
+.hljs-emphasis {
+    font-style: italic
+}
+.hljs-strong {
+    font-weight: bold
+}

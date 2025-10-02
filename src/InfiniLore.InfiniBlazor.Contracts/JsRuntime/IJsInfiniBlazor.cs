@@ -11,6 +11,7 @@ public interface IJsInfiniBlazor {
     IJsInfiniBlazorElement Element { get; }
     IJsInfiniBlazorTextSelection TextSelection { get; }
     IJsInfiniBlazorKeyDownListener KeyDownListener { get; }
+    IJsInfiniBlazorHighlight Highlight { get; }
     
     Task CopyToClipboardAsync(string text);
 }

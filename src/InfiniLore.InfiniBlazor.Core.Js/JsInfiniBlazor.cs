@@ -18,12 +18,14 @@ public class JsInfiniBlazor(
     IJsInfiniBlazorDocument documentService,
     IJsInfiniBlazorElement elementService,
     IJsInfiniBlazorTextSelection textSelectionService,
-    IJsInfiniBlazorKeyDownListener keyDownListenerService
+    IJsInfiniBlazorKeyDownListener keyDownListenerService,
+    IJsInfiniBlazorHighlight highlightService
 ) : IJsInfiniBlazor {
     public IJsInfiniBlazorDocument Document => documentService;
     public IJsInfiniBlazorElement Element => elementService;
     public IJsInfiniBlazorTextSelection TextSelection => textSelectionService;
     public IJsInfiniBlazorKeyDownListener KeyDownListener => keyDownListenerService;
+    public IJsInfiniBlazorHighlight Highlight => highlightService;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
