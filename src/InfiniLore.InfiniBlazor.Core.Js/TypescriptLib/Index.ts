@@ -10,15 +10,13 @@ import {KeyListenerLib} from "./Libs/KeyListenerLib";
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-// noinspection JSUnusedGlobalSymbols
 export class InfiniBlazor {
     public document : DocumentLib = new DocumentLib();
-    public element : ElementLib = new ElementLib();
+    public elements : ElementLib = new ElementLib();
     public textSelection : TextSelectionLib = new TextSelectionLib();
     public keyListener : KeyListenerLib = new KeyListenerLib();
 }
 
-// noinspection JSUnusedGlobalSymbols
 export const infiniBlazor = new InfiniBlazor();
 export default infiniBlazor;
 

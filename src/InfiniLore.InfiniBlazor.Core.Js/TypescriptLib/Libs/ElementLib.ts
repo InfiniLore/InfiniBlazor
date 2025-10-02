@@ -1,13 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+import {IInputElement} from "../Contracts/IInputElement";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 // noinspection JSUnusedGlobalSymbols
 export class ElementLib {
-    public setValue(element: HTMLInputElement, value: string): void {
+    public setValue(element: IInputElement, value: string): void {
         if (!element) return;
         if (!value) return;
         
