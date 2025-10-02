@@ -12,14 +12,16 @@
 <CascadingIsDisabled @bind-Value="EditorContext.IsLocked">
     <div class="@Class border-infini-border flex">
         <textarea
-            disabled="@EditorContext.IsLocked"
+            disabled="@(!RendererInfo.IsInteractive || EditorContext.IsLocked)"
             class="disabled:text-infini-base-30 disabled:cursor-not-allowed focus:outline-none w-full h-full font-mono overflow-y-auto infini-scrollbar"
             @oninput="@OnInputAsync"
             @ref="@EditorContext.InputElementRef"
             @onkeydown="@OnKeyDownAsync"
         >
             @* WHY DOES VALUE SETTING NOT WORK? and this is the solutions that solves the jumping cursor! *@
-            @EditorContext.TextSource.Text 
+            @* Okay after some research I think I found where the issue comes from and this solutions makes some sense *@
+            @* The value bind some js code that is slow to transfer back to the C# side and thus causes a desync, and the cursor jumps *@
+            @EditorContext.TextSource.Text
         </textarea>
     </div>
 </CascadingIsDisabled>
@@ -33,16 +35,20 @@
     private int _valueHashCode;
 
     protected override bool ShouldRender() {
+        if (!base.ShouldRender()) return false;
+
         int lastHashCode = _valueHashCode;
         _valueHashCode = EditorContext.TextSource.Text.GetHashCode();
         return _valueHashCode != lastHashCode;
     }
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private async Task OnInputAsync(ChangeEventArgs changeEventArgs) {
         if (EditorContext.IsLocked) return;
         if (changeEventArgs.Value is not string input) return;
+        SuppressRendering();
 
         await EditorContext.InvokeSourceChangeAsync(input).ConfigureAwait(false);
     }
@@ -50,6 +56,7 @@
     private async Task OnKeyDownAsync(KeyboardEventArgs args) {
         if (EditorContext.IsLocked) return;
         if (!args.CtrlKey) return;// quick exit to doesn't have to wait on every key press
+        SuppressRendering();
 
         await EditorContext.InvokeInputKeyDownAsync(args).ConfigureAwait(false);
     }

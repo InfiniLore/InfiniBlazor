@@ -1,12 +1,20 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+import {IInputElement} from "../Contracts/IInputElement";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 // noinspection JSUnusedGlobalSymbols
 export class ElementLib {
+    public setValue(element: IInputElement, value: string): void {
+        if (!element) return;
+        if (!value) return;
+        
+        element.value = value;
+    }
+    
     public setTextContent(element: HTMLElement, text: string): void {
         if (!element) return;
         if (!text) return;

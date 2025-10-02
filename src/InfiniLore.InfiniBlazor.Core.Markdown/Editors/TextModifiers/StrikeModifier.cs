@@ -15,5 +15,5 @@ public class StrikeModifier(ILogger<StrikeModifier> logger) : SingleInstructionM
     public const string Name = "strike";
     
     public override string ModifierName { get; } = Name;
-    protected override string Instruction { get; } = "~";
+    protected override string Instruction { get; } = "~~";
 }
