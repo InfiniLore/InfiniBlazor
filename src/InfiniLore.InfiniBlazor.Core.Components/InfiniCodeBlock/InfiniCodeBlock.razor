@@ -27,7 +27,9 @@
     </div>
     <div class="overload-bg-infini-codeblock text-sm border border-infini-border rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar">
         <div class="relative">
-            <pre class="whitespace-pre m-0 font-mono min-h-0"><code @ref="@Reference" class="@LanguageClass">@Content @ChildContent</code></pre>
+            <pre class="whitespace-pre m-0 font-mono min-h-0">
+                <code @ref="@Reference" class="@LanguageClass">@Content @ChildContent</code>
+            </pre>
         </div>
     </div>
 </div>
@@ -51,9 +53,15 @@
     protected override async Task OnAfterRenderAsync(bool firstRender) {
         await base.OnAfterRenderAsync(firstRender);
         
-        if (firstRender && RendererInfo.IsInteractive) {
-            await JsInfiniBlazor.Highlight.HighlightElementAsync(Reference);
-        }
+        if (!firstRender && Content is not null) await JsInfiniBlazor.Element.SetTextContentAsync(Reference,Content);
+        if (RendererInfo.IsInteractive) await JsInfiniBlazor.Highlight.HighlightElementAsync(Reference);
+    }
+
+    protected override async Task OnParametersSetAsync() {
+        await base.OnParametersSetAsync();
+        
+        // if (Content is not null) await JsInfiniBlazor.Element.SetTextContentAsync(Reference,Content);
+        // if (RendererInfo.IsInteractive) await JsInfiniBlazor.Highlight.HighlightElementAsync(Reference);
     }
 
     private async Task CopyToClipboardAsync() {

@@ -41,5 +41,4 @@ declare global {
 if (typeof window !== 'undefined') {
     window.infiniBlazor = infiniBlazor;
     window.hljs = hljs;
-    window.hljs.highlightAll();
 }
