@@ -12,7 +12,7 @@
 <CascadingIsDisabled @bind-Value="EditorContext.IsLocked">
     <div class="@Class border-infini-border flex">
         <textarea
-            disabled="@EditorContext.IsLocked"
+            disabled="@(!RendererInfo.IsInteractive || EditorContext.IsLocked)"
             class="disabled:text-infini-base-30 disabled:cursor-not-allowed focus:outline-none w-full h-full font-mono overflow-y-auto infini-scrollbar"
             @oninput="@OnInputAsync"
             @ref="@EditorContext.InputElementRef"
@@ -41,6 +41,7 @@
         _valueHashCode = EditorContext.TextSource.Text.GetHashCode();
         return _valueHashCode != lastHashCode;
     }
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
