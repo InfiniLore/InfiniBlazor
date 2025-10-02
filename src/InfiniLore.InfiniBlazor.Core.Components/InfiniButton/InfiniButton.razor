@@ -87,10 +87,12 @@ else {
     // -----------------------------------------------------------------------------------------------------------------
     private async Task OnMouseEnterAsync() {
         OnHover = true;
+        SuppressRendering();
         await OnHoverChanged.InvokeAsync(OnHover);
     }
     private async Task OnMouseExitAsync() {
         OnHover = false;
+        SuppressRendering();
         await OnHoverChanged.InvokeAsync(OnHover);
     }
 }

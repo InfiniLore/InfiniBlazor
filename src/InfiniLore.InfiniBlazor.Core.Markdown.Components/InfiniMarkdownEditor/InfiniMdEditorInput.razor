@@ -33,6 +33,8 @@
     private int _valueHashCode;
 
     protected override bool ShouldRender() {
+        if (!base.ShouldRender()) return false;
+
         int lastHashCode = _valueHashCode;
         _valueHashCode = EditorContext.TextSource.Text.GetHashCode();
         return _valueHashCode != lastHashCode;
@@ -43,6 +45,7 @@
     private async Task OnInputAsync(ChangeEventArgs changeEventArgs) {
         if (EditorContext.IsLocked) return;
         if (changeEventArgs.Value is not string input) return;
+        SuppressRendering();
 
         await EditorContext.InvokeSourceChangeAsync(input).ConfigureAwait(false);
     }
@@ -50,6 +53,7 @@
     private async Task OnKeyDownAsync(KeyboardEventArgs args) {
         if (EditorContext.IsLocked) return;
         if (!args.CtrlKey) return;// quick exit to doesn't have to wait on every key press
+        SuppressRendering();
 
         await EditorContext.InvokeInputKeyDownAsync(args).ConfigureAwait(false);
     }

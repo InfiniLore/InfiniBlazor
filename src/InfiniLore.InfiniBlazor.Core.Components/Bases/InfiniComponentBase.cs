@@ -20,9 +20,23 @@ public abstract class InfiniComponentBase : ComponentBase, IAsyncDisposable {
     }
     
     [CascadingParameter(Name = nameof(CascadedDisabled))] public bool CascadedDisabled { get; set; }
+    
+    protected bool SuppressRender { get; set; }
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    // ReSharper disable once InvertIf
+    protected override bool ShouldRender() {
+        if (!base.ShouldRender()) return false;
+        if (SuppressRender) {
+            SuppressRender = false;
+            return false;
+        }
+        
+        return true;
+    }
+
     protected override void OnParametersSet() {
         base.OnParametersSet();
         VisualDebugger.OnChange += StateHasChanged;
@@ -45,5 +59,9 @@ public abstract class InfiniComponentBase : ComponentBase, IAsyncDisposable {
 
     protected string WhenDisabled(string onEnabled, string onDisabled) {
         return IsDisabled ? onDisabled : onEnabled;
+    }
+    
+    protected void SuppressRendering() {
+        SuppressRender = true;
     }
 }
