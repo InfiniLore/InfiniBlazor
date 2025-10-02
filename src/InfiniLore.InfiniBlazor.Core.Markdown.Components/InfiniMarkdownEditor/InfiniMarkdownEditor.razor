@@ -149,6 +149,7 @@
 
     private async Task OnSourceChangedAsync(string newSource) {
         EditorContext.TextSource.UpdateSource(newSource);
+        await JsInfiniBlazor.Element.SetValueAsync(EditorContext.InputElementRef, EditorContext.TextSource.Text);
 
         EditorContext.SyntaxTree.ReturnToPool();
         EditorContext.SyntaxTree = Parser.Markdown.SerializeToSyntaxTree(EditorContext.TextSource.Text);
@@ -191,6 +192,7 @@
 
         Range range = await JsInfiniBlazor.TextSelection.GetRangeAsync(EditorContext.InputElementRef);
         TextEditor.Insert(EditorContext.TextSource, content, range);
+
         await EditorContext.InvokeSourceChangeAsync(EditorContext.TextSource.Text).ConfigureAwait(false);
         await InvokeAsync(StateHasChanged);
     }

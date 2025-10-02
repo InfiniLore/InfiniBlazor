@@ -9,9 +9,10 @@ namespace InfiniLore.InfiniBlazor.JsRuntime;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IJsInfiniBlazorElement {
-    Task SetTextContentAsync(ElementReference element, string text);
-    Task<string> GetTextContentAsync(ElementReference element);
-    Task AddHorizontalScroll(ElementReference element, double i);
-    Task ClickElement(ElementReference element);
-    Task ClickElementById(string id);
+    Task SetValueAsync(ElementReference element, string text, CancellationToken ct = default);
+    Task SetTextContentAsync(ElementReference element, string text, CancellationToken ct = default);
+    Task<string> GetTextContentAsync(ElementReference element, CancellationToken ct = default);
+    Task AddHorizontalScroll(ElementReference element, double i, CancellationToken ct = default);
+    Task ClickElement(ElementReference element, CancellationToken ct = default);
+    Task ClickElementById(string id, CancellationToken ct = default);
 }

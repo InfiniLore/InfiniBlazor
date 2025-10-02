@@ -7,6 +7,13 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // noinspection JSUnusedGlobalSymbols
 export class ElementLib {
+    public setValue(element: HTMLInputElement, value: string): void {
+        if (!element) return;
+        if (!value) return;
+        
+        element.value = value;
+    }
+    
     public setTextContent(element: HTMLElement, text: string): void {
         if (!element) return;
         if (!text) return;
