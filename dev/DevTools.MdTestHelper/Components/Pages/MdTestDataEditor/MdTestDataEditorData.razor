@@ -2,7 +2,6 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor
-@using InfiniLore.InfiniBlazor.JsRuntime
 @using InfiniLore.InfiniBlazor.Markdown
 @using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
 @using InfiniLore.InfiniBlazor.Toasting
@@ -14,7 +13,6 @@
 @inject IMarkdownParser MarkdownParser
 @inject IToastingProvider ToastingProvider
 @inject MdTestDataProvider MdTestDataProvider
-@inject IInfiniBlazorJs InfiniBlazorJS
 
 @implements IDisposable
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -278,10 +276,10 @@
         FileName = string.Empty;
         TestId = string.Empty;
         DeveloperNote = string.Empty;
-        await EditorContext.InvokeSourceChangeAsync(string.Empty);
         ExpectedMarkdown = string.Empty;
         ExpectedSyntaxTreeString = string.Empty;
         TestDataOrigin = null;
+        await EditorContext.ClearAsync();
 
         await ToastingProvider.PublishToastAsync(
             new ToastingData("Test was Deleted", TestId),
@@ -321,10 +319,10 @@
         FileName = string.Empty;
         TestId = string.Empty;
         DeveloperNote = string.Empty;
-        await EditorContext.InvokeSourceChangeAsync(string.Empty);
         ExpectedMarkdown = string.Empty;
         ExpectedSyntaxTreeString = string.Empty;
         TestDataOrigin = null;
+        await EditorContext.ClearAsync();
 
         await ToastingProvider.PublishToastAsync(
             new ToastingData("Test Cleared"),
