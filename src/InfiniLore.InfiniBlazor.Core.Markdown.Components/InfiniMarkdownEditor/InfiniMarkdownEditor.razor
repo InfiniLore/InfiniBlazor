@@ -3,6 +3,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.JsRuntime
 @using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
+@* @using Microsoft.Extensions.Logging *@
 
 @namespace InfiniLore.InfiniBlazor.Markdown
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -13,6 +14,7 @@
 @inject IMarkdownParser Parser
 @inject IInfiniBlazorJs InfiniBlazorJs
 @inject ITextEditor TextEditor
+@* @inject ILogger<InfiniMarkdownEditor> Logger *@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -140,7 +142,8 @@
     }
 
     private async Task OnSourceChangedAsync() {
-        await InfiniBlazorJs.Element.SetValueSelectionAwareAsync(EditorContext.InputElementRef, EditorContext.TextSource.Text);
+        if (EditorContext.TextSource.IsEmpty) await InfiniBlazorJs.Element.ClearValueAsync(EditorContext.InputElementRef);
+        else await InfiniBlazorJs.Element.SetValueSelectionAwareAsync(EditorContext.InputElementRef, EditorContext.TextSource.Text);
 
         EditorContext.SyntaxTree.ReturnToPool();
         EditorContext.SyntaxTree = Parser.Markdown.SerializeToSyntaxTree(EditorContext.TextSource.Text);

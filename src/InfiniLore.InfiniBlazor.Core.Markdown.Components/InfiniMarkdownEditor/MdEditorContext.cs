@@ -47,6 +47,9 @@ public class MdEditorContext {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Task ClearAsync()
+        => InvokeSourceChangeAsync(string.Empty);
+
     public async Task InvokeSourceChangeAsync(string value) {
         TextSource.UpdateSource(value);
         if (OnSourceChangedAsync is null) return;

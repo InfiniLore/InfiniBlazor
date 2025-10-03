@@ -36,7 +36,7 @@
 
     protected override bool ShouldRender() {
         if (!base.ShouldRender()) return false;
-
+    
         int lastHashCode = _valueHashCode;
         _valueHashCode = EditorContext.TextSource.Text.GetHashCode();
         return _valueHashCode != lastHashCode;

@@ -19,6 +19,15 @@ public class InfiniBlazorJsElement(
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public async Task ClearValueAsync(ElementReference element, CancellationToken ct = default) {
+        try {
+            await jsRuntime.InvokeVoidAsync("infiniBlazor.elements.clearValue", ct, element);
+        }
+        catch (Exception e) {
+            logger.Warning(e, "Error clearing value for element {element}", element);
+        }
+    }
+    
     public async Task SetValueAsync(ElementReference element, string text, CancellationToken ct = default) {
         try {
             await jsRuntime.InvokeVoidAsync("infiniBlazor.elements.setValue", ct, element, text);
