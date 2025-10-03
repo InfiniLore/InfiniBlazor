@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "watch:tailwind-server": "npx @tailwindcss/cli -i ./src/InfiniLore.InfiniBlazor/wwwroot/tailwind.css -o ./src/InfiniLore.InfiniBlazor/wwwroot/InfiniBlazor.css --watch",
-    "watch:typescript": "npx webpack --watch"
+    "watch:typescript": "npx webpack --watch --env production=true"
   },
   "keywords": [],
   "author": "",
@@ -15,10 +15,10 @@
     "ts-loader": "^9.5.4",
     "typescript": "^5.9.3",
     "webpack": "^5.102.0",
-    "webpack-cli": "^6.0.1"
+    "webpack-cli": "^6.0.1",
+    "highlight.js": "^11.11.1"
   },
   "dependencies": {
-    "@tailwindcss/cli": "^4.1.14",
-    "highlight.js": "^11.11.1"
+    "@tailwindcss/cli": "^4.1.14"
   }
 }
