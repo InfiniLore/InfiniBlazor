@@ -14,7 +14,7 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class InfiniThemeManager(
     IThemeStateProvider themeStateProvider,
-    IJsInfiniBlazor jsInfiniBlazor,
+    IInfiniBlazorJs infiniBlazorJs,
     ILogger<InfiniThemeManager> logger
 ) : ComponentBase, IAsyncDisposable {
     private const string ThemeId = "infiniThemeManager-selected";
@@ -71,7 +71,7 @@ public partial class InfiniThemeManager(
                 return;
             }
 
-            await jsInfiniBlazor.Document.AddOrUpdateElementAtHead(ThemeId, css);
+            await infiniBlazorJs.Document.AddOrUpdateElementAtHead(ThemeId, css);
             InitialCss = null; // Forget the initial state to free up memory
         }
         finally {

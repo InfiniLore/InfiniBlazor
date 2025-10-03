@@ -9,7 +9,7 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits ComponentBase
-@inject IJsInfiniBlazor JsInfiniBlazor
+@inject IInfiniBlazorJs InfiniBlazorJs
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -44,12 +44,12 @@
         <InfiniTableCell Alignment="Alignment.Right" Class="flex justify-center gap-6">
             <InfiniButton
                 IconName="copy"
-                OnClick="@(() => JsInfiniBlazor.CopyToClipboardAsync(item.CssVarName))"
+                OnClick="@(() => InfiniBlazorJs.CopyToClipboardAsync(item.CssVarName))"
                 TooltipAnchor="Anchor.Bottom | Anchor.Left"
                 Tooltip="@item.CssVarName"></InfiniButton>
             <InfiniButton
                 IconName="copy"
-                OnClick="@(() => JsInfiniBlazor.CopyToClipboardAsync(item.CssData))"
+                OnClick="@(() => InfiniBlazorJs.CopyToClipboardAsync(item.CssData))"
                 TooltipAnchor="Anchor.Bottom | Anchor.Left"
                 Tooltip="@item.CssData"
             />

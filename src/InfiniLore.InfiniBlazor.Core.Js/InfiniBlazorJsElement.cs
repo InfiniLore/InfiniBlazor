@@ -11,11 +11,11 @@ namespace InfiniLore.InfiniBlazor.Js;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableScoped<IJsInfiniBlazorElement>]
-public class JsInfiniBlazorElement(
+[InjectableScoped<IInfiniBlazorJsElement>]
+public class InfiniBlazorJsElement(
     IJSRuntime jsRuntime,
-    ILogger<JsInfiniBlazorElement> logger
-) : IJsInfiniBlazorElement {
+    ILogger<InfiniBlazorJsElement> logger
+) : IInfiniBlazorJsElement {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

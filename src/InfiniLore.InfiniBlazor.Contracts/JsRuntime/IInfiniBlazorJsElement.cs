@@ -8,7 +8,7 @@ namespace InfiniLore.InfiniBlazor.JsRuntime;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IJsInfiniBlazorElement {
+public interface IInfiniBlazorJsElement {
     Task SetValueAsync(ElementReference element, string text, CancellationToken ct = default);
     Task SetValueSelectionAwareAsync(ElementReference element, string text, CancellationToken ct = default);
     

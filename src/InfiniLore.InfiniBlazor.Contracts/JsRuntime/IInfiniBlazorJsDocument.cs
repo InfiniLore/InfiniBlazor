@@ -6,6 +6,6 @@ namespace InfiniLore.InfiniBlazor.JsRuntime;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IJsInfiniBlazorDocument {
+public interface IInfiniBlazorJsDocument {
     Task AddOrUpdateElementAtHead(string id, string css);
 }
