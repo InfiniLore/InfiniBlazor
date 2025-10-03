@@ -23,10 +23,25 @@
 @code {
     private Dictionary<string, object> GetAttributes() {
         var dict = new Dictionary<string, object>();
-        if (SyntaxNode.Modifier is not {} modifier || !modifier.TryGetColor(out string? color)) return dict;
+        if (SyntaxNode.Modifier is not {} modifier) return dict;
 
-        if (color is "accent") color = "var(--color-infini-accent)";
-        dict.AddOrUpdate("style", $"color:{color};");
+        if (modifier.TryGetColor(out string? color)) {
+            if (color is "accent") color = "var(--color-infini-accent)";
+            dict.AddOrUpdate(
+                "style",
+                _ => $"color:{color}",
+                (_, oldValue) => $"{oldValue};color:{color}"
+            );     
+        }
+
+        if (modifier.TryGetStyle(out string? style)) {
+            dict.AddOrUpdate(
+                "style",
+                _ => style,
+                (_, oldValue) => $"{oldValue};{style}"
+            );       
+            
+        }
 
         return dict;
     }
