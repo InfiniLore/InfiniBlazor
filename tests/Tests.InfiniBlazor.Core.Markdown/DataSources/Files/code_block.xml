@@ -45,6 +45,144 @@ const code = sample();
   ]
 }</ExpectedJsonString>
   </MdTestData>
+  <MdTestData Id="edgecase_withTrailingContent" FileName="code_block.xml">
+    <MdString>```
+const code = sample();
+``` with trailing content
+
+```javascript
+const code = sample();
+``` with **bold trailing** content
+
+
+```javascript
+const code = sample();
+``` with ``` weird codeblock ``` as trailing content</MdString>
+    <MdSyntaxTree>
+      <CodeBlockMdSyntaxNode xml:space="preserve" Language="">const code = sample();
+</CodeBlockMdSyntaxNode>
+      <ParagraphMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> with trailing content</TextMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <CodeBlockMdSyntaxNode xml:space="preserve" Language="javascript">const code = sample();
+</CodeBlockMdSyntaxNode>
+      <ParagraphMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> with </TextMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">bold trailing</TextMdSyntaxNode>
+        </BoldMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> content</TextMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <NewLineMdSyntaxNode />
+      <CodeBlockMdSyntaxNode xml:space="preserve" Language="javascript">const code = sample();
+</CodeBlockMdSyntaxNode>
+      <ParagraphMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> with </TextMdSyntaxNode>
+        <CodeInlineMdSyntaxNode xml:space="preserve" BackTickCount="3"> weird codeblock </CodeInlineMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> as trailing content</TextMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedMarkdown>```
+const code = sample();
+``` with trailing content
+
+```javascript
+const code = sample();
+``` with **bold trailing** content
+
+
+```javascript
+const code = sample();
+``` with ``` weird codeblock ``` as trailing content</ExpectedMarkdown>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "CodeBlockMdSyntaxNode",
+      "language": "",
+      "content": "const code = sample();\n"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " with trailing content"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "CodeBlockMdSyntaxNode",
+      "language": "javascript",
+      "content": "const code = sample();\n"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " with "
+        },
+        {
+          "type": "BoldMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "bold trailing"
+            }
+          ]
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " content"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "CodeBlockMdSyntaxNode",
+      "language": "javascript",
+      "content": "const code = sample();\n"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " with "
+        },
+        {
+          "type": "CodeInlineMdSyntaxNode",
+          "backTickCount": 3,
+          "content": " weird codeblock "
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " as trailing content"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
+  </MdTestData>
   <MdTestData Id="empty" FileName="code_block.xml">
     <MdString>```
 

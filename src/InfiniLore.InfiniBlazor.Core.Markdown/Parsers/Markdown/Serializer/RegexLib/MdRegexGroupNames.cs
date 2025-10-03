@@ -18,6 +18,7 @@ public static class MdRegexGroupNames {
     public const string CodeBlock = "codeBlock";
     public const string CodeBlockContent = "cBody";
     public const string CodeBlockLang = "cLang";
+    public const string CodeBlockTrailing = "cTrailing";
     public const string CodeInline = "code";
     public const string CodeInlineContent = "c";
     public const string Emote = "emote";

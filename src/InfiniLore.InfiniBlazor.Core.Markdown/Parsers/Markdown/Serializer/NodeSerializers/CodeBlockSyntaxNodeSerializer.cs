@@ -13,6 +13,7 @@ namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSeria
 public static class CodeBlockSyntaxNodeSerializer {
     private static readonly int CBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeBlockContent);
     private static readonly int CLangId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeBlockLang);
+    private static readonly int CTrailingId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeBlockTrailing);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -32,6 +33,12 @@ public static class CodeBlockSyntaxNodeSerializer {
         string content = ProcessCodeBlockContent(ref codeBlockBody);
         codeNode.WithContent(content);
         parentNode.AddChildNode(codeNode);
+        
+        // Add trailing text as a paragraph node
+        if (!match.Groups[CTrailingId].TryGetValue(out string? trailing)) return;
+        ParagraphMdSyntaxNode paragraphNode = ParagraphMdSyntaxNode.Pool.Get();
+        parentNode.AddChildNode(paragraphNode);
+        stack.PushSingleLineMatchesToStack(trailing, paragraphNode);
     }
 
     private static string ProcessCodeBlockContent(ref ReadOnlySpan<char> content) {
