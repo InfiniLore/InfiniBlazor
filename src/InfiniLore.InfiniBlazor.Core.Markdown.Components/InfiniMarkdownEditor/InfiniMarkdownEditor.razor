@@ -147,9 +147,7 @@
         await JsInfiniBlazor.KeyDownListener.RemovePreventDefaultListenerAsync();
     }
 
-    private async Task OnSourceChangedAsync(string newSource) {
-        EditorContext.TextSource.UpdateSource(newSource);
-        
+    private async Task OnSourceChangedAsync() {
         await JsInfiniBlazor.Element.SetTextContentSelectionAwareAsync(EditorContext.InputElementRef, EditorContext.TextSource.Text);
 
         EditorContext.SyntaxTree.ReturnToPool();
@@ -157,7 +155,6 @@
         await EditorContext.InvokeSyntaxTreeChangeAsync().ConfigureAwait(false);
 
         await EditorContextChanged.InvokeAsync(EditorContext).ConfigureAwait(false);
-        Logger.Information("Source changed");
 
         await InvokeAsync(StateHasChanged);
     }

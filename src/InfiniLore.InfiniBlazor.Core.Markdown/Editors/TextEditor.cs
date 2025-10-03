@@ -23,7 +23,6 @@ public class TextEditor : ITextEditor {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void Modify(ITextSource source, ReadOnlySpan<char> modifierName, Range range) {
-        Logger.Error("{@source} {l} {range}", source.Text, source.Length, range);
         if (!AlternateLookup.TryGetValue(modifierName, out ITextModifier? modifier)) return;
 
         if (!modifier.IsSingleLineStructure || range.Start.Value == range.End.Value) {
@@ -114,33 +113,30 @@ public class TextEditor : ITextEditor {
 
     private bool TryHandleAsTableRow(ITextSource source, int intersectStart, int intersectEnd, ITextModifier modifier) {
         ReadOnlySpan<char> possibleTable = source.Text.AsSpan(intersectStart, intersectEnd - intersectStart);
-        if (TextEditorRegexLib.IsTableLineRegex.IsMatch(possibleTable)) {
-            Regex.ValueMatchEnumerator tableCellMatches = TextEditorRegexLib.TableCellsRegex.EnumerateMatches(possibleTable);
-            Stack<Range> tableCellMatchesStack = GlobalPools.RangeStack.Get();
-            try {
-                while (tableCellMatches.MoveNext()) {
-                    ValueMatch current = tableCellMatches.Current;
-                    if (current.Index < 0 || current.Length <= 0) continue;
+        if (!TextEditorRegexLib.IsTableLineRegex.IsMatch(possibleTable)) return TextEditorRegexLib.IsTableHeaderLineRegex.IsMatch(possibleTable);
 
-                    tableCellMatchesStack.Push(new Range(
-                        intersectStart + current.Index,
-                        intersectStart + current.Index + current.Length
-                    ));
-                }
+        Regex.ValueMatchEnumerator tableCellMatches = TextEditorRegexLib.TableCellsRegex.EnumerateMatches(possibleTable);
+        Stack<Range> tableCellMatchesStack = GlobalPools.RangeStack.Get();
+        try {
+            while (tableCellMatches.MoveNext()) {
+                ValueMatch current = tableCellMatches.Current;
+                if (current.Index < 0 || current.Length <= 0) continue;
 
-                while (tableCellMatchesStack.TryPop(out Range result)) {
-                    modifier.Modify(source, result, this);
-                }
-
-                return true;
+                tableCellMatchesStack.Push(new Range(
+                    intersectStart + current.Index,
+                    intersectStart + current.Index + current.Length
+                ));
             }
-            finally {
-                GlobalPools.RangeStack.Return(tableCellMatchesStack);
+
+            while (tableCellMatchesStack.TryPop(out Range result)) {
+                modifier.Modify(source, result, this);
             }
+
+            return true;
         }
-
-        return TextEditorRegexLib.IsTableHeaderLineRegex.IsMatch(possibleTable);
-
+        finally {
+            GlobalPools.RangeStack.Return(tableCellMatchesStack);
+        }
     }
     #endregion
 }
