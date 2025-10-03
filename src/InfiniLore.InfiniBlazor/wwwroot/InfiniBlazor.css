@@ -829,6 +829,9 @@
   .h-\[1\.25rem\] {
     height: 1.25rem;
   }
+  .h-\[1em\] {
+    height: 1em;
+  }
   .h-auto {
     height: auto;
   }
@@ -1162,6 +1165,9 @@
   }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
+  }
+  .transform-\[translate\(0\,-0\.1em\)\] {
+    transform: translate(0,-0.1em);
   }
   .cursor-default {
     cursor: default;
@@ -1914,6 +1920,9 @@
   }
   .align-bottom {
     vertical-align: bottom;
+  }
+  .align-text-bottom {
+    vertical-align: text-bottom;
   }
   .font-mono {
     font-family: var(--font-mono);

@@ -35,7 +35,10 @@
     }
 
     case { ContentType: EmoteContentType.ResourcePathPng, Data: {} data }: {
-        <img src="data:image/png;base64,@GetBase64Image(data)" alt="@Name" class="inline-block rounded-lg shadow-lg h-full w-auto object-contain" style="width:auto;height:1.5em;vertical-align:text-bottom;object-fit:contain;transform:translate(0,0.15em);" />
+        <img 
+            src="data:image/png;base64,@GetBase64Image(data)" 
+            alt="@Name"
+            class="inline-block shadow-lg h-[1em] w-auto align-text-bottom object-contain transform-[translate(0,-0.1em)]"/>
         break;
     }
 
