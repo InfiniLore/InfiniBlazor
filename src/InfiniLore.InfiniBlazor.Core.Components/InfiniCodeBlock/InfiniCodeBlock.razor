@@ -52,22 +52,12 @@
 
     private string LanguageClass => $"language-{Language}";
     private ElementReference Reference { get; set; }
-
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override async Task OnInitializedAsync() {
-        await base.OnInitializedAsync();
-        await HighlightAsync();
-    }
-    
     protected override async Task OnAfterRenderAsync(bool firstRender) {
         await base.OnAfterRenderAsync(firstRender);
-        await HighlightAsync();
-    }
-
-    protected override async Task OnParametersSetAsync() {
-        await base.OnParametersSetAsync();
         await HighlightAsync();
     }
 
