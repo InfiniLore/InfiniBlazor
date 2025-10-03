@@ -1,4 +1,4 @@
-/*! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.1.14 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
@@ -186,7 +186,7 @@
     --color-infini-button-outline-solid-text-hover: var(--color-infini-button-outline-text-hover);
     --color-infini-button-outline-solid-ring: var(--color-infini-button-outline-ring);
     --color-infini-button-outline-solid-ring-hover: var(--color-infini-button-outline-ring-hover);
-    --color-infini-codeblock: var(--color-infini-base-50);
+    --color-infini-codeblock: var(--color-infini-base-80);
   }
 }
 @layer base {
@@ -361,10 +361,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-8gCQtWpQCs: auto;
-      --toolwind-toggle-jqJYEzkGNd: transparent;
-      --toolwind-toggle-uyTvcjF9jH: inherit;
-      --toolwind-toggle-tmjxvcBW0P: 0px;
+      --toolwind-toggle-Ljn2hkN5pK: auto;
+      --toolwind-toggle-qHGl3dN4t4: transparent;
+      --toolwind-toggle-UAoDClExNA: inherit;
+      --toolwind-toggle-OTqjqqsCM3: 0px;
     }
   }
   .anchored-bottom-left\/anchor-tooltip {
@@ -373,10 +373,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-8gCQtWpQCs: auto;
-      --toolwind-toggle-jqJYEzkGNd: transparent;
-      --toolwind-toggle-uyTvcjF9jH: inherit;
-      --toolwind-toggle-tmjxvcBW0P: 0px;
+      --toolwind-toggle-Ljn2hkN5pK: auto;
+      --toolwind-toggle-qHGl3dN4t4: transparent;
+      --toolwind-toggle-UAoDClExNA: inherit;
+      --toolwind-toggle-OTqjqqsCM3: 0px;
     }
   }
   .anchored-bottom-right\/anchor-tooltip {
@@ -385,10 +385,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-8gCQtWpQCs: auto;
-      --toolwind-toggle-jqJYEzkGNd: transparent;
-      --toolwind-toggle-uyTvcjF9jH: inherit;
-      --toolwind-toggle-tmjxvcBW0P: 0px;
+      --toolwind-toggle-Ljn2hkN5pK: auto;
+      --toolwind-toggle-qHGl3dN4t4: transparent;
+      --toolwind-toggle-UAoDClExNA: inherit;
+      --toolwind-toggle-OTqjqqsCM3: 0px;
     }
   }
   .anchored-bottom\/anchor-nav-bar-menu {
@@ -397,10 +397,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w333619322p3a192q2p3619312t3239;
-      --toolwind-toggle-8gCQtWpQCs: auto;
-      --toolwind-toggle-jqJYEzkGNd: transparent;
-      --toolwind-toggle-uyTvcjF9jH: inherit;
-      --toolwind-toggle-tmjxvcBW0P: 0px;
+      --toolwind-toggle-Ljn2hkN5pK: auto;
+      --toolwind-toggle-qHGl3dN4t4: transparent;
+      --toolwind-toggle-UAoDClExNA: inherit;
+      --toolwind-toggle-OTqjqqsCM3: 0px;
     }
   }
   .anchored-left\/anchor-tooltip {
@@ -409,10 +409,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-8gCQtWpQCs: auto;
-      --toolwind-toggle-jqJYEzkGNd: transparent;
-      --toolwind-toggle-uyTvcjF9jH: inherit;
-      --toolwind-toggle-tmjxvcBW0P: 0px;
+      --toolwind-toggle-Ljn2hkN5pK: auto;
+      --toolwind-toggle-qHGl3dN4t4: transparent;
+      --toolwind-toggle-UAoDClExNA: inherit;
+      --toolwind-toggle-OTqjqqsCM3: 0px;
     }
   }
   .anchored-right\/anchor-tooltip {
@@ -421,10 +421,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-8gCQtWpQCs: auto;
-      --toolwind-toggle-jqJYEzkGNd: transparent;
-      --toolwind-toggle-uyTvcjF9jH: inherit;
-      --toolwind-toggle-tmjxvcBW0P: 0px;
+      --toolwind-toggle-Ljn2hkN5pK: auto;
+      --toolwind-toggle-qHGl3dN4t4: transparent;
+      --toolwind-toggle-UAoDClExNA: inherit;
+      --toolwind-toggle-OTqjqqsCM3: 0px;
     }
   }
   .anchored-top-center\/anchor-tooltip {
@@ -433,10 +433,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-8gCQtWpQCs: auto;
-      --toolwind-toggle-jqJYEzkGNd: transparent;
-      --toolwind-toggle-uyTvcjF9jH: inherit;
-      --toolwind-toggle-tmjxvcBW0P: 0px;
+      --toolwind-toggle-Ljn2hkN5pK: auto;
+      --toolwind-toggle-qHGl3dN4t4: transparent;
+      --toolwind-toggle-UAoDClExNA: inherit;
+      --toolwind-toggle-OTqjqqsCM3: 0px;
     }
   }
   .anchored-top-left\/anchor-tooltip {
@@ -445,10 +445,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-8gCQtWpQCs: auto;
-      --toolwind-toggle-jqJYEzkGNd: transparent;
-      --toolwind-toggle-uyTvcjF9jH: inherit;
-      --toolwind-toggle-tmjxvcBW0P: 0px;
+      --toolwind-toggle-Ljn2hkN5pK: auto;
+      --toolwind-toggle-qHGl3dN4t4: transparent;
+      --toolwind-toggle-UAoDClExNA: inherit;
+      --toolwind-toggle-OTqjqqsCM3: 0px;
     }
   }
   .anchored-top-right\/anchor-tooltip {
@@ -457,10 +457,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-8gCQtWpQCs: auto;
-      --toolwind-toggle-jqJYEzkGNd: transparent;
-      --toolwind-toggle-uyTvcjF9jH: inherit;
-      --toolwind-toggle-tmjxvcBW0P: 0px;
+      --toolwind-toggle-Ljn2hkN5pK: auto;
+      --toolwind-toggle-qHGl3dN4t4: transparent;
+      --toolwind-toggle-UAoDClExNA: inherit;
+      --toolwind-toggle-OTqjqqsCM3: 0px;
     }
   }
   .anchored\/anchor-tooltip {
@@ -468,10 +468,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-8gCQtWpQCs: auto;
-      --toolwind-toggle-jqJYEzkGNd: transparent;
-      --toolwind-toggle-uyTvcjF9jH: inherit;
-      --toolwind-toggle-tmjxvcBW0P: 0px;
+      --toolwind-toggle-Ljn2hkN5pK: auto;
+      --toolwind-toggle-qHGl3dN4t4: transparent;
+      --toolwind-toggle-UAoDClExNA: inherit;
+      --toolwind-toggle-OTqjqqsCM3: 0px;
     }
   }
   .absolute {
@@ -3289,12 +3289,51 @@
   --tw-font-weight: var(--font-weight-semibold);
   font-weight: var(--font-weight-semibold);
 }
+.hljs-comment {
+  color: var(--color-infini-base-30);
+}
+.hljs-tag, .hljs-punctuation {
+  color: var(--color-infini-base-60);
+}
+.hljs-tag .hljs-name, .hljs-tag .hljs-attr {
+  color: var(--color-infini-base-50);
+}
+.hljs-keyword {
+  color: var(--color-infini-red-light);
+}
+.hljs-attribute, .hljs-selector-tag, .hljs-doctag, .hljs-name {
+  font-weight: bold;
+}
+.hljs-type, .hljs-selector-id, .hljs-selector-class, .hljs-quote, .hljs-template-tag, .hljs-deletion {
+  color: var(--color-infini-red-light);
+}
+.hljs-title, .hljs-section {
+  color: var(--color-infini-purple-light);
+}
+.hljs-regexp, .hljs-symbol, .hljs-variable, .hljs-template-variable, .hljs-link, .hljs-selector-attr, .hljs-operator, .hljs-selector-pseudo {
+  color: var(--color-infini-orange-light);
+}
+.hljs-literal {
+  color: var(--color-infini-orange-light);
+}
+.hljs-built_in, .hljs-bullet, .hljs-code, .hljs-addition {
+  color: var(--color-infini-orange-light);
+}
+.hljs-string, .hljs-number, .hljs-meta .hljs-keyword, .hljs-meta, .hljs-meta .hljs-string {
+  color: var(--color-infini-blue-light);
+}
+.hljs-emphasis {
+  font-style: italic;
+}
+.hljs-strong {
+  font-weight: bold;
+}
 @layer base {
   [popover] {
-    inset: var(--toolwind-toggle-8gCQtWpQCs, 0px);
-    background-color: var(--toolwind-toggle-jqJYEzkGNd, canvas);
-    color: var(--toolwind-toggle-uyTvcjF9jH, canvastext);
-    margin: var(--toolwind-toggle-tmjxvcBW0P, auto);
+    inset: var(--toolwind-toggle-Ljn2hkN5pK, 0px);
+    background-color: var(--toolwind-toggle-qHGl3dN4t4, canvas);
+    color: var(--toolwind-toggle-UAoDClExNA, canvastext);
+    margin: var(--toolwind-toggle-OTqjqqsCM3, auto);
   }
 }
 @property --tw-translate-x {

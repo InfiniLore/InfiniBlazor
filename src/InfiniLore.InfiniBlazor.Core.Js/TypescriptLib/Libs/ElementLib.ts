@@ -21,6 +21,16 @@ export class ElementLib {
         
         element.textContent = text;
     }
+    
+    public setTextContentSelectionAware(element: IInputElement, text: string): void {
+        if (!element) return;
+        if (!text) return;
+
+        const start = element.selectionStart || 0;
+        const end = element.selectionEnd || 0;
+        element.textContent = text;
+        element.setSelectionRange(start, end);
+    }
 
     public getTextContent(element: HTMLElement): string {
         if (!element) return "";

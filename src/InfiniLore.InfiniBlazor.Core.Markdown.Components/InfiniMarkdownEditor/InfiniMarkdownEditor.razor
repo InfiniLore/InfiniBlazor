@@ -149,7 +149,8 @@
 
     private async Task OnSourceChangedAsync(string newSource) {
         EditorContext.TextSource.UpdateSource(newSource);
-        await JsInfiniBlazor.Element.SetValueAsync(EditorContext.InputElementRef, EditorContext.TextSource.Text);
+        
+        await JsInfiniBlazor.Element.SetTextContentSelectionAwareAsync(EditorContext.InputElementRef, EditorContext.TextSource.Text);
 
         EditorContext.SyntaxTree.ReturnToPool();
         EditorContext.SyntaxTree = Parser.Markdown.SerializeToSyntaxTree(EditorContext.TextSource.Text);

@@ -30,9 +30,15 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     public MdEditorContext Context = new() {
-        Content = "- [ ] something"
+        // ReSharper disable once UseRawString
+        Content = @"```cs
+public class ExampleClass {
+    public string? Property { get; set; }
+    
+    private void DoSomething() {}
+}
+```"
     };
     public MdRenderContext RenderContext = MdRenderContext.Interactive;
-    // public string? Content { get; set; } = "- [ ] something";
 }
 

@@ -11,6 +11,7 @@ namespace InfiniLore.InfiniBlazor.JsRuntime;
 public interface IJsInfiniBlazorElement {
     Task SetValueAsync(ElementReference element, string text, CancellationToken ct = default);
     Task SetTextContentAsync(ElementReference element, string text, CancellationToken ct = default);
+    Task SetTextContentSelectionAwareAsync(ElementReference element, string text, CancellationToken ct = default);
     Task<string> GetTextContentAsync(ElementReference element, CancellationToken ct = default);
     Task AddHorizontalScroll(ElementReference element, double i, CancellationToken ct = default);
     Task ClickElement(ElementReference element, CancellationToken ct = default);

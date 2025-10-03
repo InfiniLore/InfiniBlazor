@@ -17,6 +17,7 @@
     <div class="absolute top-2 right-4 flex justify-end @ZIndex.CodeBlockCopyButton">
         @if (EnableCopy) {
             <InfiniButtonOutlineSolidToolTipped
+                Size="Size.Xs"
                 IconName="@LucideNames.Copy"
                 OnClick="@CopyToClipboardAsync"
                 TooltipAnchor="@Anchor.Left">
@@ -25,26 +26,59 @@
             </InfiniButtonOutlineSolidToolTipped>
         }
     </div>
-    <div class="overload-bg-infini-codeblock text-sm border border-infini-border rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar">
+    <div
+        class="overload-bg-infini-codeblock text-sm border border-infini-border rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar">
         <div class="relative">
-            <pre class="whitespace-pre m-0 font-mono min-h-0"><code>@Content @ChildContent</code></pre>
+            <pre class="whitespace-pre m-0 font-mono min-h-0">
+                <code @ref="@Reference" class="@LanguageClass">
+                    @if (Content is not null) @Content
+                    else if (ChildContent is not null) @ChildContent
+                </code>
+            </pre>
         </div>
     </div>
 </div>
 
-
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
     [Parameter] public string? Content { get; set; } = string.Empty;
     [Parameter] public EventCallback<string> ContentChanged { get; set; }
     [Parameter] public string? Language { get; set; }
     [Parameter] public bool EnableCopy { get; set; } = true;
-    
+    [Parameter] public bool DisableHighlighting { get; set; }
+
+    private string LanguageClass => $"language-{Language}";
+    private ElementReference Reference { get; set; }
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    protected override async Task OnInitializedAsync() {
+        await base.OnInitializedAsync();
+        await HighlightAsync();
+    }
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        await base.OnAfterRenderAsync(firstRender);
+        await HighlightAsync();
+    }
+
+    protected override async Task OnParametersSetAsync() {
+        await base.OnParametersSetAsync();
+        await HighlightAsync();
+    }
+
+    private async Task HighlightAsync() {
+        if (DisableHighlighting) return;
+        if (!RendererInfo.IsInteractive) return;
+
+        if (Content is not null) await JsInfiniBlazor.Highlight.SetContentAndHighlightElementAsync(Reference, Content);
+        if (ChildContent is not null) await JsInfiniBlazor.Highlight.HighlightElementAsync(Reference);
+    }
+
     private async Task CopyToClipboardAsync() {
         if (Content.IsNullOrWhiteSpace()) return;
 

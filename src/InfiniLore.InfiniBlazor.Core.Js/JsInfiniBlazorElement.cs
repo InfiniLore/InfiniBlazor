@@ -36,6 +36,15 @@ public class JsInfiniBlazorElement(
             logger.Warning(e, "Error setting text content");
         }
     }
+    
+    public async Task SetTextContentSelectionAwareAsync(ElementReference element, string text, CancellationToken ct = default) {
+        try {
+            await jsRuntime.InvokeVoidAsync("infiniBlazor.elements.setTextContentSelectionAware", ct, element, text);
+        }
+        catch (Exception e) {
+            logger.Warning(e, "Error setting text content");
+        }
+    }
 
     public async Task<string> GetTextContentAsync(ElementReference element, CancellationToken ct = default) {
         try {
