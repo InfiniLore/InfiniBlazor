@@ -142,7 +142,8 @@
     }
 
     private async Task OnSourceChangedAsync() {
-        await InfiniBlazorJs.Element.SetValueSelectionAwareAsync(EditorContext.InputElementRef, EditorContext.TextSource.Text);
+        if (EditorContext.TextSource.IsEmpty) await InfiniBlazorJs.Element.ClearValueAsync(EditorContext.InputElementRef);
+        else await InfiniBlazorJs.Element.SetValueSelectionAwareAsync(EditorContext.InputElementRef, EditorContext.TextSource.Text);
 
         EditorContext.SyntaxTree.ReturnToPool();
         EditorContext.SyntaxTree = Parser.Markdown.SerializeToSyntaxTree(EditorContext.TextSource.Text);

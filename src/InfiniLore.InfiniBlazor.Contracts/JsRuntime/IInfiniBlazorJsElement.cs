@@ -9,6 +9,7 @@ namespace InfiniLore.InfiniBlazor.JsRuntime;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IInfiniBlazorJsElement {
+    Task ClearValueAsync(ElementReference element, CancellationToken ct = default);
     Task SetValueAsync(ElementReference element, string text, CancellationToken ct = default);
     Task SetValueSelectionAwareAsync(ElementReference element, string text, CancellationToken ct = default);
     

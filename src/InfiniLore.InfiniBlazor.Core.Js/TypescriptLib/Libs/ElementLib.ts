@@ -8,6 +8,12 @@ import {IInputElement} from "../Contracts/IInputElement";
 // ---------------------------------------------------------------------------------------------------------------------
 // noinspection JSUnusedGlobalSymbols
 class ElementLib {
+    public clearValue(element: IInputElement): void {
+        if (!element) return;
+        
+        element.value = "";
+    }
+    
     public setValue(element: IInputElement, value: string): void {
         if (!element) return;
         if (!value) return;
