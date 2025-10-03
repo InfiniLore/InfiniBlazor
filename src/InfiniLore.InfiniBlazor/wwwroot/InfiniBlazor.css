@@ -744,6 +744,14 @@
   .table {
     display: table;
   }
+  .size-\[1em\] {
+    width: 1em;
+    height: 1em;
+  }
+  .size-fit {
+    width: fit-content;
+    height: fit-content;
+  }
   .size-full {
     width: 100%;
     height: 100%;
@@ -823,6 +831,9 @@
   }
   .h-auto {
     height: auto;
+  }
+  .h-fit {
+    height: fit-content;
   }
   .h-full {
     height: 100%;
