@@ -233,6 +233,41 @@
   ]
 }</ExpectedJsonString>
   </MdTestData>
+  <MdTestData Id="edgecase_withHorizontalRule" FileName="list_unordered.xml">
+    <MdString>- ---</MdString>
+    <MdSyntaxTree>
+      <ListUnOrderedMdSyntaxNode LeadingSpaces="0">
+        <ListItemMdSyntaxNode CheckMarker="" Index="" LeadingSpaces="1" CheckLeadingSpaces="0">
+          <TextMdSyntaxNode xml:space="preserve">---</TextMdSyntaxNode>
+        </ListItemMdSyntaxNode>
+      </ListUnOrderedMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedMarkdown>- ---</ExpectedMarkdown>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ListUnOrderedMdSyntaxNode",
+      "leadingSpaces": 0,
+      "children": [
+        {
+          "type": "ListItemMdSyntaxNode",
+          "checkMarker": "",
+          "index": "",
+          "leadingSpaces": 1,
+          "checkLeadingSpaces": 0,
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "---"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
+  </MdTestData>
   <MdTestData Id="edgecaseExtraSpacesForAllignment" FileName="list_unordered.xml">
     <MdString>-    Extra spaces for alignment
       1. This is a sublist

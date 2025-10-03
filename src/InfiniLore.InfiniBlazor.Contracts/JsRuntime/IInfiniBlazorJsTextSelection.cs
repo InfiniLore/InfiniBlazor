@@ -1,17 +1,22 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using Microsoft.AspNetCore.Components;
+
 namespace InfiniLore.InfiniBlazor.JsRuntime;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IJsInfiniBlazor {
-    IJsInfiniBlazorDocument Document { get; }
-    IJsInfiniBlazorElement Element { get; }
-    IJsInfiniBlazorTextSelection TextSelection { get; }
-    IJsInfiniBlazorKeyDownListener KeyDownListener { get; }
-    IJsInfiniBlazorHighlight Highlight { get; }
+public interface IInfiniBlazorJsTextSelection {
+    Task<int> GetStartIndexAsync(ElementReference element);
+    Task<int> GetEndIndexAsync(ElementReference element);
     
-    Task CopyToClipboardAsync(string text);
+    Task<(int, int)> GetAsTupleAsync(ElementReference element);
+    Task<Range> GetRangeAsync(ElementReference element);
+    
+    Task SetRangeAsync(ElementReference element, int start, int end);
+    Task SetRangeAsync(ElementReference element, Range range);
+    Task SetIndexAsync(ElementReference element, int index);
+
 }

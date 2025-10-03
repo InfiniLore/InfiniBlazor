@@ -57,4 +57,7 @@ public static class MdSyntaxNodeModifierExtensions {
     public static bool TryGetColor(this IMdSyntaxNodeModifier mod, [NotNullWhen(true)] out string? color) 
         => mod.TryGetValue("color", out color);
     
+    public static bool TryGetStyle(this IMdSyntaxNodeModifier mod, [NotNullWhen(true)] out string? style) 
+        => mod.TryGetValue("style", out style);
+    
 }

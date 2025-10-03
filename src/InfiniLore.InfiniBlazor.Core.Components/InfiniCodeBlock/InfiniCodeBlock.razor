@@ -9,7 +9,7 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniComponentBase
-@inject IJsInfiniBlazor JsInfiniBlazor
+@inject IInfiniBlazorJs InfiniBlazorJs
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -65,13 +65,13 @@
         if (DisableHighlighting) return;
         if (!RendererInfo.IsInteractive) return;
 
-        if (Content is not null) await JsInfiniBlazor.Highlight.SetContentAndHighlightElementAsync(Reference, Content);
-        if (ChildContent is not null) await JsInfiniBlazor.Highlight.HighlightElementAsync(Reference);
+        if (Content is not null) await InfiniBlazorJs.Highlight.SetContentAndHighlightElementAsync(Reference, Content);
+        if (ChildContent is not null) await InfiniBlazorJs.Highlight.HighlightElementAsync(Reference);
     }
 
     private async Task CopyToClipboardAsync() {
         if (Content.IsNullOrWhiteSpace()) return;
 
-        await JsInfiniBlazor.CopyToClipboardAsync(Content);
+        await InfiniBlazorJs.CopyToClipboardAsync(Content);
     }
 }

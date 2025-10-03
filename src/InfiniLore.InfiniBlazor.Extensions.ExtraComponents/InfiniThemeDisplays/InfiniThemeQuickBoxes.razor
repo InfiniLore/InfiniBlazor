@@ -9,7 +9,7 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits ComponentBase
-@inject IJsInfiniBlazor JsInfiniBlazor
+@inject IInfiniBlazorJs InfiniBlazorJs
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -17,7 +17,7 @@
     <div class="flex flex-row flex-wrap gap-2 justify-center w-9/10">
         @foreach (ThemeItem item in ThemeItems) {
             <InfiniButtonTransparent
-                OnClick="() => JsInfiniBlazor.CopyToClipboardAsync(item.CssVarName)">
+                OnClick="() => InfiniBlazorJs.CopyToClipboardAsync(item.CssVarName)">
                 <div class="w-12 h-12 shadow-md flex items-center justify-center leading-none rounded-xl"
                      style="background: var(@item.CssVarName)">
                 </div>

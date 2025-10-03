@@ -10,11 +10,11 @@ namespace InfiniLore.InfiniBlazor.Js;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableScoped<IJsInfiniBlazorKeyDownListener>]
-public class JsInfiniBlazorKeyDownListener(
+[InjectableScoped<IInfiniBlazorJsKeyDownListener>]
+public class InfiniBlazorJsKeyDownListener(
     IJSRuntime jsRuntime,
-    ILogger<JsInfiniBlazorKeyDownListener> logger
-) : IJsInfiniBlazorKeyDownListener {
+    ILogger<InfiniBlazorJsKeyDownListener> logger
+) : IInfiniBlazorJsKeyDownListener {
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

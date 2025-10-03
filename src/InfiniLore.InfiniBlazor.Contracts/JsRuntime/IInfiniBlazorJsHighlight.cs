@@ -1,12 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.JsRuntime;
+using Microsoft.AspNetCore.Components;
 
+namespace InfiniLore.InfiniBlazor.JsRuntime;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IJsInfiniBlazorKeyDownListener {
-    Task AddPreventDefaultListenerAsync();
-    Task RemovePreventDefaultListenerAsync();
+public interface IInfiniBlazorJsHighlight {
+    Task HighlightElementAsync(ElementReference element, CancellationToken ct = default);
+    Task SetContentAndHighlightElementAsync(ElementReference element, string content, CancellationToken ct = default);
 }

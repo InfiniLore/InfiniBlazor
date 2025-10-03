@@ -11,11 +11,11 @@ namespace InfiniLore.InfiniBlazor.Js;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableScoped<IJsInfiniBlazorTextSelection>]
-public class JsInfiniBlazorTextSelection(
+[InjectableScoped<IInfiniBlazorJsTextSelection>]
+public class InfiniBlazorJsTextSelection(
     IJSRuntime jsRuntime,
-    ILogger<JsInfiniBlazorTextSelection> logger
-) : IJsInfiniBlazorTextSelection {
+    ILogger<InfiniBlazorJsTextSelection> logger
+) : IInfiniBlazorJsTextSelection {
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

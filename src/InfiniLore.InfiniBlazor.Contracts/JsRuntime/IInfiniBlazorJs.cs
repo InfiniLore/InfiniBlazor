@@ -1,13 +1,17 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Microsoft.AspNetCore.Components;
-
 namespace InfiniLore.InfiniBlazor.JsRuntime;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IJsInfiniBlazorHighlight {
-    Task HighlightElementAsync(ElementReference element, CancellationToken ct = default);
-    Task SetContentAndHighlightElementAsync(ElementReference element, string content, CancellationToken ct = default);
+public interface IInfiniBlazorJs {
+    IInfiniBlazorJsDocument Document { get; }
+    IInfiniBlazorJsElement Element { get; }
+    IInfiniBlazorJsTextSelection TextSelection { get; }
+    IInfiniBlazorJsKeyDownListener KeyDownListener { get; }
+    IInfiniBlazorJsHighlight Highlight { get; }
+    
+    Task CopyToClipboardAsync(string text);
 }

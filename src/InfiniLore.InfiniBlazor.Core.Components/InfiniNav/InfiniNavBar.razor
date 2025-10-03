@@ -7,7 +7,7 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniNavBarBase
-@inject IJsInfiniBlazor JsInfiniBlazor
+@inject IInfiniBlazorJs InfiniBlazorJs
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -53,7 +53,7 @@
         if (!Location.IsHorizontal()) return;
         if (obj.DeltaY == 0) return;
 
-        await JsInfiniBlazor.Element.AddHorizontalScroll(Reference, obj.DeltaY);
+        await InfiniBlazorJs.Element.AddHorizontalScroll(Reference, obj.DeltaY);
     }
 
     private string OrientationClasses => ConcatClasses(

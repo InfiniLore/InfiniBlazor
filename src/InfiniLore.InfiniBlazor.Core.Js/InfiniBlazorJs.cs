@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.JsRuntime;
-using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 
@@ -11,28 +10,32 @@ namespace InfiniLore.InfiniBlazor.Js;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableScoped<IJsInfiniBlazorHighlight>]
-public class JsInfiniBlazorHighlight(
+[InjectableScoped<IInfiniBlazorJs>]
+public class InfiniBlazorJs(
     IJSRuntime jsRuntime,
-    ILogger<JsInfiniBlazorHighlight> logger
-) : IJsInfiniBlazorHighlight {
+    ILogger<InfiniBlazorJs> logger,
+    
+    IInfiniBlazorJsDocument documentService,
+    IInfiniBlazorJsElement elementService,
+    IInfiniBlazorJsTextSelection textSelectionService,
+    IInfiniBlazorJsKeyDownListener keyDownListenerService,
+    IInfiniBlazorJsHighlight highlightService
+) : IInfiniBlazorJs {
+    public IInfiniBlazorJsDocument Document => documentService;
+    public IInfiniBlazorJsElement Element => elementService;
+    public IInfiniBlazorJsTextSelection TextSelection => textSelectionService;
+    public IInfiniBlazorJsKeyDownListener KeyDownListener => keyDownListenerService;
+    public IInfiniBlazorJsHighlight Highlight => highlightService;
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public async Task HighlightElementAsync(ElementReference element, CancellationToken ct = default) {
+    public async Task CopyToClipboardAsync(string text) {
         try {
-            await jsRuntime.InvokeVoidAsync("infiniBlazor.highlight.highlightElement", ct, element);
+            await jsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", text);
         }
         catch (Exception e) {
-            logger.Warning(e, "Error trying to code highlight element {element}", element);
-        }
-    }
-    public async Task SetContentAndHighlightElementAsync(ElementReference element, string content, CancellationToken ct = default) {
-        try {
-            await jsRuntime.InvokeVoidAsync("infiniBlazor.highlight.setContentAndHighlight", ct, element, content);
-        }
-        catch (Exception e) {
-            logger.Warning(e, "Error trying to code highlight element {element}", element);
+            logger.Warning(e, "Error writing text to clipboard");
         }
     }
 }
