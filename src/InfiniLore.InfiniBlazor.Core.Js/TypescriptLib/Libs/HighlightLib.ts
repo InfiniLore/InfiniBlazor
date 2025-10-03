@@ -20,7 +20,9 @@ export class HighlightLib {
         if (!this.isHighlightJsAvailable()) return;
         if (!element) return;
 
-        if (element.dataset.highlighted) delete element.dataset.highlighted;
+        if (element.dataset && element.dataset.highlighted) {
+            delete element.dataset.highlighted;
+        }
         window.hljs!.highlightElement(element);
     }
     
