@@ -15,12 +15,17 @@ export class KeyListenerLib {
     // Main function to prevent default behavior
     private preventKeyDefault(event: KeyboardEvent): void {
         if (!event) return;
-        if (!event.ctrlKey) return;
-
         const key = event.key.toLowerCase();
-        if (allowSpecialConditions.some(condition => condition(event, key))) return;
 
-        // Block default behavior for keys in the keysToSkip set
+        // Special tab behaviour
+        if (key == "tab" && !event.shiftKey && !event.ctrlKey) {
+            event.preventDefault();
+            return;
+        }
+
+        // Block default behavior for keys that are registered
+        if (!event.ctrlKey) return;
+        if (allowSpecialConditions.some(condition => condition(event, key))) return;
         if (!keysToSkip.has(key)) return;
         event.preventDefault();
     }
