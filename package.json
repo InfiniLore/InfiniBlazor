@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "watch:tailwind-server": "npx @tailwindcss/cli -i ./src/InfiniLore.InfiniBlazor/wwwroot/tailwind.css -o ./src/InfiniLore.InfiniBlazor/wwwroot/InfiniBlazor.css --watch",
-    "watch:typescript": "npx webpack --watch --env production=true"
+    "watch:typescript": "npx webpack --watch"
   },
   "keywords": [],
   "author": "",
