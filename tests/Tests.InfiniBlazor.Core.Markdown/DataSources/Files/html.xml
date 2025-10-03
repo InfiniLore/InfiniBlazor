@@ -1,28 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <MdTestData Id="break" FileName="html.xml">
-    <MdString>test &lt;br/&gt; test</MdString>
-    <MdSyntaxTree>
-      <ParagraphMdSyntaxNode>
-        <TextMdSyntaxNode xml:space="preserve">test &lt;br/&gt; test</TextMdSyntaxNode>
-      </ParagraphMdSyntaxNode>
-    </MdSyntaxTree>
-    <ExpectedMarkdown>test &lt;br/&gt; test</ExpectedMarkdown>
-    <ExpectedJsonString>{
-  "type": "MdSyntaxTree",
-  "children": [
-    {
-      "type": "ParagraphMdSyntaxNode",
-      "children": [
-        {
-          "type": "TextMdSyntaxNode",
-          "content": "test &lt;br/&gt; test"
-        }
-      ]
-    }
-  ]
-}</ExpectedJsonString>
-  </MdTestData>
   <MdTestData Id="default" FileName="html.xml">
     <MdString>&lt;div&gt;&lt;/div&gt;</MdString>
     <MdSyntaxTree>

@@ -54,7 +54,8 @@ public static class MdStringMdSyntaxDeserializerFactory {
             .Register<FootnoteDescriptionMdSyntaxNode, FootnoteDescriptionSyntaxNodeDeserializer>(instance)
             .Register<HighlightMdSyntaxNode, HighlightSyntaxNodeDeserializer>(instance)
             .Register<WrapperMdSyntaxNode, WrapperSyntaxNodeDeserializer>(instance)
-            .Register<FrontMatterMdSyntaxNode, FrontMatterSyntaxNodeDeserializer>(instance);
+            .Register<FrontMatterMdSyntaxNode, FrontMatterSyntaxNodeDeserializer>(instance)
+            .Register<BreakMdSyntaxNode, BreakSyntaxNodeDeserializer>(instance);
 
         instance.Deserializers = deserializers.ToFrozenDictionary();
         return instance;
