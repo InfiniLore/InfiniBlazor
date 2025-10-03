@@ -329,18 +329,17 @@
 .hljs-tag .hljs-attr {
     color: var(--color-infini-base-50);
 }
-.hljs-keyword,
+.hljs-keyword {
+    color: var(--color-infini-red-light);
+}
 .hljs-attribute,
 .hljs-selector-tag,
-.hljs-meta .hljs-keyword,
 .hljs-doctag,
 .hljs-name {
     font-weight: bold
 }
 
 .hljs-type,
-.hljs-string,
-.hljs-number,
 .hljs-selector-id,
 .hljs-selector-class,
 .hljs-quote,
@@ -348,10 +347,10 @@
 .hljs-deletion {
     color: var(--color-infini-red-light);
 }
+
 .hljs-title,
 .hljs-section {
-    color: var(--color-infini-red-dark);
-    font-weight: bold
+    color: var(--color-infini-purple-light);
 }
 .hljs-regexp,
 .hljs-symbol,
@@ -361,22 +360,23 @@
 .hljs-selector-attr,
 .hljs-operator,
 .hljs-selector-pseudo {
-    color: var(--color-infini-red-light);
+    color: var(--color-infini-orange-light);
 }
 
 .hljs-literal {
-    color: var(--color-infini-green-light);
+    color: var(--color-infini-orange-light);
 }
 .hljs-built_in,
 .hljs-bullet,
 .hljs-code,
 .hljs-addition {
-    color: var(--color-infini-green);
+    color: var(--color-infini-orange-light);
 }
 
-.hljs-meta {
-    color: var(--color-infini-blue);
-}
+.hljs-string,
+.hljs-number,
+.hljs-meta .hljs-keyword,
+.hljs-meta,
 .hljs-meta .hljs-string {
     color: var(--color-infini-blue-light);
 }
