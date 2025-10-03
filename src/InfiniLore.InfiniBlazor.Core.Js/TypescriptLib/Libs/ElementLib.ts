@@ -22,8 +22,15 @@ class ElementLib {
 
         const start = element.selectionStart || 0;
         const end = element.selectionEnd || 0;
+        
+        if (element.value === text) return;
+        
+        const oldLength = element.value.length;
+        const newLength = text.length;
+        const diff = newLength - oldLength;
+        
         element.value = text;
-        element.setSelectionRange(start, end);
+        element.setSelectionRange(start + diff, end + diff);
     }
     
     public setTextContent(element: HTMLElement, text: string): void {

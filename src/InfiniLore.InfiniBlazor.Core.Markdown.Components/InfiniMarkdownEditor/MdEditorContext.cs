@@ -32,19 +32,12 @@ public class MdEditorContext {
     public event Func<string, Task>? OnModifierActionAsync;
     public event Func<string, Task>? OnInsertActionAsync;
     
-    private ThrottledDebouncer<string> SourceChangedCallbackDebouncer { get; }
     private ThrottledDebouncer SyntaxTreeChangedCallbackDebouncer { get; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
     public MdEditorContext() {
-        SourceChangedCallbackDebouncer = ThrottledDebouncer<string>.FromDelegate(async value => {
-            TextSource.UpdateSource(value);
-            if (OnSourceChangedAsync is null) return;
-            await OnSourceChangedAsync().ConfigureAwait(false);
-        });
-        
         SyntaxTreeChangedCallbackDebouncer = ThrottledDebouncer.FromDelegate(async () => {
             if (OnSyntaxTreeChangedAsync is null) return;
             await OnSyntaxTreeChangedAsync().ConfigureAwait(false);
@@ -54,8 +47,11 @@ public class MdEditorContext {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public async Task InvokeSourceChangeAsync(string value) 
-        => await SourceChangedCallbackDebouncer.InvokeDebouncedAsync(value);
+    public async Task InvokeSourceChangeAsync(string value) {
+        TextSource.UpdateSource(value);
+        if (OnSourceChangedAsync is null) return;
+        await OnSourceChangedAsync().ConfigureAwait(false);
+    }
 
     public async Task InvokeSyntaxTreeChangeAsync()
         => await SyntaxTreeChangedCallbackDebouncer.InvokeDebouncedAsync();
