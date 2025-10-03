@@ -21,29 +21,23 @@ public class MdEditorContext {
         set => TextSource.UpdateSource(value);
     }
     
-    public ITextSource TextSource { get; private set; } = new TextSource();
+    public ITextSource TextSource { get; } = new TextSource();
     public ElementReference InputElementRef { get; set; }
 
     public IMdSyntaxTree SyntaxTree { get; set; } = MdSyntaxTree.Empty;
     
-    public event Func<string, Task>? OnSourceChangedAsync;
+    public event Func<Task>? OnSourceChangedAsync;
     public event Func<Task>? OnSyntaxTreeChangedAsync;
     public event Func<KeyboardEventArgs, Task>? OnInputKeyDownAsync;
     public event Func<string, Task>? OnModifierActionAsync;
     public event Func<string, Task>? OnInsertActionAsync;
     
-    private ThrottledDebouncer<string> SourceChangedCallbackDebouncer { get; }
     private ThrottledDebouncer SyntaxTreeChangedCallbackDebouncer { get; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
     public MdEditorContext() {
-        SourceChangedCallbackDebouncer = ThrottledDebouncer<string>.FromDelegate(async input => {
-            if (OnSourceChangedAsync is null) return;
-            await OnSourceChangedAsync(input).ConfigureAwait(false);
-        });
-        
         SyntaxTreeChangedCallbackDebouncer = ThrottledDebouncer.FromDelegate(async () => {
             if (OnSyntaxTreeChangedAsync is null) return;
             await OnSyntaxTreeChangedAsync().ConfigureAwait(false);
@@ -53,9 +47,12 @@ public class MdEditorContext {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public async Task InvokeSourceChangeAsync(string value) 
-        => await SourceChangedCallbackDebouncer.InvokeDebouncedAsync(value);
-    
+    public async Task InvokeSourceChangeAsync(string value) {
+        TextSource.UpdateSource(value);
+        if (OnSourceChangedAsync is null) return;
+        await OnSourceChangedAsync().ConfigureAwait(false);
+    }
+
     public async Task InvokeSyntaxTreeChangeAsync()
         => await SyntaxTreeChangedCallbackDebouncer.InvokeDebouncedAsync();
 

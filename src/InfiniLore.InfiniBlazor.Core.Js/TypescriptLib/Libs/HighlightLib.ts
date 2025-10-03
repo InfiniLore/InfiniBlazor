@@ -11,6 +11,16 @@ export class HighlightLib {
         return typeof window !== 'undefined' && window.hljs !== undefined;
     }
     
+    private ensureElementDataset(element: HTMLElement): void {
+        if (element.dataset) return;
+        Object.defineProperty(element, 'dataset', {
+            value: {},
+            writable: true,
+            enumerable: true,
+            configurable: true
+        });
+    }
+    
     public highlightAll(): void {
         if (!this.isHighlightJsAvailable()) return;
         window.hljs!.highlightAll();
@@ -20,7 +30,10 @@ export class HighlightLib {
         if (!this.isHighlightJsAvailable()) return;
         if (!element) return;
 
-        if (element.dataset.highlighted) delete element.dataset.highlighted;
+        this.ensureElementDataset(element);
+        if (element.dataset && element.dataset.highlighted) {
+            delete element.dataset.highlighted;
+        }
         window.hljs!.highlightElement(element);
     }
     

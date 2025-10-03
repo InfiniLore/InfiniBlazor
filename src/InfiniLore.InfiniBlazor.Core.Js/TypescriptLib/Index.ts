@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // noinspection JSUnusedGlobalSymbols
 
-import {ElementLib} from "./Libs/ElementLib";
+import ElementLib from "./Libs/ElementLib";
 import {DocumentLib} from "./Libs/DocumentLib";
 import {TextSelectionLib} from "./Libs/TextSelectionLib";
 import {KeyListenerLib} from "./Libs/KeyListenerLib";
