@@ -17,6 +17,7 @@
     <div class="absolute top-2 right-4 flex justify-end @ZIndex.CodeBlockCopyButton">
         @if (EnableCopy) {
             <InfiniButtonOutlineSolidToolTipped
+                Size="Size.Xs"
                 IconName="@LucideNames.Copy"
                 OnClick="@CopyToClipboardAsync"
                 TooltipAnchor="@Anchor.Left">

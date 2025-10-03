@@ -135,7 +135,7 @@
     --color-infini-button-outline-solid-text-hover : var(--color-infini-button-outline-text-hover);
     --color-infini-button-outline-solid-ring : var(--color-infini-button-outline-ring);
     --color-infini-button-outline-solid-ring-hover : var(--color-infini-button-outline-ring-hover);
-    --color-infini-codeblock : var(--color-infini-base-50);
+    --color-infini-codeblock : var(--color-infini-base-80);
 }
 
 /* ------------------------------------------------------------------------------------------------------------------ */
