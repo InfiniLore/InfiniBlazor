@@ -68,6 +68,7 @@ public class JsonMdSyntaxTreeParser : IJsonMdSyntaxTreeParser {
         RegisterVisitor<HighlightMdSyntaxNode, HighlightJsonMdSyntaxNodeVisitor>();
         RegisterVisitor<WrapperMdSyntaxNode, WrapperJsonMdSyntaxNodeVisitor>();
         RegisterVisitor<FrontMatterMdSyntaxNode, FrontMatterJsonMdSyntaxNodeVisitor>();
+        RegisterVisitor<BreakMdSyntaxNode, BreakJsonMdSyntaxNodeVisitor>();
     }
 
     private void RegisterVisitor<TNode, TVisitor>() where TNode : MdSyntaxNode<TNode>, new() where TVisitor : JsonMdSyntaxNodeVisitor<TNode>, new() {

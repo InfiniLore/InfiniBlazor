@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="break.xml">
+    <MdString>test &lt;br/&gt; test</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">test </TextMdSyntaxNode>
+        <BreakMdSyntaxNode />
+        <TextMdSyntaxNode xml:space="preserve"> test</TextMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedMarkdown>test &lt;br/&gt; test</ExpectedMarkdown>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "test "
+        },
+        {
+          "type": "BreakMdSyntaxNode"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " test"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
+  </MdTestData>
+  <MdTestData Id="muliple" FileName="break.xml">
+    <MdString>test &lt;br/&gt; &lt;br/&gt; test
+test &lt;br/&gt; &lt;br/&gt; &lt;br/&gt; test
+test &lt;br/&gt; &lt;br/&gt; &lt;br/&gt; &lt;br/&gt; test
+test &lt;br/&gt; &lt;br/&gt; &lt;br/&gt; &lt;br/&gt; &lt;br/&gt; test</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">test </TextMdSyntaxNode>
+        <BreakMdSyntaxNode />
+        <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
+        <BreakMdSyntaxNode />
+        <TextMdSyntaxNode xml:space="preserve"> test</TextMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">test </TextMdSyntaxNode>
+        <BreakMdSyntaxNode />
+        <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
+        <BreakMdSyntaxNode />
+        <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
+        <BreakMdSyntaxNode />
+        <TextMdSyntaxNode xml:space="preserve"> test</TextMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">test </TextMdSyntaxNode>
+        <BreakMdSyntaxNode />
+        <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
+        <BreakMdSyntaxNode />
+        <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
+        <BreakMdSyntaxNode />
+        <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
+        <BreakMdSyntaxNode />
+        <TextMdSyntaxNode xml:space="preserve"> test</TextMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+      <NewLineMdSyntaxNode />
+      <ParagraphMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve">test </TextMdSyntaxNode>
+        <BreakMdSyntaxNode />
+        <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
+        <BreakMdSyntaxNode />
+        <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
+        <BreakMdSyntaxNode />
+        <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
+        <BreakMdSyntaxNode />
+        <TextMdSyntaxNode xml:space="preserve"> </TextMdSyntaxNode>
+        <BreakMdSyntaxNode />
+        <TextMdSyntaxNode xml:space="preserve"> test</TextMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedMarkdown>test &lt;br/&gt; &lt;br/&gt; test
+test &lt;br/&gt; &lt;br/&gt; &lt;br/&gt; test
+test &lt;br/&gt; &lt;br/&gt; &lt;br/&gt; &lt;br/&gt; test
+test &lt;br/&gt; &lt;br/&gt; &lt;br/&gt; &lt;br/&gt; &lt;br/&gt; test</ExpectedMarkdown>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "test "
+        },
+        {
+          "type": "BreakMdSyntaxNode"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        },
+        {
+          "type": "BreakMdSyntaxNode"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " test"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "test "
+        },
+        {
+          "type": "BreakMdSyntaxNode"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        },
+        {
+          "type": "BreakMdSyntaxNode"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        },
+        {
+          "type": "BreakMdSyntaxNode"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " test"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "test "
+        },
+        {
+          "type": "BreakMdSyntaxNode"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        },
+        {
+          "type": "BreakMdSyntaxNode"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        },
+        {
+          "type": "BreakMdSyntaxNode"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        },
+        {
+          "type": "BreakMdSyntaxNode"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " test"
+        }
+      ]
+    },
+    {
+      "type": "NewLineMdSyntaxNode"
+    },
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "TextMdSyntaxNode",
+          "content": "test "
+        },
+        {
+          "type": "BreakMdSyntaxNode"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        },
+        {
+          "type": "BreakMdSyntaxNode"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        },
+        {
+          "type": "BreakMdSyntaxNode"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        },
+        {
+          "type": "BreakMdSyntaxNode"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " "
+        },
+        {
+          "type": "BreakMdSyntaxNode"
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " test"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
+  </MdTestData>
+</ArrayOfMdTestData>

@@ -9,6 +9,7 @@ public static class MdRegexGroupNames {
     public const string BlockQuote = "blockQuote";
     public const string Bold = "bold";
     public const string BoldContent = "b";
+    public const string Break = "break";
     public const string Callout = "callout";
     public const string CalloutBody = "clBody";
     public const string CalloutMod = "clMod";
