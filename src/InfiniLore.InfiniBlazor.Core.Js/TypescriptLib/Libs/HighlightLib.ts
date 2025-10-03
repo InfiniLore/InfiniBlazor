@@ -1,40 +1,36 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-
+import hljs from 'highlight.js';
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 // noinspection JSUnusedGlobalSymbols
 export class HighlightLib {
-    private isHighlightJsLoaded(): this is this & { __hljsAvailable: true } {
-        return typeof window !== 'undefined' && window.hljs !== undefined;
-    }
-
     public highlightAll(): void {
-        if (this.isHighlightJsLoaded()) {
-            window.hljs!.highlightAll();
-        }
+        hljs.highlightAll();
     }
 
     public highlightElement(element: HTMLElement): void {
         if (!element) return;
 
-        if (this.isHighlightJsLoaded()) {
-            window.hljs!.highlightElement(element);
-        }
+        if (element.dataset.highlighted) delete element.dataset.highlighted;
+        hljs.highlightElement(element);
+    }
+    
+    public setContentAndHighlight(element: HTMLElement, content: string): void {
+        if (!element) return;
+        if (!content) return;
+        
+        element.textContent = content;
+        this.highlightElement(element);
     }
 
     public configure(options: any): void {
-        if (this.isHighlightJsLoaded()) {
-            window.hljs!.configure(options);
-        }
+        hljs.configure(options);
     }
 
     public getAvailableLanguages(): string[] {
-        if (this.isHighlightJsLoaded()) {
-            return window.hljs!.listLanguages();
-        }
-        return [];
+        return hljs.listLanguages();
     }
 }

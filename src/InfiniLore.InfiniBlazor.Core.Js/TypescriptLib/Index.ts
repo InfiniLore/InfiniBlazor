@@ -8,8 +8,6 @@ import {DocumentLib} from "./Libs/DocumentLib";
 import {TextSelectionLib} from "./Libs/TextSelectionLib";
 import {KeyListenerLib} from "./Libs/KeyListenerLib";
 import {HighlightLib} from "./Libs/HighlightLib";
-
-import hljs from 'highlight.js';
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -40,5 +38,4 @@ declare global {
 
 if (typeof window !== 'undefined') {
     window.infiniBlazor = infiniBlazor;
-    window.hljs = hljs;
 }
