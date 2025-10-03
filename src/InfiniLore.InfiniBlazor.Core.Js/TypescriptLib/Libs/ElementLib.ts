@@ -16,7 +16,6 @@ class ElementLib {
     }
 
     public setValueSelectionAware(element: IInputElement, text: string): void {
-        console.log(text);
         if (!element) return;
         if (!text) return;
 

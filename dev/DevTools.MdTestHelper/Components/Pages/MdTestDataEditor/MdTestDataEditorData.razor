@@ -2,6 +2,7 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor
+@using InfiniLore.InfiniBlazor.JsRuntime
 @using InfiniLore.InfiniBlazor.Markdown
 @using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
 @using InfiniLore.InfiniBlazor.Toasting
@@ -13,6 +14,7 @@
 @inject IMarkdownParser MarkdownParser
 @inject IToastingProvider ToastingProvider
 @inject MdTestDataProvider MdTestDataProvider
+@inject IInfiniBlazorJs InfiniBlazorJS
 
 @implements IDisposable
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -95,7 +97,8 @@
                 </InfiniTabContent>
 
                 <InfiniTabContent TabName="Blazor">
-                    <InfiniMdEditorStandalonePreview @bind-EditorContext="@EditorContext" @bind-RenderContext="@RenderContext"/>
+                    <InfiniMdEditorStandalonePreview @bind-EditorContext="@EditorContext"
+                                                     @bind-RenderContext="@RenderContext"/>
                 </InfiniTabContent>
             </InfiniTabContainer>
 
@@ -143,7 +146,7 @@
 
         EditorContext.OnSyntaxTreeChangedAsync += OnGenerateAsync;
     }
-    
+
     public void Dispose() {
         EditorContext.OnSyntaxTreeChangedAsync -= OnGenerateAsync;
     }
@@ -179,11 +182,11 @@
         IMdSyntaxTree tree = EditorContext.SyntaxTree;
         using var memoryStream = new MemoryStream();
         await MarkdownParser.Json.DeserializeToJsonStreamAsync(memoryStream, tree);
-        
+
         memoryStream.Position = 0;
         string result = await new StreamReader(memoryStream).ReadToEndAsync();
         ExpectedJsonString = result.ReplaceLineEndings("\n");
-        
+
     }
 
     private Task GenerateMarkdown() {
@@ -215,7 +218,7 @@
         EditorContext.Content = testData.MdString;
 
         if (testData.MdSyntaxTree is {} tree) {
-            using MemoryStream memoryStream = new MemoryStream();
+            using var memoryStream = new MemoryStream();
             await MarkdownParser.Xml.DeserializeToXmlStreamAsync(memoryStream, tree);
 
             memoryStream.Position = 0;
@@ -256,8 +259,8 @@
         }
 
         await ToastingProvider.PublishToastAsync(
-        new ToastingData("Test was saved", TestId),
-        ToastAppearance.Success
+            new ToastingData("Test was saved", TestId),
+            ToastAppearance.Success
         );
 
         // Notify parent component about the rename
@@ -275,14 +278,14 @@
         FileName = string.Empty;
         TestId = string.Empty;
         DeveloperNote = string.Empty;
-        EditorContext.Content = string.Empty;
+        await EditorContext.InvokeSourceChangeAsync(string.Empty);
         ExpectedMarkdown = string.Empty;
         ExpectedSyntaxTreeString = string.Empty;
         TestDataOrigin = null;
 
         await ToastingProvider.PublishToastAsync(
-        new ToastingData("Test was Deleted", TestId),
-        ToastAppearance.Success
+            new ToastingData("Test was Deleted", TestId),
+            ToastAppearance.Success
         );
 
         // Notify parent component about the rename
@@ -303,8 +306,8 @@
         }
 
         await ToastingProvider.PublishToastAsync(
-        new ToastingData("Test was Renamed", TestId),
-        ToastAppearance.Success
+            new ToastingData("Test was Renamed", TestId),
+            ToastAppearance.Success
         );
 
         // Re-fetch data
@@ -318,14 +321,14 @@
         FileName = string.Empty;
         TestId = string.Empty;
         DeveloperNote = string.Empty;
-        EditorContext.Content = string.Empty;
+        await EditorContext.InvokeSourceChangeAsync(string.Empty);
         ExpectedMarkdown = string.Empty;
         ExpectedSyntaxTreeString = string.Empty;
         TestDataOrigin = null;
 
         await ToastingProvider.PublishToastAsync(
-        new ToastingData("Test Cleared"),
-        ToastAppearance.Info
+            new ToastingData("Test Cleared"),
+            ToastAppearance.Info
         );
     }
 }
