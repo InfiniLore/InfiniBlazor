@@ -28,18 +28,18 @@ public class JsInfiniBlazorElement(
         }
     }
     
-    public async Task SetTextContentAsync(ElementReference element, string text, CancellationToken ct = default) {
+    public async Task SetValueSelectionAwareAsync(ElementReference element, string text, CancellationToken ct = default) {
         try {
-            await jsRuntime.InvokeVoidAsync("infiniBlazor.elements.setTextContent", ct, element, text);
+            await jsRuntime.InvokeVoidAsync("infiniBlazor.elements.setValueSelectionAware", ct, element, text);
         }
         catch (Exception e) {
             logger.Warning(e, "Error setting text content");
         }
     }
     
-    public async Task SetTextContentSelectionAwareAsync(ElementReference element, string text, CancellationToken ct = default) {
+    public async Task SetTextContentAsync(ElementReference element, string text, CancellationToken ct = default) {
         try {
-            await jsRuntime.InvokeVoidAsync("infiniBlazor.elements.setTextContentSelectionAware", ct, element, text);
+            await jsRuntime.InvokeVoidAsync("infiniBlazor.elements.setTextContent", ct, element, text);
         }
         catch (Exception e) {
             logger.Warning(e, "Error setting text content");

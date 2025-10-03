@@ -21,7 +21,7 @@ public class MdEditorContext {
         set => TextSource.UpdateSource(value);
     }
     
-    public ITextSource TextSource { get; private set; } = new TextSource();
+    public ITextSource TextSource { get; } = new TextSource();
     public ElementReference InputElementRef { get; set; }
 
     public IMdSyntaxTree SyntaxTree { get; set; } = MdSyntaxTree.Empty;

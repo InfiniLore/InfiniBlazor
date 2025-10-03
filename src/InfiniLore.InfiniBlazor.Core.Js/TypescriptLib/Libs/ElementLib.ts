@@ -7,12 +7,23 @@ import {IInputElement} from "../Contracts/IInputElement";
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 // noinspection JSUnusedGlobalSymbols
-export class ElementLib {
+class ElementLib {
     public setValue(element: IInputElement, value: string): void {
         if (!element) return;
         if (!value) return;
         
         element.value = value;
+    }
+
+    public setValueSelectionAware(element: IInputElement, text: string): void {
+        console.log(text);
+        if (!element) return;
+        if (!text) return;
+
+        const start = element.selectionStart || 0;
+        const end = element.selectionEnd || 0;
+        element.value = text;
+        element.setSelectionRange(start, end);
     }
     
     public setTextContent(element: HTMLElement, text: string): void {
@@ -20,16 +31,6 @@ export class ElementLib {
         if (!text) return;
         
         element.textContent = text;
-    }
-    
-    public setTextContentSelectionAware(element: IInputElement, text: string): void {
-        if (!element) return;
-        if (!text) return;
-
-        const start = element.selectionStart || 0;
-        const end = element.selectionEnd || 0;
-        element.textContent = text;
-        element.setSelectionRange(start, end);
     }
 
     public getTextContent(element: HTMLElement): string {
@@ -61,3 +62,5 @@ export class ElementLib {
         element.click();
     }
 }
+
+export default ElementLib

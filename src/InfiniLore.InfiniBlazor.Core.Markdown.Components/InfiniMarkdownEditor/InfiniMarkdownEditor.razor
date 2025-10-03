@@ -92,7 +92,6 @@
         [InfiniEditorKeyCombo.Underline] = static editor => editor.OnModifierActivatedAsync("underline"),
         [InfiniEditorKeyCombo.SelectAll] = static editor => editor.HandleSelectAllAsync()
     };
-    private int _valueHashCode;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -112,27 +111,21 @@
 
         EditorContext.SyntaxTree.ReturnToPool();
         EditorContext.SyntaxTree = Parser.Markdown.SerializeToSyntaxTree(EditorContext.TextSource.Text);
-        await EditorContext.InvokeSyntaxTreeChangeAsync().ConfigureAwait(false);
+        await EditorContext.InvokeSyntaxTreeChangeAsync();
         await InvokeAsync(StateHasChanged);
-    }
-    
-    protected override bool ShouldRender() {
-        int lastHashCode = _valueHashCode;
-        _valueHashCode = EditorContext.TextSource.Text.GetHashCode();
-        return _valueHashCode != lastHashCode;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender) {
         await base.OnAfterRenderAsync(firstRender);
         if (firstRender) {
             // Only add the "prevent default listener" once.
-            await JsInfiniBlazor.KeyDownListener.AddPreventDefaultListenerAsync().ConfigureAwait(false);
+            await JsInfiniBlazor.KeyDownListener.AddPreventDefaultListenerAsync();
             return;
         } 
 
         // place the caret in a newly requested location
         if (TextEditor.TryGetCaretUpdate(out int index))
-            await JsInfiniBlazor.TextSelection.SetIndexAsync(EditorContext.InputElementRef, index).ConfigureAwait(false);
+            await JsInfiniBlazor.TextSelection.SetIndexAsync(EditorContext.InputElementRef, index);
     }
 
     public override async ValueTask DisposeAsync() {
@@ -148,13 +141,13 @@
     }
 
     private async Task OnSourceChangedAsync() {
-        await JsInfiniBlazor.Element.SetTextContentSelectionAwareAsync(EditorContext.InputElementRef, EditorContext.TextSource.Text);
+        await JsInfiniBlazor.Element.SetValueSelectionAwareAsync(EditorContext.InputElementRef, EditorContext.TextSource.Text);
 
         EditorContext.SyntaxTree.ReturnToPool();
         EditorContext.SyntaxTree = Parser.Markdown.SerializeToSyntaxTree(EditorContext.TextSource.Text);
-        await EditorContext.InvokeSyntaxTreeChangeAsync().ConfigureAwait(false);
+        await EditorContext.InvokeSyntaxTreeChangeAsync();
 
-        await EditorContextChanged.InvokeAsync(EditorContext).ConfigureAwait(false);
+        await EditorContextChanged.InvokeAsync(EditorContext);
 
         await InvokeAsync(StateHasChanged);
     }
@@ -163,7 +156,7 @@
         string newContent = Parser.Markdown.DeserializeToString(EditorContext.SyntaxTree);
         EditorContext.TextSource.UpdateSource(newContent);
 
-        await EditorContextChanged.InvokeAsync(EditorContext).ConfigureAwait(false);
+        await EditorContextChanged.InvokeAsync(EditorContext);
         
         await InvokeAsync(StateHasChanged);
     }
@@ -178,11 +171,13 @@
 
     public async Task OnModifierActivatedAsync(string modifierName) {
         if (EditorContext.IsLocked) return;
-    
+        
         Range range = await JsInfiniBlazor.TextSelection.GetRangeAsync(EditorContext.InputElementRef);
         TextEditor.Modify(EditorContext.TextSource, modifierName, range);
-        await EditorContext.InvokeSourceChangeAsync(EditorContext.TextSource.Text);
+            
         await InvokeAsync(StateHasChanged);
+            
+        await EditorContext.InvokeSourceChangeAsync(EditorContext.TextSource.Text);
     }
 
     public async Task OnInsertActivatedAsync(string content) {
@@ -191,8 +186,9 @@
         Range range = await JsInfiniBlazor.TextSelection.GetRangeAsync(EditorContext.InputElementRef);
         TextEditor.Insert(EditorContext.TextSource, content, range);
 
-        await EditorContext.InvokeSourceChangeAsync(EditorContext.TextSource.Text).ConfigureAwait(false);
         await InvokeAsync(StateHasChanged);
+            
+        await EditorContext.InvokeSourceChangeAsync(EditorContext.TextSource.Text);
     }
 
     private async Task HandleSelectAllAsync() {
@@ -202,7 +198,7 @@
         // when ctrl+a has been pressed twice, select the full text
         if (LastPressedCombo == InfiniEditorKeyCombo.SelectAll) {
             Range fullRange = new(0, EditorContext.TextSource.Length);
-            await JsInfiniBlazor.TextSelection.SetRangeAsync(EditorContext.InputElementRef, fullRange).ConfigureAwait(false);
+            await JsInfiniBlazor.TextSelection.SetRangeAsync(EditorContext.InputElementRef, fullRange);
             return;
         }
 
@@ -210,6 +206,6 @@
         int caretIndex = await JsInfiniBlazor.TextSelection.GetStartIndexAsync(EditorContext.InputElementRef);
         if (!TextEditor.TryGetCaretLine(EditorContext.TextSource, caretIndex, out Range lineRange)) return;
 
-        await JsInfiniBlazor.TextSelection.SetRangeAsync(EditorContext.InputElementRef, lineRange).ConfigureAwait(false);
+        await JsInfiniBlazor.TextSelection.SetRangeAsync(EditorContext.InputElementRef, lineRange);
     }
 }
