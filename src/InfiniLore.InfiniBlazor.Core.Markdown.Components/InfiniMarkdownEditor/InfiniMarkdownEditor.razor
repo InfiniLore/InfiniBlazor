@@ -155,6 +155,7 @@
         string newContent = Parser.Markdown.DeserializeToString(EditorContext.SyntaxTree);
         EditorContext.TextSource.UpdateSource(newContent);
 
+        await InfiniBlazorJs.Element.SetValueAsync(EditorContext.InputElementRef, EditorContext.TextSource.Text);
         await EditorContextChanged.InvokeAsync(EditorContext);
         
         await InvokeAsync(StateHasChanged);
