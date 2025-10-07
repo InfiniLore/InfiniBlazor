@@ -11,7 +11,6 @@ namespace InfiniLore.InfiniBlazor.Components;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class InfiniButtonComponentBase : InfiniHrefContentComponentBase {
-    
     [Parameter] public string? IconName { get; set; }
     [Parameter] public string? Text { get; set; }
     [Parameter] public bool StopPropagation { get; set; } = true;
@@ -31,6 +30,7 @@ public partial class InfiniButtonComponentBase : InfiniHrefContentComponentBase 
             ? OnClick.GetDebouncer(DebounceMs)
             : EventCallbackDebouncer<MouseEventArgs>.Empty;
     }
+    
     protected async Task OnClickAsync(MouseEventArgs args) {
         if (IsDisabled) return;
 
@@ -41,6 +41,7 @@ public partial class InfiniButtonComponentBase : InfiniHrefContentComponentBase 
     public override async ValueTask DisposeAsync() {
         await base.DisposeAsync();
         if (!OnClickDebounced.IsEmpty) await OnClickDebounced.DisposeAsync();
+        GC.SuppressFinalize(this);
     }
 
     private string IconSizeClass => Size switch {
