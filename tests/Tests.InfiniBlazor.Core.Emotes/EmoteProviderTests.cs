@@ -18,7 +18,7 @@ public class EmoteProviderTests(IEmoteProvider provider) {
     [Test]
     public async Task CountShouldReturnExpected() {
         // Arrange
-        const int expectedMinCount = 1600;// Lucide has around 1600 icons and those should all be loaded.
+        const int expectedMinCount = 4000 + 1600;// Standard has 4000 plus, Lucide has around 1600 icons and those should all be loaded.
 
         // Act
         int result = provider.Count;
@@ -33,19 +33,19 @@ public class EmoteProviderTests(IEmoteProvider provider) {
         yield return () => ("random-name", false, null);
 
         yield return () => ("flag-trans", true, new EmoteEntry(
-            ["flag-transgender", "flag-trans"],
+            ["flagtransgender", "flagtrans", "transgenderflag", "transflag"],
             "\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f",
             EmoteContentType.Emoji
         ));
 
         yield return () => ("flag-transgender", true, new EmoteEntry(
-            ["flag-transgender", "flag-trans"],
+            ["flagtransgender", "flagtrans", "transgenderflag", "transflag"],
             "\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f",
             EmoteContentType.Emoji
         ));
 
         yield return () => ("ducky-trans", true, new EmoteEntry(
-            ["ducky-trans"],
+            ["duckytrans"],
             "InfiniLore.InfiniBlazor.Emotes.wwwroot.assets.ducky-trans.png",
             EmoteContentType.ResourcePathPng
         ));
