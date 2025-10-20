@@ -5,7 +5,7 @@ using InfiniLore.InfiniBlazor.Components;
 using InfiniLore.InfiniBlazor.Emotes;
 using Tests.InfiniBlazor.Shared;
 
-namespace Test.InfiniBlazor.Core.Emotes;
+namespace Tests.InfiniBlazor.Core.Emotes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

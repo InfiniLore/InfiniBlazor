@@ -1,0 +1,57 @@
+﻿// ---------------------------------------------------------------------------------------------------------------------
+// Imports
+// ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Core.Emotes;
+using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Immutable;
+using System.Reflection;
+
+namespace InfiniLore.InfiniBlazor.Emotes.Config;
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Code
+// ---------------------------------------------------------------------------------------------------------------------
+public class InfiniBlazorEmotesConfig : IEmotesConfig {
+    private List<string> EmoteJsonLibFiles { get; } = [
+        "/_content/InfiniLore.InfiniBlazor/libs/emotes/emotes_standard.json",
+        "/_content/InfiniLore.InfiniBlazor/libs/emotes/emotes_lucide.json",
+        "/_content/InfiniLore.InfiniBlazor/libs/emotes/emotes_duckies.json",
+    ];
+    
+    private List<Type> EmbeddedResourceAssemblyEntryPoints { get; } = [];
+        
+    private Lazy<ImmutableArray<string>> EmoteJsonLibFilePathsLazy { get; }
+    private Lazy<ImmutableArray<Assembly>> EmbeddedResourceAssembliesLazy { get; }
+    
+    
+    // -----------------------------------------------------------------------------------------------------------------
+    // Constructors 
+    // -----------------------------------------------------------------------------------------------------------------
+    public InfiniBlazorEmotesConfig(IServiceCollection serviceCollection) {
+        serviceCollection.RegisterServicesFromInfiniLoreInfiniBlazorCoreEmotes();
+        serviceCollection.AddSingleton<IEmotesConfig>(this);
+        
+        EmoteJsonLibFilePathsLazy = new Lazy<ImmutableArray<string>>(() => EmoteJsonLibFiles.ToImmutableArray());
+        EmbeddedResourceAssembliesLazy = new Lazy<ImmutableArray<Assembly>>(() => EmbeddedResourceAssemblyEntryPoints.Select(t => t.Assembly).ToImmutableArray());
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    public InfiniBlazorEmotesConfig AddEmbeddedResourceAssembly<TEntrypoint>() {
+        EmbeddedResourceAssemblyEntryPoints.Add(typeof(TEntrypoint));
+        return this;
+    }
+    
+    public ImmutableArray<string> GetEmoteJsonLibFilePaths()
+        => EmoteJsonLibFilePathsLazy.Value;
+    
+    public bool TryGetEmbeddedResourceAssemblies(out ImmutableArray<Assembly> assemblies) {
+        if (EmbeddedResourceAssembliesLazy.IsValueCreated || !EmbeddedResourceAssemblyEntryPoints.IsEmpty()) {
+            assemblies = EmbeddedResourceAssembliesLazy.Value;
+            return true;
+        }
+
+        assemblies = ImmutableArray<Assembly>.Empty;
+        return false;
+    }
+}

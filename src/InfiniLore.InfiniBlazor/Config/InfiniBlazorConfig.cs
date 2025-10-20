@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Components.Config;
+using InfiniLore.InfiniBlazor.Emotes.Config;
 using InfiniLore.InfiniBlazor.Markdown;
 using InfiniLore.InfiniBlazor.Theming.Config;
 using InfiniLore.InfiniBlazor.Toasting.Config;
@@ -17,4 +18,5 @@ public class InfiniBlazorConfig(IServiceCollection collection) : IInfiniBlazorCo
     public InfiniBlazorThemingConfig Theming { get; } = new(collection);
     public InfiniBlazorToastingConfig Toasting { get; } = new(collection);
     public InfiniBlazorComponentsConfig Components { get; } = new(collection);
+    public InfiniBlazorEmotesConfig Emotes { get; } = new(collection);
 }

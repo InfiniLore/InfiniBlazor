@@ -12,7 +12,7 @@ namespace InfiniLore.InfiniBlazor.Emotes.DataLoaders;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IEmoteDataLoader>(KeyName)]
 public class EmbeddedResourceEmoteDataLoader(
-    IComponentsConfig componentsConfig
+    IEmotesConfig emotesConfig
 ) : IEmoteDataLoader {
     public const string KeyName = nameof(EmbeddedResourceEmoteDataLoader);
 
@@ -20,9 +20,9 @@ public class EmbeddedResourceEmoteDataLoader(
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public IEnumerable<Stream> LoadEmoteStreams() {
-        if (!componentsConfig.TryGetEmbeddedResourceAssemblies(out ImmutableArray<Assembly> assemblies)) return Enumerable.Empty<Stream>();
+        if (!emotesConfig.TryGetEmbeddedResourceAssemblies(out ImmutableArray<Assembly> assemblies)) return Enumerable.Empty<Stream>();
         
-        HashSet<string> resourceFilePaths = componentsConfig.GetEmoteJsonLibFilePaths()
+        HashSet<string> resourceFilePaths = emotesConfig.GetEmoteJsonLibFilePaths()
             .Select(static path => path.TrimStart('/')
                 .Replace("_content/InfiniLore.InfiniBlazor/", "InfiniLore.InfiniBlazor.wwwroot.")
                 .Replace("/", ".")

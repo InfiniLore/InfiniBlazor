@@ -12,7 +12,7 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniLore.InfiniBlazor.Components.InfiniComponentBase
-@inject IComponentsConfig ComponentsConfig
+@inject IEmotesConfig EmotesConfig
 @inject IEmoteProvider EmoteProvider
 @inject ILogger<InfiniEmote> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -59,7 +59,7 @@
     [Parameter] public Func<string, RenderFragment>? OnEmoteNotFound { get; init; }
 
     private string GetBase64Image(string resourcePath) {
-        if (!ComponentsConfig.TryGetEmbeddedResourceAssemblies(out ImmutableArray<Assembly> assemblies)) return string.Empty;
+        if (!EmotesConfig.TryGetEmbeddedResourceAssemblies(out ImmutableArray<Assembly> assemblies)) return string.Empty;
 
         foreach (Assembly assembly in assemblies) {
             try {

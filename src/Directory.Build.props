@@ -36,6 +36,7 @@
         <InternalsVisibleTo Include="Tests.InfiniBlazor.Shared.Markdown" />
         <InternalsVisibleTo Include="Tests.InfiniBlazor.Extensions.AutoDocumentation" />
         <InternalsVisibleTo Include="Tests.InfiniBlazor.Core.Markdown" />
+        <InternalsVisibleTo Include="Tests.InfiniBlazor.Core.Emotes" />
     </ItemGroup>
 
     

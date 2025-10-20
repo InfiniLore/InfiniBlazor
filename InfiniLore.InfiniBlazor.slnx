@@ -62,8 +62,8 @@
     <Project Path="tests\Tests.InfiniBlazor\Tests.InfiniBlazor.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/tests/core/">
-    <Project Path="tests\Test.InfiniBlazor.Core.Emotes\Test.InfiniBlazor.Core.Emotes.csproj" Type="Classic C#" />
     <Project Path="tests\Tests.InfiniBlazor.Core.Components\Tests.InfiniBlazor.Core.Components.csproj" Type="Classic C#" />
+    <Project Path="tests\Tests.InfiniBlazor.Core.Emotes\Tests.InfiniBlazor.Core.Emotes.csproj" Type="Classic C#" />
     <Project Path="tests\Tests.InfiniBlazor.Core.Markdown\Tests.InfiniBlazor.Core.Markdown.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/tests/extensions/">
