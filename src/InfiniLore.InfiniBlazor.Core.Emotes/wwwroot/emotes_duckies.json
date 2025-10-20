@@ -1,0 +1,12 @@
+﻿[
+  {
+    "keys": ["ducky-trans"],
+    "data": "InfiniLore.InfiniBlazor.Emotes.wwwroot.assets.ducky-trans.png",
+    "contentType": "ResourcePathPng"
+  },
+  {
+    "keys": ["ducky-agender"],
+    "data": "InfiniLore.InfiniBlazor.Emotes.wwwroot.assets.ducky-agender.png",
+    "contentType": "ResourcePathPng"
+  }
+]

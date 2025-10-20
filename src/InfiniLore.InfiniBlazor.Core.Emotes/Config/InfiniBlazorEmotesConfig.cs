@@ -13,12 +13,12 @@ namespace InfiniLore.InfiniBlazor.Emotes.Config;
 // ---------------------------------------------------------------------------------------------------------------------
 public class InfiniBlazorEmotesConfig : IEmotesConfig {
     private List<string> EmoteJsonLibFiles { get; } = [
-        "/_content/InfiniLore.InfiniBlazor/libs/emotes/emotes_standard.json",
-        "/_content/InfiniLore.InfiniBlazor/libs/emotes/emotes_lucide.json",
-        "/_content/InfiniLore.InfiniBlazor/libs/emotes/emotes_duckies.json",
+        "/_content/InfiniLore.InfiniBlazor.Emotes/emotes_standard.json",
+        "/_content/InfiniLore.InfiniBlazor.Emotes/emotes_lucide.json",
+        "/_content/InfiniLore.InfiniBlazor.Emotes/emotes_duckies.json",
     ];
     
-    private List<Type> EmbeddedResourceAssemblyEntryPoints { get; } = [];
+    private List<Type> EmbeddedResourceAssemblyEntryPoints { get; } = [typeof(InfiniBlazorEmotesConfig)];
         
     private Lazy<ImmutableArray<string>> EmoteJsonLibFilePathsLazy { get; }
     private Lazy<ImmutableArray<Assembly>> EmbeddedResourceAssembliesLazy { get; }

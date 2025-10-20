@@ -16,6 +16,9 @@ public class EmbeddedResourceEmoteDataLoaderTests(IEmotesConfig componentConfig)
     [Test]
     public async Task CountShouldReturnExpected() {
         // Arrange
+        var data = typeof(EmbeddedResourceEmoteDataLoader).Assembly.GetManifestResourceNames();
+        
+        
         var dataLoader = new EmbeddedResourceEmoteDataLoader(componentConfig);
         
         // Act
@@ -23,6 +26,6 @@ public class EmbeddedResourceEmoteDataLoaderTests(IEmotesConfig componentConfig)
         Stream[] streamArray = streams.ToArray();
         
         // Assert
-        await Assert.That(streamArray).HasCount().GreaterThan(1);
+        await Assert.That(streamArray).HasCount().GreaterThanOrEqualTo(3);
     }
 }

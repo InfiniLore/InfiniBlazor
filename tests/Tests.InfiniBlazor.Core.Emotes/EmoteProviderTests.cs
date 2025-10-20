@@ -46,7 +46,7 @@ public class EmoteProviderTests(IEmoteProvider provider) {
 
         yield return () => ("ducky-trans", true, new EmoteEntry(
             ["ducky-trans"],
-            "InfiniLore.InfiniBlazor.wwwroot.libs.emotes.assets.ducky-trans.png",
+            "InfiniLore.InfiniBlazor.Emotes.wwwroot.assets.ducky-trans.png",
             EmoteContentType.ResourcePathPng
         ));
     }

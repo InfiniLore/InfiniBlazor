@@ -22,9 +22,10 @@ public class EmbeddedResourceEmoteDataLoader(
     public IEnumerable<Stream> LoadEmoteStreams() {
         if (!emotesConfig.TryGetEmbeddedResourceAssemblies(out ImmutableArray<Assembly> assemblies)) return Enumerable.Empty<Stream>();
         
+        // TODO this is hacky and should be replaced by a proper solution
         HashSet<string> resourceFilePaths = emotesConfig.GetEmoteJsonLibFilePaths()
             .Select(static path => path.TrimStart('/')
-                .Replace("_content/InfiniLore.InfiniBlazor/", "InfiniLore.InfiniBlazor.wwwroot.")
+                .Replace("_content/InfiniLore.InfiniBlazor.Emotes/", "InfiniLore.InfiniBlazor.Emotes.wwwroot.")
                 .Replace("/", ".")
             ).ToHashSet();
 
