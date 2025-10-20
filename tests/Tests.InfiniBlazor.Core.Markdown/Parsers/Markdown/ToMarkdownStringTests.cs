@@ -28,6 +28,6 @@ public class ToMarkdownTests(IMarkdownParser parser) {
         // Assert
         await Assert.That(foundOutput)
             .IsNotNull()
-            .IsEqualTo(expectedOutput);
+            .And.IsEqualTo(expectedOutput);
     }
 }

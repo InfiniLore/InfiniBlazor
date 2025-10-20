@@ -27,6 +27,6 @@ public class FromMarkdownTests(IMarkdownParser parser) {
         // Assert
         await Assert.That(foundTree)
             .IsNotNull()
-            .IsEqualTo(expectedOutput);
+            .And.IsEqualTo(expectedOutput);
     }
 }

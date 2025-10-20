@@ -28,6 +28,6 @@ public class ToJsonTests(IMarkdownParser parser) {
         // Assert
         await Assert.That(foundOutputNormalized)
             .IsNotNull()
-            .IsEqualTo(expectedOutput);
+            .And.IsEqualTo(expectedOutput);
     }
 }

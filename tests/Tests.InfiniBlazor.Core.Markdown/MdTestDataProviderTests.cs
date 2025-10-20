@@ -67,7 +67,9 @@ public class MdTestDataProviderTests {
         // Assert
         await Assert.That(fileNames)
             .IsNotNull()
-            .HasCount().GreaterThanOrEqualTo(2)
+            .And.HasCount().GreaterThanOrEqualTo(2);
+        
+        await Assert.That(fileNames)
             .Contains(filePath => filePath == "bold.xml");
     }
     
@@ -87,7 +89,7 @@ public class MdTestDataProviderTests {
         // Assert
         await Assert.That(data)
             .IsNotNull()
-            .HasCount().GreaterThanOrEqualTo(minimumExpectedCount);
+            .And.HasCount().GreaterThanOrEqualTo(minimumExpectedCount);
     }
 
     [Test]
@@ -102,7 +104,7 @@ public class MdTestDataProviderTests {
         // Assert
         await Assert.That(data)
             .IsNotNull()
-            .HasCount().GreaterThanOrEqualTo(minimumExpectedCount);
+            .And.HasCount().GreaterThanOrEqualTo(minimumExpectedCount);
     }
 
     [Test]
