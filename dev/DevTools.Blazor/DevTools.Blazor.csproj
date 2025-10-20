@@ -22,7 +22,6 @@
 
     <ItemGroup>
       <Folder Include="Components\Library\" />
-      <Folder Include="Components\Pages\EmoteDataEditor\" />
     </ItemGroup>
     
 </Project>

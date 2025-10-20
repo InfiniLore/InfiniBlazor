@@ -16,9 +16,6 @@ public class EmbeddedResourceEmoteDataLoaderTests(IEmotesConfig componentConfig)
     [Test]
     public async Task CountShouldReturnExpected() {
         // Arrange
-        var data = typeof(EmbeddedResourceEmoteDataLoader).Assembly.GetManifestResourceNames();
-        
-        
         var dataLoader = new EmbeddedResourceEmoteDataLoader(componentConfig);
         
         // Act

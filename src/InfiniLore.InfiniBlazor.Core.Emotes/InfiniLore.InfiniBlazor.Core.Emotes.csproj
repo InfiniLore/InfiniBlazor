@@ -38,6 +38,7 @@
       <EmbeddedResource Include="wwwroot\emotes_duckies.json" />
       <EmbeddedResource Include="wwwroot\emotes_lucide.json" />
       <EmbeddedResource Include="wwwroot\emotes_standard.json" />
+      <EmbeddedResource Include="wwwroot\emotes_standard_extended.json" />
     </ItemGroup>
 
 </Project>

@@ -14,6 +14,7 @@ namespace InfiniLore.InfiniBlazor.Emotes.Config;
 public class InfiniBlazorEmotesConfig : IEmotesConfig {
     private List<string> EmoteJsonLibFiles { get; } = [
         "/_content/InfiniLore.InfiniBlazor.Emotes/emotes_standard.json",
+        "/_content/InfiniLore.InfiniBlazor.Emotes/emotes_standard_extended.json",
         "/_content/InfiniLore.InfiniBlazor.Emotes/emotes_lucide.json",
         "/_content/InfiniLore.InfiniBlazor.Emotes/emotes_duckies.json",
     ];

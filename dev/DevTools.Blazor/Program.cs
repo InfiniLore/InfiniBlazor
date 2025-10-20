@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using DevTools.Blazor.Components;
+using DevTools.Blazor.Components.Pages.EmoteDataEditor;
 using Microsoft.AspNetCore.Components.Web;
 using System.Diagnostics.CodeAnalysis;
 using Tests.InfiniBlazor.Shared.Markdown;
@@ -33,6 +34,8 @@ public class Program {
         builder.Services.RegisterServicesFromDevToolsBlazor();
         builder.Services.RegisterServicesFromTestsInfiniBlazorSharedMarkdown();
 
+        builder.Services.AddHttpClient<EmoteDataEditorPage>();
+        
         // -----------------------------------------------------------------------------------------------------------------
         // App
         // -----------------------------------------------------------------------------------------------------------------
