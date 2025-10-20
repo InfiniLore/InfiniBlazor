@@ -1,12 +1,12 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using DevTools.MdTestHelper.Components;
+using DevTools.Blazor.Components;
 using Microsoft.AspNetCore.Components.Web;
 using System.Diagnostics.CodeAnalysis;
 using Tests.InfiniBlazor.Shared.Markdown;
 
-namespace DevTools.MdTestHelper;
+namespace DevTools.Blazor;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -30,7 +30,7 @@ public class Program {
             config.Markdown.SkipBlazorRenderingOnComponent<NewLineMdSyntaxNode>();
         });
 
-        builder.Services.RegisterServicesFromDevToolsMdTestHelper();
+        builder.Services.RegisterServicesFromDevToolsBlazor();
         builder.Services.RegisterServicesFromTestsInfiniBlazorSharedMarkdown();
 
         // -----------------------------------------------------------------------------------------------------------------

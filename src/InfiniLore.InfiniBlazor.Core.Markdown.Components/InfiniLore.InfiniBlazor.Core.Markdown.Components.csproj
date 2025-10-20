@@ -11,6 +11,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core.Components\InfiniLore.InfiniBlazor.Core.Components.csproj" />
+        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core.Emotes\InfiniLore.InfiniBlazor.Core.Emotes.csproj" />
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core.Markdown\InfiniLore.InfiniBlazor.Core.Markdown.csproj" />
     </ItemGroup>
 
