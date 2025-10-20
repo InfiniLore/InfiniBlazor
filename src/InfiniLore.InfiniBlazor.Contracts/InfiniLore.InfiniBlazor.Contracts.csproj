@@ -13,6 +13,7 @@
       <PackageReference Include="InfiniLore.Lucide" />
       <PackageReference Include="JetBrains.Annotations" />
       <PackageReference Include="Microsoft.AspNetCore.Components" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" VersionOverride="9.0.10" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
       <PackageReference Include="Microsoft.Extensions.ObjectPool" />
     </ItemGroup>
