@@ -121,14 +121,15 @@
             foreach (GistEmoteJsonEntry original in GistEmoteJsonData.Emotes) {
                 if (original.Unicode.IsNullOrWhiteSpace() || original.ShortName.IsNullOrWhiteSpace()) continue;
 
-                var originalName = original.ShortName.Trim(':');
-                List<string> keys = [originalName];
-                if (originalName.Contains('_')) {
-                    keys.Add(originalName.Replace('_', '-'));
-                    keys.Add(originalName.Replace("_", string.Empty));
-                }
+                string originalName = original.ShortName
+                    .Trim(':')
+                    .Replace("-", string.Empty)
+                    .Replace("_", string.Empty)
+                    .Replace("/", string.Empty)
+                    .ToLowerInvariant();
+                
                 var entry = new EmoteEntry(
-                    keys.ToArray(),
+                    [originalName],
                     original.Emoji?.Replace("‍", ""),
                     EmoteContentType.Emoji
                 );
