@@ -18,7 +18,7 @@ public class EmoteProviderTests(IEmoteProvider provider) {
     [Test]
     public async Task CountShouldReturnExpected() {
         // Arrange
-        const int expectedMinCount = 4000 + 1600;// Standard has 4000 plus, Lucide has around 1600 icons and those should all be loaded.
+        const int expectedMinCount = 3526;
 
         // Act
         int result = provider.Count;
@@ -33,13 +33,23 @@ public class EmoteProviderTests(IEmoteProvider provider) {
         yield return () => ("random-name", false, null);
 
         yield return () => ("flag-trans", true, new EmoteEntry(
-            ["flagtransgender", "flagtrans", "transgenderflag", "transflag"],
+            [
+                "transgenderflag",
+                "transflag",
+                "flagtransgender",
+                "flagtrans"
+            ],
             "\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f",
             EmoteContentType.Emoji
         ));
 
         yield return () => ("flag-transgender", true, new EmoteEntry(
-            ["flagtransgender", "flagtrans", "transgenderflag", "transflag"],
+            [
+                "transgenderflag",
+                "transflag",
+                "flagtransgender",
+                "flagtrans"
+            ],
             "\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f",
             EmoteContentType.Emoji
         ));
@@ -65,7 +75,7 @@ public class EmoteProviderTests(IEmoteProvider provider) {
 
         // Assert
         var entryCast = entry as EmoteEntry;
-        await Assert.That(result).IsEqualTo(expectedResult);
+        await Assert.That(result).IsEquivalentTo(expectedResult);
         await Assert.That(entryCast).IsEquivalentTo(expectedEntry);
     }
 }

@@ -65,6 +65,7 @@ public class EmoteProvider(
     // -----------------------------------------------------------------------------------------------------------------
     public bool TryGetEntry(string key, [NotNullWhen(true)] out IEmoteEntry? entry) {
         entry = null;
+        if (key.IsNullOrWhiteSpace()) return false;
         if (!key.Contains('_') && !key.Contains('-') && !key.Contains('/'))
             return !key.IsNullOrWhiteSpace()
                 && Entries.TryGetValue(key, out entry);
