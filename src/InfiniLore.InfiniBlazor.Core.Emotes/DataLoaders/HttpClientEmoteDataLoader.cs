@@ -2,11 +2,12 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.Components;
 using Microsoft.Extensions.Logging;
 using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 
-namespace InfiniLore.InfiniBlazor.Components.DataLoaders;
+namespace InfiniLore.InfiniBlazor.Emotes.DataLoaders;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

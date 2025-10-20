@@ -1,9 +1,10 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Components;
 using System.Text.Json.Serialization;
 
-namespace InfiniLore.InfiniBlazor.Components;
+namespace InfiniLore.InfiniBlazor.Emotes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -12,4 +13,3 @@ public record EmoteEntry(
     [property: JsonPropertyName("data")] string? Data,
     [property: JsonPropertyName("contentType")] EmoteContentType ContentType
 ) : IEmoteEntry;
-

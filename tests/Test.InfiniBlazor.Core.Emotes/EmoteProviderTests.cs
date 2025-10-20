@@ -2,9 +2,10 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Components;
+using InfiniLore.InfiniBlazor.Emotes;
 using Tests.InfiniBlazor.Shared;
 
-namespace Tests.InfiniBlazor.Services.Emotes;
+namespace Test.InfiniBlazor.Core.Emotes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

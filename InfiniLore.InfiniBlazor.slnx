@@ -41,6 +41,7 @@
   </Folder>
   <Folder Name="/src/core/">
     <Project Path="src\InfiniLore.InfiniBlazor.Core.Components\InfiniLore.InfiniBlazor.Core.Components.csproj" Type="Classic C#" />
+    <Project Path="src\InfiniLore.InfiniBlazor.Core.Emotes\InfiniLore.InfiniBlazor.Core.Emotes.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor.Core.Js\InfiniLore.InfiniBlazor.Core.Js.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor.Core.Markdown.Components\InfiniLore.InfiniBlazor.Core.Markdown.Components.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor.Core.Markdown\InfiniLore.InfiniBlazor.Core.Markdown.csproj" Type="Classic C#" />
@@ -61,6 +62,7 @@
     <Project Path="tests\Tests.InfiniBlazor\Tests.InfiniBlazor.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/tests/core/">
+    <Project Path="tests\Test.InfiniBlazor.Core.Emotes\Test.InfiniBlazor.Core.Emotes.csproj" Type="Classic C#" />
     <Project Path="tests\Tests.InfiniBlazor.Core.Components\Tests.InfiniBlazor.Core.Components.csproj" Type="Classic C#" />
     <Project Path="tests\Tests.InfiniBlazor.Core.Markdown\Tests.InfiniBlazor.Core.Markdown.csproj" Type="Classic C#" />
   </Folder>
