@@ -12,11 +12,46 @@
 
 <body>
     <div id="app">
-        <svg class="loading-progress">
-            <circle r="40%" cx="50%" cy="50%" />
-            <circle r="40%" cx="50%" cy="50%" />
-        </svg>
-        <div class="loading-progress-text"></div>
+        <div class="flex items-center justify-center min-h-screen bg-infini-base-90">
+            <div class="flex flex-col items-center gap-4">
+                <!-- Blazor-controlled progress -->
+                
+                <svg id="loading-progress" class="w-20 h-20 text-infini-accent" viewBox="0 0 100 100">
+                    <circle class="bg-infini-base-90" cx="50" cy="50" r="45" stroke="currentColor" stroke-width="10" fill="none" />
+                    <circle
+                        id="circle-progress"
+                        class="text-infini-accent"
+                        cx="50" cy="50" r="45"/>
+                </svg>
+
+                <!-- Blazor sets this text dynamically -->
+                <div id="loading-progress-text" class="text-lg font-medium text-gray-300"></div>
+            </div>
+        </div>
+        
+        <!--suppress CssUnresolvedCustomProperty -->
+        <style>
+            #loading-progress {
+                transform: rotate(-90deg);
+            }
+            
+            /* TODO This is not working as it should, it always shows 100% of the circle */
+            #circle-progress {
+                stroke: currentColor;
+                stroke-width: 10;
+                stroke-linecap: round;
+                fill: none;
+
+                stroke-dasharray: 283;
+                stroke-dashoffset: calc(283 * (1 - var(--blazor-load-percentage, 0%) / 100));
+
+                transition: stroke-dashoffset 0.2s ease-out;
+            }
+            
+            #loading-progress-text:after {
+                content: var(--blazor-load-percentage-text, "Loading");
+            }
+        </style>
     </div>
     
     <script src="_framework/blazor.webassembly.js"></script>
