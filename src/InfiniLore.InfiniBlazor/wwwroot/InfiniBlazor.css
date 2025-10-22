@@ -1425,6 +1425,9 @@
   .border-collapse {
     border-collapse: collapse;
   }
+  .origin-\[50\%_50\%\] {
+    transform-origin: 50% 50%;
+  }
   .translate-x-0 {
     --tw-translate-x: calc(var(--spacing) * 0);
     translate: var(--tw-translate-x) var(--tw-translate-y);
@@ -1471,6 +1474,9 @@
   }
   .scale-3d {
     scale: var(--tw-scale-x) var(--tw-scale-y) var(--tw-scale-z);
+  }
+  .rotate-\[-90deg\] {
+    rotate: -90deg;
   }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
@@ -2192,11 +2198,20 @@
   .fill-none {
     fill: none;
   }
+  .stroke-\[--tw-current\] {
+    stroke: --tw-current;
+  }
   .stroke-infini-accent {
     stroke: var(--color-infini-accent);
   }
   .stroke-infini-base-90 {
     stroke: var(--color-infini-base-90);
+  }
+  .stroke-\[0\.6em\] {
+    stroke-width: 0.6em;
+  }
+  .stroke-\[10px\] {
+    stroke-width: 10px;
   }
   .object-contain {
     object-fit: contain;

@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTarget -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,30 +9,30 @@
     <base href="/" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="stylesheet" href="_content/InfiniLore.InfiniBlazor/InfiniBlazor.css" />
-
-    <!--suppress CssUnresolvedCustomProperty -->
-    <style>
-        #loading-progress {
-            stroke-width: 0.6rem;
-            transform-origin: 50% 50%;
-            transform: rotate(-90deg);
-        }
-
-        /* TODO This is not working as it should, it always shows 100% of the circle */
-        #loading-progress circle:last-child {
-            stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%)), 500%;
-            transition: stroke-dasharray 0.05s ease-in-out;
-        }
-
-        #loading-progress-text:after {
-            content: var(--blazor-load-percentage-text, "Loading");
-        }
-    </style>
 </head>
 
 <body>
     <div id="app">
-        <div class="flex items-center justify-center min-h-screen bg-infini-base-90">
+        <!--#app gets replaced by the actual app content and then this is removed as well-->
+        <!--suppress CssUnresolvedCustomProperty-->
+        <style>
+            #loading-progress {
+                stroke-width: 0.6rem;
+                transform-origin: 50% 50%;
+                transform: rotate(-90deg);
+            }
+
+            #loading-progress circle:last-child {
+                stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%)), 500%;
+                transition: stroke-dasharray 0.05s ease-in-out;
+            }
+
+            #loading-progress-text:after {
+                content: var(--blazor-load-percentage-text, "Loading");
+            }
+        </style>
+        
+        <div class="flex items-center justify-center min-h-screen min-w-screen bg-infini-base-90">
             <div class="flex flex-col items-center gap-4">
                 <!-- Blazor-controlled progress -->
                 <svg id="loading-progress" class="w-20 h-20 stroke-infini-base-90 fill-none" viewBox="0 0 100 100">
