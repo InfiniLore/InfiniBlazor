@@ -136,7 +136,7 @@ public class MdTestDataProviderTests {
                 Id = "testId",
                 FileName = "test_write_async.xml",
                 MdString = "**test markdown**",
-                MdSyntaxTree = new MdSyntaxTree() // Dont process the Syntax tree, not needed for anything here
+                MdSyntaxTree = new MdSyntaxTree() // Don't process the Syntax tree, not needed for anything here
             }
         };
 
@@ -146,7 +146,7 @@ public class MdTestDataProviderTests {
         // Assert
         await Assert.That(result).IsTrue();
 
-        // Cleanup - verify file was created and can be read back
+        // Cleanup - a file was created and can be read back
         List<MdTestData>? readBackData = await MdTestDataProvider.TestInstance.TryGetXmlMdTestDataAsync(TestWriteAsyncFileName);
         await Assert.That(readBackData).IsNotNull();
         await Assert.That(readBackData!.First().Id).IsEqualTo("testId");
@@ -160,7 +160,7 @@ public class MdTestDataProviderTests {
                 Id = "testId",
                 FileName = "test_write_sync.xml",
                 MdString = "**test markdown**",
-                MdSyntaxTree = new MdSyntaxTree() // Dont process the Syntax tree, not needed for anything here
+                MdSyntaxTree = new MdSyntaxTree() // Don't process the Syntax tree, not needed for anything here
             }
         };
 
@@ -170,7 +170,7 @@ public class MdTestDataProviderTests {
         // Assert
         await Assert.That(result).IsTrue();
 
-        // Cleanup - verify file was created and can be read back
+        // Cleanup - a file was created and can be read back
         List<MdTestData>? readBackData = MdTestDataProvider.TestInstance.TryGetXmlMdTestData(TestWriteSyncFileName);
         await Assert.That(readBackData).IsNotNull();
         await Assert.That(readBackData!.First().Id).IsEqualTo("testId");
@@ -183,7 +183,7 @@ public class MdTestDataProviderTests {
             Id = "newTestId",
             FileName = "test_add_async.xml",
             MdString = "*new test markdown*",
-            MdSyntaxTree = new MdSyntaxTree() // Dont process the Syntax tree, not needed for anything here
+            MdSyntaxTree = new MdSyntaxTree() // Don't process the Syntax tree, not needed for anything here
         };
 
         // Act
@@ -205,7 +205,7 @@ public class MdTestDataProviderTests {
             Id = "newTestId",
             FileName = "test_add_sync.xml",
             MdString = "*new test markdown*",
-            MdSyntaxTree = new MdSyntaxTree() // Dont process the Syntax tree, not needed for anything here
+            MdSyntaxTree = new MdSyntaxTree() // Don't process the Syntax tree, not needed for anything here
         };
 
         // Act
@@ -227,7 +227,7 @@ public class MdTestDataProviderTests {
             Id = "updateTestId",
             FileName = "test_update_async.xml",
             MdString = "*initial markdown*",
-            MdSyntaxTree = new MdSyntaxTree() // Dont process the Syntax tree, not needed for anything here
+            MdSyntaxTree = new MdSyntaxTree() // Don't process the Syntax tree, not needed for anything here
         };
 
         // First, add the initial item
@@ -237,7 +237,7 @@ public class MdTestDataProviderTests {
             Id = "updateTestId",// Same ID
             FileName = "test_update_async.xml",
             MdString = "**updated markdown**",// Different content
-            MdSyntaxTree = new MdSyntaxTree() // Dont process the Syntax tree, not needed for anything here
+            MdSyntaxTree = new MdSyntaxTree() // Don't process the Syntax tree, not needed for anything here
         };
 
         // Act
@@ -260,7 +260,7 @@ public class MdTestDataProviderTests {
             Id = "updateTestId",
             FileName = "test_update_sync.xml",
             MdString = "*initial markdown*",
-            MdSyntaxTree = new MdSyntaxTree() // Dont process the Syntax tree, not needed for anything here
+            MdSyntaxTree = new MdSyntaxTree() // Don't process the Syntax tree, not needed for anything here
         };
 
         // First, add the initial item
@@ -270,7 +270,7 @@ public class MdTestDataProviderTests {
             Id = "updateTestId",// Same ID
             FileName = "test_update_sync.xml",
             MdString = "**updated markdown**",// Different content
-            MdSyntaxTree = new MdSyntaxTree() // Dont process the Syntax tree, not needed for anything here
+            MdSyntaxTree = new MdSyntaxTree() // Don't process the Syntax tree, not needed for anything here
         };
 
         // Act
@@ -293,7 +293,7 @@ public class MdTestDataProviderTests {
             Id = "deleteTestId",
             FileName = "test_delete_async.xml",
             MdString = "*to be deleted*",
-            MdSyntaxTree = new MdSyntaxTree() // Dont process the Syntax tree, not needed for anything here
+            MdSyntaxTree = new MdSyntaxTree() // Don't process the Syntax tree, not needed for anything here
         };
 
         // First, add the item
@@ -318,7 +318,7 @@ public class MdTestDataProviderTests {
             Id = "deleteTestId",
             FileName = "test_delete_sync.xml",
             MdString = "*to be deleted*",
-            MdSyntaxTree = new MdSyntaxTree() // Dont process the Syntax tree, not needed for anything here
+            MdSyntaxTree = new MdSyntaxTree() // Don't process the Syntax tree, not needed for anything here
         };
 
         // First, add the item
@@ -366,7 +366,7 @@ public class MdTestDataProviderTests {
                 Id = "",// Invalid - empty ID
                 FileName = "test_invalid_async.xml",
                 MdString = "**test markdown**",
-                MdSyntaxTree = new MdSyntaxTree() // Dont process the Syntax tree, not needed for anything here
+                MdSyntaxTree = new MdSyntaxTree() // Don't process the Syntax tree, not needed for anything here
             }
         };
 
@@ -385,7 +385,7 @@ public class MdTestDataProviderTests {
                 Id = "",// Invalid - empty ID
                 FileName = "test_invalid_sync.xml",
                 MdString = "**test markdown**",
-                MdSyntaxTree = new MdSyntaxTree() // Dont process the Syntax tree, not needed for anything here
+                MdSyntaxTree = new MdSyntaxTree() // Don't process the Syntax tree, not needed for anything here
             }
         };
 

@@ -31,7 +31,7 @@
 }</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="edgeCase_HrTagPossibility" FileName="subscript.xml">
-    <DeveloperNote>I dont know if this is possible anymore</DeveloperNote>
+    <DeveloperNote>I Don't know if this is possible anymore</DeveloperNote>
     <MdString>some text ~~~~</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
