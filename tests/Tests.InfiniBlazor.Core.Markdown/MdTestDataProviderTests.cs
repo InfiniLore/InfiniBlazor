@@ -65,9 +65,8 @@ public class MdTestDataProviderTests {
         string[]? fileNames = MdTestDataProvider.TestInstance.TryGetFileNames();
 
         // Assert
-        await Assert.That(fileNames)
-            .IsNotNull()
-            .And.HasCount().GreaterThanOrEqualTo(2);
+        await Assert.That(fileNames).IsNotNull();
+        await Assert.That(fileNames).HasCount().GreaterThanOrEqualTo(2);
         
         await Assert.That(fileNames)
             .Contains(filePath => filePath == "bold.xml");
@@ -87,9 +86,8 @@ public class MdTestDataProviderTests {
         List<MdTestData>? data = await MdTestDataProvider.TestInstance.TryGetXmlMdTestDataAsync(fileName);
 
         // Assert
-        await Assert.That(data)
-            .IsNotNull()
-            .And.HasCount().GreaterThanOrEqualTo(minimumExpectedCount);
+        await Assert.That(data).IsNotNull();
+        await Assert.That(data).HasCount().GreaterThanOrEqualTo(minimumExpectedCount);
     }
 
     [Test]
@@ -102,9 +100,8 @@ public class MdTestDataProviderTests {
         List<MdTestData>? data = MdTestDataProvider.TestInstance.TryGetXmlMdTestData(fileName);
 
         // Assert
-        await Assert.That(data)
-            .IsNotNull()
-            .And.HasCount().GreaterThanOrEqualTo(minimumExpectedCount);
+        await Assert.That(data).IsNotNull();
+        await Assert.That(data).HasCount().GreaterThanOrEqualTo(minimumExpectedCount);
     }
 
     [Test]

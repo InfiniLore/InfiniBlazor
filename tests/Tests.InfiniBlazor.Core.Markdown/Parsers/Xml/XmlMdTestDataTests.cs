@@ -82,9 +82,9 @@ public class XmlMdTestDataTests {
         
         // Assert
         await Assert.That(deserializedData)
-            .IsNotNull()
-            .And.IsNotEmpty()
-            .And.HasCount(3);
+            .IsNotEmpty()
+            .HasCount(3)
+            .IsNotNull();
 
         await Assert.That(deserializedData![0]).IsEqualTo(TestEntry);
         await Assert.That(deserializedData[1]).IsEqualTo(TestEntry);
