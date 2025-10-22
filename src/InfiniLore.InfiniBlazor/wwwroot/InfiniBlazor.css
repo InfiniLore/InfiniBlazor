@@ -541,6 +541,9 @@
   .top-100 {
     top: calc(var(--spacing) * 100);
   }
+  .top-full {
+    top: 100%;
+  }
   .-right-1 {
     right: calc(var(--spacing) * -1);
   }
@@ -2185,6 +2188,15 @@
     --strip-scape-4: 95%;
     background-image: linear-gradient( var(--stripe-angle), var(--stripe-color) var(--strip-scape-1), transparent var(--strip-scape-1), transparent var(--strip-scape-2), var(--stripe-color) var(--strip-scape-2), var(--stripe-color) var(--strip-scape-3), transparent var(--strip-scape-3), transparent var(--strip-scape-4), var(--stripe-color) var(--strip-scape-4) );
     background-size: 1rem 1rem;
+  }
+  .fill-none {
+    fill: none;
+  }
+  .stroke-infini-accent {
+    stroke: var(--color-infini-accent);
+  }
+  .stroke-infini-base-90 {
+    stroke: var(--color-infini-base-90);
   }
   .object-contain {
     object-fit: contain;
