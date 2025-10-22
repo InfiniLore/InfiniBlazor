@@ -2,16 +2,17 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.Components;
 using System.Collections.Immutable;
 using System.Reflection;
 
-namespace InfiniLore.InfiniBlazor.Components.DataLoaders;
+namespace InfiniLore.InfiniBlazor.Emotes.DataLoaders;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IEmoteDataLoader>(KeyName)]
 public class EmbeddedResourceEmoteDataLoader(
-    IComponentsConfig componentsConfig
+    IEmotesConfig emotesConfig
 ) : IEmoteDataLoader {
     public const string KeyName = nameof(EmbeddedResourceEmoteDataLoader);
 
@@ -19,11 +20,12 @@ public class EmbeddedResourceEmoteDataLoader(
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public IEnumerable<Stream> LoadEmoteStreams() {
-        if (!componentsConfig.TryGetEmbeddedResourceAssemblies(out ImmutableArray<Assembly> assemblies)) return Enumerable.Empty<Stream>();
+        if (!emotesConfig.TryGetEmbeddedResourceAssemblies(out ImmutableArray<Assembly> assemblies)) return Enumerable.Empty<Stream>();
         
-        HashSet<string> resourceFilePaths = componentsConfig.GetEmoteJsonLibFilePaths()
+        // TODO this is hacky and should be replaced by a proper solution
+        HashSet<string> resourceFilePaths = emotesConfig.GetEmoteJsonLibFilePaths()
             .Select(static path => path.TrimStart('/')
-                .Replace("_content/InfiniLore.InfiniBlazor/", "InfiniLore.InfiniBlazor.wwwroot.")
+                .Replace("_content/InfiniLore.InfiniBlazor.Emotes/", "InfiniLore.InfiniBlazor.Emotes.wwwroot.")
                 .Replace("/", ".")
             ).ToHashSet();
 

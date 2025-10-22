@@ -1,0 +1,154 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor
+@using InfiniLore.InfiniBlazor.Emotes
+@using InfiniLore.InfiniBlazor.Toasting
+@using System.Text
+@using System.Text.Json
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@page "/EmoteDataEditorPage"
+@rendermode InteractiveServer
+
+@inject HttpClient HttpClient
+@inject IToastingProvider ToastingProvider
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniPage Title="Emotes Data Editor" Class="p-4 overflow-auto">
+    <InfiniSection Class="overflow-auto max-w-full min-size-full">
+        <InfiniHeading1>Emote Data Editor</InfiniHeading1>
+        <p>
+            This is the Emote Data Editor page.
+            The button bellow will download <a href="@GistUrl" class="text-infini-accent hover:text-infini-accent-light hover:underline"> a github gist file</a>, and insert the data in the appropriate fields. 
+        </p>
+        
+        <div class="flex w-full gap-4 justify-start">
+            <InfiniButton OnClick="@OnProcessDataClickedAsync">Process Data</InfiniButton>
+            
+            @if (GistEmoteJsonData is not null) {
+                <InfiniButton Color="Color.Green" OnClick="@OnSaveClickedAsync">Save Data</InfiniButton>
+            }
+        </div>
+        
+        @if (GistEmoteJsonData is not null) {
+            <p>@GistEmoteJsonData.Emotes.Length</p>
+            <InfiniSpacerVertical Spacing="Size.Xl" />
+            
+            <InfiniTable TItem="GistEmoteJsonEntry" Items="@GistEmoteJsonData.Emotes">
+                <Header>
+                    <InfiniTableHeader>@nameof(GistEmoteJsonEntry.Emoji)</InfiniTableHeader>
+                    <InfiniTableHeader>@nameof(GistEmoteJsonEntry.Name)</InfiniTableHeader>
+                    <InfiniTableHeader>@nameof(GistEmoteJsonEntry.ShortName)</InfiniTableHeader>
+                    <InfiniTableHeader>@nameof(GistEmoteJsonEntry.Unicode)</InfiniTableHeader>
+                    <InfiniTableHeader>@nameof(GistEmoteJsonEntry.Html)</InfiniTableHeader>
+                    <InfiniTableHeader>@nameof(GistEmoteJsonEntry.Category)</InfiniTableHeader>
+                    <InfiniTableHeader>@nameof(GistEmoteJsonEntry.Order)</InfiniTableHeader>
+                </Header>
+                <ContentWithIndex Context="box">
+                    @{GistEmoteJsonEntry entry = box.Item1;}
+                    @* @{int index = box.Item2;} *@
+            
+                    <InfiniTableCell>@entry.Emoji</InfiniTableCell>
+                    <InfiniTableCell>@entry.Name</InfiniTableCell>
+                    <InfiniTableCell>@entry.ShortName</InfiniTableCell>
+                    <InfiniTableCell>@entry.Unicode</InfiniTableCell>
+                    <InfiniTableCell>@entry.Html</InfiniTableCell>
+                    <InfiniTableCell>@entry.Category</InfiniTableCell>
+                    <InfiniTableCell>@entry.Order</InfiniTableCell>
+                </ContentWithIndex>
+            </InfiniTable>
+        
+            <InfiniCodeBlock Content="@GetCodeData()"></InfiniCodeBlock>
+        }
+    </InfiniSection>
+</InfiniPage>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    private const string GistUrl = "https://gist.github.com/oliveratgithub/0bf11a9aff0d6da7b46f1490f86a71eb/";
+    private const string GistRawDataUrl = $"{GistUrl}raw/d8e4b78cfe66862cf3809443c1dba017f37b61db/emojis.json";
+    private const string DataFilePath = "src/InfiniLore.InfiniBlazor.Core.Emotes/wwwroot/emotes_standard.json";
+    private GistEmoteJson? GistEmoteJsonData { get; set; }
+    private static readonly JsonSerializerOptions SerializerOptions = new() {
+        WriteIndented = true,
+        Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+    };
+    
+    private async Task OnProcessDataClickedAsync() {
+        try {
+            var uri = new Uri(GistRawDataUrl);
+            var responseData = await HttpClient.GetFromJsonAsync<GistEmoteJson>(uri);
+            GistEmoteJsonData = responseData ?? throw new Exception("The response data is null.");
+
+            await ToastingProvider.PublishToastAsync(new ToastingData(
+                "Data downloaded", 
+                $"{GistEmoteJsonData.Emotes.Length}"),
+                ToastAppearance.Success
+            );
+        }
+        catch (Exception e) {
+            await ToastingProvider.PublishToastAsync(new ToastingData("Error", e.Message), ToastAppearance.Error);
+        }
+        finally {
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private string GetCodeData() {
+        if (GistEmoteJsonData is null) return string.Empty;
+        
+        var sb = new StringBuilder();
+
+        foreach (GistEmoteJsonEntry entry in GistEmoteJsonData.Emotes) {
+            if (!GistEmoteJsonEntryDto.TryParseFromJsonEntry(entry, out GistEmoteJsonEntryDto? dto)) continue;
+
+            sb.AppendLine($"[name : '{dto.Emoji}', unicode: '{dto.Unicode}']");
+        }
+
+        return sb.ToString();
+    }
+
+    private async Task OnSaveClickedAsync() {
+        if (GistEmoteJsonData is null) return;
+
+        try {
+            var resultList = new List<EmoteEntry>(GistEmoteJsonData.Emotes.Length);
+            foreach (GistEmoteJsonEntry original in GistEmoteJsonData.Emotes) {
+                if (original.Unicode.IsNullOrWhiteSpace() || original.ShortName.IsNullOrWhiteSpace()) continue;
+
+                string originalName = original.ShortName
+                    .Trim(':')
+                    .Replace("-", string.Empty)
+                    .Replace("_", string.Empty)
+                    .Replace("/", string.Empty)
+                    .ToLowerInvariant();
+                
+                var entry = new EmoteEntry(
+                    [originalName],
+                    original.Emoji?.Replace("‍", ""),
+                    EmoteContentType.Emoji
+                );
+                resultList.Add(entry);
+            }
+
+            string jsonData = JsonSerializer.Serialize(resultList, SerializerOptions);
+
+            string filePath = Path.Join("../../", DataFilePath);
+            await File.WriteAllTextAsync(filePath, jsonData);
+        
+            await ToastingProvider.PublishToastAsync(new ToastingData(
+                    "Data Saved", 
+                    $"{resultList.Count} entries saved"),
+                ToastAppearance.Success
+            );
+        }
+        catch (Exception e) {
+            await ToastingProvider.PublishToastAsync(new ToastingData("Error", e.Message), ToastAppearance.Error);
+        }
+    }
+}

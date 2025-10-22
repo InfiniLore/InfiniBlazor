@@ -1,17 +1,18 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Components
 @using InfiniLore.Lucide
 @using Microsoft.Extensions.Logging
 @using System.Collections.Immutable
 @using System.Reflection
 
-@namespace InfiniLore.InfiniBlazor.Components
+@namespace InfiniLore.InfiniBlazor.Emotes
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniComponentBase
-@inject IComponentsConfig ComponentsConfig
+@inherits InfiniLore.InfiniBlazor.Components.InfiniComponentBase
+@inject IEmotesConfig EmotesConfig
 @inject IEmoteProvider EmoteProvider
 @inject ILogger<InfiniEmote> Logger
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -58,7 +59,7 @@
     [Parameter] public Func<string, RenderFragment>? OnEmoteNotFound { get; init; }
 
     private string GetBase64Image(string resourcePath) {
-        if (!ComponentsConfig.TryGetEmbeddedResourceAssemblies(out ImmutableArray<Assembly> assemblies)) return string.Empty;
+        if (!EmotesConfig.TryGetEmbeddedResourceAssemblies(out ImmutableArray<Assembly> assemblies)) return string.Empty;
 
         foreach (Assembly assembly in assemblies) {
             try {

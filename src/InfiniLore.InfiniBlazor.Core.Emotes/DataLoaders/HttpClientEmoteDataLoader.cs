@@ -2,25 +2,26 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.Components;
 using Microsoft.Extensions.Logging;
 using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 
-namespace InfiniLore.InfiniBlazor.Components.DataLoaders;
+namespace InfiniLore.InfiniBlazor.Emotes.DataLoaders;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IEmoteDataLoaderAsync>]
 public class HttpClientEmoteDataLoader(
     IHttpClientFactory clientFactory,
-    IComponentsConfig componentsConfig, 
+    IEmotesConfig emotesConfig, 
     ILogger<HttpClientEmoteDataLoader> logger
 ) : IEmoteDataLoaderAsync {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public async IAsyncEnumerable<Stream> LoadEmoteStreamsAsync([EnumeratorCancellation] CancellationToken ct = default) {
-        ImmutableArray<string> resourceFilePaths = componentsConfig.GetEmoteJsonLibFilePaths();
+        ImmutableArray<string> resourceFilePaths = emotesConfig.GetEmoteJsonLibFilePaths();
         if (resourceFilePaths.IsEmpty) yield break;
         
         using HttpClient client = clientFactory.CreateClient();

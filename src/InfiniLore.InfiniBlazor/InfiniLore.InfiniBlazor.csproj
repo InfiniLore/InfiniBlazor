@@ -44,16 +44,11 @@
     </ItemGroup>
     
     <ItemGroup>
-        <EmbeddedResource Include="..\..\assets\ducky-trans.png">
-          <Link>wwwroot\libs\emotes\assets\ducky-trans.png</Link>
-        </EmbeddedResource>
-        <EmbeddedResource Include="..\..\assets\ducky-agender.png">
-            <Link>wwwroot\libs\emotes\assets\ducky-agender.png</Link>
-        </EmbeddedResource>
        <EmbeddedResource Include="wwwroot\InfiniBlazor.css" />
        <EmbeddedResource Include="wwwroot\InfiniBlazor.js" />
-       <EmbeddedResource Include="wwwroot\libs\emotes\emotes_duckies.json" />
-       <EmbeddedResource Include="wwwroot\libs\emotes\emotes_lucide.json" />
-       <EmbeddedResource Include="wwwroot\libs\emotes\emotes_standard.json" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="wwwroot\libs\" />
     </ItemGroup>
 </Project>

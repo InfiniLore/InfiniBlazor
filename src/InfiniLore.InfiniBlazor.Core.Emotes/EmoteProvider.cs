@@ -2,15 +2,16 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using InfiniLore.InfiniBlazor.Components.DataLoaders;
+using InfiniLore.InfiniBlazor.Components;
+using InfiniLore.InfiniBlazor.Emotes.DataLoaders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Collections.Concurrent;
+using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace InfiniLore.InfiniBlazor.Components;
+namespace InfiniLore.InfiniBlazor.Emotes;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -19,7 +20,7 @@ public class EmoteProvider(
     ILogger<EmoteProvider> logger, 
     [FromKeyedServices(EmbeddedResourceEmoteDataLoader.KeyName)] IEmoteDataLoader dataLoader
     ) : IEmoteProvider {
-    private ConcurrentDictionary<string, IEmoteEntry> Entries { get; } = GetEntries(dataLoader, logger);
+    private FrozenDictionary<string, IEmoteEntry> Entries { get; } = GetEntries(dataLoader, logger);
 
     private static JsonSerializerOptions JsonSerializerOptions { get; } = new() {
         WriteIndented = true,
@@ -32,8 +33,8 @@ public class EmoteProvider(
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
-    private static ConcurrentDictionary<string, IEmoteEntry> GetEntries(IEmoteDataLoader dataLoader, ILogger<EmoteProvider> logger) {
-        var dictionary = new ConcurrentDictionary<string, IEmoteEntry>(-1, 2000, StringComparer.OrdinalIgnoreCase);
+    private static FrozenDictionary<string, IEmoteEntry> GetEntries(IEmoteDataLoader dataLoader, ILogger<EmoteProvider> logger) {
+        var dictionary = new Dictionary<string, IEmoteEntry>(4000, StringComparer.OrdinalIgnoreCase);
         
         foreach (Stream stream in dataLoader.LoadEmoteStreams()) {
             IEnumerable<EmoteEntry>? enumerable;
@@ -56,7 +57,7 @@ public class EmoteProvider(
             }
         }
 
-        return dictionary;
+        return dictionary.ToFrozenDictionary();
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -64,8 +65,22 @@ public class EmoteProvider(
     // -----------------------------------------------------------------------------------------------------------------
     public bool TryGetEntry(string key, [NotNullWhen(true)] out IEmoteEntry? entry) {
         entry = null;
-        return !key.IsNullOrWhiteSpace()
-            && Entries.TryGetValue(key, out entry);
+        if (key.IsNullOrWhiteSpace()) return false;
+        if (!key.Contains('_') && !key.Contains('-') && !key.Contains('/'))
+            return !key.IsNullOrWhiteSpace()
+                && Entries.TryGetValue(key, out entry);
+
+        ReadOnlySpan<char> keySpan = key.AsSpan();
+        Span<char> span = stackalloc char[keySpan.Length];
+        int length = 0;
+        foreach (char c in keySpan) {
+            if (c is '_' or '-' or '/') continue;
+            span[length++] = c;
+        }
+        if (length <= 0) return false;
+        Span<char> keySpan2 = span[..length];
+        return Entries.TryGetAlternateLookup(out FrozenDictionary<string, IEmoteEntry>.AlternateLookup<ReadOnlySpan<char>> lookup)
+            && lookup.TryGetValue(keySpan2, out entry);
     }
 
 }

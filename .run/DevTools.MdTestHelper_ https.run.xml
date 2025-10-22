@@ -1,6 +1,6 @@
 ﻿<component name="ProjectRunConfigurationManager">
   <configuration default="false" name="DevTools.MdTestHelper: https" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
-    <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/dev/DevTools.MdTestHelper/DevTools.MdTestHelper.csproj" />
+    <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/dev/DevTools.Blazor/DevTools.Blazor.csproj" />
     <option name="LAUNCH_PROFILE_TFM" value="net9.0" />
     <option name="LAUNCH_PROFILE_NAME" value="https" />
     <option name="USE_EXTERNAL_CONSOLE" value="0" />

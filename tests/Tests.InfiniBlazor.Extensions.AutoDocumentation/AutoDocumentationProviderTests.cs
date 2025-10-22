@@ -94,6 +94,6 @@ public class AutoDocumentationProviderTests {
 
         // Assert
         await Assert.That(result).IsEqualTo(expectedResult);
-        await Assert.That(fragment).IsEqualTo(expectedFragment, AutoDocumentationFragmentComparer.Instance!);
+        await Assert.That(fragment).IsEqualTo(expectedFragment, AutoDocumentationFragmentComparer.Instance);
     }
 }
