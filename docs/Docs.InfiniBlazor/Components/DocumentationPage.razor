@@ -1,24 +1,24 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using Docs.InfiniBlazor.Components
 @using InfiniLore.InfiniBlazor
+@using InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InfiniRenderModeProvider.InfiniRenderMode
-
-@page "/docs/components/embedded-markdown-preview"
+@inherits InfiniComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<DocumentationPage Title="EmbeddedMarkdownPreview">
-    <EmbeddedMarkdownPreview ResourcePath="Docs.InfiniBlazor.Pages.EmbeddedMarkdownPreviewPage.razor.md"/>
-</DocumentationPage>
+<InfiniPage Title="@Title" Class="justify-center items-center">
+    <InfiniSection Class="flex flex-col size-full rounded-none border-none" >
+        @ChildContent
+    </InfiniSection>
+</InfiniPage>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
-
+    [EditorRequired, Parameter] public string Title { get; set; } = string.Empty;
 }

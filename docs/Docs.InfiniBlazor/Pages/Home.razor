@@ -3,24 +3,20 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using Docs.InfiniBlazor.Components
 @using InfiniLore.InfiniBlazor
-@using InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InfiniRenderModeProvider.InfiniRenderMode
-@inherits InfiniNavBarBase
+
 @page "/"
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniPage Title="InfiniLore Docs" Class="justify-center items-center">
-    <InfiniSection Class="flex flex-col w-2/3">
-        <EmbeddedMarkdownPreview ResourcePath="Docs.InfiniBlazor.Pages.Home.razor.md"/>
-    </InfiniSection>
-</InfiniPage>
+<DocumentationPage Title="InfiniBlazor Docs">
+    <EmbeddedMarkdownPreview ResourcePath="Docs.InfiniBlazor.Pages.Home.razor.md"/>
+</DocumentationPage>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    
 }
