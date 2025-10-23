@@ -34,11 +34,4 @@
         </EmbeddedResource>
     </ItemGroup>
 
-    <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-        <Content Include="Pages\**\*.razor.md">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-            <Link>wwwroot\Pages\%(RecursiveDir)%(Filename)%(Extension)</Link>
-        </Content>
-    </ItemGroup>    
-
 </Project>
