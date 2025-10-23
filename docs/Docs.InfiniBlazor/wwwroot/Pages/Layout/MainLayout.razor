@@ -1,26 +1,36 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using Docs.InfiniBlazor.Components
 @using InfiniLore.InfiniBlazor
 @using InfiniLore.InfiniBlazor.Components
+@using InfiniLore.InfiniBlazor.Theming
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@rendermode InfiniRenderModeProvider.InfiniRenderMode
-@inherits InfiniNavBarBase
-@page "/"
+@inherits LayoutComponentBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniPage Title="InfiniLore Docs" Class="justify-center items-center">
-    <InfiniSection Class="flex flex-col w-2/3">
-        <EmbeddedMarkdownPreview ResourcePath="Docs.InfiniBlazor.Pages.Home.razor.md"/>
-    </InfiniSection>
-</InfiniPage>
+<InfiniThemeManager/>
+<InfiniDialogManager/>
+
+<InfiniLayout Layout="NavLayout.LeftPrimary">
+    <Left>
+        <NavBarLeft/>
+    </Left>
+    
+    <Body>
+        <InfiniToastManager/>
+        @Body
+    </Body>
+</InfiniLayout>
+
+<div id="blazor-error-ui" class="hidden fixed bottom-0 left-0 w-full bg-yellow-100 shadow-md p-3 pl-5 @ZIndex.BlazorError">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss cursor-pointer absolute right-3 top-2">🗙</a>
+</div>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@code {
-    
-}

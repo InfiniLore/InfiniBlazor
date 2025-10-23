@@ -1,26 +1,41 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using Docs.InfiniBlazor.Components
-@using InfiniLore.InfiniBlazor
-@using InfiniLore.InfiniBlazor.Components
+@using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor
+
+@namespace InfiniLore.InfiniBlazor.Markdown
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InfiniRenderModeProvider.InfiniRenderMode
-@inherits InfiniNavBarBase
-@page "/"
+
+@inherits InfiniComponentBase
+
+@inject IMarkdownParser MarkdownParser
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniPage Title="InfiniLore Docs" Class="justify-center items-center">
-    <InfiniSection Class="flex flex-col w-2/3">
-        <EmbeddedMarkdownPreview ResourcePath="Docs.InfiniBlazor.Pages.Home.razor.md"/>
-    </InfiniSection>
-</InfiniPage>
+<CascadingValue Value="@EditorContext">
+    <CascadingValue Value="@RenderContext">
+        <InfiniMdEditorPreview/>
+    </CascadingValue>
+</CascadingValue>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
+    [EditorRequired, Parameter] public string? Content { get; set; } = "# test";
+
+    private MdEditorContext EditorContext { get; set; } = new();
+    private MdRenderContext RenderContext { get; } = MdRenderContext.Interactive;
     
+    protected override async Task OnParametersSetAsync() {
+        await base.OnParametersSetAsync();
+        
+        IMdSyntaxTree tree = MarkdownParser.FromMarkdown(Content ?? string.Empty).Tree;
+        EditorContext.SyntaxTree = tree;
+        
+        await InvokeAsync(StateHasChanged);
+    }
 }
