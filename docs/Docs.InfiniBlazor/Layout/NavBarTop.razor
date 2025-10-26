@@ -7,18 +7,39 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InfiniRenderModeProvider.InfiniRenderMode
-@inherits InfiniComponentBase
+@inherits InfiniNavBarBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniPage Title="@Title" Class="justify-center items-center p-4">
-    <InfiniSection Class="flex flex-col size-full" >
-        @ChildContent
-    </InfiniSection>
-</InfiniPage>
+<InfiniNavBar Location="NavBarLocation.Top" Size="Size.L" Class="@Class">
+    <InfiniNavCollapseButton 
+        State="CollapsedState"
+        StateChanged="@UpdateCollapse"/>
+    
+    <InfiniNavLink
+        Href="/"
+        Text="InfiniBlazor Docs"
+        Class="font-bold"
+    />
+    
+    <InfiniSpacer/>
+    
+    <InfiniNavLink
+        Href="https://github.com/InfiniLore/InfiniBlazor"
+        Icon="github"
+    />
+    
+</InfiniNavBar>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+
 @code {
-    [EditorRequired, Parameter] public string Title { get; set; } = string.Empty;
+    [Parameter] public bool CollapsedState { get; set; }
+    [Parameter] public EventCallback<bool> CollapsedStateChanged { get; set; }
+
+    private async Task UpdateCollapse(bool state) {
+        CollapsedState = state;
+        await CollapsedStateChanged.InvokeAsync(state);
+    }
 }

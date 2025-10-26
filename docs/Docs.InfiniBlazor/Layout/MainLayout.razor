@@ -14,10 +14,13 @@
 <InfiniThemeManager/>
 <InfiniDialogManager/>
 
-<InfiniLayout Layout="NavLayout.LeftPrimary">
+<InfiniLayout Layout="NavLayout.TopPrimary">
     <Left>
-        <NavBarLeft/>
+        <NavBarLeft @bind-CollapsedState="@CollapsedState"/>
     </Left>
+    <Top>
+        <NavBarTop @bind-CollapsedState="@CollapsedState"/>
+    </Top>
     
     <Body>
         <InfiniToastManager/>
@@ -34,3 +37,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter] public bool CollapsedState { get; set; }
+    [Parameter] public EventCallback<bool> CollapsedStateChanged { get; set; }
+}
