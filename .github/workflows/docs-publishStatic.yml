@@ -35,8 +35,8 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore InfiniLore.InfiniBlazor.GitHubActions.Docs.slnf
 
-      - name: Publish app
-        run: dotnet publish Docs.InfiniBlazor -c Release -c Release -o ./out
+      - name: Publish docs site
+        run: dotnet publish docs/Docs.InfiniBlazor -c Release -o ./out
         
       - name: List published files
         # sanity check so you can see what will be uploaded (optional)
@@ -50,7 +50,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './out'
+          path: './out/wwwroot'
 
       - name: Deploy to GitHub Pages
         id: deployment
