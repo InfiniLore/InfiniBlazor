@@ -1,0 +1,32 @@
+﻿{
+    "solution": {
+        "path": "InfiniLore.InfiniBlazor.slnx",
+        "projects": [
+            "src\\InfiniLore.InfiniBlazor.Core.Components\\InfiniLore.InfiniBlazor.Core.Components.csproj",
+            "src\\InfiniLore.InfiniBlazor.Core.Js\\InfiniLore.InfiniBlazor.Core.Js.csproj",
+            "src\\InfiniLore.InfiniBlazor.Core.Markdown\\InfiniLore.InfiniBlazor.Core.Markdown.csproj",
+            "src\\InfiniLore.InfiniBlazor.Core.Markdown.Components\\InfiniLore.InfiniBlazor.Core.Markdown.Components.csproj",
+            "src\\InfiniLore.InfiniBlazor.Core.Theming\\InfiniLore.InfiniBlazor.Core.Theming.csproj",
+            "src\\InfiniLore.InfiniBlazor.Core.Toasting\\InfiniLore.InfiniBlazor.Core.Toasting.csproj",
+            
+            "src\\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation\\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.csproj",
+            "src\\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators\\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.csproj",
+            "src\\InfiniLore.InfiniBlazor.Extensions.Maui\\InfiniLore.InfiniBlazor.Extensions.Maui.csproj",
+            "src\\InfiniLore.InfiniBlazor.Extensions.ExtraComponents\\InfiniLore.InfiniBlazor.Extensions.ExtraComponents.csproj",
+            
+            "src\\InfiniLore.InfiniBlazor\\InfiniLore.InfiniBlazor.csproj",
+            "src\\InfiniLore.InfiniBlazor.Contracts\\InfiniLore.InfiniBlazor.Contracts.csproj",
+            "src\\InfiniLore.InfiniBlazor.Shared\\InfiniLore.InfiniBlazor.Shared.csproj",
+            "src\\InfiniLore.InfiniBlazor.SourceGenerators\\InfiniLore.InfiniBlazor.SourceGenerators.csproj",
+            
+            "docs\\Docs.InfiniBlazor\\Docs.InfiniBlazor.csproj",
+
+            "tests\\Tests.InfiniBlazor.Core.Components\\Tests.InfiniBlazor.Core.Components.csproj",
+            "tests\\Tests.InfiniBlazor.Core.Markdown\\Tests.InfiniBlazor.Core.Markdown.csproj",
+            "tests\\Tests.InfiniBlazor.Extensions.AutoDocumentation\\Tests.InfiniBlazor.Extensions.AutoDocumentation.csproj",
+            "tests\\Tests.InfiniBlazor.Shared\\Tests.InfiniBlazor.Shared.csproj",
+            "tests\\Tests.InfiniBlazor.Shared.Markdown\\Tests.InfiniBlazor.Shared.Markdown.csproj",
+            "tests\\Tests.InfiniBlazor\\Tests.InfiniBlazor.csproj"
+        ]
+    }
+}
