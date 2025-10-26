@@ -1,0 +1,37 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor
+@using InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@rendermode InfiniRenderModeProvider.InfiniRenderMode
+@inherits InfiniNavBarBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniNavBar Location="NavBarLocation.Left" Size="Size" Class="@Class" @bind-NavBarCollapsed="CollapsedState">
+    <div class="flex flex-row justify-between sticky top-0 z-10 overload-bg-infini-nav-top border-b-1 border-infini-nav-border">
+        <InfiniNavLink
+            Href="/"
+            Text="InfiniBlazor Docs"
+            Class="@ConcatClasses(HiddenIf(CollapsedState), "font-bold")"
+            HiddenOnCollapsed
+        />
+
+        <InfiniNavCollapseButton @bind-State="CollapsedState" Class="h-10"/>
+    </div>
+    
+    <InfiniNavLink
+        Href="/docs/components/embedded-markdown-preview"
+        Text="Embedded Markdown Preview"
+        />
+</InfiniNavBar>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [Parameter] public bool CollapsedState { get; set; }
+}

@@ -1,0 +1,64 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using Docs.InfiniBlazor.Services
+@using InfiniLore.InfiniBlazor
+@using InfiniLore.InfiniBlazor.Markdown
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inject RazorMarkdownFileExtractor RazorMarkdownFileExtractor
+@inject ILogger<EmbeddedMarkdownPreview> Logger
+
+@rendermode InfiniRenderModeProvider.InfiniRenderMode
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniMarkdownPreview Content="@Content"/>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [Parameter, EditorRequired] public string ResourcePath { get; set; } = string.Empty;
+    private string? Content { get; set; }
+
+    #if DEBUG
+    private Timer? _reloadTimer;
+    #endif
+
+    protected override async Task OnParametersSetAsync() {
+        await LoadMarkdownAsync();
+        
+        #if DEBUG
+        Logger.Information("Reloading markdown every second");
+        _reloadTimer ??= new Timer(async void (_) => {
+            try
+            {
+                await LoadMarkdownAsync();
+                await InvokeAsync(StateHasChanged);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, "Failed to reload markdown");
+            }
+        }, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+        #endif
+    }
+
+    private async Task LoadMarkdownAsync() {
+        string? result = await RazorMarkdownFileExtractor.ExtractEmbeddedResourceAsync(ResourcePath);
+        if (result is null) {
+            Logger.LogWarning("Could not get a valid markdown result for {ResourcePath}", ResourcePath);
+            return;
+        }
+
+        Content = result;
+    }
+
+    public void Dispose() {
+        #if DEBUG
+        _reloadTimer?.Dispose();
+        #endif
+    }
+}
