@@ -5,19 +5,27 @@
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        
+        <Deterministic>true</Deterministic>
         <DebugType>embedded</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <RepositoryUrl>https://github.com/InfiniLore/InfiniBlazor.git</RepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         
-        <Version>0.1.0-preview.100</Version>
+        <Version>0.1.0-preview.99</Version>
         <Authors>Anna Sas</Authors>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageIcon>icon.png</PackageIcon>
+        <PackageProjectUrl>https://docs.infiniblazor.dev/</PackageProjectUrl>
 
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+        <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     </PropertyGroup>
 
     <ItemGroup>
