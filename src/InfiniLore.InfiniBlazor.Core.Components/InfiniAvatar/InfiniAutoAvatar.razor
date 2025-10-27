@@ -2,6 +2,7 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Components.Avatars
+@using Microsoft.Extensions.DependencyInjection
 
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -12,7 +13,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="relative w-8 h-8">
+<div class="relative size-8">
     @RenderImageComponents()
     @RenderStatusComponents()
 </div>
@@ -21,15 +22,16 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     [EditorRequired, Parameter] public TUserId? UserId { get; set; }
-    [Inject] public IInfiniAvatarDataProvider<TUserId>? StatusProvider { get; set; } = null;
+    [Inject] public required IServiceProvider ServiceProvider { get; set; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     protected override async Task OnParametersSetAsync() {
         await base.OnParametersSetAsync();
-        if (StatusProvider is not null && UserId is not null) {
-            AvatarData = await StatusProvider.GetDataAsync(UserId);
+        
+        if (ServiceProvider.GetService<IInfiniAvatarDataProvider<TUserId>>() is {} statusProvider && UserId is not null) {
+            AvatarData = await statusProvider.GetDataAsync(UserId);
         }
     }
 }

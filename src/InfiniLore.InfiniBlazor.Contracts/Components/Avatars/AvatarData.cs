@@ -7,10 +7,10 @@ namespace InfiniLore.InfiniBlazor.Components.Avatars;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public record struct AvatarData(
-    AvatarStatus Status,
-    string? Href,
-    string? ImageUrl,
-    string? CustomStatus
+    AvatarStatus Status = AvatarStatus.Undefined,
+    string? Href = null,
+    string? ImageUrl = null,
+    string? CustomStatus = null
 ) {
-    public static AvatarData Empty { get; } = new(AvatarStatus.Undefined, null,null, null);
+    public static AvatarData Empty { get; } = new();
 }

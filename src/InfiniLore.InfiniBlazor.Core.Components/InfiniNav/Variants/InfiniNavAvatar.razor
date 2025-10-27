@@ -5,6 +5,7 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Components.Avatars
 @inherits InfiniNavLinkBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
@@ -13,7 +14,7 @@
      class="@(ConcatClasses(Class, CollapsedState ? "px-1 py-2" : "p-2")) flex flex-nowrap items-center rounded hover:bg-infini-nav-button-hover group transition-all duration-300">
     <span class="@ConcatClasses(Direction.ToFlexRow(), CollapsedState ? "gap-0": "gap-4")  flex items-center w-full transition-all justify-between">
         <span class="@(CollapsedState ? "" : "-ml-1") transition-all duration-300">
-            <InfiniAvatar Href="@ComputedHref" ImageUrl="@UserImageUrl"/>
+            <InfiniAvatar AvatarData="@AvatarData"/>
         </span>
 
         <!-- User Info -->
@@ -45,6 +46,8 @@
     
     [Parameter] public RenderFragment? Additional { get; set; }
     [Parameter] public Direction Direction { get; set; } = Direction.LeftToRight;
+
+    private AvatarData AvatarData => new(AvatarStatus.Undefined, ComputedHref, UserImageUrl);
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
