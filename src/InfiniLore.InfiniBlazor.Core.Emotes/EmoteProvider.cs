@@ -63,24 +63,7 @@ public class EmoteProvider(
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public bool TryGetEntry(string key, [NotNullWhen(true)] out IEmoteEntry? entry) {
-        entry = null;
-        if (key.IsNullOrWhiteSpace()) return false;
-        if (!key.Contains('_') && !key.Contains('-') && !key.Contains('/'))
-            return !key.IsNullOrWhiteSpace()
-                && Entries.TryGetValue(key, out entry);
-
-        ReadOnlySpan<char> keySpan = key.AsSpan();
-        Span<char> span = stackalloc char[keySpan.Length];
-        int length = 0;
-        foreach (char c in keySpan) {
-            if (c is '_' or '-' or '/') continue;
-            span[length++] = c;
-        }
-        if (length <= 0) return false;
-        Span<char> keySpan2 = span[..length];
-        return Entries.TryGetAlternateLookup(out FrozenDictionary<string, IEmoteEntry>.AlternateLookup<ReadOnlySpan<char>> lookup)
-            && lookup.TryGetValue(keySpan2, out entry);
-    }
+    public bool TryGetEntry(string key, [NotNullWhen(true)] out IEmoteEntry? entry) 
+        => Entries.TryGetValue(key, out entry);
 
 }
