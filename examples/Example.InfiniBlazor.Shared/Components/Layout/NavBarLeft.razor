@@ -157,16 +157,16 @@
     }
 
     @* User *@
-    <InfiniNavUser
+    <InfiniNavAvatar
         UserName="InfiniLore"
         Href="/"
         UserImageUrl="@_currentUserImage"
         Class="sticky bottom-0 z-10 overload-bg-infini-nav-bottom border-t-1 border-infini-nav-border rounded-none">
         <Additional>
             <InfiniToggleButton OnToggle="@(_ => SwitchUserImage())" Size="Size.Xxs"/>
-            <InfiniNavUserAdditonalLink Href="/#logout" Class="text-red-500">logout</InfiniNavUserAdditonalLink>
+            <InfiniNavAvatarAdditonalLink Href="/#logout" Class="text-red-500">logout</InfiniNavAvatarAdditonalLink>
         </Additional>
-    </InfiniNavUser>
+    </InfiniNavAvatar>
 </InfiniNavBar>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code

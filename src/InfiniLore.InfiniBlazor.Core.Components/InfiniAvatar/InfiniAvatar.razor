@@ -1,97 +1,15 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using InfiniLore.Lucide
-
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inject HttpClient Http
+@inherits InfiniAvatarBase
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
 <div class="relative w-8 h-8">
-    <a href="@Href" @onclick:stopPropagation>
-        @* ReSharper disable once CSharpWarnings::CS8974 *@
-        @if (!_imageLoadFailed) {
-            <!--suppress HtmlDeprecatedAttribute -->
-            <img src="@ImageUrl"
-                 alt="Profile"
-                 class="w-full h-full rounded-full object-cover group-hover:ring-2 ring-infini-usericon-ring"
-                 crossorigin="anonymous"
-                 @onerror="@HandleImageError"/>
-        } else {
-            <span class="w-8 h-8 flex justify-center items-center">
-                <LiCircleUser class="w-8 h-8 text-infini-usericon-alt group-hover:text-infini-usericon-alt-hover"/>
-            </span>
-        }
-    </a>
-    
-    @switch (StatusData) {
-        case { Status : AvatarStatus.Undefined}: break;
-        case { Status : AvatarStatus.Online}:
-        case { Status : AvatarStatus.Offline}:
-        case { Status : AvatarStatus.Busy}:
-        case { Status : AvatarStatus.DoNotDisturb}: {
-            <div class="absolute -bottom-1 -right-1 flex items-center justify-center">
-                <div class="@StatusClasses w-3.5 h-3.5 rounded-full border-1 border-infini-usericon-status"></div>
-            </div>
-            break;
-        }
-
-        case { CustomStatus: {} customStatus } when customStatus.IsNotNullOrWhiteSpace(): {
-            <div class="absolute -bottom-2 -right-2 flex items-center justify-center">
-                <div class="w-5 h-5 rounded-full flex items-center justify-center text-xs leading-none ">
-                    @customStatus
-                </div>
-            </div>
-
-            break;
-        }
-        default: throw new ArgumentOutOfRangeException();
-    }
+    @RenderImageComponents()
+    @RenderStatusComponents()
 </div>
-@* ------------------------------------------------------------------------------------------------------------------ *@
-@* Code
-@* ------------------------------------------------------------------------------------------------------------------ *@
-@code {
-    [Parameter][EditorRequired] public string Href { get; set; } = string.Empty;
-    [Parameter] public string? ImageUrl { get; set; }
-    [Parameter] public bool ShowStatusIndicator { get; set; }
-    [Parameter] public AvatarStatusData StatusData { get; set; } = AvatarStatusData.Empty;
-
-    private bool _imageLoadFailed;
-
-    private string StatusClasses => StatusData.Status switch {
-        AvatarStatus.Undefined or AvatarStatus.Custom => string.Empty,
-        AvatarStatus.Online => "bg-infini-green",
-        AvatarStatus.Offline => "bg-infini-gray",
-        AvatarStatus.Busy => "bg-infini-orange",
-        AvatarStatus.DoNotDisturb => "bg-infini-red",
-        _ => string.Empty
-    };
-    
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
-    protected override async Task OnParametersSetAsync() {
-        if (ImageUrl.IsNullOrEmpty()) _imageLoadFailed = true;
-        else if (ImageUrl.StartsWith("/"))  _imageLoadFailed = false;
-        else {
-            try {
-                HttpResponseMessage response = await Http.GetAsync(ImageUrl);
-                _imageLoadFailed = !response.IsSuccessStatusCode;
-            }
-            catch {
-                _imageLoadFailed = true;
-            }
-        }
-        await base.OnParametersSetAsync();
-
-    }
-    
-    private void HandleImageError(ErrorEventArgs obj) {
-        _imageLoadFailed = true;
-    }
-}

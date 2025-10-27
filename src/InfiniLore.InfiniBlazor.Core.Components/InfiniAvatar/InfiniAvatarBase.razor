@@ -1,0 +1,67 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Components.Avatars
+@using InfiniLore.Lucide
+
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    // ReSharper disable once UnusedParameter.Local
+    protected RenderFragment RenderStatusComponents() => __builder => {
+        switch (AvatarData) {
+            case { Status : AvatarStatus.Undefined}: break;
+            case { Status : AvatarStatus.Online}:
+            case { Status : AvatarStatus.Offline}:
+            case { Status : AvatarStatus.Busy}:
+            case { Status : AvatarStatus.DoNotDisturb}: {
+                <div class="absolute -bottom-1 -right-1 flex items-center justify-center">
+                    <div class="@StatusClasses w-3.5 h-3.5 rounded-full border-1 border-infini-usericon-status"></div>
+                </div>
+                break;
+            }
+
+            case { CustomStatus: {} customStatus } when customStatus.IsNotNullOrWhiteSpace(): {
+                <div class="absolute -bottom-2 -right-2 flex items-center justify-center">
+                    <div class="w-5 h-5 rounded-full flex items-center justify-center text-xs leading-none ">
+                        @customStatus
+                    </div>
+                </div>
+
+                break;
+            }
+            default: throw new ArgumentOutOfRangeException();
+        }
+    };
+
+    // ReSharper disable once UnusedParameter.Local
+    protected RenderFragment RenderImageComponents() => __builder => {
+        <a href="@AvatarData.Href" @onclick:stopPropagation>
+            @* ReSharper disable once CSharpWarnings::CS8974 *@
+            @if (!ImageLoadFailed) {
+                <!--suppress HtmlDeprecatedAttribute -->
+                <img src="@AvatarData.ImageUrl"
+                     alt="Profile"
+                     class="w-full h-full rounded-full object-cover group-hover:ring-2 ring-infini-usericon-ring"
+                     crossorigin="anonymous"
+                     @onerror="@HandleImageError"/>
+            }
+            else {
+                <span class="w-8 h-8 flex justify-center items-center">
+                    <LiCircleUser class="w-8 h-8 text-infini-usericon-alt group-hover:text-infini-usericon-alt-hover"/>
+                </span>
+            }
+        </a>
+    };
+}

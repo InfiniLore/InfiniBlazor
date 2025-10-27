@@ -1,16 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Components;
+namespace InfiniLore.InfiniBlazor.Components.Avatars;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public enum AvatarStatus {
-    Undefined,
-    Online,
-    Offline,
-    Busy,
-    DoNotDisturb,
-    Custom
+public interface IInfiniAvatarDataProvider<in TUserId> {
+    Task<AvatarData> GetDataAsync(TUserId userId, CancellationToken ct = default);
 }
