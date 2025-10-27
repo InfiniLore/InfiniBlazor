@@ -9,9 +9,9 @@ namespace Docs.InfiniBlazor.Services;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<RazorMarkdownFileExtractor>]
 public class RazorMarkdownFileExtractor(
-    ILogger<RazorMarkdownFileExtractor> logger,
+    ILogger<RazorMarkdownFileExtractor> logger
     #if DEBUG
-    HttpClient client
+    ,HttpClient client
     #endif
 ) {
 
