@@ -13,7 +13,7 @@
      class="@(ConcatClasses(Class, CollapsedState ? "px-1 py-2" : "p-2")) flex flex-nowrap items-center rounded hover:bg-infini-nav-button-hover group transition-all duration-300">
     <span class="@ConcatClasses(Direction.ToFlexRow(), CollapsedState ? "gap-0": "gap-4")  flex items-center w-full transition-all justify-between">
         <span class="@(CollapsedState ? "" : "-ml-1") transition-all duration-300">
-            <InfiniUserIcon Href="@ComputedHref" ImageUrl="@UserImageUrl"/>
+            <InfiniAvatar Href="@ComputedHref" ImageUrl="@UserImageUrl"/>
         </span>
 
         <!-- User Info -->

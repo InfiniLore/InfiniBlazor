@@ -15,6 +15,7 @@
     <a href="@Href" @onclick:stopPropagation>
         @* ReSharper disable once CSharpWarnings::CS8974 *@
         @if (!_imageLoadFailed) {
+            <!--suppress HtmlDeprecatedAttribute -->
             <img src="@ImageUrl"
                  alt="Profile"
                  class="w-full h-full rounded-full object-cover group-hover:ring-2 ring-infini-usericon-ring"
@@ -27,22 +28,22 @@
         }
     </a>
     
-    @switch (Status) {
-        case UserIconStatus.Undefined: break;
-        case UserIconStatus.Online:
-        case UserIconStatus.Offline:
-        case UserIconStatus.Busy:
-        case UserIconStatus.DoNotDisturb: {
+    @switch (StatusData) {
+        case { Status : AvatarStatus.Undefined}: break;
+        case { Status : AvatarStatus.Online}:
+        case { Status : AvatarStatus.Offline}:
+        case { Status : AvatarStatus.Busy}:
+        case { Status : AvatarStatus.DoNotDisturb}: {
             <div class="absolute -bottom-1 -right-1 flex items-center justify-center">
                 <div class="@StatusClasses w-3.5 h-3.5 rounded-full border-1 border-infini-usericon-status"></div>
             </div>
             break;
         }
 
-        case UserIconStatus.Custom when StatusEmoji.IsNotNullOrWhiteSpace(): {
+        case { CustomStatus: {} customStatus } when customStatus.IsNotNullOrWhiteSpace(): {
             <div class="absolute -bottom-2 -right-2 flex items-center justify-center">
                 <div class="w-5 h-5 rounded-full flex items-center justify-center text-xs leading-none ">
-                    @StatusEmoji
+                    @customStatus
                 </div>
             </div>
 
@@ -58,17 +59,16 @@
     [Parameter][EditorRequired] public string Href { get; set; } = string.Empty;
     [Parameter] public string? ImageUrl { get; set; }
     [Parameter] public bool ShowStatusIndicator { get; set; }
-    [Parameter] public string? StatusEmoji { get; set; }
-    [Parameter] public UserIconStatus Status { get; set; } = UserIconStatus.Undefined;
+    [Parameter] public AvatarStatusData StatusData { get; set; } = AvatarStatusData.Empty;
 
     private bool _imageLoadFailed;
 
-    private string StatusClasses => Status switch {
-        UserIconStatus.Undefined or UserIconStatus.Custom => string.Empty,
-        UserIconStatus.Online => "bg-infini-green",
-        UserIconStatus.Offline => "bg-infini-gray",
-        UserIconStatus.Busy => "bg-infini-orange",
-        UserIconStatus.DoNotDisturb => "bg-infini-red",
+    private string StatusClasses => StatusData.Status switch {
+        AvatarStatus.Undefined or AvatarStatus.Custom => string.Empty,
+        AvatarStatus.Online => "bg-infini-green",
+        AvatarStatus.Offline => "bg-infini-gray",
+        AvatarStatus.Busy => "bg-infini-orange",
+        AvatarStatus.DoNotDisturb => "bg-infini-red",
         _ => string.Empty
     };
     

@@ -6,7 +6,7 @@ namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public enum UserIconStatus {
+public enum AvatarStatus {
     Undefined,
     Online,
     Offline,
