@@ -29,7 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Include="Pages\**\*.razor.md" Watch="true">
+        <EmbeddedResource Include="Pages\**\*.razor.md">
             <DependentUpon>%(Filename)</DependentUpon>
         </EmbeddedResource>
     </ItemGroup>

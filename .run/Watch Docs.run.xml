@@ -12,6 +12,8 @@
     <option name="restartOnRudeEditEditor" value="true" />
     <option name="watchParameters" value="" />
     <option name="workingDirectory" value="$PROJECT_DIR$/docs/Docs.InfiniBlazor" />
-    <method v="2" />
+    <method v="2">
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Docs.InfiniBlazor.Api: https" run_configuration_type="LaunchSettings" />
+    </method>
   </configuration>
 </component>

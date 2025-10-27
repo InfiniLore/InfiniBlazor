@@ -1,22 +1,26 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using Docs.InfiniBlazor.Layout
+@using Docs.InfiniBlazor.Components
+@using InfiniLore.InfiniBlazor
 
+@namespace Docs.InfiniBlazor.Pages.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@rendermode InfiniRenderModeProvider.InfiniRenderMode
 
+@page "/docs/components/infinibutton"
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<Router AppAssembly="@typeof(App).Assembly">
-    <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"/>
-    </Found>
-    <NotFound>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <NotFoundPage/>
-        </LayoutView>
-    </NotFound>
-</Router>
+<DocumentationPage Title="InfiniButton">
+    <EmbeddedMarkdownPreview ResourcePath="Docs.InfiniBlazor.Pages.Components.InfiniButton.razor.md"/>
+</DocumentationPage>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+
+}
