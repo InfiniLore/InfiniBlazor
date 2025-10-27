@@ -23,9 +23,9 @@
 @code {
     [Parameter, EditorRequired] public string ResourcePath { get; set; } = string.Empty;
     private string? Content { get; set; }
-    private static readonly TimeSpan ReloadPeriod = TimeSpan.FromSeconds(10);
 
     #if DEBUG
+    private static readonly TimeSpan ReloadPeriod = TimeSpan.FromSeconds(10);
     private Timer? _reloadTimer;
     #endif
 
