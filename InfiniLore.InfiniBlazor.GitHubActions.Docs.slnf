@@ -19,14 +19,7 @@
             "src\\InfiniLore.InfiniBlazor.Shared\\InfiniLore.InfiniBlazor.Shared.csproj",
             "src\\InfiniLore.InfiniBlazor.SourceGenerators\\InfiniLore.InfiniBlazor.SourceGenerators.csproj",
             
-            "docs\\Docs.InfiniBlazor\\Docs.InfiniBlazor.csproj",
-
-            "tests\\Tests.InfiniBlazor.Core.Components\\Tests.InfiniBlazor.Core.Components.csproj",
-            "tests\\Tests.InfiniBlazor.Core.Markdown\\Tests.InfiniBlazor.Core.Markdown.csproj",
-            "tests\\Tests.InfiniBlazor.Extensions.AutoDocumentation\\Tests.InfiniBlazor.Extensions.AutoDocumentation.csproj",
-            "tests\\Tests.InfiniBlazor.Shared\\Tests.InfiniBlazor.Shared.csproj",
-            "tests\\Tests.InfiniBlazor.Shared.Markdown\\Tests.InfiniBlazor.Shared.Markdown.csproj",
-            "tests\\Tests.InfiniBlazor\\Tests.InfiniBlazor.csproj"
+            "docs\\Docs.InfiniBlazor\\Docs.InfiniBlazor.csproj"
         ]
     }
 }
