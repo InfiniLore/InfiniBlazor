@@ -1,33 +1,26 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using Docs.InfiniBlazor.Components
 @using InfiniLore.InfiniBlazor
-@using InfiniLore.InfiniBlazor.Components
-@using InfiniLore.Lucide
+
+@namespace Docs.InfiniBlazor.Pages.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InfiniRenderModeProvider.InfiniRenderMode
-@inherits InfiniNavBarBase
+
+@page "/docs/components/infinibutton"
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<InfiniNavBar Location="NavBarLocation.Left" Size="Size" Class="@Class" @bind-NavBarCollapsed="CollapsedState">
-    <InfiniNavLink
-        Href="/docs/components/embedded-markdown-preview"
-        Text="Embedded Markdown Preview"
-        Icon="@LucideNames.TextInitial"
-    />
-    <InfiniNavLink
-        Href="/docs/components/infinibutton"
-        Text="InfiniButton"
-        Icon="@LucideNames.Square"/>
-</InfiniNavBar>
+<DocumentationPage Title="InfiniButton">
+    <EmbeddedMarkdownPreview ResourcePath="Docs.InfiniBlazor.Pages.Components.InfiniButton.razor.md"/>
+</DocumentationPage>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 
 @code {
-    [Parameter] public bool CollapsedState { get; set; }
-    [Parameter] public EventCallback<bool> CollapsedStateChanged { get; set; }
+
 }
