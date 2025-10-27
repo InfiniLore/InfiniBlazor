@@ -1,6 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Components.CodeBlock
 @using InfiniLore.InfiniBlazor.JsRuntime
 @using InfiniLore.Lucide
 
@@ -9,35 +10,47 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @inherits InfiniComponentBase
+
 @inject IInfiniBlazorJs InfiniBlazorJs
+@inject ICodeBlockLanguageHandlerProvider LanguageInjectionProvider
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<div class="@Class relative flex overflow-hidden min-h-0 text-infini-base-10">
-    <div class="absolute top-2 right-4 flex justify-end @ZIndex.CodeBlockCopyButton">
-        @if (EnableCopy) {
-            <InfiniButtonOutlineSolidToolTipped
-                Size="Size.Xs"
-                IconName="@LucideNames.Copy"
-                OnClick="@CopyToClipboardAsync"
-                TooltipAnchor="@Anchor.Left">
-                <Content>@Language</Content>
-                <Tooltip>Copy to clipboard</Tooltip>
-            </InfiniButtonOutlineSolidToolTipped>
-        }
-    </div>
-    <div
-        class="overload-bg-infini-codeblock text-sm border border-infini-border rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar">
-        <div class="relative">
-            <pre class="whitespace-pre m-0 font-mono min-h-0">
-                <code @ref="@Reference" class="@LanguageClass">
-                    @if (Content is not null) @Content
-                    else if (ChildContent is not null) @ChildContent
-                </code>
-            </pre>
+@if (LanguageInjectionProvider.TryGetComponentType(Language, out Type? componentType)) {
+    var parameters = new Dictionary<string, object?> { [nameof(Content)] = Content };
+    <DynamicComponent Type="@componentType" Parameters="@parameters"/>
+}
+else {
+    <div class="@Class relative flex overflow-hidden min-h-0 text-infini-base-10">
+        <div class="absolute top-2 right-4 flex justify-end @ZIndex.CodeBlockCopyButton">
+            @if (EnableCopy) {
+                <InfiniButtonOutlineSolidToolTipped
+                    Size="Size.Xs"
+                    IconName="@LucideNames.Copy"
+                    OnClick="@CopyToClipboardAsync"
+                    TooltipAnchor="@Anchor.Left">
+                    <Content>@Language</Content>
+                    <Tooltip>Copy to clipboard</Tooltip>
+                </InfiniButtonOutlineSolidToolTipped>
+            }
+        </div>
+        <div
+            class="overload-bg-infini-codeblock text-sm border border-infini-border rounded p-4 overflow-auto w-full min-h-0 infini-scrollbar">
+            <div class="relative">
+                <pre class="whitespace-pre m-0 font-mono min-h-0">
+                    <code @ref="@Reference" class="@LanguageClass">
+                        @if (Content is not null) {
+                            @Content
+                        }
+                        else if (ChildContent is not null) {
+                            @ChildContent
+                        }
+                    </code>
+                </pre>
+            </div>
         </div>
     </div>
-</div>
+}
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
@@ -53,9 +66,19 @@
     private string LanguageClass => $"language-{Language}";
     private ElementReference Reference { get; set; }
     
+    private Type? LanguageHandlerComponentType { get; set; }
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
-    // -----------------------------------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------------------------------\
+    protected override void OnParametersSet() {
+        base.OnParametersSet();
+
+        if (LanguageInjectionProvider.TryGetComponentType(Language, out Type? componentType)) {
+            LanguageHandlerComponentType = componentType;
+        }
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender) {
         await base.OnAfterRenderAsync(firstRender);
         await HighlightAsync();
@@ -64,6 +87,7 @@
     private async Task HighlightAsync() {
         if (DisableHighlighting) return;
         if (!RendererInfo.IsInteractive) return;
+        if (LanguageHandlerComponentType is not null) return;
 
         if (Content is not null) await InfiniBlazorJs.Highlight.SetContentAndHighlightElementAsync(Reference, Content);
         if (ChildContent is not null) await InfiniBlazorJs.Highlight.HighlightElementAsync(Reference);

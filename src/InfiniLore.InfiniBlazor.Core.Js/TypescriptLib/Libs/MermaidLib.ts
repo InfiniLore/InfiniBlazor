@@ -1,13 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Collections.Frozen;
-
-namespace InfiniLore.InfiniBlazor;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IComponentsConfig {
-    FrozenDictionary<string, Type> GetCodeBlockLanguageHandlers();
+export class MermaidLib {
+    public isMermaidJsAvailable(): boolean {
+        return typeof window !== 'undefined' && window.mermaid !== undefined;
+    }
 }
