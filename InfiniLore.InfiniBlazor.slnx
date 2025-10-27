@@ -25,6 +25,7 @@
     <Project Path="benchmarks\Benchmarks.InfiniLore.InfiniBlazor.Markdown\Benchmarks.InfiniLore.InfiniBlazor.Markdown.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/docs/">
+    <Project Path="docs\Docs.InfiniBlazor.Api\Docs.InfiniBlazor.Api.csproj" Type="Classic C#" />
     <Project Path="docs\Docs.InfiniBlazor\Docs.InfiniBlazor.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/example/">

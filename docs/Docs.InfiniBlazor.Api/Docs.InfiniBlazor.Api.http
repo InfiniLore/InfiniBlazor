@@ -1,0 +1,6 @@
+@Api_HostAddress = https://localhost:7285
+
+GET {{Api_HostAddress}}/api/markdown/Home.razor.md
+Accept: application/json
+
+###

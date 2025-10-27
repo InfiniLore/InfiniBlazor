@@ -1,6 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using Docs.InfiniBlazor.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -40,6 +41,14 @@ internal static class Program {
         );
 
         builder.Services.RegisterServicesFromDocsInfiniBlazor();
+        
+        #if DEBUG
+        builder.Services.AddHttpClient<RazorMarkdownFileExtractor>(client => {
+            client.BaseAddress = new Uri("https://localhost:7285/");
+            client.Timeout = TimeSpan.FromSeconds(10);
+            client.DefaultRequestHeaders.Add("Accept", "text/markdown");
+        });
+        #endif
 
         builder.Logging.ClearProviders();
         builder.Logging.AddProvider(new SerilogLoggerProvider(Log.Logger, dispose: false));
