@@ -63,7 +63,8 @@ public class EmoteProvider(
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public bool TryGetEntry(string key, [NotNullWhen(true)] out IEmoteEntry? entry) 
-        => Entries.TryGetValue(key, out entry);
-
+    public bool TryGetEntry(string key, [NotNullWhen(true)] out IEmoteEntry? entry) {
+        entry = null;
+        return !key.IsNullOrWhiteSpace() && Entries.TryGetValue(key, out entry);
+    }
 }

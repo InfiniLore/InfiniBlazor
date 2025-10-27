@@ -31,8 +31,8 @@ def extract_lucide_version_from_props(props_file_path: str) -> Optional[str]:
                 version = item.get("Version", "")
                 print(f"Found {include} version: {version}")
 
-                # Format: 0.33.541 -> we want 541
-                match = re.search(r'\.(\d+)$', version)
+                # Format: 0.541.0 -> we want 541
+                match = re.search(r'\.(\d+)\.\d+$', version)
                 if match:
                     lucide_version = match.group(1)
                     print(f"Extracted Lucide version: {lucide_version}")
@@ -78,9 +78,10 @@ def generate_icon_entries(icon_names: List[str]) -> List[Dict]:
     entries = []
 
     for icon_name in icon_names:
-        key = f"li_{icon_name.replace('-', '_')}"
+        key_without_dashes = f"li{icon_name.replace('-', '')}"
+#         key_with_dashes = f"li-{icon_name}"
 
-        keys = [key]
+        keys = [key_without_dashes]
 
         entry = {
             "keys": keys,

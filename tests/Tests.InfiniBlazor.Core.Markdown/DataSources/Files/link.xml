@@ -120,15 +120,15 @@
 }</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="withEmote" FileName="link.xml">
-    <MdString>[:flag-transgender:](https://www.twitch.tv/annasasdev)</MdString>
+    <MdString>[:flag_transgender:](https://www.twitch.tv/annasasdev)</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <LinkMdSyntaxNode Href="https://www.twitch.tv/annasasdev">
-          <EmoteMdSyntaxNode EmoteKey="flag-transgender" OriginalEmote=":flag-transgender:" />
+          <EmoteMdSyntaxNode EmoteKey="flag_transgender" OriginalEmote=":flag_transgender:" />
         </LinkMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedMarkdown>[:flag-transgender:](https://www.twitch.tv/annasasdev)</ExpectedMarkdown>
+    <ExpectedMarkdown>[:flag_transgender:](https://www.twitch.tv/annasasdev)</ExpectedMarkdown>
     <ExpectedMarkdownSkipOnWhitespaceMisMatch>True</ExpectedMarkdownSkipOnWhitespaceMisMatch>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
@@ -142,8 +142,8 @@
           "children": [
             {
               "type": "EmoteMdSyntaxNode",
-              "emoteKey": "flag-transgender",
-              "originalEmote": ":flag-transgender:"
+              "emoteKey": "flag_transgender",
+              "originalEmote": ":flag_transgender:"
             }
           ]
         }

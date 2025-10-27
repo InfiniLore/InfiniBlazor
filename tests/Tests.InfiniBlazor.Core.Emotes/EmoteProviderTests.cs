@@ -32,30 +32,30 @@ public class EmoteProviderTests(IEmoteProvider provider) {
         yield return () => ("", false, null);
         yield return () => ("random-name", false, null);
 
-        yield return () => ("flag-trans", true, new EmoteEntry(
+        yield return () => ("flag_trans", true, new EmoteEntry(
             [
-                "transgenderflag",
-                "transflag",
-                "flagtransgender",
-                "flagtrans"
+                "transgender_flag",
+                "trans_flag",
+                "flag_transgender",
+                "flag_trans"
             ],
             "\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f",
             EmoteContentType.Emoji
         ));
 
-        yield return () => ("flag-transgender", true, new EmoteEntry(
+        yield return () => ("flag_transgender", true, new EmoteEntry(
             [
-                "transgenderflag",
-                "transflag",
-                "flagtransgender",
-                "flagtrans"
+                "transgender_flag",
+                "trans_flag",
+                "flag_transgender",
+                "flag_trans"
             ],
             "\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f",
             EmoteContentType.Emoji
         ));
 
-        yield return () => ("ducky-trans", true, new EmoteEntry(
-            ["duckytrans"],
+        yield return () => ("ducky_trans", true, new EmoteEntry(
+            ["ducky_trans"],
             "InfiniLore.InfiniBlazor.Emotes.wwwroot.assets.ducky-trans.png",
             EmoteContentType.ResourcePathPng
         ));

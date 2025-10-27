@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <MdTestData Id="default" FileName="emote.xml">
-    <MdString>:flag-transgender:</MdString>
+    <MdString>:flag_transgender:</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <EmoteMdSyntaxNode EmoteKey="flag-transgender" OriginalEmote=":flag-transgender:" />
+        <EmoteMdSyntaxNode EmoteKey="flag_transgender" OriginalEmote=":flag_transgender:" />
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedMarkdown>:flag-transgender:</ExpectedMarkdown>
+    <ExpectedMarkdown>:flag_transgender:</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -16,8 +16,8 @@
       "children": [
         {
           "type": "EmoteMdSyntaxNode",
-          "emoteKey": "flag-transgender",
-          "originalEmote": ":flag-transgender:"
+          "emoteKey": "flag_transgender",
+          "originalEmote": ":flag_transgender:"
         }
       ]
     }
@@ -25,13 +25,13 @@
 }</ExpectedJsonString>
   </MdTestData>
   <MdTestData Id="easteregg_duckyTrans" FileName="emote.xml">
-    <MdString>:ducky-trans:</MdString>
+    <MdString>:ducky_trans:</MdString>
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
-        <EmoteMdSyntaxNode EmoteKey="ducky-trans" OriginalEmote=":ducky-trans:" />
+        <EmoteMdSyntaxNode EmoteKey="ducky_trans" OriginalEmote=":ducky_trans:" />
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
-    <ExpectedMarkdown>:ducky-trans:</ExpectedMarkdown>
+    <ExpectedMarkdown>:ducky_trans:</ExpectedMarkdown>
     <ExpectedJsonString>{
   "type": "MdSyntaxTree",
   "children": [
@@ -40,8 +40,8 @@
       "children": [
         {
           "type": "EmoteMdSyntaxNode",
-          "emoteKey": "ducky-trans",
-          "originalEmote": ":ducky-trans:"
+          "emoteKey": "ducky_trans",
+          "originalEmote": ":ducky_trans:"
         }
       ]
     }
