@@ -1,16 +1,16 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Components;
+namespace InfiniLore.InfiniBlazor.Components.Avatars;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public enum UserIconStatus {
-    Undefined,
-    Online,
-    Offline,
-    Busy,
-    DoNotDisturb,
-    Custom
+public record struct AvatarData(
+    AvatarStatus Status = AvatarStatus.Undefined,
+    string? Href = null,
+    string? ImageUrl = null,
+    string? CustomStatus = null
+) {
+    public static AvatarData Empty { get; } = new();
 }

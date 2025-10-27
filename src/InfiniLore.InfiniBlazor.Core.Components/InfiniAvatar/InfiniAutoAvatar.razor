@@ -1,0 +1,37 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Components.Avatars
+@using Microsoft.Extensions.DependencyInjection
+
+@namespace InfiniLore.InfiniBlazor.Components
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniAvatarBase
+@typeparam TUserId
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="relative size-8">
+    @RenderImageComponents()
+    @RenderStatusComponents()
+</div>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [EditorRequired, Parameter] public TUserId? UserId { get; set; }
+    [Inject] public required IServiceProvider ServiceProvider { get; set; }
+    
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override async Task OnParametersSetAsync() {
+        await base.OnParametersSetAsync();
+        
+        if (ServiceProvider.GetService<IInfiniAvatarDataProvider<TUserId>>() is {} statusProvider && UserId is not null) {
+            AvatarData = await statusProvider.GetDataAsync(UserId);
+        }
+    }
+}
