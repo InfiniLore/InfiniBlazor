@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using JetBrains.Annotations;
 
-namespace Docs.InfiniBlazor.Api.Endpoints.MarkdownFile;
+namespace Docs.InfiniBlazor.DevApi.Endpoints.MarkdownFile;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

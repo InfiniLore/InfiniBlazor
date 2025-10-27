@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 
-namespace Docs.InfiniBlazor.Api.Services;
+namespace Docs.InfiniBlazor.DevApi.Services;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code

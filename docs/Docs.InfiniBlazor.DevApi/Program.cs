@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using FastEndpoints;
 
-namespace Docs.InfiniBlazor.Api;
+namespace Docs.InfiniBlazor.DevApi;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -15,7 +15,7 @@ public static class Program {
         // -------------------------------------------------------------------------------------------------------------
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
         builder.Services.AddFastEndpoints();
-        builder.Services.RegisterServicesFromDocsInfiniBlazorApi();
+        builder.Services.RegisterServicesFromDocsInfiniBlazorDevApi();
 
         builder.Services.AddCors(options => {
             options.AddPolicy(DocsCors, policy => {

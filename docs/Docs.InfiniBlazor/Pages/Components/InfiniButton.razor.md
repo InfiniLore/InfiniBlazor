@@ -3,3 +3,5 @@
 ```docs.infiniblazor
 <InfiniButton />
 ```
+
+this is awesome
