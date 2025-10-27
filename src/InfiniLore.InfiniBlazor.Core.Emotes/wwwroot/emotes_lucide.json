@@ -1184,6 +1184,13 @@
   },
   {
     "keys": [
+      "libirdhouse"
+    ],
+    "data": "birdhouse",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
       "libitcoin"
     ],
     "data": "bitcoin",
@@ -4918,6 +4925,13 @@
       "ligamepad2"
     ],
     "data": "gamepad-2",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
+      "ligamepaddirectional"
+    ],
+    "data": "gamepad-directional",
     "contentType": "LucideIconName"
   },
   {

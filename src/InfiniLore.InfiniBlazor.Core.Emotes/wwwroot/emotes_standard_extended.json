@@ -1,18 +1,18 @@
 ﻿[
   {
     "keys": [
-      "transgenderflag",
-      "transflag",
-      "flagtransgender",
-      "flagtrans"
+      "transgender_flag",
+      "trans_flag",
+      "flag_transgender",
+      "flag_trans"
     ],
     "data": "\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f",
     "contentType": "Emoji"
   },
   {
     "keys": [
-      "rainbowflag",
-      "flagrainbow"
+      "rainbow_flag",
+      "flag_rainbow"
     ],
     "data": "\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08",
     "contentType": "Emoji"

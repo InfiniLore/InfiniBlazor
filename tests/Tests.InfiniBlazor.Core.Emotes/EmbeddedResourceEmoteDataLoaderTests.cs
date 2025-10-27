@@ -23,6 +23,6 @@ public class EmbeddedResourceEmoteDataLoaderTests(IEmotesConfig componentConfig)
         Stream[] streamArray = streams.ToArray();
         
         // Assert
-        await Assert.That(streamArray).HasCount().GreaterThanOrEqualTo(3);
+        await Assert.That(streamArray).HasCount().GreaterThanOrEqualTo(4);
     }
 }

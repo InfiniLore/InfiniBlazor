@@ -129,7 +129,7 @@
     --color-infini-text: var(--color-infini-base-00);
     --color-infini-section: var(--color-infini-base-70);
     --color-infini-section-border: var(--color-infini-base-40);
-    --color-infini-border: var(--color-infini-base-40);
+    --color-infini-border: var(--color-infini-base-50);
     --color-infini-nav-text: var(--color-infini-base-10);
     --color-infini-nav-text-hover: var(--color-infini-accent);
     --color-infini-nav-button: var(--color-infini-transparent);
@@ -362,10 +362,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-usMgEctfCN: auto;
-      --toolwind-toggle-lqrRFeGW3d: transparent;
-      --toolwind-toggle-2aMdi25CEp: inherit;
-      --toolwind-toggle-uk40O3ygRL: 0px;
+      --toolwind-toggle-KWRiy0ICRk: auto;
+      --toolwind-toggle-mekaPuYLOK: transparent;
+      --toolwind-toggle-v3yE8RKEQM: inherit;
+      --toolwind-toggle-wmIIQtcPck: 0px;
     }
   }
   .anchored-bottom-left\/anchor-tooltip {
@@ -374,10 +374,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-usMgEctfCN: auto;
-      --toolwind-toggle-lqrRFeGW3d: transparent;
-      --toolwind-toggle-2aMdi25CEp: inherit;
-      --toolwind-toggle-uk40O3ygRL: 0px;
+      --toolwind-toggle-KWRiy0ICRk: auto;
+      --toolwind-toggle-mekaPuYLOK: transparent;
+      --toolwind-toggle-v3yE8RKEQM: inherit;
+      --toolwind-toggle-wmIIQtcPck: 0px;
     }
   }
   .anchored-bottom-right\/anchor-tooltip {
@@ -386,10 +386,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-usMgEctfCN: auto;
-      --toolwind-toggle-lqrRFeGW3d: transparent;
-      --toolwind-toggle-2aMdi25CEp: inherit;
-      --toolwind-toggle-uk40O3ygRL: 0px;
+      --toolwind-toggle-KWRiy0ICRk: auto;
+      --toolwind-toggle-mekaPuYLOK: transparent;
+      --toolwind-toggle-v3yE8RKEQM: inherit;
+      --toolwind-toggle-wmIIQtcPck: 0px;
     }
   }
   .anchored-bottom\/anchor-nav-bar-menu {
@@ -398,10 +398,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w333619322p3a192q2p3619312t3239;
-      --toolwind-toggle-usMgEctfCN: auto;
-      --toolwind-toggle-lqrRFeGW3d: transparent;
-      --toolwind-toggle-2aMdi25CEp: inherit;
-      --toolwind-toggle-uk40O3ygRL: 0px;
+      --toolwind-toggle-KWRiy0ICRk: auto;
+      --toolwind-toggle-mekaPuYLOK: transparent;
+      --toolwind-toggle-v3yE8RKEQM: inherit;
+      --toolwind-toggle-wmIIQtcPck: 0px;
     }
   }
   .anchored-left\/anchor-tooltip {
@@ -410,10 +410,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-usMgEctfCN: auto;
-      --toolwind-toggle-lqrRFeGW3d: transparent;
-      --toolwind-toggle-2aMdi25CEp: inherit;
-      --toolwind-toggle-uk40O3ygRL: 0px;
+      --toolwind-toggle-KWRiy0ICRk: auto;
+      --toolwind-toggle-mekaPuYLOK: transparent;
+      --toolwind-toggle-v3yE8RKEQM: inherit;
+      --toolwind-toggle-wmIIQtcPck: 0px;
     }
   }
   .anchored-right\/anchor-tooltip {
@@ -422,10 +422,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-usMgEctfCN: auto;
-      --toolwind-toggle-lqrRFeGW3d: transparent;
-      --toolwind-toggle-2aMdi25CEp: inherit;
-      --toolwind-toggle-uk40O3ygRL: 0px;
+      --toolwind-toggle-KWRiy0ICRk: auto;
+      --toolwind-toggle-mekaPuYLOK: transparent;
+      --toolwind-toggle-v3yE8RKEQM: inherit;
+      --toolwind-toggle-wmIIQtcPck: 0px;
     }
   }
   .anchored-top-center\/anchor-tooltip {
@@ -434,10 +434,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-usMgEctfCN: auto;
-      --toolwind-toggle-lqrRFeGW3d: transparent;
-      --toolwind-toggle-2aMdi25CEp: inherit;
-      --toolwind-toggle-uk40O3ygRL: 0px;
+      --toolwind-toggle-KWRiy0ICRk: auto;
+      --toolwind-toggle-mekaPuYLOK: transparent;
+      --toolwind-toggle-v3yE8RKEQM: inherit;
+      --toolwind-toggle-wmIIQtcPck: 0px;
     }
   }
   .anchored-top-left\/anchor-tooltip {
@@ -446,10 +446,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-usMgEctfCN: auto;
-      --toolwind-toggle-lqrRFeGW3d: transparent;
-      --toolwind-toggle-2aMdi25CEp: inherit;
-      --toolwind-toggle-uk40O3ygRL: 0px;
+      --toolwind-toggle-KWRiy0ICRk: auto;
+      --toolwind-toggle-mekaPuYLOK: transparent;
+      --toolwind-toggle-v3yE8RKEQM: inherit;
+      --toolwind-toggle-wmIIQtcPck: 0px;
     }
   }
   .anchored-top-right\/anchor-tooltip {
@@ -458,10 +458,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-usMgEctfCN: auto;
-      --toolwind-toggle-lqrRFeGW3d: transparent;
-      --toolwind-toggle-2aMdi25CEp: inherit;
-      --toolwind-toggle-uk40O3ygRL: 0px;
+      --toolwind-toggle-KWRiy0ICRk: auto;
+      --toolwind-toggle-mekaPuYLOK: transparent;
+      --toolwind-toggle-v3yE8RKEQM: inherit;
+      --toolwind-toggle-wmIIQtcPck: 0px;
     }
   }
   .anchored\/anchor-tooltip {
@@ -469,10 +469,10 @@
     &:where(&) {
       position: absolute;
       view-transition-name: --tw-anchor-view-transition-2p322r2w33361938333330382x34;
-      --toolwind-toggle-usMgEctfCN: auto;
-      --toolwind-toggle-lqrRFeGW3d: transparent;
-      --toolwind-toggle-2aMdi25CEp: inherit;
-      --toolwind-toggle-uk40O3ygRL: 0px;
+      --toolwind-toggle-KWRiy0ICRk: auto;
+      --toolwind-toggle-mekaPuYLOK: transparent;
+      --toolwind-toggle-v3yE8RKEQM: inherit;
+      --toolwind-toggle-wmIIQtcPck: 0px;
     }
   }
   .absolute {
@@ -2361,6 +2361,9 @@
     outline-style: var(--tw-outline-style);
     outline-width: 1px;
   }
+  .filter {
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
   .backdrop-blur-none {
     --tw-backdrop-blur:  ;
     -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
@@ -3453,10 +3456,10 @@
 }
 @layer base {
   [popover] {
-    inset: var(--toolwind-toggle-usMgEctfCN, 0px);
-    background-color: var(--toolwind-toggle-lqrRFeGW3d, canvas);
-    color: var(--toolwind-toggle-2aMdi25CEp, canvastext);
-    margin: var(--toolwind-toggle-uk40O3ygRL, auto);
+    inset: var(--toolwind-toggle-KWRiy0ICRk, 0px);
+    background-color: var(--toolwind-toggle-mekaPuYLOK, canvas);
+    color: var(--toolwind-toggle-v3yE8RKEQM, canvastext);
+    margin: var(--toolwind-toggle-wmIIQtcPck, auto);
   }
 }
 @property --tw-translate-x {
@@ -3597,6 +3600,59 @@
   inherits: false;
   initial-value: solid;
 }
+@property --tw-blur {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-brightness {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-contrast {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-grayscale {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-hue-rotate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-invert {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-opacity {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-saturate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-sepia {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-drop-shadow-size {
+  syntax: "*";
+  inherits: false;
+}
 @property --tw-backdrop-blur {
   syntax: "*";
   inherits: false;
@@ -3679,6 +3735,19 @@
       --tw-ring-offset-color: #fff;
       --tw-ring-offset-shadow: 0 0 #0000;
       --tw-outline-style: solid;
+      --tw-blur: initial;
+      --tw-brightness: initial;
+      --tw-contrast: initial;
+      --tw-grayscale: initial;
+      --tw-hue-rotate: initial;
+      --tw-invert: initial;
+      --tw-opacity: initial;
+      --tw-saturate: initial;
+      --tw-sepia: initial;
+      --tw-drop-shadow: initial;
+      --tw-drop-shadow-color: initial;
+      --tw-drop-shadow-alpha: 100%;
+      --tw-drop-shadow-size: initial;
       --tw-backdrop-blur: initial;
       --tw-backdrop-brightness: initial;
       --tw-backdrop-contrast: initial;

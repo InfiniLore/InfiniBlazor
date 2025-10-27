@@ -69,7 +69,7 @@
     --color-infini-section-border : var(--color-infini-base-40);
 
     --color-infini-text-error : var(--color-infini-red);
-    --color-infini-border : var(--color-infini-base-40);
+    --color-infini-border : var(--color-infini-base-50);
     --color-infini-nav-hamburger: var(--color-infini-text);
     --color-infini-nav-text: var(--color-infini-base-10);
     --color-infini-nav-text-hover : var(--color-infini-accent);
