@@ -123,9 +123,8 @@
 
                 string originalName = original.ShortName
                     .Trim(':')
-                    .Replace("-", string.Empty)
-                    .Replace("_", string.Empty)
-                    .Replace("/", string.Empty)
+                    .Replace("-", "_")
+                    .Replace("/", "_")
                     .ToLowerInvariant();
                 
                 var entry = new EmoteEntry(
