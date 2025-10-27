@@ -8,6 +8,7 @@ namespace Docs.InfiniBlazor.Api;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public static class Program {
+    private const string DocsCors = nameof(DocsCors);
     public static void Main(string[] args) {
         // -------------------------------------------------------------------------------------------------------------
         // Builder
@@ -17,7 +18,7 @@ public static class Program {
         builder.Services.RegisterServicesFromDocsInfiniBlazorApi();
 
         builder.Services.AddCors(options => {
-            options.AddPolicy("DocsCors", policy => {
+            options.AddPolicy(DocsCors, policy => {
                 policy.AllowAnyOrigin();
                 policy.AllowAnyHeader();
                 policy.AllowAnyMethod();
@@ -28,13 +29,8 @@ public static class Program {
         // App
         // -------------------------------------------------------------------------------------------------------------
         WebApplication app = builder.Build();
-
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment()) {
-            app.MapOpenApi();
-        }
         
-        app.UseCors("DocsCors");
+        app.UseCors(DocsCors);
 
         app.UseHttpsRedirection();
         
