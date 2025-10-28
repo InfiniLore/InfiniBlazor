@@ -11,6 +11,8 @@ export class MermaidLib {
     }
     
     public async renderMermaidAsync(element: HTMLElement): Promise<void> {
+        if (!element) return;
+        
         if (!this.isMermaidJsAvailable()) {
             throw new Error("Mermaid is not available");
         }
@@ -21,6 +23,9 @@ export class MermaidLib {
     }
     
     public async renderMermaidWithContentAsync(element:HTMLElement, content: string): Promise<void> {
+        if (!element) return;
+        if (!content) return;
+        
         if (!this.isMermaidJsAvailable()) {
             throw new Error("Mermaid is not available");
         }

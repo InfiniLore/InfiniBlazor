@@ -32,19 +32,17 @@
     protected override async Task OnParametersSetAsync() {
         await base.OnParametersSetAsync();
         if (Reference.Context is null) return;
-        if (_lastContent == Content) return;
         await RenderMermaidContent();
     }
     protected override async Task OnAfterRenderAsync(bool firstRender) {
         await base.OnAfterRenderAsync(firstRender);
-
         if (!firstRender) return;
-        if (_lastContent == Content) return;
         await RenderMermaidContent();
     }
     
     private async Task RenderMermaidContent() {
-        await InfiniBlazorJs.Mermaid.RenderMermaidWithContentAsync(Reference, Content);
+        if (_lastContent == Content) return;
         _lastContent = Content;
+        await InfiniBlazorJs.Mermaid.RenderMermaidWithContentAsync(Reference, Content);
     }
 }
