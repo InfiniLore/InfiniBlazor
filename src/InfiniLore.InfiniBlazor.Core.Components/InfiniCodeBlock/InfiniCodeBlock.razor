@@ -61,6 +61,7 @@ else {
     [Parameter] public string? Language { get; set; }
     [Parameter] public bool EnableCopy { get; set; } = true;
     [Parameter] public bool DisableHighlighting { get; set; }
+    [Parameter] public bool DisableCustomLanguageHandling { get; set; }
 
     private string LanguageClass => $"language-{Language}";
     private ElementReference Reference { get; set; }
@@ -83,7 +84,10 @@ else {
     }
 
     private async Task HandleLanguages() {
+        if (DisableCustomLanguageHandling) return;
         if (!LanguageInjectionProvider.TryGetComponentType(Language, out Type? componentType)) return;
+        
+        if (LanguageHandlerComponentType == componentType) return;
         LanguageHandlerComponentType = componentType;
         LanguageHandlerParameters = new Dictionary<string, object?> { [nameof(Content)] = Content };
         await InvokeAsync(StateHasChanged);

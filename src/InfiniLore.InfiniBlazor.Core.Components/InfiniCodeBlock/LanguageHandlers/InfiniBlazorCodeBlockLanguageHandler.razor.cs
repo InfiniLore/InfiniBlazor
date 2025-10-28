@@ -51,6 +51,7 @@ public partial class InfiniBlazorCodeBlockLanguageHandler(ILogger<InfiniBlazorCo
         [nameof(InfiniHeading4)] = typeof(InfiniHeading4),
         [nameof(InfiniHeading5)] = typeof(InfiniHeading5),
         [nameof(InfiniHeading6)] = typeof(InfiniHeading6),
+        [nameof(InfiniCodeBlock)] = typeof(InfiniCodeBlock),
     }.ToFrozenDictionary();
     
     // -----------------------------------------------------------------------------------------------------------------
@@ -79,11 +80,21 @@ public partial class InfiniBlazorCodeBlockLanguageHandler(ILogger<InfiniBlazorCo
                 if (attrMatch.Groups["value0"].TryGetValue(out string? value0)) attributes.Add(key, value0);
                 else if (attrMatch.Groups["value1"].TryGetValue(out string? value1)) attributes.Add(key, value1);
             }
-            
-            if (body.IsNotNullOrWhiteSpace()) attributes.Add(
-                "ChildContent", 
-                new RenderFragment(builder => builder.AddContent(0, LineNormalization.NormalizeLineIndentation(body, out _)))
-            );
+
+            switch (tag) {
+                case nameof(InfiniCodeBlock): {
+                    attributes.Add(nameof(InfiniCodeBlock.DisableCustomLanguageHandling), true);
+                    break;
+                }
+
+                case not null when body.IsNotNullOrWhiteSpace(): {
+                    attributes.Add(
+                        "ChildContent", 
+                        new RenderFragment(builder => builder.AddContent(0, LineNormalization.NormalizeLineIndentation(body, out _)))
+                    );
+                    break;
+                }
+            }
             _attributes.Add((componentType, attributes));
         }
 
