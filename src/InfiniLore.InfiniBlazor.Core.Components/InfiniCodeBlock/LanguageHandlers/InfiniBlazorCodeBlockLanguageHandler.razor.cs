@@ -42,6 +42,7 @@ public partial class InfiniBlazorCodeBlockLanguageHandler(ILogger<InfiniBlazorCo
     
     private List<(Type, Dictionary<string, object?>)> _attributes = new();
     
+    // TODO add other elements and also default html element handlers
     private static readonly FrozenDictionary<string, Type> ComponentTypes = new Dictionary<string, Type>() {
         [nameof(InfiniHeading)]  = typeof(InfiniHeading),
         [nameof(InfiniHeading1)] = typeof(InfiniHeading1),
