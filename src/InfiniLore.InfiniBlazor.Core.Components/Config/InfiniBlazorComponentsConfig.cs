@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Components.CodeBlock;
-using InfiniLore.InfiniBlazor.Components.LanguageHandlers;
 using InfiniLore.InfiniBlazor.Core.Components;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +26,9 @@ public class InfiniBlazorComponentsConfig : IComponentsConfig {
         CodeBlockLanguageHandlers = new Lazy<FrozenDictionary<string, Type>>(() => CodeBlockLanguageHandlersDictionary.ToFrozenDictionary(
             StringComparer.OrdinalIgnoreCase
         ));
+
+        this.AddInfiniBlazorCodeBlockHandler();
+        this.AddMermaidCodeBlockHandler();
     }
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
