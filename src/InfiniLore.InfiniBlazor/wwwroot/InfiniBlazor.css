@@ -3020,9 +3020,19 @@
       cursor: not-allowed;
     }
   }
+  .disabled\:bg-infini-base-30 {
+    &:disabled {
+      background-color: var(--color-infini-base-30);
+    }
+  }
   .disabled\:text-infini-base-30 {
     &:disabled {
       color: var(--color-infini-base-30);
+    }
+  }
+  .disabled\:opacity-50 {
+    &:disabled {
+      opacity: 50%;
     }
   }
   .sm\:w-150 {

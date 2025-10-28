@@ -15,8 +15,17 @@
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"/>
     </Found>
     <NotFound>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <NotFoundPage/>
-        </LayoutView>
+        @RedirectToNotFound()
     </NotFound>
 </Router>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Inject] public required NavigationManager Nav { get; set; }
+
+    private RenderFragment RedirectToNotFound() => __builder => {
+        Nav.NavigateTo("/not-found", forceLoad: false);
+    };
+}

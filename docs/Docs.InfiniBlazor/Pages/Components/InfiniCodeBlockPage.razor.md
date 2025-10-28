@@ -1,4 +1,4 @@
-﻿# Core Component : InfiniCodeBlock
+﻿## Core Component : InfiniCodeBlock
 
 ```htmlinblazor
 <InfiniCodeBlock Content="var a = 1 + 1;" Language="csharp" />

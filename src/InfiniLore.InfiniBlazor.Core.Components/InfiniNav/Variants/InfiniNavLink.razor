@@ -9,21 +9,37 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<a href="@ComputedHref"
-   class="@ContainerClasses"
-   target="@(OpenInNewTab ? "_blank" : null)"
-   rel="noopener noreferrer"
-   hidden="@IsHidden"
-   @onclick="() => SubMenuContext?.OnSubItemPressed?.Invoke()"
-   >
-    <InfiniNavItem Text="@Text" Icon="@Icon" Class="@Class">
-        @ChildContent
-    </InfiniNavItem>
-</a>
+@if (IsDisabled) {
+    <div class="@ContainerClassesDisabled">
+        @GetContent()
+    </div>
+    
+}
+else {
+    <a href="@ComputedHref"
+       class="@ContainerClasses"
+       target="@(OpenInNewTab ? "_blank" : null)"
+       rel="noopener noreferrer"
+       hidden="@IsHidden"
+       @onclick="() => SubMenuContext?.OnSubItemPressed?.Invoke()"
+    >
+        @GetContent()
+    </a>
+}
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
     [Parameter] public bool OpenInNewTab { get; set; }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    // ReSharper disable once UnusedParameter.Local
+    private RenderFragment GetContent() => __builder => {
+        <InfiniNavItem Text="@Text" Icon="@Icon" Class="@Class" IsDisabled="@IsDisabled">
+            @ChildContent
+        </InfiniNavItem>
+    };
 }
 
