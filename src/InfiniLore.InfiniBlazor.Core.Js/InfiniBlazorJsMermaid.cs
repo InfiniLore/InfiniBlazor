@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.JsRuntime;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 
@@ -10,34 +11,28 @@ namespace InfiniLore.InfiniBlazor.Js;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableScoped<IInfiniBlazorJs>]
-public class InfiniBlazorJs(
+[InjectableScoped<IInfiniBlazorJsMermaid>]
+public class InfiniBlazorJsMermaid(
     IJSRuntime jsRuntime,
-    ILogger<InfiniBlazorJs> logger,
-    
-    IInfiniBlazorJsDocument documentService,
-    IInfiniBlazorJsElement elementService,
-    IInfiniBlazorJsTextSelection textSelectionService,
-    IInfiniBlazorJsKeyDownListener keyDownListenerService,
-    IInfiniBlazorJsHighlight highlightService,
-    IInfiniBlazorJsMermaid mermaidService
-) : IInfiniBlazorJs {
-    public IInfiniBlazorJsDocument Document => documentService;
-    public IInfiniBlazorJsElement Element => elementService;
-    public IInfiniBlazorJsTextSelection TextSelection => textSelectionService;
-    public IInfiniBlazorJsKeyDownListener KeyDownListener => keyDownListenerService;
-    public IInfiniBlazorJsHighlight Highlight => highlightService;
-    public IInfiniBlazorJsMermaid Mermaid => mermaidService;
-
+    ILogger<InfiniBlazorJsMermaid> logger
+) : IInfiniBlazorJsMermaid {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public async Task CopyToClipboardAsync(string text) {
+    public async Task RenderMermaidAsync(ElementReference element, CancellationToken ct = default) {
         try {
-            await jsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", text);
+            await jsRuntime.InvokeVoidAsync("infiniBlazor.mermaid.renderMermaidAsync", ct, element);
         }
         catch (Exception e) {
-            logger.Warning(e, "Error writing text to clipboard");
+            logger.Warning(e, "Error trying to render mermaid graph for element {element}", element);
+        }
+    }
+    public async Task RenderMermaidWithContentAsync(ElementReference element, string content, CancellationToken ct = default)  {
+        try {
+            await jsRuntime.InvokeVoidAsync("infiniBlazor.mermaid.renderMermaidWithContentAsync", ct, element, content);
+        }
+        catch (Exception e) {
+            logger.Warning(e, "Error trying to render mermaid graph for element {element}", element);
         }
     }
 }

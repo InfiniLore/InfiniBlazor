@@ -2,6 +2,7 @@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @using InfiniLore.InfiniBlazor.Components.CodeBlock
+@using InfiniLore.InfiniBlazor.JsRuntime
 
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -10,21 +11,40 @@
 @inherits InfiniComponentBase
 @implements ICodeBlockLanguageHandler
 
+@inject IInfiniBlazorJs InfiniBlazorJs
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<pre class="mermaid">
-@* TODO removce " around the content? *@
-@(new MarkupString(Content ?? string.Empty))
-</pre>
-<script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-    mermaid.initialize({ startOnLoad: true });
-</script>
+<pre class="mermaid" @ref="@Reference"></pre>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public string? Content { get; set; } = string.Empty;
+    [Parameter] public string Content { get; set; } = string.Empty;
+    private string _lastContent = string.Empty;
+    private ElementReference Reference { get; set; }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override async Task OnParametersSetAsync() {
+        await base.OnParametersSetAsync();
+        if (Reference.Context is null) return;
+        if (_lastContent == Content) return;
+        await RenderMermaidContent();
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (!firstRender) return;
+        if (_lastContent == Content) return;
+        await RenderMermaidContent();
+    }
+    
+    private async Task RenderMermaidContent() {
+        await InfiniBlazorJs.Mermaid.RenderMermaidWithContentAsync(Reference, Content);
+        _lastContent = Content;
+    }
 }

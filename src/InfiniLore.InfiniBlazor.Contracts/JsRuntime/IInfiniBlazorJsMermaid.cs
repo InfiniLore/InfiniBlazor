@@ -1,18 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using Microsoft.AspNetCore.Components;
+
 namespace InfiniLore.InfiniBlazor.JsRuntime;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IInfiniBlazorJs {
-    IInfiniBlazorJsDocument Document { get; }
-    IInfiniBlazorJsElement Element { get; }
-    IInfiniBlazorJsTextSelection TextSelection { get; }
-    IInfiniBlazorJsKeyDownListener KeyDownListener { get; }
-    IInfiniBlazorJsHighlight Highlight { get; }
-    IInfiniBlazorJsMermaid Mermaid { get; }
-    
-    Task CopyToClipboardAsync(string text);
+public interface IInfiniBlazorJsMermaid {
+    Task RenderMermaidAsync(ElementReference element, CancellationToken ct = default);
+    Task RenderMermaidWithContentAsync(ElementReference element, string content, CancellationToken ct = default);
 }

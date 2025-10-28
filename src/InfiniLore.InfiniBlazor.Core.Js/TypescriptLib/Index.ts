@@ -36,6 +36,7 @@ declare global {
         }
         mermaid?: {
             initialize(config: any): void;
+            run(param: any): void;
         }
     }
 }

@@ -16,9 +16,8 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@if (LanguageInjectionProvider.TryGetComponentType(Language, out Type? componentType)) {
-    var parameters = new Dictionary<string, object?> { [nameof(Content)] = Content };
-    <DynamicComponent Type="@componentType" Parameters="@parameters"/>
+@if (LanguageHandlerComponentType is not null) {
+    <DynamicComponent Type="@LanguageHandlerComponentType" Parameters="@LanguageHandlerParameters" @key="Content"/>
 }
 else {
     <div class="@Class relative flex overflow-hidden min-h-0 text-infini-base-10">
@@ -67,21 +66,27 @@ else {
     private ElementReference Reference { get; set; }
     
     private Type? LanguageHandlerComponentType { get; set; }
+    private Dictionary<string, object?>? LanguageHandlerParameters { get; set; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------\
-    protected override void OnParametersSet() {
-        base.OnParametersSet();
-
-        if (LanguageInjectionProvider.TryGetComponentType(Language, out Type? componentType)) {
-            LanguageHandlerComponentType = componentType;
-        }
+    protected override async Task OnParametersSetAsync() {
+        await base.OnParametersSetAsync();
+        await HandleLanguages();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender) {
         await base.OnAfterRenderAsync(firstRender);
         await HighlightAsync();
+        await HandleLanguages();
+    }
+
+    private async Task HandleLanguages() {
+        if (!LanguageInjectionProvider.TryGetComponentType(Language, out Type? componentType)) return;
+        LanguageHandlerComponentType = componentType;
+        LanguageHandlerParameters = new Dictionary<string, object?> { [nameof(Content)] = Content };
+        await InvokeAsync(StateHasChanged);
     }
 
     private async Task HighlightAsync() {
