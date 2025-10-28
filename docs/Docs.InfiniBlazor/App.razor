@@ -25,6 +25,7 @@
 @code {
     [Inject] public required NavigationManager Nav { get; set; }
 
+    // ReSharper disable once UnusedParameter.Local
     private RenderFragment RedirectToNotFound() => __builder => {
         Nav.NavigateTo("/not-found", forceLoad: false);
     };
