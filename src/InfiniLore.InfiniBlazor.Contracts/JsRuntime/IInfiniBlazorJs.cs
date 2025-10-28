@@ -12,6 +12,7 @@ public interface IInfiniBlazorJs {
     IInfiniBlazorJsTextSelection TextSelection { get; }
     IInfiniBlazorJsKeyDownListener KeyDownListener { get; }
     IInfiniBlazorJsHighlight Highlight { get; }
+    IInfiniBlazorJsMermaid Mermaid { get; }
     
     Task CopyToClipboardAsync(string text);
 }

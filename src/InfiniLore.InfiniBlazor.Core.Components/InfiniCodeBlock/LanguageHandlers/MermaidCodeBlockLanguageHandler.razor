@@ -1,45 +1,48 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor.Components.CodeBlock
+@using InfiniLore.InfiniBlazor.JsRuntime
+
 @namespace InfiniLore.InfiniBlazor.Components
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@inherits InfiniNavLinkBase
+@inherits InfiniComponentBase
+@implements ICodeBlockLanguageHandler
+
+@inject IInfiniBlazorJs InfiniBlazorJs
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@if (IsDisabled) {
-    <div class="@ContainerClassesDisabled">
-        @GetContent()
-    </div>
-    
-}
-else {
-    <a href="@ComputedHref"
-       class="@ContainerClasses"
-       target="@(OpenInNewTab ? "_blank" : null)"
-       rel="noopener noreferrer"
-       hidden="@IsHidden"
-       @onclick="() => SubMenuContext?.OnSubItemPressed?.Invoke()"
-    >
-        @GetContent()
-    </a>
-}
+<pre class="mermaid" @ref="@Reference"></pre>
+
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Parameter] public bool OpenInNewTab { get; set; }
+    [Parameter] public string Content { get; set; } = string.Empty;
+    private string _lastContent = string.Empty;
+    private ElementReference Reference { get; set; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    // ReSharper disable once UnusedParameter.Local
-    private RenderFragment GetContent() => __builder => {
-        <InfiniNavItem Text="@Text" Icon="@Icon" Class="@Class" IsDisabled="@IsDisabled">
-            @ChildContent
-        </InfiniNavItem>
-    };
+    protected override async Task OnParametersSetAsync() {
+        await base.OnParametersSetAsync();
+        if (Reference.Context is null) return;
+        await RenderMermaidContent();
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        await base.OnAfterRenderAsync(firstRender);
+        if (!firstRender) return;
+        await RenderMermaidContent();
+    }
+    
+    private async Task RenderMermaidContent() {
+        if (_lastContent == Content) return;
+        _lastContent = Content;
+        await InfiniBlazorJs.Mermaid.RenderMermaidWithContentAsync(Reference, Content);
+    }
 }
-

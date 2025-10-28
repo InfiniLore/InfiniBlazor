@@ -22,6 +22,7 @@ public abstract class InfiniComponentBase : ComponentBase, IAsyncDisposable {
     [CascadingParameter(Name = nameof(CascadedDisabled))] public bool CascadedDisabled { get; set; }
     
     protected bool SuppressRender { get; set; }
+    protected bool IsDisposed { get; set; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -44,6 +45,7 @@ public abstract class InfiniComponentBase : ComponentBase, IAsyncDisposable {
 
     public virtual ValueTask DisposeAsync() {
         VisualDebugger.OnChange -= StateHasChanged;
+        IsDisposed = true;
         GC.SuppressFinalize(this);
         return ValueTask.CompletedTask;
     }

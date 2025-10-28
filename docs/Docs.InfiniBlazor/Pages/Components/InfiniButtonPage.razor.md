@@ -1,4 +1,4 @@
-﻿# Core Component : InfiniButton
+﻿## Core Component : InfiniButton
 
 ```docs.infiniblazor
 <InfiniButton />

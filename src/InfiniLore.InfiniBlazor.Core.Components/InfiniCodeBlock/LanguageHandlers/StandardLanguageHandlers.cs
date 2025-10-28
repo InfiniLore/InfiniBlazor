@@ -1,13 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Collections.Frozen;
-
-namespace InfiniLore.InfiniBlazor;
+namespace InfiniLore.InfiniBlazor.Components;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IComponentsConfig {
-    FrozenDictionary<string, Type> GetCodeBlockLanguageHandlers();
+public static class StandardLanguageHandlers {
+    public const string Mermaid = "mermaid";
+    public const string InfiniBlazor  = "infiniblazor";
 }

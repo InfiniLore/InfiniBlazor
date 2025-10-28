@@ -53,4 +53,8 @@ public class RazorMarkdownFileExtractor(
             return null;
         }
     }
+    
+    public bool IsValidResoucePath(string resourcePath, CancellationToken ct = default) => 
+        !resourcePath.IsNullOrWhiteSpace() 
+        && typeof(RazorMarkdownFileExtractor).Assembly.GetManifestResourceNames().Contains(resourcePath);
 }

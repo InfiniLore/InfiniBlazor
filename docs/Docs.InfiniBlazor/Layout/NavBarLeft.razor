@@ -1,6 +1,7 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
+@using Docs.InfiniBlazor.Services
 @using InfiniLore.InfiniBlazor
 @using InfiniLore.InfiniBlazor.Components
 @using InfiniLore.Lucide
@@ -8,7 +9,10 @@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InfiniRenderModeProvider.InfiniRenderMode
+
 @inherits InfiniNavBarBase
+
+@inject RazorMarkdownFileExtractor RazorMarkdownFileExtractor
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
@@ -18,16 +22,49 @@
         Text="Embedded Markdown Preview"
         Icon="@LucideNames.TextInitial"
     />
-    <InfiniNavLink
-        Href="/docs/components/infinibutton"
-        Text="InfiniButton"
-        Icon="@LucideNames.Square"/>
+    
+    <InfiniNavSubMenu Text="Components" Icon="@LucideNames.Component" IgnoreCascadeCollapsedState>
+        @(AddComponentNavLink<InfiniAvatar>())
+        @(AddComponentNavLink<InfiniButton>())
+        @(AddComponentNavLink<InfiniCallout>())
+        @(AddComponentNavLink<InfiniCheckbox>())
+        @(AddComponentNavLink<InfiniCodeBlock>())
+        @* @(AddComponentNavLink<InfiniDialog>()) *@
+        @(AddComponentNavLink<InfiniDivider>())
+        @(AddComponentNavLink<InfiniFrontMatter>())
+        @(AddComponentNavLink<InfiniHeading>())
+        @(AddComponentNavLink<InfiniHydratable>())
+        @* @(AddComponentNavLink<InfiniInput>()) *@
+        @(AddComponentNavLink<InfiniLabel>())
+        @(AddComponentNavLink<InfiniLayout>())
+        @* @(AddComponentNavLink<InfiniNav>()) *@
+        @(AddComponentNavLink<InfiniPage>())
+        @(AddComponentNavLink<InfiniRadioButton>())
+        @(AddComponentNavLink<InfiniSection>())
+        @(AddComponentNavLink<InfiniSpacer>())
+        @(AddComponentNavLink<InfiniTabContainer>())
+        @* @(AddComponentNavLink<InfiniTable>()) *@
+        @(AddComponentNavLink<InfiniTag>())
+        @(AddComponentNavLink<InfiniTag>())
+        @(AddComponentNavLink<InfiniToggleButton>())
+        @* @(AddComponentNavLink<InfiniToolTip>()) *@
+    </InfiniNavSubMenu>
 </InfiniNavBar>
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
-
 @code {
     [Parameter] public bool CollapsedState { get; set; }
     [Parameter] public EventCallback<bool> CollapsedStateChanged { get; set; }
+    
+    private RenderFragment AddComponentNavLink<TComponent>() {
+        string text = typeof(TComponent).Name;
+        string href = $"/docs/components/{text.ToLowerInvariant()}";
+        bool isDisabled = !RazorMarkdownFileExtractor.IsValidResoucePath($"Docs.InfiniBlazor.Pages.Components.{text}Page.razor.md");
+        
+        // ReSharper disable once UnusedParameter.Local
+        return __builder => {
+            <InfiniNavLink Href="@href" Text="@text" IsDisabled="@isDisabled"/>
+        };
+    }
 }

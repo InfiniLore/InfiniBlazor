@@ -1,13 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Collections.Frozen;
+using Microsoft.AspNetCore.Components;
 
-namespace InfiniLore.InfiniBlazor;
+namespace InfiniLore.InfiniBlazor.JsRuntime;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IComponentsConfig {
-    FrozenDictionary<string, Type> GetCodeBlockLanguageHandlers();
+public interface IInfiniBlazorJsMermaid {
+    Task RenderMermaidAsync(ElementReference element, CancellationToken ct = default);
+    Task RenderMermaidWithContentAsync(ElementReference element, string content, CancellationToken ct = default);
 }

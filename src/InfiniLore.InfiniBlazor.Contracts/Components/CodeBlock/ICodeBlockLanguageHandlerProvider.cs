@@ -1,13 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using System.Collections.Frozen;
+using System.Diagnostics.CodeAnalysis;
 
-namespace InfiniLore.InfiniBlazor;
+namespace InfiniLore.InfiniBlazor.Components.CodeBlock;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IComponentsConfig {
-    FrozenDictionary<string, Type> GetCodeBlockLanguageHandlers();
+public interface ICodeBlockLanguageHandlerProvider {
+    bool TryGetComponentType(string? language,[NotNullWhen(true)] out Type? type);
 }

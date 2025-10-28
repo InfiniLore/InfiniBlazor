@@ -22,6 +22,9 @@ public abstract class InfiniNavItemBase : InfiniComponentBase {
     
     protected bool CollapsedState => NavBarCollapsed && (!SubMenuContext?.IgnoreCascadeCollapsedState ?? true);
     
-    protected static string ContainerClasses => ConcatClasses(ContainerClassesNoHover, "hover:bg-infini-nav-button-hover");
-    protected static string ContainerClassesNoHover => "flex flex-nowrap items-center overload-bg-infini-nav-button rounded group justify-start p-2";
+    protected static string ContainerClassesDisabled => $"{BaseContainerClasses} opacity-50 cursor-not-allowed ";
+    protected static string ContainerClasses => $"{BaseContainerClasses} hover:bg-infini-nav-button-hover";
+    protected static string ContainerClassesNoHover => BaseContainerClasses;
+    
+    private const string BaseContainerClasses = "flex flex-nowrap items-center group justify-start p-2 rounded overload-bg-infini-nav-button";
 }
