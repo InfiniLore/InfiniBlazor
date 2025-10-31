@@ -27,15 +27,18 @@
             case { Status : AvatarStatus.Busy}:
             case { Status : AvatarStatus.DoNotDisturb}: {
                 <div class="absolute -bottom-1 -right-1 flex items-center justify-center">
-                    <div class="@StatusClasses w-3.5 h-3.5 rounded-full border-1 border-infini-usericon-status"></div>
+                    <div class="@StatusClasses @StatusCircleClasses rounded-full border-infini-usericon-status"></div>
                 </div>
                 break;
             }
 
             case { CustomStatus: {} customStatus } when customStatus.IsNotNullOrWhiteSpace(): {
                 <div class="absolute -bottom-2 -right-2 flex items-center justify-center">
-                    <div class="w-5 h-5 rounded-full flex items-center justify-center text-xs leading-none ">
+                    <div class="@StatusCustomClasses select-none rounded-full flex items-center justify-center leading-none relative z-10">
                         @customStatus
+                    </div>
+                    <div class="@StatusCustomBackgroundClasses rounded-full border-infini-usericon-status bg-infini-usericon-status absolute bottom-0 right-0 z-0">
+                        
                     </div>
                 </div>
 
@@ -47,7 +50,7 @@
 
     // ReSharper disable once UnusedParameter.Local
     protected RenderFragment RenderImageComponents() => __builder => {
-        <a href="@AvatarData.Href" @onclick:stopPropagation>
+        <a href="@AvatarData.Href" @onclick:stopPropagation class="select-none">
             @* ReSharper disable once CSharpWarnings::CS8974 *@
             @if (!ImageLoadFailed) {
                 <!--suppress HtmlDeprecatedAttribute -->
