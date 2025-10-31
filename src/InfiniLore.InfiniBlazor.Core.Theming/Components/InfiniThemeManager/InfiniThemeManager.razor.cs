@@ -23,10 +23,6 @@ public partial class InfiniThemeManager(
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    // protected override async Task OnAfterRenderAsync(bool firstRender) {
-    //     await OnThemeStateChangedAsync();
-    // }
-
     protected override async Task OnInitializedAsync() {
         await base.OnInitializedAsync();
         
