@@ -1,10 +1,15 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Theming;
+using InfiniLore.InfiniBlazor.Theming;
 
+namespace InfiniLore.InfiniBlazor.Config;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[AttributeUsage(AttributeTargets.Property)]
-public sealed class CssDataAttribute : Attribute;
+public interface IThemingConfig {
+    (string CollectionName, string ThemeName) DefaultThemeSelection { get; }
+    bool ThrowOnBrokenInitialization { get; }
+    
+    ThemeResource[] GetThemeResources();
+}

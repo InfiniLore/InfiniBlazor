@@ -1,12 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor;
+using Microsoft.Extensions.DependencyInjection;
 
+namespace InfiniLore.InfiniBlazor.Config;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IRadioButtonData<out TId> {
-    TId Id { get; }
-    string? Label { get; }
+public interface IInfiniBlazorConfig {
+    IServiceCollection Services { get; }
 }

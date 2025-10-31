@@ -10,7 +10,6 @@
     </PropertyGroup>
     
     <ItemGroup>
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.Shared\InfiniLore.InfiniBlazor.Shared.csproj" />
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.SourceGenerators\InfiniLore.InfiniBlazor.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="contentfiles;build" Pack="true" />
     </ItemGroup>
@@ -32,5 +31,10 @@
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
         <PackageReference Include="Microsoft.AspNetCore.WebUtilities" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <EmbeddedResource Include="wwwroot\theme_default.json" />
+        <EmbeddedResource Include="wwwroot\theme_pride.json" />
     </ItemGroup>
 </Project>

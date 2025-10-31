@@ -100,6 +100,7 @@
     --color-infini-base-80: #1a1e1d;
     --color-infini-base-90: #111413;
     --color-infini-base-95: #090b0a;
+    --color-infini-base-100: #000000;
     --color-infini-accent: #fa9f3e;
     --color-infini-accent-light: #faa951;
     --color-infini-red: #ef4444;
@@ -130,6 +131,7 @@
     --color-infini-section: var(--color-infini-base-70);
     --color-infini-section-border: var(--color-infini-base-40);
     --color-infini-border: var(--color-infini-base-50);
+    --color-infini-nav-hamburger: var(--color-infini-text);
     --color-infini-nav-text: var(--color-infini-base-10);
     --color-infini-nav-text-hover: var(--color-infini-accent);
     --color-infini-nav-button: var(--color-infini-transparent);

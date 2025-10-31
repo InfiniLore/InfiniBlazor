@@ -15,7 +15,7 @@ public class QueryParameterManager(NavigationManager navigationManager) : IQuery
     private HashSet<string> TrackedQueryParameters { get; } = [
         QueryParameterNames.Debug,
         QueryParameterNames.ThemeCollection,
-        QueryParameterNames.ThemeMode
+        QueryParameterNames.ThemeEntry
     ];
 
     // -----------------------------------------------------------------------------------------------------------------

@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Core.Toasting;
 using InfiniLore.InfiniBlazor.Toasting.ToastAppearances;
 using Microsoft.Extensions.DependencyInjection;

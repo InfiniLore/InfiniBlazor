@@ -20,7 +20,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
       <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Core.Emotes\InfiniLore.InfiniBlazor.Core.Emotes.csproj" />
       <ProjectReference Include="..\Tests.InfiniBlazor.Shared\Tests.InfiniBlazor.Shared.csproj" />
     </ItemGroup>

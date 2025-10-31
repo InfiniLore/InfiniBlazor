@@ -6,6 +6,6 @@ namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IExternalThemeCollectionProvider {
-    ValueTask<IThemeCollection?> TryGetCollectionAsync(string themeName, CancellationToken ct = default);
+public interface IThemeCollectionProvider {
+    ValueTask<ThemeCollectionData?> GetThemeCollectionAsync(string collectionName, CancellationToken ct = default);
 }

@@ -39,9 +39,7 @@
     <Project Path="examples\Example.InfiniBlazor.Maui\Example.InfiniBlazor.Maui.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/src/">
-    <Project Path="src\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor.Shared\InfiniLore.InfiniBlazor.Shared.csproj" Type="Classic C#" />
-    <Project Path="src\InfiniLore.InfiniBlazor.SourceGenerators\InfiniLore.InfiniBlazor.SourceGenerators.csproj" Type="Classic C#" />
     <Project Path="src\InfiniLore.InfiniBlazor\InfiniLore.InfiniBlazor.csproj" Type="Classic C#" />
     <File Path="src\Directory.Build.props" />
   </Folder>

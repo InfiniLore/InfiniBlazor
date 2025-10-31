@@ -1,10 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Theming;
+using System.Collections.Frozen;
+
+namespace InfiniLore.InfiniBlazor.Config;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[AttributeUsage(AttributeTargets.Class, Inherited = false)]
-public sealed class GenerateVariableNamesAttribute : Attribute;
+public interface IComponentsConfig {
+    FrozenDictionary<string, Type> GetCodeBlockLanguageHandlers();
+}
