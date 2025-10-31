@@ -6,7 +6,6 @@ using InfiniLore.InfiniBlazor.Theming.CssData;
 using System.Text.RegularExpressions;
 
 namespace Tests.InfiniBlazor.Services.Theming;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -50,12 +49,13 @@ public partial class CssDataTests {
             (string cssVariable, string data) = tuple;
             await Assert.That(cssVariable).Matches(IsCssVariableNameRegex);
             if (AllowedKeywords.Contains(data)) return;
+            
+            bool result = IsCssVariableDefinitionRegex.IsMatch(data)
+                || IsRgbColorRegex.IsMatch(data)
+                || IsHexColorRegex.IsMatch(data);
 
-            await Assert.That(data)
-                .Matches(IsCssVariableDefinitionRegex)
-                .Or.Matches(IsRgbColorRegex)
-                .Or.Matches(IsHexColorRegex);
-
+            await Assert.That(result).IsTrue();
+            
             token.ThrowIfCancellationRequested();
         });
         await Assert.That(executionCount).IsEqualTo(variables.Count);
