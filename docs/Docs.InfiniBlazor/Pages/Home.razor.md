@@ -1,7 +1,7 @@
 ﻿# InfiniBlazor Docs
 ## Introduction
 
-Welcome to the documentation for InfiniBlazor, a powerful Blazor framework for building high-performance web applications. 
+Welcome to the documentation for InfiniBlazor, a blazor component library meant for InfiniLore but also for anyone who wants to use it. 
 This documentation provides detailed information on how to use InfiniBlazor to create efficient and scalable web applications.
 
 >[!warning] Docs are under construction.
