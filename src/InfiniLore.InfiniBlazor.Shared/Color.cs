@@ -22,7 +22,6 @@ public enum Color {
 }
 
 public static class ColorExtensions {
-
     #region Text
     public static string ToCssClassText(this Color color) => color switch {
         Color.Default => string.Empty,

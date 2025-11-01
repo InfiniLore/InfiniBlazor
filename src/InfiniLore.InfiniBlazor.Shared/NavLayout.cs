@@ -13,7 +13,7 @@ public enum NavLayout {
     RightPrimary  = 1 << 3,
     
     SidesPrimary = LeftPrimary | RightPrimary,
-    BarsPrimary = TopPrimary | BottomPrimary,
+    BarsPrimary = TopPrimary | BottomPrimary
 }
 
 public static class NavLayoutExtensions {

@@ -18,12 +18,6 @@ public static class OrientationExtensions {
         _ => "horizontal"
     };
     
-    public static string ToFlexDirection(this Orientation orientation) => orientation switch {
-        Orientation.Horizontal => "row",
-        Orientation.Vertical => "column",
-        _ => "row"
-    };
-    
     public static string ToSize(this Orientation orientation) => orientation switch {
         Orientation.Horizontal => "w-full",
         Orientation.Vertical => "h-full",

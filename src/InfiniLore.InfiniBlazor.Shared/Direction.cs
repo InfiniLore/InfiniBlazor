@@ -8,14 +8,18 @@ namespace InfiniLore.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
 public enum Direction {
     LeftToRight = 0,
-    Ltr = LeftToRight,
-    
-    RightToLeft = 1,
-    Rtl = RightToLeft,
+    RightToLeft = 1
 }
 
-
 public static class DirectionExtensions {
-    public static string ToFlexRow(this Direction direction) => direction is Direction.LeftToRight ? "flex-row" : "flex-row-reverse";
-    public static string ToFlexCol(this Direction direction) => direction is Direction.LeftToRight ? "flex-col" : "flex-col-reverse";
+    public static string ToFlexRow(this Direction direction) => direction switch {
+        Direction.LeftToRight => "flex-row",
+        Direction.RightToLeft => "flex-row-reverse",
+        _ => "flex-row"
+    };
+    public static string ToFlexCol(this Direction direction) => direction switch {
+        Direction.LeftToRight => "flex-col",
+        Direction.RightToLeft => "flex-col-reverse",
+        _ => "flex-col"
+    };
 }
