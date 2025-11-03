@@ -36,6 +36,7 @@ jobs:
                   NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
               run: |
                   dotnet nuget push src/InfiniLore.InfiniBlazor.Core.Components/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                  dotnet nuget push src/InfiniLore.InfiniBlazor.Core.Emotes/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
                   dotnet nuget push src/InfiniLore.InfiniBlazor.Core.Js/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
                   dotnet nuget push src/InfiniLore.InfiniBlazor.Core.Markdown/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
                   dotnet nuget push src/InfiniLore.InfiniBlazor.Core.Markdown.Components/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
