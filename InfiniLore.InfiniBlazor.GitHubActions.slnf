@@ -3,6 +3,7 @@
         "path": "InfiniLore.InfiniBlazor.slnx",
         "projects": [
             "src\\InfiniLore.InfiniBlazor.Core.Components\\InfiniLore.InfiniBlazor.Core.Components.csproj",
+            "src\\InfiniLore.InfiniBlazor.Core.Emotes\\InfiniLore.InfiniBlazor.Core.Emotes.csproj",
             "src\\InfiniLore.InfiniBlazor.Core.Js\\InfiniLore.InfiniBlazor.Core.Js.csproj",
             "src\\InfiniLore.InfiniBlazor.Core.Markdown\\InfiniLore.InfiniBlazor.Core.Markdown.csproj",
             "src\\InfiniLore.InfiniBlazor.Core.Markdown.Components\\InfiniLore.InfiniBlazor.Core.Markdown.Components.csproj",
