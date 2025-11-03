@@ -1,0 +1,19 @@
+﻿{
+  "name": "Default",
+  "metadata": {
+    "author": "InfiniLore",
+    "version": "1.0.0",
+    "description": "Default theme collection with placeholder entries.",
+    "primary_entry_name": "Dark"
+  },
+  "entries": [
+    {
+      "name": "Dark",
+      "css": ""
+    },
+    {
+      "name": "Light",
+      "css": ":root {\n    --color-infini-base-00: #000000;\n    --color-infini-base-05: #090b0a;\n    --color-infini-base-10: #111413;\n    --color-infini-base-20: #1a1e1d;\n    --color-infini-base-30: #222826;\n    --color-infini-base-40: #2b3230;\n    --color-infini-base-50: #333c39;\n    --color-infini-base-60: #555c5a;\n    --color-infini-base-70: #767d7a;\n    --color-infini-base-80: #989d9b;\n    --color-infini-base-90: #b9bdbc;\n    --color-infini-base-95: #dbdddc;\n    --color-infini-base-100: #ffffff;\n\n    --color-infini-button-default: var(--color-infini-base-10);\n    --color-infini-button-primary: var(--color-infini-base-80);\n}"
+    }
+  ]
+}

@@ -1,10 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Theming;
-
+namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[AttributeUsage(AttributeTargets.Property)]
-public class InterpretAsRgbAttribute : Attribute;
+public interface ICheckBoxData {
+    string? Label { get; }
+    bool IsChecked { get; set; }
+}

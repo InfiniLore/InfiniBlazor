@@ -35,8 +35,9 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
 
     // ReSharper disable once InvertIf
     private static FrozenDictionary<string, Range> GetLazyDictionary(scoped ReadOnlySpan<char> span) {
-        int spanLength = span.Length;
-
+        ReadOnlySpan<char> spanTrimmed = span.TrimEnd(' ');
+        int spanLength = spanTrimmed.Length;
+        
         Span<char> buffer = stackalloc char[spanLength - 1];// set it to the max possible, and all mods start with a | based on the regex, so we can trim one char
 
         int keyStart = 0;
@@ -46,8 +47,8 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
         var dictionary = new Dictionary<string, Range>(StringComparer.OrdinalIgnoreCase);
 
         for (int pointer = 0; pointer < spanLength;) {
-            char currentCharacter = span[pointer];
-            if (currentCharacter is not ('|' or '=') || span.IsEscapedCharacterAtIndex(pointer)) {
+            char currentCharacter = spanTrimmed[pointer];
+            if (currentCharacter is not ('|' or '=') || spanTrimmed.IsEscapedCharacterAtIndex(pointer)) {
                 pointer++;
                 continue;
             }
@@ -57,13 +58,13 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
                     if (pointer > keyStart) {
                         if (keyEnd == -1) {
                             // No '=' found, this is a flag attribute
-                            int length = span[keyStart..pointer].ToLowerInvariant(buffer);
+                            int length = spanTrimmed[keyStart..pointer].ToLowerInvariant(buffer);
                             string value = buffer[..length].ToString();
                             dictionary.AddOrUpdate(value, new Range(pointer, pointer));
                         }
                         else {
                             // Normal key=value attribute
-                            int length = span[keyStart..keyEnd].ToLowerInvariant(buffer);
+                            int length = spanTrimmed[keyStart..keyEnd].ToLowerInvariant(buffer);
                             string value = buffer[..length].ToString();
                             dictionary.AddOrUpdate(value, new Range(valueStart, pointer));
                         }
@@ -91,13 +92,13 @@ public class MdSyntaxNodeModifier : IMdSyntaxNodeModifier, IResettable {
         if (spanLength > keyStart) {
             if (keyEnd == -1) {
                 // The last attribute is a flag
-                int length = span[keyStart..spanLength].ToLowerInvariant(buffer);
+                int length = spanTrimmed[keyStart..spanLength].ToLowerInvariant(buffer);
                 string value = buffer[..length].ToString();
                 dictionary.AddOrUpdate(value, new Range(spanLength, spanLength));
             }
             else if (valueStart < spanLength) {
                 // The last attribute is key=value
-                int length = span[keyStart..keyEnd].ToLowerInvariant(buffer);
+                int length = spanTrimmed[keyStart..keyEnd].ToLowerInvariant(buffer);
                 string value = buffer[..length].ToString();
                 dictionary.AddOrUpdate(value, new Range(valueStart, spanLength));
             }

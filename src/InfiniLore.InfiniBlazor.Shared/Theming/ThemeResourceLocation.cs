@@ -1,12 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Microsoft.Extensions.DependencyInjection;
+namespace InfiniLore.InfiniBlazor.Theming;
 
-namespace InfiniLore.InfiniBlazor;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IInfiniBlazorConfig {
-    IServiceCollection Services { get; }
+public enum ThemeResourceLocation {
+    EmbeddedResource,
+    LocalFilePath,
+    WebUrl
 }

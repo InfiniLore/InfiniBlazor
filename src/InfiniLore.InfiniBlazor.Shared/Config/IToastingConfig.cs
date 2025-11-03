@@ -1,11 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.JsRuntime;
+using System.Collections.Frozen;
+
+namespace InfiniLore.InfiniBlazor.Config;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IInfiniBlazorJsDocument {
-    Task AddOrUpdateElementAtHead(string id, string css);
+public interface IToastingConfig {
+    int AutoRemoveDuration { get; }
+    FrozenDictionary<string, Type> GetAppearanceComponentMapping();
 }

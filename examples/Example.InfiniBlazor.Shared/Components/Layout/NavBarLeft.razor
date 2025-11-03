@@ -1,22 +1,18 @@
 ﻿@* ------------------------------------------------------------------------------------------------------------------ *@
 @* Imports
 @* ------------------------------------------------------------------------------------------------------------------ *@
-@using Example.InfiniBlazor.Shared.Themes
 @using InfiniLore.InfiniBlazor
 @using InfiniLore.InfiniBlazor.Theming
-@using InfiniLore.InfiniBlazor.Theming.ThemeCollections
 @using InfiniLore.InfiniBlazor.Toasting
-@using Microsoft.Extensions.Logging
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Descriptors
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @rendermode InfiniRenderModeProvider.InfiniRenderMode
 @inherits InfiniNavBarBase
-@inject IThemeStateProvider ThemeStateProvider
+@inject IThemeProvider ThemeProvider
 @inject IToastingProvider ToastingProvider
 @inject IVisualDebuggerProvider DebuggerProvider
-@inject ILogger<NavBarLeft> Logger
 @inject IDialogProvider DialogProvider
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
@@ -139,7 +135,7 @@
     />
 
 
-    @if (ThemeStateProvider.GetState().IsBinaryCollection) {
+    @if (ThemeProvider.LastKnownThemeEntryData is { CssData.Length: 2 }) {
         <InfiniNavToggleButton
             Value="@(ToggleState)"
             ValueChanged="@OnThemeModeChanged"
@@ -182,17 +178,19 @@
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     private async Task SwitchTheme() {
-        IThemeState state = ThemeStateProvider.GetState();
-
-        string? themeCollectionName = state.CollectionName;
+        (string collectionName, string _) = ThemeProvider.LastKnownThemeSelection;
+        
+        string themeCollectionName = collectionName;
         themeCollectionName = themeCollectionName switch {
-            DefaultThemeCollection.Name => PrideThemeCollection.Name,
-            _ => DefaultThemeCollection.Name
+            "Default" => "Pride",
+            _ => "Default"
         };
-        Logger.Information("{a}", themeCollectionName);
-
-        await ThemeStateProvider.TrySelectCollectionAsync(themeCollectionName);
-        ToggleState = state.ModeName != state.FirstModeInCollectionName;
+        
+        ThemeCollectionData? collection = await ThemeProvider.GetThemeCollectionData(themeCollectionName);
+        if (collection is null) return;
+        
+        await ThemeProvider.InvokeThemeChangeRequestedAsync(collection.Name, collection.Entries[0].EntryName);
+        ToggleState = false;
 
         StateHasChanged();
     }
@@ -226,15 +224,27 @@
     }
 
     private async Task OnThemeModeChanged() {
-        if (!await ThemeStateProvider.TrySelectNextModeAsync()) {
-            Logger.Warning("Could not activate next theme mode");
-        }
-        else {
-            Logger.Information("Activated next theme mode");
-        }
+        (string collectionName, string themeName) = ThemeProvider.LastKnownThemeSelection;
+        
+        ThemeCollectionData? collection = await ThemeProvider.GetThemeCollectionData(collectionName);
+        ThemeEntryData? entry = await ThemeProvider.GetThemeEntryData(collectionName, themeName);
+        if (collection is null) return;
+        if (entry is null) return;
 
-        IThemeState state = ThemeStateProvider.GetState();
-        ToggleState = state.ModeName != state.FirstModeInCollectionName;
+        int newIndex = -1;
+        for (int index = 0; index < collection.Entries.Length; index++) {
+            ThemeEntryData? currentEntry = collection.Entries.ElementAtOrDefault(index);
+            if (currentEntry != entry) continue;
+
+            if (index == collection.Entries.Length - 1) {
+                newIndex = 0;
+                break;
+            }
+            newIndex = index + 1;
+        }
+        if (newIndex == -1) return;
+        ThemeEntryData newEntry = collection.Entries[newIndex];
+        await ThemeProvider.InvokeThemeChangeRequestedAsync(collection.Name, newEntry.EntryName);
 
         StateHasChanged();
     }

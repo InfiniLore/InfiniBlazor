@@ -1,7 +1,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using Example.InfiniBlazor.Shared.Themes;
 using InfiniLore.InfiniBlazor.AutoDocumentation;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -14,7 +13,6 @@ public static class Program {
         var builder = WebAssemblyHostBuilder.CreateDefault(args);
         
         builder.Services.AddInfiniBlazor(config => {
-            config.Theming.RegisterTheme<PrideThemeCollection>();
             config.AddAutoDocumentation(static config => 
                 config.RegisterAutoDocumentationData<AutoDocumenterData_ExampleInfiniBlazorShared>()
             );

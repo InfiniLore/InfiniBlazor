@@ -12,7 +12,6 @@
     </PropertyGroup>
     
     <ItemGroup>
-        <ProjectReference Include="..\InfiniLore.InfiniBlazor.Contracts\InfiniLore.InfiniBlazor.Contracts.csproj" />
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core.Components\InfiniLore.InfiniBlazor.Core.Components.csproj" />
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core.Js\InfiniLore.InfiniBlazor.Core.Js.csproj" />
         <ProjectReference Include="..\InfiniLore.InfiniBlazor.Core.Markdown.Components\InfiniLore.InfiniBlazor.Core.Markdown.Components.csproj" />

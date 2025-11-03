@@ -19,9 +19,9 @@ public class InfiniBlazorJsDocument(
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public async Task AddOrUpdateElementAtHead(string id, string css) {
+    public async Task AddOrUpdateElementAtHead(string id, string css, CancellationToken ct = default) {
         try {
-            await jsRuntime.InvokeVoidAsync("infiniBlazor.document.addOrUpdateElementAtHead", id, css);
+            await jsRuntime.InvokeVoidAsync("infiniBlazor.document.addOrUpdateElementAtHead", ct, id, css);
         }
         catch (Exception e) {
             logger.Warning(e, "Error adding or updating style element at head");

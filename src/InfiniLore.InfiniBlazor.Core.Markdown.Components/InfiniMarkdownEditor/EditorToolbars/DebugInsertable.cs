@@ -148,13 +148,13 @@ public static class DefaultInsertableTexts {
         A paragragh with a **bold** word in it.
         A paragraph with an *italic* word in it.
         A paragraph with an _underline_ word in it.
-        A paragraph with a ~strikethrough~ word in it.
+        A paragraph with a ~~strikethrough~~ word in it.
         A paragraph with a `code` word in it.
         A paragraph with a [link](https://google.com) in it.
         A paragraph with a ![image](https://localhost:7210/icon.png|size=100x100) in it.
         A paragraph with an :flag-trans: emote in it.
-        A paragraph with a ^subscript^ word in it.
-        A paragraph with a ^^superscript^^ word in it.
+        A paragraph with a ~subscript~ word in it.
+        A paragraph with a ^superscript^ word in it.
         A paragraph with a #tag word in it.
 
         ---

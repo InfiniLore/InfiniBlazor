@@ -1,10 +1,10 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Core.Theming;
-using InfiniLore.InfiniBlazor.Theming.ThemeCollections;
 using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Frozen;
+using System.Collections.Concurrent;
 
 namespace InfiniLore.InfiniBlazor.Theming.Config;
 
@@ -12,58 +12,38 @@ namespace InfiniLore.InfiniBlazor.Theming.Config;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class InfiniBlazorThemingConfig : IThemingConfig {
-    private readonly IServiceCollection _serviceCollection;
-    private Dictionary<string, IThemeCollection> RegisteredBaseThemeCollections { get; } = new(4);
-    public ThemeMode DefaultThemeMode { get; private set; } = ThemeMode.DarkMode;
-    public string DefaultThemeCollectionName { get; private set; } = DefaultThemeCollection.Name;
-    
-    private Lazy<FrozenDictionary<string, IThemeCollection>> RegisteredBaseThemeCollectionsLazy { get; }
-
+    private ConcurrentBag<ThemeResource> ThemeResources { get; } = new();
+    public (string CollectionName, string ThemeName) DefaultThemeSelection { get; private set; } = ("Default", "Dark");
+    public bool ThrowOnBrokenInitialization { get; set; } = true;
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
     public InfiniBlazorThemingConfig(IServiceCollection serviceCollection) {
-        _serviceCollection = serviceCollection;
         serviceCollection.RegisterServicesFromInfiniLoreInfiniBlazorCoreTheming();
         serviceCollection.AddSingleton<IThemingConfig>(this);
-        RegisterTheme<DefaultThemeCollection>();
-        
-        RegisteredBaseThemeCollectionsLazy = new Lazy<FrozenDictionary<string, IThemeCollection>>(() => {
-            RegisteredBaseThemeCollections.TrimExcess();
-            return RegisteredBaseThemeCollections.ToFrozenDictionary(
-                pair => pair.Key, 
-                IThemeCollection (pair) => pair.Value);
-        });
+
+        RegisterThemeResource(new ThemeResource(
+            ThemeResourceLocation.EmbeddedResource,
+            "InfiniLore.InfiniBlazor.Theming.wwwroot.theme_default.json"
+        ));
+        RegisterThemeResource(new ThemeResource(
+            ThemeResourceLocation.EmbeddedResource, 
+            "InfiniLore.InfiniBlazor.Theming.wwwroot.theme_pride.json"
+        ));
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public InfiniBlazorThemingConfig RegisterTheme<TTheme>() where TTheme : class, IThemeCollection, new() {
-        var theme = new TTheme();
-        RegisteredBaseThemeCollections.AddOrUpdate(theme.CollectionName, theme);
-        return this;
-    }
-
-    public InfiniBlazorThemingConfig SetDefaultThemeMode(ThemeMode mode) {
-        if (mode.Variant == ThemeModeVariants.Undefined) return this;
-
-        DefaultThemeMode = mode;
-        return this;
-    }
-
-    public InfiniBlazorThemingConfig SetDefaultThemeCollectionName(string modeName) {
-        if (modeName.IsNullOrWhiteSpace()) return this;
-
-        DefaultThemeCollectionName = modeName;
-        return this;
-    }
-
-    public InfiniBlazorThemingConfig RegisterExternalThemeCollectionProvider<TProvider>() where TProvider : class, IExternalThemeCollectionProvider {
-        _serviceCollection.AddScoped<IExternalThemeCollectionProvider, TProvider>();
+    public InfiniBlazorThemingConfig RegisterThemeResource(ThemeResource themeResource) {
+        ThemeResources.Add(themeResource);
         return this;
     }
     
-    public FrozenDictionary<string, IThemeCollection> GetRegisteredThemeCollections() => RegisteredBaseThemeCollectionsLazy.Value;
+    public InfiniBlazorThemingConfig SetDefaultTheme(string collectionName, string themeName) {
+        DefaultThemeSelection = (collectionName, themeName);
+        return this;
+    }
     
+    public ThemeResource[] GetThemeResources() => ThemeResources.ToArray();
 }

@@ -501,4 +501,45 @@ Direct Title definition, without space:
   ]
 }</ExpectedJsonString>
   </MdTestData>
+  <MdTestData Id="withTrailingSpaceInModfier" FileName="link.xml">
+    <MdString>![image](https://localhost:7210/icon.png|fit )</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <ImageMdSyntaxNode Href="https://localhost:7210/icon.png" AltText="image">
+          <Modifiers>
+            <Attributes>
+              <Entry Key="fit" Start="4" End="4" />
+            </Attributes>
+            <OriginalInput>|fit </OriginalInput>
+          </Modifiers>
+        </ImageMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedMarkdown>![image](https://localhost:7210/icon.png|fit )</ExpectedMarkdown>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "ImageMdSyntaxNode",
+          "Modifiers": {
+            "Attributes": [
+              {
+                "key": "fit",
+                "Start": 4,
+                "End": 4
+              }
+            ],
+            "OriginalInput": "|fit "
+          },
+          "href": "https://localhost:7210/icon.png",
+          "altText": "image"
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
+  </MdTestData>
 </ArrayOfMdTestData>

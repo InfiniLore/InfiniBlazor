@@ -1,0 +1,53 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.InfiniBlazor
+@using InfiniLore.InfiniBlazor.Components.Avatars
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@rendermode InfiniRenderModeProvider.InfiniRenderMode
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+<InfiniHeading3>Avatars</InfiniHeading3>
+
+<div class="flex flex-row flex-wrap gap-2">
+    <div>
+        <InfiniAvatar AvatarData="@AvatarData" Size="Size.Xxs"/>
+        <InfiniAvatar AvatarData="@AvatarData" Size="Size.Xs"/>
+        <InfiniAvatar AvatarData="@AvatarData" Size="Size.S"/>
+        <InfiniAvatar AvatarData="@AvatarData" Size="Size.M"/>
+        <InfiniAvatar AvatarData="@AvatarData" Size="Size.L"/>
+        <InfiniAvatar AvatarData="@AvatarData" Size="Size.Xl"/>
+        <InfiniAvatar AvatarData="@AvatarData" Size="Size.Xxl"/>
+    </div>
+    <div>
+        <InfiniAvatar AvatarData="@AvatarOnline" Size="Size.Xxs"/>
+        <InfiniAvatar AvatarData="@AvatarOnline" Size="Size.Xs"/>
+        <InfiniAvatar AvatarData="@AvatarOnline" Size="Size.S"/>
+        <InfiniAvatar AvatarData="@AvatarOnline" Size="Size.M"/>
+        <InfiniAvatar AvatarData="@AvatarOnline" Size="Size.L"/>
+        <InfiniAvatar AvatarData="@AvatarOnline" Size="Size.Xl"/>
+        <InfiniAvatar AvatarData="@AvatarOnline" Size="Size.Xxl"/>
+    </div>
+    <div>
+        <InfiniAvatar AvatarData="@AvatarCustom" Size="Size.Xxs"/>
+        <InfiniAvatar AvatarData="@AvatarCustom" Size="Size.Xs"/>
+        <InfiniAvatar AvatarData="@AvatarCustom" Size="Size.S"/>
+        <InfiniAvatar AvatarData="@AvatarCustom" Size="Size.M"/>
+        <InfiniAvatar AvatarData="@AvatarCustom" Size="Size.L"/>
+        <InfiniAvatar AvatarData="@AvatarCustom" Size="Size.Xl"/>
+        <InfiniAvatar AvatarData="@AvatarCustom" Size="Size.Xxl"/>
+    </div>
+</div>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    private AvatarData AvatarData => new(AvatarStatus.Undefined, null, "/icon.png");
+    private AvatarData AvatarOnline => new(AvatarStatus.Online, null, "/icon.png");
+    private AvatarData AvatarCustom => new(AvatarStatus.Custom, null, "/icon.png", "🏳️‍⚧️");
+}

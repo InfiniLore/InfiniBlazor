@@ -1,20 +1,19 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Components;
 using InfiniLore.InfiniBlazor.JsRuntime;
-using InfiniLore.InfiniBlazor.Pooling;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
 namespace InfiniLore.InfiniBlazor.Theming;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class InfiniThemeManager(
-    IThemeStateProvider themeStateProvider,
+    IThemeProvider themeProvider,
     IInfiniBlazorJs infiniBlazorJs,
+    IQueryParameterManager queryParameterManager,
     ILogger<InfiniThemeManager> logger
 ) : ComponentBase, IAsyncDisposable {
     private const string ThemeId = "infiniThemeManager-selected";
@@ -24,110 +23,63 @@ public partial class InfiniThemeManager(
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    protected override async Task OnAfterRenderAsync(bool firstRender) {
-        await OnThemeStateChanged();
-
-        if (firstRender) {
-            themeStateProvider.OnChangedAsync += OnThemeStateChanged;
-        }
-    }
-
     protected override async Task OnInitializedAsync() {
-        await themeStateProvider.InitializeFromQueryAsync();
-        await PreloadInitialThemeCss();
+        await base.OnInitializedAsync();
+        
+        ThemeEntryData? initialTheme = await GetInitialThemeAsync();
+        InitialCss = initialTheme?.CssData;
+        
+        themeProvider.OnThemeChangeRequestAsync += OnThemeChangeRequestAsync;
     }
 
-    private async Task OnThemeStateChanged() {
+    private async Task<ThemeEntryData?> GetInitialThemeAsync(CancellationToken ct = default) {
+        string? collectionName = queryParameterManager.GetParam<string>(QueryParameterNames.ThemeCollection);
+        string? entryName = queryParameterManager.GetParam<string>(QueryParameterNames.ThemeEntry);
+        
+        // ReSharper disable once InvertIf
+        if (collectionName.IsNotNullOrWhiteSpace() 
+            && entryName is not null
+            && await themeProvider.GetThemeEntryData(collectionName, entryName, ct) is {} entryData) {
+            logger.Information("Found theme entry data in query parameters.");
+            return entryData;
+        }
+        
+        return await themeProvider.GetInitialThemeEntyData(ct);
+    }
+    
+    private async Task OnThemeChangeRequestAsync(string collectionName, string entryName) {
         if (_isUpdatingTheme) return;
-
         _isUpdatingTheme = true;
+        
+        queryParameterManager.SetParams(
+            (QueryParameterNames.ThemeCollection, collectionName),
+            (QueryParameterNames.ThemeEntry, entryName)
+        );
+        
+        var ctx = new CancellationTokenSource(TimeSpan.FromSeconds(10));
         try {
-            IThemeState state = themeStateProvider.GetState();
-
-            string? collectionName = state.CollectionName;
-            if (collectionName.IsNullOrWhiteSpace()) {
-                logger.Warning("Could not find theme collection.");
+            if (await themeProvider.GetThemeEntryData(collectionName, entryName, ctx.Token) is not {} entryData) {
+                logger.Warning("Could not find theme entry data.");
                 return;
             }
 
-            IThemeCollection? collection = await themeStateProvider.TryGetCollectionAsync(collectionName);
-            if (collection is null) {
-                logger.Warning("Could not find theme collection.");
-                return;
-            }
-
-            string? mode = state.ModeName;
-            if (mode.IsNullOrWhiteSpace()) {
-                mode = collection.GetFirstMode().Name;
-            }
-
-            if (!collection.TryGetCssData(mode, out ICssData? cssData)) {
-                logger.Warning("Could not find theme mode CSS data.");
-                return;
-            }
-
-            if (!TryGetCssString(cssData, out string? css)) {
-                logger.Warning("Could not create theme CSS.");
-                return;
-            }
-
-            await infiniBlazorJs.Document.AddOrUpdateElementAtHead(ThemeId, css);
-            InitialCss = null; // Forget the initial state to free up memory
+            await infiniBlazorJs.Document.AddOrUpdateElementAtHead(ThemeId, entryData.CssData, ctx.Token);
+            InitialCss = null;// Forget the initial state to free up memory
+        }
+        catch (OperationCanceledException e) {
+            logger.Warning(e, "Timeout while updating theme.");
+        }
+        catch (Exception e) {
+            logger.Warning(e, "Error updating theme");
         }
         finally {
             _isUpdatingTheme = false;
         }
     }
-
-
-    private async Task PreloadInitialThemeCss() {
-        try {
-            IThemeState state = themeStateProvider.GetState();
-
-            string? collectionName = state.CollectionName;
-            if (collectionName.IsNullOrWhiteSpace()) return;
-
-            IThemeCollection? collection = await themeStateProvider.TryGetCollectionAsync(collectionName);
-            if (collection is null) return;
-
-            string? mode = state.ModeName;
-            if (mode.IsNullOrWhiteSpace()) {
-                mode = collection.GetFirstMode().Name;
-            }
-
-            if (collection.TryGetCssData(mode, out ICssData? cssData) &&
-                TryGetCssString(cssData, out string? css)) {
-                InitialCss = css;
-            }
-        }
-        catch (Exception ex) {
-            logger.Error(ex, "Failed to preload theme CSS.");
-        }
-    }
     
     public ValueTask DisposeAsync() {
-        themeStateProvider.OnChangedAsync -= OnThemeStateChanged;
+        themeProvider.OnThemeChangeRequestAsync -= OnThemeChangeRequestAsync;
         GC.SuppressFinalize(this);
         return ValueTask.CompletedTask;
-    }
-
-    private static bool TryGetCssString(ICssData cssData, [NotNullWhen(true)] out string? css) {
-        StringBuilder sb = GlobalPools.StringBuilder.Get();
-        try {
-            sb.Append(":root{");
-            foreach ((string key, string value) in cssData.AsCssVariables()) {
-                sb.Append(key);
-                sb.Append(':');
-                sb.Append(value);
-                sb.Append(';');
-            }
-            sb.Append('}');
-
-            css = sb.ToString();
-            return true;
-        }
-        finally {
-            GlobalPools.StringBuilder.Return(sb);
-        }
     }
 }

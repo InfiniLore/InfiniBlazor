@@ -1,10 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Theming;
+namespace InfiniLore.InfiniBlazor.JsRuntime;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[AttributeUsage(AttributeTargets.Class, Inherited = false)]
-public sealed class GenerateThemeSymbolsAttribute : Attribute;
+public interface IInfiniBlazorJsDocument {
+    Task AddOrUpdateElementAtHead(string id, string css, CancellationToken ct = default);
+}

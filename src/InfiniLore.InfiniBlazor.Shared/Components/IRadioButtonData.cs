@@ -1,14 +1,12 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace InfiniLore.InfiniBlazor.Theming;
+namespace InfiniLore.InfiniBlazor.Components;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IThemeState {
-    string? CollectionName { get; }
-    string? ModeName { get; }
-    bool IsBinaryCollection { get; }
-    string? FirstModeInCollectionName { get; }
+public interface IRadioButtonData<out TId> {
+    TId Id { get; }
+    string? Label { get; }
 }
