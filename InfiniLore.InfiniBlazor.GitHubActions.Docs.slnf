@@ -16,7 +16,6 @@
             
             "src\\InfiniLore.InfiniBlazor\\InfiniLore.InfiniBlazor.csproj",
             "src\\InfiniLore.InfiniBlazor.Shared\\InfiniLore.InfiniBlazor.Shared.csproj",
-            "src\\InfiniLore.InfiniBlazor.SourceGenerators\\InfiniLore.InfiniBlazor.SourceGenerators.csproj",
             
             "docs\\Docs.InfiniBlazor\\Docs.InfiniBlazor.csproj"
         ]
