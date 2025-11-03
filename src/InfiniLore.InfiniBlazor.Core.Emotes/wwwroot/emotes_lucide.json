@@ -2899,6 +2899,13 @@
   },
   {
     "keys": [
+      "liclockcheck"
+    ],
+    "data": "clock-check",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
       "liclockfading"
     ],
     "data": "clock-fading",
@@ -3998,20 +4005,6 @@
   },
   {
     "keys": [
-      "lifileaudio"
-    ],
-    "data": "file-audio",
-    "contentType": "LucideIconName"
-  },
-  {
-    "keys": [
-      "lifileaudio2"
-    ],
-    "data": "file-audio-2",
-    "contentType": "LucideIconName"
-  },
-  {
-    "keys": [
       "lifileaxis3d"
     ],
     "data": "file-axis-3d",
@@ -4026,16 +4019,23 @@
   },
   {
     "keys": [
-      "lifilebadge2"
+      "lifilebox"
     ],
-    "data": "file-badge-2",
+    "data": "file-box",
     "contentType": "LucideIconName"
   },
   {
     "keys": [
-      "lifilebox"
+      "lifilebraces"
     ],
-    "data": "file-box",
+    "data": "file-braces",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
+      "lifilebracescorner"
+    ],
+    "data": "file-braces-corner",
     "contentType": "LucideIconName"
   },
   {
@@ -4075,9 +4075,9 @@
   },
   {
     "keys": [
-      "lifilecheck2"
+      "lifilecheckcorner"
     ],
-    "data": "file-check-2",
+    "data": "file-check-corner",
     "contentType": "LucideIconName"
   },
   {
@@ -4096,9 +4096,9 @@
   },
   {
     "keys": [
-      "lifilecode2"
+      "lifilecodecorner"
     ],
-    "data": "file-code-2",
+    "data": "file-code-corner",
     "contentType": "LucideIconName"
   },
   {
@@ -4131,6 +4131,20 @@
   },
   {
     "keys": [
+      "lifileexclamationpoint"
+    ],
+    "data": "file-exclamation-point",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
+      "lifileheadphone"
+    ],
+    "data": "file-headphone",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
       "lifileheart"
     ],
     "data": "file-heart",
@@ -4152,30 +4166,9 @@
   },
   {
     "keys": [
-      "lifilejson"
-    ],
-    "data": "file-json",
-    "contentType": "LucideIconName"
-  },
-  {
-    "keys": [
-      "lifilejson2"
-    ],
-    "data": "file-json-2",
-    "contentType": "LucideIconName"
-  },
-  {
-    "keys": [
       "lifilekey"
     ],
     "data": "file-key",
-    "contentType": "LucideIconName"
-  },
-  {
-    "keys": [
-      "lifilekey2"
-    ],
-    "data": "file-key-2",
     "contentType": "LucideIconName"
   },
   {
@@ -4187,13 +4180,6 @@
   },
   {
     "keys": [
-      "lifilelock2"
-    ],
-    "data": "file-lock-2",
-    "contentType": "LucideIconName"
-  },
-  {
-    "keys": [
       "lifileminus"
     ],
     "data": "file-minus",
@@ -4201,9 +4187,9 @@
   },
   {
     "keys": [
-      "lifileminus2"
+      "lifileminuscorner"
     ],
-    "data": "file-minus-2",
+    "data": "file-minus-corner",
     "contentType": "LucideIconName"
   },
   {
@@ -4250,9 +4236,9 @@
   },
   {
     "keys": [
-      "lifileplus2"
+      "lifilepluscorner"
     ],
-    "data": "file-plus-2",
+    "data": "file-plus-corner",
     "contentType": "LucideIconName"
   },
   {
@@ -4278,9 +4264,16 @@
   },
   {
     "keys": [
-      "lifilesearch2"
+      "lifilesearchcorner"
     ],
-    "data": "file-search-2",
+    "data": "file-search-corner",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
+      "lifilesignal"
+    ],
+    "data": "file-signal",
     "contentType": "LucideIconName"
   },
   {
@@ -4334,9 +4327,9 @@
   },
   {
     "keys": [
-      "lifiletype2"
+      "lifiletypecorner"
     ],
-    "data": "file-type-2",
+    "data": "file-type-corner",
     "contentType": "LucideIconName"
   },
   {
@@ -4369,20 +4362,6 @@
   },
   {
     "keys": [
-      "lifilevolume2"
-    ],
-    "data": "file-volume-2",
-    "contentType": "LucideIconName"
-  },
-  {
-    "keys": [
-      "lifilewarning"
-    ],
-    "data": "file-warning",
-    "contentType": "LucideIconName"
-  },
-  {
-    "keys": [
       "lifilex"
     ],
     "data": "file-x",
@@ -4390,9 +4369,9 @@
   },
   {
     "keys": [
-      "lifilex2"
+      "lifilexcorner"
     ],
-    "data": "file-x-2",
+    "data": "file-x-corner",
     "contentType": "LucideIconName"
   },
   {
@@ -4985,6 +4964,13 @@
   },
   {
     "keys": [
+      "ligitbranchminus"
+    ],
+    "data": "git-branch-minus",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
       "ligitbranchplus"
     ],
     "data": "git-branch-plus",
@@ -5499,6 +5485,13 @@
       "liheater"
     ],
     "data": "heater",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
+      "lihelicopter"
+    ],
+    "data": "helicopter",
     "contentType": "LucideIconName"
   },
   {
@@ -9272,6 +9265,13 @@
       "lisofa"
     ],
     "data": "sofa",
+    "contentType": "LucideIconName"
+  },
+  {
+    "keys": [
+      "lisolarpanel"
+    ],
+    "data": "solar-panel",
     "contentType": "LucideIconName"
   },
   {
