@@ -4,6 +4,7 @@
 using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Deserializer;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------

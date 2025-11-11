@@ -4,6 +4,7 @@
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
 using InfiniLore.InfiniBlazor.Markdown;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 

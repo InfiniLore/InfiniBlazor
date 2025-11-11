@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using InfiniLore.InfiniBlazor.Pooling;
 using System.Text;

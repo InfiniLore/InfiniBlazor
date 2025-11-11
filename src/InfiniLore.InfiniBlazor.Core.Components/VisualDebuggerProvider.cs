@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniLore.InfiniBlazor.Components.Debugger;
 
 namespace InfiniLore.InfiniBlazor.Components;
 // ---------------------------------------------------------------------------------------------------------------------

@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Deserializer.NodeDeserializers;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using InfiniLore.InfiniBlazor.Markdown.Syntax.Nodes;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Frozen;

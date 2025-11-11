@@ -4,7 +4,7 @@
 using Microsoft.Extensions.ObjectPool;
 using System.Diagnostics.CodeAnalysis;
 
-namespace InfiniLore.InfiniBlazor.Markdown;
+namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

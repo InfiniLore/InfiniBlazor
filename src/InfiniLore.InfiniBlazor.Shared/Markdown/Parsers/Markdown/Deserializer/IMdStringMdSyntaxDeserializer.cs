@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using System.Diagnostics.CodeAnalysis;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Markdown.Deserializer;

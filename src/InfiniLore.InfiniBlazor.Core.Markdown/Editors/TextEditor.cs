@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Pooling;
+using InfiniLore.InfiniBlazor.TextEditor;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;
 using System.Text.RegularExpressions;

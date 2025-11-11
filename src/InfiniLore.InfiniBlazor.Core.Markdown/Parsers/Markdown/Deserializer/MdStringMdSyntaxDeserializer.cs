@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using InfiniLore.InfiniBlazor.Pooling;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;

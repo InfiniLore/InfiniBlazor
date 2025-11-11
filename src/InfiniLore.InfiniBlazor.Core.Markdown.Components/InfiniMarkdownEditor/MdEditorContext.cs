@@ -4,6 +4,7 @@
 using CodeOfChaos.Extensions.Debouncers;
 using InfiniLore.InfiniBlazor.Markdown.Editors;
 using InfiniLore.InfiniBlazor.Markdown.Syntax;
+using InfiniLore.InfiniBlazor.TextEditor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 

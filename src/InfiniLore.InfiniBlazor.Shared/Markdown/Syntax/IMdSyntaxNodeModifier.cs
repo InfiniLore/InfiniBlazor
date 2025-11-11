@@ -4,7 +4,7 @@
 using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 
-namespace InfiniLore.InfiniBlazor.Markdown;
+namespace InfiniLore.InfiniBlazor.Markdown.Syntax;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

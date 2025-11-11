@@ -1,8 +1,8 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor;
 using InfiniLore.InfiniBlazor.Markdown.Editors;
+using InfiniLore.InfiniBlazor.TextEditor;
 using Tests.InfiniBlazor.DataSources.TextEditor;
 using Tests.InfiniBlazor.Shared;
 

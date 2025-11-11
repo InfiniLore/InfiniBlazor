@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using System.Xml.Linq;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Xml;

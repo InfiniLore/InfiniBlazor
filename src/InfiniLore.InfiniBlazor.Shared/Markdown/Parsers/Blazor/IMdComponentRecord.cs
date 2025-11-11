@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Microsoft.AspNetCore.Components.Rendering;
 
 namespace InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor;

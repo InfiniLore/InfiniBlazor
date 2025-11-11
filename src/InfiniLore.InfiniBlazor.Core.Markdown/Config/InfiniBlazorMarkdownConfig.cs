@@ -5,6 +5,7 @@ using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Core.Markdown;
 using InfiniLore.InfiniBlazor.Markdown.Editors;
 using InfiniLore.InfiniBlazor.Markdown.Parsers.Blazor;
+using InfiniLore.InfiniBlazor.Markdown.Syntax;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Frozen;
 
