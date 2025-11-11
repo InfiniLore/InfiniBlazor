@@ -28,7 +28,6 @@ public class InfiniBlazorComponentsConfig : IComponentsConfig {
             StringComparer.OrdinalIgnoreCase
         ));
 
-        this.AddInfiniBlazorCodeBlockHandler();
         this.AddMermaidCodeBlockHandler();
     }
     // -----------------------------------------------------------------------------------------------------------------
