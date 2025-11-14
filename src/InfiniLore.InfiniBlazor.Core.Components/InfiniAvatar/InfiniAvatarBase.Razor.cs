@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Components.Avatars;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using ErrorEventArgs=Microsoft.AspNetCore.Components.Web.ErrorEventArgs;

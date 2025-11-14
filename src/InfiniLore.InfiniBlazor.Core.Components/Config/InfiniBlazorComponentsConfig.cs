@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Components.CodeBlock;
 using InfiniLore.InfiniBlazor.Config;
 using InfiniLore.InfiniBlazor.Core.Components;
 using Microsoft.AspNetCore.Components;

@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using Bunit;
+using Bunit.Rendering;
 using Microsoft.AspNetCore.Components;
 using Tests.InfiniBlazor.Shared;
 
@@ -19,7 +20,7 @@ public partial class InfiniHeadingTests(IServiceProvider services) : InfiniBlazo
         RenderFragment expectedMarkup = testData.ExpectedMarkup;
         
         // Act
-        IRenderedFragment renderedFragment = Render(input);
+        IRenderedComponent<ContainerFragment> renderedFragment = Render(input);
         
         // Assert
         renderedFragment.MarkupMatches(expectedMarkup);

@@ -5,10 +5,10 @@
         <entry key="DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION" value="1" />
       </map>
     </option>
-    <option name="exePath" value="$PROJECT_DIR$/examples/Example.InfiniBlazor/bin/Debug/net9.0/Example.InfiniBlazor.exe" />
+    <option name="exePath" value="$PROJECT_DIR$/examples/Example.InfiniBlazor/bin/Debug/net10.0/Example.InfiniBlazor.exe" />
     <option name="programParameters" value="" />
     <option name="projectFilePath" value="$PROJECT_DIR$/examples/Example.InfiniBlazor/Example.InfiniBlazor.csproj" />
-    <option name="projectTfm" value="net9.0" />
+    <option name="projectTfm" value="net10.0" />
     <option name="restartOnRudeEditEditor" value="true" />
     <option name="watchParameters" value="" />
     <option name="workingDirectory" value="$PROJECT_DIR$/examples/Example.InfiniBlazor" />
