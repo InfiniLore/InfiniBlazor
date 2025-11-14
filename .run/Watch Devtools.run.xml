@@ -1,9 +1,9 @@
 ﻿<component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Watch Devtools" type="RunDotNetWatch" factoryName="RunDotNetWatch">
-    <option name="exePath" value="$PROJECT_DIR$/dev/DevTools.Blazor/bin/Release/net9.0/DevTools.Blazor.exe" />
+    <option name="exePath" value="$PROJECT_DIR$/dev/DevTools.Blazor/bin/Release/net10.0/DevTools.Blazor.exe" />
     <option name="programParameters" value="" />
     <option name="projectFilePath" value="$PROJECT_DIR$/dev/DevTools.Blazor/DevTools.Blazor.csproj" />
-    <option name="projectTfm" value="net9.0" />
+    <option name="projectTfm" value="net10.0" />
     <option name="restartOnRudeEditEditor" value="true" />
     <option name="watchParameters" value="" />
     <option name="workingDirectory" value="$PROJECT_DIR$/dev/DevTools.Blazor" />
