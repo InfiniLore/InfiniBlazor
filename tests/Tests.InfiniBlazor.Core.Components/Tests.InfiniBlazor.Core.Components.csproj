@@ -7,7 +7,6 @@
         <Nullable>enable</Nullable>
 
         <IsPackable>false</IsPackable>
-        <IsTestProject>true</IsTestProject>
 <!--        <TUNIT_EXECUTION_MODE>reflection</TUNIT_EXECUTION_MODE>-->
     </PropertyGroup>
 
