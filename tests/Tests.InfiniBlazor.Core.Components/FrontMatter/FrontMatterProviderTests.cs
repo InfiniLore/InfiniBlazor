@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniLore.InfiniBlazor.Components;
-using InfiniLore.InfiniBlazor.Components.FrontMatter;
 using Tests.InfiniBlazor.Shared;
 
 namespace Tests.InfiniBlazor.Core.Components.FrontMatter;

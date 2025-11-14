@@ -1,11 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using Bunit;
+
 namespace Tests.InfiniBlazor.Core.Components;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class InfiniBlazorBunitTest : Bunit.TestContext {
+public class InfiniBlazorBunitTest : BunitContext {
     public InfiniBlazorBunitTest(IServiceProvider services) {
         Services.AddFallbackServiceProvider(services);
     }

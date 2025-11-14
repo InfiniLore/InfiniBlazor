@@ -1,7 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniLore.InfiniBlazor.Components.Tags;
+using InfiniLore.InfiniBlazor.Components;
 
 namespace InfiniLore.InfiniBlazor.Markdown;
 

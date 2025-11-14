@@ -11,23 +11,14 @@
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Html
 @* ------------------------------------------------------------------------------------------------------------------ *@
-<Router AppAssembly="@typeof(App).Assembly">
+<Router AppAssembly="@typeof(App).Assembly" NotFoundPage="@typeof(NotFoundPage)">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"/>
     </Found>
-    <NotFoundPage>
-        @RedirectToNotFound()
-    </NotFoundPage>
 </Router>
 
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @* Code
 @* ------------------------------------------------------------------------------------------------------------------ *@
 @code {
-    [Inject] public required NavigationManager Nav { get; set; }
-
-    // ReSharper disable once UnusedParameter.Local
-    private RenderFragment RedirectToNotFound() => __builder => {
-        Nav.NavigateTo("/not-found", forceLoad: false);
-    };
 }

@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using InfiniLore.InfiniBlazor.Components.FrontMatter;
 using InfiniLore.Lucide;
 using Microsoft.Extensions.Logging;
 using System.Collections.Frozen;

@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.Extensions.DependencyInjection;
-using InfiniLore.InfiniBlazor.Components.CodeBlock;
 using InfiniLore.InfiniBlazor.Config;
 using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
