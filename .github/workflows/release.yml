@@ -12,44 +12,45 @@ jobs:
         
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout repository
-              uses: actions/checkout@v5
+            -   name: Checkout repository
+                uses: actions/checkout@v5
 
-            - name: Setup .NET
-              uses: actions/setup-dotnet@v5
-              with:
+            -   name: Setup .NET
+                uses: actions/setup-dotnet@v5
+                with:
                   dotnet-version: '10.x'
 
-            - name: Restore dependencies
-              run: dotnet restore InfiniLore.InfiniBlazor.GitHubActions.slnf
+            -   name: Restore dependencies
+                run: dotnet restore InfiniLore.InfiniBlazor.GitHubActions.slnf
 
-            - name: Build
-              run: dotnet build InfiniLore.InfiniBlazor.GitHubActions.slnf --configuration Release --no-restore
+            -   name: Build
+                run: dotnet build InfiniLore.InfiniBlazor.GitHubActions.slnf --configuration Release --no-restore
             
             # Ensure that the tests must pass 
             # The job will fail automatically if any test fails because `dotnet test` exits with a non-zero code
-            - name: Run tests     
-              run: dotnet test --solution InfiniLore.InfiniBlazor.GitHubActions.slnf --configuration Release --no-restore --no-build
+            -   name: Run tests     
+                run: dotnet test --solution InfiniLore.InfiniBlazor.GitHubActions.slnf --configuration Release --no-restore --no-build
 
-            - name: Publish to NuGet
-              env:
-                  NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-              run: |
-                  dotnet nuget push src/InfiniLore.InfiniBlazor.Core.Components/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                  dotnet nuget push src/InfiniLore.InfiniBlazor.Core.Emotes/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                  dotnet nuget push src/InfiniLore.InfiniBlazor.Core.Js/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                  dotnet nuget push src/InfiniLore.InfiniBlazor.Core.Markdown/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                  dotnet nuget push src/InfiniLore.InfiniBlazor.Core.Markdown.Components/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                  dotnet nuget push src/InfiniLore.InfiniBlazor.Core.Theming/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                  dotnet nuget push src/InfiniLore.InfiniBlazor.Core.Toasting/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                  dotnet nuget push src/InfiniLore.InfiniBlazor.Extensions.AutoDocumentation/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                  dotnet nuget push src/InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                  dotnet nuget push src/InfiniLore.InfiniBlazor.Extensions.Maui/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                  dotnet nuget push src/InfiniLore.InfiniBlazor.Extensions.ExtraComponents/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                  dotnet nuget push src/InfiniLore.InfiniBlazor/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                  dotnet nuget push src/InfiniLore.InfiniBlazor.Shared/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+            -   name: Publish to NuGet
+                env:
+                    NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+                run: |
+                    dotnet nuget push src/InfiniLore.InfiniBlazor.Core.Components/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                    dotnet nuget push src/InfiniLore.InfiniBlazor.Core.Emotes/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                    dotnet nuget push src/InfiniLore.InfiniBlazor.Core.Js/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                    dotnet nuget push src/InfiniLore.InfiniBlazor.Core.Markdown/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                    dotnet nuget push src/InfiniLore.InfiniBlazor.Core.Markdown.Components/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                    dotnet nuget push src/InfiniLore.InfiniBlazor.Core.Theming/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                    dotnet nuget push src/InfiniLore.InfiniBlazor.Core.Toasting/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                    dotnet nuget push src/InfiniLore.InfiniBlazor.Extensions.AutoDocumentation/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                    dotnet nuget push src/InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                    dotnet nuget push src/InfiniLore.InfiniBlazor.Extensions.Maui/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                    dotnet nuget push src/InfiniLore.InfiniBlazor.Extensions.ExtraComponents/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                    dotnet nuget push src/InfiniLore.InfiniBlazor/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+                    dotnet nuget push src/InfiniLore.InfiniBlazor.Shared/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
                   
-            - name: Create GitHub Release
-              uses: softprops/action-gh-release@v2
-              with:
-                  generate_release_notes: true
+            -   name: Create GitHub Release
+                uses: softprops/action-gh-release@v2
+                with:
+                    generate_release_notes: true
+                    prerelease: ${{ contains(github.ref_name, 'preview') }}
