@@ -9,10 +9,10 @@ module.exports = (env, _) => {
         mode: isProduction ? 'production' : 'development',
         devtool: isProduction ? false : 'inline-source-map',
         entry: {
-            main: "./src/InfiniLore.InfiniBlazor.Core.Js/TypescriptLib/Index.ts",
+            main: "./src/InfiniBlazor.Core.Js/TypescriptLib/Index.ts",
         },
         output: {
-            path: path.resolve(__dirname, './src/InfiniLore.InfiniBlazor/wwwroot'),
+            path: path.resolve(__dirname, './src/InfiniBlazor/wwwroot'),
             filename: "InfiniBlazor.js" // <--- Will be compiled to this single file
         },
         resolve: {
