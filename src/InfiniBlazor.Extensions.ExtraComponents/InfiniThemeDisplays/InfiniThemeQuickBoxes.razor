@@ -1,0 +1,48 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using global::InfiniBlazor.ExtraComponents
+@using InfiniBlazor.JsRuntime
+
+@namespace InfiniBlazor.ExtraComponents
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits ComponentBase
+@inject IInfiniBlazorJs InfiniBlazorJs
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="flex flex-col justify-center items-center">
+    <div class="flex flex-row flex-wrap gap-2 justify-center w-9/10">
+        @foreach (ThemeItem item in ThemeItems) {
+            <InfiniButtonTransparent
+                OnClick="() => InfiniBlazorJs.CopyToClipboardAsync(item.CssVarName)">
+                <div class="w-12 h-12 shadow-md flex items-center justify-center leading-none rounded-xl"
+                     style="background: var(@item.CssVarName)">
+                </div>
+            </InfiniButtonTransparent>
+        }
+    </div>
+</div>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    private ThemeItem[] ThemeItems => GetThemeItems();
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private ThemeItem[] GetThemeItems() {
+        // if (!ThemeSelector.TryGetCurrentCssData(out ICssData? theme)) return [];
+        //
+        // return theme.AsCssVariables()
+        //     .Select(tuple => new ThemeItem(tuple.Item1, tuple.Item2))
+        //     .Where(item => !item.CssVarName.EndsWith("-rgb"))
+        //     .ToArray();
+
+        return Array.Empty<ThemeItem>();
+    }
+}

@@ -1,0 +1,80 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniBlazor.Markdown.Parsers.Blazor
+@using InfiniBlazor.Markdown.Syntax.Nodes
+
+@namespace InfiniBlazor.Markdown
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inject IBlazorMdComponentConverter ComponentConverter
+@inject IMarkdownParser Parser
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="@Class border-infini-border flex min-h-0">
+    <div class="flex-1 overflow-y-auto infini-scrollbar">
+        @if (!VisualDebugger.IsEnabled()) {
+            <CascadingIsDisabled Value="@(EditorContext.IsLocked || !RenderContext.IsInteractive)">
+                <CascadingValue Value="@TagLinkContext" IsFixed>
+                    @ComponentConverter.RenderRootComponents(EditorContext.SyntaxTree.VisitTopLevelNodes())
+                    
+                    @if (EditorContext.SyntaxTree.TryGetCachedChildrenByType(out IEnumerable<FootnoteDescriptionMdSyntaxNode>? footnoteDescriptions)) {
+                        <InfiniMdEditorFootnoteDescriptionWrapper>
+                            @ComponentConverter.RenderRootComponentsWithSkipped(footnoteDescriptions)
+                        </InfiniMdEditorFootnoteDescriptionWrapper>
+                    }
+                    
+                </CascadingValue>
+            </CascadingIsDisabled>
+        }
+        else {
+            @* Alaways override IsDisabled and Don't use the CascadingValue*@
+            <InfiniCodeBlock
+                IsDisabled="false"
+                Language="MdSyntaxTree"
+                Class="h-full text-infini-red"
+                Content="@Parser.Xml.DeserializeToString(EditorContext.SyntaxTree)"
+            />
+        }
+    </div>
+</div>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [CascadingParameter] protected MdEditorContext EditorContext { get; set; } = null!;
+    [CascadingParameter] protected MdRenderContext RenderContext { get; set; } = null!;
+
+    private readonly ITagLinkContext TagLinkContext = SimpleMdTagLinkContext.Shared;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Component lifetime Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override void OnInitialized() {
+        base.OnInitialized();
+
+        EditorContext.OnSyntaxTreeChangedAsync += OnSourceChangedAsync;
+    }
+
+    public override async ValueTask DisposeAsync() {
+        await base.DisposeAsync();
+
+        // help aaa
+        EditorContext.OnSyntaxTreeChangedAsync -= OnSourceChangedAsync;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private async Task OnSourceChangedAsync() {
+        await InvokeAsync(StateHasChanged).ConfigureAwait(false);
+    }
+}

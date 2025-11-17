@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+        <StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />
+      <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" />
+      <PackageReference Include="Microsoft.Extensions.Http" />
+      <PackageReference Include="Microsoft.NET.Sdk.WebAssembly.Pack" />
+      <PackageReference Include="Microsoft.NET.ILLink.Tasks" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators\InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.csproj" OutputItemType="Analyzer"/>
+      <ProjectReference Include="..\..\src\InfiniBlazor.Extensions.AutoDocumentation\InfiniBlazor.Extensions.AutoDocumentation.csproj" />
+      <ProjectReference Include="..\..\src\InfiniBlazor\InfiniBlazor.csproj" />
+      <ProjectReference Include="..\InfiniBlazorExample.Shared\InfiniBlazorExample.Shared.csproj" />
+    </ItemGroup>
+
+</Project>

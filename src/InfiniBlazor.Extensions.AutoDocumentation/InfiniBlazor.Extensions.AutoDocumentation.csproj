@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <RootNamespace>InfiniBlazor.AutoDocumentation</RootNamespace>
+
+        <!-- Package metadata -->
+        <PackageId>InfiniLore.InfiniBlazor.Extensions.AutoDocumentation</PackageId>
+        <Description>InfiniLore's Component Library</Description>
+        <PackageTags>Blazor;Ui;Design;Components;Library</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="JetBrains.Annotations" />
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" />
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\InfiniBlazor.Core.Components\InfiniBlazor.Core.Components.csproj" />
+      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.csproj">
+          <Pack>true</Pack>
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>analyzers</IncludeAssets>
+          <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      </ProjectReference>
+      <ProjectReference Include="..\InfiniBlazor\InfiniBlazor.csproj">
+          <PrivateAssets>all</PrivateAssets>
+      </ProjectReference>
+
+    </ItemGroup>
+
+</Project>

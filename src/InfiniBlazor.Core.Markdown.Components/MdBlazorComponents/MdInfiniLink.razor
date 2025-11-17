@@ -1,0 +1,31 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniBlazor.Markdown.Parsers.Blazor
+@using InfiniBlazor.Markdown.Syntax
+@using InfiniBlazor.Markdown.Syntax.Nodes
+
+@namespace InfiniBlazor.Markdown.MdBlazorComponents
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniBlazorMdComponentBase<LinkMdSyntaxNode>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<a href="@SyntaxNode.Href"
+   title="@GetTitle()"
+   class="text-infini-accent hover:text-infini-accent-light hover:underline">
+    @RenderChildContent()
+</a>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    private string? GetTitle() {
+        if (SyntaxNode.Title.IsNotNullOrWhiteSpace()) return SyntaxNode.Title;
+        if (SyntaxNode.Modifier != null && SyntaxNode.Modifier.TryGetTitle(out string? title)) return title;
+        return null;   
+    }
+}

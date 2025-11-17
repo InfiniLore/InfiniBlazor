@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>InfiniBlazor.Js</RootNamespace>
+
+        <!-- Package metadata -->
+        <PackageId>InfiniLore.InfiniBlazor.Core.Js</PackageId>
+        <Description>InfiniLore's Component Library</Description>
+        <PackageTags>Blazor;Ui;Design;Components;Library</PackageTags>
+    </PropertyGroup>    
+
+    <ItemGroup>
+        <PackageReference Include="CodeOfChaos.Extensions.AspNetCore.Components" />
+        <PackageReference Include="CodeOfChaos.Extensions.MicrosoftLogging" />
+        <PackageReference Include="CodeOfChaos.Extensions.ObjectPool" />
+        <PackageReference Include="CodeOfChaos.Extensions" />
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" />
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+
+        <PackageReference Include="JetBrains.Annotations" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    </ItemGroup>    
+
+    <ItemGroup>
+      <ProjectReference Include="..\InfiniBlazor.Shared\InfiniBlazor.Shared.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,40 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniBlazor
+@using InfiniBlazor.Toasting
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@rendermode InfiniRenderModeProvider.InfiniRenderMode
+@inherits InfiniNavBarBase
+@inject IToastingProvider ToastingProvider
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniNavBar Location="NavBarLocation.Top" Size="Size.Xs" Class="@Class" @bind-NavBarCollapsed="CollapsedState">
+    <InfiniSpacer/>
+    <InfiniNavBreak/>
+    <InfiniNavSubMenu Text="Sub Menu">
+        <InfiniNavLink Text="Something" Icon="@LucideNames.AArrowDown" Href="/"/>
+        <InfiniNavLink Text="Else" Icon="@LucideNames.AArrowDown" Href="/"/>
+        <InfiniNavSubMenu Text="Sub Menu" IgnoreCascadeCollapsedState>
+            <InfiniNavLink Text="Something" Icon="@LucideNames.AArrowDown" Href="/"/>
+            <InfiniNavLink Text="Else" Icon="@LucideNames.AArrowDown" Href="/"/>
+        </InfiniNavSubMenu>
+        </InfiniNavSubMenu>
+    <InfiniNavBreak/>
+    <InfiniSpacer/>
+    <InfiniNavButton
+        Text="Remove All Toasts"
+        Icon="@LucideNames.Radiation"
+        OnClick="@ToastingProvider.UnpublishAllToastsAsync"
+    />
+</InfiniNavBar>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter] public bool CollapsedState { get; set; }
+}

@@ -1,0 +1,103 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@namespace InfiniBlazor
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.Lucide
+@inherits InfiniNavItemBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<span
+    hidden="@IsHidden"
+    title="@(CollapsedState ? Text : string.Empty)"
+    class="@ConcatClasses(Class, OffsetClasses) flex flex-nowrap items-center"
+> 
+    @switch (Icon, Text) {
+        case (not null, null): {
+            <span class="@IconClasses">
+                <LucideIcon Name="@Icon" Size="@IconSize"/>
+            </span>
+            @ChildContent
+            break;
+        }
+
+        case (null, not null): {
+            <span
+                class="@(CollapsedState ? "w-0 opacity-0 delay-0" : "delay-300 w-auto opacity-100") transition-all duration-300 h-6 overflow-hidden">
+                <span class="@ConcatClasses(TextClasses, TextSize)">
+                    @Text
+                </span>
+                @ChildContent
+            </span>
+            break;
+        }
+
+        case (_, _): {
+            <span class="@IconClasses">
+                <LucideIcon Name="@Icon" Size="@IconSize"/>
+            </span>
+
+            <span
+                class="@(CollapsedState ? "w-0 opacity-0 delay-0" : "delay-300 w-auto ml-2 opacity-100") transition-all duration-300 h-6 overflow-hidden">
+                <span class="@ConcatClasses(TextClasses, TextSize)">
+                    @Text
+                </span>
+                @ChildContent
+            </span>
+            break;
+        }
+    }
+</span>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private int IconSize => NavBarSize switch {
+        Size.Xxs => 10,
+        Size.Xs => 14,
+        Size.S => 18,
+        Size.M => 24,
+        Size.L => 32,
+        Size.Xl => 42,
+        Size.Xxl => 48,
+        _ => 24
+    };
+    
+    private string TextSize => NavBarSize switch {
+        Size.Xxs => "text-xs",
+        Size.Xs => "text-xs",
+        Size.S => "text-sm",
+        Size.M => "text-base",
+        Size.L => "text-base",
+        Size.Xl => "text-lg",
+        Size.Xxl => "text-xl",
+        _ => string.Empty
+    };
+
+    private string OffsetClasses => NavBarLocation.IsVertical()
+        ? NavBarSize switch {
+            Size.Xxs => "-ml-1.5",
+            Size.Xs => "-ml-1",
+            Size.S => "-ml-0.5",
+            _ => string.Empty
+        }
+        : string.Empty;
+
+    private string IconClasses => ConcatClasses(
+        "text-infini-nav-text flex-shrink-0",
+        IsDisabled ? null : "group-hover:text-infini-nav-text-hover"
+    );
+    
+    private string TextClasses => ConcatClasses(
+        "text-infini-nav-text truncate inline-block",
+        IsDisabled ? null : "group-hover:text-infini-nav-text-hover"
+    );
+}
+

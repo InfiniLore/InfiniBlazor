@@ -1,0 +1,244 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniBlazor
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@rendermode InfiniRenderModeProvider.InfiniRenderMode
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<!-- Basic Text Input Example -->
+<InfiniHeading3>Basic Text Input</InfiniHeading3>
+<div class="space-y-4">
+    <InfiniTextInput
+        @bind-Value="@BasicExample.Value"
+        OnChange="@BasicExample.OnChanged"
+        Placeholder="Type something..."/>
+
+    <div class="text-sm space-y-1">
+        <p>Bound Value: @BasicExample.Value</p>
+        <p>OnChanged Value: @BasicExample.OnChangedValue</p>
+    </div>
+</div>
+
+<!-- Text Input with Submit Button -->
+<InfiniHeading3>Text Input with Submit</InfiniHeading3>
+<div class="space-y-4">
+    <InfiniToggleInput
+        Label="Toggle Enabled State"
+        Value="@TextInputDisabled"
+        ValueChanged="@HandleToggleChanged">
+        @TextInputDisabled
+    </InfiniToggleInput>
+
+    <InfiniTextInput
+        Label="Do something"
+        @bind-Value="@SubmitExample.Value"
+        Placeholder="Type something else and submit..."
+        IsDisabled="TextInputDisabled"/>
+
+    <InfiniTextInput
+        Label="Do something with a long label... bla bla bla blabla bla bla blabla bla bla blabla bla bla blabla bla bla blabla bla bla blabla bla bla bla bla bla bla bla bla"
+        LabelLocation="LabelLocation.Left"
+        @bind-Value="@SubmitExample.Value"
+        Placeholder="Type something else and submit..."
+        IsDisabled="TextInputDisabled">
+        <InfiniButton OnClick="@SubmitExample.OnSubmit">Submit</InfiniButton>
+    </InfiniTextInput>
+
+    <InfiniTextAreaInput
+        Label="Do something in a text area"
+        LabelLocation="LabelLocation.Left"
+        @bind-Value="@SubmitExample.Value"
+        Placeholder="Type something else and submit..."
+        IsDisabled="TextInputDisabled">
+        <InfiniButton OnClick="@SubmitExample.OnSubmit">Submit</InfiniButton>
+    </InfiniTextAreaInput>
+
+    <InfiniFileInput
+        Label="Upload Files"
+        Accept=".png,.jpg,.jpeg"
+        AllowMultipleFiles
+        IsDisabled="TextInputDisabled"
+        OnFilesChanged="HandleFilesChanged"
+        Placeholder="Choose documents..."/>
+
+    <InfiniButtonInput Label="Does Something" IsDisabled="TextInputDisabled">
+        Submit
+    </InfiniButtonInput>
+
+    <div class="text-sm space-y-1">
+        <p>Bound Value: @SubmitExample.Value</p>
+        <p>Submitted Value: @SubmitExample.SubmittedValue</p>
+
+        @if (SelectedFiles is not null && SelectedFiles.Any()) {
+            <div class="mt-2 space-y-2">
+                <p class="text-sm font-medium">Selected Files:</p>
+                <div class="space-y-1">
+                    @foreach (IBrowserFile file in SelectedFiles) {
+                        <div class="flex items-center gap-2 text-sm p-2 bg-infini-base-95 rounded">
+                            <span class="font-medium">@file.Name</span>
+                            <span class="text-infini-base-40">(@(file.Size / 1024.0) KB)</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+    </div>
+
+
+</div>
+
+<!-- Text Input with Label -->
+<InfiniHeading3>Text Input with Submit</InfiniHeading3>
+<div class="space-y-4">
+    <InfiniTextInput
+        @bind-Value="@SubmitExample.Value"
+        Placeholder="Type something else and submit..."
+        Label="Test Example"
+    >
+        <InfiniButtonPrimary OnClick="@SubmitExample.OnSubmit">Submit</InfiniButtonPrimary>
+    </InfiniTextInput>
+
+    <div class="text-sm space-y-1">
+        <p>Bound Value: @SubmitExample.Value</p>
+        <p>Submitted Value: @SubmitExample.SubmittedValue</p>
+    </div>
+</div>
+
+<InfiniHeading3>CheckBox Inputs</InfiniHeading3>
+<div class="space-y-4">
+    <InfiniCheckBoxInput Data="@Data"/>
+    <InfiniRadioButtonInput
+        Label="@(SelectedId.ToString())"
+        Data="@RadioButtonDatas"
+        @bind-SelectedId="SelectedId"/>
+</div>
+
+<!-- Form Inputs Example -->
+<InfiniHeading3>Form Inputs</InfiniHeading3>
+<div class="space-y-4">
+    <InfiniTextInput
+        Type="email"
+        LabelLocation="LabelLocation.OnTop"
+        Label="Email"
+        Value="@FormExample.Email"
+        ValueChanged="FormExample.HandleEmailChange"
+        ValidationMessage="@FormExample.ValidationMessage"
+        Placeholder="Enter email">
+    </InfiniTextInput>
+
+    <InfiniTextInput
+        Label="Password"
+        LabelLocation="LabelLocation.Left"
+        Type="password"
+        Value="@FormExample.Password"
+        ValueChanged="@(value => FormExample.Password = value)"
+        Placeholder="Enter password"/>
+</div>
+
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    private BasicInputExample BasicExample { get; } = new();
+    private SubmitInputExample SubmitExample { get; } = new();
+    private FormInputExample FormExample { get; } = new();
+
+    private bool TextInputDisabled { get; set; }
+
+    private IEnumerable<IBrowserFile>? SelectedFiles { get; set; }
+
+    private IEnumerable<ICheckBoxData> Data { get; set; } = new[] {
+        new CheckBoxData { Label = "Something" },
+        new CheckBoxData { Label = "else" }
+    };
+
+    private IEnumerable<IRadioButtonData<Guid>> RadioButtonDatas { get; set; } = new[] {
+        new RadioButtonData() {
+            Id = Guid.CreateVersion7(),
+            Label = "Something"
+        },
+        new RadioButtonData() {
+            Id = Guid.CreateVersion7(),
+            Label = "Else"
+        },
+        new RadioButtonData() {
+            Id = Guid.CreateVersion7(),
+            Label = "Else"
+        },
+        new RadioButtonData() {
+            Id = Guid.CreateVersion7(),
+            Label = "Else"
+        },
+        new RadioButtonData() {
+            Id = Guid.CreateVersion7(),
+            Label = "Else"
+        }
+    };
+    private Guid SelectedId { get; set; }
+
+    private class CheckBoxData : ICheckBoxData {
+        public string? Label { get; init; }
+        public bool IsChecked { get; set; }
+    }
+
+    private class RadioButtonData : IRadioButtonData<Guid> {
+        public required Guid Id { get; init; }
+        public required string? Label { get; init; }
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Models
+    // -----------------------------------------------------------------------------------------------------------------
+    private async Task HandleToggleChanged(bool value) {
+        TextInputDisabled = value;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private sealed class BasicInputExample {
+        public string? Value { get; set; }
+        public string? OnChangedValue { get; private set; }
+
+        public void OnChanged(ChangeEventArgs args) {
+            if (args.Value is string value) {
+                OnChangedValue = value;
+            }
+        }
+    }
+
+    private sealed class SubmitInputExample {
+        public string? Value { get; set; }
+        public string? SubmittedValue { get; private set; }
+
+        public void OnSubmit(MouseEventArgs _) {
+            SubmittedValue = Value;
+        }
+    }
+
+    private sealed class FormInputExample {
+        public string? Password { get; set; }
+        public string? Email { get; private set; }
+        public string? ValidationMessage { get; private set; }
+
+        public void HandleEmailChange(string? value) {
+            Email = value;
+            ValidationMessage = ValidateEmail(value);
+        }
+
+        private static string? ValidateEmail(string? value) => value switch {
+            null or "" => "Email is required",
+            not null when !value.Contains("@") => "Please enter a valid email address",
+            _ => null
+        };
+    }
+
+    private void HandleFilesChanged(IReadOnlyList<IBrowserFile>? obj) {
+        SelectedFiles = obj;
+    }
+}

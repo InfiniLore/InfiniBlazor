@@ -1,0 +1,113 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using global::InfiniBlazor
+@using global::InfiniBlazor.Components
+@using JetBrains.Annotations
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@rendermode InfiniRenderModeProvider.InfiniRenderMode
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniHeading3>Toggle Buttons</InfiniHeading3>
+
+<div class="flex flex-row gap-4">
+    <div class="flex flex-col gap-1 items-center">
+        <InfiniHeading6>Sizes</InfiniHeading6>
+        <InfiniToggleButton
+            @bind-Value="_isEnabled"
+            OnIcon="sun"
+            OffIcon="moon"
+            Size="Size.Xxs"/>
+
+        <InfiniToggleButton
+            @bind-Value="_isEnabled"
+            OnIcon="sun"
+            OffIcon="moon"
+            Size="Size.Xs"/>
+
+        <InfiniToggleButton
+            @bind-Value="_isEnabled"
+            OnIcon="sun"
+            OffIcon="moon"
+            Size="Size.S"/>
+        <InfiniToggleButton
+            @bind-Value="_isEnabled"
+            OnIcon="sun"
+            OffIcon="moon"
+            Size="Size.M"/>
+        <InfiniToggleButton
+            @bind-Value="_isEnabled"
+            OnIcon="sun"
+            OffIcon="moon"
+            Size="Size.L"/>
+        <InfiniToggleButton
+            @bind-Value="_isEnabled"
+            OnIcon="sun"
+            OffIcon="moon"
+            Size="Size.Xl"/>
+        <InfiniToggleButton
+            @bind-Value="_isEnabled"
+            OnIcon="sun"
+            OffIcon="moon"
+            Size="Size.Xxl"/>
+    </div>
+
+    <div class="flex flex-col gap-1 items-center">
+        <InfiniHeading6>No Icons</InfiniHeading6>
+        <InfiniToggleButton Color="Color.Accent" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Red" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Orange" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Yellow" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Green" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Cyan" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Blue" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Purple" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Pink" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Gray" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.White" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Black" @bind-Value="_isEnabled"/>
+    </div>
+
+    <div class="flex flex-col gap-1 items-center">
+        <InfiniHeading6>Icon on True</InfiniHeading6>
+        <InfiniToggleButton Color="Color.Accent" OnIcon="sun" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Red" OnIcon="sun" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Orange" OnIcon="sun" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Yellow" OnIcon="sun" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Green" OnIcon="sun" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Cyan" OnIcon="sun" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Blue" OnIcon="sun" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Purple" OnIcon="sun" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Pink" OnIcon="sun" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Gray" OnIcon="sun" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.White" OnIcon="sun" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Black" OnIcon="sun" @bind-Value="_isEnabled"/>
+    </div>
+
+    <div class="flex flex-col gap-1 items-center">
+        <InfiniHeading6>Icon on False</InfiniHeading6>
+        <InfiniToggleButton Color="Color.Accent" OffIcon="moon" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Red" OffIcon="moon" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Orange" OffIcon="moon" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Yellow" OffIcon="moon" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Green" OffIcon="moon" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Cyan" OffIcon="moon" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Blue" OffIcon="moon" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Purple" OffIcon="moon" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Pink" OffIcon="moon" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Gray" OffIcon="moon" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.White" OffIcon="moon" @bind-Value="_isEnabled"/>
+        <InfiniToggleButton Color="Color.Black" OffIcon="moon" @bind-Value="_isEnabled"/>
+    </div>
+</div>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [UsedImplicitly] bool _isEnabled;
+}

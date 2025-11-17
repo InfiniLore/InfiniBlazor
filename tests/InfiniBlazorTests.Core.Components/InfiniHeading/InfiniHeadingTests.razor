@@ -1,0 +1,113 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniBlazor
+
+@namespace InfiniBlazorTests.Core.Components.InfiniHeading
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniBlazorBunitTest
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    public static IEnumerable<Func<BunitTestData>> GetComponentDataSources() {
+        // default
+        yield return () => new BunitTestData(
+            @<InfiniHeading Size="HeadingSize.H1">Test</InfiniHeading>,
+            @<h1 class=" text-6xl font-semibold mb-6">Test</h1>
+        );
+        
+        yield return () => new BunitTestData(
+            @<InfiniHeading Size="HeadingSize.H2">Test</InfiniHeading>,
+            @<h2 class=" text-5xl font-semibold mb-5">Test</h2>
+        );
+        
+        yield return () => new BunitTestData(
+            @<InfiniHeading Size="HeadingSize.H3">Test</InfiniHeading>,
+            @<h3 class=" text-4xl font-semibold mb-4">Test</h3>
+        );
+        
+        yield return () => new BunitTestData(
+            @<InfiniHeading Size="HeadingSize.H4">Test</InfiniHeading>,
+            @<h4 class=" text-3xl font-semibold mb-3">Test</h4>
+        );
+        
+        yield return () => new BunitTestData(
+            @<InfiniHeading Size="HeadingSize.H5">Test</InfiniHeading>,
+            @<h5 class=" text-2xl font-semibold mb-2">Test</h5>
+        );
+        
+        yield return () => new BunitTestData(
+            @<InfiniHeading Size="HeadingSize.H6">Test</InfiniHeading>,
+            @<h6 class=" text-xl font-semibold mb-1">Test</h6>
+        );
+        
+        // withClass
+        yield return () => new BunitTestData(
+            @<InfiniHeading Size="HeadingSize.H1" Class="text-red-500">Test</InfiniHeading>,
+            @<h1 class="text-red-500 text-6xl font-semibold mb-6">Test</h1>
+        );
+        
+        yield return () => new BunitTestData(
+            @<InfiniHeading Size="HeadingSize.H2" Class="text-red-500">Test</InfiniHeading>,
+            @<h2 class="text-red-500 text-5xl font-semibold mb-5">Test</h2>
+        );
+        
+        yield return () => new BunitTestData(
+            @<InfiniHeading Size="HeadingSize.H3" Class="text-red-500">Test</InfiniHeading>,
+            @<h3 class="text-red-500 text-4xl font-semibold mb-4">Test</h3>
+        );
+        
+        yield return () => new BunitTestData(
+            @<InfiniHeading Size="HeadingSize.H4" Class="text-red-500">Test</InfiniHeading>,
+            @<h4 class="text-red-500 text-3xl font-semibold mb-3">Test</h4>
+        );
+        
+        yield return () => new BunitTestData(
+            @<InfiniHeading Size="HeadingSize.H5" Class="text-red-500">Test</InfiniHeading>,
+            @<h5 class="text-red-500 text-2xl font-semibold mb-2">Test</h5>
+        );
+        
+        yield return () => new BunitTestData(
+            @<InfiniHeading Size="HeadingSize.H6" Class="text-red-500">Test</InfiniHeading>,
+            @<h6 class="text-red-500 text-xl font-semibold mb-1">Test</h6>
+        );
+        
+        // without Content
+        yield return () => new BunitTestData(
+            @<InfiniHeading Size="HeadingSize.H1"/>,
+            @<h1 class=" text-6xl font-semibold mb-6"></h1>
+        );
+        
+        yield return () => new BunitTestData(
+            @<InfiniHeading Size="HeadingSize.H2"/>,
+            @<h2 class=" text-5xl font-semibold mb-5"></h2>
+        );
+        
+        yield return () => new BunitTestData(
+            @<InfiniHeading Size="HeadingSize.H3"/>,
+            @<h3 class=" text-4xl font-semibold mb-4"></h3>
+        );
+        
+        yield return () => new BunitTestData(
+            @<InfiniHeading Size="HeadingSize.H4"/>,
+            @<h4 class=" text-3xl font-semibold mb-3"></h4>
+        );
+        
+        yield return () => new BunitTestData(
+            @<InfiniHeading Size="HeadingSize.H5"/>,
+            @<h5 class=" text-2xl font-semibold mb-2"></h5>
+        );
+        
+        yield return () => new BunitTestData(
+            @<InfiniHeading Size="HeadingSize.H6"/>,
+            @<h6 class=" text-xl font-semibold mb-1"></h6>
+        );
+    }
+}

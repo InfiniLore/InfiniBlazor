@@ -1,0 +1,75 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@page "/example/tabs"
+@using global::InfiniBlazor
+@using global::InfiniBlazor.Components
+@rendermode InfiniRenderModeProvider.InfiniRenderMode
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniPage Title="Tabs" Class="p-4">
+    <InfiniSection Class="gap-4 w-full h-full overflow-auto infini-scrollbar">
+        <InfiniTabContainer Style="@TabContainerStyle.Stretch">
+            <InfiniTabContent TabName="Something">
+                <p>something bla bla bla</p>
+            </InfiniTabContent>
+            <InfiniTabContent TabName="Else">
+                <p>else bla bla bla</p>
+            </InfiniTabContent>
+        </InfiniTabContainer>
+        
+        <InfiniTabContainer Style="@TabContainerStyle.Left">
+            <InfiniTabContent TabName="Something">
+                <p>something bla bla bla</p>
+            </InfiniTabContent>
+            <InfiniTabContent TabName="Else">
+                <p>else bla bla bla</p>
+            </InfiniTabContent>
+        </InfiniTabContainer>
+        
+        <InfiniTabContainer Orientation="Orientation.Vertical">
+            <InfiniTabContent TabName="Something">
+                <p>something bla bla bla</p>
+            </InfiniTabContent>
+            <InfiniTabContent TabName="Else">
+                <p>else bla bla bla</p>
+            </InfiniTabContent>
+        </InfiniTabContainer>
+        
+        <InfiniTabContainer Orientation="Orientation.Vertical" TabsOnRight="true">
+            <InfiniTabContent TabName="Something">
+                <p>something bla bla bla</p>
+            </InfiniTabContent>
+            <InfiniTabContent TabName="Else">
+                <p>else bla bla bla</p>
+            </InfiniTabContent>
+        </InfiniTabContainer>
+        
+        <InfiniTabContainer Style="@TabContainerStyle.Stretch" Orientation="Orientation.Vertical">
+            <InfiniTabContent TabName="Something">
+                <p>something bla bla bla</p>
+            </InfiniTabContent>
+            <InfiniTabContent TabName="Else">
+                <p>else bla bla bla</p>
+            </InfiniTabContent>
+        </InfiniTabContainer>
+        
+        <InfiniTabContainer Style="@TabContainerStyle.Stretch" Orientation="Orientation.Vertical" TabsOnRight="true">
+            <InfiniTabContent TabName="Something">
+                <p>something bla bla bla</p>
+            </InfiniTabContent>
+            <InfiniTabContent TabName="Else">
+                <p>else bla bla bla</p>
+            </InfiniTabContent>
+        </InfiniTabContainer>
+    </InfiniSection>
+</InfiniPage>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+}

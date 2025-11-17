@@ -1,0 +1,31 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniBlazor.Markdown.Parsers.Blazor
+
+@namespace InfiniBlazor.Markdown
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<CascadingValue Value="@EditorContext">
+    <CascadingValue Value="@RenderContext">
+        <InfiniMdEditorPreview/>
+    </CascadingValue>
+</CascadingValue>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [Parameter] public MdEditorContext EditorContext { get; set; } = new();
+    [Parameter] public EventCallback<MdEditorContext> EditorContextChanged  { get; set; }
+    
+    [Parameter] public MdRenderContext RenderContext { get; set; } = new();
+    [Parameter] public EventCallback<MdRenderContext> RenderContextChanged  { get; set; }
+}

@@ -1,0 +1,43 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@namespace InfiniBlazor
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniButton
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniToolTipWrapper @bind-ShowTooltip="@OnHover" Anchor="@TooltipAnchor">
+    <Content>
+        <InfiniButton
+            AutoWidth="AutoWidth"
+            IsDisabled="IsDisabled"
+            Href="@Href"
+            IconName="@IconName"
+            Text="@Text"
+            StopPropagation="@StopPropagation"
+            OnClick="@OnClick"  
+            DebounceMs="@DebounceMs"
+            DisableTrackedQueryParams="@DisableTrackedQueryParams"
+            Type="@Type"
+            AriaLabel="@AriaLabel"
+            Color="@Color"
+            Size="@Size"
+            @bind-OnHover="@OnHover">
+            @Content
+        </InfiniButton>
+    </Content>
+    <Tooltip>
+        @Tooltip
+    </Tooltip>
+</InfiniToolTipWrapper>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter, EditorRequired] public required RenderFragment Content { get; set; }
+    [Parameter, EditorRequired] public required RenderFragment Tooltip { get; set; }
+    [Parameter] public Anchor TooltipAnchor { get; set; } = Anchor.Center | Anchor.Bottom;
+}

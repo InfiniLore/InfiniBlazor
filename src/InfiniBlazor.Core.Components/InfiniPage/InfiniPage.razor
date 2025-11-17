@@ -1,0 +1,42 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@namespace InfiniBlazor
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@if (Title.IsNotNullOrWhiteSpace()) {
+    <PageTitle>@Title</PageTitle>
+}
+
+@if (VisualDebugger.IsEnabled()) {
+    <div
+        class="absolute pointer-events-none top-0 right-0 bg-infini-red text-infini-white transition-opacity duration-500 ease-in-out p-2 rounded-bl-md opacity-75 flex flex-col gap-2 @ZIndex.DebugRenderInfo">
+        <span>Render Mode : <strong>@RendererInfo.Name</strong></span>
+        <span>Interactive : <strong>@RendererInfo.IsInteractive</strong></span>
+    </div>
+}
+
+<main
+    class="@Class flex flex-col overflow-y-auto items-center overload-bg-infini-base-95 text-infini-text infini-scrollbar gap-4 h-full w-full">
+    @ChildContent
+</main>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [Parameter] public string? Title { get; set; }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override async Task OnInitializedAsync() {
+        await base.OnInitializedAsync();
+        VisualDebugger.InitializeFromUrl();
+    }
+}

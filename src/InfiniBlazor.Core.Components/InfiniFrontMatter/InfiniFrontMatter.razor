@@ -1,0 +1,70 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@namespace InfiniBlazor
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniComponentBase
+@inject IFrontMatterProvider FrontMatterProvider
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="flex flex-col gap-0.5 overload-bg-infini-base-90 p-2 rounded-xl">
+    <InfiniHeading6>@Title</InfiniHeading6>
+    @if (_entries is not null) {
+        foreach (IFrontMatterEntry entry in _entries) {
+            string iconName = FrontMatterProvider.TryGetIconName(entry.Key, out string? icon) ? icon : InfiniFrontMatterEntry.DefaultIconName;
+            <InfiniFrontMatterEntry
+                IconName="@iconName"
+                Key="@entry.Key"
+                KeyChanged="@(async (string? s) => await OnKeyChanged(s, entry))"
+                Value="@entry.Value"
+                ValueChanged="@(async (object? s) => await OnValueChanged(s, entry))"
+                />
+        }
+    }
+</div>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter] public string Title { get; set; } = "Properties";
+    [Parameter] public string? Source { get; set; } 
+    [Parameter] public string? SourceLang { get; set; }
+    [Parameter] public EventCallback<IEnumerable<IFrontMatterEntry>> OnEntriesChanged { get; set; }
+
+    private List<IFrontMatterEntry>? _entries;
+
+    protected override void OnParametersSet() {
+        base.OnParametersSet();
+        if (Source.IsNullOrWhiteSpace()) return;
+        
+        FrontMatterProvider.TryParse(Source ?? string.Empty, SourceLang, out IEnumerable<IFrontMatterEntry>? entries);
+        _entries = entries as List<IFrontMatterEntry> ?? entries?.ToList();
+    }
+
+    private async Task OnKeyChanged(string? newKey, IFrontMatterEntry oldEntry) {
+        if (_entries is null) return;
+        int index = _entries.FindIndex(e => e.Equals(oldEntry));
+        if (index == -1) return;
+
+        _entries[index] = new FrontMatterEntryData(newKey ?? string.Empty, oldEntry.Value);
+        
+        await OnEntriesChanged.InvokeAsync(_entries);
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task OnValueChanged(object? newValue, IFrontMatterEntry oldEntry) {
+        if (_entries is null) return;
+        int index = _entries.FindIndex(e => e.Equals(oldEntry));
+        if (index == -1) return;
+
+        _entries[index] = new FrontMatterEntryData(oldEntry.Key, newValue);
+
+        await OnEntriesChanged.InvokeAsync(_entries);
+        await InvokeAsync(StateHasChanged);
+    }
+}

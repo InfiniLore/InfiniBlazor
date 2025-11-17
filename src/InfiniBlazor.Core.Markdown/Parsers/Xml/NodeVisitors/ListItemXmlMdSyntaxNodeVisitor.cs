@@ -1,0 +1,36 @@
+﻿// ---------------------------------------------------------------------------------------------------------------------
+// Imports
+// ---------------------------------------------------------------------------------------------------------------------
+using InfiniBlazor.Markdown.Syntax;
+using InfiniBlazor.Markdown.Syntax.Nodes;
+using System.Xml.Linq;
+
+namespace InfiniBlazor.Markdown.Parsers.Xml.NodeVisitors;
+// ---------------------------------------------------------------------------------------------------------------------
+// Code
+// ---------------------------------------------------------------------------------------------------------------------
+public sealed class ListItemXmlMdSyntaxNodeVisitor : XmlMdSyntaxNodeVisitor<ListItemMdSyntaxNode> {
+    private const string LeadingSpaces = nameof(ListItemMdSyntaxNode.LeadingSpaces);
+    private const string CheckLeadingSpaces = nameof(ListItemMdSyntaxNode.CheckLeadingSpaces);
+    private const string Index = nameof(ListItemMdSyntaxNode.Index);
+    private const string CheckMarker = nameof(CheckMarker);
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override void DeserializeDetails(ListItemMdSyntaxNode node, XElement targetElement) {
+        base.DeserializeDetails(node, targetElement);
+        targetElement.SetAttributeValue(CheckMarker, node.OriginalCheckMarker);
+        targetElement.SetAttributeValue(Index, node.Index);
+        targetElement.SetAttributeValue(LeadingSpaces, node.LeadingSpaces);
+        targetElement.SetAttributeValue(CheckLeadingSpaces, node.CheckLeadingSpaces);
+    }
+
+    protected override void SerializeDetails(IMdSyntaxTree tree, XElement element, ListItemMdSyntaxNode targetNode) {
+        base.SerializeDetails(tree, element, targetNode);
+        targetNode.WithCheckMarker(element.Attribute(CheckMarker)?.Value ?? string.Empty);
+        targetNode.WithIndex(element.Attribute(Index)?.Value ?? string.Empty);
+        targetNode.WithLeadingSpaces(int.Parse(element.Attribute(LeadingSpaces)?.Value ?? "0"));
+        targetNode.WithCheckLeadingSpaces(int.Parse(element.Attribute(CheckLeadingSpaces)?.Value ?? "0"));
+    }
+}

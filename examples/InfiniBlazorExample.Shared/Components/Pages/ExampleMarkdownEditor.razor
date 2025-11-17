@@ -1,0 +1,45 @@
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@page "/markdown-editor"
+@using global::InfiniBlazor
+@using global::InfiniBlazor.Components
+@using global::InfiniBlazor.Markdown
+@using global::InfiniBlazor.Markdown.Parsers.Blazor
+@rendermode InfiniRenderModeProvider.InfiniRenderMode
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniPage Title="Markdown Editor" Class="p-4 w-full">
+    <InfiniSection Class="grow flex flex-col gap-2 overflow-auto infini-scrollbar min-h-128 w-full">
+        <InfiniHeading1>Markdown Editor</InfiniHeading1>
+        <InfiniMarkdownEditor @bind-EditorContext="Context" @bind-RenderContext="RenderContext">
+            <ToolbarBottom>
+                <InfiniMdEditorToolNodeCounter/>
+                <InfiniMdEditorToolWordCounter/>
+            </ToolbarBottom>
+        </InfiniMarkdownEditor>
+        <hr class="my-4 border-t border-infini-border"/>
+        <InfiniCodeBlock @bind-Content="Context.Content" Language="markdown" />
+    </InfiniSection>
+</InfiniPage>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    public MdEditorContext Context = new() {
+        // ReSharper disable once UseRawString
+        Content = @"```cs
+public class ExampleClass {
+    public string? Property { get; set; }
+    
+    private void DoSomething() {}
+}
+```"
+    };
+    public MdRenderContext RenderContext = MdRenderContext.Interactive;
+}
+

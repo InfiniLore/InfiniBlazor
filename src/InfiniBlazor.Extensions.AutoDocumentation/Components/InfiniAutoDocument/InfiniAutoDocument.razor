@@ -1,0 +1,63 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniBlazor.Components
+@using InfiniBlazor.Pooling
+@using System.Text
+
+@namespace InfiniBlazor.AutoDocumentation
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inject IAutoDocumentationProvider AutoDocumentationProvider
+@inherits InfiniComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="flex flex-col gap-2">
+    <!-- Render dynamically generated code -->
+    <div>
+        @if (AutoDocumentationProvider.TryGetDocumentationFragment(Id, out IAutoDocumentationFragment? fragment)) {
+            if (!fragment.RazorData.IsEmpty()) {
+                <InfiniCodeBlock Content="@AsSource(fragment.RazorData)" Language="razor"/>
+            }
+            if (!fragment.CsharpData.IsEmpty()) {
+                <InfiniCodeBlock Content="@AsSource(fragment.CsharpData)" Language="csharp"/>
+            }
+        }
+        @{  }
+    </div>
+
+    <!-- Render actual child content -->
+    <div>
+        @ChildContent
+    </div>
+</div>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [EditorRequired, Parameter] public string Id { get; set; } = string.Empty;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private static string AsSource(IEnumerable<string> input) {
+        StringBuilder builder = GlobalPools.StringBuilder.Get();
+        try {
+            foreach (string s in input) {
+                builder.Append(s);
+                builder.Append("\n\n");
+            }
+
+            builder.Length--;
+            builder.Length--;
+            return builder.ToString();
+        }
+        finally {
+            GlobalPools.StringBuilder.Return(builder);
+        }
+    }
+}

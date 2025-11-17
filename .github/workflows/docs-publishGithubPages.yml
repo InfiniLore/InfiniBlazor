@@ -33,7 +33,7 @@ jobs:
           dotnet-version: '10.x'
 
       - name: Restore dependencies
-        run: dotnet restore InfiniLore.InfiniBlazor.GitHubActions.Docs.slnf
+        run: dotnet restore InfiniBlazor.GitHubActions.Docs.slnf
 
       - name: Publish docs site
         run: dotnet publish docs/Docs.InfiniBlazor -c Release -o ./out
