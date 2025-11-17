@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniBlazor.Config;
-using InfiniBlazor.Core.Markdown;
 using InfiniBlazor.Markdown.Editors;
 using InfiniBlazor.Markdown.Parsers.Blazor;
 using InfiniBlazor.Markdown.Syntax;

@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniBlazor;
 using InfiniBlazor.Config;
-using InfiniBlazor.Components;
 using InfiniBlazor.Markdown.Config;
 using InfiniBlazor.Markdown.Editors;
 using InfiniBlazor.Markdown.Parsers.Markdown.Deserializer;

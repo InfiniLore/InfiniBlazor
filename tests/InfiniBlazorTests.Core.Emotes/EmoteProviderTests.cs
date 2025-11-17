@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniBlazor;
-using InfiniBlazor.Components;
 using InfiniBlazor.Emotes;
 using InfiniBlazorTests.Shared;
 
