@@ -1,7 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <RootNamespace>InfiniBlazor.Emotes</RootNamespace>
+        <RootNamespace>InfiniLore.InfiniBlazor.Emotes</RootNamespace>
+
+        <!-- Package metadata -->
+        <PackageId>InfiniLore.InfiniBlazor.Core.Emotes</PackageId>
+        <Description>InfiniLore's Emote Component Library</Description>
+        <PackageTags>Blazor;Ui;Design;Components;Library</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
