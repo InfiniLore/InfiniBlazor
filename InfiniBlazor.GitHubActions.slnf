@@ -19,6 +19,7 @@
             "src\\InfiniBlazor.Shared\\InfiniBlazor.Shared.csproj",
 
             "tests\\InfiniBlazorTests.Core.Components\\InfiniBlazorTests.Core.Components.csproj",
+            "tests\\InfiniBlazorTests.Core.Emotes\\InfiniBlazorTests.Core.Emotes.csproj",
             "tests\\InfiniBlazorTests.Core.Markdown\\InfiniBlazorTests.Core.Markdown.csproj",
             "tests\\InfiniBlazorTests.Extensions.AutoDocumentation\\InfiniBlazorTests.Extensions.AutoDocumentation.csproj",
             "tests\\InfiniBlazorTests.Shared\\InfiniBlazorTests.Shared.csproj",

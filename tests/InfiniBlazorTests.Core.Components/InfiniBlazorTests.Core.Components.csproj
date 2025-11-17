@@ -5,10 +5,8 @@
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-
+        
         <IsPackable>false</IsPackable>
-
-<!--        <TUNIT_EXECUTION_MODE>reflection</TUNIT_EXECUTION_MODE>-->
     </PropertyGroup>
 
     <ItemGroup>

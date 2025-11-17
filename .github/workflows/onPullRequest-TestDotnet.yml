@@ -21,8 +21,5 @@ jobs:
             - name: Restore dependencies
               run: dotnet restore InfiniBlazor.GitHubActions.slnf
 
-            - name: Build
-              run: dotnet build InfiniBlazor.GitHubActions.slnf --configuration Release --no-restore -p:GeneratePackageOnBuild=false -p:IsPackable=false
-
             - name: Run tests
-              run: dotnet test --solution InfiniBlazor.GitHubActions.slnf --configuration Release --no-restore --no-build
+              run: dotnet test --solution InfiniBlazor.GitHubActions.slnf --configuration Release
