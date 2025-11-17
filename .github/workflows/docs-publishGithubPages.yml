@@ -36,7 +36,7 @@ jobs:
         run: dotnet restore InfiniBlazor.GitHubActions.Docs.slnf
 
       - name: Publish docs site
-        run: dotnet publish docs/Docs.InfiniBlazor -c Release -o ./out
+        run: dotnet publish docs/InfiniBlazorDocs -c Release -o ./out
         
       - name: List published files
         # sanity check so you can see what will be uploaded (optional)
