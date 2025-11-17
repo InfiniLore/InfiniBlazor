@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="JetBrains.Annotations" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\InfiniBlazor.Extensions.ExtraComponents\InfiniBlazor.Extensions.ExtraComponents.csproj" />
+        <ProjectReference Include="..\..\src\InfiniBlazor\InfiniBlazor.csproj" />
+        <ProjectReference Include="..\..\src\InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators\InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="contentfiles;build" Pack="true" />
+        <ProjectReference Include="..\..\src\InfiniBlazor.Extensions.AutoDocumentation\InfiniBlazor.Extensions.AutoDocumentation.csproj" />
+    </ItemGroup>
+
+</Project>

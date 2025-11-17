@@ -19,10 +19,7 @@ jobs:
                   dotnet-version: '10.x'
 
             - name: Restore dependencies
-              run: dotnet restore InfiniLore.InfiniBlazor.GitHubActions.slnf
-
-            - name: Build
-              run: dotnet build InfiniLore.InfiniBlazor.GitHubActions.slnf --configuration Release --no-restore -p:GeneratePackageOnBuild=false -p:IsPackable=false
+              run: dotnet restore InfiniBlazor.GitHubActions.slnf
 
             - name: Run tests
-              run: dotnet test --solution InfiniLore.InfiniBlazor.GitHubActions.slnf --configuration Release --no-restore --no-build
+              run: dotnet test --solution InfiniBlazor.GitHubActions.slnf --configuration Release

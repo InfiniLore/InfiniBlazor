@@ -1,0 +1,45 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@namespace InfiniBlazor
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="@DividerClasses block"
+     role="@Role"
+     aria-orientation="@AriaOrientation"
+     style="@Style">
+</div>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [Parameter] public Orientation Orientation { get; set; }= Orientation.Horizontal;
+    
+    [Parameter] public string Thickness { get; set; } = "1px"; // e.g., "1px", "2px", "0.25rem"
+    [Parameter] public string? Length { get; set; }            // e.g., "100%", "2rem", "auto" (defaults to fill)
+    [Parameter] public string ColorClass { get; set; } = "bg-infini-base-40";
+    
+    // Accessibility
+    [Parameter] public string Role { get; set; } = "separator";
+
+    private string AriaOrientation => Orientation.ToAriaOrientation();
+
+    private string DividerClasses => ConcatClasses(
+        Orientation.ToSize(),
+        Orientation.Match(() => "my-2", () => "mx-2"),
+        ColorClass,
+        Class
+    );
+
+    private string Style => Orientation.Match(
+        () => $"height:{Thickness};width:{Length}",
+        () => $"width:{Thickness};height:{Length}"
+    );
+}

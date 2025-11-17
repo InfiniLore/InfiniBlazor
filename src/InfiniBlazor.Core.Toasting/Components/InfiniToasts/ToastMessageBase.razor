@@ -1,0 +1,52 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.Lucide
+@namespace InfiniBlazor.Toasting
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<div class="@ConcatClasses(BodyClasses, IsClosing ? "opacity-0 scale-95" : "opacity-100 scale-100") grid grid-cols-[auto_1fr_auto] gap-x-2 gap-y-0.5 overload-bg-infini-base-80 text-infini-text text-sm rounded-lg px-2 py-1 shadow-lg border border-infini-border transition-all duration-300 ease-in-out pointer-events-auto">
+    <!-- Icon -->
+    <div class="flex items-center">
+        <LucideIcon Name="@IconName" Class="@(HeaderClasses)"/>
+    </div>
+
+    <!-- Header Text -->
+    <div class="flex items-center">
+        <p class="@HeaderClasses font-semibold leading-tight break-all">@ToastData.Title</p>
+    </div>
+
+    <!-- Close Button -->
+    <div class="flex items-center">
+        <InfiniButtonTransparent
+            Class="@HeaderClasses"
+            Size="Size.S"
+            IconName="@LucideNames.X"
+            OnClick="@RequestCloseAsync" />
+    </div>
+
+    <!-- Body Text (center column only) -->
+    @if (ToastData.Body.IsNotNullOrWhiteSpace()) {
+        <div class="col-start-2">
+            <p class="@BodyClasses leading-snug break-all">@ToastData.Body</p>
+        </div>
+    }
+
+    <!-- Link (center column only) -->
+    @if (ToastData.LinkHref.IsNotNullOrWhiteSpace()) {
+        <div class="col-start-2 flex gap-4 ml-1">
+            <InfiniButtonTransparent
+                Size="Size.Xs"
+                Class="@ConcatClasses(HeaderClasses, "underline text-sm -ml-3")"
+                Href="@ToastData.LinkHref"
+                DisableTrackedQueryParams="@(!IsRelativeUri(ToastData.LinkHref))">
+                @(ToastData.LinkTitle ?? ToastData.LinkHref)
+            </InfiniButtonTransparent>
+        </div>
+    }
+</div>

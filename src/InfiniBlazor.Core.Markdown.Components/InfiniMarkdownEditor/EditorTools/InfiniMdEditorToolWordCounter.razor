@@ -1,0 +1,46 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@namespace InfiniBlazor.Markdown.EditorTools
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniMdEditorToolBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<span class="text-infini-base-30">@WordCount words</span>
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    private int WordCount { get; set; }
+    
+    // -----------------------------------------------------------------------------------------------------------------
+    // Component lifetime Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override async Task OnInitializedAsync() {
+        await base.OnInitializedAsync();
+        await OnSyntaxTreeUpdateAsync();
+        EditorContext.OnSyntaxTreeChangedAsync += OnSyntaxTreeUpdateAsync;
+    }
+
+    public override async ValueTask DisposeAsync() {
+        await base.DisposeAsync();
+        EditorContext.OnSyntaxTreeChangedAsync -= OnSyntaxTreeUpdateAsync;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private async Task OnSyntaxTreeUpdateAsync() {
+        char[] splitChars = [' ', ';', '/', ':', '.', '\n'];
+        
+        string text = EditorContext.TextSource.Text;
+        int count = text.Split(splitChars, StringSplitOptions.RemoveEmptyEntries).Length;
+        
+        WordCount = count;
+        await InvokeAsync(StateHasChanged).ConfigureAwait(false);
+    }
+}

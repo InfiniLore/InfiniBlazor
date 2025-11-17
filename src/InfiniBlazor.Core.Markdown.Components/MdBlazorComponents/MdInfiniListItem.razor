@@ -1,0 +1,42 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniBlazor.Markdown.Parsers.Blazor
+@using InfiniBlazor.Markdown.Syntax.Nodes
+
+@namespace InfiniBlazor.Markdown.MdBlazorComponents
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniBlazorMdComponentBase<ListItemMdSyntaxNode>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<li class="my-2 [&:has(>[data-checkbox])]:list-none [&>ul]:mt-2 [&>ol]:mt-2">
+    @if (SyntaxNode.IsCheckable) {
+        <InfiniCheckbox 
+            IsInapplicable="@SyntaxNode.IsInapplicable"
+            Size="Size.S"
+            Class="-ml-6 mr-2 align-bottom" 
+            IsChecked="@SyntaxNode.IsChecked" 
+            IsCheckedChanged="@OnCheckChanged"/>
+    }
+    @if (SyntaxNode.IsInapplicable) {
+        <CascadingIsDisabled>
+            <span class="text-infini-base-20 line-through">@ComponentConverter.RenderChildComponents(SyntaxNode)</span>
+        </CascadingIsDisabled>
+    }
+    else {
+        @ComponentConverter.RenderChildComponents(SyntaxNode)
+    }
+    
+</li>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    private async Task OnCheckChanged(bool state) {
+        SyntaxNode.WithCheckMarker(state ? "x" : " ");
+        if (RenderContext is not null) await RenderContext.InvokeSyntaxNodeChange(SyntaxNode);
+    }
+}

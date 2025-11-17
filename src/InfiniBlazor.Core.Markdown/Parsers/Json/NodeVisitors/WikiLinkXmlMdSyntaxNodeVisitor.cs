@@ -1,0 +1,31 @@
+﻿// ---------------------------------------------------------------------------------------------------------------------
+// Imports
+// ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions;
+using InfiniBlazor.Markdown.Syntax.Nodes;
+using System.Text.Json;
+
+namespace InfiniBlazor.Markdown.Parsers.Json.NodeVisitors;
+// ---------------------------------------------------------------------------------------------------------------------
+// Code
+// ---------------------------------------------------------------------------------------------------------------------
+public sealed class WikiLinkJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<WikiLinkMdSyntaxNode> {
+    private static readonly string Content = nameof(WikiLinkMdSyntaxNode.Content).ToCamelCase();
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override void DeserializeDetails(WikiLinkMdSyntaxNode node, Utf8JsonWriter writer) {
+        base.DeserializeDetails(node, writer);
+
+        writer.WriteString(Content, node.Content);
+    }
+
+    protected override void SerializeDetails(JsonElement element, WikiLinkMdSyntaxNode targetNode) {
+        base.SerializeDetails(element, targetNode);
+
+        if (element.TryGetProperty(Content, out JsonElement contentProperty)) {
+            targetNode.WithContent(contentProperty.GetString() ?? string.Empty);
+        }
+    }
+}

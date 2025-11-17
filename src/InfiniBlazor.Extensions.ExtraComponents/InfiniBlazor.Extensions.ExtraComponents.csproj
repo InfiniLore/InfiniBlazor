@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <RootNamespace>InfiniBlazor.ExtraComponents</RootNamespace>
+
+        <!-- Package metadata -->
+        <PackageId>InfiniLore.InfiniBlazor.Extensions.ExtraComponents</PackageId>
+        <Description>InfiniLore's Component Library</Description>
+        <PackageTags>Blazor;Ui;Design;Components;Library</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\InfiniBlazor\InfiniBlazor.csproj" />
+    </ItemGroup>
+</Project>

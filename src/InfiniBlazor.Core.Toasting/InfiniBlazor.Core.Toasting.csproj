@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <RootNamespace>InfiniBlazor.Toasting</RootNamespace>
+
+        <!-- Package metadata -->
+        <PackageId>InfiniLore.InfiniBlazor.Core.Toasting</PackageId>
+        <Description>InfiniLore's Component Library</Description>
+        <PackageTags>Blazor;Ui;Design;Components;Library</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Components\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\InfiniBlazor.Core.Components\InfiniBlazor.Core.Components.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="CodeOfChaos.Extensions.AspNetCore.Components" />
+        <PackageReference Include="CodeOfChaos.Extensions.MicrosoftLogging" />
+        <PackageReference Include="CodeOfChaos.Extensions.ObjectPool" />
+        <PackageReference Include="InfiniLore.Lucide" />
+        <PackageReference Include="CodeOfChaos.Extensions" />
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection" />
+        <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+
+        <PackageReference Include="JetBrains.Annotations" />
+        <PackageReference Include="Microsoft.AspNetCore.Components" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
+        <PackageReference Include="Microsoft.AspNetCore.WebUtilities" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    </ItemGroup>
+</Project>

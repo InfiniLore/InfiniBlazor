@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="CodeOfChaos.Extensions"/>
+        <PackageReference Include="CodeOfChaos.Extensions.AspNetCore" />
+        <PackageReference Include="CodeOfChaos.Testing.TUnit" />
+        <PackageReference Include="JetBrains.Annotations"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
+        <PackageReference Include="NSubstitute" />
+        <PackageReference Include="TUnit" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\InfiniBlazor\InfiniBlazor.csproj" />
+        <ProjectReference Include="..\InfiniBlazorTests.Shared.Markdown\InfiniBlazorTests.Shared.Markdown.csproj" />
+        <ProjectReference Include="..\InfiniBlazorTests.Shared\InfiniBlazorTests.Shared.csproj" />
+    </ItemGroup>
+</Project>

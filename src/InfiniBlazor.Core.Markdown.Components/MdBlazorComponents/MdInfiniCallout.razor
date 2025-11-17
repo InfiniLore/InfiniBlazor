@@ -1,0 +1,52 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniBlazor.Markdown.Syntax
+@using InfiniBlazor.Markdown.Parsers.Blazor
+@using InfiniBlazor.Markdown.Syntax.Nodes
+
+@namespace InfiniBlazor.Markdown.MdBlazorComponents
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniBlazorMdComponentBase<CalloutMdSyntaxNode>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniCallout
+    AllowCollapsing="@NodeAllowsCollapsing"
+    IsCollapsed="@NodeIsCollapsed"
+    StyleId="@SyntaxNode.CalloutType"
+    IconName="@GetIconNameFromModifer()"
+>
+    <Title>
+        @if (SyntaxNode.TryGetTitleNode(out CalloutTitleMdSyntaxNode? titleNode)) {
+            @ComponentConverter.RenderChildComponents(titleNode)
+        } else {
+            <span>Callout</span>
+        }
+    </Title>
+    <Content>
+        @if (SyntaxNode.TryGetBodyNode(out CalloutBodyMdSyntaxNode? bodyNode)) {
+            @ComponentConverter.RenderChildComponents(bodyNode)
+        }
+    </Content>
+</InfiniCallout>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    private bool NodeAllowsCollapsing => SyntaxNode.CollapsedState != CalloutMdSyntaxNode.CollapseStateOptions.None;
+    private bool NodeIsCollapsed => SyntaxNode.CollapsedState switch {
+        CalloutMdSyntaxNode.CollapseStateOptions.None => false,
+        CalloutMdSyntaxNode.CollapseStateOptions.Open => false,
+        CalloutMdSyntaxNode.CollapseStateOptions.Closed => true,
+        _ => throw new ArgumentOutOfRangeException()
+    };
+
+    private string? GetIconNameFromModifer() {
+        if (SyntaxNode.Modifier is not {} modifier || !modifier.TryGetIconName(out string? name)) return null;
+        return name;
+    }
+}

@@ -1,0 +1,150 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniLore.Lucide
+
+@namespace InfiniBlazor
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+<button @onclick="@OnClickAsync"
+        @onclick:stopPropagation="@StopPropagation"
+        type="@Type"
+        disabled="@IsDisabled"
+        aria-label="@AriaLabel"
+        aria-checked="@Value"
+        class="@(IsDisabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer")">
+    <div class="@GetToggleInnerContainerClasses()">
+        <div class="relative">
+            <div class="@GetSliderClasses()">
+                @if (OnIcon.IsNotNullOrWhiteSpace()) {
+                    <LucideIcon Name="@OnIcon" class="@WithValue(GetIconClasses(), "opacity-0")"/>
+                }
+                @if (OffIcon.IsNotNullOrWhiteSpace()) {
+                    <LucideIcon Name="@OffIcon" class="@WithValue("opacity-0", GetIconClasses())"/>
+                }
+            </div>
+        </div>
+    </div>
+</button>
+
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [Parameter] public string? OnIcon { get; set; }
+    [Parameter] public string? OffIcon { get; set; }
+    [Parameter] public bool StopPropagation { get; set; } = true;
+    
+    [Parameter] public bool Value { get; set; }
+    [Parameter] public EventCallback<bool> ValueChanged { get; set; }
+    [Parameter] public EventCallback<bool> OnToggle { get; set; }
+    
+    [Parameter] public string Type { get; set; } = "button";
+    [Parameter] public string? AriaLabel { get; set; }
+    [Parameter] public Size Size { get; set; } = Size.M;
+    [Parameter] public Color Color { get; set; } = Color.Default;
+
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public LabelPosition LabelPos { get; set; } = LabelPosition.Left;
+    
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private string? WithValue(string? onTrue = null, string? onFalse = null)
+        => Value ? onTrue : onFalse;
+
+    private string GetToggleInnerContainerClasses() {
+        string sizeClasses = Size switch {
+            Size.Xxs => "w-8 h-4",
+            Size.Xs => "w-10 h-5",
+            Size.S => "w-12 h-6",
+            Size.M => "w-14 h-7",
+            Size.L => "w-16 h-8",
+            Size.Xl => "w-20 h-10",
+            Size.Xxl => "w-24 h-12",
+            _ => "w-14 h-7"
+        };
+
+        return ConcatClasses(
+            sizeClasses,
+            "rounded-full overload-bg-infini-toggle-container transition-colors duration-300 relative overflow-hidden"
+        );
+    }
+
+    private string GetSliderClasses() {
+        string sizeClasses = Size switch {
+            Size.Xxs => "absolute w-3 h-3 top-0.5 left-0.5",
+            Size.Xs => "absolute w-4 h-4 top-0.5 left-0.5",
+            Size.S => "absolute w-5 h-5 top-0.5 left-0.5",
+            Size.M => "absolute w-6 h-6 top-0.5 left-0.5",
+            Size.L => "absolute w-7 h-7 top-0.5 left-0.5",
+            Size.Xl => "absolute w-9 h-9 top-0.5 left-0.5",
+            Size.Xxl => "absolute w-11 h-11 top-0.5 left-0.5",
+            _ => "absolute w-6 h-6 top-0.5 left-0.5"
+        };
+
+        string translateX = Size switch {
+            Size.Xxs => "translate-x-[1rem]",
+            Size.Xs => "translate-x-[1.25rem]",
+            Size.S => "translate-x-[1.5rem]",
+            Size.M => "translate-x-[1.75rem]",
+            Size.L => "translate-x-[2rem]",
+            Size.Xl => "translate-x-[2.5rem]",
+            Size.Xxl => "translate-x-[3rem]",
+            _ => "translate-x-[1.75rem]"
+        };
+
+        string background = Color is not Color.Default
+            ? Color.ToCssClassBackground()
+            : "bg-infini-base-10";
+
+        return ConcatClasses(
+            sizeClasses,
+            "flex items-center justify-center",
+            WithValue(background, "bg-infini-toggle-slider"),
+            "rounded-full transition-transform duration-300",
+            WithValue(translateX, "translate-x-0")
+        );
+    }
+
+
+    private string GetIconClasses() {
+        string sizeClasses = Size switch {
+            Size.Xxs =>"w-2.5 h-2.5",
+            Size.Xs =>"w-3 h-3", 
+            Size.S => "w-4 h-4",
+            Size.M => "w-5 h-5",
+            Size.L => "w-6 h-6",
+            Size.Xl => "w-8 h-8",
+            Size.Xxl => "w-10 h-10",
+            _ => "w-5 h-5"
+        };
+
+        string textColor = Color is not Color.Default
+            ? Color.ToCssClassTextColorReadableForeground()
+            : "text-infini-toggle-icon-on";
+        
+        return ConcatClasses(
+            "absolute",
+            sizeClasses,
+            "transform transition-all duration-300",
+            WithValue(textColor, "text-infini-toggle-icon-off" )
+        );
+    }
+
+    private async Task OnClickAsync() {
+        if (IsDisabled) return;
+
+        Value = !Value;
+        await ValueChanged.InvokeAsync(Value);
+        await OnToggle.InvokeAsync(Value);
+    }
+}

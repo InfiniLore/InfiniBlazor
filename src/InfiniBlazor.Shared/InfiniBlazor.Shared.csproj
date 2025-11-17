@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <RootNamespace>InfiniBlazor</RootNamespace>
+
+        <!-- Package metadata -->
+        <PackageId>InfiniLore.InfiniBlazor.Shared</PackageId>
+        <Description>InfiniLore's Component Library</Description>
+        <PackageTags>Blazor;Ui;Design;Components;Library</PackageTags>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <InternalsVisibleTo Include="InfiniBlazor"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="CodeOfChaos.Extensions" />
+        <PackageReference Include="CodeOfChaos.Extensions.ObjectPool" />
+        <PackageReference Include="JetBrains.Annotations" />
+        <PackageReference Include="Microsoft.AspNetCore.Components" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
+        <PackageReference Include="Microsoft.AspNetCore.WebUtilities" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    </ItemGroup>
+
+</Project>

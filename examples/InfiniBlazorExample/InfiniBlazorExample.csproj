@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>aspnet-Example.InfiniBlazor-318f330c-60fd-46fc-a6b4-3f85cb167613</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators\InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.csproj" OutputItemType="Analyzer"/>
+        <ProjectReference Include="..\..\src\InfiniBlazor.Extensions.AutoDocumentation\InfiniBlazor.Extensions.AutoDocumentation.csproj" />
+      <ProjectReference Include="..\..\src\InfiniBlazor\InfiniBlazor.csproj" />
+      <ProjectReference Include="..\InfiniBlazorExample.Client\InfiniBlazorExample.Client.csproj" />
+      <ProjectReference Include="..\InfiniBlazorExample.Shared\InfiniBlazorExample.Shared.csproj" />
+    </ItemGroup>
+
+</Project>

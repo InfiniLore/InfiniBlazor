@@ -1,0 +1,31 @@
+﻿// ---------------------------------------------------------------------------------------------------------------------
+// Imports
+// ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions;
+using InfiniBlazor.Markdown.Syntax.Nodes;
+using System.Text.Json;
+
+namespace InfiniBlazor.Markdown.Parsers.Json.NodeVisitors;
+// ---------------------------------------------------------------------------------------------------------------------
+// Code
+// ---------------------------------------------------------------------------------------------------------------------
+public sealed class BlockQuoteJsonMdSyntaxNodeVisitor : JsonMdSyntaxNodeVisitor<BlockQuoteMdSyntaxNode> {
+    private static readonly string LeadingSpaces = nameof(BlockQuoteMdSyntaxNode.LeadingSpaces).ToCamelCase();
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    protected override void DeserializeDetails(BlockQuoteMdSyntaxNode node, Utf8JsonWriter writer) {
+        base.DeserializeDetails(node, writer);
+        writer.WriteNumber(LeadingSpaces, node.LeadingSpaces);
+    }
+
+    protected override void SerializeDetails(JsonElement element, BlockQuoteMdSyntaxNode targetNode) {
+        base.SerializeDetails(element, targetNode);
+
+        if (element.TryGetProperty(LeadingSpaces, out JsonElement leadingSpacesProperty)) {
+            targetNode.WithLeadingSpaces(leadingSpacesProperty.GetInt32());
+        }
+    }
+
+}

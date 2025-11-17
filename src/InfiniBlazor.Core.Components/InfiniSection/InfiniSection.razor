@@ -1,0 +1,34 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@namespace InfiniBlazor
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniComponentBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<section
+    class="@ConcatClasses(Class, LocationClasses) relative flex flex-col overload-bg-infini-section p-4 border-infini-section-border overflow-hidden shrink-0">
+    @ChildContent
+</section>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter] public SectionLocation Location { get; set; } = SectionLocation.Center;
+
+    private string LocationClasses => Location switch {
+        SectionLocation.Top => "rounded-b-2xl border-x border-b",
+        SectionLocation.Center => "rounded-2xl border",
+        SectionLocation.Bottom => "rounded-t-2xl border-x border-t",
+        SectionLocation.TopLeft => "rounded-br-2xl border-b border-r",
+        SectionLocation.TopRight => "rounded-bl-2xl border-b border-l",
+        SectionLocation.Left => "rounded-r-2xl border-y border-r",
+        SectionLocation.Right => "rounded-l-2xl border-y border-l",
+        SectionLocation.BottomLeft => "rounded-tr-2xl border-t border-r",
+        SectionLocation.BottomRight => "rounded-tl-2xl border-t border-l",
+        _ => string.Empty
+    };
+}

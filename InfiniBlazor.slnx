@@ -1,0 +1,82 @@
+﻿<Solution>
+  <Folder Name="/.dev-tools/">
+    <File Path="InfiniBlazor.GitHubActions.slnf" />
+    <File Path="README.md" />
+    <File Path="Directory.Packages.props" />
+    <File Path="InfiniBlazor.GitHubActions.Docs.slnf" />
+    <File Path="global.json" />
+    <Project Path="dev/InfiniBlazorDevTools/InfiniBlazorDevTools.csproj" />
+  </Folder>
+  <Folder Name="/.dev-tools/github/">
+    <File Path=".github\workflows\release.yml" />
+    <File Path=".github\workflows\workflow-todo.yml" />
+    <File Path=".github\workflows\onPullRequest-TestDotnet.yml" />
+    <File Path=".github/dependabot.yml" />
+    <File Path=".github\workflows\docs-publishGithubPages.yml" />
+  </Folder>
+  <Folder Name="/.dev-tools/py/">
+    <File Path="dev\bump_version.py" />
+    <File Path="dev\download_emotes_lucides_json.py" />
+  </Folder>
+  <Folder Name="/.dev-tools/web/">
+    <File Path="tsconfig.json" />
+    <File Path="package.json" />
+    <File Path="webpack.config.js" />
+  </Folder>
+  <Folder Name="/benchmarks/">
+    <Project Path="benchmarks/Benchmarks.InfiniBlazor.Markdown/Benchmarks.InfiniBlazor.Markdown.csproj" />
+  </Folder>
+  <Folder Name="/docs/">
+    <Project Path="docs/InfiniBlazorDocs.DevApi/InfiniBlazorDocs.DevApi.csproj" />
+    <Project Path="docs/InfiniBlazorDocs/InfiniBlazorDocs.csproj" />
+  </Folder>
+  <Folder Name="/example/">
+    <Project Path="examples\InfiniBlazorExample.Shared\InfiniBlazorExample.Shared.csproj" />
+  </Folder>
+  <Folder Name="/example/blazor/">
+    <Project Path="examples/InfiniBlazorExample.Client/InfiniBlazorExample.Client.csproj" />
+    <Project Path="examples/InfiniBlazorExample/InfiniBlazorExample.csproj" />
+  </Folder>
+  <Folder Name="/example/maui/">
+    <Project Path="examples/InfiniBlazorExample.Maui/InfiniBlazorExample.Maui.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/InfiniBlazor.Shared/InfiniBlazor.Shared.csproj" />
+    <File Path="src\Directory.Build.props" />
+    <Project Path="src/InfiniBlazor/InfiniBlazor.csproj" />
+  </Folder>
+  <Folder Name="/src/core/">
+    <Project Path="src/InfiniBlazor.Core.Components/InfiniBlazor.Core.Components.csproj" />
+    <Project Path="src/InfiniBlazor.Core.Emotes/InfiniBlazor.Core.Emotes.csproj" />
+    <Project Path="src/InfiniBlazor.Core.Js/InfiniBlazor.Core.Js.csproj" />
+    <Project Path="src/InfiniBlazor.Core.Markdown.Components/InfiniBlazor.Core.Markdown.Components.csproj" />
+    <Project Path="src/InfiniBlazor.Core.Markdown/InfiniBlazor.Core.Markdown.csproj" />
+    <Project Path="src/InfiniBlazor.Core.Theming/InfiniBlazor.Core.Theming.csproj" />
+    <Project Path="src/InfiniBlazor.Core.Toasting/InfiniBlazor.Core.Toasting.csproj" />
+  </Folder>
+  <Folder Name="/src/extensions/">
+    <Project Path="src/InfiniBlazor.Extensions.ExtraComponents/InfiniBlazor.Extensions.ExtraComponents.csproj" />
+  </Folder>
+  <Folder Name="/src/extensions/AutoDocumentation/">
+      <Project Path="src/InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators/InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.csproj" />
+    <Project Path="src/InfiniBlazor.Extensions.AutoDocumentation/InfiniBlazor.Extensions.AutoDocumentation.csproj" />
+  </Folder>
+  <Folder Name="/src/extensions/Maui/">
+    <Project Path="src/InfiniBlazor.Extensions.Maui/InfiniBlazor.Extensions.Maui.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/InfiniBlazorTests/InfiniBlazorTests.csproj" />
+  </Folder>
+  <Folder Name="/tests/core/">
+    <Project Path="tests/InfiniBlazorTests.Core.Components/InfiniBlazorTests.Core.Components.csproj" />
+    <Project Path="tests/InfiniBlazorTests.Core.Emotes/InfiniBlazorTests.Core.Emotes.csproj" />
+    <Project Path="tests/InfiniBlazorTests.Core.Markdown/InfiniBlazorTests.Core.Markdown.csproj" />
+  </Folder>
+  <Folder Name="/tests/extensions/">
+    <Project Path="tests/InfiniBlazorTests.Extensions.AutoDocumentation/InfiniBlazorTests.Extensions.AutoDocumentation.csproj" />
+  </Folder>
+  <Folder Name="/tests/shared/">
+    <Project Path="tests/InfiniBlazorTests.Shared.Markdown/InfiniBlazorTests.Shared.Markdown.csproj" />
+    <Project Path="tests/InfiniBlazorTests.Shared/InfiniBlazorTests.Shared.csproj" />
+  </Folder>
+</Solution>

@@ -9,7 +9,7 @@ import urllib.request
 # CONFIGURATION - Top level constants you can modify
 # ----------------------------------------------------------------------------------------------------------------------
 DIRECTORY_PACKAGES_PROPS_PATH = "../Directory.Packages.props"
-OUTPUT_JSON_FILE = "../src/InfiniLore.InfiniBlazor.Core.Emotes/wwwroot/emotes_lucide.json"
+OUTPUT_JSON_FILE = "../src/InfiniBlazor.Core.Emotes/wwwroot/emotes_lucide.json"
 INFINILORE_LUCIDE_PACKAGE_PATTERN = "InfiniLore.Lucide"
 
 UNPKG_ICON_NODES_URL = "https://unpkg.com/lucide-static@latest/icon-nodes.json"

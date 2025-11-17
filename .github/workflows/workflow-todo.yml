@@ -9,9 +9,10 @@ jobs:
   build:
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "actions/checkout@v5"
-      - name: "TODO to Issue"
-        uses: "alstr/todo-to-issue-action@v5"
+      - uses: actions/checkout@v5
+        
+      - name: TODO to Issue
+        uses: alstr/todo-to-issue-action@v5
         with:
           PROJECT: "organization/InfiniLore/1"
           PROJECTS_SECRET: "${{ secrets.PROJECTS_SECRET }}"

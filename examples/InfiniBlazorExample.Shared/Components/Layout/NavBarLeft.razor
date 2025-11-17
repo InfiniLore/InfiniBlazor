@@ -1,0 +1,290 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniBlazor.Toasting
+@using InfiniBlazor.Theming
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@rendermode InfiniRenderModeProvider.InfiniRenderMode
+@inherits InfiniNavBarBase
+@inject IThemeProvider ThemeProvider
+@inject IToastingProvider ToastingProvider
+@inject IVisualDebuggerProvider DebuggerProvider
+@inject IDialogProvider DialogProvider
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniNavBar Location="NavBarLocation.Left" Size="Size" Class="@Class" @bind-NavBarCollapsed="CollapsedState">
+    <div class="flex flex-row justify-between sticky top-0 z-10 overload-bg-infini-nav-top border-b border-infini-nav-border">
+        <InfiniNavLink
+            Href="/"
+            Text="InfiniBlazor"
+            Class="@ConcatClasses(HiddenIf(CollapsedState), "font-bold")"
+            HiddenOnCollapsed
+        />
+
+        <InfiniNavCollapseButton @bind-State="CollapsedState" Class="h-10"/>
+    </div>
+
+    <InfiniNavLink
+        Href="/markdown-editor"
+        Text="Markdown Editor"
+        Icon="@LucideNames.Signature"
+    />
+
+    <InfiniNavLink
+        Href="/example/autodocument"
+        Text="AutoDocument"
+        Icon="@LucideNames.FileText"
+    />
+    
+    <InfiniNavLink 
+        Href="/example/tabs"
+        Text="Tabs"
+        Icon="@LucideNames.Tablets"
+    />
+
+    <InfiniNavLink
+        Href="/callout"
+        Text="Callout"
+        Icon="@LucideNames.SquareChevronDown"
+    />
+
+    <InfiniNavLink
+        Href="/table"
+        Text="Table"
+        Icon="@LucideNames.Table"
+    />
+
+    <InfiniNavLink
+        Href="/html"
+        Text="Html"
+        Icon="@LucideNames.CodeXml"
+    />
+
+    <InfiniNavLink
+        Href="/theming/table"
+        Text="Theming Table"
+        Icon="@LucideNames.Table2"
+    />
+
+    <InfiniNavLink
+        Href="/sections"
+        Text="Sections"
+        Icon="@LucideNames.Rows3"
+    />
+
+    <InfiniNavLink
+        Href="/" OpenInNewTab
+        Text="Open New Tab"
+        Icon="@LucideNames.ArrowRightToLine"
+    />
+    
+    <InfiniSpacer/>
+    <InfiniNavBreak/>
+    <InfiniNavSubMenu Text="Sub Menu">
+        <InfiniNavLink Text="Something" Icon="@LucideNames.AArrowDown" Href="/"/>
+        <InfiniNavLink Text="Else" Icon="@LucideNames.AArrowDown" Href="/"/>
+        <InfiniNavSubMenu Text="Sub Menu" IgnoreCascadeCollapsedState>
+            <InfiniNavLink Text="Something" Icon="@LucideNames.AArrowDown" Href="/"/>
+            <InfiniNavLink Text="Else" Icon="@LucideNames.AArrowDown" Href="/"/>
+        </InfiniNavSubMenu>
+    </InfiniNavSubMenu> 
+    <InfiniNavBreak/>
+    <InfiniSpacer/>
+    
+    <InfiniNavButton
+        OnClick="@OnDialogCreateAsync"
+        Text="Create Dialog"
+        Icon="@LucideNames.Diamond"
+    />
+    
+    <InfiniNavButton
+        OnClick="@OnCreateToastAsync"
+        Text="Create Toast"
+        Icon="@LucideNames.Popcorn"
+    />
+
+    <InfiniNavToggleButton
+        Value="@DebuggerProvider.IsEnabled()"
+        ValueChanged="@DebuggerProvider.ToggleStateAsync"
+        Text="Toggle Debug"
+        OnIcon="@(CollapsedState ? "bug" : null)"
+        OffIcon="@(CollapsedState ? "bug" : null)"
+        Color="Color.Red" Icon="@LucideNames.Bug"
+    />
+
+    <InfiniNavBreak/>
+
+    <InfiniNavLink
+        Href="https://github.com/InfiniLore/infinilore.infiniblazor"
+        DisableTrackedQueryParams
+        OpenInNewTab
+        Text="Github"
+        Icon="@LucideNames.Package"
+    />
+
+    @* DEBUG *@
+    <InfiniNavButton
+        OnClick="@SwitchTheme"
+        Text="Switch Theme"
+        Icon="@LucideNames.Palette"
+    />
+
+
+    @if (ThemeProvider.LastKnownThemeEntryData is { CssData.Length: 2 }) {
+        <InfiniNavToggleButton
+            Value="@(ToggleState)"
+            ValueChanged="@OnThemeModeChanged"
+            Text="Toggle Mode"
+            OnIcon="sun"
+            OffIcon="moon" Icon="@LucideNames.Sun"
+        />
+    }
+    else {
+        <InfiniNavButton
+            OnClick="@OnThemeModeChanged" 
+            Text="Toggle Mode"
+            Icon="@LucideNames.Sun"
+        />
+    }
+
+    @* User *@
+    <InfiniNavAvatar
+        UserName="InfiniLore"
+        Href="/"
+        UserImageUrl="@_currentUserImage"
+        Class="sticky bottom-0 z-10 overload-bg-infini-nav-bottom border-t border-infini-nav-border rounded-none">
+        <Additional>
+            <InfiniToggleButton OnToggle="@(_ => SwitchUserImage())" Size="Size.Xxs"/>
+            <InfiniNavAvatarAdditonalLink Href="/#logout" Class="text-red-500">logout</InfiniNavAvatarAdditonalLink>
+        </Additional>
+    </InfiniNavAvatar>
+</InfiniNavBar>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+    [Parameter] public bool CollapsedState { get; set; }
+
+    private string _currentUserImage = "/icon.png";
+    private bool ToggleState { get; set; }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private async Task SwitchTheme() {
+        (string collectionName, string _) = ThemeProvider.LastKnownThemeSelection;
+        
+        string themeCollectionName = collectionName;
+        themeCollectionName = themeCollectionName switch {
+            "Default" => "Pride",
+            _ => "Default"
+        };
+        
+        ThemeCollectionData? collection = await ThemeProvider.GetThemeCollectionData(themeCollectionName);
+        if (collection is null) return;
+        
+        await ThemeProvider.InvokeThemeChangeRequestedAsync(collection.Name, collection.Entries[0].EntryName);
+        ToggleState = false;
+
+        StateHasChanged();
+    }
+
+    private void SwitchUserImage() {
+        _currentUserImage = _currentUserImage == "/icon.png" ? "aaa/icon.png" : "/icon.png";
+    }
+
+    private async Task OnCreateToastAsync() {
+        IToastingData defaultToast = new ToastingData("default");
+        IToastingData infoToast = new ToastingData("info");
+        IToastingData successToast = new ToastingData("success");
+        IToastingData warningToast = new ToastingData("warning");
+        IToastingData errorToast = new ToastingData(
+            "error",
+            "Some DataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataDataData",
+            "#",
+            "click here"
+        );
+
+        IToastingData debugToast = new ToastingData("Debug");
+        IToastingData achievementToast = new ToastingData("Achievement");
+
+        await ToastingProvider.PublishToastAsync(defaultToast, ToastAppearance.Default, 0);
+        await ToastingProvider.PublishToastAsync(infoToast, ToastAppearance.Info, 0);
+        await ToastingProvider.PublishToastAsync(successToast, ToastAppearance.Success, 0);
+        await ToastingProvider.PublishToastAsync(warningToast, ToastAppearance.Warning, 0);
+        await ToastingProvider.PublishToastAsync(errorToast, ToastAppearance.Error, 0);
+        await ToastingProvider.PublishToastAsync(debugToast, ToastAppearance.Debug, 0);
+        await ToastingProvider.PublishToastAsync(achievementToast, ToastAppearance.Achievement, 0);
+    }
+
+    private async Task OnThemeModeChanged() {
+        (string collectionName, string themeName) = ThemeProvider.LastKnownThemeSelection;
+        
+        ThemeCollectionData? collection = await ThemeProvider.GetThemeCollectionData(collectionName);
+        ThemeEntryData? entry = await ThemeProvider.GetThemeEntryData(collectionName, themeName);
+        if (collection is null) return;
+        if (entry is null) return;
+
+        int newIndex = -1;
+        for (int index = 0; index < collection.Entries.Length; index++) {
+            ThemeEntryData? currentEntry = collection.Entries.ElementAtOrDefault(index);
+            if (currentEntry != entry) continue;
+
+            if (index == collection.Entries.Length - 1) {
+                newIndex = 0;
+                break;
+            }
+            newIndex = index + 1;
+        }
+        if (newIndex == -1) return;
+        ThemeEntryData newEntry = collection.Entries[newIndex];
+        await ThemeProvider.InvokeThemeChangeRequestedAsync(collection.Name, newEntry.EntryName);
+
+        StateHasChanged();
+    }
+    
+    private async Task OnDialogCreateAsync() {
+        await DialogProvider.PushDialogAsync(new InfiniDialogBasicDto(
+            "A Simple Dialog : Priority 100",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dignissim erat velit. Nulla eros ligula, dignissim quis enim in, sollicitudin sodales lorem. Praesent porttitor dui consectetur, consequat odio posuere, dapibus nibh. Vivamus ut nisi magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam volutpat, massa et interdum bibendum, enim tortor pharetra sem, sit amet laoreet lacus orci eu risus. Fusce feugiat sem nec mauris aliquam, et facilisis lorem euismod. Suspendisse dolor urna, fringilla vel sapien quis, egestas ultricies lorem. Phasellus lacinia tellus a ex mattis, in laoreet mi placerat. Vivamus ultricies nec arcu et maximus.",
+            OnContinue: EventCallback.Factory.Create(this, CallbackOnContinue),
+            OnReturn: EventCallback.Factory.Create(this, CallbackOnExit),
+            OnExit: EventCallback.Factory.Create(this, CallbackOnExit)
+        ) {
+            Priority = 100
+        });
+        
+        await DialogProvider.PushDialogAsync(new InfiniDialogBasicDto(
+            "A Simple Dialog : Priority 0",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dignissim erat velit. Nulla eros ligula, dignissim quis enim in, sollicitudin sodales lorem. Praesent porttitor dui consectetur, consequat odio posuere, dapibus nibh. Vivamus ut nisi magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam volutpat, massa et interdum bibendum, enim tortor pharetra sem, sit amet laoreet lacus orci eu risus. Fusce feugiat sem nec mauris aliquam, et facilisis lorem euismod. Suspendisse dolor urna, fringilla vel sapien quis, egestas ultricies lorem. Phasellus lacinia tellus a ex mattis, in laoreet mi placerat. Vivamus ultricies nec arcu et maximus.",
+            OnContinue: EventCallback.Factory.Create(this, CallbackOnContinue),
+            OnReturn: EventCallback.Factory.Create(this, CallbackOnExit),
+            OnExit: EventCallback.Factory.Create(this, CallbackOnExit)
+        ));
+        
+        await DialogProvider.PushDialogAsync(new InfiniDialogBasicDto(
+            "A Simple Dialog : Priority 99",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dignissim erat velit. Nulla eros ligula, dignissim quis enim in, sollicitudin sodales lorem. Praesent porttitor dui consectetur, consequat odio posuere, dapibus nibh. Vivamus ut nisi magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam volutpat, massa et interdum bibendum, enim tortor pharetra sem, sit amet laoreet lacus orci eu risus. Fusce feugiat sem nec mauris aliquam, et facilisis lorem euismod. Suspendisse dolor urna, fringilla vel sapien quis, egestas ultricies lorem. Phasellus lacinia tellus a ex mattis, in laoreet mi placerat. Vivamus ultricies nec arcu et maximus.",
+            OnContinue: EventCallback.Factory.Create(this, CallbackOnContinue),
+            OnReturn: EventCallback.Factory.Create(this, CallbackOnExit),
+            OnExit: EventCallback.Factory.Create(this, CallbackOnExit)
+        ) {
+            Priority = 99
+        });
+    }
+    
+    private async Task CallbackOnContinue() {
+        IToastingData infoToast = new ToastingData("info", "Pressed continue");
+        await ToastingProvider.PublishToastAsync(infoToast, ToastAppearance.Info, 0);
+    }
+    
+    private async Task CallbackOnExit() {
+        IToastingData infoToast = new ToastingData("info", "Pressed Exit");
+        await ToastingProvider.PublishToastAsync(infoToast, ToastAppearance.Error, 0);
+    }
+}

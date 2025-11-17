@@ -1,0 +1,79 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniBlazor.JsRuntime
+
+@namespace InfiniBlazor.ExtraComponents
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits ComponentBase
+@inject IInfiniBlazorJs InfiniBlazorJs
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<InfiniTable Class="@Class" Items="ThemeItems">
+    <Header>
+        <InfiniTableHeader>Name</InfiniTableHeader>
+        <InfiniTableHeader>Value</InfiniTableHeader>
+        <InfiniTableHeader>Display</InfiniTableHeader>
+        <InfiniTableHeader Class="w-min-128 flex flex-col items-center">
+            <span>Actions</span>
+            <div class="flex flex-row gap-3.5 text-infini-base-40">
+                <span>Var Name</span>
+                <span>Css Value</span>
+            </div>
+        </InfiniTableHeader>
+    </Header>
+    <Content Context="item">
+        <InfiniTableCell>
+            <code>@item.CssVarName</code>
+        </InfiniTableCell>
+
+        <InfiniTableCell>
+            <code>@item.CssData</code>
+        </InfiniTableCell>
+
+        <InfiniTableCell Alignment="Alignment.Right" Class="flex justify-center items-center">
+            <div class="w-12 h-12 shadow-md flex items-center justify-center leading-none rounded-xl"
+                 style="background: var(@item.CssVarName)">
+            </div>
+        </InfiniTableCell>
+
+        <InfiniTableCell Alignment="Alignment.Right" Class="flex justify-center gap-6">
+            <InfiniButton
+                IconName="copy"
+                OnClick="@(() => InfiniBlazorJs.CopyToClipboardAsync(item.CssVarName))"
+                TooltipAnchor="Anchor.Bottom | Anchor.Left"
+                Tooltip="@item.CssVarName"></InfiniButton>
+            <InfiniButton
+                IconName="copy"
+                OnClick="@(() => InfiniBlazorJs.CopyToClipboardAsync(item.CssData))"
+                TooltipAnchor="Anchor.Bottom | Anchor.Left"
+                Tooltip="@item.CssData"
+            />
+        </InfiniTableCell>
+    </Content>
+</InfiniTable>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter] public string Class { get; set; } = string.Empty;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    private ThemeItem[] ThemeItems => GetThemeItems();
+
+    private ThemeItem[] GetThemeItems() {
+        // if (!ThemeSelector.TryGetCurrentCssData(out ICssData? theme)) return [];
+        //
+        // return theme.AsCssVariables()
+        //     .Select(tuple => new ThemeItem(tuple.Item1, tuple.Item2))
+        //     .Where(item => !item.CssVarName.EndsWith("-rgb"))
+        //     .ToArray();
+        
+        return Array.Empty<ThemeItem>();
+    }
+}

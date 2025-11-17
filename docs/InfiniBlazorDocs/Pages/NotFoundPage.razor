@@ -1,0 +1,48 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@using InfiniBlazor
+@using InfiniBlazorDocs.Components
+@using InfiniLore.Lucide
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@rendermode InfiniRenderModeProvider.InfiniRenderMode
+
+@page "/not-found"
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+<DocumentationPage Title="Not Found">
+    <div class="flex flex-col items-center justify-center text-center py-24 gap-8">
+        <LucideIcon Name="@LucideNames.FileQuestionMark" class="w-20 h-20 text-primary/70" />
+        
+        <InfiniHeading1>404 - Page Not Found</InfiniHeading1>
+        <p class="max-w-xl text-muted-foreground text-lg">
+            The page you’re looking for doesn’t exist in the InfiniBlazor documentation.  
+            It might have been moved, renamed, or not yet written.
+        </p>
+
+        <div class="flex flex-wrap gap-4 justify-center mt-4">
+            <InfiniButtonPrimary Href="/" IconName="@LucideNames.House">
+                Go to Home
+            </InfiniButtonPrimary>
+            <InfiniButtonOutline Href="/" IconName="@LucideNames.BookOpen">
+                Browse Documentation
+            </InfiniButtonOutline>
+        </div>
+
+        <div class="mt-8 text-sm text-muted-foreground">
+            If this seems wrong, please <a href="https://github.com/InfiniLore/InfiniBlazor/issues/new" class="underline underline-offset-4 hover:text-foreground">
+                open an issue on GitHub
+            </a>.
+        </div>
+    </div>
+</DocumentationPage>
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+
+@code {
+
+}

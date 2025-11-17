@@ -1,0 +1,31 @@
+﻿// ---------------------------------------------------------------------------------------------------------------------
+// Imports
+// ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Extensions.DependencyInjection;
+using InfiniBlazor.JsRuntime;
+using Microsoft.Extensions.Logging;
+using Microsoft.JSInterop;
+
+namespace InfiniBlazor.Js;
+// ---------------------------------------------------------------------------------------------------------------------
+// Code
+// ---------------------------------------------------------------------------------------------------------------------
+[InjectableScoped<IInfiniBlazorJsDocument>]
+public class InfiniBlazorJsDocument(
+    IJSRuntime jsRuntime,
+    ILogger<InfiniBlazorJsDocument> logger
+) : IInfiniBlazorJsDocument {
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    public async Task AddOrUpdateElementAtHead(string id, string css, CancellationToken ct = default) {
+        try {
+            await jsRuntime.InvokeVoidAsync("infiniBlazor.document.addOrUpdateElementAtHead", ct, id, css);
+        }
+        catch (Exception e) {
+            logger.Warning(e, "Error adding or updating style element at head");
+        }
+    }
+    
+}

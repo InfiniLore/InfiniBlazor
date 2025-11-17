@@ -1,7 +1,7 @@
-﻿# InfiniLore.InfiniBlazor
+﻿# InfiniBlazor
 
 A comprehensive Blazor component library built for modern web applications.
-`InfiniLore.InfiniBlazor` provides a rich set of UI components with advanced features including theming, markdown processing, and optional packages for auto-documentation, and cross-platform MAUI support.
+`InfiniBlazor` provides a rich set of UI components with advanced features including theming, markdown processing, and optional packages for auto-documentation, and cross-platform MAUI support.
 
 > Originally this project was created as a simple interactive Markdown editor that could be used within any framework. 
 > However, as the project grew, it became clear that the library would benefit from a more comprehensive set of components and features. 
@@ -39,13 +39,13 @@ A comprehensive Blazor component library built for modern web applications.
 
 ### NuGet Package
 ```bash
-dotnet add package InfiniLore.InfiniBlazor
+dotnet add package InfiniBlazor
 ```
 
 ### From Source
 ```bash
 git clone https://github.com/InfiniLore/InfiniBlazor
-cd InfiniLore.InfiniBlazor
+cd InfiniBlazor
 dotnet restore
 ```
 
@@ -64,14 +64,14 @@ app.UseInfiniBlazor(); // Used for importing static data, like emote libs, at st
 ### 2. Import Statements
 Add to your `_Imports.razor`:
 ```razor
-@using InfiniLore.InfiniBlazor
-@using InfiniLore.InfiniBlazor.Components
+@using InfiniBlazor
+@using InfiniBlazor.Components
 ```
 ### 3. CSS and JavaScript Resources
 Add to your `App.razor` or main HTML file:
 ```html
-<link rel="stylesheet" href="_content/InfiniLore.InfiniBlazor/InfiniBlazor.css" />
-<script src="_content/InfiniLore.InfiniBlazor/InfiniBlazor.js"></script>
+<link rel="stylesheet" href="_content/InfiniBlazor/InfiniBlazor.css" />
+<script src="_content/InfiniBlazor/InfiniBlazor.js"></script>
 ```
 ### 4. Theme Manager
 Add to your main layout:

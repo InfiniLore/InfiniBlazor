@@ -1,0 +1,64 @@
+﻿@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Imports
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@namespace InfiniBlazor
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Descriptors
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@inherits InfiniNavItemBase
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Html
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@if (CollapsedState) {
+        <div class="@(NavBarLocation.IsVertical() ? "py-2" : "px-2") h-10 w-10 flex items-center justify-center">
+            <InfiniToggleButton 
+                DebugColor="DebugColor"
+                Value="@Value"
+                ValueChanged="@ValueChanged"
+                OnToggle="@OnToggle"
+                Size="Size.Xxs"
+                StopPropagation="true"
+                IsDisabled="@IsDisabled"
+                OnIcon="@OnIcon"
+                OffIcon="@OffIcon"
+                Class="@ConcatClasses(Class, "transform")"
+                Color="@Color"/>
+        </div>
+} else {
+    <div class="@ConcatClasses(Class, ContainerClassesNoHover) flex justify-between items-center h-10">
+        <InfiniNavItem 
+            DebugColor="DebugColor" 
+            Icon="@Icon"
+            Text="@Text">
+            @ChildContent
+        </InfiniNavItem>
+        
+        <InfiniSpacer DebugColor="DebugColor"/>
+        <InfiniToggleButton
+            DebugColor="DebugColor"
+            Value="@Value"
+            ValueChanged="@ValueChanged"
+            OnToggle="@OnToggle"
+            Size="Size.Xs"
+            StopPropagation="true"
+            IsDisabled="@IsDisabled"
+            OnIcon="@OnIcon"
+            OffIcon="@OffIcon"
+            Class="@ConcatClasses(Class, "ml-2")"
+            Color="@Color"/>
+    </div>
+}
+
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@* Code
+@* ------------------------------------------------------------------------------------------------------------------ *@
+@code {
+    [Parameter] public bool Value { get; set; }
+    [Parameter] public EventCallback<bool> ValueChanged { get; set; }
+    [Parameter] public string? OnIcon { get; set; }
+    [Parameter] public string? OffIcon { get; set; }
+    [Parameter] public Color Color { get; set; } = Color.Default;
+    [Parameter] public EventCallback<bool> OnToggle { get; set; }
+    
+}
+

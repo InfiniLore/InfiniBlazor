@@ -1,0 +1,24 @@
+﻿{
+    "solution": {
+        "path": "InfiniBlazor.slnx",
+        "projects": [
+            "src\\InfiniBlazor.Core.Components\\InfiniBlazor.Core.Components.csproj",
+            "src\\InfiniBlazor.Core.Emote\\InfiniBlazor.Core.Emote.csproj",
+            "src\\InfiniBlazor.Core.Js\\InfiniBlazor.Core.Js.csproj",
+            "src\\InfiniBlazor.Core.Markdown\\InfiniBlazor.Core.Markdown.csproj",
+            "src\\InfiniBlazor.Core.Markdown.Components\\InfiniBlazor.Core.Markdown.Components.csproj",
+            "src\\InfiniBlazor.Core.Theming\\InfiniBlazor.Core.Theming.csproj",
+            "src\\InfiniBlazor.Core.Toasting\\InfiniBlazor.Core.Toasting.csproj",
+            
+            "src\\InfiniBlazor.Extensions.AutoDocumentation\\InfiniBlazor.Extensions.AutoDocumentation.csproj",
+            "src\\InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators\\InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.csproj",
+            "src\\InfiniBlazor.Extensions.Maui\\InfiniBlazor.Extensions.Maui.csproj",
+            "src\\InfiniBlazor.Extensions.ExtraComponents\\InfiniBlazor.Extensions.ExtraComponents.csproj",
+            
+            "src\\InfiniBlazor\\InfiniBlazor.csproj",
+            "src\\InfiniBlazor.Shared\\InfiniBlazor.Shared.csproj",
+            
+            "docs\\InfiniBlazorDocs\\InfiniBlazorDocs.csproj"
+        ]
+    }
+}

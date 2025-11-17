@@ -29,22 +29,22 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Core.Components" />
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Core.Js" />
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Core.Markdown" />
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Core.Theming" />
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Core.Toasting" />
+        <InternalsVisibleTo Include="InfiniBlazor.Core.Components" />
+        <InternalsVisibleTo Include="InfiniBlazor.Core.Js" />
+        <InternalsVisibleTo Include="InfiniBlazor.Core.Markdown" />
+        <InternalsVisibleTo Include="InfiniBlazor.Core.Theming" />
+        <InternalsVisibleTo Include="InfiniBlazor.Core.Toasting" />
         
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Extensions.AutoDocumentation" />
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Extensions.ExtraComponents" />
-        <InternalsVisibleTo Include="InfiniLore.InfiniBlazor.Extensions.Maui" />
+        <InternalsVisibleTo Include="InfiniBlazor.Extensions.AutoDocumentation" />
+        <InternalsVisibleTo Include="InfiniBlazor.Extensions.ExtraComponents" />
+        <InternalsVisibleTo Include="InfiniBlazor.Extensions.Maui" />
         
-        <InternalsVisibleTo Include="Tests.InfiniBlazor" />
-        <InternalsVisibleTo Include="Tests.InfiniBlazor.Shared" />
-        <InternalsVisibleTo Include="Tests.InfiniBlazor.Shared.Markdown" />
-        <InternalsVisibleTo Include="Tests.InfiniBlazor.Extensions.AutoDocumentation" />
-        <InternalsVisibleTo Include="Tests.InfiniBlazor.Core.Markdown" />
-        <InternalsVisibleTo Include="Tests.InfiniBlazor.Core.Emotes" />
+        <InternalsVisibleTo Include="InfiniBlazorTests" />
+        <InternalsVisibleTo Include="InfiniBlazorTests.Shared" />
+        <InternalsVisibleTo Include="InfiniBlazorTests.Shared.Markdown" />
+        <InternalsVisibleTo Include="InfiniBlazorTests.Extensions.AutoDocumentation" />
+        <InternalsVisibleTo Include="InfiniBlazorTests.Core.Markdown" />
+        <InternalsVisibleTo Include="InfiniBlazorTests.Core.Emotes" />
     </ItemGroup>
 
     
