@@ -77,7 +77,6 @@
     <ItemGroup>
       <ProjectReference Include="..\..\src\InfiniBlazor.Extensions.Maui\InfiniBlazor.Extensions.Maui.csproj" />
       <ProjectReference Include="..\..\src\InfiniBlazor\InfiniBlazor.csproj" />
-      <ProjectReference Include="..\Example.InfiniBlazor.Shared\Example.InfiniBlazor.Shared.csproj" />
       <ProjectReference Include="..\InfiniBlazorExample.Shared\InfiniBlazorExample.Shared.csproj" />
     </ItemGroup>
 

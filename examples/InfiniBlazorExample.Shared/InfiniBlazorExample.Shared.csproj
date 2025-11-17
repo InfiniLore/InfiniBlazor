@@ -11,11 +11,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators\InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.csproj" OutputItemType="Analyzer"/>
         <ProjectReference Include="..\..\src\InfiniBlazor.Extensions.ExtraComponents\InfiniBlazor.Extensions.ExtraComponents.csproj" />
         <ProjectReference Include="..\..\src\InfiniBlazor\InfiniBlazor.csproj" />
-        <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.SourceGenerators\InfiniLore.InfiniBlazor.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="contentfiles;build" Pack="true" />
-        <ProjectReference Include="..\..\src\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="contentfiles;build" Pack="true" />
+        <ProjectReference Include="..\..\src\InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators\InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="contentfiles;build" Pack="true" />
         <ProjectReference Include="..\..\src\InfiniBlazor.Extensions.AutoDocumentation\InfiniBlazor.Extensions.AutoDocumentation.csproj" />
     </ItemGroup>
 

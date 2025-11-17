@@ -20,7 +20,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\InfiniBlazor.Core.Components\InfiniBlazor.Core.Components.csproj" />
-      <ProjectReference Include="..\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators\InfiniLore.InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.csproj">
+      <ProjectReference Include="..\InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators\InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.csproj">
           <Pack>true</Pack>
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>analyzers</IncludeAssets>
