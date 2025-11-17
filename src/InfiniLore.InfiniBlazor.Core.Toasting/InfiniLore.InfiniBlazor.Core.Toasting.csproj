@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <RootNamespace>InfiniLore.InfiniBlazor.Toasting</RootNamespace>
+        <RootNamespace>InfiniBlazor.Toasting</RootNamespace>
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.InfiniBlazor.Core.Toasting</PackageId>

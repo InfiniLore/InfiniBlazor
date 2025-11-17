@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <RootNamespace>InfiniLore.InfiniBlazor.Markdown</RootNamespace>
+        <RootNamespace>InfiniBlazor.Markdown</RootNamespace>
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.InfiniBlazor.Core.Markdown</PackageId>

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <RootNamespace>InfiniLore.InfiniBlazor.AutoDocumentation</RootNamespace>
+        <RootNamespace>InfiniBlazor.AutoDocumentation</RootNamespace>
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.InfiniBlazor.Extensions.AutoDocumentation</PackageId>

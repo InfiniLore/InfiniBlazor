@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <RootNamespace>InfiniLore.InfiniBlazor.Js</RootNamespace>
+        <RootNamespace>InfiniBlazor.Js</RootNamespace>
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.InfiniBlazor.Core.Js</PackageId>

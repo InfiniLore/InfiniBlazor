@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <RootNamespace>InfiniLore.InfiniBlazor.Components</RootNamespace>
+        <RootNamespace>InfiniBlazor.Components</RootNamespace>
 
         <!-- Package metadata -->
         <PackageId>InfiniLore.InfiniBlazor.Core.Components</PackageId>
