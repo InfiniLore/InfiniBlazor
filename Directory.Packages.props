@@ -12,7 +12,7 @@
     <PackageVersion Include="CodeOfChaos.Extensions.AspNetCore" Version="0.85.0" />
     <PackageVersion Include="CodeOfChaos.Extensions.AspNetCore.Components" Version="0.85.0" />
     <PackageVersion Include="CodeOfChaos.Extensions.DependencyInjection" Version="0.85.0" />
-    <PackageVersion Include="CodeOfChaos.Extensions.DependencyInjection.Generators" Version="0.85.0">
+    <PackageVersion Include="CodeOfChaos.Extensions.DependencyInjection.Generators" Version="0.87.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
