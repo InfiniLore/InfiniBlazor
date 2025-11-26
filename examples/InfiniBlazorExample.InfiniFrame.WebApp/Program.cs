@@ -1,6 +1,12 @@
-using InfiniBlazorExample.InfiniFrame.Components;
+// ---------------------------------------------------------------------------------------------------------------------
+// Imports
+// ---------------------------------------------------------------------------------------------------------------------
+using InfiniBlazorExample.InfiniFrame.WebApp.Components;
 
-namespace InfiniBlazorExample.InfiniFrame;
+namespace InfiniBlazorExample.InfiniFrame.WebApp;
+// ---------------------------------------------------------------------------------------------------------------------
+// Code
+// ---------------------------------------------------------------------------------------------------------------------
 public class Program {
     public static void Main(string[] args) {
         var builder = WebApplication.CreateBuilder(args);

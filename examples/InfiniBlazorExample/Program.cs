@@ -11,6 +11,9 @@ namespace InfiniBlazorExample;
 // ---------------------------------------------------------------------------------------------------------------------
 public class Program {
     public static async Task Main(string[] args) {
+        // -------------------------------------------------------------------------------------------------------------
+        // Builder
+        // -------------------------------------------------------------------------------------------------------------
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
         
         builder.Services.AddLogging();

@@ -31,12 +31,15 @@
     <Project Path="docs/InfiniBlazorDocs/InfiniBlazorDocs.csproj" />
   </Folder>
   <Folder Name="/example/">
-    <Project Path="examples/InfiniBlazorExample.InfiniFrame/InfiniBlazorExample.InfiniFrame.csproj" />
     <Project Path="examples\InfiniBlazorExample.Shared\InfiniBlazorExample.Shared.csproj" />
   </Folder>
   <Folder Name="/example/blazor/">
     <Project Path="examples/InfiniBlazorExample.Client/InfiniBlazorExample.Client.csproj" />
     <Project Path="examples/InfiniBlazorExample/InfiniBlazorExample.csproj" />
+  </Folder>
+  <Folder Name="/example/infiniframe/">
+    <Project Path="examples/InfiniBlazorExample.InfiniFrame.BlazorWebView/InfiniBlazorExample.InfiniFrame.BlazorWebView.csproj" />
+    <Project Path="examples/InfiniBlazorExample.InfiniFrame.WebApp/InfiniBlazorExample.InfiniFrame.WebApp.csproj" />
   </Folder>
   <Folder Name="/example/maui/">
     <Project Path="examples/InfiniBlazorExample.Maui/InfiniBlazorExample.Maui.csproj" />
