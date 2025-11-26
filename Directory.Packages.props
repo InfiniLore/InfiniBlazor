@@ -22,10 +22,10 @@
     <PackageVersion Include="CodeOfChaos.GeneratorTools" Version="2.2.1" />
     <PackageVersion Include="CodeOfChaos.Testing.TUnit" Version="0.16.2" />
     <PackageVersion Include="FastEndpoints" Version="7.1.1" />
-    <PackageVersion Include="InfiniLore.InfiniFrame" Version="0.1.0-preview.10" />
-    <PackageVersion Include="InfiniLore.InfiniFrame.Blazor" Version="0.1.0-preview.10" />
-    <PackageVersion Include="InfiniLore.InfiniFrame.BlazorWebView" Version="0.1.0-preview.10" />
-    <PackageVersion Include="InfiniLore.InfiniFrame.Server" Version="0.1.0-preview.10" />
+    <PackageVersion Include="InfiniLore.InfiniFrame" Version="0.1.0-preview.11" />
+    <PackageVersion Include="InfiniLore.InfiniFrame.Blazor" Version="0.1.0-preview.11" />
+    <PackageVersion Include="InfiniLore.InfiniFrame.BlazorWebView" Version="0.1.0-preview.11" />
+    <PackageVersion Include="InfiniLore.InfiniFrame.WebServer" Version="0.1.0-preview.11" />
     <PackageVersion Include="InfiniLore.Lucide" Version="0.554.0" />
     <PackageVersion Include="IsExternalInit" Version="1.0.3" />
     <PackageVersion Include="JetBrains.Annotations" Version="2025.2.2" />

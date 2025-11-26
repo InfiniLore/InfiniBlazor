@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="InfiniLore.InfiniFrame.Server" />
+      <PackageReference Include="InfiniLore.InfiniFrame.WebServer" />
     </ItemGroup>
 
 </Project>

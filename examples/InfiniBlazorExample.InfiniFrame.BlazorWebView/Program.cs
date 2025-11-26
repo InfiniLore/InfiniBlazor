@@ -5,8 +5,6 @@ using InfiniBlazor.AutoDocumentation;
 using InfiniBlazorExample.InfiniFrame.BlazorWebView.Components;
 using InfiniFrame;
 using InfiniFrame.BlazorWebView;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Serilog;
 
 namespace InfiniBlazorExample.InfiniFrame.BlazorWebView;
