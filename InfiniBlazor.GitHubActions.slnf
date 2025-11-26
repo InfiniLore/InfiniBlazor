@@ -15,7 +15,7 @@
             "src\\InfiniBlazor.Extensions.Maui\\InfiniBlazor.Extensions.Maui.csproj",
             "src\\InfiniBlazor.Extensions.ExtraComponents\\InfiniBlazor.Extensions.ExtraComponents.csproj",
             "src\\InfiniBlazor.Extensions.InfiniFrame.BlazorWebView\\InfiniBlazor.Extensions.InfiniFrame.BlazorWebView.csproj",
-            "src\\InfiniBlazor.Extensions.InfiniFrame.BlazorWebView\\InfiniBlazor.Extensions.InfiniFrame.BlazorWebView.csproj",
+            "src\\InfiniBlazor.Extensions.InfiniFrame.WebServer\\InfiniBlazor.Extensions.InfiniFrame.WebServer.csproj",
             
             "src\\InfiniBlazor\\InfiniBlazor.csproj",
             "src\\InfiniBlazor.Shared\\InfiniBlazor.Shared.csproj",
