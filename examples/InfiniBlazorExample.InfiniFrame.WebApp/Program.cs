@@ -1,38 +1,74 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniBlazor.AutoDocumentation;
 using InfiniBlazorExample.InfiniFrame.WebApp.Components;
+using InfiniBlazorExample.Shared;
+using InfiniFrame;
+using InfiniFrame.Js;
+using InfiniFrame.WebServer;
+using Serilog;
 
 namespace InfiniBlazorExample.InfiniFrame.WebApp;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class Program {
+public static class Program {
     [STAThread]
     public static void Main(string[] args) {
-        var builder = WebApplication.CreateBuilder(args);
+        // -------------------------------------------------------------------------------------------------------------
+        // Builder
+        // -------------------------------------------------------------------------------------------------------------
+        InfiniFrameWebApplicationBuilder builder = InfiniFrameWebApplication.CreateBuilder(args);
+        WebApplicationBuilder appBuilder = builder.WebApp;
+        
+        appBuilder.Services.AddLogging(config => {
+            config.ClearProviders();
+            config.AddSerilog();
+        });
 
-        // Add services to the container.
-        builder.Services.AddRazorComponents()
+        appBuilder.Services.AddSerilog(config => {
+            config.WriteTo.Async(static c => c.Console())
+                .MinimumLevel.Debug();
+        });
+
+        appBuilder.Services.AddInfiniBlazor(config => {
+            config.AddAutoDocumentation(static config => 
+                config.RegisterAutoDocumentationData<AutoDocumenterData_InfiniBlazorExampleClient>()
+            );
+        });
+
+        appBuilder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
+        
+        appBuilder.Services.AddHttpClient();
 
-        var app = builder.Build();
+        appBuilder.Services.AddLucideIcons();
+        
+        appBuilder.Services.AddInfiniFrameJs();
+        
+        appBuilder.WebHost.UseStaticWebAssets();
+        
+        InfiniFrameWindowBuilder windowBuilder = builder.Window;
+        windowBuilder
+            .SetUseOsDefaultSize(true)
+            .SetUseOsDefaultLocation(true)
+            .SetTitle("InfiniBlazor.InfiniFrame Sample");
 
-        // Configure the HTTP request pipeline.
-        if (!app.Environment.IsDevelopment()) {
-            app.UseExceptionHandler("/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-            app.UseHsts();
-        }
+        // -------------------------------------------------------------------------------------------------------------
+        // App
+        // -------------------------------------------------------------------------------------------------------------
+        InfiniFrameWebApplication app = builder.Build();
+        WebApplication webApp = app.WebApp;
 
-        app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
-        app.UseHttpsRedirection();
+        webApp.UseRouting();
 
-        app.UseAntiforgery();
+        webApp.UseAntiforgery();
+        webApp.MapStaticAssets();
 
-        app.MapStaticAssets();
-        app.MapRazorComponents<App>()
-            .AddInteractiveServerRenderMode();
+        webApp.MapRazorComponents<App>()
+            .AddInteractiveServerRenderMode()
+            .AddAdditionalAssemblies(ISharedEntry.Assembly);
 
         app.Run();
     }
