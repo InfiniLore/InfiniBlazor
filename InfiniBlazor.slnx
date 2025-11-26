@@ -37,6 +37,10 @@
     <Project Path="examples/InfiniBlazorExample.Client/InfiniBlazorExample.Client.csproj" />
     <Project Path="examples/InfiniBlazorExample/InfiniBlazorExample.csproj" />
   </Folder>
+  <Folder Name="/example/infiniframe/">
+    <Project Path="examples/InfiniBlazorExample.InfiniFrame.BlazorWebView/InfiniBlazorExample.InfiniFrame.BlazorWebView.csproj" />
+    <Project Path="examples/InfiniBlazorExample.InfiniFrame.WebServer/InfiniBlazorExample.InfiniFrame.WebServer.csproj" />
+  </Folder>
   <Folder Name="/example/maui/">
     <Project Path="examples/InfiniBlazorExample.Maui/InfiniBlazorExample.Maui.csproj" />
   </Folder>
@@ -60,6 +64,10 @@
   <Folder Name="/src/extensions/AutoDocumentation/">
       <Project Path="src/InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators/InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators.csproj" />
     <Project Path="src/InfiniBlazor.Extensions.AutoDocumentation/InfiniBlazor.Extensions.AutoDocumentation.csproj" />
+  </Folder>
+  <Folder Name="/src/extensions/InfiniFrame/">
+    <Project Path="src/InfiniBlazor.Extensions.InfiniFrame.BlazorWebView/InfiniBlazor.Extensions.InfiniFrame.BlazorWebView.csproj" />
+    <Project Path="src/InfiniBlazor.Extensions.InfiniFrame.WebServer/InfiniBlazor.Extensions.InfiniFrame.WebServer.csproj" />
   </Folder>
   <Folder Name="/src/extensions/Maui/">
     <Project Path="src/InfiniBlazor.Extensions.Maui/InfiniBlazor.Extensions.Maui.csproj" />

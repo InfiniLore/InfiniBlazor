@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>InfiniBlazor.InfiniFrame.WebServer</RootNamespace>
+
+        <!-- Package metadata -->
+        <PackageId>InfiniLore.InfiniBlazor.InfiniFrame.WebServer</PackageId>
+        <Description>InfiniLore's Component Library</Description>
+        <PackageTags>Blazor;Ui;Design;Components;Library</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\InfiniBlazor\InfiniBlazor.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="InfiniLore.InfiniFrame.WebServer" />
+    </ItemGroup>
+
+</Project>

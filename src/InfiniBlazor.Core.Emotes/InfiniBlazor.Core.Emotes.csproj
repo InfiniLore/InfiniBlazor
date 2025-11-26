@@ -46,4 +46,12 @@
       <EmbeddedResource Include="wwwroot\emotes_standard_extended.json" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="..\..\assets\favicon.png">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <Link>wwwroot\assets\favicon.png</Link>
+      </Content>
+    </ItemGroup>
+
 </Project>
