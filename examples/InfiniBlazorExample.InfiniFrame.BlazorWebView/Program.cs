@@ -40,11 +40,10 @@ public class Program {
                 .SetTitle("InfiniBlazor.InfiniFrame Sample");
         });
         
-        builder.Services.AddInfiniBlazor(config => {
+        builder.AddInfiniBlazor(config => {
             config.AddAutoDocumentation(static config => 
                 config.RegisterAutoDocumentationData<AutoDocumenterData_InfiniBlazorExampleClient>()
             );
-            config.Components.SetRenderMode(null!);
         });
         
         builder.Services.AddHttpClient();

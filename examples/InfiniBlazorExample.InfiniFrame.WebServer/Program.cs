@@ -2,14 +2,14 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniBlazor.AutoDocumentation;
-using InfiniBlazorExample.InfiniFrame.WebApp.Components;
+using InfiniBlazorExample.InfiniFrame.WebServer.Components;
 using InfiniBlazorExample.Shared;
 using InfiniFrame;
 using InfiniFrame.Js;
 using InfiniFrame.WebServer;
 using Serilog;
 
-namespace InfiniBlazorExample.InfiniFrame.WebApp;
+namespace InfiniBlazorExample.InfiniFrame.WebServer;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ public static class Program {
                 .MinimumLevel.Debug();
         });
 
-        appBuilder.Services.AddInfiniBlazor(config => {
+        builder.AddInfiniBlazor(config => {
             config.AddAutoDocumentation(static config => 
                 config.RegisterAutoDocumentationData<AutoDocumenterData_InfiniBlazorExampleClient>()
             );

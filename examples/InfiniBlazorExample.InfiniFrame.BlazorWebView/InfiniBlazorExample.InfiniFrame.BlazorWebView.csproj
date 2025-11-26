@@ -36,6 +36,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\src\InfiniBlazor.Extensions.InfiniFrame.BlazorWebView\InfiniBlazor.Extensions.InfiniFrame.BlazorWebView.csproj" />
       <ProjectReference Include="..\InfiniBlazorExample.Client\InfiniBlazorExample.Client.csproj" />
       <ProjectReference Include="..\InfiniBlazorExample.Shared\InfiniBlazorExample.Shared.csproj" />
     </ItemGroup>
