@@ -31,6 +31,7 @@
     <Project Path="docs/InfiniBlazorDocs/InfiniBlazorDocs.csproj" />
   </Folder>
   <Folder Name="/example/">
+    <Project Path="examples/InfiniBlazorExample.InfiniFrame/InfiniBlazorExample.InfiniFrame.csproj" />
     <Project Path="examples\InfiniBlazorExample.Shared\InfiniBlazorExample.Shared.csproj" />
   </Folder>
   <Folder Name="/example/blazor/">
