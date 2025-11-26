@@ -6,6 +6,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
+        <ApplicationIcon>..\..\assets\favicon.ico</ApplicationIcon>
         <PlatformTarget>x64</PlatformTarget>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     </PropertyGroup>
@@ -22,6 +23,14 @@
 
     <ItemGroup>
         <Content Update="wwwroot\**">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\..\assets\favicon.ico">
+          <Link>wwwroot\favicon.ico</Link>
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\..\assets\icon.png">
+          <Link>wwwroot\icon.png</Link>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>

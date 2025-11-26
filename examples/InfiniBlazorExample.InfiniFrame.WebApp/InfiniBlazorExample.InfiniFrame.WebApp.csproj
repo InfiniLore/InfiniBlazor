@@ -28,16 +28,14 @@
           <Link>wwwroot\favicon.ico</Link>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+        <Content Include="..\..\assets\icon.png">
+            <Link>wwwroot\icon.png</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\InfiniBlazorExample.Client\InfiniBlazorExample.Client.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="Components\Pages\Error.razor" />
-      <_ContentIncludedByDefault Remove="Components\Pages\Home.razor" />
-      <_ContentIncludedByDefault Remove="Components\Pages\NotFound.razor" />
     </ItemGroup>
 
 </Project>
