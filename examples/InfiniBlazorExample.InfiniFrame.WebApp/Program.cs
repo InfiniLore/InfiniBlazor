@@ -8,6 +8,7 @@ namespace InfiniBlazorExample.InfiniFrame.WebApp;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class Program {
+    [STAThread]
     public static void Main(string[] args) {
         var builder = WebApplication.CreateBuilder(args);
 

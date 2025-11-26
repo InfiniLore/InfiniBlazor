@@ -7,4 +7,9 @@
         <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="InfiniLore.InfiniFrame" />
+      <PackageReference Include="InfiniLore.InfiniFrame.Server" />
+    </ItemGroup>
+
 </Project>
