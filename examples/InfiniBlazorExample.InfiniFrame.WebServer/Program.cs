@@ -6,6 +6,7 @@ using InfiniBlazorExample.InfiniFrame.WebServer.Components;
 using InfiniBlazorExample.Shared;
 using InfiniFrame;
 using InfiniFrame.Js;
+using InfiniFrame.Js.MessageHandlers;
 using InfiniFrame.WebServer;
 using Serilog;
 
@@ -53,7 +54,8 @@ public static class Program {
         windowBuilder
             .SetUseOsDefaultSize(true)
             .SetUseOsDefaultLocation(true)
-            .SetTitle("InfiniBlazor.InfiniFrame Sample");
+            .SetTitle("InfiniBlazor.InfiniFrame Sample")
+            .RegisterOpenExternalTargetWebMessageHandler();
 
         // -------------------------------------------------------------------------------------------------------------
         // App

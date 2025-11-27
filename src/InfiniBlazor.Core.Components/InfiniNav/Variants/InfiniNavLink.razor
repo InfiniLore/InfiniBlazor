@@ -19,6 +19,7 @@ else {
     <a href="@ComputedHref"
        class="@ContainerClasses"
        target="@(OpenInNewTab ? "_blank" : null)"
+       data-external="@(OpenInNewTab ? "" : null)"
        rel="noopener noreferrer"
        hidden="@IsHidden"
        @onclick="() => SubMenuContext?.OnSubItemPressed?.Invoke()"
