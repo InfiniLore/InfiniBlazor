@@ -60,8 +60,9 @@ public static class Program {
         // -------------------------------------------------------------------------------------------------------------
         // App
         // -------------------------------------------------------------------------------------------------------------
-        InfiniFrameWebApplication app = builder.Build();
-        WebApplication webApp = app.WebApp;
+        InfiniFrameWebApplication application = builder.Build();
+        application.UseAutoServerClose();
+        WebApplication webApp = application.WebApp;
 
         webApp.UseRouting();
 
@@ -72,6 +73,6 @@ public static class Program {
             .AddInteractiveServerRenderMode()
             .AddAdditionalAssemblies(ISharedEntry.Assembly);
 
-        app.Run();
+        application.Run();
     }
 }

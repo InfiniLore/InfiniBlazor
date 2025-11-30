@@ -21,9 +21,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Update="wwwroot\**">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
+        <Folder Include="wwwroot/"/>
+<!--        <Content Update="wwwroot\**">-->
+<!--            <CopyToOutputDirectory>Always</CopyToOutputDirectory>-->
+<!--        </Content>-->
         <Content Include="..\..\assets\favicon.ico">
           <Link>wwwroot\favicon.ico</Link>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
