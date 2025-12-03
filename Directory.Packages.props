@@ -38,12 +38,10 @@
     <PackageVersion Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="10.0.11" />
     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
     <PackageVersion Include="Microsoft.AspNetCore.WebUtilities" Version="10.0.0" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="4.14.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageVersion>
-    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="5.0.0" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.Common" Version="5.0.0" />
+      <!-- DO NOT UPDATE: Microsoft.CodeAnalysis packages locked at 4.14.0 due to compatibility requirements -->
+      <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="[4.14.0,4.15.0)"/>
+      <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="[4.14.0,4.15.0)" />
+      <PackageVersion Include="Microsoft.CodeAnalysis.Common" Version="[4.14.0,4.15.0)" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.0" />

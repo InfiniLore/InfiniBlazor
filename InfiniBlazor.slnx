@@ -30,18 +30,19 @@
     <Project Path="docs/InfiniBlazorDocs.DevApi/InfiniBlazorDocs.DevApi.csproj" />
     <Project Path="docs/InfiniBlazorDocs/InfiniBlazorDocs.csproj" />
   </Folder>
-  <Folder Name="/example/">
+  <Folder Name="/examples/">
+    <File Path="examples/Directory.Build.props" />
     <Project Path="examples\InfiniBlazorExample.Shared\InfiniBlazorExample.Shared.csproj" />
   </Folder>
-  <Folder Name="/example/blazor/">
+  <Folder Name="/examples/blazor/">
     <Project Path="examples/InfiniBlazorExample.Client/InfiniBlazorExample.Client.csproj" />
     <Project Path="examples/InfiniBlazorExample/InfiniBlazorExample.csproj" />
   </Folder>
-  <Folder Name="/example/infiniframe/">
+  <Folder Name="/examples/infiniframe/">
     <Project Path="examples/InfiniBlazorExample.InfiniFrame.BlazorWebView/InfiniBlazorExample.InfiniFrame.BlazorWebView.csproj" />
     <Project Path="examples/InfiniBlazorExample.InfiniFrame.WebServer/InfiniBlazorExample.InfiniFrame.WebServer.csproj" />
   </Folder>
-  <Folder Name="/example/maui/">
+  <Folder Name="/examples/maui/">
     <Project Path="examples/InfiniBlazorExample.Maui/InfiniBlazorExample.Maui.csproj" />
   </Folder>
   <Folder Name="/src/">
@@ -73,6 +74,7 @@
     <Project Path="src/InfiniBlazor.Extensions.Maui/InfiniBlazor.Extensions.Maui.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <File Path="tests/Directory.Build.props" />
     <Project Path="tests/InfiniBlazorTests/InfiniBlazorTests.csproj" />
   </Folder>
   <Folder Name="/tests/core/">

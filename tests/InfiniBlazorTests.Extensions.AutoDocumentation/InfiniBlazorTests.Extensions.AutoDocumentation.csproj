@@ -1,13 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <TargetFramework>net10.0</TargetFramework>
-        <LangVersion>latest</LangVersion>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-
-        <IsPackable>false</IsPackable>
-
         <InifiniBlazor_AutoDocumentation_EnableKRParsing>true</InifiniBlazor_AutoDocumentation_EnableKRParsing>
     </PropertyGroup>
 
@@ -20,6 +13,7 @@
         <PackageReference Include="CodeOfChaos.Extensions.AspNetCore" />
         <PackageReference Include="CodeOfChaos.Testing.TUnit" />
         <PackageReference Include="JetBrains.Annotations"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
         <PackageReference Include="NSubstitute" />
         <PackageReference Include="TUnit" />
