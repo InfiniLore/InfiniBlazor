@@ -118,7 +118,7 @@ public class MdSyntaxTreeJsonParserTests {
         await Assert.That(linkNode.Href).IsEqualTo("https://example.com");
 
         List<IMdSyntaxNode> children = linkNode.GetChildren().ToList();
-        await Assert.That(children).HasCount().EqualTo(2);
+        await Assert.That(children).Count().IsEqualTo(2);
 
         IMdSyntaxNode firstChild = children[0];
         await Assert.That(firstChild).IsNotNull();
@@ -149,7 +149,7 @@ public class MdSyntaxTreeJsonParserTests {
         await Assert.That(linkNode.Href).IsEqualTo("https://example.com");
 
         List<IMdSyntaxNode> children = linkNode.GetChildren().ToList();
-        await Assert.That(children).HasCount().EqualTo(2);
+        await Assert.That(children).Count().IsEqualTo(2);
 
         IMdSyntaxNode firstChild = children[0];
         await Assert.That(firstChild).IsNotNull();
