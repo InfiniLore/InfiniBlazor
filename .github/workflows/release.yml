@@ -1,54 +1,145 @@
-name: Publish Packages
+name: Release to NuGet
 
 on:
     workflow_dispatch:
-    push:
-        tags:
-            - 'v*.*.*' # Match version tags like v1.0.0
+        inputs:
+            version_bump:
+                description: 'Version bump type'
+                required: true
+                type: choice
+                options:
+                    - major
+                    - minor
+                    - patch
+                    - preview
+                    - custom
+            custom_version:
+                description: 'Custom version (only used if "custom" is selected, e.g., 1.0.0 or 1.0.0-preview.1)'
+                required: false
+                type: string
+            publish_to_nuget:
+                description: 'Publish to NuGet after building'
+                type: boolean
+                default: true
+
+permissions:
+    contents: write
+    packages: write
 
 jobs:
-    publish:
-        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') && github.event.base_ref == 'refs/heads/core')
-        
+    # ------------------------------------------------------------------------------------------------------------------
+    # Bump version, commit, and tag
+    # ------------------------------------------------------------------------------------------------------------------
+    bump-version:
+        name: Bump Version
         runs-on: ubuntu-latest
+        outputs:
+            new_version: ${{ steps.bump.outputs.version }}
+            tag_name: ${{ steps.bump.outputs.tag }}
+
         steps:
-            -   name: Checkout repository
+            -   name: Checkout
                 uses: actions/checkout@v6
+                with:
+                    fetch-depth: 0
+                    token: ${{ secrets.RELEASE_TOKEN }}
+
+            -   name: Setup Python
+                uses: actions/setup-python@v6
+                with:
+                    python-version: '3.x'
+
+            -   name: Configure Git
+                run: |
+                    git config user.name "github-actions[bot]"
+                    git config user.email "github-actions[bot]@users.noreply.github.com"
+
+            -   name: Bump version
+                id: bump
+                run: |
+                    cd dev
+                    if [ "${{ inputs.version_bump }}" == "custom" ]; then
+                        if [ -z "${{ inputs.custom_version }}" ]; then
+                            echo "Error: custom_version is required when version_bump is 'custom'"
+                            exit 1
+                        fi
+                        VERSION=$(python bump_version.py custom "${{ inputs.custom_version }}" | tail -n 1)
+                    else
+                        VERSION=$(python bump_version.py ${{ inputs.version_bump }} | tail -n 1)
+                    fi
+                    TAG="v${VERSION}"
+
+                    echo "version=$VERSION" >> $GITHUB_OUTPUT
+                    echo "tag=$TAG" >> $GITHUB_OUTPUT
+                    echo "Bumped to version: $VERSION (tag: $TAG)"
+
+            -   name: Commit and push changes
+                run: |
+                    git add src/Directory.Build.props
+                    git commit -m "VersionBump : ${{ steps.bump.outputs.tag }}"
+                    git tag ${{ steps.bump.outputs.tag }}
+                    git push origin HEAD:${{ github.ref_name }}
+                    git push origin ${{ steps.bump.outputs.tag }}
+    
+    # ------------------------------------------------------------------------------------------------------------------
+    # Run tests
+    # ------------------------------------------------------------------------------------------------------------------
+    test:
+        name: Run Tests
+        needs: bump-version
+        uses: ./.github/workflows/onPullRequest-TestDotnet.yml
+
+    # ------------------------------------------------------------------------------------------------------------------
+    # Build and publish
+    # ------------------------------------------------------------------------------------------------------------------
+    release:
+        name: Build and Release
+        runs-on: ubuntu-latest
+        needs: [bump-version, test]
+
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v6
+                with:
+                    ref: ${{ needs.bump-version.outputs.tag_name }}
+                    fetch-depth: 1
 
             -   name: Setup .NET
                 uses: actions/setup-dotnet@v5
                 with:
-                  dotnet-version: '10.x'
+                    dotnet-version: '10.x'
 
             -   name: Restore dependencies
                 run: dotnet restore InfiniBlazor.GitHubActions.slnf
 
             -   name: Build
                 run: dotnet build InfiniBlazor.GitHubActions.slnf --configuration Release --no-restore
-            
-            -   name: Run tests     
-                run: dotnet test --solution InfiniBlazor.GitHubActions.slnf --configuration Release --no-restore --no-build
 
-            -   name: Publish to NuGet
+            -   name: Pack
+                run: dotnet pack InfiniBlazor.GitHubActions.slnf --configuration Release --no-build -o ./release
+
+            -   name: Upload NuGet packages as artifact
+                uses: actions/upload-artifact@v5
+                with:
+                    name: nuget-packages-${{ needs.bump-version.outputs.tag_name }}
+                    path: ./release/*.nupkg
+
+            -   name: Create GitHub Release
+                if: inputs.publish_to_nuget
+                uses: softprops/action-gh-release@v2
+                with:
+                    tag_name: ${{ needs.bump-version.outputs.tag_name }}
+                    name: Release ${{ needs.bump-version.outputs.new_version }}
+                    generate_release_notes: true
+                    files: ./release/*.nupkg
+                    prerelease: ${{ contains(needs.bump-version.outputs.new_version, 'preview') }}
+
+            -   name: Push to NuGet
+                if: inputs.publish_to_nuget
                 env:
                     NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
                 run: |
-                    dotnet nuget push src/InfiniBlazor.Core.Components/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                    dotnet nuget push src/InfiniBlazor.Core.Emotes/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                    dotnet nuget push src/InfiniBlazor.Core.Js/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                    dotnet nuget push src/InfiniBlazor.Core.Markdown/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                    dotnet nuget push src/InfiniBlazor.Core.Markdown.Components/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                    dotnet nuget push src/InfiniBlazor.Core.Theming/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                    dotnet nuget push src/InfiniBlazor.Core.Toasting/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                    dotnet nuget push src/InfiniBlazor.Extensions.AutoDocumentation/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                    dotnet nuget push src/InfiniBlazor.Extensions.AutoDocumentation.SourceGenerators/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                    dotnet nuget push src/InfiniBlazor.Extensions.Maui/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                    dotnet nuget push src/InfiniBlazor.Extensions.ExtraComponents/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                    dotnet nuget push src/InfiniBlazor/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                    dotnet nuget push src/InfiniBlazor.Shared/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
-                  
-            -   name: Create GitHub Release
-                uses: softprops/action-gh-release@v2
-                with:
-                    generate_release_notes: true
-                    prerelease: ${{ contains(github.ref_name, 'preview') }}
+                    dotnet nuget push "./release/*.nupkg" \
+                        --api-key "$NUGET_API_KEY" \
+                        --source https://api.nuget.org/v3/index.json \
+                        --skip-duplicate
