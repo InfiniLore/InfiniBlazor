@@ -44,7 +44,7 @@ public class MdSyntaxNodeModifierTests {
         MdSyntaxNodeModifier mod = MdSyntaxNodeModifier.FromString(input);
 
         // Assert
-        await Assert.That(mod.Attributes).HasCount(count);
+        await Assert.That(mod.Attributes).Count().IsEqualTo(count);
         
         await Parallel.ForEachAsync(expectedOutput, async (expected, _) => {
             string attributeKey = expected.First();

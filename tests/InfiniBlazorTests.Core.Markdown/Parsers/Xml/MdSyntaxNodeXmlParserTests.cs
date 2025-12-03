@@ -101,7 +101,7 @@ public class MdSyntaxTreeXmlParserTests {
         await Assert.That(listNode.Href).IsEqualTo("https://example.com");
 
         List<IMdSyntaxNode> children = listNode.GetChildren().ToList();
-        await Assert.That(children).HasCount(2);
+        await Assert.That(children).Count().IsEqualTo(2);
 
         IMdSyntaxNode firstChild = children[0];
         await Assert.That(firstChild).IsNotNull();
@@ -132,7 +132,7 @@ public class MdSyntaxTreeXmlParserTests {
         await Assert.That(listNode.Href).IsEqualTo("https://example.com");
 
         List<IMdSyntaxNode> children = listNode.GetChildren().ToList();
-        await Assert.That(children).HasCount(2);
+        await Assert.That(children).Count().IsEqualTo(2);
 
         IMdSyntaxNode firstChild = children[0];
         await Assert.That(firstChild).IsNotNull();

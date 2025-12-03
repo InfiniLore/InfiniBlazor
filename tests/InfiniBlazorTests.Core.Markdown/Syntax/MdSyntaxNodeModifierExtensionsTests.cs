@@ -20,7 +20,7 @@ public class MdSyntaxNodeModifierExtensionsTests {
         bool result = mod.TryGetTitle(out string? title);
 
         // Assert
-        await Assert.That(mod.Attributes).HasCount(1);
+        await Assert.That(mod.Attributes).Count().IsEqualTo(1);
         
         await Assert.That(mod.Attributes["title"]).IsEqualTo(new Range(7, 16));
         await Assert.That(result).IsTrue();
@@ -38,7 +38,7 @@ public class MdSyntaxNodeModifierExtensionsTests {
         bool result = mod.TryGetFit(out bool fit);
 
         // Assert
-        await Assert.That(mod.Attributes).HasCount(1);
+        await Assert.That(mod.Attributes).Count().IsEqualTo(1);
         
         await Assert.That(mod.Attributes["fit"]).IsEqualTo(new Range(4, 4));
         await Assert.That(result).IsTrue();
@@ -57,7 +57,7 @@ public class MdSyntaxNodeModifierExtensionsTests {
         bool result = mod.TryGetSize(out (int Width, int Height) size);
         
         // Assert
-        await Assert.That(mod.Attributes).HasCount(1);
+        await Assert.That(mod.Attributes).Count().IsEqualTo(1);
         
         await Assert.That(mod.Attributes["size"]).IsEqualTo(new Range(6, 13));
         await Assert.That(result).IsTrue();
@@ -74,7 +74,7 @@ public class MdSyntaxNodeModifierExtensionsTests {
         // Act
 
         // Assert
-        await Assert.That(mod.Attributes).HasCount(3);
+        await Assert.That(mod.Attributes).Count().IsEqualTo(3);
         
         await Assert.That(mod.Attributes["size"]).IsEqualTo(new Range(6, 13));
         await Assert.That(mod.TryGetSize(out (int Width, int Height) size)).IsTrue();

@@ -70,7 +70,7 @@ public class MdSyntaxTreeCachedChildrenTests {
         
         // Assert
         await Assert.That(result).IsTrue();
-        await Assert.That(cachedChildren).HasCount(expectedChildren.Length);
+        await Assert.That(cachedChildren).Count().IsEqualTo(expectedChildren.Length);
 
         for (int i = 0; i < expectedChildren.Length; i++) {
             IMdSyntaxNode cached = cachedChildren![i];
