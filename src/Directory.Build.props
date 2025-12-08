@@ -13,7 +13,7 @@
         <RepositoryUrl>https://github.com/InfiniLore/InfiniBlazor.git</RepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         
-        <Version>0.1.0-preview.115</Version>
+        <Version>0.1.0-preview.116</Version>
         <Authors>Anna Sas</Authors>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
