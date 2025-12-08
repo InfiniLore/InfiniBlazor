@@ -1,5 +1,5 @@
 {
-  "name": "infinilore",
+  "name": "infiniblazor",
   "version": "0.1.0",
   "scripts": {
     "watch:tailwind-server": "npx @tailwindcss/cli -i ./src/InfiniBlazor/wwwroot/tailwind.css -o ./src/InfiniBlazor/wwwroot/InfiniBlazor.css --watch",
