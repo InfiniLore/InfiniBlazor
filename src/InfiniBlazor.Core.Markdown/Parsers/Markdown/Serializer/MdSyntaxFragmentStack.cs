@@ -32,12 +32,26 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
             (nodeSerializer, match) => (match, nodeSerializer)
         ));
 
-        // Sort matches by index descending so we push the latest matches first (LIFO stack behavior)
-        matches.Sort((a, b) => b.Match.Index.CompareTo(a.Match.Index));
+        // Sort by start index (ascending) then by length (descending) to prioritize longer matches at the same position
+        matches.Sort((a, b) => {
+            int cmp = a.Match.Index.CompareTo(b.Match.Index);
+            return cmp != 0 ? cmp : b.Match.Length.CompareTo(a.Match.Length);
+        });
 
-        _stack.EnsureCapacity(_stack.Count + matches.Count);
-        foreach ((Match match, IMdSyntaxNodeSerializer serializer) in matches) {
-            PushMatchToStack(match, node, serializer);
+        // Filter out overlapping matches (greedy first-win)
+        List<(Match Match, IMdSyntaxNodeSerializer Serializer)> filteredMatches = [];
+        int lastEnd = startIndex;
+        foreach (var m in matches) {
+            if (m.Match.Index >= lastEnd) {
+                filteredMatches.Add(m);
+                lastEnd = m.Match.Index + m.Match.Length;
+            }
+        }
+
+        // Push to stack in reverse order (LIFO) so the first match in the text is processed first
+        _stack.EnsureCapacity(_stack.Count + filteredMatches.Count);
+        for (int i = filteredMatches.Count - 1; i >= 0; i--) {
+            PushMatchToStack(filteredMatches[i].Match, node, filteredMatches[i].Serializer);
         }
     }
 
@@ -49,22 +63,31 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
             (nodeSerializer, match) => (match, nodeSerializer))
         );
 
-        // Sort matches by index ascending to handle gaps correctly
-        matches.Sort((a, b) => a.Match.Index.CompareTo(b.Match.Index));
+        // Sort by start index (ascending) then by length (descending)
+        matches.Sort((a, b) => {
+            int cmp = a.Match.Index.CompareTo(b.Match.Index);
+            return cmp != 0 ? cmp : b.Match.Length.CompareTo(a.Match.Length);
+        });
+
+        // Filter out overlapping matches
+        List<(Match Match, IMdSyntaxNodeSerializer Serializer)> filteredMatches = [];
+        int lastEnd = 0;
+        foreach (var m in matches) {
+            if (m.Match.Index >= lastEnd) {
+                filteredMatches.Add(m);
+                lastEnd = m.Match.Index + m.Match.Length;
+            }
+        }
 
         int inputLength = input.Length;
-
-        // Since we want to push to stack (LIFO), we actually need to process text gaps and matches 
-        // in a way that the first character of the string ends up at the TOP of the stack.
-        // Thus, we iterate backwards through our sorted matches.
-
         int lastProcessedIndex = inputLength;
 
-        for (int i = matches.Count - 1; i >= 0; i--) {
-            (Match match, IMdSyntaxNodeSerializer serializer) = matches[i];
+        // Iterate backwards through filtered matches to handle gaps and LIFO stack behavior
+        for (int i = filteredMatches.Count - 1; i >= 0; i--) {
+            (Match match, IMdSyntaxNodeSerializer serializer) = filteredMatches[i];
             int matchEnd = match.Index + match.Length;
 
-            // Handle text after this match (gap between this match and the next/end)
+            // Handle text after this match
             if (matchEnd < lastProcessedIndex) {
                 TextMdSyntaxNode contentNode = TextMdSyntaxNode.Pool.Get();
                 contentNode.WithContent(input[matchEnd..lastProcessedIndex]);

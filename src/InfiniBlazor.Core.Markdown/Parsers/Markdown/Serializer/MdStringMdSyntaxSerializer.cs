@@ -46,8 +46,7 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
         new HtmlBlockSyntaxNodeSerializer(),
         new HorizontalRuleSyntaxNodeSerializer(),
         new ParagraphSyntaxNodeSerializer(),
-        new NewLineSyntaxNodeSerializer(),
-        new BlockQuoteSyntaxNodeSerializer(),
+        new NewLineSyntaxNodeSerializer()
     ];
 
     public IMdSyntaxNodeSerializer? FrontMatterSerializer { get; } = new FrontmatterSyntaxNodeSerializer();
