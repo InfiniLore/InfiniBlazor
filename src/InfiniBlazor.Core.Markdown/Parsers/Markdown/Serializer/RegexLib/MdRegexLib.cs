@@ -77,46 +77,46 @@ public static partial class MdRegexLib {
     [GeneratedRegex(@"(?<heading>^(?<hLevel>\#{1,6})[\ ]+(?<hText>[^\n]+)$)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex HeadingRegex { get; }
 
-    [GeneratedRegex(@"(?<codeBlock>^(?<open>`{3,})\ *(?<cLang>.*?)?\n(?<cBody>(?>[\s\S]|(?!\k<open>))*?)\k<open>(?<cTrailing>[^\n]+)?$)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"(?<codeBlock>^(?<open>`{3,})[\ ]*(?<cLang>.*?)?\n(?<cBody>(?>[\s\S]|(?!\k<open>))*?)\k<open>(?<cTrailing>[^\n]+)?$)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex CodeBlockRegex { get; }
 
-    [GeneratedRegex(@"(?<headingSimple>^(?<hsText>.+?)\n(?<hsIdentifier>\ *(?:={3,}?|-{3,}?)\ *$))", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"(?<headingSimple>^(?<hsText>.+?)\n(?<hsIdentifier>[\ ]*(?:={3,}?|-{3,}?)[\ ]*$))", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex HeadingSimpleRegex { get; }
 
     [GeneratedRegex("""
         (?<list>
             ^[^\S\n]*(?<lsId>-(?!-)|\d+\.|\.\d+).+
-            (?:\n(?:(?:-(?!-)|\d+\.|\.\d+)|(?:\ +)).+)*
+            (?:\n(?:(?:-(?!-)|\d+\.|\.\d+)|(?:[\ ]+)).+)*
         )
-        """, RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex ListRegex { get; }
 
     [GeneratedRegex("""
         (?<table>
-            ^\|(?<tHead>.+)\|\ *\n
-            ^\|(?<tSep>[:\-|\ ]+?)\|\ *
+            ^\|(?<tHead>.+)\|[\ ]*\n
+            ^\|(?<tSep>[:\-|\ ]+?)\|[\ ]*
             (?<tBody>(?:\n(?:^\|.*\|$))+)
         )
-        """, RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex TableRegex { get; }
 
     [GeneratedRegex("""
         (?<callout>
-            ^>(?:\[!(?<clType>[^\|\n]+)(?<clMod>\|[^\n]*)?\](?<clOption>\+|\-)?)\ *(?<clTitle>[^\n]*)$
+            ^>(?:\[!(?<clType>[^\|\n]+)(?<clMod>\|[^\n]*)?\](?<clOption>\+|\-)?)[\ ]*(?<clTitle>[^\n]*)$
             (?:\n(?<clBody>>[^\n]*(?:\n>[^\n]*)*)$)?  
         )
-        """, RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex CalloutRegex { get; }
 
-    [GeneratedRegex(@"(?<blockQuote>^>\ *(?:.+(?:\n>[^\n]*)*)$)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"(?<blockQuote>^>[\ ]*(?:.+(?:\n>[^\n]*)*)$)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex BlockQuoteRegex { get; }
 
     [GeneratedRegex("""
         (?<footnoteDesc> 
-            ^\[\^(?<fdId>[\d\p{L}\p{N}]+)\]\ ?:\ ?(?<fdBody>.+
+            ^\[\^(?<fdId>[\d\p{L}\p{N}]+)\][\ ]?:[\ ]?(?<fdBody>.+
             (?:\n(?!\[)(?:.+))*)
         )
-        """, RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex FootnoteDescriptionRegex { get; }
 
     [GeneratedRegex("""

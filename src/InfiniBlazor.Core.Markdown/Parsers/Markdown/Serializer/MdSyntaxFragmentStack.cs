@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using InfiniBlazor.Pooling;
@@ -26,32 +27,38 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
     #region PushToStack
     public void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node, int startIndex = 0) {
         ImmutableArray<IMdSyntaxNodeSerializer> serializers = SerializerReference.MultiLineSerializers;
-        List<(Match Match, IMdSyntaxNodeSerializer Serializer)> matches = [];
-        matches.AddRange(serializers.SelectMany(
-            nodeSerializer => nodeSerializer.Syntax.Matches(input, startIndex),
-            (nodeSerializer, match) => (match, nodeSerializer)
-        ));
+        List<(Match Match, IMdSyntaxNodeSerializer Serializer)> topLevelWinners = [];
 
-        // Sort by start index (ascending) then by length (descending) to prioritize longer matches at the same position
-        matches.Sort((a, b) => {
-            int cmp = a.Match.Index.CompareTo(b.Match.Index);
-            return cmp != 0 ? cmp : b.Match.Length.CompareTo(a.Match.Length);
-        });
+        int scanPos = startIndex;
+        int inputLength = input.Length;
 
-        // Filter out overlapping matches (greedy first-win)
-        List<(Match Match, IMdSyntaxNodeSerializer Serializer)> filteredMatches = [];
-        int lastEnd = startIndex;
-        foreach (var m in matches) {
-            if (m.Match.Index >= lastEnd) {
-                filteredMatches.Add(m);
-                lastEnd = m.Match.Index + m.Match.Length;
+        while (scanPos < inputLength) {
+            bool foundMatch = false;
+
+            foreach (IMdSyntaxNodeSerializer serializer in serializers) {
+                // Find the first match for THIS serializer starting from scanPos
+                Match m = serializer.Syntax.Match(input, scanPos);
+                
+                // We only accept the match if it starts EXACTLY at scanPos.
+                // This prevents a Paragraph further down the string from "jumping the gun".
+                if (!m.Success || m.Index != scanPos) continue;
+
+                topLevelWinners.Add((m, serializer));
+                scanPos += Math.Max(1, m.Length);
+                foundMatch = true;
+                break; // Winner found for this position, move to next scanPos
             }
+
+            // If absolutely nothing matched at the current scanPos, 
+            // we must advance scanPos by at least 1 to avoid an infinite loop.
+            // (In a perfect world, Paragraph/NewLine always catch everything).
+            if (!foundMatch) scanPos++;
         }
 
-        // Push to stack in reverse order (LIFO) so the first match in the text is processed first
-        _stack.EnsureCapacity(_stack.Count + filteredMatches.Count);
-        for (int i = filteredMatches.Count - 1; i >= 0; i--) {
-            PushMatchToStack(filteredMatches[i].Match, node, filteredMatches[i].Serializer);
+        // Push to stack in reverse (LIFO) so the first winner is processed first
+        _stack.EnsureCapacity(_stack.Count + topLevelWinners.Count);
+        for (int i = topLevelWinners.Count - 1; i >= 0; i--) {
+            PushMatchToStack(topLevelWinners[i].Match, node, topLevelWinners[i].Serializer);
         }
     }
 
