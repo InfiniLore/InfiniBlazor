@@ -10,13 +10,15 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class HeadingSyntaxNodeSerializer {
+public class HeadingSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     private static readonly int HLevelId = MdRegexLib.GetGroupId(MdRegexGroupNames.HeadingLevel);
     private static readonly int HTextId = MdRegexLib.GetGroupId(MdRegexGroupNames.HeadingText);
+    
+    public Regex Syntax { get; } = MdRegexLib.HeadingRegex;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(
+    public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match

@@ -11,15 +11,16 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class CodeBlockSyntaxNodeSerializer {
+public class CodeBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     private static readonly int CBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeBlockContent);
     private static readonly int CLangId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeBlockLang);
     private static readonly int CTrailingId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeBlockTrailing);
 
+    public Regex Syntax { get; } = MdRegexLib.CodeBlockRegex;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(
+    public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match

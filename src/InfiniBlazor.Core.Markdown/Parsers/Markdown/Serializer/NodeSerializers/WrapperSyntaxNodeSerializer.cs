@@ -10,14 +10,15 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class WrapperSyntaxNodeSerializer {
+public class WrapperSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     private static readonly int WId = MdRegexLib.GetGroupId(MdRegexGroupNames.WrapperContent);
     private static readonly int WModsId = MdRegexLib.GetGroupId(MdRegexGroupNames.WrapperMods);
 
+    public Regex Syntax { get; } = MdRegexLib.WrapperRegex;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
+    public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
         if (!match.Groups[WId].TryGetValue(out string? wrapperValue)) return;
         if (!match.Groups[WModsId].TryGetValue(out string? mods)) return;// Mods are required for this match
 

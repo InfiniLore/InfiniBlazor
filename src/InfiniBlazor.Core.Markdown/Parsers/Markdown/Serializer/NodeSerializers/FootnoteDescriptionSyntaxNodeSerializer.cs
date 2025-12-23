@@ -10,14 +10,15 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class FootnoteDescriptionSyntaxNodeSerializer {
+public class FootnoteDescriptionSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     private static readonly int FootnoteIdentifierId = MdRegexLib.GetGroupId(MdRegexGroupNames.FootnoteDescriptionIdentifier);
     private static readonly int FootnoteBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.FootnoteDescriptionBody);
 
+    public Regex Syntax { get; } = MdRegexLib.FootnoteDescriptionRegex;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(
+    public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match

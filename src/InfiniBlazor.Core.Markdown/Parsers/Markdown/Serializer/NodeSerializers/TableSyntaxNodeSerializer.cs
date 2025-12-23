@@ -11,17 +11,18 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class TableSyntaxNodeSerializer {
+public class TableSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     private const int StackAllocThreshold = 16;
 
     private static readonly int BodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.TableBody);
     private static readonly int HeadId = MdRegexLib.GetGroupId(MdRegexGroupNames.TableHead);
     private static readonly int SepId = MdRegexLib.GetGroupId(MdRegexGroupNames.TableSeparator);
 
+    public Regex Syntax { get; } = MdRegexLib.TableRegex;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(
+    public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match

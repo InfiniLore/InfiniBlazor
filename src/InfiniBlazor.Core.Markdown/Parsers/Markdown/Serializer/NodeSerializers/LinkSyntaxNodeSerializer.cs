@@ -10,17 +10,18 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class LinkSyntaxNodeSerializer {
+public class LinkSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     private static readonly int LnTextId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkText);
     private static readonly int LnHrefId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkHref);
     private static readonly int LnModsId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkModifiers);
     private static readonly int LnBangId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkBang);
     private static readonly int LnTitleId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkTitle);
 
+    public Regex Syntax { get; } = MdRegexLib.LinkRegex;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(
+    public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match

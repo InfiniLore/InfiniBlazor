@@ -10,14 +10,15 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class EmoteSyntaxNodeSerializer {
+public class EmoteSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     private static readonly int EmoteBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.EmoteContent);
     private static readonly int EmoteId = MdRegexLib.GetGroupId(MdRegexGroupNames.Emote);
 
+    public Regex Syntax { get; } = MdRegexLib.EmoteRegex;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(
+    public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match

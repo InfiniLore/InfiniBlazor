@@ -10,13 +10,14 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class HighlightSyntaxNodeSerializer {
+public class HighlightSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     private static readonly int HId = MdRegexLib.GetGroupId(MdRegexGroupNames.HighlightContent);
 
+    public Regex Syntax { get; } = MdRegexLib.HighlightRegex;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
+    public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
         if (!match.Groups[HId].TryGetValue(out string? boldValue)) return;
 
         HighlightMdSyntaxNode node = HighlightMdSyntaxNode.Pool.Get();

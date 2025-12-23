@@ -2,17 +2,15 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniBlazor.Markdown.Syntax;
-using System.Collections.Immutable;
+using System.Text.RegularExpressions;
 
 namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMdStringMdSyntaxSerializer {
-    ImmutableArray<IMdSyntaxNodeSerializer> SingleLineSerializers { get; }
-    ImmutableArray<IMdSyntaxNodeSerializer> MultiLineSerializers { get; }
-    IMdSyntaxNodeSerializer? FrontMatterSerializer { get; }
+public interface IMdSyntaxNodeSerializer {
+    Regex Syntax { get; }
     
-    IMdSyntaxTree SerializeToTree(string markdown);
-    void SerializeToTree(string markdown, IMdSyntaxTree nodeTree);
+    void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match);
 }

@@ -11,11 +11,15 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class FrontmatterSyntaxNodeSerializer {
+public class FrontmatterSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     private static readonly int LangId = MdRegexLib.GetGroupId(MdRegexGroupNames.FrontmatterLang);
     private static readonly int BodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.FrontmatterBody);
     
-    public static void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
+    public Regex Syntax { get; } = MdRegexLib.FrontmatterRegex;
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
         FrontMatterMdSyntaxNode node = FrontMatterMdSyntaxNode.Pool.Get();
         if (match.Groups[LangId].TryGetValue(out string? lang)) node.WithLanguage(lang);
         if (match.Groups[BodyId].TryGetValue(out string? body)) node.WithContent(body);

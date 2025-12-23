@@ -1,11 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using InfiniBlazor.Pooling;
 using Microsoft.Extensions.ObjectPool;
+using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 
 namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
@@ -14,6 +14,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable {
     public IMdSyntaxTree TreeReference { get; set; } = null!;
+    public IMdStringMdSyntaxSerializer SerializerReference { get; set; } = null!;
 
     private readonly Stack<MdSyntaxFragment> _stack = new();
     public static ObjectPool<MdSyntaxFragmentStack> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxFragmentStack>(PoolingHelpers.ParsersRetained);
@@ -24,42 +25,60 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
     // -----------------------------------------------------------------------------------------------------------------
     #region PushToStack
     public void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node, int startIndex = 0) {
-        MatchCollection matches = MdRegexLib.MultilineStructuresRegex.Matches(input, startIndex);
-        int count = matches.Count;
-        _stack.EnsureCapacity(_stack.Count + count);
+        ImmutableArray<IMdSyntaxNodeSerializer> serializers = SerializerReference.MultiLineSerializers;
+        List<(Match Match, IMdSyntaxNodeSerializer Serializer)> matches = [];
+        matches.AddRange(serializers.SelectMany(
+            nodeSerializer => nodeSerializer.Syntax.Matches(input, startIndex),
+            (nodeSerializer, match) => (match, nodeSerializer)
+        ));
 
-        for (int i = count - 1; i >= 0; i--) {
-            PushMatchToStack(matches[i], node);
+        // Sort matches by index descending so we push the latest matches first (LIFO stack behavior)
+        matches.Sort((a, b) => b.Match.Index.CompareTo(a.Match.Index));
+
+        _stack.EnsureCapacity(_stack.Count + matches.Count);
+        foreach ((Match match, IMdSyntaxNodeSerializer serializer) in matches) {
+            PushMatchToStack(match, node, serializer);
         }
     }
 
     public void PushSingleLineMatchesToStack(string input, IMdSyntaxNode node) {
-        MatchCollection matches = MdRegexLib.SinglelineStructuresRegex.Matches(input);
-        int count = matches.Count;
-        _stack.EnsureCapacity(_stack.Count + count);
+        ImmutableArray<IMdSyntaxNodeSerializer> serializers = SerializerReference.SingleLineSerializers;
+        List<(Match Match, IMdSyntaxNodeSerializer Serializer)> matches = [];
+        matches.AddRange(serializers.SelectMany(
+            nodeSerializer => nodeSerializer.Syntax.Matches(input),
+            (nodeSerializer, match) => (match, nodeSerializer))
+        );
 
-        int currentIndex = input.Length;
+        // Sort matches by index ascending to handle gaps correctly
+        matches.Sort((a, b) => a.Match.Index.CompareTo(b.Match.Index));
 
-        for (int i = count - 1; i >= 0; i--) {
-            Match match = matches[i];
+        int inputLength = input.Length;
+
+        // Since we want to push to stack (LIFO), we actually need to process text gaps and matches 
+        // in a way that the first character of the string ends up at the TOP of the stack.
+        // Thus, we iterate backwards through our sorted matches.
+
+        int lastProcessedIndex = inputLength;
+
+        for (int i = matches.Count - 1; i >= 0; i--) {
+            (Match match, IMdSyntaxNodeSerializer serializer) = matches[i];
             int matchEnd = match.Index + match.Length;
 
-            // If there's an uncaught text between this match's end and the last position, add it as raw input
-            if (matchEnd < currentIndex) {
+            // Handle text after this match (gap between this match and the next/end)
+            if (matchEnd < lastProcessedIndex) {
                 TextMdSyntaxNode contentNode = TextMdSyntaxNode.Pool.Get();
-                contentNode.WithContent(input[matchEnd..currentIndex]);
+                contentNode.WithContent(input[matchEnd..lastProcessedIndex]);
                 PushProcessedNodeToStack(node, contentNode);
             }
 
-            PushMatchToStack(match, node);
-            currentIndex = match.Index;
+            PushMatchToStack(match, node, serializer);
+            lastProcessedIndex = match.Index;
         }
 
-        // ReSharper disable once InvertIf
-        if (currentIndex > 0) {
-            // Handle any remaining text before the first match
+        // Handle any remaining text at the very beginning
+        if (lastProcessedIndex > 0) {
             TextMdSyntaxNode contentNode = TextMdSyntaxNode.Pool.Get();
-            contentNode.WithContent(input[..currentIndex]);
+            contentNode.WithContent(input[..lastProcessedIndex]);
             PushProcessedNodeToStack(node, contentNode);
         }
     }
@@ -67,8 +86,8 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
     public void PushProcessedNodeToStack(IMdSyntaxNode parentNode, IMdSyntaxNode childNode)
         => _stack.Push(MdSyntaxFragment.AsProcessedNode(parentNode, childNode));
 
-    private void PushMatchToStack(Match match, IMdSyntaxNode currentNode)
-        => _stack.Push(MdSyntaxFragment.AsUnhandledMatch(match, currentNode));
+    private void PushMatchToStack(Match match, IMdSyntaxNode currentNode, IMdSyntaxNodeSerializer nodeSerializer)
+        => _stack.Push(MdSyntaxFragment.AsUnhandledMatch(match, currentNode, nodeSerializer));
     #endregion
 
     public bool TryPopDto(out MdSyntaxFragment dto) {

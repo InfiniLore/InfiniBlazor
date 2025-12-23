@@ -10,13 +10,14 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class UserSyntaxNodeSerializer {
+public class UserSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     private static readonly int UsernameId = MdRegexLib.GetGroupId(MdRegexGroupNames.UserName);
-
+    
+    public Regex Syntax { get; } = MdRegexLib.UserRegex;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(
+    public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match

@@ -10,14 +10,15 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class CodeInlineSyntaxNodeSerializer {
+public class CodeInlineSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     private static readonly int CodeContentId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeInlineContent);
     private static readonly int CodeInlineId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeInline);
 
+    public Regex Syntax { get; } = MdRegexLib.CodeInlineRegex;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
+    public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
         if (!match.Groups[CodeContentId].TryGetValue(out string? codeValue)) return;
         if (!match.Groups[CodeInlineId].TryGetValueSpan(out ReadOnlySpan<char> fullOriginalString)) return;
 

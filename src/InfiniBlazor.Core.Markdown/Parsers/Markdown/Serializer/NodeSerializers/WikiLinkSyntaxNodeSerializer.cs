@@ -10,13 +10,14 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class WikiLinkSyntaxNodeSerializer {
+public class WikiLinkSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     private static readonly int WikiLinkHrefId = MdRegexLib.GetGroupId(MdRegexGroupNames.WikiLinkHref);
 
+    public Regex Syntax { get; } = MdRegexLib.WikiLinkRegex;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(
+    public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match
