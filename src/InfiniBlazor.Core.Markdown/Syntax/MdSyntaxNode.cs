@@ -332,4 +332,10 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
 
     }
     #endregion
+
+    #region ToString
+    public virtual string ToDebugString() => GetType().Name;
+    
+    public override string ToString() => ToDebugString();
+    #endregion
 }

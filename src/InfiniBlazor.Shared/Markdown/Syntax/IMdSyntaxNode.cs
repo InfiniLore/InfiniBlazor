@@ -32,6 +32,11 @@ public interface IMdSyntaxNode : IResettable, IEquatable<IMdSyntaxNode>{
     
     int GetIndexAtParent();
     
+    /// <summary>
+    /// Returns a simple string representation of the node for tree visualization.
+    /// </summary>
+    string ToDebugString();
+    
     void AddChildNode(IMdSyntaxNode childNode);
     TChild AddChildNode<TChild>(TChild childNode) where TChild : IMdSyntaxNode;
 

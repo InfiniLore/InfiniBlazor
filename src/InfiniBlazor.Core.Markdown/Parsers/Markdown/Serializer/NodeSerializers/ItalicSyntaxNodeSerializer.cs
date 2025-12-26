@@ -11,7 +11,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class ItalicSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    private static readonly int ItalicId = MdRegexLib.GetGroupId(MdRegexGroupNames.ItalicContent);
+    private static readonly int ItalicContentId = MdRegexLib.GetGroupId(MdRegexGroupNames.ItalicContent);
     
     public Regex Syntax { get; } = MdRegexLib.ItalicRegex;
     // -----------------------------------------------------------------------------------------------------------------
@@ -22,7 +22,7 @@ public class ItalicSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[ItalicId].TryGetValue(out string? italicValue)) return;
+        if (!match.Groups[ItalicContentId].TryGetValue(out string? italicValue)) return;
 
         ItalicMdSyntaxNode node = ItalicMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);

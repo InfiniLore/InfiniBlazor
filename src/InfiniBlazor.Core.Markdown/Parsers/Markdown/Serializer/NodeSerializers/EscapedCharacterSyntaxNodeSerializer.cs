@@ -10,7 +10,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class EscapedSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+public class EscapedCharacterSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     public Regex Syntax { get; } = MdRegexLib.EscapedCharacterRegex;
     private static readonly int EscapedId = MdRegexLib.GetGroupId(MdRegexGroupNames.Escaped);
 

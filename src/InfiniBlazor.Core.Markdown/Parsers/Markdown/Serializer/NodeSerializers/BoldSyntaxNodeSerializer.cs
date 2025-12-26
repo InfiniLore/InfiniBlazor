@@ -11,14 +11,14 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class BoldSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    private static readonly int BId = MdRegexLib.GetGroupId(MdRegexGroupNames.BoldContent);
+    private static readonly int BoldContentId = MdRegexLib.GetGroupId(MdRegexGroupNames.BoldContent);
     
     public Regex Syntax { get; } = MdRegexLib.BoldRegex;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
-        if (!match.Groups[BId].TryGetValue(out string? boldValue)) return;
+        if (!match.Groups[BoldContentId].TryGetValue(out string? boldValue)) return;
 
         BoldMdSyntaxNode node = BoldMdSyntaxNode.Pool.Get();
         parentNode.AddChildNode(node);

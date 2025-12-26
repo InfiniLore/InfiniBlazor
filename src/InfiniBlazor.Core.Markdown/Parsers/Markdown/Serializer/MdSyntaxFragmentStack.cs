@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using InfiniBlazor.Pooling;
@@ -78,37 +77,36 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
 
         // Filter out overlapping matches
         List<(Match Match, IMdSyntaxNodeSerializer Serializer)> filteredMatches = [];
-        int lastEnd = 0;
+        int lastEndMark = 0;
         foreach (var m in matches) {
-            if (m.Match.Index >= lastEnd) {
+            if (m.Match.Index >= lastEndMark) {
                 filteredMatches.Add(m);
-                lastEnd = m.Match.Index + m.Match.Length;
+                lastEndMark = m.Match.Index + m.Match.Length;
             }
         }
 
-        int inputLength = input.Length;
-        int lastProcessedIndex = inputLength;
+        int currentPos = input.Length;
 
         // Iterate backwards through filtered matches to handle gaps and LIFO stack behavior
         for (int i = filteredMatches.Count - 1; i >= 0; i--) {
             (Match match, IMdSyntaxNodeSerializer serializer) = filteredMatches[i];
-            int matchEnd = match.Index + match.Length;
-
-            // Handle text after this match
-            if (matchEnd < lastProcessedIndex) {
+            
+            // Handle text AFTER the match
+            if (match.Index + match.Length < currentPos) {
                 TextMdSyntaxNode contentNode = TextMdSyntaxNode.Pool.Get();
-                contentNode.WithContent(input[matchEnd..lastProcessedIndex]);
+                contentNode.WithContent(input[(match.Index + match.Length)..currentPos]);
                 PushProcessedNodeToStack(node, contentNode);
             }
 
+            // Push the match itself
             PushMatchToStack(match, node, serializer);
-            lastProcessedIndex = match.Index;
+            currentPos = match.Index;
         }
 
         // Handle any remaining text at the very beginning
-        if (lastProcessedIndex > 0) {
+        if (currentPos > 0) {
             TextMdSyntaxNode contentNode = TextMdSyntaxNode.Pool.Get();
-            contentNode.WithContent(input[..lastProcessedIndex]);
+            contentNode.WithContent(input[..currentPos]);
             PushProcessedNodeToStack(node, contentNode);
         }
     }

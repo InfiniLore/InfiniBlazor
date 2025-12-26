@@ -4,6 +4,7 @@
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using InfiniBlazor.Pooling;
 using Microsoft.Extensions.ObjectPool;
+using System.Text;
 
 namespace InfiniBlazor.Markdown.Syntax;
 using System.Collections.Concurrent;
@@ -252,4 +253,30 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     public bool Equals(IMdSyntaxTree? other)
         => other is not null
             && RootNode.Equals(other.RootNode);
+    
+    public override string ToString() {
+        StringBuilder sb = new();
+        sb.AppendLine($"{GetType().Name}:");
+        sb.AppendLine(RootNode.ToDebugString());
+        
+        ReadOnlySpan<IMdSyntaxNode> children = RootNode.GetChildrenSpan();
+        for (int i = 0; i < children.Length; i++) {
+            BuildTreeString(sb, children[i], "", i == children.Length - 1);
+        }
+        
+        return sb.ToString();
+    }
+
+    private static void BuildTreeString(StringBuilder sb, IMdSyntaxNode node, string indent, bool isLast) {
+        sb.Append(indent);
+        sb.Append(isLast ? "└── " : "├── ");
+        sb.AppendLine(node.ToDebugString());
+
+        string nextIndent = indent + (isLast ? "    " : "│   ");
+
+        ReadOnlySpan<IMdSyntaxNode> children = node.GetChildrenSpan();
+        for (int i = 0; i < children.Length; i++) {
+            BuildTreeString(sb, children[i], nextIndent, i == children.Length - 1);
+        }
+    }
 }

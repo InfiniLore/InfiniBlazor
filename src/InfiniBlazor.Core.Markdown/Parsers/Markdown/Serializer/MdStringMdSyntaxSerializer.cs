@@ -15,7 +15,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
 [InjectableSingleton<IMdStringMdSyntaxSerializer>]
 public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerializer> logger) : IMdStringMdSyntaxSerializer {
     public ImmutableArray<IMdSyntaxNodeSerializer> SingleLineSerializers { get; } = [
-        new EscapedSyntaxNodeSerializer(),
+        new EscapedCharacterSyntaxNodeSerializer(),
         new BoldSyntaxNodeSerializer(),
         new ItalicSyntaxNodeSerializer(),
         new SuperScriptSyntaxNodeSerializer(),

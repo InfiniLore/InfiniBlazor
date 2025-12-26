@@ -11,7 +11,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class BreakSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    public Regex Syntax { get; } = MdRegexLib.BoldRegex;
+    public Regex Syntax { get; } = MdRegexLib.BreakRegex;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
