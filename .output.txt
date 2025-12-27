@@ -1,0 +1,837 @@
+﻿
+Running tests from tests\InfiniBlazorTests.Core.Markdown\bin\Debug\net10.0\InfiniBlazorTests.Core.Markdown.dll (net10.0|x64)
+failed FromMarkdown_ToSyntaxTree_ShouldBeSame(footnote.xml/reference_withSuperscript) (0ms)
+  AssertionException: Expected to be equal to MdSyntaxTree:
+RootMdSyntaxNode
+├── ParagraphMdSyntaxNode
+│   ├── TextMdSyntaxNode
+│   ├── FootnoteReferenceMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── ParagraphMdSyntaxNode
+│   ├── TextMdSyntaxNode
+│   ├── SuperScriptMdSyntaxNode
+│   │   └── TextMdSyntaxNode
+│   ├── TextMdSyntaxNode
+│   ├── FootnoteReferenceMdSyntaxNode
+│   ├── TextMdSyntaxNode
+│   └── SuperScriptMdSyntaxNode
+│       └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── FootnoteDescriptionMdSyntaxNode
+│   └── ParagraphMdSyntaxNode
+│       └── TextMdSyntaxNode
+└── NewLineMdSyntaxNode
+but found MdSyntaxTree:
+RootMdSyntaxNode
+├── ParagraphMdSyntaxNode
+│   ├── TextMdSyntaxNode
+│   ├── FootnoteReferenceMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── ParagraphMdSyntaxNode
+│   ├── TextMdSyntaxNode
+│   ├── SuperScriptMdSyntaxNode
+│   │   └── TextMdSyntaxNode
+│   ├── TextMdSyntaxNode
+│   ├── FootnoteReferenceMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── FootnoteDescriptionMdSyntaxNode
+│   └── ParagraphMdSyntaxNode
+│       └── TextMdSyntaxNode
+└── NewLineMdSyntaxNode
+at Assert.That(foundTree).IsEquatableTo(expectedOutput)
+  from tests\InfiniBlazorTests.Core.Markdown\bin\Debug\net10.0\InfiniBlazorTests.Core.Markdown.dll (net10.0|x64)
+  TUnit.Engine.Exceptions.TestFailedException: AssertionException: Expected to be equal to MdSyntaxTree:
+  RootMdSyntaxNode
+  ├── ParagraphMdSyntaxNode
+  │   ├── TextMdSyntaxNode
+  │   ├── FootnoteReferenceMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── ParagraphMdSyntaxNode
+  │   ├── TextMdSyntaxNode
+  │   ├── SuperScriptMdSyntaxNode
+  │   │   └── TextMdSyntaxNode
+  │   ├── TextMdSyntaxNode
+  │   ├── FootnoteReferenceMdSyntaxNode
+  │   ├── TextMdSyntaxNode
+  │   └── SuperScriptMdSyntaxNode
+  │       └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── FootnoteDescriptionMdSyntaxNode
+  │   └── ParagraphMdSyntaxNode
+  │       └── TextMdSyntaxNode
+  └── NewLineMdSyntaxNode
+
+  but found MdSyntaxTree:
+  RootMdSyntaxNode
+  ├── ParagraphMdSyntaxNode
+  │   ├── TextMdSyntaxNode
+  │   ├── FootnoteReferenceMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── ParagraphMdSyntaxNode
+  │   ├── TextMdSyntaxNode
+  │   ├── SuperScriptMdSyntaxNode
+  │   │   └── TextMdSyntaxNode
+  │   ├── TextMdSyntaxNode
+  │   ├── FootnoteReferenceMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── FootnoteDescriptionMdSyntaxNode
+  │   └── ParagraphMdSyntaxNode
+  │       └── TextMdSyntaxNode
+  └── NewLineMdSyntaxNode
+
+
+  at Assert.That(foundTree).IsEquatableTo(expectedOutput)
+failed FromMarkdown_ToSyntaxTree_ShouldBeSame(blockquote.xml/withMarkdown) (17ms)
+  AssertionException: Expected to be equal to MdSyntaxTree:
+RootMdSyntaxNode
+├── BlockQuoteMdSyntaxNode
+│   └── ParagraphMdSyntaxNode
+│       ├── TextMdSyntaxNode
+│       ├── BoldMdSyntaxNode
+│       │   └── TextMdSyntaxNode
+│       ├── TextMdSyntaxNode
+│       ├── ItalicMdSyntaxNode
+│       │   └── TextMdSyntaxNode
+│       └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── BlockQuoteMdSyntaxNode
+│   ├── ParagraphMdSyntaxNode
+│   │   └── TextMdSyntaxNode
+│   ├── NewLineMdSyntaxNode
+│   └── ParagraphMdSyntaxNode
+│       ├── BoldMdSyntaxNode
+│       │   └── TextMdSyntaxNode
+│       ├── TextMdSyntaxNode
+│       ├── ItalicMdSyntaxNode
+│       │   └── TextMdSyntaxNode
+│       ├── TextMdSyntaxNode
+│       ├── CodeInlineMdSyntaxNode
+│       ├── TextMdSyntaxNode
+│       ├── LinkMdSyntaxNode
+│       │   └── TextMdSyntaxNode
+│       └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── BlockQuoteMdSyntaxNode
+│   └── ParagraphMdSyntaxNode
+│       ├── BoldMdSyntaxNode
+│       │   └── TextMdSyntaxNode
+│       ├── TextMdSyntaxNode
+│       ├── ItalicMdSyntaxNode
+│       │   └── TextMdSyntaxNode
+│       ├── TextMdSyntaxNode
+│       ├── CodeInlineMdSyntaxNode
+│       ├── TextMdSyntaxNode
+│       ├── StrikeMdSyntaxNode
+│       │   └── TextMdSyntaxNode
+│       ├── TextMdSyntaxNode
+│       ├── LinkMdSyntaxNode
+│       │   └── TextMdSyntaxNode
+│       └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── NewLineMdSyntaxNode
+└── BlockQuoteMdSyntaxNode
+    ├── ParagraphMdSyntaxNode
+    │   └── TextMdSyntaxNode
+    ├── NewLineMdSyntaxNode
+    └── CodeBlockMdSyntaxNode
+but found MdSyntaxTree:
+RootMdSyntaxNode
+├── BlockQuoteMdSyntaxNode
+│   └── ParagraphMdSyntaxNode
+│       ├── TextMdSyntaxNode
+│       ├── BoldMdSyntaxNode
+│       │   └── TextMdSyntaxNode
+│       └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── BlockQuoteMdSyntaxNode
+│   ├── ParagraphMdSyntaxNode
+│   │   └── TextMdSyntaxNode
+│   ├── NewLineMdSyntaxNode
+│   └── ParagraphMdSyntaxNode
+│       ├── BoldMdSyntaxNode
+│       │   └── TextMdSyntaxNode
+│       ├── TextMdSyntaxNode
+│       ├── CodeInlineMdSyntaxNode
+│       ├── TextMdSyntaxNode
+│       ├── LinkMdSyntaxNode
+│       │   └── TextMdSyntaxNode
+│       └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── BlockQuoteMdSyntaxNode
+│   └── ParagraphMdSyntaxNode
+│       ├── BoldMdSyntaxNode
+│       │   └── TextMdSyntaxNode
+│       ├── TextMdSyntaxNode
+│       ├── CodeInlineMdSyntaxNode
+│       ├── TextMdSyntaxNode
+│       ├── StrikeMdSyntaxNode
+│       │   └── TextMdSyntaxNode
+│       ├── TextMdSyntaxNode
+│       ├── LinkMdSyntaxNode
+│       │   └── TextMdSyntaxNode
+│       └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── NewLineMdSyntaxNode
+└── BlockQuoteMdSyntaxNode
+    ├── ParagraphMdSyntaxNode
+    │   └── TextMdSyntaxNode
+    ├── NewLineMdSyntaxNode
+    └── CodeBlockMdSyntaxNode
+at Assert.That(foundTree).IsEquatableTo(expectedOutput)
+  from tests\InfiniBlazorTests.Core.Markdown\bin\Debug\net10.0\InfiniBlazorTests.Core.Markdown.dll (net10.0|x64)
+  TUnit.Engine.Exceptions.TestFailedException: AssertionException: Expected to be equal to MdSyntaxTree:
+  RootMdSyntaxNode
+  ├── BlockQuoteMdSyntaxNode
+  │   └── ParagraphMdSyntaxNode
+  │       ├── TextMdSyntaxNode
+  │       ├── BoldMdSyntaxNode
+  │       │   └── TextMdSyntaxNode
+  │       ├── TextMdSyntaxNode
+  │       ├── ItalicMdSyntaxNode
+  │       │   └── TextMdSyntaxNode
+  │       └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── BlockQuoteMdSyntaxNode
+  │   ├── ParagraphMdSyntaxNode
+  │   │   └── TextMdSyntaxNode
+  │   ├── NewLineMdSyntaxNode
+  │   └── ParagraphMdSyntaxNode
+  │       ├── BoldMdSyntaxNode
+  │       │   └── TextMdSyntaxNode
+  │       ├── TextMdSyntaxNode
+  │       ├── ItalicMdSyntaxNode
+  │       │   └── TextMdSyntaxNode
+  │       ├── TextMdSyntaxNode
+  │       ├── CodeInlineMdSyntaxNode
+  │       ├── TextMdSyntaxNode
+  │       ├── LinkMdSyntaxNode
+  │       │   └── TextMdSyntaxNode
+  │       └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── BlockQuoteMdSyntaxNode
+  │   └── ParagraphMdSyntaxNode
+  │       ├── BoldMdSyntaxNode
+  │       │   └── TextMdSyntaxNode
+  │       ├── TextMdSyntaxNode
+  │       ├── ItalicMdSyntaxNode
+  │       │   └── TextMdSyntaxNode
+  │       ├── TextMdSyntaxNode
+  │       ├── CodeInlineMdSyntaxNode
+  │       ├── TextMdSyntaxNode
+  │       ├── StrikeMdSyntaxNode
+  │       │   └── TextMdSyntaxNode
+  │       ├── TextMdSyntaxNode
+  │       ├── LinkMdSyntaxNode
+  │       │   └── TextMdSyntaxNode
+  │       └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  └── BlockQuoteMdSyntaxNode
+      ├── ParagraphMdSyntaxNode
+      │   └── TextMdSyntaxNode
+      ├── NewLineMdSyntaxNode
+      └── CodeBlockMdSyntaxNode
+
+  but found MdSyntaxTree:
+  RootMdSyntaxNode
+  ├── BlockQuoteMdSyntaxNode
+  │   └── ParagraphMdSyntaxNode
+  │       ├── TextMdSyntaxNode
+  │       ├── BoldMdSyntaxNode
+  │       │   └── TextMdSyntaxNode
+  │       └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── BlockQuoteMdSyntaxNode
+  │   ├── ParagraphMdSyntaxNode
+  │   │   └── TextMdSyntaxNode
+  │   ├── NewLineMdSyntaxNode
+  │   └── ParagraphMdSyntaxNode
+  │       ├── BoldMdSyntaxNode
+  │       │   └── TextMdSyntaxNode
+  │       ├── TextMdSyntaxNode
+  │       ├── CodeInlineMdSyntaxNode
+  │       ├── TextMdSyntaxNode
+  │       ├── LinkMdSyntaxNode
+  │       │   └── TextMdSyntaxNode
+  │       └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── BlockQuoteMdSyntaxNode
+  │   └── ParagraphMdSyntaxNode
+  │       ├── BoldMdSyntaxNode
+  │       │   └── TextMdSyntaxNode
+  │       ├── TextMdSyntaxNode
+  │       ├── CodeInlineMdSyntaxNode
+  │       ├── TextMdSyntaxNode
+  │       ├── StrikeMdSyntaxNode
+  │       │   └── TextMdSyntaxNode
+  │       ├── TextMdSyntaxNode
+  │       ├── LinkMdSyntaxNode
+  │       │   └── TextMdSyntaxNode
+  │       └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  └── BlockQuoteMdSyntaxNode
+      ├── ParagraphMdSyntaxNode
+      │   └── TextMdSyntaxNode
+      ├── NewLineMdSyntaxNode
+      └── CodeBlockMdSyntaxNode
+
+
+  at Assert.That(foundTree).IsEquatableTo(expectedOutput)
+failed FromMarkdown_ToSyntaxTree_ShouldBeSame(underline.xml/withMultipleMarkdownSections) (1ms)
+  AssertionException: Expected to be equal to MdSyntaxTree:
+RootMdSyntaxNode
+└── ParagraphMdSyntaxNode
+    └── UnderlineMdSyntaxNode
+        ├── BoldMdSyntaxNode
+        │   └── TextMdSyntaxNode
+        ├── TextMdSyntaxNode
+        └── ItalicMdSyntaxNode
+            └── TextMdSyntaxNode
+but found MdSyntaxTree:
+RootMdSyntaxNode
+└── ParagraphMdSyntaxNode
+    └── UnderlineMdSyntaxNode
+        ├── BoldMdSyntaxNode
+        │   └── TextMdSyntaxNode
+        └── TextMdSyntaxNode
+at Assert.That(foundTree).IsEquatableTo(expectedOutput)
+  from tests\InfiniBlazorTests.Core.Markdown\bin\Debug\net10.0\InfiniBlazorTests.Core.Markdown.dll (net10.0|x64)
+  TUnit.Engine.Exceptions.TestFailedException: AssertionException: Expected to be equal to MdSyntaxTree:
+  RootMdSyntaxNode
+  └── ParagraphMdSyntaxNode
+      └── UnderlineMdSyntaxNode
+          ├── BoldMdSyntaxNode
+          │   └── TextMdSyntaxNode
+          ├── TextMdSyntaxNode
+          └── ItalicMdSyntaxNode
+              └── TextMdSyntaxNode
+
+  but found MdSyntaxTree:
+  RootMdSyntaxNode
+  └── ParagraphMdSyntaxNode
+      └── UnderlineMdSyntaxNode
+          ├── BoldMdSyntaxNode
+          │   └── TextMdSyntaxNode
+          └── TextMdSyntaxNode
+
+
+  at Assert.That(foundTree).IsEquatableTo(expectedOutput)
+failed FromMarkdown_ToSyntaxTree_ShouldBeSame(blockquote.xml/withMarkdownAndListOrdered) (3ms)
+  AssertionException: Expected to be equal to MdSyntaxTree:
+RootMdSyntaxNode
+└── BlockQuoteMdSyntaxNode
+    ├── ParagraphMdSyntaxNode
+    │   ├── TextMdSyntaxNode
+    │   ├── BoldMdSyntaxNode
+    │   │   └── TextMdSyntaxNode
+    │   ├── TextMdSyntaxNode
+    │   ├── ItalicMdSyntaxNode
+    │   │   └── TextMdSyntaxNode
+    │   └── TextMdSyntaxNode
+    ├── NewLineMdSyntaxNode
+    └── ListOrderedMdSyntaxNode
+        ├── ListItemMdSyntaxNode
+        │   └── TextMdSyntaxNode
+        └── ListItemMdSyntaxNode
+            ├── TextMdSyntaxNode
+            ├── NewLineMdSyntaxNode
+            └── ListUnOrderedMdSyntaxNode
+                └── ListItemMdSyntaxNode
+                    └── TextMdSyntaxNode
+but found MdSyntaxTree:
+RootMdSyntaxNode
+└── BlockQuoteMdSyntaxNode
+    ├── ParagraphMdSyntaxNode
+    │   ├── TextMdSyntaxNode
+    │   ├── BoldMdSyntaxNode
+    │   │   └── TextMdSyntaxNode
+    │   └── TextMdSyntaxNode
+    ├── NewLineMdSyntaxNode
+    └── ListOrderedMdSyntaxNode
+        ├── ListItemMdSyntaxNode
+        │   └── TextMdSyntaxNode
+        └── ListItemMdSyntaxNode
+            ├── TextMdSyntaxNode
+            ├── NewLineMdSyntaxNode
+            └── ListUnOrderedMdSyntaxNode
+                └── ListItemMdSyntaxNode
+                    └── TextMdSyntaxNode
+at Assert.That(foundTree).IsEquatableTo(expectedOutput)
+  from tests\InfiniBlazorTests.Core.Markdown\bin\Debug\net10.0\InfiniBlazorTests.Core.Markdown.dll (net10.0|x64)
+  TUnit.Engine.Exceptions.TestFailedException: AssertionException: Expected to be equal to MdSyntaxTree:
+  RootMdSyntaxNode
+  └── BlockQuoteMdSyntaxNode
+      ├── ParagraphMdSyntaxNode
+      │   ├── TextMdSyntaxNode
+      │   ├── BoldMdSyntaxNode
+      │   │   └── TextMdSyntaxNode
+      │   ├── TextMdSyntaxNode
+      │   ├── ItalicMdSyntaxNode
+      │   │   └── TextMdSyntaxNode
+      │   └── TextMdSyntaxNode
+      ├── NewLineMdSyntaxNode
+      └── ListOrderedMdSyntaxNode
+          ├── ListItemMdSyntaxNode
+          │   └── TextMdSyntaxNode
+          └── ListItemMdSyntaxNode
+              ├── TextMdSyntaxNode
+              ├── NewLineMdSyntaxNode
+              └── ListUnOrderedMdSyntaxNode
+                  └── ListItemMdSyntaxNode
+                      └── TextMdSyntaxNode
+
+  but found MdSyntaxTree:
+  RootMdSyntaxNode
+  └── BlockQuoteMdSyntaxNode
+      ├── ParagraphMdSyntaxNode
+      │   ├── TextMdSyntaxNode
+      │   ├── BoldMdSyntaxNode
+      │   │   └── TextMdSyntaxNode
+      │   └── TextMdSyntaxNode
+      ├── NewLineMdSyntaxNode
+      └── ListOrderedMdSyntaxNode
+          ├── ListItemMdSyntaxNode
+          │   └── TextMdSyntaxNode
+          └── ListItemMdSyntaxNode
+              ├── TextMdSyntaxNode
+              ├── NewLineMdSyntaxNode
+              └── ListUnOrderedMdSyntaxNode
+                  └── ListItemMdSyntaxNode
+                      └── TextMdSyntaxNode
+
+
+  at Assert.That(foundTree).IsEquatableTo(expectedOutput)
+failed FromMarkdown_ToSyntaxTree_ShouldBeSame(aggregate.xml/test1) (43ms)
+  AssertionException: Expected to be equal to MdSyntaxTree:
+RootMdSyntaxNode
+├── HeadingMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── HeadingMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── ParagraphMdSyntaxNode
+│   ├── TextMdSyntaxNode
+│   ├── BoldMdSyntaxNode
+│   │   └── TextMdSyntaxNode
+│   ├── TextMdSyntaxNode
+│   ├── ItalicMdSyntaxNode
+│   │   └── TextMdSyntaxNode
+│   ├── TextMdSyntaxNode
+│   ├── CodeInlineMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── HeadingMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── ParagraphMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── CodeBlockMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── HeadingMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── ParagraphMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── ListUnOrderedMdSyntaxNode
+│   ├── ListItemMdSyntaxNode
+│   │   └── TextMdSyntaxNode
+│   └── ListItemMdSyntaxNode
+│       ├── TextMdSyntaxNode
+│       ├── NewLineMdSyntaxNode
+│       └── ListUnOrderedMdSyntaxNode
+│           ├── ListItemMdSyntaxNode
+│           │   └── TextMdSyntaxNode
+│           └── ListItemMdSyntaxNode
+│               └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── HeadingMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── BlockQuoteMdSyntaxNode
+│   ├── ParagraphMdSyntaxNode
+│   │   └── TextMdSyntaxNode
+│   ├── NewLineMdSyntaxNode
+│   └── ParagraphMdSyntaxNode
+│       └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── HeadingMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── TableMdSyntaxNode
+│   ├── TableRowMdSyntaxNode
+│   │   ├── TableCellMdSyntaxNode
+│   │   │   └── TextMdSyntaxNode
+│   │   ├── TableCellMdSyntaxNode
+│   │   │   └── TextMdSyntaxNode
+│   │   └── TableCellMdSyntaxNode
+│   │       └── TextMdSyntaxNode
+│   ├── TableRowMdSyntaxNode
+│   │   ├── TableCellMdSyntaxNode
+│   │   │   └── TextMdSyntaxNode
+│   │   ├── TableCellMdSyntaxNode
+│   │   │   └── TextMdSyntaxNode
+│   │   └── TableCellMdSyntaxNode
+│   │       └── TextMdSyntaxNode
+│   └── TableRowMdSyntaxNode
+│       ├── TableCellMdSyntaxNode
+│       │   └── TextMdSyntaxNode
+│       ├── TableCellMdSyntaxNode
+│       │   └── TextMdSyntaxNode
+│       └── TableCellMdSyntaxNode
+│           └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── HeadingMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── ParagraphMdSyntaxNode
+│   ├── TextMdSyntaxNode
+│   ├── LinkMdSyntaxNode
+│   │   └── TextMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+└── ParagraphMdSyntaxNode
+    └── ImageMdSyntaxNode
+but found MdSyntaxTree:
+RootMdSyntaxNode
+├── HeadingMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── HeadingMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── ParagraphMdSyntaxNode
+│   ├── TextMdSyntaxNode
+│   ├── BoldMdSyntaxNode
+│   │   └── TextMdSyntaxNode
+│   ├── TextMdSyntaxNode
+│   ├── CodeInlineMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── HeadingMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── ParagraphMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── CodeBlockMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── HeadingMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── ParagraphMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── ListUnOrderedMdSyntaxNode
+│   ├── ListItemMdSyntaxNode
+│   │   └── TextMdSyntaxNode
+│   └── ListItemMdSyntaxNode
+│       ├── TextMdSyntaxNode
+│       ├── NewLineMdSyntaxNode
+│       └── ListUnOrderedMdSyntaxNode
+│           ├── ListItemMdSyntaxNode
+│           │   └── TextMdSyntaxNode
+│           └── ListItemMdSyntaxNode
+│               └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── HeadingMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── BlockQuoteMdSyntaxNode
+│   ├── ParagraphMdSyntaxNode
+│   │   └── TextMdSyntaxNode
+│   ├── NewLineMdSyntaxNode
+│   └── ParagraphMdSyntaxNode
+│       └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── HeadingMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── TableMdSyntaxNode
+│   ├── TableRowMdSyntaxNode
+│   │   ├── TableCellMdSyntaxNode
+│   │   │   └── TextMdSyntaxNode
+│   │   ├── TableCellMdSyntaxNode
+│   │   │   └── TextMdSyntaxNode
+│   │   └── TableCellMdSyntaxNode
+│   │       └── TextMdSyntaxNode
+│   ├── TableRowMdSyntaxNode
+│   │   ├── TableCellMdSyntaxNode
+│   │   │   └── TextMdSyntaxNode
+│   │   ├── TableCellMdSyntaxNode
+│   │   │   └── TextMdSyntaxNode
+│   │   └── TableCellMdSyntaxNode
+│   │       └── TextMdSyntaxNode
+│   └── TableRowMdSyntaxNode
+│       ├── TableCellMdSyntaxNode
+│       │   └── TextMdSyntaxNode
+│       ├── TableCellMdSyntaxNode
+│       │   └── TextMdSyntaxNode
+│       └── TableCellMdSyntaxNode
+│           └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── HeadingMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+├── ParagraphMdSyntaxNode
+│   ├── TextMdSyntaxNode
+│   ├── LinkMdSyntaxNode
+│   │   └── TextMdSyntaxNode
+│   └── TextMdSyntaxNode
+├── NewLineMdSyntaxNode
+└── ParagraphMdSyntaxNode
+    └── ImageMdSyntaxNode
+at Assert.That(foundTree).IsEquatableTo(expectedOutput)
+  from tests\InfiniBlazorTests.Core.Markdown\bin\Debug\net10.0\InfiniBlazorTests.Core.Markdown.dll (net10.0|x64)
+  TUnit.Engine.Exceptions.TestFailedException: AssertionException: Expected to be equal to MdSyntaxTree:
+  RootMdSyntaxNode
+  ├── HeadingMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── HeadingMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── ParagraphMdSyntaxNode
+  │   ├── TextMdSyntaxNode
+  │   ├── BoldMdSyntaxNode
+  │   │   └── TextMdSyntaxNode
+  │   ├── TextMdSyntaxNode
+  │   ├── ItalicMdSyntaxNode
+  │   │   └── TextMdSyntaxNode
+  │   ├── TextMdSyntaxNode
+  │   ├── CodeInlineMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── HeadingMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── ParagraphMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── CodeBlockMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── HeadingMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── ParagraphMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── ListUnOrderedMdSyntaxNode
+  │   ├── ListItemMdSyntaxNode
+  │   │   └── TextMdSyntaxNode
+  │   └── ListItemMdSyntaxNode
+  │       ├── TextMdSyntaxNode
+  │       ├── NewLineMdSyntaxNode
+  │       └── ListUnOrderedMdSyntaxNode
+  │           ├── ListItemMdSyntaxNode
+  │           │   └── TextMdSyntaxNode
+  │           └── ListItemMdSyntaxNode
+  │               └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── HeadingMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── BlockQuoteMdSyntaxNode
+  │   ├── ParagraphMdSyntaxNode
+  │   │   └── TextMdSyntaxNode
+  │   ├── NewLineMdSyntaxNode
+  │   └── ParagraphMdSyntaxNode
+  │       └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── HeadingMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── TableMdSyntaxNode
+  │   ├── TableRowMdSyntaxNode
+  │   │   ├── TableCellMdSyntaxNode
+  │   │   │   └── TextMdSyntaxNode
+  │   │   ├── TableCellMdSyntaxNode
+  │   │   │   └── TextMdSyntaxNode
+  │   │   └── TableCellMdSyntaxNode
+  │   │       └── TextMdSyntaxNode
+  │   ├── TableRowMdSyntaxNode
+  │   │   ├── TableCellMdSyntaxNode
+  │   │   │   └── TextMdSyntaxNode
+  │   │   ├── TableCellMdSyntaxNode
+  │   │   │   └── TextMdSyntaxNode
+  │   │   └── TableCellMdSyntaxNode
+  │   │       └── TextMdSyntaxNode
+  │   └── TableRowMdSyntaxNode
+  │       ├── TableCellMdSyntaxNode
+  │       │   └── TextMdSyntaxNode
+  │       ├── TableCellMdSyntaxNode
+  │       │   └── TextMdSyntaxNode
+  │       └── TableCellMdSyntaxNode
+  │           └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── HeadingMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── ParagraphMdSyntaxNode
+  │   ├── TextMdSyntaxNode
+  │   ├── LinkMdSyntaxNode
+  │   │   └── TextMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  └── ParagraphMdSyntaxNode
+      └── ImageMdSyntaxNode
+
+  but found MdSyntaxTree:
+  RootMdSyntaxNode
+  ├── HeadingMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── HeadingMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── ParagraphMdSyntaxNode
+  │   ├── TextMdSyntaxNode
+  │   ├── BoldMdSyntaxNode
+  │   │   └── TextMdSyntaxNode
+  │   ├── TextMdSyntaxNode
+  │   ├── CodeInlineMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── HeadingMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── ParagraphMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── CodeBlockMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── HeadingMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── ParagraphMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── ListUnOrderedMdSyntaxNode
+  │   ├── ListItemMdSyntaxNode
+  │   │   └── TextMdSyntaxNode
+  │   └── ListItemMdSyntaxNode
+  │       ├── TextMdSyntaxNode
+  │       ├── NewLineMdSyntaxNode
+  │       └── ListUnOrderedMdSyntaxNode
+  │           ├── ListItemMdSyntaxNode
+  │           │   └── TextMdSyntaxNode
+  │           └── ListItemMdSyntaxNode
+  │               └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── HeadingMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── BlockQuoteMdSyntaxNode
+  │   ├── ParagraphMdSyntaxNode
+  │   │   └── TextMdSyntaxNode
+  │   ├── NewLineMdSyntaxNode
+  │   └── ParagraphMdSyntaxNode
+  │       └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── HeadingMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── TableMdSyntaxNode
+  │   ├── TableRowMdSyntaxNode
+  │   │   ├── TableCellMdSyntaxNode
+  │   │   │   └── TextMdSyntaxNode
+  │   │   ├── TableCellMdSyntaxNode
+  │   │   │   └── TextMdSyntaxNode
+  │   │   └── TableCellMdSyntaxNode
+  │   │       └── TextMdSyntaxNode
+  │   ├── TableRowMdSyntaxNode
+  │   │   ├── TableCellMdSyntaxNode
+  │   │   │   └── TextMdSyntaxNode
+  │   │   ├── TableCellMdSyntaxNode
+  │   │   │   └── TextMdSyntaxNode
+  │   │   └── TableCellMdSyntaxNode
+  │   │       └── TextMdSyntaxNode
+  │   └── TableRowMdSyntaxNode
+  │       ├── TableCellMdSyntaxNode
+  │       │   └── TextMdSyntaxNode
+  │       ├── TableCellMdSyntaxNode
+  │       │   └── TextMdSyntaxNode
+  │       └── TableCellMdSyntaxNode
+  │           └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── HeadingMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  ├── ParagraphMdSyntaxNode
+  │   ├── TextMdSyntaxNode
+  │   ├── LinkMdSyntaxNode
+  │   │   └── TextMdSyntaxNode
+  │   └── TextMdSyntaxNode
+  ├── NewLineMdSyntaxNode
+  └── ParagraphMdSyntaxNode
+      └── ImageMdSyntaxNode
+
+
+  at Assert.That(foundTree).IsEquatableTo(expectedOutput)
+tests\InfiniBlazorTests.Core.Markdown\bin\Debug\net10.0\InfiniBlazorTests.Core.Markdown.dll (net10.0|x64) failed with 5 error(s) (853ms)
+Exit code: 2
+  Standard output:
+  ████████╗██╗   ██╗███╗   ██╗██╗████████╗
+  ╚══██╔══╝██║   ██║████╗  ██║██║╚══██╔══╝
+     ██║   ██║   ██║██╔██╗ ██║██║   ██║
+     ██║   ██║   ██║██║╚██╗██║██║   ██║
+     ██║   ╚██████╔╝██║ ╚████║██║   ██║
+     ╚═╝    ╚═════╝ ╚═╝  ╚═══╝╚═╝   ╚═╝
+
+     TUnit v1.6.28.0 | 64-bit | Microsoft Windows 10.0.26200 | win-x64 | .NET 10.0.1 | Microsoft Testing Platform v2.0.2
+
+     Engine Mode: SourceGenerated
+
+
+Test run summary: Failed!
+  total: 895
+  failed: 5
+  succeeded: 890
+  skipped: 0
+  duration: 1s 705ms
+Test run completed with non-success exit code: 2 (see: https://aka.ms/testingplatform/exitcodes)

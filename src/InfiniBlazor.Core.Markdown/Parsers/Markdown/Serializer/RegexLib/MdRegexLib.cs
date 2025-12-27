@@ -19,10 +19,10 @@ public static partial class MdRegexLib {
     [GeneratedRegex(@"(?<italic>\*(?<i>(?>[^\\\*]+|\\\*|\*\*|(?<open>\*)|(?<-open>\*))+)(?(open)(?!))\*)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex ItalicRegex { get; }
 
-    [GeneratedRegex(@"(?<supScript>\^(?<sp>(?>[^\\\^]+|\\\^|\^\^|(?<open>\^)|(?<-open>\^))+)(?(open)(?!))\^)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"(?<supScript>\^(?<sp>(?>[^\\\^\n]+|\\\^|\^\^|(?<open>\^)|(?<-open>\^))+)(?(open)(?!))\^)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex SuperScriptRegex { get; }
 
-    [GeneratedRegex(@"(?<subScript>~(?<sb>(?>[^\\~]+|\\~|~~|(?<open>~)|(?<-open>~))+)(?(open)(?!))~)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"(?<subScript>~(?<sb>(?>[^\\~\n]+|\\~|~~|(?<open>~)|(?<-open>~))+)(?(open)(?!))~)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex SubScriptRegex { get; }
 
     [GeneratedRegex(@"(?<code>(?<open>`+)(?<c>(?>[^`\\]+|\\.|`(?!\k<open>))+?)\k<open>)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
@@ -31,7 +31,7 @@ public static partial class MdRegexLib {
     [GeneratedRegex(@"(?<strike>~~(?<s>(?>[^\\~]+|\\~|~|(?<open>~~)|(?<-open>~~))+?~?)(?(open)(?!))~~)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex StrikeRegex { get; }
 
-    [GeneratedRegex(@"(?<underline>_(?<u>.+?)(?<!\\)_)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"(?<underline>_(?<u>(?>[^\\_]+|\\_|__|(?<open>_)|(?<-open>_))+)(?(open)(?!))_)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex UnderlineRegex { get; }
 
     [GeneratedRegex(@"(?<highlight>==(?<h>.+?)(?<!\\)==)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]

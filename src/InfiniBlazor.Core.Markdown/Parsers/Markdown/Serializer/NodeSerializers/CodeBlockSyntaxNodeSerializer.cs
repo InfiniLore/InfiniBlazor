@@ -76,20 +76,13 @@ public class CodeBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         for (int i = 0; i < content.Length; i++) {
             switch (content[i]) {
                 case '\r' when i + 1 < content.Length && content[i + 1] == '\n': {
-                    // Don't add a newline if it's the last character sequence
-                    if (i + 2 < content.Length) {
-                        result[destinationIndex++] = '\n';
-                    }
+                    result[destinationIndex++] = '\n';
                     i++;// Skip the \n
                     break;
                 }
 
                 default:
                     result[destinationIndex++] = content[i];
-                    break;
-
-                // Skip the last single \n if present
-                case '\n' when i == content.Length - 1:
                     break;
             }
         }
