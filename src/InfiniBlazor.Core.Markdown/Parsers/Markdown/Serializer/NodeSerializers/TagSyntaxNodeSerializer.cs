@@ -24,7 +24,7 @@ public class TagSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     ) {
         if (!match.Groups[TextId].TryGetValue(out string? tagValue)) return;
 
-        TagMdSyntaxNode node = TagMdSyntaxNode.Pool.Get();
+        TagMdSyntaxNode node = MdSyntaxNodePool<TagMdSyntaxNode>.Shared.Get();
         node.WithContent(tagValue);
         parentNode.AddChildNode(node);
     }

@@ -22,7 +22,7 @@ public class WrapperSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
         if (!match.Groups[WId].TryGetValue(out string? wrapperValue)) return;
         if (!match.Groups[WModsId].TryGetValue(out string? mods)) return;// Mods are required for this match
 
-        WrapperMdSyntaxNode node = WrapperMdSyntaxNode.Pool.Get();
+        WrapperMdSyntaxNode node = MdSyntaxNodePool<WrapperMdSyntaxNode>.Shared.Get();
         node.WithModifier(MdSyntaxNodeModifier.FromString(mods));
         parentNode.AddChildNode(node);
         stack.PushSingleLineMatchesToStack(wrapperValue, node);

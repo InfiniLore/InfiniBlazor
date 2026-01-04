@@ -27,7 +27,7 @@ public class BlockQuoteSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
 
         string adjustedBlockquote = LineNormalization.NormalizeBlockQuote(blockQuoteBody, out int leadingSpaces);
 
-        BlockQuoteMdSyntaxNode blockQuoteNode = BlockQuoteMdSyntaxNode.Pool.Get();
+        BlockQuoteMdSyntaxNode blockQuoteNode = MdSyntaxNodePool<BlockQuoteMdSyntaxNode>.Shared.Get();
         blockQuoteNode.WithLeadingSpaces(leadingSpaces);
 
         parentNode.AddChildNode(blockQuoteNode);

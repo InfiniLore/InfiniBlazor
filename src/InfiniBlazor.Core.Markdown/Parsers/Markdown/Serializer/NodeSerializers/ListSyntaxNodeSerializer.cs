@@ -41,14 +41,14 @@ public class ListSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
             matchCollection.CopyTo(matchArray, 0);
 
             IMdSyntaxNode listNode = isOrdered
-                ? ListOrderedMdSyntaxNode.Pool.Get()
-                : ListUnOrderedMdSyntaxNode.Pool.Get();
+                ? MdSyntaxNodePool<ListOrderedMdSyntaxNode>.Shared.Get()
+                : MdSyntaxNodePool<ListUnOrderedMdSyntaxNode>.Shared.Get();
             parentNode.AddChildNode(listNode);
 
             for (int i = 0; i < matchCount; i++) {
                 GroupCollection groups = matchArray[i].Groups;
 
-                ListItemMdSyntaxNode listItemNode = ListItemMdSyntaxNode.Pool.Get();
+                ListItemMdSyntaxNode listItemNode = MdSyntaxNodePool<ListItemMdSyntaxNode>.Shared.Get();
                 listNode.AddChildNode(listItemNode);
 
                 groups[ListItemLeadingSpaces].TryGetLength(out int listItemLeadingSpaces);

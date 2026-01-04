@@ -19,5 +19,5 @@ public class NewLineSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match
-    ) => parentNode.AddChildNode(NewLineMdSyntaxNode.Pool.Get());
+    ) => parentNode.AddChildNode(MdSyntaxNodePool<NewLineMdSyntaxNode>.Shared.Get());
 }

@@ -26,7 +26,7 @@ public class EmoteSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         if (match.Groups[EmoteId] is not { Success: true, Value: var originalEmote }) return;
         if (match.Groups[EmoteBodyId] is not { Success: true, Value: var emoteBody }) return;
 
-        EmoteMdSyntaxNode node = EmoteMdSyntaxNode.Pool.Get();
+        EmoteMdSyntaxNode node = MdSyntaxNodePool<EmoteMdSyntaxNode>.Shared.Get();
         node.WithOriginalEmote(originalEmote)
             .WithEmoteKey(emoteBody);
         parentNode.AddChildNode(node);

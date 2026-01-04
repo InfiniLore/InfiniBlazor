@@ -14,7 +14,7 @@ using System.Diagnostics.CodeAnalysis;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
-    private Lazy<IMdSyntaxNode> LazyRootNode { get; set; } = new(static () => RootMdSyntaxNode.Pool.Get());
+    private Lazy<IMdSyntaxNode> LazyRootNode { get; set; } = new(static () => MdSyntaxNodePool<RootMdSyntaxNode>.Shared.Get());
     public IMdSyntaxNode RootNode {
         get => LazyRootNode.Value;
         init {
@@ -226,7 +226,7 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
 
             // Finally, reset and replace the root node
             RootNode.ReturnToPool();
-            LazyRootNode = new Lazy<IMdSyntaxNode>(() => RootMdSyntaxNode.Pool.Get());
+            LazyRootNode = new Lazy<IMdSyntaxNode>(() => MdSyntaxNodePool<RootMdSyntaxNode>.Shared.Get());
             return true;
         }
 

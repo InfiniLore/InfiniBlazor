@@ -40,7 +40,7 @@ public class HtmlBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
         }
 
         if (hasTrailingContent && parentNode is not (ParagraphMdSyntaxNode or HtmlSpanMdSyntaxNode)) {
-            parentNode = parentNode.AddChildNode(ParagraphMdSyntaxNode.Pool.Get());
+            parentNode = parentNode.AddChildNode(MdSyntaxNodePool<ParagraphMdSyntaxNode>.Shared.Get());
         }
 
         if (match.Groups[HtmlPostId].TryGetValue(out string? post)) {
@@ -50,7 +50,7 @@ public class HtmlBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
         if (hasHtmlBody && htmlBody is not null) {
             // Span should be the only special case allowed that allows for Markdown parsing within it
             if (spanMatch is not null && spanBody is not null) {
-                HtmlSpanMdSyntaxNode spanNode = HtmlSpanMdSyntaxNode.Pool.Get();
+                HtmlSpanMdSyntaxNode spanNode = MdSyntaxNodePool<HtmlSpanMdSyntaxNode>.Shared.Get();
 
                 string spanTagAttrs = spanMatch.Groups[SpanTagAttrsId].Value;
                 spanNode.WithAttributes(spanTagAttrs);
@@ -59,7 +59,7 @@ public class HtmlBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
                 stack.PushProcessedNodeToStack(parentNode, spanNode);
             }
             else {
-                HtmlMdSyntaxNode htmlNode = HtmlMdSyntaxNode.Pool.Get();
+                HtmlMdSyntaxNode htmlNode = MdSyntaxNodePool<HtmlMdSyntaxNode>.Shared.Get();
                 htmlNode.WithContent(htmlBody);
                 stack.PushProcessedNodeToStack(parentNode, htmlNode);
             }

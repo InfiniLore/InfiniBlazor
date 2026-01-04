@@ -16,7 +16,7 @@ public class BreakSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
-        BreakMdSyntaxNode node = BreakMdSyntaxNode.Pool.Get();
+        BreakMdSyntaxNode node = MdSyntaxNodePool<BreakMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(node);
     }
 }

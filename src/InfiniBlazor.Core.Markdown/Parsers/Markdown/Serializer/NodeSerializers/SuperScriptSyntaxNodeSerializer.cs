@@ -24,7 +24,7 @@ public class SuperScriptSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     ) {
         if (!match.Groups[SpId].TryGetValue(out string? superValue)) return;
 
-        SuperScriptMdSyntaxNode node = SuperScriptMdSyntaxNode.Pool.Get();
+        SuperScriptMdSyntaxNode node = MdSyntaxNodePool<SuperScriptMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(node);
         stack.PushSingleLineMatchesToStack(superValue, node);
     }

@@ -2,8 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniBlazor.Markdown.Syntax.Nodes;
-using InfiniBlazor.Pooling;
-using Microsoft.Extensions.ObjectPool;
 using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
@@ -26,9 +24,6 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     public Type Type => TypeBacking; 
 
     public IMdSyntaxNodeModifier? Modifier { get; private set; }
-
-    public static ObjectPool<T> Pool { get; } = PoolingHelpers.CreateResettablePool<T>(PoolingHelpers.VisitorPerParserRetained);
-
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
@@ -235,7 +230,7 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     #region With...
     public IMdSyntaxNode WithText(string content) {
         if (ChildNodes.LastOrDefault() is not TextMdSyntaxNode lastNode) {
-            TextMdSyntaxNode newNode = TextMdSyntaxNode.Pool.Get();
+            TextMdSyntaxNode newNode = MdSyntaxNodePool<TextMdSyntaxNode>.Shared.Get();
             newNode.WithContent(content);
             AddChildNode(newNode);
             return this;
@@ -283,8 +278,7 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     #endregion
 
     #region ReturnToPool and Cleanup
-    public void ReturnToPool()
-        => Pool.Return(Unsafe.As<T>(this));
+    void IMdSyntaxNode.ReturnToPool() => MdSyntaxNodePool<T>.Shared.Return(Unsafe.As<T>(this));
 
     public virtual bool TryReset() {
         if (ChildNodes.Length > 0) {

@@ -48,7 +48,7 @@ public abstract class JsonMdSyntaxNodeVisitor<TNode> : IJsonMdSyntaxNodeVisitor 
     }
 
     public IMdSyntaxNode SerializeToNode(JsonElement element, IMdSyntaxNode parentNode) {
-        TNode node = MdSyntaxNode<TNode>.Pool.Get();
+        TNode node = MdSyntaxNodePool<TNode>.Shared.Get();
         parentNode.AddChildNode(node);
 
         SerializeDetails(element, node);

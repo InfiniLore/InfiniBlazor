@@ -43,16 +43,16 @@ public class TableSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
         int rowCount = rows.Split(rowRanges, '\n', StringSplitOptions.TrimEntries);
 
         // Construct table HTML
-        TableMdSyntaxNode tableNode = TableMdSyntaxNode.Pool.Get();
+        TableMdSyntaxNode tableNode = MdSyntaxNodePool<TableMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(tableNode);
         if (hasSeparatorData) tableNode.WithAlignments(separatorColumData);
 
         // Add headers
-        TableRowMdSyntaxNode tableHeadRow = TableRowMdSyntaxNode.Pool.Get();
+        TableRowMdSyntaxNode tableHeadRow = MdSyntaxNodePool<TableRowMdSyntaxNode>.Shared.Get();
         tableNode.TrySetHeader(tableHeadRow);
 
         for (int index = 0; index < headerColumnCount; index++) {
-            TableCellMdSyntaxNode tableHeadCellNode = TableCellMdSyntaxNode.Pool.Get();
+            TableCellMdSyntaxNode tableHeadCellNode = MdSyntaxNodePool<TableCellMdSyntaxNode>.Shared.Get();
             tableHeadRow.AddChildNode(tableHeadCellNode);
 
             ReadOnlySpan<char> column = header[headerColumns[index]];
@@ -72,11 +72,11 @@ public class TableSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
 
                 int rowColumnCount = row.Split(columnBuffer, '|', StringSplitOptions.RemoveEmptyEntries);
 
-                TableRowMdSyntaxNode tableRow = TableRowMdSyntaxNode.Pool.Get();
+                TableRowMdSyntaxNode tableRow = MdSyntaxNodePool<TableRowMdSyntaxNode>.Shared.Get();
                 tableNode.TryAddRow(tableRow);
 
                 for (int columnIndex = 0; columnIndex < rowColumnCount; columnIndex++) {
-                    TableCellMdSyntaxNode tableCell = TableCellMdSyntaxNode.Pool.Get();
+                    TableCellMdSyntaxNode tableCell = MdSyntaxNodePool<TableCellMdSyntaxNode>.Shared.Get();
                     tableRow.AddChildNode(tableCell);
 
                     ReadOnlySpan<char> column = row[columnBuffer[columnIndex]];

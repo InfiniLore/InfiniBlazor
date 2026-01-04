@@ -24,7 +24,7 @@ public class StrikeSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     ) {
         if (!match.Groups[StrikeContentId].TryGetValue(out string? strikeValue)) return;
 
-        StrikeMdSyntaxNode node = StrikeMdSyntaxNode.Pool.Get();
+        StrikeMdSyntaxNode node = MdSyntaxNodePool<StrikeMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(node);
 
         stack.PushSingleLineMatchesToStack(strikeValue, node);

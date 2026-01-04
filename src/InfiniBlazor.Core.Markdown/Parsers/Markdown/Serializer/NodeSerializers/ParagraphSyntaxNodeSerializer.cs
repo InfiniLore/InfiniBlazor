@@ -29,7 +29,7 @@ public class ParagraphSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
             return;
         }
 
-        ParagraphMdSyntaxNode node = ParagraphMdSyntaxNode.Pool.Get();
+        ParagraphMdSyntaxNode node = MdSyntaxNodePool<ParagraphMdSyntaxNode>.Shared.Get();
         parentNode = parentNode.AddChildNode(node);
         stack.PushSingleLineMatchesToStack(paragraph, parentNode);
     }

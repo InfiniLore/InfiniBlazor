@@ -27,7 +27,7 @@ public class CodeBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     ) {
         if (!match.Groups[CBodyId].TryGetValueSpan(out ReadOnlySpan<char> codeBlockBody)) return;
 
-        CodeBlockMdSyntaxNode codeNode = CodeBlockMdSyntaxNode.Pool.Get();
+        CodeBlockMdSyntaxNode codeNode = MdSyntaxNodePool<CodeBlockMdSyntaxNode>.Shared.Get();
 
         string langNameValue = match.Groups[CLangId].Value;
         if (!langNameValue.IsEmpty()) codeNode.WithLanguage(langNameValue);
@@ -38,7 +38,7 @@ public class CodeBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         
         // Add trailing text as a paragraph node
         if (!match.Groups[CTrailingId].TryGetValue(out string? trailing)) return;
-        ParagraphMdSyntaxNode paragraphNode = ParagraphMdSyntaxNode.Pool.Get();
+        ParagraphMdSyntaxNode paragraphNode = MdSyntaxNodePool<ParagraphMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(paragraphNode);
         stack.PushSingleLineMatchesToStack(trailing, paragraphNode);
     }

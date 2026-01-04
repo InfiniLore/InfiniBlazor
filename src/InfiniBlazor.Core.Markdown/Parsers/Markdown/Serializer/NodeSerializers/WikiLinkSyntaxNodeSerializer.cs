@@ -24,7 +24,7 @@ public class WikiLinkSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     ) {
         if (!match.Groups[WikiLinkHrefId].TryGetValue(out string? href)) return;
 
-        WikiLinkMdSyntaxNode node = WikiLinkMdSyntaxNode.Pool.Get();
+        WikiLinkMdSyntaxNode node = MdSyntaxNodePool<WikiLinkMdSyntaxNode>.Shared.Get();
         node.WithContent(href);
         parentNode.AddChildNode(node);
     }

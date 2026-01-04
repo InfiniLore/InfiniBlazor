@@ -24,7 +24,7 @@ public class SubScriptSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     ) {
         if (!match.Groups[SbId].TryGetValue(out string? subValue)) return;
 
-        SubScriptMdSyntaxNode node = SubScriptMdSyntaxNode.Pool.Get();
+        SubScriptMdSyntaxNode node = MdSyntaxNodePool<SubScriptMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(node);
         stack.PushSingleLineMatchesToStack(subValue, node);
     }

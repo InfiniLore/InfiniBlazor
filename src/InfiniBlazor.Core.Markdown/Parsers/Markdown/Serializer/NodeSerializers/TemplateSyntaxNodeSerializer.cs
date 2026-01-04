@@ -26,7 +26,7 @@ public class TemplateSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         if (!match.Groups[TemplateContentId].TryGetValue(out string? variableContent)) return;
         if (!match.Groups[TemplateId].TryGetLength(out int variableLength)) return;
 
-        TemplateMdSyntaxNode node = TemplateMdSyntaxNode.Pool.Get();
+        TemplateMdSyntaxNode node = MdSyntaxNodePool<TemplateMdSyntaxNode>.Shared.Get();
         node.WithContent(variableContent)
             .WithBracesCount((variableLength - variableContent.Length) / 2);
         parentNode.AddChildNode(node);

@@ -82,7 +82,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
 
                 if (next is null) {
                     if (scanPos < length) {
-                        TextMdSyntaxNode tail = TextMdSyntaxNode.Pool.Get();
+                        TextMdSyntaxNode tail = MdSyntaxNodePool<TextMdSyntaxNode>.Shared.Get();
                         tail.WithContent(input[scanPos..]);
                         
                         EnsureCapacity(ref fragments, index + 1);
@@ -96,7 +96,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
                 IMdSyntaxNodeSerializer serializerWinner = next.Value.Serializer;
 
                 if (match.Index > scanPos) {
-                    TextMdSyntaxNode contentNode = TextMdSyntaxNode.Pool.Get();
+                    TextMdSyntaxNode contentNode = MdSyntaxNodePool<TextMdSyntaxNode>.Shared.Get();
                     contentNode.WithContent(input[scanPos..match.Index]);
 
                     EnsureCapacity(ref fragments, index + 1);

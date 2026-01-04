@@ -23,7 +23,7 @@ public class EscapedCharacterSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         Match match
     ) {
         char value = match.Groups[EscapedId].ValueSpan[1];
-        EscapedCharacterMdSyntaxNode node = EscapedCharacterMdSyntaxNode.Pool.Get();
+        EscapedCharacterMdSyntaxNode node = MdSyntaxNodePool<EscapedCharacterMdSyntaxNode>.Shared.Get();
         node.WithContent(value);
         parentNode.AddChildNode(node);
     }

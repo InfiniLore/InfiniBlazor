@@ -26,7 +26,7 @@ public class FootnoteDescriptionSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         if (match.Groups[FootnoteIdentifierId] is not { Success: true, Value: var footnoteId }) return;
         if (match.Groups[FootnoteBodyId] is not { Success: true, Value: var body }) return;
 
-        FootnoteDescriptionMdSyntaxNode node = FootnoteDescriptionMdSyntaxNode.Pool.Get();
+        FootnoteDescriptionMdSyntaxNode node = MdSyntaxNodePool<FootnoteDescriptionMdSyntaxNode>.Shared.Get();
         node.WithIdentifier(footnoteId);
         parentNode.AddChildNode(node);
 

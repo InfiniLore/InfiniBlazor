@@ -33,7 +33,7 @@ public class LinkSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         match.Groups[LnTitleId].TryGetValue(out string? title);
 
         if (match.Groups[LnBangId].Success) {
-            ImageMdSyntaxNode imgNode = ImageMdSyntaxNode.Pool.Get();
+            ImageMdSyntaxNode imgNode = MdSyntaxNodePool<ImageMdSyntaxNode>.Shared.Get();
             imgNode.WithAltText(linkText);
             imgNode.WithHref(linkHref);
 
@@ -44,7 +44,7 @@ public class LinkSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
             return;
         }
 
-        LinkMdSyntaxNode linkNode = LinkMdSyntaxNode.Pool.Get();
+        LinkMdSyntaxNode linkNode = MdSyntaxNodePool<LinkMdSyntaxNode>.Shared.Get();
         linkNode.WithHref(linkHref);
         if (mods.IsNotNullOrWhiteSpace()) linkNode.WithModifier(MdSyntaxNodeModifier.FromString(mods));
         if (title.IsNotNullOrEmpty()) linkNode.WithTitle(title);

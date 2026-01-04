@@ -20,7 +20,7 @@ public class HighlightSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
         if (!match.Groups[HId].TryGetValue(out string? boldValue)) return;
 
-        HighlightMdSyntaxNode node = HighlightMdSyntaxNode.Pool.Get();
+        HighlightMdSyntaxNode node = MdSyntaxNodePool<HighlightMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(node);
         stack.PushSingleLineMatchesToStack(boldValue, node);
     }

@@ -45,6 +45,6 @@ public interface IMdSyntaxNode : IResettable, IEquatable<IMdSyntaxNode>{
     IMdSyntaxNode WithParent(IMdSyntaxNode parent);
     IMdSyntaxNode WithModifier(IMdSyntaxNodeModifier modifier);
     IMdSyntaxNode WithChild<TChild>(TChild child) where TChild : IMdSyntaxNode;
-
-    void ReturnToPool();
+    
+    internal void ReturnToPool();
 }

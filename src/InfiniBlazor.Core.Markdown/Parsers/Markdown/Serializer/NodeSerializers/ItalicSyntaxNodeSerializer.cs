@@ -24,7 +24,7 @@ public class ItalicSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     ) {
         if (!match.Groups[ItalicContentId].TryGetValue(out string? italicValue)) return;
 
-        ItalicMdSyntaxNode node = ItalicMdSyntaxNode.Pool.Get();
+        ItalicMdSyntaxNode node = MdSyntaxNodePool<ItalicMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(node);
         stack.PushSingleLineMatchesToStack(italicValue, node);
     }

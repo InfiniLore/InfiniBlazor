@@ -20,7 +20,7 @@ public class FrontmatterSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
-        FrontMatterMdSyntaxNode node = FrontMatterMdSyntaxNode.Pool.Get();
+        FrontMatterMdSyntaxNode node = MdSyntaxNodePool<FrontMatterMdSyntaxNode>.Shared.Get();
         if (match.Groups[LangId].TryGetValue(out string? lang)) node.WithLanguage(lang);
         if (match.Groups[BodyId].TryGetValue(out string? body)) node.WithContent(body);
         

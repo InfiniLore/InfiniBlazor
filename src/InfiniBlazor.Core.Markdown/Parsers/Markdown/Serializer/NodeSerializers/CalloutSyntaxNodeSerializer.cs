@@ -26,7 +26,7 @@ public class CalloutSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        CalloutMdSyntaxNode node = CalloutMdSyntaxNode.Pool.Get();
+        CalloutMdSyntaxNode node = MdSyntaxNodePool<CalloutMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(node);
 
         if (match.Groups[CalloutOptionId] is { Success: true, ValueSpan: { Length: > 0 } option }) {
@@ -42,7 +42,7 @@ public class CalloutSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         }
 
         if (match.Groups[CalloutTitleId] is { Success: true, Value: {} title }) {
-            CalloutTitleMdSyntaxNode titleNode = CalloutTitleMdSyntaxNode.Pool.Get();
+            CalloutTitleMdSyntaxNode titleNode = MdSyntaxNodePool<CalloutTitleMdSyntaxNode>.Shared.Get();
             node.TrySetTitle(titleNode);
 
             stack.PushSingleLineMatchesToStack(title, titleNode);
@@ -50,7 +50,7 @@ public class CalloutSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
 
         // ReSharper disable once InvertIf
         if (match.Groups[CalloutBodyId] is { Success: true, ValueSpan: var calloutBody }) {
-            CalloutBodyMdSyntaxNode bodyNode = CalloutBodyMdSyntaxNode.Pool.Get();
+            CalloutBodyMdSyntaxNode bodyNode = MdSyntaxNodePool<CalloutBodyMdSyntaxNode>.Shared.Get();
             node.TrySetBody(bodyNode);
 
             stack.PushMultiLineMatchesToStack(

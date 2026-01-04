@@ -24,7 +24,7 @@ public class FootnoteReferenceSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     ) {
         if (match.Groups[FootnoteIdentifierId] is not { Success: true, Value: var footnoteId }) return;
 
-        FootnoteReferenceMdSyntaxNode node = FootnoteReferenceMdSyntaxNode.Pool.Get();
+        FootnoteReferenceMdSyntaxNode node = MdSyntaxNodePool<FootnoteReferenceMdSyntaxNode>.Shared.Get();
         node.WithIdentifier(footnoteId);
         parentNode.AddChildNode(node);
     }
