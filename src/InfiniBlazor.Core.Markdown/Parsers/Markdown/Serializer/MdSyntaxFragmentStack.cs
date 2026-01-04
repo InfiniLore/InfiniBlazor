@@ -36,8 +36,6 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
 
         try {
             while (scanPos < inputLength) {
-                bool foundMatch = false;
-
                 foreach (IMdSyntaxNodeSerializer serializer in serializers) {
                     Match m = serializer.Syntax.Match(input, scanPos);
                     if (!m.Success || m.Index != scanPos) continue;
@@ -46,11 +44,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
                     fragments[index++] = MdSyntaxFragment.AsUnhandledMatch(m, node, serializer);
 
                     scanPos += Math.Max(1, m.Length);
-                    foundMatch = true;
-                    break;
                 }
-
-                if (!foundMatch) scanPos++;
             }
 
             _stack.EnsureCapacity(_stack.Count + fragments.Length);
@@ -78,7 +72,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
                 foreach (IMdSyntaxNodeSerializer serializer in serializers) {
                     Match m = serializer.Syntax.Match(input, scanPos);
                     if (!m.Success) continue;
-
+                    
                     if (next is null
                         || m.Index < next.Value.Match.Index
                         || m.Index == next.Value.Match.Index && m.Length > next.Value.Match.Length) {
