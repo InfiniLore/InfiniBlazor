@@ -37,7 +37,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
             foreach (IMdSyntaxNodeSerializer serializer in serializers) {
                 // Find the first match for THIS serializer starting from scanPos
                 Match m = serializer.Syntax.Match(input, scanPos);
-                
+
                 // We only accept the match if it starts EXACTLY at scanPos.
                 // This prevents a Paragraph further down the string from "jumping the gun".
                 if (!m.Success || m.Index != scanPos) continue;
@@ -45,7 +45,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
                 topLevelWinners.Add((m, serializer));
                 scanPos += Math.Max(1, m.Length);
                 foundMatch = true;
-                break; // Winner found for this position, move to next scanPos
+                break;// Winner found for this position, move to next scanPos
             }
 
             // If absolutely nothing matched at the current scanPos, 
@@ -63,51 +63,52 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
 
     public void PushSingleLineMatchesToStack(string input, IMdSyntaxNode node) {
         ImmutableArray<IMdSyntaxNodeSerializer> serializers = SerializerReference.SingleLineSerializers;
-        List<(Match Match, IMdSyntaxNodeSerializer Serializer)> matches = [];
-        matches.AddRange(serializers.SelectMany(
-            nodeSerializer => nodeSerializer.Syntax.Matches(input),
-            (nodeSerializer, match) => (match, nodeSerializer))
-        );
 
-        // Sort by start index (ascending) then by length (descending)
-        matches.Sort((a, b) => {
-            int cmp = a.Match.Index.CompareTo(b.Match.Index);
-            return cmp != 0 ? cmp : b.Match.Length.CompareTo(a.Match.Length);
-        });
+        int pos = 0;
+        int length = input.Length;
+        List<MdSyntaxFragment> fragments = [];
 
-        // Filter out overlapping matches
-        List<(Match Match, IMdSyntaxNodeSerializer Serializer)> filteredMatches = [];
-        int lastEndMark = 0;
-        foreach (var m in matches) {
-            if (m.Match.Index >= lastEndMark) {
-                filteredMatches.Add(m);
-                lastEndMark = m.Match.Index + m.Match.Length;
+        while (pos < length) {
+            (Match Match, IMdSyntaxNodeSerializer Serializer)? next = null;
+
+            foreach (IMdSyntaxNodeSerializer serializer in serializers) {
+                Match m = serializer.Syntax.Match(input, pos);
+                if (!m.Success) continue;
+
+                if (next is null
+                    || m.Index < next.Value.Match.Index
+                    || m.Index == next.Value.Match.Index && m.Length > next.Value.Match.Length) {
+                    next = (m, serializer);
+                }
             }
-        }
 
-        int currentPos = input.Length;
+            if (next is null) {
+                if (pos < length) {
+                    TextMdSyntaxNode tail = TextMdSyntaxNode.Pool.Get();
+                    tail.WithContent(input[pos..]);
+                    fragments.Add(MdSyntaxFragment.AsProcessedNode(node, tail));
+                }
 
-        // Iterate backwards through filtered matches to handle gaps and LIFO stack behavior
-        for (int i = filteredMatches.Count - 1; i >= 0; i--) {
-            (Match match, IMdSyntaxNodeSerializer serializer) = filteredMatches[i];
-            
-            // Handle text AFTER the match
-            if (match.Index + match.Length < currentPos) {
+                break;
+            }
+
+            Match match = next.Value.Match;
+            IMdSyntaxNodeSerializer serializerWinner = next.Value.Serializer;
+
+            if (match.Index > pos) {
                 TextMdSyntaxNode contentNode = TextMdSyntaxNode.Pool.Get();
-                contentNode.WithContent(input[(match.Index + match.Length)..currentPos]);
-                PushProcessedNodeToStack(node, contentNode);
+                contentNode.WithContent(input[pos..match.Index]);
+                fragments.Add(MdSyntaxFragment.AsProcessedNode(node, contentNode));
             }
 
-            // Push the match itself
-            PushMatchToStack(match, node, serializer);
-            currentPos = match.Index;
+            fragments.Add(MdSyntaxFragment.AsUnhandledMatch(match, node, serializerWinner));
+
+            pos = match.Index + Math.Max(1, match.Length);
         }
 
-        // Handle any remaining text at the very beginning
-        if (currentPos > 0) {
-            TextMdSyntaxNode contentNode = TextMdSyntaxNode.Pool.Get();
-            contentNode.WithContent(input[..currentPos]);
-            PushProcessedNodeToStack(node, contentNode);
+        // Push in reverse so the first fragment is processed first
+        for (int i = fragments.Count - 1; i >= 0; i--) {
+            _stack.Push(fragments[i]);
         }
     }
 

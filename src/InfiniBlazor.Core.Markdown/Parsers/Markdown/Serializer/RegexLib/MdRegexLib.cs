@@ -13,7 +13,7 @@ public static partial class MdRegexLib {
     [GeneratedRegex(@"(?<escaped>\\\S)")]
     public static partial Regex EscapedCharacterRegex { get; }
 
-    [GeneratedRegex(@"(?<bold>\*\*(?<b>(?>[^\\\*]+|\\\*|\*|(?<open>\*\*)|(?<-open>\*\*))+?\*?)(?(open)(?!))\*\*)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"(?<bold>\*\*(?<b>(?>[^\\\*]+|\\\*|\*|(?<open>\*\*)|(?<-open>\*\*))+)(?(open)(?!))\*\*)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     public static partial Regex BoldRegex { get; }
 
     [GeneratedRegex(@"(?<italic>\*(?<i>(?>[^\\\*]+|\\\*|\*\*|(?<open>\*)|(?<-open>\*))+)(?(open)(?!))\*)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
