@@ -5,6 +5,7 @@ using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using InfiniBlazor.Pooling;
 using Microsoft.Extensions.ObjectPool;
+using System.Buffers;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 
@@ -66,50 +67,70 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
 
         int pos = 0;
         int length = input.Length;
-        List<MdSyntaxFragment> fragments = [];
+        MdSyntaxFragment[] fragments = ArrayPool<MdSyntaxFragment>.Shared.Rent(8);
+        int index = 0;
 
-        while (pos < length) {
-            (Match Match, IMdSyntaxNodeSerializer Serializer)? next = null;
+        try {
+            while (pos < length) {
+                (Match Match, IMdSyntaxNodeSerializer Serializer)? next = null;
 
-            foreach (IMdSyntaxNodeSerializer serializer in serializers) {
-                Match m = serializer.Syntax.Match(input, pos);
-                if (!m.Success) continue;
+                foreach (IMdSyntaxNodeSerializer serializer in serializers) {
+                    Match m = serializer.Syntax.Match(input, pos);
+                    if (!m.Success) continue;
 
-                if (next is null
-                    || m.Index < next.Value.Match.Index
-                    || m.Index == next.Value.Match.Index && m.Length > next.Value.Match.Length) {
-                    next = (m, serializer);
-                }
-            }
-
-            if (next is null) {
-                if (pos < length) {
-                    TextMdSyntaxNode tail = TextMdSyntaxNode.Pool.Get();
-                    tail.WithContent(input[pos..]);
-                    fragments.Add(MdSyntaxFragment.AsProcessedNode(node, tail));
+                    if (next is null
+                        || m.Index < next.Value.Match.Index
+                        || m.Index == next.Value.Match.Index && m.Length > next.Value.Match.Length) {
+                        next = (m, serializer);
+                    }
                 }
 
-                break;
+                if (next is null) {
+                    if (pos < length) {
+                        TextMdSyntaxNode tail = TextMdSyntaxNode.Pool.Get();
+                        tail.WithContent(input[pos..]);
+                        
+                        EnsureCapacity(ref fragments, index + 1);
+                        fragments[index++] = MdSyntaxFragment.AsProcessedNode(node, tail);
+                    }
+
+                    break;
+                }
+
+                Match match = next.Value.Match;
+                IMdSyntaxNodeSerializer serializerWinner = next.Value.Serializer;
+
+                if (match.Index > pos) {
+                    TextMdSyntaxNode contentNode = TextMdSyntaxNode.Pool.Get();
+                    contentNode.WithContent(input[pos..match.Index]);
+
+                    EnsureCapacity(ref fragments, index + 1);
+                    fragments[index++] = MdSyntaxFragment.AsProcessedNode(node, contentNode);
+                }
+
+                EnsureCapacity(ref fragments, index + 1);
+                fragments[index++] = MdSyntaxFragment.AsUnhandledMatch(match, node, serializerWinner);
+
+                pos = match.Index + Math.Max(1, match.Length);
             }
 
-            Match match = next.Value.Match;
-            IMdSyntaxNodeSerializer serializerWinner = next.Value.Serializer;
-
-            if (match.Index > pos) {
-                TextMdSyntaxNode contentNode = TextMdSyntaxNode.Pool.Get();
-                contentNode.WithContent(input[pos..match.Index]);
-                fragments.Add(MdSyntaxFragment.AsProcessedNode(node, contentNode));
+            // Push only the populated fragments, in reverse, so the first fragment is processed first
+            for (int i = index - 1; i >= 0; i--) {
+                _stack.Push(fragments[i]);
             }
-
-            fragments.Add(MdSyntaxFragment.AsUnhandledMatch(match, node, serializerWinner));
-
-            pos = match.Index + Math.Max(1, match.Length);
         }
-
-        // Push in reverse so the first fragment is processed first
-        for (int i = fragments.Count - 1; i >= 0; i--) {
-            _stack.Push(fragments[i]);
+        finally {
+            ArrayPool<MdSyntaxFragment>.Shared.Return(fragments);
         }
+    }
+
+    private static void EnsureCapacity(ref MdSyntaxFragment[] arr, int required) {
+        if (required <= arr.Length) return;
+
+        MdSyntaxFragment[] newArr = ArrayPool<MdSyntaxFragment>.Shared.Rent(arr.Length * 2);
+        Array.Copy(arr, newArr, arr.Length);
+        ArrayPool<MdSyntaxFragment>.Shared.Return(arr);
+        arr = newArr;
     }
 
     public void PushProcessedNodeToStack(IMdSyntaxNode parentNode, IMdSyntaxNode childNode)
