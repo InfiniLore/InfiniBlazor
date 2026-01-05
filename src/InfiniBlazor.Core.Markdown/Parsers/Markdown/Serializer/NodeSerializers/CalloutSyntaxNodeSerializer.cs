@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -12,18 +11,16 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class CalloutSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     [GeneratedRegex("""
-        (?<callout>
-            ^>(?:\[!(?<clType>[^\|\n]+)(?<clMod>\|[^\n]*)?\](?<clOption>\+|\-)?)[\ ]*(?<clTitle>[^\n]*)$
-            (?:\n(?<clBody>>[^\n]*(?:\n>[^\n]*)*)$)?  
-        )
+        ^>(?:\[!(?<type>[^\|\n]+)(?<mod>\|[^\n]*)?\](?<option>\+|\-)?)[\ ]*(?<title>[^\n]*)$
+        (?:\n(?<body>>[^\n]*(?:\n>[^\n]*)*)$)?
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
     
-    private static readonly int CalloutTypeId = Syntax.GroupNumberFromName(MdRegexGroupNames.CalloutType);
-    private static readonly int CalloutModId = Syntax.GroupNumberFromName(MdRegexGroupNames.CalloutMod);
-    private static readonly int CalloutTitleId = Syntax.GroupNumberFromName(MdRegexGroupNames.CalloutTitle);
-    private static readonly int CalloutBodyId = Syntax.GroupNumberFromName(MdRegexGroupNames.CalloutBody);
-    private static readonly int CalloutOptionId = Syntax.GroupNumberFromName(MdRegexGroupNames.CalloutOption);
+    private static readonly int CalloutTypeId = Syntax.GroupNumberFromName("type");
+    private static readonly int CalloutModId = Syntax.GroupNumberFromName("mod");
+    private static readonly int CalloutOptionId = Syntax.GroupNumberFromName("option");
+    private static readonly int CalloutTitleId = Syntax.GroupNumberFromName("title");
+    private static readonly int CalloutBodyId = Syntax.GroupNumberFromName("body");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -11,11 +10,10 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class UserSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-
-    [GeneratedRegex(@"(?<user>\@(?<uName>[\p{L}\p{N}\-_\/\.]+))", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"\@(?<u>[\p{L}\p{N}\-_\/\.]+)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
     
-    private static readonly int UsernameId = Syntax.GroupNumberFromName(MdRegexGroupNames.UserName);
+    private static readonly int UsernameId = Syntax.GroupNumberFromName("u");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

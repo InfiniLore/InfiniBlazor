@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Buffers;
@@ -12,12 +11,12 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class CodeBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    [GeneratedRegex(@"(?<codeBlock>^(?<open>`{3,})[\ ]*(?<cLang>.*?)?\n(?<cBody>(?>[\s\S]|(?!\k<open>))*?)\k<open>(?<cTrailing>[^\n]+)?$)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"^(?<open>`{3,})[\ ]*(?<lang>.*?)?\n(?<body>(?>[\s\S]|(?!\k<open>))*?)\k<open>(?<tail>[^\n]+)?$", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
     
-    private static readonly int CBodyId = Syntax.GroupNumberFromName(MdRegexGroupNames.CodeBlockContent);
-    private static readonly int CLangId = Syntax.GroupNumberFromName(MdRegexGroupNames.CodeBlockLang);
-    private static readonly int CTrailingId = Syntax.GroupNumberFromName(MdRegexGroupNames.CodeBlockTrailing);
+    private static readonly int CBodyId = Syntax.GroupNumberFromName("body");
+    private static readonly int CLangId = Syntax.GroupNumberFromName("lang");
+    private static readonly int CTrailId = Syntax.GroupNumberFromName("tail");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -41,7 +40,7 @@ public partial class CodeBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         parentNode.AddChildNode(codeNode);
         
         // Add trailing text as a paragraph node
-        if (!match.Groups[CTrailingId].TryGetValue(out string? trailing)) return;
+        if (!match.Groups[CTrailId].TryGetValue(out string? trailing)) return;
         ParagraphMdSyntaxNode paragraphNode = MdSyntaxNodePool<ParagraphMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(paragraphNode);
         stack.PushSingleLineMatchesToStack(trailing, paragraphNode);

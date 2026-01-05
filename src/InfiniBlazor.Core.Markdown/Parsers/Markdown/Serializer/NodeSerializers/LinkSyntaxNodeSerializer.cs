@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -12,23 +11,21 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class LinkSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     [GeneratedRegex("""
-        (?<link>
-            (?<lnBang>!)?
-            \[(?<lnText> (?:\ *!?\[.+?\]\(.+?\)\ *)|(?:[^\\\]]|\\\]|\\[^\]])*?)\]
-            \(
-              (?<lnHref>\ *https?[^\ |]+)
-              (?:\ ?\"(?<lnTitle>.+)\")?
-              (?<lnMods>\|.*)?
-            \)
-        )
+        (?<bang>!)?
+        \[(?<text> (?:\ *!?\[.+?\]\(.+?\)\ *)|(?:[^\\\]]|\\\]|\\[^\]])*?)\]
+        \(
+          (?<href>\ *https?[^\ |]+)
+          (?:\ ?\"(?<title>.+)\")?
+          (?<mods>\|.*)?
+        \)
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
     
-    private static readonly int LnTextId = Syntax.GroupNumberFromName(MdRegexGroupNames.LinkText);
-    private static readonly int LnHrefId = Syntax.GroupNumberFromName(MdRegexGroupNames.LinkHref);
-    private static readonly int LnModsId = Syntax.GroupNumberFromName(MdRegexGroupNames.LinkModifiers);
-    private static readonly int LnBangId = Syntax.GroupNumberFromName(MdRegexGroupNames.LinkBang);
-    private static readonly int LnTitleId = Syntax.GroupNumberFromName(MdRegexGroupNames.LinkTitle);
+    private static readonly int LnBangId = Syntax.GroupNumberFromName("bang");
+    private static readonly int LnTextId = Syntax.GroupNumberFromName("text");
+    private static readonly int LnHrefId = Syntax.GroupNumberFromName("href");
+    private static readonly int LnTitleId = Syntax.GroupNumberFromName("title");
+    private static readonly int LnModsId = Syntax.GroupNumberFromName("mods");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

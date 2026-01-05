@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -11,11 +10,10 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class CodeInlineSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
-    [GeneratedRegex(@"(?<code>(?<open>`+)(?<c>(?>[^`\\]+|\\.|`(?!\k<open>))+?)\k<open>)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"(?<open>`+)(?<c>(?>[^`\\]+|\\.|`(?!\k<open>))+?)\k<open>", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
     
-    private static readonly int CodeContentId = Syntax.GroupNumberFromName(MdRegexGroupNames.CodeInlineContent);
-    private static readonly int CodeInlineId = Syntax.GroupNumberFromName(MdRegexGroupNames.CodeInline);
+    private static readonly int CodeContentId = Syntax.GroupNumberFromName("c");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -24,7 +22,7 @@ public partial class CodeInlineSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     
     public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
         if (!match.Groups[CodeContentId].TryGetValue(out string? codeValue)) return;
-        if (!match.Groups[CodeInlineId].TryGetValueSpan(out ReadOnlySpan<char> fullOriginalString)) return;
+        if (!match.TryGetValueSpan(out ReadOnlySpan<char> fullOriginalString)) return;
 
         CodeInlineMdSyntaxNode node = MdSyntaxNodePool<CodeInlineMdSyntaxNode>.Shared.Get();
         node.WithContent(codeValue);

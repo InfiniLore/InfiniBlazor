@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -12,11 +11,11 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class FrontmatterSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    [GeneratedRegex(@"(?<frontmatter>(?<open>^-{3,}) *(?<fLang>.+)?\r?\n(?<fBody>[\s\S]*?)\r?\n\k<open>)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"(?<open>^-{3,}) *(?<lang>.+)?\r?\n(?<body>[\s\S]*?)\r?\n\k<open>", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     internal static partial Regex Syntax { get; }
     
-    private static readonly int LangId = Syntax.GroupNumberFromName(MdRegexGroupNames.FrontmatterLang);
-    private static readonly int BodyId = Syntax.GroupNumberFromName(MdRegexGroupNames.FrontmatterBody);
+    private static readonly int LangId = Syntax.GroupNumberFromName("lang");
+    private static readonly int BodyId = Syntax.GroupNumberFromName("body");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -11,11 +10,11 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class HeadingSimpleSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    [GeneratedRegex(@"(?<headingSimple>^(?<hsText>.+?)\n(?<hsIdentifier>[\ ]*(?:={3,}?|-{3,}?)[\ ]*$))", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"^(?<text>.+?)\n(?<id>[\ ]*(?:={3,}?|-{3,}?)[\ ]*$)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
     
-    private static readonly int HsTextId = Syntax.GroupNumberFromName(MdRegexGroupNames.HeadingSimpleText);
-    private static readonly int HsIdentifierId = Syntax.GroupNumberFromName(MdRegexGroupNames.HeadingSimpleIdentifier);
+    private static readonly int HsTextId = Syntax.GroupNumberFromName("text");
+    private static readonly int HsIdentifierId = Syntax.GroupNumberFromName("id");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

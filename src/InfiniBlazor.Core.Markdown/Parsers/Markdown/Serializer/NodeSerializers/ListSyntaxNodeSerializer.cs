@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Buffers;
@@ -13,24 +12,23 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class ListSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     [GeneratedRegex("""
-        (?<list>
-            ^[^\S\n]*(?<lsId>-(?!-)|\d+\.|\.\d+).+
-            (?:\n(?:(?:-(?!-)|\d+\.|\.\d+)|(?:[\ ]+)).+)*
-        )
+        ^[^\S\n]*(?<id>-(?!-)|\d+\.|\.\d+).+
+        (?:\n(?:(?:-(?!-)|\d+\.|\.\d+)|(?:[\ ]+)).+)*
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
     
     
-    [GeneratedRegex(@"^ *(?:-|(?<lIndex>\d*)\.)(?:(?<lTaskSpace> *)\[(?<lTask>[ xX~])])?(?:(?<lSpace> *)(?<lHead>.+)|(?<lHead> )|(?<lHead>))(?<lBody>(?:\n +.*)*)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"^ *(?:-|(?<index>\d*)\.)(?:(?<taskSpace> *)\[(?<task>[ xX~])])?(?:(?<space> *)(?<head>.+)|(?<head> )|(?<head>))(?<body>(?:\n +.*)*)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex ListItemBodySyntax { get; }
     
-    private static readonly int LsId = Syntax.GroupNumberFromName(MdRegexGroupNames.ListIdentifier);
-    private static readonly int LTaskId = ListItemBodySyntax.GroupNumberFromName(MdRegexGroupNames.ListTask);
-    private static readonly int LHeadId = ListItemBodySyntax.GroupNumberFromName(MdRegexGroupNames.ListHead);
-    private static readonly int LBodyId = ListItemBodySyntax.GroupNumberFromName(MdRegexGroupNames.ListBody);
-    private static readonly int LIndexId = ListItemBodySyntax.GroupNumberFromName(MdRegexGroupNames.ListIndex);
-    private static readonly int ListItemLeadingSpaces = ListItemBodySyntax.GroupNumberFromName(MdRegexGroupNames.ListItemLeadingSpaces);
-    private static readonly int ListTaskItemLeadingSpaces = ListItemBodySyntax.GroupNumberFromName(MdRegexGroupNames.ListTaskItemLeadingSpaces);
+    private static readonly int LsId = Syntax.GroupNumberFromName("id");
+    
+    private static readonly int LIndexId = ListItemBodySyntax.GroupNumberFromName("index");
+    private static readonly int ListTaskItemLeadingSpaces = ListItemBodySyntax.GroupNumberFromName("taskSpace");
+    private static readonly int LTaskId = ListItemBodySyntax.GroupNumberFromName("task");
+    private static readonly int ListItemLeadingSpaces = ListItemBodySyntax.GroupNumberFromName("space");
+    private static readonly int LHeadId = ListItemBodySyntax.GroupNumberFromName("head");
+    private static readonly int LBodyId = ListItemBodySyntax.GroupNumberFromName("body");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

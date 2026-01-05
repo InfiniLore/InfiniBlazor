@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Buffers;
@@ -13,17 +12,15 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class TableSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     [GeneratedRegex("""
-        (?<table>
-            ^\|(?<tHead>.+)\|[\ ]*\n
-            ^\|(?<tSep>[:\-|\ ]+?)\|[\ ]*
-            (?<tBody>(?:\n(?:^\|.*\|$))+)
-        )
+        ^\|(?<head>.+)\|[\ ]*\n
+        ^\|(?<sep>[:\-|\ ]+?)\|[\ ]*
+        (?<body>(?:\n(?:^\|.*\|$))+)
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
 
-    private static readonly int BodyId = Syntax.GroupNumberFromName(MdRegexGroupNames.TableBody);
-    private static readonly int HeadId = Syntax.GroupNumberFromName(MdRegexGroupNames.TableHead);
-    private static readonly int SepId = Syntax.GroupNumberFromName(MdRegexGroupNames.TableSeparator);
+    private static readonly int HeadId = Syntax.GroupNumberFromName("head");
+    private static readonly int SepId = Syntax.GroupNumberFromName("sep");
+    private static readonly int BodyId = Syntax.GroupNumberFromName("body");
     
     private const int StackAllocThreshold = 16;
     // -----------------------------------------------------------------------------------------------------------------

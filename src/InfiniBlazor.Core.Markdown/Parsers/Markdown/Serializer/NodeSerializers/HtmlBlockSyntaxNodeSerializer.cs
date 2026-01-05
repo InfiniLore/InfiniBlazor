@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -12,44 +11,42 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class HtmlBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     [GeneratedRegex("""
-        (?:
-            (?<htmlPre>.+?)?
-            (?<htmlBody>
-                <(?<htmlTag>\w+)\b[^>]*>
-                (?>
-                    [^<]+
-                    | <(?<open>\k<htmlTag>)\b[^>]*>
-                    | </(?<-open>\k<htmlTag>)>
-                    | <(?!/?\k<htmlTag>\b)[^>]+>
-                )*
-                (?(open)(?!))
-                (</\k<htmlTag>>)
-            )
-            (?<htmlPost>.+)?
+        (?<pre>.+?)?
+        (?<body>
+            <(?<tag>\w+)\b[^>]*>
+            (?>
+                [^<]+
+                | <(?<open>\k<tag>)\b[^>]*>
+                | </(?<-open>\k<tag>)>
+                | <(?!/?\k<tag>\b)[^>]+>
+            )*
+            (?(open)(?!))
+            (</\k<tag>>)
         )
+        (?<post>.+)?
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
     
     [GeneratedRegex("""
-        (?<spanTag><(?<spanHtmlTag>span)\ ?(?<spanTagAttrs>\b[^>]*)>)
-        (?<spanBody>
+        <span\ ?(?<attr>\b[^>]*)>
+        (?<body>
           (?>
             [^<]+
-            | <(?<open>\k<spanHtmlTag>)\b[^>]*>
-            | </(?<-open>\k<spanHtmlTag>)>
-            | <(?!/?\k<spanHtmlTag>\b)[^>]+>
+            | <(?<open>span)\b[^>]*>
+            | </(?<-open>span)>
+            | <(?!/?span\b)[^>]+>
           )*
         )
         (?(open)(?!))
-        (</\k<spanHtmlTag>>)
+        (</span>)
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.Compiled)]
     private static partial Regex SpanSyntax { get; }
     
-    private static readonly int HtmlPreId = Syntax.GroupNumberFromName(MdRegexGroupNames.HtmlPre);
-    private static readonly int HtmlBodyId = Syntax.GroupNumberFromName(MdRegexGroupNames.HtmlBody);
-    private static readonly int HtmlPostId = Syntax.GroupNumberFromName(MdRegexGroupNames.HtmlPost);
-    private static readonly int SpanTagAttrsId = SpanSyntax.GroupNumberFromName(MdRegexGroupNames.SpanTagAttrs);
-    private static readonly int SpanBodyId = SpanSyntax.GroupNumberFromName(MdRegexGroupNames.SpanBody);
+    private static readonly int HtmlPreId = Syntax.GroupNumberFromName("pre");
+    private static readonly int HtmlBodyId = Syntax.GroupNumberFromName("body");
+    private static readonly int HtmlPostId = Syntax.GroupNumberFromName("post");
+    private static readonly int SpanTagAttrsId = SpanSyntax.GroupNumberFromName("attr");
+    private static readonly int SpanBodyId = SpanSyntax.GroupNumberFromName("body");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

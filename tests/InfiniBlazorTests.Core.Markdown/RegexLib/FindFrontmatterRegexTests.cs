@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using System.Text.RegularExpressions;
 
 namespace InfiniBlazorTests.Core.Markdown.RegexLib;
@@ -96,8 +95,8 @@ public class FindFrontmatterRegexTests {
 
         // Act
         Match result = regex.Match(input);
-        Group groupLang = result.Groups[MdRegexGroupNames.FrontmatterLang];
-        Group groupBody = result.Groups[MdRegexGroupNames.FrontmatterBody];
+        Group groupLang = result.Groups["lang"];
+        Group groupBody = result.Groups["body"];
 
         // Assert
         await Assert.That(result.Success).IsEqualTo(expected);

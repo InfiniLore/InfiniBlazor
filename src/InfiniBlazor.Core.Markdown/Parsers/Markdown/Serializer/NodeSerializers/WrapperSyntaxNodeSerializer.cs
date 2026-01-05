@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -12,11 +11,11 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class WrapperSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
 
-    [GeneratedRegex(@"(?<wrapper><(?<wMods>\|.*?)>(?<w>.*)</>)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"<(?<mods>\|.*?)>(?<w>.*)</>", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
     
-    private static readonly int WId = Syntax.GroupNumberFromName(MdRegexGroupNames.WrapperContent);
-    private static readonly int WModsId = Syntax.GroupNumberFromName(MdRegexGroupNames.WrapperMods);
+    private static readonly int WId = Syntax.GroupNumberFromName("w");
+    private static readonly int WModsId = Syntax.GroupNumberFromName("mods");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

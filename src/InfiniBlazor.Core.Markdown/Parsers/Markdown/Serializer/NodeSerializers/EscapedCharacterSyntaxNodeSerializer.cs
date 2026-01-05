@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -11,10 +10,9 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class EscapedCharacterSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    [GeneratedRegex(@"(?<escaped>\\\S)")]
+    [GeneratedRegex(@"\\\S")]
     private static partial Regex Syntax { get; }
     
-    private static readonly int EscapedId = Syntax.GroupNumberFromName(MdRegexGroupNames.Escaped);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -26,7 +24,7 @@ public partial class EscapedCharacterSyntaxNodeSerializer : IMdSyntaxNodeSeriali
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        char value = match.Groups[EscapedId].ValueSpan[1];
+        char value = match.ValueSpan[1];
         EscapedCharacterMdSyntaxNode node = MdSyntaxNodePool<EscapedCharacterMdSyntaxNode>.Shared.Get();
         node.WithContent(value);
         parentNode.AddChildNode(node);

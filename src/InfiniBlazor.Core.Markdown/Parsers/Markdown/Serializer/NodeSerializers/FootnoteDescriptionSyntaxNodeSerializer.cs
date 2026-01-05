@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -11,16 +10,11 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class FootnoteDescriptionSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    [GeneratedRegex("""
-        (?<footnoteDesc> 
-            ^\[\^(?<fdId>[\d\p{L}\p{N}]+)\][\ ]?:[\ ]?(?<fdBody>.+
-            (?:\n(?!\[)(?:.+))*)
-        )
-        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"^\[\^(?<id>[\d\p{L}\p{N}]+)\][\ ]?:[\ ]?(?<body>.+(?:\n(?!\[)(?:.+))*)", RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
     
-    private static readonly int FootnoteIdentifierId = Syntax.GroupNumberFromName(MdRegexGroupNames.FootnoteDescriptionIdentifier);
-    private static readonly int FootnoteBodyId = Syntax.GroupNumberFromName(MdRegexGroupNames.FootnoteDescriptionBody);
+    private static readonly int FootnoteIdentifierId = Syntax.GroupNumberFromName("id");
+    private static readonly int FootnoteBodyId = Syntax.GroupNumberFromName("body");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

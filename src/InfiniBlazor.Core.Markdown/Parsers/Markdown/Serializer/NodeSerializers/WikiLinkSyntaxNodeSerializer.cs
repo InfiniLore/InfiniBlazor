@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -12,10 +11,10 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class WikiLinkSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     
-    [GeneratedRegex(@"(?<wikiLink>\[\[(?<wHref>[^\]\[\ ]+)\]\])", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"\[\[(?<href>[^\]\[\ ]+)\]\]", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
     
-    private static readonly int WikiLinkHrefId = Syntax.GroupNumberFromName(MdRegexGroupNames.WikiLinkHref);
+    private static readonly int WikiLinkHrefId = Syntax.GroupNumberFromName("href");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
