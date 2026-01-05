@@ -26,8 +26,8 @@ public partial class HeadingSimpleSyntaxNodeSerializer : IMdSyntaxNodeSerializer
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[HsTextId].TryGetValue(out string? headerSimpleText)) return;
-        if (!match.Groups[HsIdentifierId].TryGetValue(out string? headerIdentifierText)) return;
+        string headerSimpleText = match.Groups[HsTextId].Value;
+        string headerIdentifierText = match.Groups[HsIdentifierId].Value;
 
         HeadingSimpleMdSyntaxNode headingNode = MdSyntaxNodePool<HeadingSimpleMdSyntaxNode>.Shared.Get();
         headingNode.WithIdentifier(headerIdentifierText);

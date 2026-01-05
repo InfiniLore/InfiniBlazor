@@ -23,8 +23,7 @@ public partial class BlockQuoteSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.TryGetValueSpan(out ReadOnlySpan<char> blockQuoteBody)) return;
-
+        ReadOnlySpan<char> blockQuoteBody = match.ValueSpan;
         string adjustedBlockquote = LineNormalization.NormalizeBlockQuote(blockQuoteBody, out int leadingSpaces);
 
         BlockQuoteMdSyntaxNode blockQuoteNode = MdSyntaxNodePool<BlockQuoteMdSyntaxNode>.Shared.Get();

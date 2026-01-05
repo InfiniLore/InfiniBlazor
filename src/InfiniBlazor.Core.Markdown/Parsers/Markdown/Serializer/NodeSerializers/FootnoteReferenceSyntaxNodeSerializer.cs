@@ -25,7 +25,7 @@ public partial class FootnoteReferenceSyntaxNodeSerializer : IMdSyntaxNodeSerial
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (match.Groups[FootnoteIdentifierId] is not { Success: true, Value: var footnoteId }) return;
+        string footnoteId = match.Groups[FootnoteIdentifierId].Value;
 
         FootnoteReferenceMdSyntaxNode node = MdSyntaxNodePool<FootnoteReferenceMdSyntaxNode>.Shared.Get();
         node.WithIdentifier(footnoteId);

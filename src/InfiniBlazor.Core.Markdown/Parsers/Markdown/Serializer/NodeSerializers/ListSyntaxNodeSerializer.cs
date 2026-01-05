@@ -40,8 +40,7 @@ public partial class ListSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.TryGetValue(out string? listBody)) return;
-
+        string listBody = match.Value;
         bool isOrdered = !match.Groups[LsId].ValueSpan.Contains('-');
 
         MatchCollection matchCollection = ListItemBodySyntax.Matches(listBody);

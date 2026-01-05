@@ -26,7 +26,7 @@ public partial class WikiLinkSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[WikiLinkHrefId].TryGetValue(out string? href)) return;
+        string href = match.Groups[WikiLinkHrefId].Value;
 
         WikiLinkMdSyntaxNode node = MdSyntaxNodePool<WikiLinkMdSyntaxNode>.Shared.Get();
         node.WithContent(href);

@@ -25,7 +25,7 @@ public partial class HorizontalRuleSyntaxNodeSerializer : IMdSyntaxNodeSerialize
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[HrId].TryGetValue(out string? hrContent)) return;
+        string hrContent = match.Groups[HrId].Value;
 
         HorizontalRuleMdSyntaxNode node = MdSyntaxNodePool<HorizontalRuleMdSyntaxNode>.Shared.Get();
         node.WithIdentifier(hrContent);

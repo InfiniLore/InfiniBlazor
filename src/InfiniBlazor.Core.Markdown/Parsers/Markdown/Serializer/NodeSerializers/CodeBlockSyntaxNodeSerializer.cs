@@ -28,8 +28,7 @@ public partial class CodeBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[CBodyId].TryGetValueSpan(out ReadOnlySpan<char> codeBlockBody)) return;
-
+        ReadOnlySpan<char> codeBlockBody = match.Groups[CBodyId].ValueSpan;
         CodeBlockMdSyntaxNode codeNode = MdSyntaxNodePool<CodeBlockMdSyntaxNode>.Shared.Get();
 
         string langNameValue = match.Groups[CLangId].Value;

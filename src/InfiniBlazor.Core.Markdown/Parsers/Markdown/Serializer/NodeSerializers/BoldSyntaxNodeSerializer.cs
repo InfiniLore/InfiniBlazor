@@ -21,7 +21,7 @@ public partial class BoldSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         => Syntax.Match(input, startPosition);
     
     public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
-        if (!match.Groups[BoldContentId].TryGetValue(out string? boldValue)) return;
+        string boldValue = match.Groups[BoldContentId].Value;
 
         BoldMdSyntaxNode node = MdSyntaxNodePool<BoldMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(node);

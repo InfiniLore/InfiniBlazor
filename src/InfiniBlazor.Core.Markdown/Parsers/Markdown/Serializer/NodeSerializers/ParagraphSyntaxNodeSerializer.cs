@@ -26,7 +26,7 @@ public partial class ParagraphSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[PId].TryGetValue(out string? paragraph)) return;
+        string paragraph = match.Groups[PId].Value;
 
         if (parentNode is HtmlSpanMdSyntaxNode) {
             stack.PushSingleLineMatchesToStack(paragraph, parentNode);

@@ -21,9 +21,9 @@ public partial class CodeInlineSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
         => Syntax.Match(input, startPosition);
     
     public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
-        if (!match.Groups[CodeContentId].TryGetValue(out string? codeValue)) return;
-        if (!match.TryGetValueSpan(out ReadOnlySpan<char> fullOriginalString)) return;
-
+        string codeValue = match.Groups[CodeContentId].Value;
+        ReadOnlySpan<char> fullOriginalString = match.ValueSpan;
+        
         CodeInlineMdSyntaxNode node = MdSyntaxNodePool<CodeInlineMdSyntaxNode>.Shared.Get();
         node.WithContent(codeValue);
 

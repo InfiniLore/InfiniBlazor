@@ -23,8 +23,8 @@ public partial class WrapperSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
         => Syntax.Match(input, startPosition);
     
     public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
-        if (!match.Groups[WId].TryGetValue(out string? wrapperValue)) return;
-        if (!match.Groups[WModsId].TryGetValue(out string? mods)) return;// Mods are required for this match
+        string wrapperValue = match.Groups[WId].Value;
+        string mods = match.Groups[WModsId].Value; // Mods are required for this match
 
         WrapperMdSyntaxNode node = MdSyntaxNodePool<WrapperMdSyntaxNode>.Shared.Get();
         node.WithModifier(MdSyntaxNodeModifier.FromString(mods));

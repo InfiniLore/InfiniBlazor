@@ -21,10 +21,10 @@ public partial class HighlightSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
         => Syntax.Match(input, startPosition);
     
     public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
-        if (!match.Groups[HId].TryGetValue(out string? boldValue)) return;
+        string highlightValue = match.Groups[HId].Value;
 
         HighlightMdSyntaxNode node = MdSyntaxNodePool<HighlightMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(node);
-        stack.PushSingleLineMatchesToStack(boldValue, node);
+        stack.PushSingleLineMatchesToStack(highlightValue, node);
     }
 }

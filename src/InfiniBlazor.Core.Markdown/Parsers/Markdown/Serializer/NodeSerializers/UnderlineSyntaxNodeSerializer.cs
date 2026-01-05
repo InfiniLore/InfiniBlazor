@@ -25,7 +25,7 @@ public partial class UnderlineSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[UId].TryGetValue(out string? underlineValue)) return;
+        string underlineValue = match.Groups[UId].Value;
 
         UnderlineMdSyntaxNode node = MdSyntaxNodePool<UnderlineMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(node);

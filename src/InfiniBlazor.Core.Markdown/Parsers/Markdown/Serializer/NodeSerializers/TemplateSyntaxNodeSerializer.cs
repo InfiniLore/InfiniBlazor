@@ -25,8 +25,8 @@ public partial class TemplateSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[TemplateContentId].TryGetValue(out string? variableContent)) return;
-        if (!match.TryGetLength(out int variableLength)) return;
+        string variableContent = match.Groups[TemplateContentId].Value;
+        int variableLength = match.Length;
 
         TemplateMdSyntaxNode node = MdSyntaxNodePool<TemplateMdSyntaxNode>.Shared.Get();
         node.WithContent(variableContent)

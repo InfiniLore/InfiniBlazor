@@ -25,7 +25,7 @@ public partial class UserSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[UsernameId].TryGetValue(out string? username)) return;
+        string username = match.Groups[UsernameId].Value;
 
         UserMdSyntaxNode node = MdSyntaxNodePool<UserMdSyntaxNode>.Shared.Get();
         node.WithContent(username);

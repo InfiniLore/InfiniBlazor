@@ -26,8 +26,8 @@ public partial class HeadingSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[HLevelId].TryGetLength(out int headingLevel)) return;
-        if (!match.Groups[HTextId].TryGetValue(out string? headerText)) return;
+        string headerText = match.Groups[HTextId].Value;
+        int headingLevel = match.Groups[HLevelId].Length;
 
         HeadingMdSyntaxNode headingNode = MdSyntaxNodePool<HeadingMdSyntaxNode>.Shared.Get();
         headingNode.WithLevel(headingLevel);

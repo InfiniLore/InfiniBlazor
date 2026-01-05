@@ -37,11 +37,10 @@ public partial class LinkSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[LnTextId].TryGetValue(out string? linkText)) return;
-        if (!match.Groups[LnHrefId].TryGetValue(out string? linkHref)) return;
-
-        match.Groups[LnModsId].TryGetValue(out string? mods);
-        match.Groups[LnTitleId].TryGetValue(out string? title);
+        string linkText = match.Groups[LnTextId].Value;
+        string linkHref = match.Groups[LnHrefId].Value;
+        string mods = match.Groups[LnModsId].Value;
+        string title = match.Groups[LnTitleId].Value;
 
         if (match.Groups[LnBangId].Success) {
             ImageMdSyntaxNode imgNode = MdSyntaxNodePool<ImageMdSyntaxNode>.Shared.Get();
