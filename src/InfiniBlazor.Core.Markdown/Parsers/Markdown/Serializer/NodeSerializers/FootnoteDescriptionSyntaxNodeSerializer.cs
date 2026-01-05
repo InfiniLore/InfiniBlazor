@@ -10,14 +10,23 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class FootnoteDescriptionSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    private static readonly int FootnoteIdentifierId = MdRegexLib.GetGroupId(MdRegexGroupNames.FootnoteDescriptionIdentifier);
-    private static readonly int FootnoteBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.FootnoteDescriptionBody);
-
-    public Regex Syntax { get; } = MdRegexLib.FootnoteDescriptionRegex;
+public partial class FootnoteDescriptionSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex("""
+        (?<footnoteDesc> 
+            ^\[\^(?<fdId>[\d\p{L}\p{N}]+)\][\ ]?:[\ ]?(?<fdBody>.+
+            (?:\n(?!\[)(?:.+))*)
+        )
+        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    private static readonly int FootnoteIdentifierId = Syntax.GroupNumberFromName(MdRegexGroupNames.FootnoteDescriptionIdentifier);
+    private static readonly int FootnoteBodyId = Syntax.GroupNumberFromName(MdRegexGroupNames.FootnoteDescriptionBody);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,

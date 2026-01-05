@@ -10,13 +10,17 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class UnderlineSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    private static readonly int UId = MdRegexLib.GetGroupId(MdRegexGroupNames.UnderlineContent);
-
-    public Regex Syntax { get; } = MdRegexLib.UnderlineRegex;
+public partial class UnderlineSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex(@"(?<underline>_(?<u>(?>[^\\_]+|\\_|__|(?<open>_)|(?<-open>_))+)(?(open)(?!))_)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    private static readonly int UId = Syntax.GroupNumberFromName(MdRegexGroupNames.UnderlineContent);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,

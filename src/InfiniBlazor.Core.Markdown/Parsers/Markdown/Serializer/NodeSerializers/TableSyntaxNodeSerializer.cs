@@ -11,17 +11,27 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class TableSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
+public partial class TableSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
+    [GeneratedRegex("""
+        (?<table>
+            ^\|(?<tHead>.+)\|[\ ]*\n
+            ^\|(?<tSep>[:\-|\ ]+?)\|[\ ]*
+            (?<tBody>(?:\n(?:^\|.*\|$))+)
+        )
+        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+
+    private static readonly int BodyId = Syntax.GroupNumberFromName(MdRegexGroupNames.TableBody);
+    private static readonly int HeadId = Syntax.GroupNumberFromName(MdRegexGroupNames.TableHead);
+    private static readonly int SepId = Syntax.GroupNumberFromName(MdRegexGroupNames.TableSeparator);
+    
     private const int StackAllocThreshold = 16;
-
-    private static readonly int BodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.TableBody);
-    private static readonly int HeadId = MdRegexLib.GetGroupId(MdRegexGroupNames.TableHead);
-    private static readonly int SepId = MdRegexLib.GetGroupId(MdRegexGroupNames.TableSeparator);
-
-    public Regex Syntax { get; } = MdRegexLib.TableRegex;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,

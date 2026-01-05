@@ -10,13 +10,18 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class WikiLinkSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
-    private static readonly int WikiLinkHrefId = MdRegexLib.GetGroupId(MdRegexGroupNames.WikiLinkHref);
-
-    public Regex Syntax { get; } = MdRegexLib.WikiLinkRegex;
+public partial class WikiLinkSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
+    
+    [GeneratedRegex(@"(?<wikiLink>\[\[(?<wHref>[^\]\[\ ]+)\]\])", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    private static readonly int WikiLinkHrefId = Syntax.GroupNumberFromName(MdRegexGroupNames.WikiLinkHref);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,

@@ -10,13 +10,17 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class StrikeSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
-    private static readonly int StrikeContentId = MdRegexLib.GetGroupId(MdRegexGroupNames.StrikeContent);
+public partial class StrikeSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
+    [GeneratedRegex(@"(?<strike>~~(?<s>(?>[^\\~]+|\\~|~|(?<open>~~)|(?<-open>~~))+?~?)(?(open)(?!))~~)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
     
-    public Regex Syntax { get; } = MdRegexLib.StrikeRegex;
+    private static readonly int StrikeContentId = Syntax.GroupNumberFromName(MdRegexGroupNames.StrikeContent);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,

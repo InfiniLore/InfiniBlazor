@@ -10,13 +10,17 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class BlockQuoteSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    private static readonly int BlockQuoteId = MdRegexLib.GetGroupId(MdRegexGroupNames.BlockQuote);
-
-    public Regex Syntax { get; } = MdRegexLib.BlockQuoteRegex;
+public partial class BlockQuoteSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex(@"(?<blockQuote>^>[\ ]*(?:.+(?:\n>[^\n]*)*)$)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    private static readonly int BlockQuoteId = Syntax.GroupNumberFromName(MdRegexGroupNames.BlockQuote);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,

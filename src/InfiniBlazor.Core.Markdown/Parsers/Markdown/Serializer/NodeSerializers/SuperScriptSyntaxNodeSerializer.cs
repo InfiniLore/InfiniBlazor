@@ -10,13 +10,17 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class SuperScriptSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
-    private static readonly int SpId = MdRegexLib.GetGroupId(MdRegexGroupNames.SuperScriptContent);
+public partial class SuperScriptSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
+    [GeneratedRegex(@"(?<supScript>\^(?<sp>(?>[^\\\^\n]+|\\\^|\^\^|(?<open>\^)|(?<-open>\^))+)(?(open)(?!))\^)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
     
-    public Regex Syntax { get; } = MdRegexLib.SuperScriptRegex;
+    private static readonly int SpId = Syntax.GroupNumberFromName(MdRegexGroupNames.SuperScriptContent);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,

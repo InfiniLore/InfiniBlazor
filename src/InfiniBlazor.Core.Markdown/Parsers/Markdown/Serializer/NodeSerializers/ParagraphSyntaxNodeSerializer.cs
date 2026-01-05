@@ -10,13 +10,18 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class ParagraphSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
-    private static readonly int PId = MdRegexLib.GetGroupId(MdRegexGroupNames.ParagraphContent);
+public partial class ParagraphSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
+
+    [GeneratedRegex("(?<paragraph>^(?<p>.+?)$)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
     
-    public Regex Syntax { get; } = MdRegexLib.ParagraphRegex;
+    private static readonly int PId = Syntax.GroupNumberFromName(MdRegexGroupNames.ParagraphContent);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,

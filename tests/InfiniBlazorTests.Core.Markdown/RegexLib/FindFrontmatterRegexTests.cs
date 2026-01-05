@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using System.Text.RegularExpressions;
 
@@ -83,7 +84,7 @@ public class FindFrontmatterRegexTests {
     [MethodDataSource(nameof(GetTestData))]
     public async Task FindFrontmatterRegex_ShouldReturnExpected(TestDataDto testData) {
         // Arrange
-        Regex regex = MdRegexLib.FrontmatterRegex;
+        Regex regex = FrontmatterSyntaxNodeSerializer.Syntax;
         string input = testData.Input.ReplaceLineEndings("\n");
         bool expected = testData.ExpectedResult;
         

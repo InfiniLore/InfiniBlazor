@@ -11,14 +11,18 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class FrontmatterSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    private static readonly int LangId = MdRegexLib.GetGroupId(MdRegexGroupNames.FrontmatterLang);
-    private static readonly int BodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.FrontmatterBody);
+public partial class FrontmatterSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex(@"(?<frontmatter>(?<open>^-{3,}) *(?<fLang>.+)?\r?\n(?<fBody>[\s\S]*?)\r?\n\k<open>)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    internal static partial Regex Syntax { get; }
     
-    public Regex Syntax { get; } = MdRegexLib.FrontmatterRegex;
+    private static readonly int LangId = Syntax.GroupNumberFromName(MdRegexGroupNames.FrontmatterLang);
+    private static readonly int BodyId = Syntax.GroupNumberFromName(MdRegexGroupNames.FrontmatterBody);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
         FrontMatterMdSyntaxNode node = MdSyntaxNodePool<FrontMatterMdSyntaxNode>.Shared.Get();
         if (match.Groups[LangId].TryGetValue(out string? lang)) node.WithLanguage(lang);

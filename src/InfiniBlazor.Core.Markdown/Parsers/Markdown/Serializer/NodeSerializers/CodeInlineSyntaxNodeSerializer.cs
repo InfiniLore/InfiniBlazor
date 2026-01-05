@@ -10,14 +10,18 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class CodeInlineSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
-    private static readonly int CodeContentId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeInlineContent);
-    private static readonly int CodeInlineId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeInline);
-
-    public Regex Syntax { get; } = MdRegexLib.CodeInlineRegex;
+public partial class CodeInlineSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
+    [GeneratedRegex(@"(?<code>(?<open>`+)(?<c>(?>[^`\\]+|\\.|`(?!\k<open>))+?)\k<open>)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    private static readonly int CodeContentId = Syntax.GroupNumberFromName(MdRegexGroupNames.CodeInlineContent);
+    private static readonly int CodeInlineId = Syntax.GroupNumberFromName(MdRegexGroupNames.CodeInline);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
         if (!match.Groups[CodeContentId].TryGetValue(out string? codeValue)) return;
         if (!match.Groups[CodeInlineId].TryGetValueSpan(out ReadOnlySpan<char> fullOriginalString)) return;

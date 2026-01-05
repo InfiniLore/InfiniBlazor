@@ -10,13 +10,17 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class FootnoteReferenceSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    private static readonly int FootnoteIdentifierId = MdRegexLib.GetGroupId(MdRegexGroupNames.FootnoteReferenceIdentifier);
-
-    public Regex Syntax { get; } = MdRegexLib.FootnoteReferenceRegex;
+public partial class FootnoteReferenceSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex(@"(?<footnoteRef>\[\^(?<frId>[\d\p{L}\p{N}]+)\])", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    private static readonly int FootnoteIdentifierId = Syntax.GroupNumberFromName(MdRegexGroupNames.FootnoteReferenceIdentifier);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,

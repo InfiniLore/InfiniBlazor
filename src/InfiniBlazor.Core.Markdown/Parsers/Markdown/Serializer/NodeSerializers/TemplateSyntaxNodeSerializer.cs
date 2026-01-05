@@ -10,14 +10,18 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class TemplateSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    private static readonly int TemplateId = MdRegexLib.GetGroupId(MdRegexGroupNames.Template);
-    private static readonly int TemplateContentId = MdRegexLib.GetGroupId(MdRegexGroupNames.TemplateContent);
-
-    public Regex Syntax { get; } = MdRegexLib.TemplateRegex;
+public partial class TemplateSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex(@"(?<template>(?<!\])(?<open>\{)+(?<t>[^\s{}]+)(?<-open>\})+(?(open)(?!)))", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    private static readonly int TemplateId = Syntax.GroupNumberFromName(MdRegexGroupNames.Template);
+    private static readonly int TemplateContentId = Syntax.GroupNumberFromName(MdRegexGroupNames.TemplateContent);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,

@@ -10,17 +10,52 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class HtmlBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
-    private static readonly int HtmlPreId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlPre);
-    private static readonly int HtmlBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlBody);
-    private static readonly int HtmlPostId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlPost);
-    private static readonly int SpanTagAttrsId = MdRegexLib.GetGroupId(MdRegexGroupNames.SpanTagAttrs);
-    private static readonly int SpanBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.SpanBody);
-
-    public Regex Syntax { get; } = MdRegexLib.HtmlBlockRegex;
+public partial class HtmlBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
+    [GeneratedRegex("""
+        (?:
+            (?<htmlPre>.+?)?
+            (?<htmlBody>
+                <(?<htmlTag>\w+)\b[^>]*>
+                (?>
+                    [^<]+
+                    | <(?<open>\k<htmlTag>)\b[^>]*>
+                    | </(?<-open>\k<htmlTag>)>
+                    | <(?!/?\k<htmlTag>\b)[^>]+>
+                )*
+                (?(open)(?!))
+                (</\k<htmlTag>>)
+            )
+            (?<htmlPost>.+)?
+        )
+        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    [GeneratedRegex("""
+        (?<spanTag><(?<spanHtmlTag>span)\ ?(?<spanTagAttrs>\b[^>]*)>)
+        (?<spanBody>
+          (?>
+            [^<]+
+            | <(?<open>\k<spanHtmlTag>)\b[^>]*>
+            | </(?<-open>\k<spanHtmlTag>)>
+            | <(?!/?\k<spanHtmlTag>\b)[^>]+>
+          )*
+        )
+        (?(open)(?!))
+        (</\k<spanHtmlTag>>)
+        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.Compiled)]
+    private static partial Regex SpanSyntax { get; }
+    
+    private static readonly int HtmlPreId = Syntax.GroupNumberFromName(MdRegexGroupNames.HtmlPre);
+    private static readonly int HtmlBodyId = Syntax.GroupNumberFromName(MdRegexGroupNames.HtmlBody);
+    private static readonly int HtmlPostId = Syntax.GroupNumberFromName(MdRegexGroupNames.HtmlPost);
+    private static readonly int SpanTagAttrsId = SpanSyntax.GroupNumberFromName(MdRegexGroupNames.SpanTagAttrs);
+    private static readonly int SpanBodyId = SpanSyntax.GroupNumberFromName(MdRegexGroupNames.SpanBody);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
@@ -33,7 +68,7 @@ public class HtmlBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
         bool hasHtmlBody = match.Groups[HtmlBodyId].TryGetValue(out string? htmlBody);
         string? spanBody = null;
         if (hasHtmlBody && htmlBody is not null) {
-            spanMatch = MdRegexLib.FindSpanHtmlRegex.Match(htmlBody);
+            spanMatch = SpanSyntax.Match(htmlBody);
             if (spanMatch.Groups[SpanBodyId].TryGetValue(out spanBody)) {
                 hasTrailingContent = true;
             }

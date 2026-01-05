@@ -10,14 +10,18 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class EmoteSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    private static readonly int EmoteBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.EmoteContent);
-    private static readonly int EmoteId = MdRegexLib.GetGroupId(MdRegexGroupNames.Emote);
-
-    public Regex Syntax { get; } = MdRegexLib.EmoteRegex;
+public partial class EmoteSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex(@"(?<emote>:(?<e>[\p{L}\p{N}_]+):)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    private static readonly int EmoteBodyId = Syntax.GroupNumberFromName(MdRegexGroupNames.EmoteContent);
+    private static readonly int EmoteId = Syntax.GroupNumberFromName(MdRegexGroupNames.Emote);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,

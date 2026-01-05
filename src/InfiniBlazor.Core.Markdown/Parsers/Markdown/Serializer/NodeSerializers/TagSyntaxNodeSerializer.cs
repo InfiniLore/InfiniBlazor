@@ -10,13 +10,17 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class TagSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
-    private static readonly int TextId = MdRegexLib.GetGroupId(MdRegexGroupNames.TagText);
-
-    public Regex Syntax { get; } = MdRegexLib.TagRegex;
+public partial class TagSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
+    [GeneratedRegex(@"(?<tag>\#(?<tText>[\p{L}\p{N}\-_\/\.]+))", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    private static readonly int TextId = Syntax.GroupNumberFromName(MdRegexGroupNames.TagText);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,

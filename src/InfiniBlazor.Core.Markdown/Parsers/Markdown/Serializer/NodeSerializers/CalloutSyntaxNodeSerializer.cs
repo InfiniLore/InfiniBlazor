@@ -10,17 +10,26 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class CalloutSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    private static readonly int CalloutTypeId = MdRegexLib.GetGroupId(MdRegexGroupNames.CalloutType);
-    private static readonly int CalloutModId = MdRegexLib.GetGroupId(MdRegexGroupNames.CalloutMod);
-    private static readonly int CalloutTitleId = MdRegexLib.GetGroupId(MdRegexGroupNames.CalloutTitle);
-    private static readonly int CalloutBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.CalloutBody);
-    private static readonly int CalloutOptionId = MdRegexLib.GetGroupId(MdRegexGroupNames.CalloutOption);
-
-    public Regex Syntax { get; } = MdRegexLib.CalloutRegex;
+public partial class CalloutSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex("""
+        (?<callout>
+            ^>(?:\[!(?<clType>[^\|\n]+)(?<clMod>\|[^\n]*)?\](?<clOption>\+|\-)?)[\ ]*(?<clTitle>[^\n]*)$
+            (?:\n(?<clBody>>[^\n]*(?:\n>[^\n]*)*)$)?  
+        )
+        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    private static readonly int CalloutTypeId = Syntax.GroupNumberFromName(MdRegexGroupNames.CalloutType);
+    private static readonly int CalloutModId = Syntax.GroupNumberFromName(MdRegexGroupNames.CalloutMod);
+    private static readonly int CalloutTitleId = Syntax.GroupNumberFromName(MdRegexGroupNames.CalloutTitle);
+    private static readonly int CalloutBodyId = Syntax.GroupNumberFromName(MdRegexGroupNames.CalloutBody);
+    private static readonly int CalloutOptionId = Syntax.GroupNumberFromName(MdRegexGroupNames.CalloutOption);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,

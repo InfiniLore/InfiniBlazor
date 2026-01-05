@@ -11,19 +11,32 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class ListSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    private static readonly int LsId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListIdentifier);
-    private static readonly int LTaskId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListTask);
-    private static readonly int LHeadId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListHead);
-    private static readonly int LBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListBody);
-    private static readonly int LIndexId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListIndex);
-    private static readonly int ListItemLeadingSpaces = MdRegexLib.GetGroupId(MdRegexGroupNames.ListItemLeadingSpaces);
-    private static readonly int ListTaskItemLeadingSpaces = MdRegexLib.GetGroupId(MdRegexGroupNames.ListTaskItemLeadingSpaces);
-
-    public Regex Syntax { get; } = MdRegexLib.ListRegex;
+public partial class ListSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex("""
+        (?<list>
+            ^[^\S\n]*(?<lsId>-(?!-)|\d+\.|\.\d+).+
+            (?:\n(?:(?:-(?!-)|\d+\.|\.\d+)|(?:[\ ]+)).+)*
+        )
+        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    
+    [GeneratedRegex(@"^ *(?:-|(?<lIndex>\d*)\.)(?:(?<lTaskSpace> *)\[(?<lTask>[ xX~])])?(?:(?<lSpace> *)(?<lHead>.+)|(?<lHead> )|(?<lHead>))(?<lBody>(?:\n +.*)*)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex ListItemBodySyntax { get; }
+    
+    private static readonly int LsId = Syntax.GroupNumberFromName(MdRegexGroupNames.ListIdentifier);
+    private static readonly int LTaskId = ListItemBodySyntax.GroupNumberFromName(MdRegexGroupNames.ListTask);
+    private static readonly int LHeadId = ListItemBodySyntax.GroupNumberFromName(MdRegexGroupNames.ListHead);
+    private static readonly int LBodyId = ListItemBodySyntax.GroupNumberFromName(MdRegexGroupNames.ListBody);
+    private static readonly int LIndexId = ListItemBodySyntax.GroupNumberFromName(MdRegexGroupNames.ListIndex);
+    private static readonly int ListItemLeadingSpaces = ListItemBodySyntax.GroupNumberFromName(MdRegexGroupNames.ListItemLeadingSpaces);
+    private static readonly int ListTaskItemLeadingSpaces = ListItemBodySyntax.GroupNumberFromName(MdRegexGroupNames.ListTaskItemLeadingSpaces);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
@@ -33,7 +46,7 @@ public class ListSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
 
         bool isOrdered = !match.Groups[LsId].ValueSpan.Contains('-');
 
-        MatchCollection matchCollection = MdRegexLib.ListItemBodyRegex.Matches(listBody);
+        MatchCollection matchCollection = ListItemBodySyntax.Matches(listBody);
         int matchCount = matchCollection.Count;
         Match[] matchArray = ArrayPool<Match>.Shared.Rent(matchCount);
 

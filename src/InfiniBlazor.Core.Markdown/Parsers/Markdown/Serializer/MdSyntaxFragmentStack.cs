@@ -34,7 +34,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
         try {
             while (scanPos < inputLength) {
                 foreach (IMdSyntaxNodeSerializer serializer in serializers) {
-                    Match m = serializer.Syntax.Match(input, scanPos);
+                    Match m = serializer.Match(input, scanPos);
                     if (!m.Success || m.Index != scanPos) continue;
 
                     EnsureCapacity(ref fragments, index + 1);
@@ -67,7 +67,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
                 (Match Match, IMdSyntaxNodeSerializer Serializer)? next = null;
 
                 foreach (IMdSyntaxNodeSerializer serializer in serializers) {
-                    Match m = serializer.Syntax.Match(input, scanPos);
+                    Match m = serializer.Match(input, scanPos);
                     if (!m.Success) continue;
                     
                     if (next is null

@@ -10,13 +10,17 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class EscapedCharacterSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    public Regex Syntax { get; } = MdRegexLib.EscapedCharacterRegex;
-    private static readonly int EscapedId = MdRegexLib.GetGroupId(MdRegexGroupNames.Escaped);
-
+public partial class EscapedCharacterSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex(@"(?<escaped>\\\S)")]
+    private static partial Regex Syntax { get; }
+    
+    private static readonly int EscapedId = Syntax.GroupNumberFromName(MdRegexGroupNames.Escaped);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,

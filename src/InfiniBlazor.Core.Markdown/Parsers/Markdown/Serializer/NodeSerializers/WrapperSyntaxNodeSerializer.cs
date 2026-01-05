@@ -10,14 +10,19 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class WrapperSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
-    private static readonly int WId = MdRegexLib.GetGroupId(MdRegexGroupNames.WrapperContent);
-    private static readonly int WModsId = MdRegexLib.GetGroupId(MdRegexGroupNames.WrapperMods);
+public partial class WrapperSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
 
-    public Regex Syntax { get; } = MdRegexLib.WrapperRegex;
+    [GeneratedRegex(@"(?<wrapper><(?<wMods>\|.*?)>(?<w>.*)</>)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    private static readonly int WId = Syntax.GroupNumberFromName(MdRegexGroupNames.WrapperContent);
+    private static readonly int WModsId = Syntax.GroupNumberFromName(MdRegexGroupNames.WrapperMods);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
         if (!match.Groups[WId].TryGetValue(out string? wrapperValue)) return;
         if (!match.Groups[WModsId].TryGetValue(out string? mods)) return;// Mods are required for this match

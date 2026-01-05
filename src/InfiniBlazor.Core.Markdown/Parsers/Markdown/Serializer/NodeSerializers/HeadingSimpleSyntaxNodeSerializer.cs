@@ -10,14 +10,18 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class HeadingSimpleSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    private static readonly int HsTextId = MdRegexLib.GetGroupId(MdRegexGroupNames.HeadingSimpleText);
-    private static readonly int HsIdentifierId = MdRegexLib.GetGroupId(MdRegexGroupNames.HeadingSimpleIdentifier);
+public partial class HeadingSimpleSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex(@"(?<headingSimple>^(?<hsText>.+?)\n(?<hsIdentifier>[\ ]*(?:={3,}?|-{3,}?)[\ ]*$))", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
     
-    public Regex Syntax { get; } = MdRegexLib.HeadingSimpleRegex;
+    private static readonly int HsTextId = Syntax.GroupNumberFromName(MdRegexGroupNames.HeadingSimpleText);
+    private static readonly int HsIdentifierId = Syntax.GroupNumberFromName(MdRegexGroupNames.HeadingSimpleIdentifier);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,

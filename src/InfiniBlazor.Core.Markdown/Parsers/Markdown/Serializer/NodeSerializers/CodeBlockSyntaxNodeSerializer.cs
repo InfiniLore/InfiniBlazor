@@ -11,15 +11,19 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class CodeBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    private static readonly int CBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeBlockContent);
-    private static readonly int CLangId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeBlockLang);
-    private static readonly int CTrailingId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeBlockTrailing);
-
-    public Regex Syntax { get; } = MdRegexLib.CodeBlockRegex;
+public partial class CodeBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex(@"(?<codeBlock>^(?<open>`{3,})[\ ]*(?<cLang>.*?)?\n(?<cBody>(?>[\s\S]|(?!\k<open>))*?)\k<open>(?<cTrailing>[^\n]+)?$)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    private static readonly int CBodyId = Syntax.GroupNumberFromName(MdRegexGroupNames.CodeBlockContent);
+    private static readonly int CLangId = Syntax.GroupNumberFromName(MdRegexGroupNames.CodeBlockLang);
+    private static readonly int CTrailingId = Syntax.GroupNumberFromName(MdRegexGroupNames.CodeBlockTrailing);
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
     public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
