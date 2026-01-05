@@ -153,6 +153,7 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
             MdSyntaxNodeStackPool.Return(outputStack);
         }
     }
+    
     public int GetCount() {
         ReadOnlySpan<IMdSyntaxNode> rootNodeChildren = RootNode.GetChildrenSpan();
         int rootNodeChildCount = rootNodeChildren.Length;
