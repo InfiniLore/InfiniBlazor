@@ -14,7 +14,7 @@ public partial class BlockQuoteSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     [GeneratedRegex(@"(?<blockQuote>^>[\ ]*(?:.+(?:\n>[^\n]*)*)$)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
     
-    private static readonly int BlockQuoteId = Syntax.GroupNumberFromName(MdRegexGroupNames.BlockQuote);
+    private static readonly int BlockQuoteId = Syntax.GroupNumberFromName("blockQuote");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
