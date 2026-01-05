@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
-using InfiniBlazor.Pooling;
 using Microsoft.Extensions.ObjectPool;
 using System.Buffers;
 using System.Collections.Immutable;
@@ -18,9 +17,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
     public IMdStringMdSyntaxSerializer SerializerReference { get; set; } = null!;
 
     private readonly Stack<MdSyntaxFragment> _stack = new();
-    public static ObjectPool<MdSyntaxFragmentStack> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxFragmentStack>(PoolingHelpers.ParsersRetained);
-
-
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

@@ -55,13 +55,13 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public IMdSyntaxTree SerializeToTree(string markdown) {
-        MdSyntaxTree nodeTree = MdSyntaxTree.Pool.Get();
+        IMdSyntaxTree nodeTree = MdSyntaxTreePool.Shared.Get();
         SerializeToTree(markdown, nodeTree);
         return nodeTree;
     }
 
     public void SerializeToTree(string markdown, IMdSyntaxTree nodeTree) {
-        MdSyntaxFragmentStack fragmentStack = MdSyntaxFragmentStack.Pool.Get();
+        MdSyntaxFragmentStack fragmentStack = MdSyntaxFragmentStackPool.Shared.Get();
         fragmentStack.TreeReference = nodeTree;
         fragmentStack.SerializerReference = this;
 
@@ -98,7 +98,7 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
             throw;
         }
         finally {
-            MdSyntaxFragmentStack.Pool.Return(fragmentStack);
+            MdSyntaxFragmentStackPool.Shared.Return(fragmentStack);
         }
     }
 

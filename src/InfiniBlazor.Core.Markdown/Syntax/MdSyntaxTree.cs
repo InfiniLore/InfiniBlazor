@@ -24,8 +24,7 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
         }
     }
 
-    public static ObjectPool<MdSyntaxTree> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxTree>(16);
-    private static ObjectPool<Stack<IMdSyntaxNode>> MdSyntaxNodeStackPool { get; } = PoolingHelpers.CreateStackPool<IMdSyntaxNode>(PoolingHelpers.ParsersRetained);
+    private static ObjectPool<Stack<IMdSyntaxNode>> MdSyntaxNodeStackPool { get; } = PoolingHelpers.CreateStackPool<IMdSyntaxNode>(16);
     
     public static IMdSyntaxTree Empty => new MdSyntaxTree();
 
@@ -188,10 +187,6 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
         return count;
     }
     #endregion
-    
-    public void ReturnToPool() {
-        Pool.Return(this);
-    }
 
     public bool TryReset() {
         if (RootNode is not RootMdSyntaxNode rootNode) return false;// Cannot reset a non-root node
@@ -237,10 +232,6 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
         finally {
             MdSyntaxNodeStackPool.Return(stack);
         }
-    }
-
-    public void Dispose() {
-        ReturnToPool();
     }
 
     public override int GetHashCode()

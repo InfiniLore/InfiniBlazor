@@ -1,20 +1,22 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.ObjectPool;
+using InfiniBlazor.Pooling;
 using Microsoft.Extensions.ObjectPool;
 
-namespace InfiniBlazor.Pooling;
+namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class PoolingHelpers {
+public class MdSyntaxFragmentStackPool {
+    public static MdSyntaxFragmentStackPool Shared { get; } = new();
+    
+    private ObjectPool<MdSyntaxFragmentStack> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxFragmentStack>(16);
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static ObjectPool<T> CreateResettablePool<T>(int maxRetained) where T : class, IResettable, new()
-        => new DefaultObjectPool<T>(new ResettablePoolPolicy<T>(), maxRetained);
-
-    public static ObjectPool<Stack<TItem>> CreateStackPool<TItem>(int maxRetained)  
-        => new DefaultObjectPool<Stack<TItem>>(new StackPoolPolicy<Stack<TItem>,TItem>(), maxRetained);
+    public MdSyntaxFragmentStack Get() => Pool.Get();
+    public void Return(MdSyntaxFragmentStack stack) => Pool.Return(stack);
 }

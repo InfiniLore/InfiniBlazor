@@ -12,7 +12,7 @@ namespace InfiniBlazor.Markdown.Syntax;
 public class MdSyntaxNodePool<T> where T : class, IMdSyntaxNode, new() {
     public static MdSyntaxNodePool<T> Shared { get; } = new();
     
-    private static ObjectPool<T> Pool { get; } = PoolingHelpers.CreateResettablePool<T>(PoolingHelpers.VisitorPerParserRetained);
+    private static ObjectPool<T> Pool { get; } = PoolingHelpers.CreateResettablePool<T>(64);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

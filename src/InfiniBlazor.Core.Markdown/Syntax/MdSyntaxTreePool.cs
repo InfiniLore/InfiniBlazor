@@ -1,20 +1,23 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.Extensions.ObjectPool;
+using InfiniBlazor.Pooling;
 using Microsoft.Extensions.ObjectPool;
 
-namespace InfiniBlazor.Pooling;
+namespace InfiniBlazor.Markdown.Syntax;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class PoolingHelpers {
+public class MdSyntaxTreePool {
+    public static MdSyntaxTreePool Shared { get; } = new();
+    
+    private ObjectPool<MdSyntaxTree> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxTree>(16);
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static ObjectPool<T> CreateResettablePool<T>(int maxRetained) where T : class, IResettable, new()
-        => new DefaultObjectPool<T>(new ResettablePoolPolicy<T>(), maxRetained);
-
-    public static ObjectPool<Stack<TItem>> CreateStackPool<TItem>(int maxRetained)  
-        => new DefaultObjectPool<Stack<TItem>>(new StackPoolPolicy<Stack<TItem>,TItem>(), maxRetained);
+    public IMdSyntaxTree Get() => Pool.Get();
+    public void Return(MdSyntaxTree tree) => Pool.Return(tree);
+    public void Return(IMdSyntaxTree tree) => Pool.Return(tree as MdSyntaxTree ?? throw new ArgumentException("Tree must be of type MdSyntaxTree", nameof(tree)));
 }

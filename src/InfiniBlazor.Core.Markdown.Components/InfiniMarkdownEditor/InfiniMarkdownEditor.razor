@@ -112,7 +112,7 @@
     protected override async Task OnParametersSetAsync() {
         await base.OnParametersSetAsync();
 
-        EditorContext.SyntaxTree.ReturnToPool();
+        MdSyntaxTreePool.Shared.Return(EditorContext.SyntaxTree);
         EditorContext.SyntaxTree = Parser.Markdown.SerializeToSyntaxTree(EditorContext.TextSource.Text);
         await EditorContext.InvokeSyntaxTreeChangeAsync();
         await InvokeAsync(StateHasChanged);
@@ -147,7 +147,7 @@
         if (EditorContext.TextSource.IsEmpty) await InfiniBlazorJs.Element.ClearValueAsync(EditorContext.InputElementRef);
         else await InfiniBlazorJs.Element.SetValueSelectionAwareAsync(EditorContext.InputElementRef, EditorContext.TextSource.Text);
 
-        EditorContext.SyntaxTree.ReturnToPool();
+        MdSyntaxTreePool.Shared.Return(EditorContext.SyntaxTree);
         EditorContext.SyntaxTree = Parser.Markdown.SerializeToSyntaxTree(EditorContext.TextSource.Text);
         await EditorContext.InvokeSyntaxTreeChangeAsync();
 
