@@ -299,12 +299,6 @@ public class IndividualMarkdownBenchmarks {
     // -----------------------------------------------------------------------------------------------------------------
     // Benchmarks
     // -----------------------------------------------------------------------------------------------------------------
-    [Benchmark(Baseline = true)]
-    public IMdSyntaxTree SerializeToSyntaxTree_ParagraphBaseline() {
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree("This is a paragraph.");
-        return tree;
-    }
-
     [Benchmark]
     public IMdSyntaxTree SerializeToSyntaxTree() {
         IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(InputCase.Markdown);
