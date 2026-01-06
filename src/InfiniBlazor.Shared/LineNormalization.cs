@@ -44,10 +44,10 @@ public static class LineNormalization {
                 if (line.IsEmpty) continue;
 
                 int currentIndent = CountLeadingWhitespace(line);
-                if (line.Length > currentIndent) {
-                    minIndent = Math.Min(minIndent, currentIndent);
-                    leadingSpaces = minIndent;
-                }
+                if (line.Length <= currentIndent) continue;
+
+                minIndent = Math.Min(minIndent, currentIndent);
+                leadingSpaces = minIndent;
             }
 
             if (minIndent == int.MaxValue) return input.ToString();
@@ -64,9 +64,7 @@ public static class LineNormalization {
             }
 
             // Remove the last newline if it wasn't in the original input
-            if (stringBuilder.Length > 0 && !input.EndsWith('\n')) {
-                stringBuilder.Length--;
-            }
+            if (stringBuilder.Length > 0 && !input.EndsWith('\n')) stringBuilder.Length--;
             
             // Remove the last newlines if they weren't in the original input
             while (stringBuilder.Length > 0 && newLineCountFromEnd > 0 && stringBuilder[^1] == '\n') {
@@ -86,17 +84,14 @@ public static class LineNormalization {
         int count = 0;
 
         for (int i = input.Length - 1; i >= 0; i--) {
-            if (input[i] == '\n') {
-                count++;
-            } else {
-                break;
-            }
+            if (input[i] != '\n') break;
+
+            count++;
         }
 
         return count;
     }
-
-
+    
     private static int CountLeadingWhitespace(ReadOnlySpan<char> line) {
         int count = 0;
         while (count < line.Length) {
@@ -110,8 +105,7 @@ public static class LineNormalization {
     
     public static string NormalizeBlockQuote(ReadOnlySpan<char> span, out int leadingSpaces) {
         ReadOnlySpan<char> normalized = NormalizeLinePrefixes(span, ">");
-        string adjusted = NormalizeLineIndentation(normalized, out leadingSpaces);
-        return adjusted;
+        return NormalizeLineIndentation(normalized, out leadingSpaces);
     }
 
     private static ReadOnlySpan<char> NormalizeLinePrefixes(ReadOnlySpan<char> span, ReadOnlySpan<char> prefix) {
@@ -121,9 +115,7 @@ public static class LineNormalization {
             foreach (ReadOnlySpan<char> line in span.EnumerateLines()) {
                 ReadOnlySpan<char> trimmedLine = line.TrimStart();
 
-                if (trimmedLine.StartsWith(prefix)) {
-                    trimmedLine = trimmedLine[prefixLength..];// Remove prefix
-                }
+                if (trimmedLine.StartsWith(prefix)) trimmedLine = trimmedLine[prefixLength..];// Remove prefix
 
                 // Append the normalized line back to the builder
                 builder.Append(trimmedLine);
