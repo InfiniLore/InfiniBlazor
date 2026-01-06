@@ -73,13 +73,21 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
         MdSyntaxFragment[] fragments = ArrayPool<MdSyntaxFragment>.Shared.Rent(128);
         int index = 0;
 
+        SearchValues<char> searchValues = SerializerReference.SingleLineTriggerSearchValues;
+        ReadOnlySpan<char> span = input.AsSpan();
+        
         try {
             while (scanPos < length) {
+                // 1. FAST JUMP: Find the next trigger character relative to current scanPos
+                int offset = span[scanPos..].IndexOfAny(searchValues);
+                if (offset == -1) break;  // No more triggers, jump to end
+                
+                scanPos += offset;
                 char currentChar = input[scanPos];
+                ImmutableArray<IMdSyntaxNodeSerializer> candidates = SerializerReference.GetSingleLineSerializersForChar(currentChar);
+                
                 IMdSyntaxNodeSerializer? winner = null;
                 Match? winningMatch = null;
-
-                ImmutableArray<IMdSyntaxNodeSerializer> candidates = SerializerReference.GetSingleLineSerializersForChar(currentChar);
 
                 foreach (IMdSyntaxNodeSerializer serializer in candidates) {
                     Match m = serializer.Match(input, scanPos);
@@ -91,7 +99,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
                 }
 
                 if (winner != null && winningMatch != null) {
-                    // If we have accumulated text before this match, push it
+                    // Push accumulated text found BEFORE this match
                     if (scanPos > textStart) {
                         TextMdSyntaxNode contentNode = MdSyntaxNodePool<TextMdSyntaxNode>.Shared.Get();
                         contentNode.WithContent(input[textStart..scanPos]);
@@ -104,7 +112,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
                     fragments[index++] = MdSyntaxFragment.AsUnhandledMatch(winningMatch, node, winner);
 
                     scanPos += Math.Max(1, winningMatch.Length);
-                    textStart = scanPos; // Reset text pointer to after the match
+                    textStart = scanPos; 
                 }
                 else {
                     // No match at this position, just move the cursor

@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniBlazor.Markdown.Syntax;
+using System.Buffers;
 using System.Collections.Immutable;
 
 namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
@@ -9,6 +10,8 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMdStringMdSyntaxSerializer {
+    SearchValues<char> SingleLineTriggerSearchValues { get; }
+    
     ImmutableArray<IMdSyntaxNodeSerializer> SingleLineSerializers { get; }
     ImmutableArray<IMdSyntaxNodeSerializer> MultiLineSerializers { get; }
     IMdSyntaxNodeSerializer? FrontMatterSerializer { get; }

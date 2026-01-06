@@ -5,6 +5,7 @@ using CodeOfChaos.Extensions.DependencyInjection;
 using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 using InfiniBlazor.Markdown.Syntax;
 using Microsoft.Extensions.Logging;
+using System.Buffers;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 
@@ -35,6 +36,7 @@ public sealed class MdStringMdSyntaxSerializer : IMdStringMdSyntaxSerializer {
         new WrapperSyntaxNodeSerializer(),
         new BreakSyntaxNodeSerializer(),
     ];
+    
     public ImmutableArray<IMdSyntaxNodeSerializer> MultiLineSerializers { get; init; } = [
         new HeadingSyntaxNodeSerializer(),
         new CodeBlockSyntaxNodeSerializer(),
@@ -54,6 +56,8 @@ public sealed class MdStringMdSyntaxSerializer : IMdStringMdSyntaxSerializer {
 
     private readonly ImmutableArray<IMdSyntaxNodeSerializer>[] _singleLineLookup;
     private readonly ImmutableArray<IMdSyntaxNodeSerializer>[] _multiLineLookup;
+    
+    public SearchValues<char> SingleLineTriggerSearchValues { get; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
@@ -63,6 +67,14 @@ public sealed class MdStringMdSyntaxSerializer : IMdStringMdSyntaxSerializer {
         
         _singleLineLookup = BuildLookup(SingleLineSerializers);
         _multiLineLookup = BuildLookup(MultiLineSerializers);
+        
+        // Pre-calculate all trigger characters for fast IndexOfAny jumping
+        char[] triggers = SingleLineSerializers
+            .SelectMany(s => s.TriggerCharacters)
+            .Distinct()
+            .ToArray();
+        
+        SingleLineTriggerSearchValues = SearchValues.Create(triggers);
     }
 
     private static ImmutableArray<IMdSyntaxNodeSerializer>[] BuildLookup(ImmutableArray<IMdSyntaxNodeSerializer> serializers) {
