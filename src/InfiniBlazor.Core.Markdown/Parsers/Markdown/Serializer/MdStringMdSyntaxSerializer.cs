@@ -13,7 +13,8 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IMdStringMdSyntaxSerializer>]
-public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerializer> logger) : IMdStringMdSyntaxSerializer {
+public sealed class MdStringMdSyntaxSerializer : IMdStringMdSyntaxSerializer {
+    private readonly ILogger<MdStringMdSyntaxSerializer> _logger;
     public ImmutableArray<IMdSyntaxNodeSerializer> SingleLineSerializers { get; } = [
         new EscapedCharacterSyntaxNodeSerializer(),
         new BoldSyntaxNodeSerializer(),
@@ -51,9 +52,50 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
 
     public IMdSyntaxNodeSerializer? FrontMatterSerializer { get; } = new FrontmatterSyntaxNodeSerializer();
 
+    private readonly ImmutableArray<IMdSyntaxNodeSerializer>[] _singleLineLookup = new ImmutableArray<IMdSyntaxNodeSerializer>[256];
+    private readonly ImmutableArray<IMdSyntaxNodeSerializer>[] _multiLineLookup = new ImmutableArray<IMdSyntaxNodeSerializer>[256];
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Constructors
+    // -----------------------------------------------------------------------------------------------------------------
+    public MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerializer> logger) {
+        _logger = logger;
+        
+        // Initialize arrays with empty to avoid null checks later
+        for (int i = 0; i < 256; i++) {
+            _singleLineLookup[i] = ImmutableArray<IMdSyntaxNodeSerializer>.Empty;
+            _multiLineLookup[i] = ImmutableArray<IMdSyntaxNodeSerializer>.Empty;
+        }
+
+        PopulateLookup(_singleLineLookup, SingleLineSerializers);
+        PopulateLookup(_multiLineLookup, MultiLineSerializers);
+    }
+
+    private static void PopulateLookup(ImmutableArray<IMdSyntaxNodeSerializer>[] table, ImmutableArray<IMdSyntaxNodeSerializer> serializers) {
+        // First, add serializers with specific triggers
+        foreach (IMdSyntaxNodeSerializer s in serializers.Where(s => !s.TriggerCharacters.IsEmpty())) {
+            foreach (char c in s.TriggerCharacters) {
+                if (c < 256) table[c] = table[c].Add(s);
+            }
+        }
+
+        // Second, add "Global" serializers (empty triggers) to EVERY slot
+        ImmutableArray<IMdSyntaxNodeSerializer> globals = serializers.Where(s => s.TriggerCharacters.IsEmpty()).ToImmutableArray();
+        if (globals.IsEmpty) return;
+
+        for (int i = 0; i < 256; i++) {
+            table[i] = table[i].AddRange(globals);
+        }
+    }
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public ImmutableArray<IMdSyntaxNodeSerializer> GetSingleLineSerializersForChar(char c) 
+        => c < 256 ? _singleLineLookup[c] : ImmutableArray<IMdSyntaxNodeSerializer>.Empty;
+
+    public ImmutableArray<IMdSyntaxNodeSerializer> GetMultiLineSerializersForChar(char c) 
+        => c < 256 ? _multiLineLookup[c] : ImmutableArray<IMdSyntaxNodeSerializer>.Empty;
+
     public IMdSyntaxTree SerializeToTree(string markdown) {
         IMdSyntaxTree nodeTree = MdSyntaxTreePool.Shared.Get();
         SerializeToTree(markdown, nodeTree);
@@ -87,14 +129,14 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
 
                     // Unhandled state which should never happen
                     default: {
-                        logger.LogError("Unhandled state in MdStringMdSyntaxSerializer.SerializeToTree with fragment '{Fragment}'.", fragment);
+                        _logger.LogError("Unhandled state in MdStringMdSyntaxSerializer.SerializeToTree with fragment '{Fragment}'.", fragment);
                         break;
                     }
                 }
             }
         }
         catch (Exception ex) {
-            logger.LogError(ex, "Error parsing Markdown during tree conversion.");
+            _logger.LogError(ex, "Error parsing Markdown during tree conversion.");
             throw;
         }
         finally {

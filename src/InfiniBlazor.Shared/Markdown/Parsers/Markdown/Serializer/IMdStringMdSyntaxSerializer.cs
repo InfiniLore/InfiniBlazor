@@ -12,7 +12,9 @@ public interface IMdStringMdSyntaxSerializer {
     ImmutableArray<IMdSyntaxNodeSerializer> SingleLineSerializers { get; }
     ImmutableArray<IMdSyntaxNodeSerializer> MultiLineSerializers { get; }
     IMdSyntaxNodeSerializer? FrontMatterSerializer { get; }
-    
+
+    ImmutableArray<IMdSyntaxNodeSerializer> GetSingleLineSerializersForChar(char c);
+    ImmutableArray<IMdSyntaxNodeSerializer> GetMultiLineSerializersForChar(char c);
     IMdSyntaxTree SerializeToTree(string markdown);
     void SerializeToTree(string markdown, IMdSyntaxTree nodeTree);
 }

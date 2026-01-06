@@ -15,7 +15,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
 public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable {
     public IMdSyntaxTree TreeReference { get; set; } = null!;
     public IMdStringMdSyntaxSerializer SerializerReference { get; set; } = null!;
-
+    
     private readonly Stack<MdSyntaxFragment> _stack = new();
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -23,8 +23,6 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
     // -----------------------------------------------------------------------------------------------------------------
     #region PushToStack
     public void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node, int startIndex = 0) {
-        ImmutableArray<IMdSyntaxNodeSerializer> serializers = SerializerReference.MultiLineSerializers;
-
         int scanPos = startIndex;
         int inputLength = input.Length;
 
@@ -36,10 +34,9 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
                 char currentChar = input[scanPos];
                 bool matched = false;
 
-                // Only try serializers if we hit a trigger character
-                foreach (IMdSyntaxNodeSerializer serializer in serializers) {
-                    if (!serializer.TriggerCharacters.IsEmpty() && Array.IndexOf(serializer.TriggerCharacters, currentChar) == -1) continue;
+                ImmutableArray<IMdSyntaxNodeSerializer> candidates = SerializerReference.GetMultiLineSerializersForChar(currentChar);
 
+                foreach (IMdSyntaxNodeSerializer serializer in candidates) {
                     Match m = serializer.Match(input, scanPos);
                     if (!m.Success || m.Index != scanPos) continue;
 
@@ -70,7 +67,6 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
     }
 
     public void PushSingleLineMatchesToStack(string input, IMdSyntaxNode node) {
-        ImmutableArray<IMdSyntaxNodeSerializer> serializers = SerializerReference.SingleLineSerializers;
         int scanPos = 0;
         int length = input.Length;
         int textStart = 0;
@@ -83,10 +79,9 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
                 IMdSyntaxNodeSerializer? winner = null;
                 Match? winningMatch = null;
 
-                // Only try serializers if we hit a trigger character
-                foreach (IMdSyntaxNodeSerializer serializer in serializers) {
-                    if (!serializer.TriggerCharacters.IsEmpty() && Array.IndexOf(serializer.TriggerCharacters, currentChar) == -1) continue;
+                ImmutableArray<IMdSyntaxNodeSerializer> candidates = SerializerReference.GetSingleLineSerializersForChar(currentChar);
 
+                foreach (IMdSyntaxNodeSerializer serializer in candidates) {
                     Match m = serializer.Match(input, scanPos);
                     if (!m.Success || m.Index != scanPos) continue;
 
