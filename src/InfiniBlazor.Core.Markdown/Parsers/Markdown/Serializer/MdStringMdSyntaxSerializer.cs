@@ -15,7 +15,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
 [InjectableSingleton<IMdStringMdSyntaxSerializer>]
 public sealed class MdStringMdSyntaxSerializer : IMdStringMdSyntaxSerializer {
     private readonly ILogger<MdStringMdSyntaxSerializer> _logger;
-    public ImmutableArray<IMdSyntaxNodeSerializer> SingleLineSerializers { get; } = [
+    public ImmutableArray<IMdSyntaxNodeSerializer> SingleLineSerializers { get; init; } = [
         new EscapedCharacterSyntaxNodeSerializer(),
         new BoldSyntaxNodeSerializer(),
         new ItalicSyntaxNodeSerializer(),
@@ -35,7 +35,7 @@ public sealed class MdStringMdSyntaxSerializer : IMdStringMdSyntaxSerializer {
         new WrapperSyntaxNodeSerializer(),
         new BreakSyntaxNodeSerializer(),
     ];
-    public ImmutableArray<IMdSyntaxNodeSerializer> MultiLineSerializers { get; } = [
+    public ImmutableArray<IMdSyntaxNodeSerializer> MultiLineSerializers { get; init; } = [
         new HeadingSyntaxNodeSerializer(),
         new CodeBlockSyntaxNodeSerializer(),
         new HeadingSimpleSyntaxNodeSerializer(),
@@ -52,8 +52,8 @@ public sealed class MdStringMdSyntaxSerializer : IMdStringMdSyntaxSerializer {
 
     public IMdSyntaxNodeSerializer? FrontMatterSerializer { get; } = new FrontmatterSyntaxNodeSerializer();
 
-    private readonly ImmutableArray<IMdSyntaxNodeSerializer>[] _singleLineLookup = new ImmutableArray<IMdSyntaxNodeSerializer>[256];
-    private readonly ImmutableArray<IMdSyntaxNodeSerializer>[] _multiLineLookup = new ImmutableArray<IMdSyntaxNodeSerializer>[256];
+    private readonly ImmutableArray<IMdSyntaxNodeSerializer>[] _singleLineLookup;
+    private readonly ImmutableArray<IMdSyntaxNodeSerializer>[] _multiLineLookup;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
@@ -61,40 +61,37 @@ public sealed class MdStringMdSyntaxSerializer : IMdStringMdSyntaxSerializer {
     public MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerializer> logger) {
         _logger = logger;
         
-        // Initialize arrays with empty to avoid null checks later
-        for (int i = 0; i < 256; i++) {
-            _singleLineLookup[i] = ImmutableArray<IMdSyntaxNodeSerializer>.Empty;
-            _multiLineLookup[i] = ImmutableArray<IMdSyntaxNodeSerializer>.Empty;
-        }
-
-        PopulateLookup(_singleLineLookup, SingleLineSerializers);
-        PopulateLookup(_multiLineLookup, MultiLineSerializers);
+        _singleLineLookup = BuildLookup(SingleLineSerializers);
+        _multiLineLookup = BuildLookup(MultiLineSerializers);
     }
 
-    private static void PopulateLookup(ImmutableArray<IMdSyntaxNodeSerializer>[] table, ImmutableArray<IMdSyntaxNodeSerializer> serializers) {
-        // First, add serializers with specific triggers
-        foreach (IMdSyntaxNodeSerializer s in serializers.Where(s => !s.TriggerCharacters.IsEmpty())) {
-            foreach (char c in s.TriggerCharacters) {
-                if (c < 256) table[c] = table[c].Add(s);
-            }
-        }
-
-        // Second, add "Global" serializers (empty triggers) to EVERY slot
-        ImmutableArray<IMdSyntaxNodeSerializer> globals = serializers.Where(s => s.TriggerCharacters.IsEmpty()).ToImmutableArray();
-        if (globals.IsEmpty) return;
+    private static ImmutableArray<IMdSyntaxNodeSerializer>[] BuildLookup(ImmutableArray<IMdSyntaxNodeSerializer> serializers) {
+        var table = new ImmutableArray<IMdSyntaxNodeSerializer>[256];
+        
+        // Identify "Global" serializers (those with no triggers)
+        IMdSyntaxNodeSerializer[] globals = serializers.Where(s => s.TriggerCharacters.IsEmpty()).ToArray();
 
         for (int i = 0; i < 256; i++) {
-            table[i] = table[i].AddRange(globals);
+            char c = (char)i;
+            
+            // Get serializers specifically triggered by this character
+            IEnumerable<IMdSyntaxNodeSerializer> triggers = serializers.Where(s => s.TriggerCharacters.Contains(c));
+            
+            // Result is Triggers + Globals
+            table[i] = triggers.Concat(globals).ToImmutableArray();
         }
+
+        return table;
     }
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public ImmutableArray<IMdSyntaxNodeSerializer> GetSingleLineSerializersForChar(char c) 
-        => c < 256 ? _singleLineLookup[c] : ImmutableArray<IMdSyntaxNodeSerializer>.Empty;
+        => c < 256 ? _singleLineLookup[c] : SingleLineSerializers;
 
     public ImmutableArray<IMdSyntaxNodeSerializer> GetMultiLineSerializersForChar(char c) 
-        => c < 256 ? _multiLineLookup[c] : ImmutableArray<IMdSyntaxNodeSerializer>.Empty;
+        => c < 256 ? _multiLineLookup[c] : MultiLineSerializers;
 
     public IMdSyntaxTree SerializeToTree(string markdown) {
         IMdSyntaxTree nodeTree = MdSyntaxTreePool.Shared.Get();
