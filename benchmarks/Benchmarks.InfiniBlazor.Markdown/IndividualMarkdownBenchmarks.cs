@@ -245,6 +245,16 @@ public class IndividualMarkdownBenchmarks {
             | Row 2    | Data 2   |
             | Row 3    | Data 3   |
             """),
+        new("Table_50Rows", $"""
+            | Header 1 | Header 2 |
+            | -------- | -------- |
+            {RepeatLines("| Row 1    | Data 1   |", 50)}
+            """),
+        new("Table_100Rows", $"""
+            | Header 1 | Header 2 |
+            | -------- | -------- |
+            {RepeatLines("| Row 1    | Data 1   |", 100)}
+            """),
         #endregion
 
         #region Tag
