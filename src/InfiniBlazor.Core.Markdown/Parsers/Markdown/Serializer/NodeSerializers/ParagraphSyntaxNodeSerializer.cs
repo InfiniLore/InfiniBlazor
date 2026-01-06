@@ -16,7 +16,7 @@ public partial class ParagraphSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     
     private static readonly int PId = Syntax.GroupNumberFromName("p");
     
-    public char[] TriggerCharacters { get; } = [];
+    public char[] TriggerCharacters { get; } = Array.Empty<char>();
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

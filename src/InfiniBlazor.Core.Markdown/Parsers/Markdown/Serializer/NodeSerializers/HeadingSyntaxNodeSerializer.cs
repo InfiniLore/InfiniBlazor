@@ -16,7 +16,7 @@ public partial class HeadingSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     private static readonly int HLevelId = Syntax.GroupNumberFromName("level");
     private static readonly int HTextId = Syntax.GroupNumberFromName("text");
     
-    public char[] TriggerCharacters { get; } = [];
+    public char[] TriggerCharacters { get; } = Array.Empty<char>();
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

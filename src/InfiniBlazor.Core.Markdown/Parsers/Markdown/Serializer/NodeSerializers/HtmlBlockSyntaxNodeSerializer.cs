@@ -49,7 +49,7 @@ public partial class HtmlBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     private static readonly int SpanTagAttrsId = SpanSyntax.GroupNumberFromName("attr");
     private static readonly int SpanBodyId = SpanSyntax.GroupNumberFromName("body");
 
-    public char[] TriggerCharacters { get; } = [];
+    public char[] TriggerCharacters { get; } = Array.Empty<char>();
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

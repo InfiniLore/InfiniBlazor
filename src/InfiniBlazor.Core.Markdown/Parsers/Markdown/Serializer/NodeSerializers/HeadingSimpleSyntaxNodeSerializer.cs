@@ -16,7 +16,7 @@ public partial class HeadingSimpleSyntaxNodeSerializer : IMdSyntaxNodeSerializer
     private static readonly int HsTextId = Syntax.GroupNumberFromName("text");
     private static readonly int HsIdentifierId = Syntax.GroupNumberFromName("id");
     
-    public char[] TriggerCharacters { get; } = [];
+    public char[] TriggerCharacters { get; } = Array.Empty<char>();
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
