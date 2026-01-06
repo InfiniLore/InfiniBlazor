@@ -42,16 +42,6 @@ public class MarkdownBenchmarks {
         return serviceCollection.BuildServiceProvider();
     }
 
-    private class MockNavigationManager : Microsoft.AspNetCore.Components.NavigationManager {
-        public MockNavigationManager() => Initialize("http://localhost/", "http://localhost/");
-        protected override void NavigateToCore(string uri, bool forceLoad) { }
-    }
-
-    private class MockJsRuntime : Microsoft.JSInterop.IJSRuntime {
-        public ValueTask<TValue> InvokeAsync<TValue>(string identifier, object?[]? args) => default;
-        public ValueTask<TValue> InvokeAsync<TValue>(string identifier, CancellationToken cancellationToken, object?[]? args) => default;
-    }
-
     [Benchmark(Baseline = true)]
     public async Task<string> RenderMarkdown() {
         IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(Markdown);

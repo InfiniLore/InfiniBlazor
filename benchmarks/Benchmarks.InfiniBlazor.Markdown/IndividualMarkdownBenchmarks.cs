@@ -19,266 +19,243 @@ public class IndividualMarkdownBenchmarks {
     [GlobalSetup]
     public void Setup() {
         var serviceCollection = new ServiceCollection();
+        serviceCollection.AddSingleton<Microsoft.AspNetCore.Components.NavigationManager, MockNavigationManager>();
+        serviceCollection.AddSingleton<Microsoft.JSInterop.IJSRuntime, MockJsRuntime>();
         serviceCollection.AddInfiniBlazor();
         serviceCollection.AddLogging();
         ServiceProvider provider = serviceCollection.BuildServiceProvider();
-        
+
         Parser = provider.GetRequiredService<IMarkdownParser>();
     }
 
-    // -----------------------------------------------------------------------------------------------------------------
-    // Benchmarks for SinglelineStructuresRegex Features
-    // -----------------------------------------------------------------------------------------------------------------
-    [Benchmark]
-    public async Task<string> EscapedCharacters() {
-        const string input = @"\*escaped text\*";
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
+    public sealed record BenchmarkCase(string Name, string Markdown) {
+        public override string ToString() => Name;
     }
 
-    [Benchmark]
-    public async Task<string> BoldAndItalic() {
-        const string input = "***bold and italic***";
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
-
-    [Benchmark]
-    public async Task<string> BoldOnly() {
-        const string input = "**bold**";
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
-
-    [Benchmark]
-    public async Task<string> ItalicOnly() {
-        const string input = "*italic*";
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
-
-    [Benchmark]
-    public async Task<string> Superscript() {
-        const string input = "^^sup-script^^";
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
-
-    [Benchmark]
-    public async Task<string> Subscript() {
-        const string input = "^^sub-script^^";
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
-
-    [Benchmark]
-    public async Task<string> Strikethrough() {
-        const string input = "~~strikethrough~~";
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
-
-    [Benchmark]
-    public async Task<string> Underline() {
-        const string input = "_underline_";
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
-
-    [Benchmark]
-    public async Task<string> InlineCode() {
-        const string input = "`inline code`";
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
-
-    [Benchmark]
-    public async Task<string> Emotes() {
-        const string input = ":flag-trans:";
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
-
-    [Benchmark]
-    public async Task<string> NestedLinks() {
-        const string input = "[![nested link](image_url)](outer_url)";
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
-
-    [Benchmark]
-    public async Task<string> RegularLinks() {
-        const string input = "[Regular Link](https://example.com)";
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
-
-    [Benchmark]
-    public async Task<string> Tags() {
-        const string input = "#tag";
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
-
-    [Benchmark]
-    public async Task<string> HtmlSpecialCharacters() {
-        const string input = "&copy; & < >";
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
+    [ParamsSource(nameof(Cases))]
+    public BenchmarkCase InputCase { get; set; } = null!;
 
     // -----------------------------------------------------------------------------------------------------------------
-    // Benchmarks for MultilineStructuresRegex Features
+    // Data
     // -----------------------------------------------------------------------------------------------------------------
-
-    [Benchmark]
-    public async Task<string> Headings() {
-        const string input = """
-            # Header 1
-            ## Header 2
-            ### Header 3
-            """;
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
-
-    [Benchmark]
-    public async Task<string> CodeBlocks() {
-        const string input = """
-            ```csharp
-            code block
-            ```
-            """;
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
-
-    [Benchmark]
-    public async Task<string> SimpleHeadings() {
-        const string input = """
-            Simple Heading
-            ---
-            """;
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
-
-    [Benchmark]
-    public async Task<string> UnorderedLists() {
-        const string input = """
-            - Item 1
-            - Item 2
-              - Nested Item
-            """;
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
-
-    [Benchmark]
-    public async Task<string> OrderedLists() {
-        const string input = """
-            1. First Item
-            2. Second Item
-              - Nested Item
-            """;
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
-
-    [Benchmark]
-    public async Task<string> Tables() {
-        const string input =
+    private static IEnumerable<BenchmarkCase> Cases => [
+        #region BlockQuote
+        new("BlockQuote_1Line", "> Blockquote text"),
+        new("BlockQuote_2Lines", """
+            > Blockquote text
+            > Continued
             """
-            | Column 1 | Column 2 |
-            |----------|----------|
-            | Value 1  | Value 2  |
-            """;
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
-
-    [Benchmark]
-    public async Task<string> BlockQuotes() {
-        const string input = """
+        ),
+        new("BlockQuote_3Lines", """
             > A blockquote
             > with multiple lines.
-            """;
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
+            """
+        ),
+        #endregion
 
-    [Benchmark]
-    public async Task<string> HtmlBlocks() {
-        const string input = "<div><p>HTML content</p></div>";
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
+        #region Bold
+        new("Bold", "**bold**"),
+        new("Bold_2InLine", "**bold** **again**"),
+        #endregion
 
-    [Benchmark]
-    public async Task<string> HorizontalRules() {
-        const string input = """
+        #region Break
+        new("Break", "line <br/> break"),
+        #endregion
+
+        #region Callout
+        new("Callout", """
+            >[!note] title
+            > body
+            """),
+        new("Callout_withoutBody", ">[!note] title"),
+        #endregion
+
+        #region CodeBlock
+        new("CodeBlock", """
+            ```csharp
+            public class MyClass {
+                public void MyMethod() {
+                    Console.WriteLine("Hello, world!");
+                }
+            }
+            ```
+            """),
+        new("CodeBlock_NoLanguage", """
+            ```
+            something code related
+            ```
+            """),
+        #endregion
+
+        #region CodeInline
+        new("CodeInline", "`code`"),
+        new("CodeInline_2ticks", "``code``"),
+        new("CodeInline_3ticks", "```code```"),
+        #endregion
+
+        #region Emote
+        new("Emote", ":flag-trans:"),
+        #endregion
+
+        #region EscapedCharacters
+        new("EscapedCharacters", @"\*escaped italic\*"),
+        #endregion
+
+        #region Footnote
+        new("FootnoteReference", "[^1]"),
+        new("FootnoteDescription", "[^1]: footnote description"),
+        #endregion
+
+        #region FrontMatter
+        new("FrontMatter", """
             ---
+            title: My Document
+            ---
+            """),
+        new("FrontMatter_2Entries", """
+                ---
+                title: My Document
+                author: John Doe
+                ---
+            """),
+        #endregion
 
-            ***
+        #region Heading
+        new("Heading_1", "# Header 1"),
+        new("Heading_2", "## Header 2"),
+        new("Heading_3", "### Header 3"),
+        new("Heading_4", "#### Header 4"),
+        new("Heading_5", "##### Header 5"),
+        new("Heading_6", "###### Header 6"),
 
-            ___
-            """;
+        new("HeadingSimple", """
+            heading
+            ---
+            """),
+        #endregion
+
+        #region Highlight
+        new("Highlight", "==highlighted text=="),
+        #endregion
+
+        #region HorizontalRule
+        new("HorizontalRule", "---"),
+        #endregion
+
+        #region HtmlBlock
+        new("HtmlBlock", "<div><p>HTML content</p></div>"),
+        #endregion
+
+        #region Italic
+        new("Italic", "*italic*"),
+        new("Italic_2InLine", "*italic* *again*"),
+        #endregion
+
+        #region Link
+        new("Link", "[Regular Link](https://example.com)"),
+        new("Link_Nested", "[![nested link](image_url)](outer_url)"),
+        #endregion
+
+        #region List
+        new("List_UnOrdered", """
+            - list item 1
+            - list item 2
+            """),
+        new("List_Ordered", """
+            1. list item 1
+            2. list item 2
+            """),
+        new("List_Task", """
+            - [ ] task item 1
+            """),
+        new("List_Task_checked", """
+            - [x] task item 1
+            """),
+        #endregion
         
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
-    }
+        #region NewLine
+        new("NewLine", """
+            line 1
+            line 2
+            """),
+        #endregion
+        
+        #region Paragraph
+        new("Paragraph", "This is a paragraph."),
+        #endregion
+        
+        #region Strikethrough
+        new("Strikethrough", "~~strikethrough~~"),
+        new("Strikethrough_2InLine", "~~strikethrough~~ ~~again~~"),
+        #endregion
+        
+        #region Subscript
+        new("Subscript", "~sub-script~"),
+        new("Subscript_2InLine", "~sub-script~ ~again~"),
+        #endregion
+        
+        #region Superscript
+        new("Superscript", "^sup-script^"),
+        new("Superscript_2InLine", "^sup-script^ ^again^"),
+        #endregion
+        
+        #region Table
+        new("Table", """
+            | Header 1 | Header 2 |
+            | -------- | -------- |
+            | Row 1    | Data 1   |
+            """),
+        new("Table_2Rows", """
+            | Header 1 | Header 2 |
+            | -------- | -------- |
+            | Row 1    | Data 1   |
+            | Row 2    | Data 2   |
+            """),
+        new("Table_3Rows", """
+            | Header 1 | Header 2 |
+            | -------- | -------- |
+            | Row 1    | Data 1   |
+            | Row 2    | Data 2   |
+            | Row 3    | Data 3   |
+            """),
+        #endregion
+        
+        #region Tag
+        new("Tag", "#tag"),
+        #endregion
+        
+        #region Template
+        new("Template", "{{template}}"),
+        #endregion
+        
+        #region Underline
+        new("Underline", "_underline_"),
+        #endregion
+        
+        #region User
+        new("User", "@user"),
+        #endregion
+        
+        #region WikiLink
+        new("WikiLink", "[[WikiLink]]"),
+        #endregion
+        
+        #region Wrapper
+        new("Wrapper", "<|color=red>red text</>"),
+        #endregion
+        
+        #region BoldAndItalic
+        new("BoldAndItalic", "***bold and italic***"),
+        new("BoldAndItalic_AfterEachOther", "**bold** and *italic*"),
+        #endregion
+    ];
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Benchmarks
+    // -----------------------------------------------------------------------------------------------------------------
     [Benchmark]
-    public async Task<string> RemainderText() {
-        const string input = "This is normal text left over.";
-        
-        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(input);
-        string? output = await Parser.Html.DeserializeToStringAsync(tree);
-        return output ?? throw new InvalidOperationException("The Markdown input should not be empty.");
+    public IMdSyntaxTree SerializeToSyntaxTree() {
+        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(InputCase.Markdown);
+        return tree;
     }
 }
