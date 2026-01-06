@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazorTests.Shared.Markdown;
+#pragma warning disable CS8604 // Possible null reference argument.
 
 namespace InfiniBlazorTests.Core.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -152,7 +153,7 @@ public class MdTestDataProviderTests {
         // Cleanup - a file was created and can be read back
         List<MdTestData>? readBackData = await MdTestDataProvider.TestInstance.TryGetXmlMdTestDataAsync(TestWriteAsyncFileName);
         await Assert.That(readBackData).IsNotNull();
-        await Assert.That(readBackData!.First().Id).IsEqualTo("testId");
+        await Assert.That(readBackData.First().Id).IsEqualTo("testId");
     }
 
     [Test]
@@ -176,7 +177,7 @@ public class MdTestDataProviderTests {
         // Cleanup - a file was created and can be read back
         List<MdTestData>? readBackData = MdTestDataProvider.TestInstance.TryGetXmlMdTestData(TestWriteSyncFileName);
         await Assert.That(readBackData).IsNotNull();
-        await Assert.That(readBackData!.First().Id).IsEqualTo("testId");
+        await Assert.That(readBackData.First().Id).IsEqualTo("testId");
     }
 
     [Test]
@@ -198,7 +199,7 @@ public class MdTestDataProviderTests {
         // Verify the item was added
         List<MdTestData>? data = await MdTestDataProvider.TestInstance.TryGetXmlMdTestDataAsync(TestAddAsyncFileName);
         await Assert.That(data).IsNotNull();
-        await Assert.That(data!.Any(x => x.Id == "newTestId")).IsTrue();
+        await Assert.That(data.Any(x => x.Id == "newTestId")).IsTrue();
     }
 
     [Test]
@@ -220,7 +221,7 @@ public class MdTestDataProviderTests {
         // Verify the item was added
         List<MdTestData>? data = MdTestDataProvider.TestInstance.TryGetXmlMdTestData(TestAddSyncFileName);
         await Assert.That(data).IsNotNull();
-        await Assert.That(data!.Any(x => x.Id == "newTestId")).IsTrue();
+        await Assert.That(data.Any(x => x.Id == "newTestId")).IsTrue();
     }
 
     [Test]
@@ -252,7 +253,7 @@ public class MdTestDataProviderTests {
         // Verify the item was updated
         List<MdTestData>? data = await MdTestDataProvider.TestInstance.TryGetXmlMdTestDataAsync(TestUpdateAsyncFileName);
         await Assert.That(data).IsNotNull();
-        await Assert.That(data!.Count).IsEqualTo(1);// Should still be only one item
+        await Assert.That(data.Count).IsEqualTo(1);// Should still be only one item
         await Assert.That(data.First().MdString).IsEqualTo("**updated markdown**");
     }
 
@@ -285,7 +286,7 @@ public class MdTestDataProviderTests {
         // Verify the item was updated
         List<MdTestData>? data = MdTestDataProvider.TestInstance.TryGetXmlMdTestData(TestUpdateSyncFileName);
         await Assert.That(data).IsNotNull();
-        await Assert.That(data!.Count).IsEqualTo(1);// Should still be only one item
+        await Assert.That(data.Count).IsEqualTo(1);// Should still be only one item
         await Assert.That(data.First().MdString).IsEqualTo("**updated markdown**");
     }
 
@@ -311,7 +312,7 @@ public class MdTestDataProviderTests {
         // Verify the item was deleted
         List<MdTestData>? data = await MdTestDataProvider.TestInstance.TryGetXmlMdTestDataAsync(TestDeleteAsyncFileName);
         await Assert.That(data).IsNotNull();
-        await Assert.That(data!.Count).IsEqualTo(0);
+        await Assert.That(data.Count).IsEqualTo(0);
     }
 
     [Test]
@@ -336,7 +337,7 @@ public class MdTestDataProviderTests {
         // Verify the item was deleted
         List<MdTestData>? data = MdTestDataProvider.TestInstance.TryGetXmlMdTestData(TestDeleteSyncFileName);
         await Assert.That(data).IsNotNull();
-        await Assert.That(data!.Count).IsEqualTo(0);
+        await Assert.That(data.Count).IsEqualTo(0);
     }
 
     [Test]
