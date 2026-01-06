@@ -5,7 +5,9 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
 using InfiniBlazor.Markdown;
 using InfiniBlazor.Markdown.Syntax;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.JSInterop;
 using System.Text;
 
 namespace Benchmarks.InfiniBlazor.Markdown;
@@ -20,8 +22,8 @@ public class IndividualMarkdownBenchmarks {
     [GlobalSetup]
     public void Setup() {
         var serviceCollection = new ServiceCollection();
-        serviceCollection.AddSingleton<Microsoft.AspNetCore.Components.NavigationManager, MockNavigationManager>();
-        serviceCollection.AddSingleton<Microsoft.JSInterop.IJSRuntime, MockJsRuntime>();
+        serviceCollection.AddSingleton<NavigationManager, MockNavigationManager>();
+        serviceCollection.AddSingleton<IJSRuntime, MockJsRuntime>();
         serviceCollection.AddInfiniBlazor();
         serviceCollection.AddLogging();
         ServiceProvider provider = serviceCollection.BuildServiceProvider();
@@ -42,7 +44,7 @@ public class IndividualMarkdownBenchmarks {
     // -----------------------------------------------------------------------------------------------------------------
     // Data
     // -----------------------------------------------------------------------------------------------------------------
-    private static IEnumerable<BenchmarkCase> Cases => [
+    public static IEnumerable<BenchmarkCase> Cases => [
         new("Paragraph_Base", "This is a paragraph."),// baseline
 
         #region BlockQuote
