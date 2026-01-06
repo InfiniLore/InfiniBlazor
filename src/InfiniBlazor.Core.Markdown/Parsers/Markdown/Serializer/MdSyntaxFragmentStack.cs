@@ -34,6 +34,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
                 char currentChar = input[scanPos];
                 bool matched = false;
 
+                // Get serializers that can trigger on this specific line-start character
                 ImmutableArray<IMdSyntaxNodeSerializer> candidates = SerializerReference.GetMultiLineSerializersForChar(currentChar);
 
                 foreach (IMdSyntaxNodeSerializer serializer in candidates) {
@@ -50,13 +51,15 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
 
                 if (matched) continue;
 
-                // If no multiline block matched, move to the next line 
-                // because most multiline structures are line-start dependent.
+                // If no multiline block matched at this position, jump to the start of the next line.
+                // We don't need to check characters mid-line for block structures.
                 int nextLine = input.IndexOf('\n', scanPos);
-                scanPos = nextLine == -1 ? inputLength : nextLine + 1;
+                if (nextLine == -1) break;
+                
+                scanPos = nextLine + 1;
             }
 
-            _stack.EnsureCapacity(_stack.Count + fragments.Length);
+            _stack.EnsureCapacity(_stack.Count + index);
             for (int i = index - 1; i >= 0; i--) {
                 _stack.Push(fragments[i]);
             }
@@ -78,14 +81,15 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
         
         try {
             while (scanPos < length) {
-                // 1. FAST JUMP: Find the next trigger character relative to current scanPos
+                // Find the next character that could potentially be a tag
                 int offset = span[scanPos..].IndexOfAny(searchValues);
-                if (offset == -1) break;  // No more triggers, jump to end
+                if (offset == -1) break; // No more trigger characters left in the whole string
                 
+                // Move scanPos to the found trigger
                 scanPos += offset;
                 char currentChar = input[scanPos];
-                ImmutableArray<IMdSyntaxNodeSerializer> candidates = SerializerReference.GetSingleLineSerializersForChar(currentChar);
                 
+                ImmutableArray<IMdSyntaxNodeSerializer> candidates = SerializerReference.GetSingleLineSerializersForChar(currentChar);
                 IMdSyntaxNodeSerializer? winner = null;
                 Match? winningMatch = null;
 
@@ -99,7 +103,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
                 }
 
                 if (winner != null && winningMatch != null) {
-                    // Push accumulated text found BEFORE this match
+                    // Push everything from textStart up to scanPos as a TextNode
                     if (scanPos > textStart) {
                         TextMdSyntaxNode contentNode = MdSyntaxNodePool<TextMdSyntaxNode>.Shared.Get();
                         contentNode.WithContent(input[textStart..scanPos]);
@@ -107,7 +111,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
                         fragments[index++] = MdSyntaxFragment.AsProcessedNode(node, contentNode);
                     }
 
-                    // Push the actual match
+                    // Push the actual Tag/Match
                     EnsureCapacity(ref fragments, ref index, 1);
                     fragments[index++] = MdSyntaxFragment.AsUnhandledMatch(winningMatch, node, winner);
 
@@ -115,7 +119,8 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
                     textStart = scanPos; 
                 }
                 else {
-                    // No match at this position, just move the cursor
+                    // It was a trigger character (like '*') but not a valid tag.
+                    // Increment scanPos so IndexOfAny finds the NEXT trigger.
                     scanPos++;
                 }
             }
