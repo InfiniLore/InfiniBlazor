@@ -17,27 +17,28 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
     public IMdStringMdSyntaxSerializer SerializerReference { get; set; } = null!;
 
     private readonly Stack<MdSyntaxFragment> _stack = new();
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     #region PushToStack
     public void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node, int startIndex = 0) {
         ImmutableArray<IMdSyntaxNodeSerializer> serializers = SerializerReference.MultiLineSerializers;
+
         int scanPos = startIndex;
         int inputLength = input.Length;
+
         MdSyntaxFragment[] fragments = ArrayPool<MdSyntaxFragment>.Shared.Rent(32);
         int index = 0;
 
         try {
             while (scanPos < inputLength) {
-                bool matched = false;
                 char currentChar = input[scanPos];
+                bool matched = false;
 
+                // Only try serializers if we hit a trigger character
                 foreach (IMdSyntaxNodeSerializer serializer in serializers) {
-                    // Check trigger characters if they exist
-                    if (serializer.TriggerCharacters.Length > 0 && Array.IndexOf(serializer.TriggerCharacters, currentChar) == -1) 
-                        continue;
+                    if (!serializer.TriggerCharacters.IsEmpty() && Array.IndexOf(serializer.TriggerCharacters, currentChar) == -1) continue;
 
                     Match m = serializer.Match(input, scanPos);
                     if (!m.Success || m.Index != scanPos) continue;
@@ -50,11 +51,12 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
                     break;
                 }
 
-                if (!matched) {
-                    // If no multiline node matches, we usually treat this as a line of text 
-                    // or move to the next potential start (usually the next newline)
-                    scanPos++; 
-                }
+                if (matched) continue;
+
+                // If no multiline block matched, move to the next line 
+                // because most multiline structures are line-start dependent.
+                int nextLine = input.IndexOf('\n', scanPos);
+                scanPos = nextLine == -1 ? inputLength : nextLine + 1;
             }
 
             _stack.EnsureCapacity(_stack.Count + fragments.Length);
@@ -71,7 +73,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
         ImmutableArray<IMdSyntaxNodeSerializer> serializers = SerializerReference.SingleLineSerializers;
         int scanPos = 0;
         int length = input.Length;
-        int textStart = 0; // Track the start of a plain text block
+        int textStart = 0;
         MdSyntaxFragment[] fragments = ArrayPool<MdSyntaxFragment>.Shared.Rent(128);
         int index = 0;
 
@@ -83,18 +85,18 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
 
                 // Only try serializers if we hit a trigger character
                 foreach (IMdSyntaxNodeSerializer serializer in serializers) {
-                    if (Array.IndexOf(serializer.TriggerCharacters, currentChar) != -1) {
-                        Match m = serializer.Match(input, scanPos);
-                        if (m.Success && m.Index == scanPos) {
-                            winner = serializer;
-                            winningMatch = m;
-                            break;
-                        }
-                    }
+                    if (!serializer.TriggerCharacters.IsEmpty() && Array.IndexOf(serializer.TriggerCharacters, currentChar) == -1) continue;
+
+                    Match m = serializer.Match(input, scanPos);
+                    if (!m.Success || m.Index != scanPos) continue;
+
+                    winner = serializer;
+                    winningMatch = m;
+                    break;
                 }
 
                 if (winner != null && winningMatch != null) {
-                    // 1. If we have accumulated text before this match, push it
+                    // If we have accumulated text before this match, push it
                     if (scanPos > textStart) {
                         TextMdSyntaxNode contentNode = MdSyntaxNodePool<TextMdSyntaxNode>.Shared.Get();
                         contentNode.WithContent(input[textStart..scanPos]);
@@ -102,7 +104,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
                         fragments[index++] = MdSyntaxFragment.AsProcessedNode(node, contentNode);
                     }
 
-                    // 2. Push the actual match
+                    // Push the actual match
                     EnsureCapacity(ref fragments, ref index, 1);
                     fragments[index++] = MdSyntaxFragment.AsUnhandledMatch(winningMatch, node, winner);
 
