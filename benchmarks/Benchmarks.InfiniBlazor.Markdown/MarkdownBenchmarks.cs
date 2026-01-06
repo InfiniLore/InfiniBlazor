@@ -35,9 +35,21 @@ public class MarkdownBenchmarks {
 
     private static ServiceProvider CreateProvider(Action<InfiniBlazorMarkdownConfig>? configure = null) {
         var serviceCollection = new ServiceCollection();
+        serviceCollection.AddSingleton<Microsoft.AspNetCore.Components.NavigationManager, MockNavigationManager>();
+        serviceCollection.AddSingleton<Microsoft.JSInterop.IJSRuntime, MockJsRuntime>();
         serviceCollection.AddInfiniBlazor(config => configure?.Invoke(config.Markdown));
         serviceCollection.AddLogging();
         return serviceCollection.BuildServiceProvider();
+    }
+
+    private class MockNavigationManager : Microsoft.AspNetCore.Components.NavigationManager {
+        public MockNavigationManager() => Initialize("http://localhost/", "http://localhost/");
+        protected override void NavigateToCore(string uri, bool forceLoad) { }
+    }
+
+    private class MockJsRuntime : Microsoft.JSInterop.IJSRuntime {
+        public ValueTask<TValue> InvokeAsync<TValue>(string identifier, object?[]? args) => default;
+        public ValueTask<TValue> InvokeAsync<TValue>(string identifier, CancellationToken cancellationToken, object?[]? args) => default;
     }
 
     [Benchmark(Baseline = true)]
