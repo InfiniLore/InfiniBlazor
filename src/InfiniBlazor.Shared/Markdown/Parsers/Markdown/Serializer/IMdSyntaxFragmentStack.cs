@@ -10,8 +10,8 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
 public interface IMdSyntaxFragmentStack {
     IMdSyntaxTree TreeReference { get; }
     
-    void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node, int startIndex = 0);
-    void PushSingleLineMatchesToStack(string input, IMdSyntaxNode node);
+    void PushMultiLineMatchesToStack(string input, IMdSyntaxNode parentNode, int startIndex = 0);
+    void PushSingleLineMatchesToStack(string input, IMdSyntaxNode parentNode);
     
     void PushProcessedNodeToStack(IMdSyntaxNode parentNode, IMdSyntaxNode childNode);
 }
