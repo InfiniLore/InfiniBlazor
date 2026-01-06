@@ -6,6 +6,7 @@ using BenchmarkDotNet.Order;
 using InfiniBlazor.Markdown;
 using InfiniBlazor.Markdown.Syntax;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text;
 
 namespace Benchmarks.InfiniBlazor.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -26,6 +27,9 @@ public class IndividualMarkdownBenchmarks {
         ServiceProvider provider = serviceCollection.BuildServiceProvider();
 
         Parser = provider.GetRequiredService<IMarkdownParser>();
+
+        // Warmup to avoid first-hit cache effects
+        _ = Parser.Markdown.SerializeToSyntaxTree("warmup");
     }
 
     public sealed record BenchmarkCase(string Name, string Markdown) {
@@ -39,6 +43,8 @@ public class IndividualMarkdownBenchmarks {
     // Data
     // -----------------------------------------------------------------------------------------------------------------
     private static IEnumerable<BenchmarkCase> Cases => [
+        new("Paragraph_Base", "This is a paragraph."),// baseline
+
         #region BlockQuote
         new("BlockQuote_1Line", "> Blockquote text"),
         new("BlockQuote_2Lines", """
@@ -51,6 +57,8 @@ public class IndividualMarkdownBenchmarks {
             > with multiple lines.
             """
         ),
+        new("BlockQuote_10Lines", RepeatLines("> line", 10)),
+        new("BlockQuote_100Lines", RepeatLines("> line", 100)),
         #endregion
 
         #region Bold
@@ -83,6 +91,16 @@ public class IndividualMarkdownBenchmarks {
         new("CodeBlock_NoLanguage", """
             ```
             something code related
+            ```
+            """),
+        new("CodeBlock_50Lines", $"""
+            ```csharp
+            {RepeatLines("Console.WriteLine(\"Hello\");", 50)}
+            ```
+            """),
+        new("CodeBlock_100Lines", $"""
+            ```csharp
+            {RepeatLines("Console.WriteLine(\"Hello\");", 100)}
             ```
             """),
         #endregion
@@ -161,44 +179,51 @@ public class IndividualMarkdownBenchmarks {
             - list item 1
             - list item 2
             """),
+        new("List_UnOrdered_50", RepeatLines("- item", 50)),
+        new("List_UnOrdered_100", RepeatLines("- item", 100)),
+
         new("List_Ordered", """
             1. list item 1
             2. list item 2
             """),
-        new("List_Task", """
-            - [ ] task item 1
-            """),
-        new("List_Task_checked", """
-            - [x] task item 1
-            """),
+        new("List_Ordered_50", RepeatLines("1. item", 50)),
+        new("List_Ordered_100", RepeatLines("1. item", 100)),
+
+        new("List_Task", "- [ ] task item 1"),
+        new("List_Task_50", RepeatLines("- [ ] item", 50)),
+        new("List_Task_100", RepeatLines("- [ ] item", 100)),
+
+        new("List_Task_checked", "- [x] task item 1"),
+        new("List_Task_checked_50", RepeatLines("- [x] item", 50)),
+        new("List_Task_checked_100", RepeatLines("- [x] item", 100)),
         #endregion
-        
+
         #region NewLine
         new("NewLine", """
             line 1
             line 2
             """),
         #endregion
-        
+
         #region Paragraph
         new("Paragraph", "This is a paragraph."),
         #endregion
-        
+
         #region Strikethrough
         new("Strikethrough", "~~strikethrough~~"),
         new("Strikethrough_2InLine", "~~strikethrough~~ ~~again~~"),
         #endregion
-        
+
         #region Subscript
         new("Subscript", "~sub-script~"),
         new("Subscript_2InLine", "~sub-script~ ~again~"),
         #endregion
-        
+
         #region Superscript
         new("Superscript", "^sup-script^"),
         new("Superscript_2InLine", "^sup-script^ ^again^"),
         #endregion
-        
+
         #region Table
         new("Table", """
             | Header 1 | Header 2 |
@@ -219,43 +244,80 @@ public class IndividualMarkdownBenchmarks {
             | Row 3    | Data 3   |
             """),
         #endregion
-        
+
         #region Tag
         new("Tag", "#tag"),
         #endregion
-        
+
         #region Template
         new("Template", "{{template}}"),
         #endregion
-        
+
         #region Underline
         new("Underline", "_underline_"),
         #endregion
-        
+
         #region User
         new("User", "@user"),
         #endregion
-        
+
         #region WikiLink
         new("WikiLink", "[[WikiLink]]"),
         #endregion
-        
+
         #region Wrapper
         new("Wrapper", "<|color=red>red text</>"),
         #endregion
-        
+
         #region BoldAndItalic
         new("BoldAndItalic", "***bold and italic***"),
         new("BoldAndItalic_AfterEachOther", "**bold** and *italic*"),
+        #endregion
+
+        #region Mixed
+        new("Mixed_RealWorld", """
+            # Title
+
+            Intro paragraph with *italic*, **bold**, and a [link](https://example.com).
+
+            - item one
+            - item two
+              - nested item
+
+            > A note block
+            > with multiple lines.
+
+            ```csharp
+            public record Sample(int Id, string Name);
+            ```
+            """),
         #endregion
     ];
 
     // -----------------------------------------------------------------------------------------------------------------
     // Benchmarks
     // -----------------------------------------------------------------------------------------------------------------
+    [Benchmark(Baseline = true)]
+    public IMdSyntaxTree SerializeToSyntaxTree_ParagraphBaseline() {
+        IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree("This is a paragraph.");
+        return tree;
+    }
+
     [Benchmark]
     public IMdSyntaxTree SerializeToSyntaxTree() {
         IMdSyntaxTree tree = Parser.Markdown.SerializeToSyntaxTree(InputCase.Markdown);
         return tree;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Helpers
+    // -----------------------------------------------------------------------------------------------------------------
+    private static string RepeatLines(string line, int count) {
+        var sb = new StringBuilder();
+        for (int i = 0; i < count; i++) {
+            sb.AppendLine(line);
+        }
+
+        return sb.ToString();
     }
 }
