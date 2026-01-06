@@ -10,10 +10,12 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class FootnoteReferenceSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    [GeneratedRegex(@"\[\^(?<id>[\d\p{L}\p{N}]+)\]", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"\G\[\^(?<id>[\d\p{L}\p{N}]+)\]", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
     
     private static readonly int FootnoteIdentifierId = Syntax.GroupNumberFromName("id");
+    
+    public char[] TriggerCharacters { get; } = ['['];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

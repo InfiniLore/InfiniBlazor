@@ -10,8 +10,10 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class NewLineSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    [GeneratedRegex(@"\n")]
+    [GeneratedRegex(@"\G\n")]
     private static partial Regex Syntax { get; }
+    
+    public char[] TriggerCharacters { get; } = ['\n'];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

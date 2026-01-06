@@ -14,6 +14,8 @@ public partial class HorizontalRuleSyntaxNodeSerializer : IMdSyntaxNodeSerialize
     private static partial Regex Syntax { get; }
     
     private static readonly int HrId = Syntax.GroupNumberFromName("hr");
+    
+    public char[] TriggerCharacters { get; } = {'-', ' ', '_'};
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

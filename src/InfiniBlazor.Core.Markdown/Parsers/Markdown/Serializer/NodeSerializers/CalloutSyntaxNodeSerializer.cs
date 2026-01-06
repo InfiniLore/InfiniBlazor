@@ -11,6 +11,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class CalloutSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     [GeneratedRegex("""
+        \G
         ^>(?:\[!(?<type>[^\|\n]+)(?<mod>\|[^\n]*)?\](?<option>\+|\-)?)[\ ]*(?<title>[^\n]*)$
         (?:\n(?<body>>[^\n]*(?:\n>[^\n]*)*)$)?
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
@@ -21,6 +22,8 @@ public partial class CalloutSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     private static readonly int CalloutOptionId = Syntax.GroupNumberFromName("option");
     private static readonly int CalloutTitleId = Syntax.GroupNumberFromName("title");
     private static readonly int CalloutBodyId = Syntax.GroupNumberFromName("body");
+
+    public char[] TriggerCharacters { get; } = ['>'];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

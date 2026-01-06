@@ -11,11 +11,13 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class WrapperSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
 
-    [GeneratedRegex(@"<(?<mods>\|.*?)>(?<w>.*)</>", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"\G<(?<mods>\|.*?)>(?<w>.*)</>", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
     
     private static readonly int WId = Syntax.GroupNumberFromName("w");
     private static readonly int WModsId = Syntax.GroupNumberFromName("mods");
+    
+    public char[] TriggerCharacters { get; } = ['<'];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

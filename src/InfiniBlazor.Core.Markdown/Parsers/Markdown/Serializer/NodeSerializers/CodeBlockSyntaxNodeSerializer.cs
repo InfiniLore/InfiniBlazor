@@ -11,12 +11,14 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class CodeBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    [GeneratedRegex(@"^(?<open>`{3,})[\ ]*(?<lang>.*?)?\n(?<body>(?>[\s\S]|(?!\k<open>))*?)\k<open>(?<tail>[^\n]+)?$", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"\G^(?<open>`{3,})[\ ]*(?<lang>.*?)?\n(?<body>(?>[\s\S]|(?!\k<open>))*?)\k<open>(?<tail>[^\n]+)?$", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
     
     private static readonly int CBodyId = Syntax.GroupNumberFromName("body");
     private static readonly int CLangId = Syntax.GroupNumberFromName("lang");
     private static readonly int CTrailId = Syntax.GroupNumberFromName("tail");
+
+    public char[] TriggerCharacters { get; } = ['`'];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

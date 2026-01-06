@@ -11,6 +11,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class LinkSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     [GeneratedRegex("""
+        \G
         (?<bang>!)?
         \[(?<text> (?:\ *!?\[.+?\]\(.+?\)\ *)|(?:[^\\\]]|\\\]|\\[^\]])*?)\]
         \(
@@ -26,6 +27,8 @@ public partial class LinkSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     private static readonly int LnHrefId = Syntax.GroupNumberFromName("href");
     private static readonly int LnTitleId = Syntax.GroupNumberFromName("title");
     private static readonly int LnModsId = Syntax.GroupNumberFromName("mods");
+    
+    public char[] TriggerCharacters { get; } = ['!', '['];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

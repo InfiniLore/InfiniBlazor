@@ -12,6 +12,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class TableSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     [GeneratedRegex("""
+        \G
         ^\|(?<head>.+)\|[\ ]*\n
         ^\|(?<sep>[:\-|\ ]+?)\|[\ ]*
         (?<body>(?:\n(?:^\|.*\|$))+)
@@ -23,6 +24,8 @@ public partial class TableSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     private static readonly int BodyId = Syntax.GroupNumberFromName("body");
     
     private const int StackAllocThreshold = 16;
+
+    public char[] TriggerCharacters { get; } = ['|'];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

@@ -11,10 +11,12 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class ParagraphSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
 
-    [GeneratedRegex("^(?<p>.+?)$", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"\G^(?<p>.+?)$", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
     
     private static readonly int PId = Syntax.GroupNumberFromName("p");
+    
+    public char[] TriggerCharacters { get; } = [];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

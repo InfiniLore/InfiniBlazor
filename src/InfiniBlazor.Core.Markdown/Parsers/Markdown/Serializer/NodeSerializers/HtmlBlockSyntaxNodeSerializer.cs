@@ -11,6 +11,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class HtmlBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     [GeneratedRegex("""
+        \G
         (?<pre>.+?)?
         (?<body>
             <(?<tag>\w+)\b[^>]*>
@@ -47,6 +48,8 @@ public partial class HtmlBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     private static readonly int HtmlPostId = Syntax.GroupNumberFromName("post");
     private static readonly int SpanTagAttrsId = SpanSyntax.GroupNumberFromName("attr");
     private static readonly int SpanBodyId = SpanSyntax.GroupNumberFromName("body");
+
+    public char[] TriggerCharacters { get; } = [];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

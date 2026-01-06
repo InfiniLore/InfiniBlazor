@@ -11,10 +11,12 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class WikiLinkSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
     
-    [GeneratedRegex(@"\[\[(?<href>[^\]\[\ ]+)\]\]", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"\G\[\[(?<href>[^\]\[\ ]+)\]\]", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
     
     private static readonly int WikiLinkHrefId = Syntax.GroupNumberFromName("href");
+    
+    public char[] TriggerCharacters { get; } = ['['];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

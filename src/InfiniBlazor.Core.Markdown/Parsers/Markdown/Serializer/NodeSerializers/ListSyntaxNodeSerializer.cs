@@ -12,6 +12,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class ListSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     [GeneratedRegex("""
+        \G
         ^[^\S\n]*(?<id>-(?!-)|\d+\.|\.\d+).+
         (?:\n(?:(?:-(?!-)|\d+\.|\.\d+)|(?:[\ ]+)).+)*
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
@@ -29,6 +30,8 @@ public partial class ListSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     private static readonly int ListItemLeadingSpaces = ListItemBodySyntax.GroupNumberFromName("space");
     private static readonly int LHeadId = ListItemBodySyntax.GroupNumberFromName("head");
     private static readonly int LBodyId = ListItemBodySyntax.GroupNumberFromName("body");
+    
+    public char[] TriggerCharacters { get; } = ['-', ' ', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

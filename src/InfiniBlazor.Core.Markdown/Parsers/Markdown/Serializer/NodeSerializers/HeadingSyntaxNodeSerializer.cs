@@ -10,11 +10,13 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class HeadingSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
-    [GeneratedRegex(@"^(?<level>\#{1,6})[\ ]+(?<text>[^\n]+)$", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"\G^(?<level>\#{1,6})[\ ]+(?<text>[^\n]+)$", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
     
     private static readonly int HLevelId = Syntax.GroupNumberFromName("level");
     private static readonly int HTextId = Syntax.GroupNumberFromName("text");
+    
+    public char[] TriggerCharacters { get; } = [];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

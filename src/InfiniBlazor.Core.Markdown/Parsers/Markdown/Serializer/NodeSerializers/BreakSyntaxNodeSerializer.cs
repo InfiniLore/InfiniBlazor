@@ -10,8 +10,10 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class BreakSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    [GeneratedRegex("<[Bb][Rr]/?>", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"\G<[Bb][Rr]/?>", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
+    
+    public char[] TriggerCharacters { get; } = ['<'];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

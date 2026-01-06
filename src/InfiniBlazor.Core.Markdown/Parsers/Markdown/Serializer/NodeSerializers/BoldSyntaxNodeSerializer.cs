@@ -10,8 +10,10 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class BoldSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    [GeneratedRegex(@"\*\*(?<b>(?>[^\\\*]+|\\\*|\*|(?<open>\*\*)|(?<-open>\*\*))+)(?(open)(?!))\*\*", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"\G\*\*(?<b>(?>[^\\\*]+|\\\*|\*|(?<open>\*\*)|(?<-open>\*\*))+)(?(open)(?!))\*\*", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
+    
+    public char[] TriggerCharacters { get; } = ['*'];
     
     private static readonly int BoldContentId = Syntax.GroupNumberFromName("b");
     // -----------------------------------------------------------------------------------------------------------------

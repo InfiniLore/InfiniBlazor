@@ -10,8 +10,10 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class BlockQuoteSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    [GeneratedRegex(@"^>[\ ]*(?:.+(?:\n>[^\n]*)*)$", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"\G^>[\ ]*(?:.+(?:\n>[^\n]*)*)$", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex Syntax { get; }
+    
+    public char[] TriggerCharacters { get; } = ['>'];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

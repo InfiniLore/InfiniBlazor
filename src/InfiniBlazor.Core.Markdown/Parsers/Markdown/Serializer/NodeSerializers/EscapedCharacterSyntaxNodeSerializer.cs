@@ -10,9 +10,10 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class EscapedCharacterSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    [GeneratedRegex(@"\\\S")]
+    [GeneratedRegex(@"\G\\\S")]
     private static partial Regex Syntax { get; }
     
+    public char[] TriggerCharacters { get; } = ['\\'];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

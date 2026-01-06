@@ -11,11 +11,13 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class FrontmatterSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    [GeneratedRegex(@"(?<open>^-{3,}) *(?<lang>.+)?\r?\n(?<body>[\s\S]*?)\r?\n\k<open>", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"\G(?<open>^-{3,}) *(?<lang>.+)?\r?\n(?<body>[\s\S]*?)\r?\n\k<open>", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     internal static partial Regex Syntax { get; }
     
     private static readonly int LangId = Syntax.GroupNumberFromName("lang");
     private static readonly int BodyId = Syntax.GroupNumberFromName("body");
+    
+    public char[] TriggerCharacters { get; } = ['-'];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
