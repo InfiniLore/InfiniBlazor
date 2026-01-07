@@ -20,9 +20,8 @@ public class MdSyntaxTreeCachedChildrenTests {
             p1.AddChildNode(p2);
             tree.RootNode.AddChildNode(p1);
 
-            tree.StoreChildAtCache(p2);
-
             return (tree, typeof(ParagraphMdSyntaxNode), [
+                p1,
                 p2
             ]);
         };
@@ -32,10 +31,7 @@ public class MdSyntaxTreeCachedChildrenTests {
 
             var p2 = new ParagraphMdSyntaxNode();
 
-            tree.RootNode.AddChildNode(new ParagraphMdSyntaxNode());
             tree.RootNode.AddChildNode(p2);
-
-            tree.StoreChildAtCache(p2);
 
             return (tree, typeof(ParagraphMdSyntaxNode), [
                 p2
@@ -53,8 +49,6 @@ public class MdSyntaxTreeCachedChildrenTests {
             tree.RootNode.AddChildNode(new ParagraphMdSyntaxNode());
             tree.RootNode.AddChildNode(p2);
 
-            tree.StoreChildAtCache(i1);
-
             return (tree, typeof(ItalicMdSyntaxNode), [
                 i1
             ]);
@@ -66,14 +60,14 @@ public class MdSyntaxTreeCachedChildrenTests {
     public async Task StoreCachedChildrenByType_ShouldCreateCorrectCache(MdSyntaxTree tree, Type cachedType, IMdSyntaxNode[] expectedChildren) {
         // Arrange & Act 
         bool result = tree.TryGetCachedChildrenByType(cachedType, out IEnumerable<IMdSyntaxNode>? nodes);
-        IMdSyntaxNode[]? cachedChildren = nodes?.ToArray();
+        IMdSyntaxNode[] cachedChildren = nodes?.ToArray() ?? [];
         
         // Assert
         await Assert.That(result).IsTrue();
         await Assert.That(cachedChildren).Count().IsEqualTo(expectedChildren.Length);
 
         for (int i = 0; i < expectedChildren.Length; i++) {
-            IMdSyntaxNode cached = cachedChildren![i];
+            IMdSyntaxNode cached = cachedChildren[i];
             IMdSyntaxNode expected = expectedChildren[i];
 
             await Assert.That(cached).IsSameReferenceAs(expected);

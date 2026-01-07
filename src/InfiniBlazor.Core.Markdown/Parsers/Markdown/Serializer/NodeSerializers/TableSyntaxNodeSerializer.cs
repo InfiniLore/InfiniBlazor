@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Buffers;
@@ -11,17 +10,29 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class TableSyntaxNodeSerializer {
+public partial class TableSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
+    [GeneratedRegex("""
+        \G
+        ^\|(?<head>.+)\|[\ ]*\n
+        ^\|(?<sep>[:\-|\ ]+?)\|[\ ]*
+        (?<body>(?:\n(?:^\|.*\|$))+)
+        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+
+    private static readonly int HeadId = Syntax.GroupNumberFromName("head");
+    private static readonly int SepId = Syntax.GroupNumberFromName("sep");
+    private static readonly int BodyId = Syntax.GroupNumberFromName("body");
+    
     private const int StackAllocThreshold = 16;
 
-    private static readonly int BodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.TableBody);
-    private static readonly int HeadId = MdRegexLib.GetGroupId(MdRegexGroupNames.TableHead);
-    private static readonly int SepId = MdRegexLib.GetGroupId(MdRegexGroupNames.TableSeparator);
-
+    public char[] TriggerCharacters { get; } = ['|'];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
+    public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match
@@ -42,16 +53,16 @@ public static class TableSyntaxNodeSerializer {
         int rowCount = rows.Split(rowRanges, '\n', StringSplitOptions.TrimEntries);
 
         // Construct table HTML
-        TableMdSyntaxNode tableNode = TableMdSyntaxNode.Pool.Get();
+        TableMdSyntaxNode tableNode = MdSyntaxNodePool<TableMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(tableNode);
         if (hasSeparatorData) tableNode.WithAlignments(separatorColumData);
 
         // Add headers
-        TableRowMdSyntaxNode tableHeadRow = TableRowMdSyntaxNode.Pool.Get();
+        TableRowMdSyntaxNode tableHeadRow = MdSyntaxNodePool<TableRowMdSyntaxNode>.Shared.Get();
         tableNode.TrySetHeader(tableHeadRow);
 
         for (int index = 0; index < headerColumnCount; index++) {
-            TableCellMdSyntaxNode tableHeadCellNode = TableCellMdSyntaxNode.Pool.Get();
+            TableCellMdSyntaxNode tableHeadCellNode = MdSyntaxNodePool<TableCellMdSyntaxNode>.Shared.Get();
             tableHeadRow.AddChildNode(tableHeadCellNode);
 
             ReadOnlySpan<char> column = header[headerColumns[index]];
@@ -71,11 +82,11 @@ public static class TableSyntaxNodeSerializer {
 
                 int rowColumnCount = row.Split(columnBuffer, '|', StringSplitOptions.RemoveEmptyEntries);
 
-                TableRowMdSyntaxNode tableRow = TableRowMdSyntaxNode.Pool.Get();
+                TableRowMdSyntaxNode tableRow = MdSyntaxNodePool<TableRowMdSyntaxNode>.Shared.Get();
                 tableNode.TryAddRow(tableRow);
 
                 for (int columnIndex = 0; columnIndex < rowColumnCount; columnIndex++) {
-                    TableCellMdSyntaxNode tableCell = TableCellMdSyntaxNode.Pool.Get();
+                    TableCellMdSyntaxNode tableCell = MdSyntaxNodePool<TableCellMdSyntaxNode>.Shared.Get();
                     tableRow.AddChildNode(tableCell);
 
                     ReadOnlySpan<char> column = row[columnBuffer[columnIndex]];

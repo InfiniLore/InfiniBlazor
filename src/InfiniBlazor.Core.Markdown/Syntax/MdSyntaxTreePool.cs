@@ -1,29 +1,23 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
-using InfiniBlazor.Markdown.Syntax;
-using InfiniBlazor.Markdown.Syntax.Nodes;
-using System.Text.RegularExpressions;
+using InfiniBlazor.Pooling;
+using Microsoft.Extensions.ObjectPool;
 
-namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
+namespace InfiniBlazor.Markdown.Syntax;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class EscapedSyntaxNodeSerializer {
-    private static readonly int EscapedId = MdRegexLib.GetGroupId(MdRegexGroupNames.Escaped);
+public class MdSyntaxTreePool {
+    public static MdSyntaxTreePool Shared { get; } = new();
+    
+    private ObjectPool<MdSyntaxTree> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxTree>(16);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(
-        IMdSyntaxFragmentStack stack,
-        IMdSyntaxNode parentNode,
-        Match match
-    ) {
-        char value = match.Groups[EscapedId].ValueSpan[1];
-        EscapedCharacterMdSyntaxNode node = EscapedCharacterMdSyntaxNode.Pool.Get();
-        node.WithContent(value);
-        parentNode.AddChildNode(node);
-    }
+    public IMdSyntaxTree Get() => Pool.Get();
+    public void Return(MdSyntaxTree tree) => Pool.Return(tree);
+    public void Return(IMdSyntaxTree tree) => Pool.Return(tree as MdSyntaxTree ?? throw new ArgumentException("Tree must be of type MdSyntaxTree", nameof(tree)));
 }

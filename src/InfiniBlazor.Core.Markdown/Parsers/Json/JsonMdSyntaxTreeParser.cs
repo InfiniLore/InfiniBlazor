@@ -81,7 +81,7 @@ public class JsonMdSyntaxTreeParser : IJsonMdSyntaxTreeParser {
     // -----------------------------------------------------------------------------------------------------------------
     #region Deserialize
     public string DeserializeToString(IMdSyntaxTree input) {
-        var element = DeserializeToJsonElement(input);
+        JsonElement element = DeserializeToJsonElement(input);
         return JsonSerializer.Serialize(element, SerializerOptions);
     }
 
@@ -102,7 +102,7 @@ public class JsonMdSyntaxTreeParser : IJsonMdSyntaxTreeParser {
         writer.Flush();
 
         stream.Position = 0;
-        using var document = JsonDocument.Parse(stream);
+        using JsonDocument document = JsonDocument.Parse(stream);
         return document.RootElement.Clone();
     }
 
@@ -131,7 +131,7 @@ public class JsonMdSyntaxTreeParser : IJsonMdSyntaxTreeParser {
             visitor.DeserializeToJson(node, writer);
         }
 
-        var children = node.GetChildren().ToList();
+        List<IMdSyntaxNode> children = node.GetChildren().ToList();
         if (children.Count > 0) {
             writer.WriteStartArray("children");
             foreach (IMdSyntaxNode child in children) {
@@ -146,13 +146,13 @@ public class JsonMdSyntaxTreeParser : IJsonMdSyntaxTreeParser {
 
     #region Serialize
     public IMdSyntaxTree SerializeToSyntaxTree(JsonElement element) {
-        if (!element.TryGetProperty("type", out var typeProperty) || typeProperty.GetString() != "MdSyntaxTree") {
+        if (!element.TryGetProperty("type", out JsonElement typeProperty) || typeProperty.GetString() != "MdSyntaxTree") {
             throw new InvalidOperationException("Invalid JSON root element");
         }
 
         MdSyntaxTree tree = new();
 
-        if (element.TryGetProperty("children", out var childrenProperty) && childrenProperty.ValueKind == JsonValueKind.Array) {
+        if (element.TryGetProperty("children", out JsonElement childrenProperty) && childrenProperty.ValueKind == JsonValueKind.Array) {
             foreach (JsonElement child in childrenProperty.EnumerateArray()) {
                 SerializeNode(child, tree.RootNode);
             }
@@ -164,7 +164,7 @@ public class JsonMdSyntaxTreeParser : IJsonMdSyntaxTreeParser {
     public async Task<IMdSyntaxTree> SerializeToSyntaxTreeAsync(Stream stream, CancellationToken ct = default) {
         ArgumentNullException.ThrowIfNull(stream);
 
-        using var document = await JsonDocument.ParseAsync(stream, cancellationToken: ct);
+        using JsonDocument document = await JsonDocument.ParseAsync(stream, cancellationToken: ct);
         return SerializeToSyntaxTree(document.RootElement);
     }
 
@@ -177,15 +177,15 @@ public class JsonMdSyntaxTreeParser : IJsonMdSyntaxTreeParser {
     }
 
     private void SerializeNode(JsonElement element, IMdSyntaxNode parentNode) {
-        if (element.TryGetProperty("type", out var typeProperty)) {
+        if (element.TryGetProperty("type", out JsonElement typeProperty)) {
             string? typeName = typeProperty.GetString();
             if (!string.IsNullOrWhiteSpace(typeName)
                 && _nodeTypes.TryGetValue(typeName, out Type? nodeType)
                 && _visitors.TryGetValue(nodeType, out IJsonMdSyntaxNodeVisitor? visitor)) {
 
-                var newNode = visitor.SerializeToNode(element, parentNode);
+                IMdSyntaxNode newNode = visitor.SerializeToNode(element, parentNode);
 
-                if (element.TryGetProperty("children", out var childrenProperty) && childrenProperty.ValueKind == JsonValueKind.Array) {
+                if (element.TryGetProperty("children", out JsonElement childrenProperty) && childrenProperty.ValueKind == JsonValueKind.Array) {
                     foreach (JsonElement child in childrenProperty.EnumerateArray()) {
                         SerializeNode(child, newNode);
                     }

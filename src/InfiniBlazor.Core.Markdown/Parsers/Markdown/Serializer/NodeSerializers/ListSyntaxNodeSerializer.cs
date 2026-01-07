@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Buffers;
@@ -11,28 +10,43 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class ListSyntaxNodeSerializer {
-    private static readonly int LsId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListIdentifier);
-    private static readonly int LTaskId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListTask);
-    private static readonly int LHeadId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListHead);
-    private static readonly int LBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListBody);
-    private static readonly int LIndexId = MdRegexLib.GetGroupId(MdRegexGroupNames.ListIndex);
-    private static readonly int ListItemLeadingSpaces = MdRegexLib.GetGroupId(MdRegexGroupNames.ListItemLeadingSpaces);
-    private static readonly int ListTaskItemLeadingSpaces = MdRegexLib.GetGroupId(MdRegexGroupNames.ListTaskItemLeadingSpaces);
-
+public partial class ListSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex("""
+        \G
+        ^[^\S\n]*(?<id>-(?!-)|\d+\.|\.\d+).+
+        (?:\n(?:(?:-(?!-)|\d+\.|\.\d+)|(?:[\ ]+)).+)*
+        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    
+    [GeneratedRegex(@"^ *(?:-|(?<index>\d*)\.)(?:(?<taskSpace> *)\[(?<task>[ xX~])])?(?:(?<space> *)(?<head>.+)|(?<head> )|(?<head>))(?<body>(?:\n +.*)*)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex ListItemBodySyntax { get; }
+    
+    private static readonly int LsId = Syntax.GroupNumberFromName("id");
+    
+    private static readonly int LIndexId = ListItemBodySyntax.GroupNumberFromName("index");
+    private static readonly int ListTaskItemLeadingSpaces = ListItemBodySyntax.GroupNumberFromName("taskSpace");
+    private static readonly int LTaskId = ListItemBodySyntax.GroupNumberFromName("task");
+    private static readonly int ListItemLeadingSpaces = ListItemBodySyntax.GroupNumberFromName("space");
+    private static readonly int LHeadId = ListItemBodySyntax.GroupNumberFromName("head");
+    private static readonly int LBodyId = ListItemBodySyntax.GroupNumberFromName("body");
+    
+    public char[] TriggerCharacters { get; } = ['-', ' ', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
+    public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.TryGetValue(out string? listBody)) return;
-
+        string listBody = match.Value;
         bool isOrdered = !match.Groups[LsId].ValueSpan.Contains('-');
 
-        MatchCollection matchCollection = MdRegexLib.ListItemBodyRegex.Matches(listBody);
+        MatchCollection matchCollection = ListItemBodySyntax.Matches(listBody);
         int matchCount = matchCollection.Count;
         Match[] matchArray = ArrayPool<Match>.Shared.Rent(matchCount);
 
@@ -40,14 +54,14 @@ public static class ListSyntaxNodeSerializer {
             matchCollection.CopyTo(matchArray, 0);
 
             IMdSyntaxNode listNode = isOrdered
-                ? ListOrderedMdSyntaxNode.Pool.Get()
-                : ListUnOrderedMdSyntaxNode.Pool.Get();
+                ? MdSyntaxNodePool<ListOrderedMdSyntaxNode>.Shared.Get()
+                : MdSyntaxNodePool<ListUnOrderedMdSyntaxNode>.Shared.Get();
             parentNode.AddChildNode(listNode);
 
             for (int i = 0; i < matchCount; i++) {
                 GroupCollection groups = matchArray[i].Groups;
 
-                ListItemMdSyntaxNode listItemNode = ListItemMdSyntaxNode.Pool.Get();
+                ListItemMdSyntaxNode listItemNode = MdSyntaxNodePool<ListItemMdSyntaxNode>.Shared.Get();
                 listNode.AddChildNode(listItemNode);
 
                 groups[ListItemLeadingSpaces].TryGetLength(out int listItemLeadingSpaces);

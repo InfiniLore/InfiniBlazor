@@ -26,8 +26,7 @@ public class FromMarkdownTests(IMarkdownParser parser) {
         IMdSyntaxTree foundTree = parser.Markdown.SerializeToSyntaxTree(input);
 
         // Assert
-        await Assert.That(foundTree)
-            .IsNotNull()
-            .And.IsEqualTo(expectedOutput);
+        await Assert.That(foundTree).IsNotNull();
+        await Assert.That(foundTree).IsEquatableTo(expectedOutput);
     }
 }

@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -10,16 +9,23 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class BoldSyntaxNodeSerializer {
-    private static readonly int BId = MdRegexLib.GetGroupId(MdRegexGroupNames.BoldContent);
-
+public partial class BoldSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex(@"\G\*\*(?<b>(?>[^\\\*]+|\\\*|\*|(?<open>\*\*)|(?<-open>\*\*))+)(?(open)(?!))\*\*", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    public char[] TriggerCharacters { get; } = ['*'];
+    
+    private static readonly int BoldContentId = Syntax.GroupNumberFromName("b");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
-        if (!match.Groups[BId].TryGetValue(out string? boldValue)) return;
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
+    public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
+        string boldValue = match.Groups[BoldContentId].Value;
 
-        BoldMdSyntaxNode node = BoldMdSyntaxNode.Pool.Get();
+        BoldMdSyntaxNode node = MdSyntaxNodePool<BoldMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(node);
         stack.PushSingleLineMatchesToStack(boldValue, node);
     }

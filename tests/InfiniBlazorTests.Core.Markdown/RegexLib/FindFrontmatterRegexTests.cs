@@ -1,7 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
+using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 using System.Text.RegularExpressions;
 
 namespace InfiniBlazorTests.Core.Markdown.RegexLib;
@@ -83,7 +83,7 @@ public class FindFrontmatterRegexTests {
     [MethodDataSource(nameof(GetTestData))]
     public async Task FindFrontmatterRegex_ShouldReturnExpected(TestDataDto testData) {
         // Arrange
-        Regex regex = MdRegexLib.FindFrontmatterRegex;
+        Regex regex = FrontmatterSyntaxNodeSerializer.Syntax;
         string input = testData.Input.ReplaceLineEndings("\n");
         bool expected = testData.ExpectedResult;
         
@@ -95,8 +95,8 @@ public class FindFrontmatterRegexTests {
 
         // Act
         Match result = regex.Match(input);
-        Group groupLang = result.Groups[MdRegexGroupNames.FrontmatterLang];
-        Group groupBody = result.Groups[MdRegexGroupNames.FrontmatterBody];
+        Group groupLang = result.Groups["lang"];
+        Group groupBody = result.Groups["body"];
 
         // Assert
         await Assert.That(result.Success).IsEqualTo(expected);

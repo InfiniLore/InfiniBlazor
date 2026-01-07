@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -10,20 +9,27 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class SuperScriptSyntaxNodeSerializer {
-    private static readonly int SpId = MdRegexLib.GetGroupId(MdRegexGroupNames.SuperScriptContent);
-
+public partial class SuperScriptSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
+    [GeneratedRegex(@"\G\^(?<sp>(?>[^\\\^\n]+|\\\^|\^\^|(?<open>\^)|(?<-open>\^))+)(?(open)(?!))\^", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    private static readonly int SpId = Syntax.GroupNumberFromName("sp");
+    
+    public char[] TriggerCharacters { get; } = ['^'];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
+    public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[SpId].TryGetValue(out string? superValue)) return;
+        string superValue = match.Groups[SpId].Value;
 
-        SuperScriptMdSyntaxNode node = SuperScriptMdSyntaxNode.Pool.Get();
+        SuperScriptMdSyntaxNode node = MdSyntaxNodePool<SuperScriptMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(node);
         stack.PushSingleLineMatchesToStack(superValue, node);
     }

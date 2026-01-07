@@ -13,17 +13,20 @@ namespace InfiniBlazorTests.Core.Markdown.Parsers.Xml;
 // ---------------------------------------------------------------------------------------------------------------------
 public class MdSyntaxTreeXmlParserTests {
     private readonly XmlMdSyntaxTreeParser _parser = new();
-    private static IMdSyntaxTree TestTree => new MdSyntaxTree {
-        RootNode = new RootMdSyntaxNode()
-            .WithChild(
+    private static IMdSyntaxTree TestTree {
+        get {
+            var tree = new MdSyntaxTree();
+            tree.RootNode.WithChild(
                 new LinkMdSyntaxNode()
                     .WithHref("https://example.com")
                     .WithText("Example Content")
                     .WithChild(new ImageMdSyntaxNode()
                         .WithHref("https://example.com/image.png")
                         .WithAltText("Example Image"))
-            )
-    };
+            );
+            return tree;
+        }
+    }
 
     private const string Xml = """
         <MdSyntaxTree>

@@ -35,6 +35,8 @@ public class MarkdownBenchmarks {
 
     private static ServiceProvider CreateProvider(Action<InfiniBlazorMarkdownConfig>? configure = null) {
         var serviceCollection = new ServiceCollection();
+        serviceCollection.AddSingleton<Microsoft.AspNetCore.Components.NavigationManager, MockNavigationManager>();
+        serviceCollection.AddSingleton<Microsoft.JSInterop.IJSRuntime, MockJsRuntime>();
         serviceCollection.AddInfiniBlazor(config => configure?.Invoke(config.Markdown));
         serviceCollection.AddLogging();
         return serviceCollection.BuildServiceProvider();

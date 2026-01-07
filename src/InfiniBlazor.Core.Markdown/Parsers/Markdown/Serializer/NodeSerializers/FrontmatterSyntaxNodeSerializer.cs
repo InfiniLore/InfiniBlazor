@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -11,12 +10,22 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class FrontmatterSyntaxNodeSerializer {
-    private static readonly int LangId = MdRegexLib.GetGroupId(MdRegexGroupNames.FrontmatterLang);
-    private static readonly int BodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.FrontmatterBody);
+public partial class FrontmatterSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex(@"\G(?<open>^-{3,}) *(?<lang>.+)?\r?\n(?<body>[\s\S]*?)\r?\n\k<open>", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    internal static partial Regex Syntax { get; }
     
-    public static void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
-        FrontMatterMdSyntaxNode node = FrontMatterMdSyntaxNode.Pool.Get();
+    private static readonly int LangId = Syntax.GroupNumberFromName("lang");
+    private static readonly int BodyId = Syntax.GroupNumberFromName("body");
+    
+    public char[] TriggerCharacters { get; } = ['-'];
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------------------------------------------------
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
+    public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
+        FrontMatterMdSyntaxNode node = MdSyntaxNodePool<FrontMatterMdSyntaxNode>.Shared.Get();
         if (match.Groups[LangId].TryGetValue(out string? lang)) node.WithLanguage(lang);
         if (match.Groups[BodyId].TryGetValue(out string? body)) node.WithContent(body);
         

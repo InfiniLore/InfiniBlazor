@@ -9,14 +9,20 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class NewLineSyntaxNodeSerializer {
-
+public partial class NewLineSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex(@"\G\n")]
+    private static partial Regex Syntax { get; }
+    
+    public char[] TriggerCharacters { get; } = ['\n'];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
+    public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match
-    ) => parentNode.AddChildNode(NewLineMdSyntaxNode.Pool.Get());
+    ) => parentNode.AddChildNode(MdSyntaxNodePool<NewLineMdSyntaxNode>.Shared.Get());
 }

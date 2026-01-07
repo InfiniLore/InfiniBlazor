@@ -4,31 +4,46 @@
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using InfiniBlazor.Pooling;
 using Microsoft.Extensions.ObjectPool;
-
-namespace InfiniBlazor.Markdown.Syntax;
+using System.Text;
 using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 
+namespace InfiniBlazor.Markdown.Syntax;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
-    private Lazy<IMdSyntaxNode> LazyRootNode { get; set; } = new(static () => RootMdSyntaxNode.Pool.Get());
-    public IMdSyntaxNode RootNode {
-        get => LazyRootNode.Value;
-        init {
-            ArgumentNullException.ThrowIfNull(value);
-            LazyRootNode = new Lazy<IMdSyntaxNode>(() => value);
-            _ = LazyRootNode.Value;
-        }
-    }
+    public IRootMdSyntaxNode RootNode {
+        get;
+        private set {
+            if (ReferenceEquals(field, value)) return;
 
-    public static ObjectPool<MdSyntaxTree> Pool { get; } = PoolingHelpers.CreateResettablePool<MdSyntaxTree>(16);
-    private static ObjectPool<Stack<IMdSyntaxNode>> MdSyntaxNodeStackPool { get; } = PoolingHelpers.CreateStackPool<IMdSyntaxNode>(PoolingHelpers.ParsersRetained);
-    
+            // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
+            field?.ReturnToPool();
+
+            value.WithTreeReference(this);
+            field = value;
+        }
+    } = null!;
+
+    private static ObjectPool<Stack<IMdSyntaxNode>> MdSyntaxNodeStackPool { get; } = PoolingHelpers.CreateStackPool<IMdSyntaxNode>(16);
+
     public static IMdSyntaxTree Empty => new MdSyntaxTree();
 
-    private ConcurrentDictionary<Type, List<int[]>> CachedChildrenByType { get; } = new();
+    private ConcurrentDictionary<Type, IMdSyntaxNode[]> CachedChildrenByType { get; } = new();
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Constructors
+    // -----------------------------------------------------------------------------------------------------------------
+    public MdSyntaxTree() {
+        InitializeRootNode(this);
+    }
+
+    private static void InitializeRootNode(MdSyntaxTree tree) {
+        RootMdSyntaxNode rootNode = MdSyntaxNodePool<RootMdSyntaxNode>.Shared.Get();
+        rootNode.WithTreeReference(tree);
+        tree.RootNode = rootNode;
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
@@ -39,33 +54,27 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
             nodes = null;
             return false;
         }
-        
+
         nodes = childNodes.Cast<T>();
         return true;
     }
+
     public bool TryGetCachedChildrenByType(Type type, [NotNullWhen(true)] out IEnumerable<IMdSyntaxNode>? nodes) {
         nodes = null;
-        if (!type.IsAssignableTo(typeof(IMdSyntaxNode)) 
-            || !CachedChildrenByType.TryGetValue(type, out List<int[]>? children)) return false;
+        if (!type.IsAssignableTo(typeof(IMdSyntaxNode))) return false;
 
-        nodes = children.Select(
-        childIndexLocation => childIndexLocation
-            .Aggregate(RootNode, (current, i) => current.GetChildAt(i))
+        IMdSyntaxNode[] cached = CachedChildrenByType.GetOrAdd(
+            type,
+            static (t, tree) => tree.VisitNodesBreadthFirst()
+                .Where(t.IsInstanceOfType)
+                .ToArray(),
+            this
         );
-        return children.Count > 0;
-    }
 
-    public void StoreChildAtCache<T>(T node) where T : IMdSyntaxNode {
-        List<int[]> list = CachedChildrenByType.GetOrAdd(typeof(T), new List<int[]>());
-        
-        int[] array = new int[node.Depth];
-        IMdSyntaxNode? parent = node;
-        for (int i = array.Length - 1; i >= 0; i--) {
-            if (parent is null) break;
-            array[i] = parent.GetIndexAtParent();
-            parent = parent.Parent;
-        }
-        list.Add(array);
+        if (cached.Length == 0) return false;
+
+        nodes = cached;
+        return true;
     }
     #endregion
 
@@ -73,7 +82,7 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     // ReSharper disable once ConvertIfStatementToReturnStatement
     public IEnumerable<IMdSyntaxNode> VisitTopLevelNodes() {
         int childCount = RootNode.ChildCount;
-        if (childCount == 0) return Enumerable.Empty<IMdSyntaxNode>();
+        if (childCount == 0) return [];
 
         return RootNode.GetChildren();
 
@@ -153,6 +162,12 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
             MdSyntaxNodeStackPool.Return(outputStack);
         }
     }
+    
+    public void ClearCaches() {
+        if (CachedChildrenByType.IsEmpty) return;
+        CachedChildrenByType.Clear();
+    }
+
     public int GetCount() {
         ReadOnlySpan<IMdSyntaxNode> rootNodeChildren = RootNode.GetChildrenSpan();
         int rootNodeChildCount = rootNodeChildren.Length;
@@ -187,17 +202,11 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
         return count;
     }
     #endregion
-    
-    public void ReturnToPool() {
-        Pool.Return(this);
-    }
 
     public bool TryReset() {
         if (RootNode is not RootMdSyntaxNode rootNode) return false;// Cannot reset a non-root node
 
-        foreach (KeyValuePair<Type, List<int[]>> keyValuePair in CachedChildrenByType) {
-            keyValuePair.Value.Clear();
-        }
+        CachedChildrenByType.Clear();
 
         // Using depth-first traversal with a single stack
         Stack<IMdSyntaxNode> stack = MdSyntaxNodeStackPool.Get();
@@ -225,7 +234,7 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
 
             // Finally, reset and replace the root node
             RootNode.ReturnToPool();
-            LazyRootNode = new Lazy<IMdSyntaxNode>(() => RootMdSyntaxNode.Pool.Get());
+            InitializeRootNode(this);
             return true;
         }
 
@@ -238,10 +247,7 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
         }
     }
 
-    public void Dispose() {
-        ReturnToPool();
-    }
-
+    // ReSharper disable once NonReadonlyMemberInGetHashCode
     public override int GetHashCode()
         => HashCode.Combine(RootNode);
 
@@ -252,4 +258,30 @@ public sealed class MdSyntaxTree : IMdSyntaxTree, IResettable {
     public bool Equals(IMdSyntaxTree? other)
         => other is not null
             && RootNode.Equals(other.RootNode);
+
+    public override string ToString() {
+        StringBuilder sb = new();
+        sb.AppendLine($"{GetType().Name}:");
+        sb.AppendLine(RootNode.ToDebugString());
+
+        ReadOnlySpan<IMdSyntaxNode> children = RootNode.GetChildrenSpan();
+        for (int i = 0; i < children.Length; i++) {
+            BuildTreeString(sb, children[i], "", i == children.Length - 1);
+        }
+
+        return sb.ToString();
+    }
+
+    private static void BuildTreeString(StringBuilder sb, IMdSyntaxNode node, string indent, bool isLast) {
+        sb.Append(indent);
+        sb.Append(isLast ? "└── " : "├── ");
+        sb.AppendLine(node.ToDebugString());
+
+        string nextIndent = indent + (isLast ? "    " : "│   ");
+
+        ReadOnlySpan<IMdSyntaxNode> children = node.GetChildrenSpan();
+        for (int i = 0; i < children.Length; i++) {
+            BuildTreeString(sb, children[i], nextIndent, i == children.Length - 1);
+        }
+    }
 }

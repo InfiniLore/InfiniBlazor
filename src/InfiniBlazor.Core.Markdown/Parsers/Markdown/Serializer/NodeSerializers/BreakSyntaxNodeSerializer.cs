@@ -9,12 +9,19 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class BreakSyntaxNodeSerializer {
+public partial class BreakSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex(@"\G<[Bb][Rr]/?>", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    public char[] TriggerCharacters { get; } = ['<'];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
-        BreakMdSyntaxNode node = BreakMdSyntaxNode.Pool.Get();
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
+    public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
+        BreakMdSyntaxNode node = MdSyntaxNodePool<BreakMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(node);
     }
 }

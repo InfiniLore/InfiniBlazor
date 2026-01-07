@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -10,20 +9,27 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class FootnoteReferenceSyntaxNodeSerializer {
-    private static readonly int FootnoteIdentifierId = MdRegexLib.GetGroupId(MdRegexGroupNames.FootnoteReferenceIdentifier);
-
+public partial class FootnoteReferenceSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex(@"\G\[\^(?<id>[\d\p{L}\p{N}]+)\]", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    private static readonly int FootnoteIdentifierId = Syntax.GroupNumberFromName("id");
+    
+    public char[] TriggerCharacters { get; } = ['['];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
+    public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (match.Groups[FootnoteIdentifierId] is not { Success: true, Value: var footnoteId }) return;
+        string footnoteId = match.Groups[FootnoteIdentifierId].Value;
 
-        FootnoteReferenceMdSyntaxNode node = FootnoteReferenceMdSyntaxNode.Pool.Get();
+        FootnoteReferenceMdSyntaxNode node = MdSyntaxNodePool<FootnoteReferenceMdSyntaxNode>.Shared.Get();
         node.WithIdentifier(footnoteId);
         parentNode.AddChildNode(node);
     }

@@ -15,6 +15,7 @@ public interface IMdSyntaxNode : IResettable, IEquatable<IMdSyntaxNode>{
     int Depth { get; }
     Type Type { get; }
     IMdSyntaxNodeModifier? Modifier { get; }
+    IMdSyntaxTree? TreeReference { get; }
 
     ReadOnlySpan<IMdSyntaxNode> GetChildrenSpan();
     IEnumerable<IMdSyntaxNode> GetChildren();
@@ -32,14 +33,22 @@ public interface IMdSyntaxNode : IResettable, IEquatable<IMdSyntaxNode>{
     
     int GetIndexAtParent();
     
+    /// <summary>
+    /// Returns a simple string representation of the node for tree visualization.
+    /// </summary>
+    string ToDebugString();
+    
     void AddChildNode(IMdSyntaxNode childNode);
     TChild AddChildNode<TChild>(TChild childNode) where TChild : IMdSyntaxNode;
+    
+    bool RemoveChildAt(int index);
+    bool RemoveChild(IMdSyntaxNode childNode);
 
     IMdSyntaxNode WithDepth(int depth);
     IMdSyntaxNode WithText(string content);
     IMdSyntaxNode WithParent(IMdSyntaxNode parent);
     IMdSyntaxNode WithModifier(IMdSyntaxNodeModifier modifier);
     IMdSyntaxNode WithChild<TChild>(TChild child) where TChild : IMdSyntaxNode;
-
-    void ReturnToPool();
+    
+    internal void ReturnToPool();
 }

@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -10,29 +9,44 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class LinkSyntaxNodeSerializer {
-    private static readonly int LnTextId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkText);
-    private static readonly int LnHrefId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkHref);
-    private static readonly int LnModsId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkModifiers);
-    private static readonly int LnBangId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkBang);
-    private static readonly int LnTitleId = MdRegexLib.GetGroupId(MdRegexGroupNames.LinkTitle);
-
+public partial class LinkSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex("""
+        \G
+        (?<bang>!)?
+        \[(?<text> (?:\ *!?\[.+?\]\(.+?\)\ *)|(?:[^\\\]]|\\\]|\\[^\]])*?)\]
+        \(
+          (?<href>\ *https?[^\ |]+)
+          (?:\ ?\"(?<title>.+)\")?
+          (?<mods>\|.*)?
+        \)
+        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    private static readonly int LnBangId = Syntax.GroupNumberFromName("bang");
+    private static readonly int LnTextId = Syntax.GroupNumberFromName("text");
+    private static readonly int LnHrefId = Syntax.GroupNumberFromName("href");
+    private static readonly int LnTitleId = Syntax.GroupNumberFromName("title");
+    private static readonly int LnModsId = Syntax.GroupNumberFromName("mods");
+    
+    public char[] TriggerCharacters { get; } = ['!', '['];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
+    public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[LnTextId].TryGetValue(out string? linkText)) return;
-        if (!match.Groups[LnHrefId].TryGetValue(out string? linkHref)) return;
-
-        match.Groups[LnModsId].TryGetValue(out string? mods);
-        match.Groups[LnTitleId].TryGetValue(out string? title);
+        string linkText = match.Groups[LnTextId].Value;
+        string linkHref = match.Groups[LnHrefId].Value;
+        string mods = match.Groups[LnModsId].Value;
+        string title = match.Groups[LnTitleId].Value;
 
         if (match.Groups[LnBangId].Success) {
-            ImageMdSyntaxNode imgNode = ImageMdSyntaxNode.Pool.Get();
+            ImageMdSyntaxNode imgNode = MdSyntaxNodePool<ImageMdSyntaxNode>.Shared.Get();
             imgNode.WithAltText(linkText);
             imgNode.WithHref(linkHref);
 
@@ -43,7 +57,7 @@ public static class LinkSyntaxNodeSerializer {
             return;
         }
 
-        LinkMdSyntaxNode linkNode = LinkMdSyntaxNode.Pool.Get();
+        LinkMdSyntaxNode linkNode = MdSyntaxNodePool<LinkMdSyntaxNode>.Shared.Get();
         linkNode.WithHref(linkHref);
         if (mods.IsNotNullOrWhiteSpace()) linkNode.WithModifier(MdSyntaxNodeModifier.FromString(mods));
         if (title.IsNotNullOrEmpty()) linkNode.WithTitle(title);

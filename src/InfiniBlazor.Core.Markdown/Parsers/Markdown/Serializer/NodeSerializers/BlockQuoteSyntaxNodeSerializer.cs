@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -10,23 +9,26 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class BlockQuoteSyntaxNodeSerializer {
-    private static readonly int BlockQuoteId = MdRegexLib.GetGroupId(MdRegexGroupNames.BlockQuote);
-
+public partial class BlockQuoteSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex(@"\G^>[\ ]*(?:.+(?:\n>[^\n]*)*)$", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    public char[] TriggerCharacters { get; } = ['>'];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
+    public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        Group group = match.Groups[BlockQuoteId];
-        if (!group.TryGetValueSpan(out ReadOnlySpan<char> blockQuoteBody)) return;
-
+        ReadOnlySpan<char> blockQuoteBody = match.ValueSpan;
         string adjustedBlockquote = LineNormalization.NormalizeBlockQuote(blockQuoteBody, out int leadingSpaces);
 
-        BlockQuoteMdSyntaxNode blockQuoteNode = BlockQuoteMdSyntaxNode.Pool.Get();
+        BlockQuoteMdSyntaxNode blockQuoteNode = MdSyntaxNodePool<BlockQuoteMdSyntaxNode>.Shared.Get();
         blockQuoteNode.WithLeadingSpaces(leadingSpaces);
 
         parentNode.AddChildNode(blockQuoteNode);

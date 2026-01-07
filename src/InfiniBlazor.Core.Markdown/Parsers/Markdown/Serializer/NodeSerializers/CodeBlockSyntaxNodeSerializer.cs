@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Buffers;
@@ -11,22 +10,28 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class CodeBlockSyntaxNodeSerializer {
-    private static readonly int CBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeBlockContent);
-    private static readonly int CLangId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeBlockLang);
-    private static readonly int CTrailingId = MdRegexLib.GetGroupId(MdRegexGroupNames.CodeBlockTrailing);
+public partial class CodeBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    [GeneratedRegex(@"\G^(?<open>`{3,})[\ ]*(?<lang>.*?)?\n(?<body>(?>[\s\S]|(?!\k<open>))*?)\k<open>(?<tail>[^\n]+)?$", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    private static readonly int CBodyId = Syntax.GroupNumberFromName("body");
+    private static readonly int CLangId = Syntax.GroupNumberFromName("lang");
+    private static readonly int CTrailId = Syntax.GroupNumberFromName("tail");
 
+    public char[] TriggerCharacters { get; } = ['`'];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
+    public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[CBodyId].TryGetValueSpan(out ReadOnlySpan<char> codeBlockBody)) return;
-
-        CodeBlockMdSyntaxNode codeNode = CodeBlockMdSyntaxNode.Pool.Get();
+        ReadOnlySpan<char> codeBlockBody = match.Groups[CBodyId].ValueSpan;
+        CodeBlockMdSyntaxNode codeNode = MdSyntaxNodePool<CodeBlockMdSyntaxNode>.Shared.Get();
 
         string langNameValue = match.Groups[CLangId].Value;
         if (!langNameValue.IsEmpty()) codeNode.WithLanguage(langNameValue);
@@ -36,8 +41,8 @@ public static class CodeBlockSyntaxNodeSerializer {
         parentNode.AddChildNode(codeNode);
         
         // Add trailing text as a paragraph node
-        if (!match.Groups[CTrailingId].TryGetValue(out string? trailing)) return;
-        ParagraphMdSyntaxNode paragraphNode = ParagraphMdSyntaxNode.Pool.Get();
+        if (!match.Groups[CTrailId].TryGetValue(out string? trailing)) return;
+        ParagraphMdSyntaxNode paragraphNode = MdSyntaxNodePool<ParagraphMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(paragraphNode);
         stack.PushSingleLineMatchesToStack(trailing, paragraphNode);
     }
@@ -75,20 +80,13 @@ public static class CodeBlockSyntaxNodeSerializer {
         for (int i = 0; i < content.Length; i++) {
             switch (content[i]) {
                 case '\r' when i + 1 < content.Length && content[i + 1] == '\n': {
-                    // Don't add a newline if it's the last character sequence
-                    if (i + 2 < content.Length) {
-                        result[destinationIndex++] = '\n';
-                    }
+                    result[destinationIndex++] = '\n';
                     i++;// Skip the \n
                     break;
                 }
 
                 default:
                     result[destinationIndex++] = content[i];
-                    break;
-
-                // Skip the last single \n if present
-                case '\n' when i == content.Length - 1:
                     break;
             }
         }

@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -10,20 +9,27 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class SubScriptSyntaxNodeSerializer {
-    private static readonly int SbId = MdRegexLib.GetGroupId(MdRegexGroupNames.SubScriptContent);
-
+public partial class SubScriptSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
+    [GeneratedRegex(@"\G~(?<sb>(?>[^\\~\n]+|\\~|~~|(?<open>~)|(?<-open>~))+)(?(open)(?!))~", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    private static readonly int SbId = Syntax.GroupNumberFromName("sb");
+    
+    public char[] TriggerCharacters { get; } = ['~'];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
+    public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[SbId].TryGetValue(out string? subValue)) return;
+        string subValue = match.Groups[SbId].Value;
 
-        SubScriptMdSyntaxNode node = SubScriptMdSyntaxNode.Pool.Get();
+        SubScriptMdSyntaxNode node = MdSyntaxNodePool<SubScriptMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(node);
         stack.PushSingleLineMatchesToStack(subValue, node);
     }

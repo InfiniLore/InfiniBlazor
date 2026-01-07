@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -10,20 +9,28 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class WikiLinkSyntaxNodeSerializer {
-    private static readonly int WikiLinkHrefId = MdRegexLib.GetGroupId(MdRegexGroupNames.WikiLinkHref);
-
+public partial class WikiLinkSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
+    
+    [GeneratedRegex(@"\G\[\[(?<href>[^\]\[\ ]+)\]\]", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    private static readonly int WikiLinkHrefId = Syntax.GroupNumberFromName("href");
+    
+    public char[] TriggerCharacters { get; } = ['['];
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
+    public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match
     ) {
-        if (!match.Groups[WikiLinkHrefId].TryGetValue(out string? href)) return;
+        string href = match.Groups[WikiLinkHrefId].Value;
 
-        WikiLinkMdSyntaxNode node = WikiLinkMdSyntaxNode.Pool.Get();
+        WikiLinkMdSyntaxNode node = MdSyntaxNodePool<WikiLinkMdSyntaxNode>.Shared.Get();
         node.WithContent(href);
         parentNode.AddChildNode(node);
     }

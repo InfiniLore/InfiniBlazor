@@ -1,7 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.RegexLib;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
@@ -10,17 +9,54 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class HtmlSyntaxNodeSerializer {
-    private static readonly int HtmlPreId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlPre);
-    private static readonly int HtmlBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlBody);
-    private static readonly int HtmlPostId = MdRegexLib.GetGroupId(MdRegexGroupNames.HtmlPost);
-    private static readonly int SpanTagAttrsId = MdRegexLib.GetGroupId(MdRegexGroupNames.SpanTagAttrs);
-    private static readonly int SpanBodyId = MdRegexLib.GetGroupId(MdRegexGroupNames.SpanBody);
+public partial class HtmlBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
+    [GeneratedRegex("""
+        \G
+        (?<pre>.+?)?
+        (?<body>
+            <(?<tag>\w+)\b[^>]*>
+            (?>
+                [^<]+
+                | <(?<open>\k<tag>)\b[^>]*>
+                | </(?<-open>\k<tag>)>
+                | <(?!/?\k<tag>\b)[^>]+>
+            )*
+            (?(open)(?!))
+            (</\k<tag>>)
+        )
+        (?<post>.+)?
+        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    private static partial Regex Syntax { get; }
+    
+    [GeneratedRegex("""
+        <span\ ?(?<attr>\b[^>]*)>
+        (?<body>
+          (?>
+            [^<]+
+            | <(?<open>span)\b[^>]*>
+            | </(?<-open>span)>
+            | <(?!/?span\b)[^>]+>
+          )*
+        )
+        (?(open)(?!))
+        (</span>)
+        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.Compiled)]
+    private static partial Regex SpanSyntax { get; }
+    
+    private static readonly int HtmlPreId = Syntax.GroupNumberFromName("pre");
+    private static readonly int HtmlBodyId = Syntax.GroupNumberFromName("body");
+    private static readonly int HtmlPostId = Syntax.GroupNumberFromName("post");
+    private static readonly int SpanTagAttrsId = SpanSyntax.GroupNumberFromName("attr");
+    private static readonly int SpanBodyId = SpanSyntax.GroupNumberFromName("body");
 
+    public char[] TriggerCharacters { get; } = Array.Empty<char>();
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static void Serialize(
+    public Match Match(string input, int startPosition = 0) 
+        => Syntax.Match(input, startPosition);
+    
+    public void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match
@@ -32,14 +68,14 @@ public static class HtmlSyntaxNodeSerializer {
         bool hasHtmlBody = match.Groups[HtmlBodyId].TryGetValue(out string? htmlBody);
         string? spanBody = null;
         if (hasHtmlBody && htmlBody is not null) {
-            spanMatch = MdRegexLib.FindSpanHtmlRegex.Match(htmlBody);
+            spanMatch = SpanSyntax.Match(htmlBody);
             if (spanMatch.Groups[SpanBodyId].TryGetValue(out spanBody)) {
                 hasTrailingContent = true;
             }
         }
 
         if (hasTrailingContent && parentNode is not (ParagraphMdSyntaxNode or HtmlSpanMdSyntaxNode)) {
-            parentNode = parentNode.AddChildNode(ParagraphMdSyntaxNode.Pool.Get());
+            parentNode = parentNode.AddChildNode(MdSyntaxNodePool<ParagraphMdSyntaxNode>.Shared.Get());
         }
 
         if (match.Groups[HtmlPostId].TryGetValue(out string? post)) {
@@ -49,7 +85,7 @@ public static class HtmlSyntaxNodeSerializer {
         if (hasHtmlBody && htmlBody is not null) {
             // Span should be the only special case allowed that allows for Markdown parsing within it
             if (spanMatch is not null && spanBody is not null) {
-                HtmlSpanMdSyntaxNode spanNode = HtmlSpanMdSyntaxNode.Pool.Get();
+                HtmlSpanMdSyntaxNode spanNode = MdSyntaxNodePool<HtmlSpanMdSyntaxNode>.Shared.Get();
 
                 string spanTagAttrs = spanMatch.Groups[SpanTagAttrsId].Value;
                 spanNode.WithAttributes(spanTagAttrs);
@@ -58,7 +94,7 @@ public static class HtmlSyntaxNodeSerializer {
                 stack.PushProcessedNodeToStack(parentNode, spanNode);
             }
             else {
-                HtmlMdSyntaxNode htmlNode = HtmlMdSyntaxNode.Pool.Get();
+                HtmlMdSyntaxNode htmlNode = MdSyntaxNodePool<HtmlMdSyntaxNode>.Shared.Get();
                 htmlNode.WithContent(htmlBody);
                 stack.PushProcessedNodeToStack(parentNode, htmlNode);
             }
