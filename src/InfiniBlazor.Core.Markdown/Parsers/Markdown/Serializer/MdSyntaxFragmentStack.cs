@@ -13,7 +13,6 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable {
-    public IMdSyntaxTree TreeReference { get; set; } = null!;
     public IMdStringMdSyntaxSerializer SerializerReference { get; set; } = null!;
     
     private readonly Stack<MdSyntaxFragment> _stack = new();

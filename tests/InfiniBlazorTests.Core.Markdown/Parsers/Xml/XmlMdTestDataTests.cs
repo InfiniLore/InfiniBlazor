@@ -13,18 +13,23 @@ namespace InfiniBlazorTests.Core.Markdown.Parsers.Xml;
 public class XmlMdTestDataTests {
     private static readonly string FileName = $"{Guid.NewGuid():N}.xml";
     private static readonly string FileNameArray = $"{Guid.NewGuid():N}.xml";
-    private static MdTestData TestEntry => new() {
-        Id = nameof(TestEntry),
-        FileName = string.Empty,
-        MdString = "Sample **Markdown**",
-        MdSyntaxTree = new MdSyntaxTree {
-            RootNode = new RootMdSyntaxNode()
+    private static MdTestData TestEntry {
+        get {
+            var tree = new MdSyntaxTree();
+            tree.RootNode
                 .WithText("Sample ")
                 .WithChild(
                     new BoldMdSyntaxNode().WithText("Markdown")
-                )
+                );
+
+            return new MdTestData {
+                Id = nameof(TestEntry),
+                FileName = string.Empty,
+                MdString = "Sample **Markdown**",
+                MdSyntaxTree = tree
+            };
         }
-    };
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Test Methods
@@ -51,12 +56,12 @@ public class XmlMdTestDataTests {
         using (StreamReader reader = new(FileName)) {
             deserializedData = (MdTestData?)serializer.Deserialize(reader);
         }
-        
+
         // Assert
         await Assert.That(deserializedData)
             .IsNotNull()
             .And.IsEqualTo(testEntry);
-        
+
         await Assert.That(deserializedData?.Id).IsEqualTo(nameof(TestEntry));
     }
 
@@ -79,7 +84,7 @@ public class XmlMdTestDataTests {
         using (StreamReader reader = new(FileNameArray)) {
             deserializedData = (MdTestData[]?)serializer.Deserialize(reader);
         }
-        
+
         // Assert
         await Assert.That(deserializedData)
             .IsNotEmpty()

@@ -4,6 +4,8 @@
 using InfiniBlazor.Config;
 using InfiniBlazor.Markdown.Editors;
 using InfiniBlazor.Markdown.Parsers.Blazor;
+using InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
+using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 using InfiniBlazor.Markdown.Syntax;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Frozen;
@@ -31,6 +33,49 @@ public sealed class InfiniBlazorMarkdownConfig : IMarkdownConfig {
         serviceCollection.RegisterServicesFromInfiniBlazorCoreMarkdown();
         serviceCollection.AddSingleton(TextEditorFactory.CreateTextEditor);
         serviceCollection.AddSingleton<IMarkdownConfig>(this);
+        
+        serviceCollection.AddSingleton<IMdStringMdSyntaxSerializer>(sp => {
+            var fullOptions = new MarkdownSerializerOptions {
+                SingleLine = [
+                    new EscapedCharacterSyntaxNodeSerializer(),
+                    new BoldSyntaxNodeSerializer(),
+                    new ItalicSyntaxNodeSerializer(),
+                    new SuperScriptSyntaxNodeSerializer(),
+                    new SubScriptSyntaxNodeSerializer(),
+                    new CodeInlineSyntaxNodeSerializer(),
+                    new StrikeSyntaxNodeSerializer(),
+                    new UnderlineSyntaxNodeSerializer(),
+                    new HighlightSyntaxNodeSerializer(),
+                    new EmoteSyntaxNodeSerializer(),
+                    new WikiLinkSyntaxNodeSerializer(),
+                    new TemplateSyntaxNodeSerializer(),
+                    new LinkSyntaxNodeSerializer(),
+                    new TagSyntaxNodeSerializer(),
+                    new UserSyntaxNodeSerializer(),
+                    new FootnoteReferenceSyntaxNodeSerializer(),
+                    new WrapperSyntaxNodeSerializer(),
+                    new BreakSyntaxNodeSerializer(),
+                ],
+                MultiLine = [
+                    new HeadingSyntaxNodeSerializer(),
+                    new CodeBlockSyntaxNodeSerializer(),
+                    new HeadingSimpleSyntaxNodeSerializer(),
+                    new ListSyntaxNodeSerializer(),
+                    new TableSyntaxNodeSerializer(),
+                    new CalloutSyntaxNodeSerializer(),
+                    new BlockQuoteSyntaxNodeSerializer(),
+                    new FootnoteDescriptionSyntaxNodeSerializer(),
+                    new HtmlBlockSyntaxNodeSerializer(),
+                    new HorizontalRuleSyntaxNodeSerializer(),
+                    new ParagraphSyntaxNodeSerializer(),
+                    new NewLineSyntaxNodeSerializer()
+                ],
+                FrontMatter = new FrontmatterSyntaxNodeSerializer()
+            };
+
+            var factory = sp.GetRequiredService<IMdSerializerFactory>();
+            return factory.Create(fullOptions);
+        });
         
         ComponentRecordsLazy = new Lazy<FrozenDictionary<Type, IMdComponentRecord>>(() => {
             ComponentRecords.TrimExcess();

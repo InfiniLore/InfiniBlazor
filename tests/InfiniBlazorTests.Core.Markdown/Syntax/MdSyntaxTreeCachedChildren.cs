@@ -20,9 +20,8 @@ public class MdSyntaxTreeCachedChildrenTests {
             p1.AddChildNode(p2);
             tree.RootNode.AddChildNode(p1);
 
-            tree.StoreChildAtCache(p2);
-
             return (tree, typeof(ParagraphMdSyntaxNode), [
+                p1,
                 p2
             ]);
         };
@@ -32,10 +31,7 @@ public class MdSyntaxTreeCachedChildrenTests {
 
             var p2 = new ParagraphMdSyntaxNode();
 
-            tree.RootNode.AddChildNode(new ParagraphMdSyntaxNode());
             tree.RootNode.AddChildNode(p2);
-
-            tree.StoreChildAtCache(p2);
 
             return (tree, typeof(ParagraphMdSyntaxNode), [
                 p2
@@ -52,8 +48,6 @@ public class MdSyntaxTreeCachedChildrenTests {
 
             tree.RootNode.AddChildNode(new ParagraphMdSyntaxNode());
             tree.RootNode.AddChildNode(p2);
-
-            tree.StoreChildAtCache(i1);
 
             return (tree, typeof(ItalicMdSyntaxNode), [
                 i1

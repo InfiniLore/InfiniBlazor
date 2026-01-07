@@ -36,6 +36,5 @@ public partial class FootnoteDescriptionSyntaxNodeSerializer : IMdSyntaxNodeSeri
         parentNode.AddChildNode(node);
 
         stack.PushMultiLineMatchesToStack(body, node);
-        stack.TreeReference.StoreChildAtCache(node);
     }
 }

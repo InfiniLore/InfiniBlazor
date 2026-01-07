@@ -24,6 +24,8 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     public Type Type => TypeBacking; 
 
     public IMdSyntaxNodeModifier? Modifier { get; private set; }
+    public IMdSyntaxTree TreeReference { get; protected set; } = null!;
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
@@ -251,6 +253,9 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
 
     public IMdSyntaxNode WithParent(IMdSyntaxNode parent) {
         Parent = parent;
+        TreeReference = parent.TreeReference;
+        TreeReference.ClearCaches();
+        
         return this;
     }
     
@@ -289,6 +294,7 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
         ChildCount = 0;
         Depth = 0;
         Parent = null;
+        TreeReference = null!;
 
         // ReSharper disable once InvertIf
         if (Modifier is not null) {

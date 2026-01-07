@@ -15,6 +15,7 @@ public interface IMdSyntaxNode : IResettable, IEquatable<IMdSyntaxNode>{
     int Depth { get; }
     Type Type { get; }
     IMdSyntaxNodeModifier? Modifier { get; }
+    IMdSyntaxTree TreeReference { get; }
 
     ReadOnlySpan<IMdSyntaxNode> GetChildrenSpan();
     IEnumerable<IMdSyntaxNode> GetChildren();

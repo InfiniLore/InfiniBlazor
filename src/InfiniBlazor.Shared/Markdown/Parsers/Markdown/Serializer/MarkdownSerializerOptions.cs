@@ -1,15 +1,13 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using InfiniBlazor.Markdown.Syntax;
-
 namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMdSyntaxFragmentStack {
-    void PushMultiLineMatchesToStack(string input, IMdSyntaxNode parentNode, int startIndex = 0);
-    void PushSingleLineMatchesToStack(string input, IMdSyntaxNode parentNode);
-    
-    void PushProcessedNodeToStack(IMdSyntaxNode parentNode, IMdSyntaxNode childNode);
+public class MarkdownSerializerOptions {
+    public List<IMdSyntaxNodeSerializer> SingleLine { get; init; } = [];
+    public List<IMdSyntaxNodeSerializer> MultiLine { get; init; } = [];
+    public IMdSyntaxNodeSerializer? FrontMatter { get; init; }
 }
