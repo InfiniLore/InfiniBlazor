@@ -25,9 +25,9 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
     public void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node, int startIndex = 0) {
         int scanPos = startIndex;
         int inputLength = input.Length;
+        int index = 0;
 
         MdSyntaxFragment[] fragments = ArrayPool<MdSyntaxFragment>.Shared.Rent(32);
-        int index = 0;
 
         try {
             while (scanPos < inputLength) {
@@ -73,11 +73,12 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
         int scanPos = 0;
         int length = input.Length;
         int textStart = 0;
-        MdSyntaxFragment[] fragments = ArrayPool<MdSyntaxFragment>.Shared.Rent(128);
         int index = 0;
 
         SearchValues<char> searchValues = SerializerReference.SingleLineTriggerSearchValues;
         ReadOnlySpan<char> span = input.AsSpan();
+        
+        MdSyntaxFragment[] fragments = ArrayPool<MdSyntaxFragment>.Shared.Rent(128);
         
         try {
             while (scanPos < length) {
