@@ -24,7 +24,7 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     public Type Type => TypeBacking; 
 
     public IMdSyntaxNodeModifier? Modifier { get; private set; }
-    public IMdSyntaxTree TreeReference { get; protected set; } = null!;
+    public IMdSyntaxTree? TreeReference { get; protected set; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
@@ -228,6 +228,34 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
         ChildNodes = newArray;
     }
     #endregion
+    
+    #region RemoveChild(ren)
+    public bool RemoveChildAt(int index) {
+        if (index < 0 || index >= ChildCount) return false;
+
+        IMdSyntaxNode removed = ChildNodes[index];
+
+        int moveCount = ChildCount - index - 1;
+        if (moveCount > 0) {
+            Array.Copy(ChildNodes, index + 1, ChildNodes, index, moveCount);
+        }
+
+        ChildNodes[--ChildCount] = null!;
+        TreeReference?.ClearCaches();
+
+        removed.ReturnToPool();
+
+        return true;
+    }
+
+    public bool RemoveChild(IMdSyntaxNode childNode) {
+        for (int i = 0; i < ChildCount; i++) {
+            if (!ReferenceEquals(ChildNodes[i], childNode)) continue;
+            return RemoveChildAt(i);
+        }
+        return false;
+    }
+    #endregion
 
     #region With...
     public IMdSyntaxNode WithText(string content) {
@@ -254,7 +282,7 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     public IMdSyntaxNode WithParent(IMdSyntaxNode parent) {
         Parent = parent;
         TreeReference = parent.TreeReference;
-        TreeReference.ClearCaches();
+        TreeReference?.ClearCaches();
         
         return this;
     }
@@ -294,7 +322,7 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
         ChildCount = 0;
         Depth = 0;
         Parent = null;
-        TreeReference = null!;
+        TreeReference = null;
 
         // ReSharper disable once InvertIf
         if (Modifier is not null) {
