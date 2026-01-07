@@ -21,11 +21,11 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     public int Depth { get; private set; }
     public IMdSyntaxNode? Parent { get; private set; }
     private static readonly Type TypeBacking = typeof(T);
-    public Type Type => TypeBacking; 
+    public Type Type => TypeBacking;
 
     public IMdSyntaxNodeModifier? Modifier { get; private set; }
     public IMdSyntaxTree? TreeReference { get; protected set; }
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
@@ -119,7 +119,7 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
         return false;
     }
     #endregion
-    
+
     #region GetPreviousSibling(s)
     public bool TryGetPreviousSibling([NotNullWhen(true)] out IMdSyntaxNode? mdSyntaxNode) {
         mdSyntaxNode = null;
@@ -129,9 +129,9 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
         for (int i = span.Length - 1; i >= 0; i--) {
             if (!ReferenceEquals(span[i], this)) continue;
 
-            if (i + 1 >= span.Length) return false;
+            if (i - 1 < 0) return false;
 
-            mdSyntaxNode = span[i + 1];
+            mdSyntaxNode = span[i - 1];
             return true;
         }
 
@@ -146,27 +146,29 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
         for (int i = span.Length - 1; i >= 0; i--) {
             if (!ReferenceEquals(span[i], this)) continue;
 
-            return i + 1 < span.Length;
+            return i - 1 >= 0;
         }
 
         // We should never get here because we are within our own parent
         return false;
     }
     #endregion
-    
+
     #region Index
     public int GetIndexAtParent() {
         if (Parent is null) return -1;
+
         ReadOnlySpan<IMdSyntaxNode> span = Parent.GetChildrenSpan();
         for (int i = 0; i < span.Length; i++) {
             if (!ReferenceEquals(span[i], this)) continue;
 
             return i;
         }
+
         return -1;
     }
     #endregion
-    
+
     #region AddChild(ren)
     public void AddChildNode(IMdSyntaxNode childNode) {
         // Check if we need to resize
@@ -228,7 +230,7 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
         ChildNodes = newArray;
     }
     #endregion
-    
+
     #region RemoveChild(ren)
     public bool RemoveChildAt(int index) {
         if (index < 0 || index >= ChildCount) return false;
@@ -251,8 +253,10 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
     public bool RemoveChild(IMdSyntaxNode childNode) {
         for (int i = 0; i < ChildCount; i++) {
             if (!ReferenceEquals(ChildNodes[i], childNode)) continue;
+
             return RemoveChildAt(i);
         }
+
         return false;
     }
     #endregion
@@ -283,19 +287,19 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
         Parent = parent;
         TreeReference = parent.TreeReference;
         TreeReference?.ClearCaches();
-        
+
         return this;
     }
-    
+
     public IMdSyntaxNode WithDepth(int depth) {
         Depth = depth;
         if (ChildCount == 0) return this;
-        
+
         foreach (IMdSyntaxNode node in GetChildrenSpan()) {
             node.WithDepth(depth + 1);
         }
-        
-        return this;   
+
+        return this;
     }
 
     public IMdSyntaxNode WithModifier(IMdSyntaxNodeModifier modifier) {
@@ -363,7 +367,7 @@ public abstract class MdSyntaxNode<T>(int initialChildCount = 2) : IMdSyntaxNode
 
     #region ToString
     public virtual string ToDebugString() => GetType().Name;
-    
+
     public override string ToString() => ToDebugString();
     #endregion
 }
