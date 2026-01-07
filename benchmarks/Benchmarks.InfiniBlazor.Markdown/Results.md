@@ -1,7 +1,7 @@
 ﻿# General Benchmark
 | Method         |     Mean |     Error |    StdDev | Ratio | RatioSD |     Gen0 |     Gen1 |    Gen2 | Allocated | Alloc Ratio |
 |----------------|---------:|----------:|----------:|------:|--------:|---------:|---------:|--------:|----------:|------------:|
-| RenderMarkdown | 3.684 ms | 0.0729 ms | 0.1908 ms |  1.00 |    0.07 | 250.0000 | 234.3750 | 46.8750 |   2.14 MB |        1.00 |
+| RenderMarkdown | 2.256 ms | 0.0420 ms | 0.1076 ms |  1.00 |    0.07 | 257.8125 | 250.0000 | 46.8750 |   2.14 MB |        1.00 |
 
 
 # Individual Benchmarks
