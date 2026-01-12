@@ -5,7 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="BenchmarkDotNet" Version="0.15.8" />
-    <PackageVersion Include="bunit" Version="2.4.2" />
+    <PackageVersion Include="bunit" Version="2.5.3" />
     <PackageVersion Include="CodeOfChaos.CliArgsParser.Generators" Version="5.1.0" />
     <PackageVersion Include="CodeOfChaos.CliArgsParser.Library" Version="5.1.0" />
     <PackageVersion Include="CodeOfChaos.Extensions" Version="0.87.2" />
