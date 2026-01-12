@@ -22,10 +22,10 @@
     <PackageVersion Include="CodeOfChaos.GeneratorTools" Version="2.2.1" />
     <PackageVersion Include="CodeOfChaos.Testing.TUnit" Version="0.17.0" />
     <PackageVersion Include="FastEndpoints" Version="7.1.1" />
-    <PackageVersion Include="InfiniLore.InfiniFrame" Version="0.1.0-preview.22" />
-    <PackageVersion Include="InfiniLore.InfiniFrame.Blazor" Version="0.1.0-preview.22" />
+    <PackageVersion Include="InfiniLore.InfiniFrame" Version="0.1.0-preview.23" />
+    <PackageVersion Include="InfiniLore.InfiniFrame.Blazor" Version="0.1.0-preview.23" />
     <PackageVersion Include="InfiniLore.InfiniFrame.BlazorWebView" Version="0.1.0-preview.23" />
-    <PackageVersion Include="InfiniLore.InfiniFrame.WebServer" Version="0.1.0-preview.22" />
+    <PackageVersion Include="InfiniLore.InfiniFrame.WebServer" Version="0.1.0-preview.23" />
     <PackageVersion Include="InfiniLore.Lucide" Version="0.556.0" />
     <PackageVersion Include="IsExternalInit" Version="1.0.3" />
     <PackageVersion Include="JetBrains.Annotations" Version="2025.2.4" />
@@ -59,7 +59,7 @@
     <PackageVersion Include="Serilog.Sinks.BrowserConsole" Version="8.0.0" />
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.1.1" />
     <PackageVersion Include="Serilog.Sinks.Debug" Version="3.0.0" />
-    <PackageVersion Include="TUnit" Version="1.9.2" />
+    <PackageVersion Include="TUnit" Version="1.9.68" />
     <PackageVersion Include="TUnit.Core" Version="1.9.2" />
     <PackageVersion Include="YamlDotNet" Version="16.3.0" />
     <!-- DO NOT UPDATE: Microsoft.CodeAnalysis packages locked at 4.14.0 due to compatibility requirements -->
