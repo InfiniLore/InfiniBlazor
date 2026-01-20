@@ -43,7 +43,6 @@
     </ItemGroup>
     
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" VersionOverride="10.0.1" />
        <EmbeddedResource Include="wwwroot\InfiniBlazor.css" />
        <EmbeddedResource Include="wwwroot\InfiniBlazor.js" />
     </ItemGroup>
