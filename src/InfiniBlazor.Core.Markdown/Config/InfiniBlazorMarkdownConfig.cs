@@ -97,7 +97,7 @@ public sealed class InfiniBlazorMarkdownConfig : IMarkdownConfig {
         int count = ComponentRecords.Count;
         if (ComponentRecords.Capacity < count + 1) ComponentRecords.EnsureCapacity(count * 2);
         
-        ComponentRecords.Add(typeof(TNode), MdComponentRecord.FromType<TComponent, TNode>());   
+        ComponentRecords.AddOrUpdate(typeof(TNode), MdComponentRecord.FromType<TComponent, TNode>());   
         return this;
     }
     
