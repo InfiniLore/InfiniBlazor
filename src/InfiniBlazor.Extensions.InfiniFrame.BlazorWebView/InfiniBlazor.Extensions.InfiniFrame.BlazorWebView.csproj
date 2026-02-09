@@ -14,6 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="InfiniLore.InfiniFrame" VersionOverride="0.1.0-preview.25" />
       <ProjectReference Include="..\InfiniBlazor\InfiniBlazor.csproj" />
     </ItemGroup>
 
