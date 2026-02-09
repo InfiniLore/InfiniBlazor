@@ -47,7 +47,7 @@
     <PackageVersion Include="Microsoft.Extensions.ObjectPool" Version="9.0.10" />
     <PackageVersion Include="Microsoft.Maui.Controls" Version="10.0.30" />
     <PackageVersion Include="Microsoft.Maui.Controls.Core" Version="10.0.30" />
-    <PackageVersion Include="Microsoft.Maui.Core" Version="10.0.30" />
+    <PackageVersion Include="Microsoft.Maui.Core" Version="10.0.31" />
     <PackageVersion Include="Microsoft.NET.Sdk.WebAssembly.Pack" Version="10.0.2" />
     <PackageVersion Include="Microsoft.NET.ILLink.Tasks" Version="10.0.2" />
     <PackageVersion Include="NSubstitute" Version="5.3.0" />
