@@ -19,6 +19,6 @@
     "highlight.js": "^11.11.1"
   },
   "dependencies": {
-    "@tailwindcss/cli": "^4.1.18"
+    "@tailwindcss/cli": "^4.2.0"
   }
 }
