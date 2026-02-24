@@ -12,7 +12,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class BaseMdSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     protected abstract Regex Syntax { get; }
-    public virtual char[] TriggerCharacters { get; } = Array.Empty<char>();
+    public virtual ReadOnlySpan<char> TriggerCharacters => default;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

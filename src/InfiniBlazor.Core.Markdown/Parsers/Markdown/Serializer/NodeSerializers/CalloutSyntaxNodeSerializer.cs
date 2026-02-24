@@ -19,7 +19,7 @@ public sealed partial class CalloutSyntaxNodeSerializer : BaseMdSyntaxNodeSerial
     protected override Regex Syntax { get; } = RegexRule;
 
     private static readonly char[] STriggerCharacters = ['>'];
-    public override char[] TriggerCharacters => STriggerCharacters;
+    public override ReadOnlySpan<char> TriggerCharacters => STriggerCharacters;
 
     private static readonly int CalloutTypeId = RegexRule.GroupNumberFromName("type");
     private static readonly int CalloutModId = RegexRule.GroupNumberFromName("mod");

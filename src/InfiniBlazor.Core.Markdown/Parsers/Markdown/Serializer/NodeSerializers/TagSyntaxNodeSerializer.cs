@@ -15,7 +15,7 @@ public sealed partial class TagSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer
     protected override Regex Syntax { get; } = RegexRule;
 
     private static readonly char[] STriggerCharacters = ['#'];
-    public override char[] TriggerCharacters => STriggerCharacters;
+    public override ReadOnlySpan<char> TriggerCharacters => STriggerCharacters;
 
     private static readonly int TextId = RegexRule.GroupNumberFromName("t");
 

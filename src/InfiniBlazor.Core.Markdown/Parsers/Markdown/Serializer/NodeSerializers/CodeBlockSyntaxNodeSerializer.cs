@@ -16,7 +16,7 @@ public sealed partial class CodeBlockSyntaxNodeSerializer : BaseMdSyntaxNodeSeri
     protected override Regex Syntax { get; } = RegexRule;
 
     private static readonly char[] STriggerCharacters = ['`'];
-    public override char[] TriggerCharacters => STriggerCharacters;
+    public override ReadOnlySpan<char> TriggerCharacters => STriggerCharacters;
 
     private static readonly int CBodyId = RegexRule.GroupNumberFromName("body");
     private static readonly int CLangId = RegexRule.GroupNumberFromName("lang");

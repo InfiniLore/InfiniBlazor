@@ -18,7 +18,7 @@ public sealed partial class WikiLinkSyntaxNodeSerializer : BaseMdSyntaxNodeSeria
     private static readonly int WikiLinkHrefId = RegexRule.GroupNumberFromName("href");
 
     private static readonly char[] STriggerCharacters = ['['];
-    public override char[] TriggerCharacters => STriggerCharacters;
+    public override ReadOnlySpan<char> TriggerCharacters => STriggerCharacters;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

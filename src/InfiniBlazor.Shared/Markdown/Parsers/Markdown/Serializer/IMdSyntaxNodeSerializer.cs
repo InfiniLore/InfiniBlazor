@@ -11,7 +11,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IMdSyntaxNodeSerializer {
-    char[] TriggerCharacters { get; }
+    ReadOnlySpan<char> TriggerCharacters { get; }
     
     bool TryGetMatch(string input, [NotNullWhen(true)] out Match? match, int startPosition = 0);
     void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match);

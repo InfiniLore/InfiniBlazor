@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System.Buffers;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
+using CollectionExtensions=System.Collections.Generic.CollectionExtensions;
 
 namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -13,22 +14,28 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerializer> logger) : IMdStringMdSyntaxSerializer {
     public required ImmutableArray<IMdSyntaxNodeSerializer> SingleLineSerializers { get; init; }
-    public required ImmutableArray<IMdSyntaxNodeSerializer>[] SingleLineLookup { get; init; }
     public required SearchValues<char> SingleLineTriggerSearchValues { get; init; }
+    public required ImmutableArray<IMdSyntaxNodeSerializer>[] SingleLineLookup { get; init; }
+    public required ImmutableDictionary<char, ImmutableArray<IMdSyntaxNodeSerializer>> SingleLineNonAsciiLookup { get; init; }
     
     public required ImmutableArray<IMdSyntaxNodeSerializer> MultiLineSerializers { get; init; }
     public required ImmutableArray<IMdSyntaxNodeSerializer>[] MultiLineLookup { get; init; }
+    public required ImmutableDictionary<char, ImmutableArray<IMdSyntaxNodeSerializer>> MultiLineNonAsciiLookup { get; init; }
     
     public required IMdSyntaxNodeSerializer? FrontMatterSerializer { get; init; }
     
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public ImmutableArray<IMdSyntaxNodeSerializer> GetSingleLineSerializersForChar(char c) 
-        => c < 256 ? SingleLineLookup[c] : SingleLineSerializers;
+    public ImmutableArray<IMdSyntaxNodeSerializer> GetSingleLineSerializersForChar(char c)
+        => c < 256
+            ? SingleLineLookup[c]
+            : CollectionExtensions.GetValueOrDefault(SingleLineNonAsciiLookup, c, SingleLineSerializers);
 
-    public ImmutableArray<IMdSyntaxNodeSerializer> GetMultiLineSerializersForChar(char c) 
-        => c < 256 ? MultiLineLookup[c] : MultiLineSerializers;
+    public ImmutableArray<IMdSyntaxNodeSerializer> GetMultiLineSerializersForChar(char c)
+        => c < 256
+            ? MultiLineLookup[c]
+            : CollectionExtensions.GetValueOrDefault(MultiLineNonAsciiLookup, c, MultiLineSerializers);
 
     public IMdSyntaxTree SerializeToTree(string markdown) {
         IMdSyntaxTree nodeTree = MdSyntaxTreePool.Shared.Get();

@@ -19,43 +19,116 @@ public class MdStringMdSyntaxSerializerFactory(ILogger<MdStringMdSyntaxSerialize
     public IMdStringMdSyntaxSerializer Create(MarkdownSerializerOptions options) {
         // ReSharper disable twice UseCollectionExpression
         ImmutableArray<IMdSyntaxNodeSerializer> singleLineSerializers = options.SingleLine.ToImmutableArray();
-        ImmutableArray<IMdSyntaxNodeSerializer>[] singleLineLookup = BuildLookup(singleLineSerializers);
-        SearchValues<char> singleLineTriggerSearchValues = SearchValues.Create(options.SingleLine
-            .SelectMany(s => s.TriggerCharacters)
-            .Distinct()
-            .ToArray());
-
         ImmutableArray<IMdSyntaxNodeSerializer> multiLineSerializers = options.MultiLine.ToImmutableArray();
-        ImmutableArray<IMdSyntaxNodeSerializer>[] multiLineLookup = BuildLookup(multiLineSerializers);
+
+        (ImmutableArray<IMdSyntaxNodeSerializer>[] singleAscii, ImmutableDictionary<char, ImmutableArray<IMdSyntaxNodeSerializer>> singleNonAscii) = BuildLookup(singleLineSerializers);
+        (ImmutableArray<IMdSyntaxNodeSerializer>[] multiAscii, ImmutableDictionary<char, ImmutableArray<IMdSyntaxNodeSerializer>> multiNonAscii) = BuildLookup(multiLineSerializers);
+
+        Span<bool> seen = stackalloc bool[256];
+        Span<char> buffer = stackalloc char[256];
+        var nonAscii = new HashSet<char>();
+        int count = 0;
+
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+        foreach (IMdSyntaxNodeSerializer serializer in options.SingleLine) {
+            foreach (char ch in serializer.TriggerCharacters) {
+                if (ch >= 256) {
+                    nonAscii.Add(ch);
+                    continue;
+                }
+                
+                if (seen[ch]) continue;
+
+                seen[ch] = true;
+                buffer[count++] = ch;
+            }
+        }
+
+        char[] all = new char[count + nonAscii.Count];
+        buffer[..count].CopyTo(all);
+        int i = count;
+        foreach (char ch in nonAscii) all[i++] = ch;
+
+        SearchValues<char> singleLineTriggerSearchValues = SearchValues.Create(all);
 
         return new MdStringMdSyntaxSerializer(logger) {
             SingleLineSerializers = singleLineSerializers,
-            SingleLineLookup = singleLineLookup,
+            SingleLineLookup = singleAscii,
+            SingleLineNonAsciiLookup = singleNonAscii,
             SingleLineTriggerSearchValues = singleLineTriggerSearchValues,
 
             MultiLineSerializers = multiLineSerializers,
-            MultiLineLookup = multiLineLookup,
+            MultiLineLookup = multiAscii,
+            MultiLineNonAsciiLookup = multiNonAscii,
 
-            FrontMatterSerializer = options.FrontMatter
+            FrontMatterSerializer = options.FrontMatter,
         };
     }
 
-    private static ImmutableArray<IMdSyntaxNodeSerializer>[] BuildLookup(ImmutableArray<IMdSyntaxNodeSerializer> serializers) {
-        var table = new ImmutableArray<IMdSyntaxNodeSerializer>[256];
+    private static (ImmutableArray<IMdSyntaxNodeSerializer>[] ascii,
+        ImmutableDictionary<char, ImmutableArray<IMdSyntaxNodeSerializer>> nonAscii)
+        BuildLookup(ImmutableArray<IMdSyntaxNodeSerializer> serializers) {
+        var buckets = new List<IMdSyntaxNodeSerializer>?[256];
+        var nonAsciiBuckets = new Dictionary<char, List<IMdSyntaxNodeSerializer>>();
+        var globals = new List<IMdSyntaxNodeSerializer>();
 
-        // Identify "Global" serializers (those with no triggers)
-        IMdSyntaxNodeSerializer[] globals = serializers.Where(s => s.TriggerCharacters.IsEmpty()).ToArray();
+        foreach (IMdSyntaxNodeSerializer s in serializers) {
+            ReadOnlySpan<char> triggers = s.TriggerCharacters;
+            if (triggers.IsEmpty) {
+                globals.Add(s);
+                continue;
+            }
 
-        for (int i = 0; i < 256; i++) {
-            char c = (char)i;
-
-            // Get serializers specifically triggered by this character
-            IEnumerable<IMdSyntaxNodeSerializer> triggers = serializers.Where(s => s.TriggerCharacters.Contains(c));
-
-            // Result is Triggers + Globals
-            table[i] = triggers.Concat(globals).ToImmutableArray();
+            foreach (char ch in triggers) {
+                if (ch < 256) {
+                    List<IMdSyntaxNodeSerializer>? list = buckets[ch];
+                    if (list is null) buckets[ch] = list = new List<IMdSyntaxNodeSerializer>();
+                    list.Add(s);
+                }
+                else {
+                    if (!nonAsciiBuckets.TryGetValue(ch, out var list)) {
+                        list = new List<IMdSyntaxNodeSerializer>();
+                        nonAsciiBuckets[ch] = list;
+                    }
+                    list.Add(s);
+                }
+            }
         }
 
-        return table;
+        var table = new ImmutableArray<IMdSyntaxNodeSerializer>[256];
+        for (int c = 0; c < 256; c++) {
+            List<IMdSyntaxNodeSerializer>? list = buckets[c];
+            int total = (list?.Count ?? 0) + globals.Count;
+
+            if (total == 0) {
+                table[c] = ImmutableArray<IMdSyntaxNodeSerializer>.Empty;
+                continue;
+            }
+
+            var arr = new IMdSyntaxNodeSerializer[total];
+            int offset = 0;
+
+            if (list is not null) {
+                list.CopyTo(arr, 0);
+                offset = list.Count;
+            }
+
+            if (globals.Count > 0) {
+                globals.CopyTo(arr, offset);
+            }
+
+            table[c] = ImmutableArray.Create(arr);
+        }
+
+        ImmutableDictionary<char, ImmutableArray<IMdSyntaxNodeSerializer>>.Builder nonAscii = ImmutableDictionary.CreateBuilder<char, ImmutableArray<IMdSyntaxNodeSerializer>>();
+        foreach ((char ch, List<IMdSyntaxNodeSerializer> list) in nonAsciiBuckets) {
+            int total = list.Count + globals.Count;
+            var arr = new IMdSyntaxNodeSerializer[total];
+            list.CopyTo(arr, 0);
+            if (globals.Count > 0) globals.CopyTo(arr, list.Count);
+            nonAscii[ch] = ImmutableArray.Create(arr);
+        }
+
+        return (table, nonAscii.ToImmutable());
     }
 }

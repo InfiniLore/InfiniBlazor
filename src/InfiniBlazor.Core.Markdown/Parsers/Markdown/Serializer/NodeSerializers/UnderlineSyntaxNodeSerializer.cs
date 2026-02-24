@@ -15,7 +15,7 @@ public sealed partial class UnderlineSyntaxNodeSerializer : BaseMdSyntaxNodeSeri
     protected override Regex Syntax { get; } = RegexRule;
 
     private static readonly char[] STriggerCharacters = ['_'];
-    public override char[] TriggerCharacters => STriggerCharacters;
+    public override ReadOnlySpan<char> TriggerCharacters => STriggerCharacters;
 
     private static readonly int UId = RegexRule.GroupNumberFromName("u");
     // -----------------------------------------------------------------------------------------------------------------

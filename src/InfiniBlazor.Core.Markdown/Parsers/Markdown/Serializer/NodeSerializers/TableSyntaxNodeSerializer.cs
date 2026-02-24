@@ -23,7 +23,7 @@ public sealed partial class TableSyntaxNodeSerializer : BaseMdSyntaxNodeSerializ
     private const int StackAllocThreshold = 16;
 
     private static readonly char[] STriggerCharacters = ['|'];
-    public override char[] TriggerCharacters => STriggerCharacters;
+    public override ReadOnlySpan<char> TriggerCharacters => STriggerCharacters;
 
     private static readonly int HeadId = RegexRule.GroupNumberFromName("head");
     private static readonly int SepId = RegexRule.GroupNumberFromName("sep");

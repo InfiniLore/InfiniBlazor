@@ -15,7 +15,7 @@ public sealed partial class CodeInlineSyntaxNodeSerializer : BaseMdSyntaxNodeSer
     protected override Regex Syntax { get; } = RegexRule;
 
     private static readonly char[] STriggerCharacters = ['`'];
-    public override char[] TriggerCharacters => STriggerCharacters;
+    public override ReadOnlySpan<char> TriggerCharacters => STriggerCharacters;
 
     private static readonly int CodeContentId = RegexRule.GroupNumberFromName("c");
 

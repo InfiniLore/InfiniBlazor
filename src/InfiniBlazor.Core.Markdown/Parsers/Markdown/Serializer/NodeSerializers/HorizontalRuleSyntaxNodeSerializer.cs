@@ -14,7 +14,7 @@ public sealed partial class HorizontalRuleSyntaxNodeSerializer : BaseMdSyntaxNod
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
 
-    public override char[] TriggerCharacters { get; } = { '-', ' ', '_' };
+    public override ReadOnlySpan<char> TriggerCharacters => ['-', ' ', '_'];
 
     private static readonly int HrId = RegexRule.GroupNumberFromName("hr");
 

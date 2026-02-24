@@ -22,7 +22,7 @@ public partial class ListSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
     [GeneratedRegex(@"^ *(?:-|(?<index>\d*)\.)(?:(?<taskSpace> *)\[(?<task>[ xX~])])?(?:(?<space> *)(?<head>.+)|(?<head> )|(?<head>))(?<body>(?:\n +.*)*)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex ListItemBodyRegexRule { get; }
 
-    public override char[] TriggerCharacters { get; } = ['-', ' ', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    public override ReadOnlySpan<char> TriggerCharacters => ['-', ' ', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
     private static readonly int LsId = RegexRule.GroupNumberFromName("id");
     private static readonly int LIndexId = ListItemBodyRegexRule.GroupNumberFromName("index");

@@ -14,7 +14,7 @@ public sealed partial class EscapedCharacterSyntaxNodeSerializer : BaseMdSyntaxN
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
 
-    public override char[] TriggerCharacters { get; } = ['\\'];
+    public override ReadOnlySpan<char> TriggerCharacters => ['\\'];
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

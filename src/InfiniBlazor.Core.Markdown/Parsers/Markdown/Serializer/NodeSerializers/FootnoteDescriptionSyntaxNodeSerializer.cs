@@ -15,7 +15,7 @@ public sealed partial class FootnoteDescriptionSyntaxNodeSerializer : BaseMdSynt
     protected override Regex Syntax { get; } = RegexRule;
 
     private static readonly char[] STriggerCharacters = ['['];
-    public override char[] TriggerCharacters => STriggerCharacters;
+    public override ReadOnlySpan<char> TriggerCharacters => STriggerCharacters;
 
     private static readonly int FootnoteIdentifierId = RegexRule.GroupNumberFromName("id");
     private static readonly int FootnoteBodyId = RegexRule.GroupNumberFromName("body");
