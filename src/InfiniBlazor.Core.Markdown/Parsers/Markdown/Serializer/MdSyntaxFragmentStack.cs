@@ -22,6 +22,8 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
     // -----------------------------------------------------------------------------------------------------------------
     #region PushToStack
     public void PushMultiLineMatchesToStack(string input, IMdSyntaxNode node, int startIndex = 0) {
+        if (input.Length == 0) return;
+
         int scanPos = startIndex;
         int inputLength = input.Length;
         int index = 0;
@@ -64,11 +66,13 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
             }
         }
         finally {
-            ArrayPool<MdSyntaxFragment>.Shared.Return(fragments);
+            ArrayPool<MdSyntaxFragment>.Shared.Return(fragments, clearArray: false);
         }
     }
 
     public void PushSingleLineMatchesToStack(string input, IMdSyntaxNode node) {
+        if (input.Length == 0) return;
+
         int scanPos = 0;
         int length = input.Length;
         int textStart = 0;
@@ -87,7 +91,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
                 
                 // Move scanPos to the found trigger
                 scanPos += offset;
-                char currentChar = input[scanPos];
+                char currentChar = span[scanPos];
                 
                 ImmutableArray<IMdSyntaxNodeSerializer> candidates = SerializerReference.GetSingleLineSerializersForChar(currentChar);
                 IMdSyntaxNodeSerializer? winner = null;
@@ -139,7 +143,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
             }
         }
         finally {
-            ArrayPool<MdSyntaxFragment>.Shared.Return(fragments);
+            ArrayPool<MdSyntaxFragment>.Shared.Return(fragments, clearArray: false);
         }
     }
 
@@ -149,7 +153,7 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
         int newSize = arr.Length * 2;
         MdSyntaxFragment[] newArr = ArrayPool<MdSyntaxFragment>.Shared.Rent(newSize);
         Array.Copy(arr, newArr, index);
-        ArrayPool<MdSyntaxFragment>.Shared.Return(arr);
+        ArrayPool<MdSyntaxFragment>.Shared.Return(arr, clearArray: false);
         arr = newArr;
     }
 
@@ -163,6 +167,6 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
 
     public bool TryReset() {
         _stack.Clear();
-        return _stack.Count == 0;
+        return true;
     }
 }

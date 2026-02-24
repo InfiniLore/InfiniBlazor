@@ -72,6 +72,9 @@ public class MdStringMdSyntaxSerializerFactory(ILogger<MdStringMdSyntaxSerialize
         var nonAsciiBuckets = new Dictionary<char, List<IMdSyntaxNodeSerializer>>();
         var globals = new List<IMdSyntaxNodeSerializer>();
 
+        Span<bool> localSeen = stackalloc bool[256];
+        HashSet<char>? localNonAscii = null;
+
         foreach (IMdSyntaxNodeSerializer s in serializers) {
             ReadOnlySpan<char> triggers = s.TriggerCharacters;
             if (triggers.IsEmpty) {
@@ -79,13 +82,22 @@ public class MdStringMdSyntaxSerializerFactory(ILogger<MdStringMdSyntaxSerialize
                 continue;
             }
 
+            localSeen.Clear();
+            localNonAscii?.Clear();
+
             foreach (char ch in triggers) {
                 if (ch < 256) {
+                    if (localSeen[ch]) continue;
+                    localSeen[ch] = true;
+
                     List<IMdSyntaxNodeSerializer>? list = buckets[ch];
                     if (list is null) buckets[ch] = list = new List<IMdSyntaxNodeSerializer>();
                     list.Add(s);
                 }
                 else {
+                    localNonAscii ??= new HashSet<char>();
+                    if (!localNonAscii.Add(ch)) continue;
+
                     if (!nonAsciiBuckets.TryGetValue(ch, out var list)) {
                         list = new List<IMdSyntaxNodeSerializer>();
                         nonAsciiBuckets[ch] = list;

@@ -4,6 +4,10 @@
 | RenderMarkdown | 2.256 ms | 0.0420 ms | 0.1076 ms |  1.00 |    0.07 | 257.8125 | 250.0000 | 46.8750 |   2.14 MB |        1.00 |
 
 
+| Method         |     Mean |     Error |    StdDev | Ratio |    Gen0 |    Gen1 |    Gen2 | Allocated | Alloc Ratio |
+|----------------|---------:|----------:|----------:|------:|--------:|--------:|--------:|----------:|------------:|
+| RenderMarkdown | 1.981 ms | 0.0153 ms | 0.0128 ms |  1.00 | 89.8438 | 85.9375 | 42.9688 |   1.51 MB |        1.00 |
+
 # Individual Benchmarks
 
 | Method                | InputCase            |         Mean |       Error |       StdDev |       Median |    Gen0 |   Gen1 |   Gen2 | Allocated |
