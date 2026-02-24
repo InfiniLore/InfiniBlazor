@@ -47,7 +47,9 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
         MdSyntaxFragmentStack fragmentStack = MdSyntaxFragmentStackPool.Shared.Get();
         fragmentStack.SerializerReference = this;
 
-        string normalized = markdown.ReplaceLineEndings("\n");
+        string normalized = markdown.Contains('\r')
+            ? markdown.ReplaceLineEndings("\n")
+            : markdown;
 
         try {
             TryExtractFrontMatter(fragmentStack, normalized, nodeTree, out int newStartAtIndex);

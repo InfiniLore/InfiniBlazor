@@ -26,13 +26,14 @@ public class MdStringMdSyntaxSerializerFactory(ILogger<MdStringMdSyntaxSerialize
 
         Span<bool> seen = stackalloc bool[256];
         Span<char> buffer = stackalloc char[256];
-        var nonAscii = new HashSet<char>();
+        HashSet<char>? nonAscii = null;
         int count = 0;
 
         // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
-        foreach (IMdSyntaxNodeSerializer serializer in options.SingleLine) {
+        foreach (IMdSyntaxNodeSerializer serializer in singleLineSerializers) {
             foreach (char ch in serializer.TriggerCharacters) {
                 if (ch >= 256) {
+                    nonAscii ??= new HashSet<char>();
                     nonAscii.Add(ch);
                     continue;
                 }
@@ -44,12 +45,11 @@ public class MdStringMdSyntaxSerializerFactory(ILogger<MdStringMdSyntaxSerialize
             }
         }
 
-        char[] all = new char[count + nonAscii.Count];
-        buffer[..count].CopyTo(all);
-        int i = count;
-        foreach (char ch in nonAscii) all[i++] = ch;
-
-        SearchValues<char> singleLineTriggerSearchValues = SearchValues.Create(all);
+        ReadOnlySpan<char> bufferView = buffer[..count];
+        
+        SearchValues<char> singleLineTriggerSearchValues = nonAscii is null
+            ? SearchValues.Create(bufferView)
+            : SearchValues.Create(BuildAllArray(ref bufferView, nonAscii));
 
         return new MdStringMdSyntaxSerializer(logger) {
             SingleLineSerializers = singleLineSerializers,
@@ -130,5 +130,13 @@ public class MdStringMdSyntaxSerializerFactory(ILogger<MdStringMdSyntaxSerialize
         }
 
         return (table, nonAscii.ToImmutable());
+    }
+
+    private static char[] BuildAllArray(ref ReadOnlySpan<char> ascii, HashSet<char> nonAscii) {
+        char[] all = new char[ascii.Length + nonAscii.Count];
+        ascii.CopyTo(all);
+        int i = ascii.Length;
+        foreach (char ch in nonAscii) all[i++] = ch;
+        return all;
     }
 }
