@@ -22,7 +22,7 @@ public static class ServiceCollectionExtensions {
         services.AddLucideIcons();
 
         services.AddSingleton(CalloutStyleProviderFactory.Create);
-        services.AddSingleton(MdStringMdSyntaxDeserializerFactory.Create);
+        services.AddSingleton(MdStringMdSyntaxDeserializerFactory.CreateDeserializer);
         services.AddSingleton(TextEditorFactory.CreateTextEditor);
 
         config.Markdown.WithDefaultEditorComponents();

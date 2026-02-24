@@ -5,16 +5,16 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\InfiniBlazor\InfiniBlazor.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
         <PackageReference Include="CodeOfChaos.Extensions" />
         <PackageReference Include="NSubstitute" />
         <PackageReference Include="CodeOfChaos.Extensions.DependencyInjection.Generators">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\InfiniBlazor.Core.Markdown\InfiniBlazor.Core.Markdown.csproj" />
     </ItemGroup>
 
 </Project>

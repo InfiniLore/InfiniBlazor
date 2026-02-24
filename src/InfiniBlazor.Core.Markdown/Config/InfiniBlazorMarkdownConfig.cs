@@ -4,6 +4,7 @@
 using InfiniBlazor.Config;
 using InfiniBlazor.Markdown.Editors;
 using InfiniBlazor.Markdown.Parsers.Blazor;
+using InfiniBlazor.Markdown.Parsers.Markdown.Deserializer;
 using InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
 using InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 using InfiniBlazor.Markdown.Syntax;
@@ -32,6 +33,7 @@ public sealed class InfiniBlazorMarkdownConfig : IMarkdownConfig {
     public InfiniBlazorMarkdownConfig(IServiceCollection serviceCollection) {
         serviceCollection.RegisterServicesFromInfiniBlazorCoreMarkdown();
         serviceCollection.AddSingleton(TextEditorFactory.CreateTextEditor);
+        serviceCollection.AddSingleton(MdStringMdSyntaxDeserializerFactory.CreateDeserializer);
         serviceCollection.AddSingleton<IMarkdownConfig>(this);
         
         serviceCollection.AddSingleton<IMdStringMdSyntaxSerializer>(static sp => {

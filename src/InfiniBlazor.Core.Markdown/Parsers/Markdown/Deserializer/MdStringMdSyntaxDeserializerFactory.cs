@@ -12,7 +12,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Deserializer;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public static class MdStringMdSyntaxDeserializerFactory {
-    public static IMdStringMdSyntaxDeserializer Create(IServiceProvider provider) {
+    public static IMdStringMdSyntaxDeserializer CreateDeserializer(IServiceProvider provider) {
         var instance = ActivatorUtilities.CreateInstance<MdStringMdSyntaxDeserializer>(provider);
 
         Dictionary<Type, IMdStringMdSyntaxNodeDeserializer> deserializers = new Dictionary<Type, IMdStringMdSyntaxNodeDeserializer>()

@@ -11,8 +11,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\InfiniBlazor\InfiniBlazor.csproj" />
         <ProjectReference Include="..\InfiniBlazorTests.Shared.Markdown\InfiniBlazorTests.Shared.Markdown.csproj" />
-        <ProjectReference Include="..\InfiniBlazorTests.Shared\InfiniBlazorTests.Shared.csproj" />
     </ItemGroup>
 </Project>

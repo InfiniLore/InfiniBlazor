@@ -4,14 +4,13 @@
 using InfiniBlazor.Markdown;
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazorTests.Core.Markdown.DataSources;
-using InfiniBlazorTests.Shared;
 using InfiniBlazorTests.Shared.Markdown;
 
 namespace InfiniBlazorTests.Core.Markdown.Parsers.Markdown;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InfiniBlazorDiDataSource]
+[InfiniBlazorMarkdownDIDataSource]
 public class ToMarkdownTests(IMarkdownParser parser) {
     [Test]
     [MethodDataSource<MdTestDataSources>(nameof(MdTestDataSources.GetBlankTest))]
