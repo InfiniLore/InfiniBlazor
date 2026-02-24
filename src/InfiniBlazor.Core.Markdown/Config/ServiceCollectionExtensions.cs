@@ -10,6 +10,7 @@ namespace InfiniBlazor.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public static class ServiceCollectionExtensions {
+    
     // Used for the standalone version of the library
     [UsedImplicitly]
     public static IServiceCollection AddInfiniBlazorMarkdown(this IServiceCollection serviceCollection, Action<InfiniBlazorMarkdownConfig>? configure = null) {

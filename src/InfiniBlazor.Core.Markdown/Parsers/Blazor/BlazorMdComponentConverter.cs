@@ -14,9 +14,9 @@ namespace InfiniBlazor.Markdown.Parsers.Blazor;
 // ---------------------------------------------------------------------------------------------------------------------
 [InjectableSingleton<IBlazorMdComponentConverter>]
 public class BlazorMdComponentConverter(IMarkdownConfig config) : IBlazorMdComponentConverter {
-    public required FrozenDictionary<Type, IMdComponentRecord> NodeToComponentMap { get; init; } = config.GetComponentRecords();
-    public required FrozenSet<Type> SkippedComponentTypes { get; init; } = config.GetSkippedBlazorComponentTypes();
-    public required bool RenderUnknownComponents { get; init; } = config.RenderUnknownBlazorComponents;
+    private FrozenDictionary<Type, IMdComponentRecord> NodeToComponentMap { get; } = config.GetComponentRecords();
+    private FrozenSet<Type> SkippedComponentTypes { get; } = config.GetSkippedBlazorComponentTypes();
+    private bool RenderUnknownComponents { get; } = config.RenderUnknownBlazorComponents;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

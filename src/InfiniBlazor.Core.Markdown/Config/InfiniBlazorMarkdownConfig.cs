@@ -34,7 +34,7 @@ public sealed class InfiniBlazorMarkdownConfig : IMarkdownConfig {
         serviceCollection.AddSingleton(TextEditorFactory.CreateTextEditor);
         serviceCollection.AddSingleton<IMarkdownConfig>(this);
         
-        serviceCollection.AddSingleton<IMdStringMdSyntaxSerializer>(sp => {
+        serviceCollection.AddSingleton<IMdStringMdSyntaxSerializer>(static sp => {
             var fullOptions = new MarkdownSerializerOptions {
                 SingleLine = [
                     new EscapedCharacterSyntaxNodeSerializer(),
