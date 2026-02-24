@@ -2,26 +2,27 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniBlazor.Markdown.Syntax;
-using InfiniBlazor.Markdown.Syntax.Nodes;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
-namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
+namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed partial class NewLineSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
-    [GeneratedRegex(@"\G\n")]
-    private static partial Regex RegexRule { get; }
-    protected override Regex Syntax { get; } = RegexRule;
+public abstract class BaseMdSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    protected abstract Regex Syntax { get; }
+    public virtual char[] TriggerCharacters { get; } = Array.Empty<char>();
 
-    public override char[] TriggerCharacters { get; } = ['\n'];
-    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public override void Serialize(
-        IMdSyntaxFragmentStack stack,
-        IMdSyntaxNode parentNode,
-        Match match
-    ) => parentNode.AddChildNode(MdSyntaxNodePool<NewLineMdSyntaxNode>.Shared.Get());
+    public bool TryGetMatch(string input, [NotNullWhen(true)] out Match? match, int startPosition = 0) {
+        match = null;
+        if (startPosition >= input.Length) return false;
+        match = Syntax.Match(input, startPosition);
+        return match.Success;
+    }
+
+    public abstract void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match);
 }

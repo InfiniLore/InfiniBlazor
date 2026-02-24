@@ -10,22 +10,21 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class CodeBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+public sealed partial class CodeBlockSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
     [GeneratedRegex(@"\G^(?<open>`{3,})[\ ]*(?<lang>.*?)?\n(?<body>(?>[\s\S]|(?!\k<open>))*?)\k<open>(?<tail>[^\n]+)?$", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
-    private static partial Regex Syntax { get; }
-    
-    private static readonly int CBodyId = Syntax.GroupNumberFromName("body");
-    private static readonly int CLangId = Syntax.GroupNumberFromName("lang");
-    private static readonly int CTrailId = Syntax.GroupNumberFromName("tail");
+    private static partial Regex RegexRule { get; }
+    protected override Regex Syntax { get; } = RegexRule;
 
-    public char[] TriggerCharacters { get; } = ['`'];
+    public override char[] TriggerCharacters { get; } = ['`'];
+    
+    private static readonly int CBodyId = RegexRule.GroupNumberFromName("body");
+    private static readonly int CLangId = RegexRule.GroupNumberFromName("lang");
+    private static readonly int CTrailId = RegexRule.GroupNumberFromName("tail");
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public Match Match(string input, int startPosition = 0) 
-        => Syntax.Match(input, startPosition);
-    
-    public void Serialize(
+    public override void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match

@@ -9,20 +9,19 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class CodeInlineSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
+public sealed partial class CodeInlineSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer{
     [GeneratedRegex(@"\G(?<open>`+)(?<c>(?>[^`\\]+|\\.|`(?!\k<open>))+?)\k<open>", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
-    private static partial Regex Syntax { get; }
+    private static partial Regex RegexRule { get; }
+    protected override Regex Syntax { get; } = RegexRule;
     
-    private static readonly int CodeContentId = Syntax.GroupNumberFromName("c");
+    public override char[] TriggerCharacters { get; } = ['`'];
     
-    public char[] TriggerCharacters { get; } = ['`'];
+    private static readonly int CodeContentId = RegexRule.GroupNumberFromName("c");
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public Match Match(string input, int startPosition = 0) 
-        => Syntax.Match(input, startPosition);
-    
-    public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
+    public override void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
         string codeValue = match.Groups[CodeContentId].Value;
         ReadOnlySpan<char> fullOriginalString = match.ValueSpan;
         

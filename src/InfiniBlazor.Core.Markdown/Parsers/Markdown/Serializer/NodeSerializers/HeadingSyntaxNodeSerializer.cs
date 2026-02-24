@@ -9,21 +9,18 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class HeadingSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
+public sealed partial class HeadingSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer{
     [GeneratedRegex(@"\G^(?<level>\#{1,6})[\ ]+(?<text>[^\n]+)$", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
-    private static partial Regex Syntax { get; }
+    private static partial Regex RegexRule { get; }
+    protected override Regex Syntax { get; } = RegexRule;
+
+    private static readonly int HLevelId = RegexRule.GroupNumberFromName("level");
+    private static readonly int HTextId = RegexRule.GroupNumberFromName("text");
     
-    private static readonly int HLevelId = Syntax.GroupNumberFromName("level");
-    private static readonly int HTextId = Syntax.GroupNumberFromName("text");
-    
-    public char[] TriggerCharacters { get; } = Array.Empty<char>();
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public Match Match(string input, int startPosition = 0) 
-        => Syntax.Match(input, startPosition);
-    
-    public void Serialize(
+    public override void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match

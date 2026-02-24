@@ -80,8 +80,7 @@ public sealed class MdStringMdSyntaxSerializer(ILogger<MdStringMdSyntaxSerialize
     private void TryExtractFrontMatter(MdSyntaxFragmentStack fragmentStack, string markdown, IMdSyntaxTree nodeTree, out int newStartAtIndex) {
         newStartAtIndex = 0;
         if (FrontMatterSerializer is null) return;
-        Match match = FrontMatterSerializer.Match(markdown);
-        if (!match.Success) return;
+        if (!FrontMatterSerializer.TryGetMatch(markdown, out Match? match)) return;
         
         newStartAtIndex = match.Index + match.Length;
         FrontMatterSerializer.Serialize(fragmentStack, nodeTree.RootNode, match);

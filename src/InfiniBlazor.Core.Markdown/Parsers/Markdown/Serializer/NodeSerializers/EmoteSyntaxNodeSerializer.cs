@@ -9,20 +9,19 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class EmoteSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+public sealed partial class EmoteSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
     [GeneratedRegex(@"\G:(?<e>[\p{L}\p{N}_]+):", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
-    private static partial Regex Syntax { get; }
+    private static partial Regex RegexRule { get; }
+    protected override Regex Syntax { get; } = RegexRule;
     
-    private static readonly int EmoteBodyId = Syntax.GroupNumberFromName("e");
+    public override char[] TriggerCharacters { get; } = [':'];
     
-    public char[] TriggerCharacters { get; } = [':'];
+    private static readonly int EmoteBodyId = RegexRule.GroupNumberFromName("e");
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public Match Match(string input, int startPosition = 0) 
-        => Syntax.Match(input, startPosition);
-    
-    public void Serialize(
+    public override void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match

@@ -9,7 +9,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class HtmlBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
+public sealed partial class HtmlBlockSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer{
     [GeneratedRegex("""
         \G
         (?<pre>.+?)?
@@ -26,7 +26,8 @@ public partial class HtmlBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
         )
         (?<post>.+)?
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
-    private static partial Regex Syntax { get; }
+    private static partial Regex RegexRule { get; }
+    protected override Regex Syntax { get; } = RegexRule;
     
     [GeneratedRegex("""
         <span\ ?(?<attr>\b[^>]*)>
@@ -41,22 +42,18 @@ public partial class HtmlBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
         (?(open)(?!))
         (</span>)
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.Compiled)]
-    private static partial Regex SpanSyntax { get; }
-    
-    private static readonly int HtmlPreId = Syntax.GroupNumberFromName("pre");
-    private static readonly int HtmlBodyId = Syntax.GroupNumberFromName("body");
-    private static readonly int HtmlPostId = Syntax.GroupNumberFromName("post");
-    private static readonly int SpanTagAttrsId = SpanSyntax.GroupNumberFromName("attr");
-    private static readonly int SpanBodyId = SpanSyntax.GroupNumberFromName("body");
+    private static partial Regex SpanRegexRule { get; }
 
-    public char[] TriggerCharacters { get; } = Array.Empty<char>();
+    private static readonly int HtmlPreId = RegexRule.GroupNumberFromName("pre");
+    private static readonly int HtmlBodyId = RegexRule.GroupNumberFromName("body");
+    private static readonly int HtmlPostId = RegexRule.GroupNumberFromName("post");
+    private static readonly int SpanTagAttrsId = SpanRegexRule.GroupNumberFromName("attr");
+    private static readonly int SpanBodyId = SpanRegexRule.GroupNumberFromName("body");
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public Match Match(string input, int startPosition = 0) 
-        => Syntax.Match(input, startPosition);
-    
-    public void Serialize(
+    public override void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match
@@ -68,7 +65,7 @@ public partial class HtmlBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
         bool hasHtmlBody = match.Groups[HtmlBodyId].TryGetValue(out string? htmlBody);
         string? spanBody = null;
         if (hasHtmlBody && htmlBody is not null) {
-            spanMatch = SpanSyntax.Match(htmlBody);
+            spanMatch = SpanRegexRule.Match(htmlBody);
             if (spanMatch.Groups[SpanBodyId].TryGetValue(out spanBody)) {
                 hasTrailingContent = true;
             }

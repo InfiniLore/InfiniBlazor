@@ -9,28 +9,27 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class CalloutSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+public sealed partial class CalloutSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
     [GeneratedRegex("""
         \G
         ^>(?:\[!(?<type>[^\|\n]+)(?<mod>\|[^\n]*)?\](?<option>\+|\-)?)[\ ]*(?<title>[^\n]*)$
         (?:\n(?<body>>[^\n]*(?:\n>[^\n]*)*)$)?
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
-    private static partial Regex Syntax { get; }
-    
-    private static readonly int CalloutTypeId = Syntax.GroupNumberFromName("type");
-    private static readonly int CalloutModId = Syntax.GroupNumberFromName("mod");
-    private static readonly int CalloutOptionId = Syntax.GroupNumberFromName("option");
-    private static readonly int CalloutTitleId = Syntax.GroupNumberFromName("title");
-    private static readonly int CalloutBodyId = Syntax.GroupNumberFromName("body");
+    private static partial Regex RegexRule { get; }
+    protected override Regex Syntax { get; } = RegexRule;
 
-    public char[] TriggerCharacters { get; } = ['>'];
+    public override char[] TriggerCharacters { get; } = ['>'];
+    
+    private static readonly int CalloutTypeId = RegexRule.GroupNumberFromName("type");
+    private static readonly int CalloutModId = RegexRule.GroupNumberFromName("mod");
+    private static readonly int CalloutOptionId = RegexRule.GroupNumberFromName("option");
+    private static readonly int CalloutTitleId = RegexRule.GroupNumberFromName("title");
+    private static readonly int CalloutBodyId = RegexRule.GroupNumberFromName("body");
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public Match Match(string input, int startPosition = 0) 
-        => Syntax.Match(input, startPosition);
-    
-    public void Serialize(
+    public override void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match

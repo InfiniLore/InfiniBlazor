@@ -10,29 +10,27 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class TableSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
+public sealed partial class TableSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
     [GeneratedRegex("""
         \G
         ^\|(?<head>.+)\|[\ ]*\n
         ^\|(?<sep>[:\-|\ ]+?)\|[\ ]*
         (?<body>(?:\n(?:^\|.*\|$))+)
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
-    private static partial Regex Syntax { get; }
+    private static partial Regex RegexRule { get; }
+    protected override Regex Syntax { get; } = RegexRule;
 
-    private static readonly int HeadId = Syntax.GroupNumberFromName("head");
-    private static readonly int SepId = Syntax.GroupNumberFromName("sep");
-    private static readonly int BodyId = Syntax.GroupNumberFromName("body");
-    
     private const int StackAllocThreshold = 16;
 
-    public char[] TriggerCharacters { get; } = ['|'];
+    public override char[] TriggerCharacters { get; } = ['|'];
+
+    private static readonly int HeadId = RegexRule.GroupNumberFromName("head");
+    private static readonly int SepId = RegexRule.GroupNumberFromName("sep");
+    private static readonly int BodyId = RegexRule.GroupNumberFromName("body");
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public Match Match(string input, int startPosition = 0) 
-        => Syntax.Match(input, startPosition);
-    
-    public void Serialize(
+    public override void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match

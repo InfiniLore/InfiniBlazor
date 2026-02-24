@@ -37,13 +37,13 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
                 ImmutableArray<IMdSyntaxNodeSerializer> candidates = SerializerReference.GetMultiLineSerializersForChar(currentChar);
 
                 foreach (IMdSyntaxNodeSerializer serializer in candidates) {
-                    Match m = serializer.Match(input, scanPos);
-                    if (!m.Success || m.Index != scanPos) continue;
+                    if (!serializer.TryGetMatch(input, out Match? match, scanPos)) continue;
+                    if (match.Index != scanPos) continue;
 
                     EnsureCapacity(ref fragments, ref index, 1);
-                    fragments[index++] = MdSyntaxFragment.AsUnhandledMatch(m, node, serializer);
+                    fragments[index++] = MdSyntaxFragment.AsUnhandledMatch(match, node, serializer);
 
-                    scanPos += Math.Max(1, m.Length);
+                    scanPos += Math.Max(1, match.Length);
                     matched = true;
                     break;
                 }
@@ -94,11 +94,11 @@ public sealed class MdSyntaxFragmentStack : IMdSyntaxFragmentStack, IResettable 
                 Match? winningMatch = null;
 
                 foreach (IMdSyntaxNodeSerializer serializer in candidates) {
-                    Match m = serializer.Match(input, scanPos);
-                    if (!m.Success || m.Index != scanPos) continue;
+                    if (!serializer.TryGetMatch(input, out Match? match, scanPos)) continue;
+                    if (match.Index != scanPos) continue;
 
                     winner = serializer;
-                    winningMatch = m;
+                    winningMatch = match;
                     break;
                 }
 
