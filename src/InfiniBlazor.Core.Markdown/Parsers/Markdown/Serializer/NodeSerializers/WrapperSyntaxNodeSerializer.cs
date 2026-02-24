@@ -18,7 +18,8 @@ public sealed partial class WrapperSyntaxNodeSerializer : BaseMdSyntaxNodeSerial
     private static readonly int WId = RegexRule.GroupNumberFromName("w");
     private static readonly int WModsId = RegexRule.GroupNumberFromName("mods");
 
-    public override char[] TriggerCharacters { get; } = ['<'];
+    private static readonly char[] STriggerCharacters = ['<'];
+    public override char[] TriggerCharacters => STriggerCharacters;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

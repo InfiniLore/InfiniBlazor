@@ -9,15 +9,15 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed partial class HorizontalRuleSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer{
+public sealed partial class HorizontalRuleSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
     [GeneratedRegex(@"^(?<hr>\ *?(\-{3,}?|_{3,}?)\ *?)$", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
-    
-    public override char[] TriggerCharacters { get; } = {'-', ' ', '_'};
-    
+
+    public override char[] TriggerCharacters { get; } = { '-', ' ', '_' };
+
     private static readonly int HrId = RegexRule.GroupNumberFromName("hr");
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

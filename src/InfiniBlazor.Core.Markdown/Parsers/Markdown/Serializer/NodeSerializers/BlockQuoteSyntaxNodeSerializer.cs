@@ -13,9 +13,10 @@ public sealed partial class BlockQuoteSyntaxNodeSerializer : BaseMdSyntaxNodeSer
     [GeneratedRegex(@"\G^>[\ ]*(?:.+(?:\n>[^\n]*)*)$", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
-    
-    public override char[] TriggerCharacters { get; } = ['>'];
-    
+
+    private static readonly char[] STriggerCharacters = ['>'];
+    public override char[] TriggerCharacters => STriggerCharacters;
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

@@ -16,7 +16,7 @@ public sealed partial class HeadingSimpleSyntaxNodeSerializer : BaseMdSyntaxNode
 
     private static readonly int HsTextId = RegexRule.GroupNumberFromName("text");
     private static readonly int HsIdentifierId = RegexRule.GroupNumberFromName("id");
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

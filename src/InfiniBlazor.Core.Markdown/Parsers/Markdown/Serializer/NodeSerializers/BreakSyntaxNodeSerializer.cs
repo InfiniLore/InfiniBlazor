@@ -13,8 +13,9 @@ public sealed partial class BreakSyntaxNodeSerializer : BaseMdSyntaxNodeSerializ
     [GeneratedRegex(@"\G<[Bb][Rr]/?>", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
-    
-    public override char[] TriggerCharacters { get; } = ['<'];
+
+    private static readonly char[] STriggerCharacters = ['<'];
+    public override char[] TriggerCharacters => STriggerCharacters;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

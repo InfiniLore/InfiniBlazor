@@ -14,8 +14,9 @@ public sealed partial class StrikeSyntaxNodeSerializer : BaseMdSyntaxNodeSeriali
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
 
-    public override char[] TriggerCharacters { get; } = ['~'];
-    
+    private static readonly char[] STriggerCharacters = ['~'];
+    public override char[] TriggerCharacters => STriggerCharacters;
+
     private static readonly int StrikeContentId = RegexRule.GroupNumberFromName("s");
 
     // -----------------------------------------------------------------------------------------------------------------

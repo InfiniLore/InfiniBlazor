@@ -15,12 +15,13 @@ public sealed partial class CodeBlockSyntaxNodeSerializer : BaseMdSyntaxNodeSeri
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
 
-    public override char[] TriggerCharacters { get; } = ['`'];
-    
+    private static readonly char[] STriggerCharacters = ['`'];
+    public override char[] TriggerCharacters => STriggerCharacters;
+
     private static readonly int CBodyId = RegexRule.GroupNumberFromName("body");
     private static readonly int CLangId = RegexRule.GroupNumberFromName("lang");
     private static readonly int CTrailId = RegexRule.GroupNumberFromName("tail");
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -38,9 +39,10 @@ public sealed partial class CodeBlockSyntaxNodeSerializer : BaseMdSyntaxNodeSeri
         string content = ProcessCodeBlockContent(ref codeBlockBody);
         codeNode.WithContent(content);
         parentNode.AddChildNode(codeNode);
-        
+
         // Add trailing text as a paragraph node
         if (!match.Groups[CTrailId].TryGetValue(out string? trailing)) return;
+
         ParagraphMdSyntaxNode paragraphNode = MdSyntaxNodePool<ParagraphMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(paragraphNode);
         stack.PushSingleLineMatchesToStack(trailing, paragraphNode);

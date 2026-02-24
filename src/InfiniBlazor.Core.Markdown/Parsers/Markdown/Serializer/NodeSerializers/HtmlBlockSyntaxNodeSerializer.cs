@@ -9,7 +9,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed partial class HtmlBlockSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer{
+public sealed partial class HtmlBlockSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
     [GeneratedRegex("""
         \G
         (?<pre>.+?)?
@@ -28,7 +28,7 @@ public sealed partial class HtmlBlockSyntaxNodeSerializer : BaseMdSyntaxNodeSeri
         """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
-    
+
     [GeneratedRegex("""
         <span\ ?(?<attr>\b[^>]*)>
         (?<body>
@@ -49,7 +49,7 @@ public sealed partial class HtmlBlockSyntaxNodeSerializer : BaseMdSyntaxNodeSeri
     private static readonly int HtmlPostId = RegexRule.GroupNumberFromName("post");
     private static readonly int SpanTagAttrsId = SpanRegexRule.GroupNumberFromName("attr");
     private static readonly int SpanBodyId = SpanRegexRule.GroupNumberFromName("body");
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

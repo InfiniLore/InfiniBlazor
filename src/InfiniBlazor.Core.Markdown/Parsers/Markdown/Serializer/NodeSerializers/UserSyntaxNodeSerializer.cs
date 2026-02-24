@@ -16,7 +16,8 @@ public sealed partial class UserSyntaxNodeSerializer : BaseMdSyntaxNodeSerialize
 
     private static readonly int UsernameId = RegexRule.GroupNumberFromName("u");
 
-    public override char[] TriggerCharacters { get; } = ['@'];
+    private static readonly char[] STriggerCharacters = ['@'];
+    public override char[] TriggerCharacters => STriggerCharacters;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

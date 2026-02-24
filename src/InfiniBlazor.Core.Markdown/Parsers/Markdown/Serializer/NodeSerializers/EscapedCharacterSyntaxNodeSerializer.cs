@@ -13,9 +13,9 @@ public sealed partial class EscapedCharacterSyntaxNodeSerializer : BaseMdSyntaxN
     [GeneratedRegex(@"\G\\\S")]
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
-    
+
     public override char[] TriggerCharacters { get; } = ['\\'];
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

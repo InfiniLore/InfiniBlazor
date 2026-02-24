@@ -15,7 +15,7 @@ public sealed partial class NewLineSyntaxNodeSerializer : BaseMdSyntaxNodeSerial
     protected override Regex Syntax { get; } = RegexRule;
 
     public override char[] TriggerCharacters { get; } = ['\n'];
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

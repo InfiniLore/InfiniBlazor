@@ -9,15 +9,16 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public sealed partial class HighlightSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer{
+public sealed partial class HighlightSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
     [GeneratedRegex(@"\G==(?<h>.+?)(?<!\\)==", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
-    
-    public override char[] TriggerCharacters { get; } = ['='];
-    
+
+    private static readonly char[] STriggerCharacters = ['='];
+    public override char[] TriggerCharacters => STriggerCharacters;
+
     private static readonly int HId = RegexRule.GroupNumberFromName("h");
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

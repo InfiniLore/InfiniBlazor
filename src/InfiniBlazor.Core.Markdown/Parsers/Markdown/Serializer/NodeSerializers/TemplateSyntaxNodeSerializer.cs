@@ -14,7 +14,8 @@ public sealed partial class TemplateSyntaxNodeSerializer : BaseMdSyntaxNodeSeria
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
 
-    public override char[] TriggerCharacters { get; } = ['{'];
+    private static readonly char[] STriggerCharacters = ['{'];
+    public override char[] TriggerCharacters => STriggerCharacters;
 
     private static readonly int TemplateContentId = RegexRule.GroupNumberFromName("t");
     // -----------------------------------------------------------------------------------------------------------------

@@ -18,14 +18,15 @@ public sealed partial class CalloutSyntaxNodeSerializer : BaseMdSyntaxNodeSerial
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
 
-    public override char[] TriggerCharacters { get; } = ['>'];
-    
+    private static readonly char[] STriggerCharacters = ['>'];
+    public override char[] TriggerCharacters => STriggerCharacters;
+
     private static readonly int CalloutTypeId = RegexRule.GroupNumberFromName("type");
     private static readonly int CalloutModId = RegexRule.GroupNumberFromName("mod");
     private static readonly int CalloutOptionId = RegexRule.GroupNumberFromName("option");
     private static readonly int CalloutTitleId = RegexRule.GroupNumberFromName("title");
     private static readonly int CalloutBodyId = RegexRule.GroupNumberFromName("body");
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------

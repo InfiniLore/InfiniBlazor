@@ -16,7 +16,7 @@ public sealed partial class ParagraphSyntaxNodeSerializer : BaseMdSyntaxNodeSeri
     protected override Regex Syntax { get; } = RegexRule;
 
     private static readonly int PId = RegexRule.GroupNumberFromName("p");
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
