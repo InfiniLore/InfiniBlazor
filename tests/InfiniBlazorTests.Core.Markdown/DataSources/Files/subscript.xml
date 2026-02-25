@@ -194,9 +194,12 @@
     <MdSyntaxTree>
       <ParagraphMdSyntaxNode>
         <SubScriptMdSyntaxNode>
-          <TextMdSyntaxNode xml:space="preserve">subscript **nested </TextMdSyntaxNode>
-          <EscapedCharacterMdSyntaxNode xml:space="preserve">~</EscapedCharacterMdSyntaxNode>
-          <TextMdSyntaxNode xml:space="preserve"> bold**</TextMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">subscript </TextMdSyntaxNode>
+          <BoldMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve">nested </TextMdSyntaxNode>
+            <EscapedCharacterMdSyntaxNode xml:space="preserve">~</EscapedCharacterMdSyntaxNode>
+            <TextMdSyntaxNode xml:space="preserve"> bold</TextMdSyntaxNode>
+          </BoldMdSyntaxNode>
         </SubScriptMdSyntaxNode>
       </ParagraphMdSyntaxNode>
     </MdSyntaxTree>
@@ -212,15 +215,24 @@
           "children": [
             {
               "type": "TextMdSyntaxNode",
-              "content": "subscript **nested "
+              "content": "subscript "
             },
             {
-              "type": "EscapedCharacterMdSyntaxNode",
-              "content": "~"
-            },
-            {
-              "type": "TextMdSyntaxNode",
-              "content": " bold**"
+              "type": "BoldMdSyntaxNode",
+              "children": [
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": "nested "
+                },
+                {
+                  "type": "EscapedCharacterMdSyntaxNode",
+                  "content": "~"
+                },
+                {
+                  "type": "TextMdSyntaxNode",
+                  "content": " bold"
+                }
+              ]
             }
           ]
         }

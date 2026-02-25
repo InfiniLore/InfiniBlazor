@@ -9,18 +9,17 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class EscapedCharacterSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+public sealed partial class EscapedCharacterSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
     [GeneratedRegex(@"\G\\\S")]
-    private static partial Regex Syntax { get; }
-    
-    public char[] TriggerCharacters { get; } = ['\\'];
+    private static partial Regex RegexRule { get; }
+    protected override Regex Syntax { get; } = RegexRule;
+
+    public override ReadOnlySpan<char> TriggerCharacters => ['\\'];
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public Match Match(string input, int startPosition = 0) 
-        => Syntax.Match(input, startPosition);
-    
-    public void Serialize(
+    public override void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match

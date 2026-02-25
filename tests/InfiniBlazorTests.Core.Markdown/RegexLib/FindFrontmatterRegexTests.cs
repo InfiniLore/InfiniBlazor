@@ -83,7 +83,7 @@ public class FindFrontmatterRegexTests {
     [MethodDataSource(nameof(GetTestData))]
     public async Task FindFrontmatterRegex_ShouldReturnExpected(TestDataDto testData) {
         // Arrange
-        Regex regex = FrontmatterSyntaxNodeSerializer.Syntax;
+        Regex regex = FrontmatterSyntaxNodeSerializer.RegexRule;
         string input = testData.Input.ReplaceLineEndings("\n");
         bool expected = testData.ExpectedResult;
         

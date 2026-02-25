@@ -10,22 +10,22 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class CodeBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    [GeneratedRegex(@"\G^(?<open>`{3,})[\ ]*(?<lang>.*?)?\n(?<body>(?>[\s\S]|(?!\k<open>))*?)\k<open>(?<tail>[^\n]+)?$", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
-    private static partial Regex Syntax { get; }
-    
-    private static readonly int CBodyId = Syntax.GroupNumberFromName("body");
-    private static readonly int CLangId = Syntax.GroupNumberFromName("lang");
-    private static readonly int CTrailId = Syntax.GroupNumberFromName("tail");
+public sealed partial class CodeBlockSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
+    [GeneratedRegex(@"\G^(?<open>`{3,})[\ ]*(?<lang>.*?)?\n(?<body>(?>[\s\S]|(?!\k<open>))*?)\k<open>(?<tail>[^\n]+)?$", DefaultMultiLineRegexOptions)]
+    private static partial Regex RegexRule { get; }
+    protected override Regex Syntax { get; } = RegexRule;
 
-    public char[] TriggerCharacters { get; } = ['`'];
+    private static readonly char[] STriggerCharacters = ['`'];
+    public override ReadOnlySpan<char> TriggerCharacters => STriggerCharacters;
+
+    private static readonly int CBodyId = RegexRule.GroupNumberFromName("body");
+    private static readonly int CLangId = RegexRule.GroupNumberFromName("lang");
+    private static readonly int CTrailId = RegexRule.GroupNumberFromName("tail");
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public Match Match(string input, int startPosition = 0) 
-        => Syntax.Match(input, startPosition);
-    
-    public void Serialize(
+    public override void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match
@@ -39,9 +39,10 @@ public partial class CodeBlockSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
         string content = ProcessCodeBlockContent(ref codeBlockBody);
         codeNode.WithContent(content);
         parentNode.AddChildNode(codeNode);
-        
+
         // Add trailing text as a paragraph node
         if (!match.Groups[CTrailId].TryGetValue(out string? trailing)) return;
+
         ParagraphMdSyntaxNode paragraphNode = MdSyntaxNodePool<ParagraphMdSyntaxNode>.Shared.Get();
         parentNode.AddChildNode(paragraphNode);
         stack.PushSingleLineMatchesToStack(trailing, paragraphNode);

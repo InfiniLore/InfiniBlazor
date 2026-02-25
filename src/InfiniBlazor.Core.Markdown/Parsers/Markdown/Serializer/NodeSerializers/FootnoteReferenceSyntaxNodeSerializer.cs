@@ -9,20 +9,20 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class FootnoteReferenceSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    [GeneratedRegex(@"\G\[\^(?<id>[\d\p{L}\p{N}]+)\]", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
-    private static partial Regex Syntax { get; }
-    
-    private static readonly int FootnoteIdentifierId = Syntax.GroupNumberFromName("id");
-    
-    public char[] TriggerCharacters { get; } = ['['];
+public sealed partial class FootnoteReferenceSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
+    [GeneratedRegex(@"\G\[\^(?<id>[\d\p{L}\p{N}]+)\]", DefaultSingleLineRegexOptions)]
+    private static partial Regex RegexRule { get; }
+    protected override Regex Syntax { get; } = RegexRule;
+
+    private static readonly char[] STriggerCharacters = ['['];
+    public override ReadOnlySpan<char> TriggerCharacters => STriggerCharacters;
+
+    private static readonly int FootnoteIdentifierId = RegexRule.GroupNumberFromName("id");
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public Match Match(string input, int startPosition = 0) 
-        => Syntax.Match(input, startPosition);
-    
-    public void Serialize(
+    public override void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match

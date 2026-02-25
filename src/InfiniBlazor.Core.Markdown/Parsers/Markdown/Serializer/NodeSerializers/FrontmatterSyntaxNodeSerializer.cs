@@ -6,29 +6,28 @@ using InfiniBlazor.Markdown.Syntax.Nodes;
 using System.Text.RegularExpressions;
 
 namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class FrontmatterSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    [GeneratedRegex(@"\G(?<open>^-{3,}) *(?<lang>.+)?\r?\n(?<body>[\s\S]*?)\r?\n\k<open>", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
-    internal static partial Regex Syntax { get; }
-    
-    private static readonly int LangId = Syntax.GroupNumberFromName("lang");
-    private static readonly int BodyId = Syntax.GroupNumberFromName("body");
-    
-    public char[] TriggerCharacters { get; } = ['-'];
+public sealed partial class FrontmatterSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
+    [GeneratedRegex(@"\G(?<open>^-{3,})\ *(?<lang>.+)?\n(?<body>[\s\S]*?)\n\k<open>", DefaultMultiLineRegexOptions)]
+    internal static partial Regex RegexRule { get; }
+    protected override Regex Syntax { get; } = RegexRule;
+
+    private static readonly char[] STriggerCharacters = ['-'];
+    public override ReadOnlySpan<char> TriggerCharacters => STriggerCharacters;
+
+    private static readonly int LangId = RegexRule.GroupNumberFromName("lang");
+    private static readonly int BodyId = RegexRule.GroupNumberFromName("body");
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public Match Match(string input, int startPosition = 0) 
-        => Syntax.Match(input, startPosition);
-    
-    public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
+    public override void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
         FrontMatterMdSyntaxNode node = MdSyntaxNodePool<FrontMatterMdSyntaxNode>.Shared.Get();
         if (match.Groups[LangId].TryGetValue(out string? lang)) node.WithLanguage(lang);
         if (match.Groups[BodyId].TryGetValue(out string? body)) node.WithContent(body);
-        
+
         ReadOnlySpan<char> span = match.ValueSpan;
         int dashCount = 0;
         int spaceCount = 0;
@@ -43,10 +42,10 @@ public partial class FrontmatterSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
             }
             break;
         }
-        
+
         node.WithDashesCount(dashCount);
         node.WithLeadingSpaces(spaceCount);
-        
+
         parentNode.AddChildNode(node);
     }
 }

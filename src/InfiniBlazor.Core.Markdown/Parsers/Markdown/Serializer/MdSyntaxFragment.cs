@@ -8,7 +8,12 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public readonly record struct MdSyntaxFragment(IMdSyntaxNode? ParentNode, IMdSyntaxNode? ChildNode, Match? Match, IMdSyntaxNodeSerializer? NodeSerializer) {
+public readonly record struct MdSyntaxFragment(
+    IMdSyntaxNode? ParentNode,
+    IMdSyntaxNode? ChildNode,
+    Match? Match,
+    IMdSyntaxNodeSerializer? NodeSerializer
+) {
 
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors

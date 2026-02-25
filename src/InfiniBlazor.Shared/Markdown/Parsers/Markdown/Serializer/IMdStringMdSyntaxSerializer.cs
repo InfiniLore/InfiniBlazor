@@ -12,8 +12,12 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
 public interface IMdStringMdSyntaxSerializer {
     SearchValues<char> SingleLineTriggerSearchValues { get; }
     
-    ImmutableArray<IMdSyntaxNodeSerializer> SingleLineSerializers { get; }
-    ImmutableArray<IMdSyntaxNodeSerializer> MultiLineSerializers { get; }
+    ImmutableArray<IMdSyntaxNodeSerializer>[] SingleLineLookup { get; init; }
+    ImmutableDictionary<char, ImmutableArray<IMdSyntaxNodeSerializer>> SingleLineNonAsciiLookup { get; init; }
+
+    ImmutableArray<IMdSyntaxNodeSerializer>[] MultiLineLookup { get; init; }
+    ImmutableDictionary<char, ImmutableArray<IMdSyntaxNodeSerializer>> MultiLineNonAsciiLookup { get; init; }
+    
     IMdSyntaxNodeSerializer? FrontMatterSerializer { get; }
 
     ImmutableArray<IMdSyntaxNodeSerializer> GetSingleLineSerializersForChar(char c);

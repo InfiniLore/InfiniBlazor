@@ -89,6 +89,53 @@
   ]
 }</ExpectedJsonString>
   </MdTestData>
+  <MdTestData Id="twoBoldOneSentence" FileName="bold.xml">
+    <MdString>**test** something **test**</MdString>
+    <MdSyntaxTree>
+      <ParagraphMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">test</TextMdSyntaxNode>
+        </BoldMdSyntaxNode>
+        <TextMdSyntaxNode xml:space="preserve"> something </TextMdSyntaxNode>
+        <BoldMdSyntaxNode>
+          <TextMdSyntaxNode xml:space="preserve">test</TextMdSyntaxNode>
+        </BoldMdSyntaxNode>
+      </ParagraphMdSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedMarkdown>**test** something **test**</ExpectedMarkdown>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ParagraphMdSyntaxNode",
+      "children": [
+        {
+          "type": "BoldMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "test"
+            }
+          ]
+        },
+        {
+          "type": "TextMdSyntaxNode",
+          "content": " something "
+        },
+        {
+          "type": "BoldMdSyntaxNode",
+          "children": [
+            {
+              "type": "TextMdSyntaxNode",
+              "content": "test"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
+  </MdTestData>
   <MdTestData Id="withEscapedAsterix_1" FileName="bold.xml">
     <MdString>**\*bold**</MdString>
     <MdSyntaxTree>

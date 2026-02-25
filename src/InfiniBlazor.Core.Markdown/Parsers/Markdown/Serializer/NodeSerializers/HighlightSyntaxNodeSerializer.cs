@@ -9,20 +9,29 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class HighlightSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
-    [GeneratedRegex(@"\G==(?<h>.+?)(?<!\\)==", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
-    private static partial Regex Syntax { get; }
-    
-    private static readonly int HId = Syntax.GroupNumberFromName("h");
-    
-    public char[] TriggerCharacters { get; } = ['='];
+public sealed partial class HighlightSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
+    [GeneratedRegex("""
+        \G
+        ==(?<h>
+            (?:\\.
+            | [^\\\n=]
+            | =(?!=) 
+            | =(?===)
+            )+
+        )==
+        """, DefaultSingleLineRegexOptions)]
+    private static partial Regex RegexRule { get; }
+    protected override Regex Syntax { get; } = RegexRule;
+
+    private static readonly char[] STriggerCharacters = ['='];
+    public override ReadOnlySpan<char> TriggerCharacters => STriggerCharacters;
+
+    private static readonly int HId = RegexRule.GroupNumberFromName("h");
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public Match Match(string input, int startPosition = 0) 
-        => Syntax.Match(input, startPosition);
-    
-    public void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
+    public override void Serialize(IMdSyntaxFragmentStack stack, IMdSyntaxNode parentNode, Match match) {
         string highlightValue = match.Groups[HId].Value;
 
         HighlightMdSyntaxNode node = MdSyntaxNodePool<HighlightMdSyntaxNode>.Shared.Get();

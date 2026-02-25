@@ -9,20 +9,19 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class UserSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
-    [GeneratedRegex(@"\G\@(?<u>[\p{L}\p{N}\-_\/\.]+)", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
-    private static partial Regex Syntax { get; }
-    
-    private static readonly int UsernameId = Syntax.GroupNumberFromName("u");
-    
-    public char[] TriggerCharacters { get; } = ['@'];
+public sealed partial class UserSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
+    [GeneratedRegex(@"\G\@(?<u>[\p{L}\p{N}\-_\/\.]+)", DefaultSingleLineRegexOptions)]
+    private static partial Regex RegexRule { get; }
+    protected override Regex Syntax { get; } = RegexRule;
+
+    private static readonly int UsernameId = RegexRule.GroupNumberFromName("u");
+
+    private static readonly char[] STriggerCharacters = ['@'];
+    public override ReadOnlySpan<char> TriggerCharacters => STriggerCharacters;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public Match Match(string input, int startPosition = 0) 
-        => Syntax.Match(input, startPosition);
-    
-    public void Serialize(
+    public override void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match

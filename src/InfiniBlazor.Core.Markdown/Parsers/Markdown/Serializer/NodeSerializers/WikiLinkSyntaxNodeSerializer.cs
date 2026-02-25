@@ -9,21 +9,20 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class WikiLinkSyntaxNodeSerializer : IMdSyntaxNodeSerializer{
-    
-    [GeneratedRegex(@"\G\[\[(?<href>[^\]\[\ ]+)\]\]", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
-    private static partial Regex Syntax { get; }
-    
-    private static readonly int WikiLinkHrefId = Syntax.GroupNumberFromName("href");
-    
-    public char[] TriggerCharacters { get; } = ['['];
+public sealed partial class WikiLinkSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
+
+    [GeneratedRegex(@"\G\[\[(?<href>[^\]\[\ ]+)\]\]", DefaultSingleLineRegexOptions)]
+    private static partial Regex RegexRule { get; }
+    protected override Regex Syntax { get; } = RegexRule;
+
+    private static readonly int WikiLinkHrefId = RegexRule.GroupNumberFromName("href");
+
+    private static readonly char[] STriggerCharacters = ['['];
+    public override ReadOnlySpan<char> TriggerCharacters => STriggerCharacters;
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public Match Match(string input, int startPosition = 0) 
-        => Syntax.Match(input, startPosition);
-    
-    public void Serialize(
+    public override void Serialize(
         IMdSyntaxFragmentStack stack,
         IMdSyntaxNode parentNode,
         Match match
