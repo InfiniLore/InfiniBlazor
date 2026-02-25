@@ -10,7 +10,16 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed partial class BoldSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
-    [GeneratedRegex(@"\G\*\*(?<b>(?>[^\\\*]+|\\\*|\*|(?<open>\*\*)|(?<-open>\*\*))+)(?(open)(?!))\*\*", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(
+        """
+            \G\*\*(?<b>
+                (?:\\.
+                | [^\\\*\n]
+                | \*(?!\*) 
+                | \*(?=\*\*)
+                )+
+            )\*\*
+        """, RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace)]
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
 
