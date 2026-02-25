@@ -11,7 +11,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed partial class WrapperSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
 
-    [GeneratedRegex(@"\G<(?<mods>\|.*?)>(?<w>.*)</>", RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"\G<(?<mods>\|.*?)>(?<w>.*)</>", DefaultSingleLineRegexOptions)]
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
 

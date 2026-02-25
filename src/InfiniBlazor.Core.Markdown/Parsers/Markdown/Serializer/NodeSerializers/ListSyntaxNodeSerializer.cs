@@ -15,11 +15,11 @@ public partial class ListSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
         \G
         ^[^\S\n]*(?<id>-(?!-)|\d+\.|\.\d+).+
         (?:\n(?:(?:-(?!-)|\d+\.|\.\d+)|(?:[\ ]+)).+)*
-        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+        """, RegexOptions.IgnorePatternWhitespace | DefaultMultiLineRegexOptions)]
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
 
-    [GeneratedRegex(@"^ *(?:-|(?<index>\d*)\.)(?:(?<taskSpace> *)\[(?<task>[ xX~])])?(?:(?<space> *)(?<head>.+)|(?<head> )|(?<head>))(?<body>(?:\n +.*)*)", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+    [GeneratedRegex(@"^\ *(?:-|(?<index>\d*)\.)(?:(?<taskSpace>\ *)\[(?<task>[\ xX~])])?(?:(?<space>\ *)(?<head>.+)|(?<head>\ )|(?<head>))(?<body>(?:\n\ +.*)*)", DefaultMultiLineRegexOptions)]
     private static partial Regex ListItemBodyRegexRule { get; }
 
     public override ReadOnlySpan<char> TriggerCharacters => ['-', ' ', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];

@@ -19,7 +19,7 @@ public sealed partial class BoldSyntaxNodeSerializer : BaseMdSyntaxNodeSerialize
                 | \*(?=\*\*)
                 )+
             )\*\*
-        """, RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace)]
+        """, DefaultSingleLineRegexOptions)]
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
 

@@ -11,6 +11,9 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public abstract class BaseMdSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
+    protected const RegexOptions DefaultSingleLineRegexOptions = RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace;
+    protected const RegexOptions DefaultMultiLineRegexOptions = RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace;
+    
     protected abstract Regex Syntax { get; }
     public virtual ReadOnlySpan<char> TriggerCharacters => default;
 

@@ -14,7 +14,7 @@ public sealed partial class CalloutSyntaxNodeSerializer : BaseMdSyntaxNodeSerial
         \G
         ^>(?:\[!(?<type>[^\|\n]+)(?<mod>\|[^\n]*)?\](?<option>\+|\-)?)[\ ]*(?<title>[^\n]*)$
         (?:\n(?<body>>[^\n]*(?:\n>[^\n]*)*)$)?
-        """, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.Compiled)]
+        """, RegexOptions.IgnorePatternWhitespace | DefaultMultiLineRegexOptions)]
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
 
