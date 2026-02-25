@@ -10,7 +10,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed partial class FrontmatterSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
-    [GeneratedRegex(@"\G(?<open>^-{3,})\ *(?<lang>.+)?\r?\n(?<body>[\s\S]*?)\r?\n\k<open>", DefaultMultiLineRegexOptions)]
+    [GeneratedRegex(@"\G(?<open>^-{3,})\ *(?<lang>.+)?\n(?<body>[\s\S]*?)\n\k<open>", DefaultMultiLineRegexOptions)]
     internal static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
 

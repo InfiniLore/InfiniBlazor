@@ -13,7 +13,7 @@ public sealed partial class HighlightSyntaxNodeSerializer : BaseMdSyntaxNodeSeri
     [GeneratedRegex("""
         ==(?<h>
             (?:\\.
-            | [^\\n=]
+            | [^\\\n=]
             | =(?!=) 
             | =(?===)
             )+

@@ -10,7 +10,15 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed partial class StrikeSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
-    [GeneratedRegex(@"\G~~(?<s>(?>[^\\~]+|\\~|~|(?<open>~~)|(?<-open>~~))+?~?)(?(open)(?!))~~", DefaultSingleLineRegexOptions)]
+    [GeneratedRegex("""
+        ~~(?<s>
+            (?:\\.
+            | [^\\\n~]
+            | ~(?!~) 
+            | ~(?=~~)
+            )+
+        )~~
+        """, DefaultSingleLineRegexOptions)]
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
 
