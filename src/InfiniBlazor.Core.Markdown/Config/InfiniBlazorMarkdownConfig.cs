@@ -59,6 +59,7 @@ public sealed class InfiniBlazorMarkdownConfig : IMarkdownConfig {
                     new BreakSyntaxNodeSerializer(),
                 ],
                 MultiLine = [
+                    new ScriptingIfStatementSyntaxNodeSerializer(),
                     new HeadingSyntaxNodeSerializer(),
                     new CodeBlockSyntaxNodeSerializer(),
                     new HeadingSimpleSyntaxNodeSerializer(),

@@ -72,6 +72,9 @@ public class XmlMdSyntaxTreeParser : IXmlMdSyntaxTreeParser {
         RegisterVisitor<WrapperMdSyntaxNode, WrapperXmlMdSyntaxNodeVisitor>();
         RegisterVisitor<FrontMatterMdSyntaxNode, FrontMatterXmlMdSyntaxNodeVisitor>();
         RegisterVisitor<BreakMdSyntaxNode, BreakXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<ScriptingBodySyntaxNode, ScriptingBodyXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<ScriptingExpressionSyntaxNode, ScriptingExpressionXmlMdSyntaxNodeVisitor>();
+        RegisterVisitor<ScriptingIfStatementSyntaxNode, ScriptingIfStatementXmlMdSyntaxNodeVisitor>();
     }
 
     private void RegisterVisitor<TNode, TVisitor>() where TNode : MdSyntaxNode<TNode>, new() where TVisitor : XmlMdSyntaxNodeVisitor<TNode>, new() {

@@ -56,7 +56,11 @@ public static class MdStringMdSyntaxDeserializerFactory {
             .Register<HighlightMdSyntaxNode, HighlightSyntaxNodeDeserializer>(instance)
             .Register<WrapperMdSyntaxNode, WrapperSyntaxNodeDeserializer>(instance)
             .Register<FrontMatterMdSyntaxNode, FrontMatterSyntaxNodeDeserializer>(instance)
-            .Register<BreakMdSyntaxNode, BreakSyntaxNodeDeserializer>(instance);
+            .Register<BreakMdSyntaxNode, BreakSyntaxNodeDeserializer>(instance)
+            .Register<ScriptingIfStatementSyntaxNode, ScriptingIfStatementSyntaxNodeDeserializer>(instance)
+            .Register<ScriptingExpressionSyntaxNode, ScriptingExpressionSyntaxNodeDeserializer>(instance)
+            .Register<ScriptingBodySyntaxNode, ScriptingBodySyntaxNodeDeserializer>(instance)
+            ;
 
         instance.Deserializers = deserializers.ToFrozenDictionary();
         return instance;

@@ -11,7 +11,7 @@ namespace InfiniBlazorTests.Core.Markdown.Parsers.Markdown;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 [InfiniBlazorMarkdownDIDataSource]
-public class FromMarkdownTests(IMarkdownParser parser) {
+public partial class FromMarkdownTests(IMarkdownParser parser) {
 
     [Test]
     [MethodDataSource<MdTestDataSources>(nameof(MdTestDataSources.GetBlankTest))]

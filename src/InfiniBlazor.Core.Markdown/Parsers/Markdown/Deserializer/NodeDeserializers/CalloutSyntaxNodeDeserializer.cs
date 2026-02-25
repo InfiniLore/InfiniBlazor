@@ -4,7 +4,6 @@
 using InfiniBlazor.Markdown.Syntax;
 using InfiniBlazor.Markdown.Syntax.Nodes;
 using InfiniBlazor.Pooling;
-using System.Collections.Concurrent;
 using System.Text;
 
 namespace InfiniBlazor.Markdown.Parsers.Markdown.Deserializer.NodeDeserializers;
@@ -12,19 +11,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Deserializer.NodeDeserializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed class CalloutSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<CalloutMdSyntaxNode> {
-    private static ConcurrentDictionary<int, string> LeadingSpacesCache { get; } = new() {
-        [0] = string.Empty,
-        [1] = " ",
-        [2] = "  ",
-        [3] = "   ",
-        [4] = "    ",
-        [5] = "     ",
-        [6] = "      ",
-        [7] = "       ",
-        [8] = "        ",
-        [9] = "         "
-    };
-
+    
     protected override void Deserialize(CalloutMdSyntaxNode node, StringBuilder builder) {
         builder.Append(">[!");
         builder.Append(node.CalloutType);

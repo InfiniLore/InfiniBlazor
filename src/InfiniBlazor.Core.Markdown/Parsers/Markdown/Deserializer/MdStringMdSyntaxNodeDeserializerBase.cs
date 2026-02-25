@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using InfiniBlazor.Markdown.Syntax;
+using System.Collections.Concurrent;
 using System.Text;
 
 namespace InfiniBlazor.Markdown.Parsers.Markdown.Deserializer;
@@ -12,6 +13,20 @@ public abstract class MdStringMdSyntaxNodeDeserializerBase<TNode> : IMdStringMdS
     where TNode : IMdSyntaxNode {
     public IMdStringMdSyntaxDeserializer Deserializer { get; internal init; } = null!;
 
+    // ReSharper disable once StaticMemberInGenericType
+    protected static ConcurrentDictionary<int, string> LeadingSpacesCache { get; } = new() {
+        [0] = string.Empty,
+        [1] = " ",
+        [2] = "  ",
+        [3] = "   ",
+        [4] = "    ",
+        [5] = "     ",
+        [6] = "      ",
+        [7] = "       ",
+        [8] = "        ",
+        [9] = "         "
+    };
+    
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
