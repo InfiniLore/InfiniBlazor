@@ -10,8 +10,8 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[InjectableSingleton<IMdSerializerFactory>]
-public class MdStringMdSyntaxSerializerFactory(ILogger<MdStringMdSyntaxSerializer> logger) : IMdSerializerFactory {
+[InjectableSingleton<IMdStringMdSyntaxSerializerFactory>]
+public class MdStringMdSyntaxSerializerFactory(ILogger<MdStringMdSyntaxSerializer> logger) : IMdStringMdSyntaxSerializerFactory {
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

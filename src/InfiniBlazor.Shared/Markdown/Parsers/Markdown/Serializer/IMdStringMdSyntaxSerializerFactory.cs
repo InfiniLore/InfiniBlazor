@@ -6,6 +6,6 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IMdSerializerFactory {
+public interface IMdStringMdSyntaxSerializerFactory {
     IMdStringMdSyntaxSerializer Create(MarkdownSerializerOptions options);
 }

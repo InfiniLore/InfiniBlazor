@@ -75,7 +75,7 @@ public sealed class InfiniBlazorMarkdownConfig : IMarkdownConfig {
                 FrontMatter = new FrontmatterSyntaxNodeSerializer()
             };
 
-            var factory = sp.GetRequiredService<IMdSerializerFactory>();
+            var factory = sp.GetRequiredService<IMdStringMdSyntaxSerializerFactory>();
             return factory.Create(fullOptions);
         });
         
