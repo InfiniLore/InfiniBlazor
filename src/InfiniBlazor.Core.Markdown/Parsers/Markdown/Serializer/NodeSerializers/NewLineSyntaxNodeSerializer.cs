@@ -13,8 +13,9 @@ public sealed partial class NewLineSyntaxNodeSerializer : BaseMdSyntaxNodeSerial
     [GeneratedRegex(@"\G\n")]
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
-
-    public override ReadOnlySpan<char> TriggerCharacters => ['\n'];
+    
+    private static readonly char[] STriggerCharacters = ['\n'];
+    public override ReadOnlySpan<char> TriggerCharacters => STriggerCharacters;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods

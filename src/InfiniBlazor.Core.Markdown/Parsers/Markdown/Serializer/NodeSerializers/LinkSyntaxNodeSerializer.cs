@@ -23,7 +23,8 @@ public sealed partial class LinkSyntaxNodeSerializer : BaseMdSyntaxNodeSerialize
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
 
-    public override ReadOnlySpan<char> TriggerCharacters => ['!', '['];
+    private static readonly char[] STriggerCharacters = ['!', '['];
+    public override ReadOnlySpan<char> TriggerCharacters => STriggerCharacters;
 
     private static readonly int LnBangId = RegexRule.GroupNumberFromName("bang");
     private static readonly int LnTextId = RegexRule.GroupNumberFromName("text");

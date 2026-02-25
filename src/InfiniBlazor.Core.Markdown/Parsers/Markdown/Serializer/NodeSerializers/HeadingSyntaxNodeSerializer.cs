@@ -13,7 +13,10 @@ public sealed partial class HeadingSyntaxNodeSerializer : BaseMdSyntaxNodeSerial
     [GeneratedRegex(@"\G^(?<level>\#{1,6})[\ ]+(?<text>[^\n]+)$", DefaultMultiLineRegexOptions)]
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
-
+    
+    private static readonly char[] STriggerCharacters = ['#'];
+    public override ReadOnlySpan<char> TriggerCharacters => STriggerCharacters;
+    
     private static readonly int HLevelId = RegexRule.GroupNumberFromName("level");
     private static readonly int HTextId = RegexRule.GroupNumberFromName("text");
 

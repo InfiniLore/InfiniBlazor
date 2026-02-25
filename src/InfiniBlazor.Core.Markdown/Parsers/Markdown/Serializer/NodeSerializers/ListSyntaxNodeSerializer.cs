@@ -21,8 +21,9 @@ public partial class ListSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
 
     [GeneratedRegex(@"^\ *(?:-|(?<index>\d*)\.)(?:(?<taskSpace>\ *)\[(?<task>[\ xX~])])?(?:(?<space>\ *)(?<head>.+)|(?<head>\ )|(?<head>))(?<body>(?:\n\ +.*)*)", DefaultMultiLineRegexOptions)]
     private static partial Regex ListItemBodyRegexRule { get; }
-
-    public override ReadOnlySpan<char> TriggerCharacters => ['-', ' ', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    
+    private static readonly char[] STriggerCharacters = ['-', ' ', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    public override ReadOnlySpan<char> TriggerCharacters => STriggerCharacters;
 
     private static readonly int LsId = RegexRule.GroupNumberFromName("id");
     private static readonly int LIndexId = ListItemBodyRegexRule.GroupNumberFromName("index");
