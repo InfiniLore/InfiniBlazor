@@ -15,7 +15,7 @@ public partial class ListSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
         \G
         ^[^\S\n]*(?<id>-(?!-)|\d+\.|\.\d+).+
         (?:\n(?:(?:-(?!-)|\d+\.|\.\d+)|(?:[\ ]+)).+)*
-        """, RegexOptions.IgnorePatternWhitespace | DefaultMultiLineRegexOptions)]
+        """, DefaultMultiLineRegexOptions)]
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
 

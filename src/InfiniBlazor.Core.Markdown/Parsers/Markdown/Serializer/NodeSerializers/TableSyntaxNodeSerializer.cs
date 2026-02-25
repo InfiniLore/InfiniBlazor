@@ -16,7 +16,7 @@ public sealed partial class TableSyntaxNodeSerializer : BaseMdSyntaxNodeSerializ
         ^\|(?<head>.+)\|[\ ]*\n
         ^\|(?<sep>[:\-|\ ]+?)\|[\ ]*
         (?<body>(?:\n(?:^\|.*\|$))+)
-        """, RegexOptions.IgnorePatternWhitespace | DefaultMultiLineRegexOptions)]
+        """, DefaultMultiLineRegexOptions)]
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
 

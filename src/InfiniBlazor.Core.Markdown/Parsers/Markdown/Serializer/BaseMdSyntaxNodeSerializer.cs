@@ -23,7 +23,7 @@ public abstract class BaseMdSyntaxNodeSerializer : IMdSyntaxNodeSerializer {
     public bool TryGetMatch(string input, [NotNullWhen(true)] out Match? match, int startPosition = 0) {
         match = null;
         if (startPosition >= input.Length) return false;
-        if (input.IsNullOrWhiteSpace()) return false;
+        if (input.IsNullOrEmpty()) return false;
         
         match = Syntax.Match(input, startPosition);
         return match.Success;

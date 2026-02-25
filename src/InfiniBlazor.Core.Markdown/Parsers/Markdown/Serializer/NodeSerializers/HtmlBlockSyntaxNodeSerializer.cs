@@ -25,7 +25,7 @@ public sealed partial class HtmlBlockSyntaxNodeSerializer : BaseMdSyntaxNodeSeri
             (</\k<tag>>)
         )
         (?<post>.+)?
-        """, RegexOptions.IgnorePatternWhitespace | DefaultMultiLineRegexOptions)]
+        """, DefaultMultiLineRegexOptions)]
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
 
