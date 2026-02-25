@@ -30,6 +30,7 @@ public sealed partial class HtmlBlockSyntaxNodeSerializer : BaseMdSyntaxNodeSeri
     protected override Regex Syntax { get; } = RegexRule;
 
     [GeneratedRegex("""
+        \G
         <span\ ?(?<attr>\b[^>]*)>
         (?<body>
           (?>

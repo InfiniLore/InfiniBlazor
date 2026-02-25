@@ -10,7 +10,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed partial class HorizontalRuleSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
-    [GeneratedRegex(@"^(?<hr>\ *?(\-{3,}?|_{3,}?)\ *?)$", DefaultMultiLineRegexOptions)]
+    [GeneratedRegex(@"\G^(?<hr>\ *?(\-{3,}?|_{3,}?)\ *?)$", DefaultMultiLineRegexOptions)]
     private static partial Regex RegexRule { get; }
     protected override Regex Syntax { get; } = RegexRule;
 

@@ -11,6 +11,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed partial class StrikeSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
     [GeneratedRegex("""
+        \G
         ~~(?<s>
             (?:\\.
             | [^\\\n~]

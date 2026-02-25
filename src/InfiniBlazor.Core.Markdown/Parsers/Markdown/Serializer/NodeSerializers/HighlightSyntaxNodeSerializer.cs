@@ -11,6 +11,7 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Serializer.NodeSerializers;
 // ---------------------------------------------------------------------------------------------------------------------
 public sealed partial class HighlightSyntaxNodeSerializer : BaseMdSyntaxNodeSerializer {
     [GeneratedRegex("""
+        \G
         ==(?<h>
             (?:\\.
             | [^\\\n=]
