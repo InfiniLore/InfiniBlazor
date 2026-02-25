@@ -12,6 +12,6 @@ namespace InfiniBlazor.Markdown.Parsers.Markdown.Deserializer.NodeDeserializers;
 public sealed class ScriptingIfStatementSyntaxNodeDeserializer : MdStringMdSyntaxNodeDeserializerBase<ScriptingIfStatementSyntaxNode> {
     protected override void Deserialize(ScriptingIfStatementSyntaxNode node, StringBuilder builder) {
         DeserializeChildren(node, builder);
-        builder.Append("@endif");
+        builder.AppendLine("@endif");
     }
 }

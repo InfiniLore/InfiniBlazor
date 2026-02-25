@@ -34,7 +34,7 @@ public sealed partial class ScriptingIfStatementSyntaxNodeSerializer : BaseMdSyn
 
     [GeneratedRegex("""
         ^@elseif\(.+\)\ *$
-        (?:\s(?!^@elseif|^@else|^@endif)(?:^.*$)+)+
+        (?:(?!^@elseif|^@else|^@endif)(?:^.*$\s*)+)+
         """, DefaultMultiLineRegexOptions)]
     private static partial Regex ElifSectionRegexRule { get; }
 
@@ -57,7 +57,7 @@ public sealed partial class ScriptingIfStatementSyntaxNodeSerializer : BaseMdSyn
         Group ifExpression = match.Groups[IfExpressionId];
         Group ifBody = match.Groups[IfBodyId];
         ScriptingExpressionSyntaxNode ifExpressionNode = MdSyntaxNodePool<ScriptingExpressionSyntaxNode>.Shared.Get();
-        ifExpressionNode.WithExpression(ifExpression.Value, ifExpression.Index, ifExpression.Length);
+        ifExpressionNode.WithExpression($"@if({ifExpression.Value})", ifExpression.Index, ifExpression.Length);
         statementNode.WithIfCondition(ifExpressionNode);
         
         string adjustedIfBody = LineNormalization.NormalizeBlockQuote(ifBody.ValueSpan, out int ifBodyLeadingSpaces);
@@ -79,7 +79,7 @@ public sealed partial class ScriptingIfStatementSyntaxNodeSerializer : BaseMdSyn
                 ReadOnlySpan<char> elifBody = valueSpan[(endBracket + 2)..];
                 
                 ScriptingExpressionSyntaxNode elifExpressionNode = MdSyntaxNodePool<ScriptingExpressionSyntaxNode>.Shared.Get();
-                elifExpressionNode.WithExpression(elifExpression.ToString(), 8, endBracket-8);
+                elifExpressionNode.WithExpression($"@elseif({elifExpression})", 8, endBracket-8);
                 statementNode.WithIfCondition(elifExpressionNode);
                 
                 string adjustedElifBody = LineNormalization.NormalizeBlockQuote(elifBody, out int elifBodyLeadingSpaces);
@@ -96,6 +96,7 @@ public sealed partial class ScriptingIfStatementSyntaxNodeSerializer : BaseMdSyn
             Group elseBody = match.Groups[ElseBodyId];
             
             ScriptingExpressionSyntaxNode elseExpressionNode = MdSyntaxNodePool<ScriptingExpressionSyntaxNode>.Shared.Get();
+            elseExpressionNode.WithExpression("@else", 5, 0);
             statementNode.WithElseCondition(elseExpressionNode);
             
             string adjustedElseBody = LineNormalization.NormalizeBlockQuote(elseBody.ValueSpan, out int elseBodyLeadingSpaces);

@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMdTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MdTestData Id="default" FileName="scripting_if.xml">
+    <MdString>@if(character.lastName==stats.MinHp or character.hp&lt;5) 
+alive
+@elseif(character.species=="vampire")
+unded
+@else 
+ded
+@endif</MdString>
+    <MdSyntaxTree>
+      <ScriptingIfStatementSyntaxNode ElseConditionIndex="2">
+        <ScriptingExpressionSyntaxNode FullStatement="@if(character.lastName==stats.MinHp or character.hp&lt;5)" ExpressionStart="4" ExpressionLength="49">
+          <ScriptingBodySyntaxNode LeadingSpaces="0">
+            <ParagraphMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">alive</TextMdSyntaxNode>
+            </ParagraphMdSyntaxNode>
+          </ScriptingBodySyntaxNode>
+        </ScriptingExpressionSyntaxNode>
+        <ScriptingExpressionSyntaxNode FullStatement="@elseif(character.species==&quot;vampire&quot;)" ExpressionStart="8" ExpressionLength="28">
+          <ScriptingBodySyntaxNode LeadingSpaces="0">
+            <ParagraphMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">unded</TextMdSyntaxNode>
+            </ParagraphMdSyntaxNode>
+            <NewLineMdSyntaxNode />
+          </ScriptingBodySyntaxNode>
+        </ScriptingExpressionSyntaxNode>
+        <ScriptingExpressionSyntaxNode FullStatement="@else" ExpressionStart="5" ExpressionLength="0">
+          <ScriptingBodySyntaxNode LeadingSpaces="0">
+            <ParagraphMdSyntaxNode>
+              <TextMdSyntaxNode xml:space="preserve">ded</TextMdSyntaxNode>
+            </ParagraphMdSyntaxNode>
+          </ScriptingBodySyntaxNode>
+        </ScriptingExpressionSyntaxNode>
+      </ScriptingIfStatementSyntaxNode>
+    </MdSyntaxTree>
+    <ExpectedMarkdown>@if(character.lastName==stats.MinHp or character.hp&lt;5)
+alive@elseif(character.species=="vampire")
+unded
+ @else
+ded@endif
+</ExpectedMarkdown>
+    <ExpectedJsonString>{
+  "type": "MdSyntaxTree",
+  "children": [
+    {
+      "type": "ScriptingIfStatementSyntaxNode",
+      "elseConditionIndex": 2,
+      "children": [
+        {
+          "type": "ScriptingExpressionSyntaxNode",
+          "fullStatement": "@if(character.lastName==stats.MinHp or character.hp&lt;5)",
+          "expressionStart": 4,
+          "expressionLength": 49,
+          "children": [
+            {
+              "type": "ScriptingBodySyntaxNode",
+              "leadingSpaces": 0,
+              "children": [
+                {
+                  "type": "ParagraphMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "alive"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ScriptingExpressionSyntaxNode",
+          "fullStatement": "@elseif(character.species==\"vampire\")",
+          "expressionStart": 8,
+          "expressionLength": 28,
+          "children": [
+            {
+              "type": "ScriptingBodySyntaxNode",
+              "leadingSpaces": 0,
+              "children": [
+                {
+                  "type": "ParagraphMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "unded"
+                    }
+                  ]
+                },
+                {
+                  "type": "NewLineMdSyntaxNode"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ScriptingExpressionSyntaxNode",
+          "fullStatement": "@else",
+          "expressionStart": 5,
+          "expressionLength": 0,
+          "children": [
+            {
+              "type": "ScriptingBodySyntaxNode",
+              "leadingSpaces": 0,
+              "children": [
+                {
+                  "type": "ParagraphMdSyntaxNode",
+                  "children": [
+                    {
+                      "type": "TextMdSyntaxNode",
+                      "content": "ded"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</ExpectedJsonString>
+  </MdTestData>
+</ArrayOfMdTestData>
