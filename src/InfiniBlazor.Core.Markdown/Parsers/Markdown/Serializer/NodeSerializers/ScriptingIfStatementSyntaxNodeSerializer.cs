@@ -14,18 +14,15 @@ public sealed partial class ScriptingIfStatementSyntaxNodeSerializer : BaseMdSyn
         \G
         ^@if\((?<ifExpression>.+)\)\ *$\s
         (?<ifBody>(?:(?!^@elseif|^@else|^@endif)^.*$\s*?)*)
-        \s?
         (?<elifSection>
           (?:
             ^@elseif\(.+\)\ *$\s
             (?:(?:(?!^@elseif|^@else|^@endif)^.*$\s*?)+)?
-            \s?
           )+
         )?
         (?<elseSection>
           ^@else\ *$\s
           (?<elseBody>(?:(?!^@endif)^.*$\s*?)*)
-          \s?
         )?
         ^@endif\ *$
         """, DefaultMultiLineRegexOptions)]
@@ -34,7 +31,7 @@ public sealed partial class ScriptingIfStatementSyntaxNodeSerializer : BaseMdSyn
 
     [GeneratedRegex("""
         ^@elseif\(.+\)\ *$
-        (?:(?!^@elseif|^@else|^@endif)(?:^.*$\s*)+)+
+        (?:\s(?!^@elseif|^@else|^@endif)(?:^.*$)+)+
         """, DefaultMultiLineRegexOptions)]
     private static partial Regex ElifSectionRegexRule { get; }
 
