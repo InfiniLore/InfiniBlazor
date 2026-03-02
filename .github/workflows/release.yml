@@ -120,7 +120,7 @@ jobs:
                 run: dotnet pack InfiniBlazor.GitHubActions.slnf --configuration Release --no-build -o ./release
 
             -   name: Upload NuGet packages as artifact
-                uses: actions/upload-artifact@v6
+                uses: actions/upload-artifact@v7
                 with:
                     name: nuget-packages-${{ needs.bump-version.outputs.tag_name }}
                     path: ./release/*.nupkg
