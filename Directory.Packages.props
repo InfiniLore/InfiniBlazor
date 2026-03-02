@@ -59,7 +59,7 @@
     <PackageVersion Include="Serilog.Sinks.BrowserConsole" Version="8.0.0" />
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.1.1" />
     <PackageVersion Include="Serilog.Sinks.Debug" Version="3.0.0" />
-    <PackageVersion Include="TUnit" Version="1.17.11" />
+    <PackageVersion Include="TUnit" Version="1.17.54" />
     <PackageVersion Include="TUnit.Core" Version="1.17.54" />
     <PackageVersion Include="YamlDotNet" Version="16.3.0" />
     <!-- DO NOT UPDATE: Microsoft.CodeAnalysis packages locked at 4.14.0 due to compatibility requirements -->
