@@ -21,7 +21,7 @@
     <PackageVersion Include="CodeOfChaos.Extensions.Serilog" Version="0.87.2" />
     <PackageVersion Include="CodeOfChaos.GeneratorTools" Version="2.2.1" />
     <PackageVersion Include="CodeOfChaos.Testing.TUnit" Version="0.17.0" />
-    <PackageVersion Include="FastEndpoints" Version="7.2.0" />
+    <PackageVersion Include="FastEndpoints" Version="8.0.1" />
     <PackageVersion Include="InfiniLore.InfiniFrame" Version="0.1.0-preview.25" />
     <PackageVersion Include="InfiniLore.InfiniFrame.Blazor" Version="0.1.0-preview.25" />
     <PackageVersion Include="InfiniLore.InfiniFrame.BlazorWebView" Version="0.1.0-preview.25" />
