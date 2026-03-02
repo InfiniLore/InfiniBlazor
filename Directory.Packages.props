@@ -5,7 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="BenchmarkDotNet" Version="0.15.8" />
-    <PackageVersion Include="bunit" Version="2.5.3" />
+    <PackageVersion Include="bunit" Version="2.6.2" />
     <PackageVersion Include="CodeOfChaos.CliArgsParser.Generators" Version="5.1.0" />
     <PackageVersion Include="CodeOfChaos.CliArgsParser.Library" Version="5.1.0" />
     <PackageVersion Include="CodeOfChaos.Extensions" Version="0.87.2" />
@@ -21,7 +21,7 @@
     <PackageVersion Include="CodeOfChaos.Extensions.Serilog" Version="0.87.2" />
     <PackageVersion Include="CodeOfChaos.GeneratorTools" Version="2.2.1" />
     <PackageVersion Include="CodeOfChaos.Testing.TUnit" Version="0.17.0" />
-    <PackageVersion Include="FastEndpoints" Version="7.2.0" />
+    <PackageVersion Include="FastEndpoints" Version="8.0.1" />
     <PackageVersion Include="InfiniLore.InfiniFrame" Version="0.1.0-preview.25" />
     <PackageVersion Include="InfiniLore.InfiniFrame.Blazor" Version="0.1.0-preview.25" />
     <PackageVersion Include="InfiniLore.InfiniFrame.BlazorWebView" Version="0.1.0-preview.25" />
@@ -60,7 +60,7 @@
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.1.1" />
     <PackageVersion Include="Serilog.Sinks.Debug" Version="3.0.0" />
     <PackageVersion Include="TUnit" Version="1.17.11" />
-    <PackageVersion Include="TUnit.Core" Version="1.17.11" />
+    <PackageVersion Include="TUnit.Core" Version="1.17.54" />
     <PackageVersion Include="YamlDotNet" Version="16.3.0" />
     <!-- DO NOT UPDATE: Microsoft.CodeAnalysis packages locked at 4.14.0 due to compatibility requirements -->
     <!--      <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="[4.14.0,4.15.0)"/>-->
