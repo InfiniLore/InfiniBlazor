@@ -26,7 +26,7 @@
     <PackageVersion Include="InfiniLore.InfiniFrame.Blazor" Version="0.1.0-preview.25" />
     <PackageVersion Include="InfiniLore.InfiniFrame.BlazorWebView" Version="0.1.0-preview.25" />
     <PackageVersion Include="InfiniLore.InfiniFrame.WebServer" Version="0.1.0-preview.25" />
-    <PackageVersion Include="InfiniLore.Lucide" Version="0.575.0" />
+    <PackageVersion Include="InfiniLore.Lucide" Version="0.576.1" />
     <PackageVersion Include="IsExternalInit" Version="1.0.3" />
     <PackageVersion Include="JetBrains.Annotations" Version="2025.2.4" />
     <PackageVersion Include="Microsoft.AspNetCore.Components" Version="10.0.3" />
@@ -59,7 +59,7 @@
     <PackageVersion Include="Serilog.Sinks.BrowserConsole" Version="8.0.0" />
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.1.1" />
     <PackageVersion Include="Serilog.Sinks.Debug" Version="3.0.0" />
-    <PackageVersion Include="TUnit" Version="1.17.54" />
+    <PackageVersion Include="TUnit" Version="1.19.11" />
     <PackageVersion Include="TUnit.Core" Version="1.19.11" />
     <PackageVersion Include="YamlDotNet" Version="16.3.0" />
     <!-- DO NOT UPDATE: Microsoft.CodeAnalysis packages locked at 4.14.0 due to compatibility requirements -->
