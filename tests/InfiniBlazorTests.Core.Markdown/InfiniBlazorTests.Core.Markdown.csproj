@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="TUnit.Core" />
         <ProjectReference Include="..\InfiniBlazorTests.Shared.Markdown\InfiniBlazorTests.Shared.Markdown.csproj" />
     </ItemGroup>
 </Project>
