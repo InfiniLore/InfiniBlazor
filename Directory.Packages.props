@@ -8,7 +8,7 @@
     <PackageVersion Include="bunit" Version="2.6.2" />
     <PackageVersion Include="CodeOfChaos.CliArgsParser.Generators" Version="5.1.0" />
     <PackageVersion Include="CodeOfChaos.CliArgsParser.Library" Version="5.1.0" />
-    <PackageVersion Include="CodeOfChaos.Extensions" Version="0.87.2" />
+    <PackageVersion Include="CodeOfChaos.Extensions" Version="0.89.0" />
     <PackageVersion Include="CodeOfChaos.Extensions.AspNetCore" Version="0.87.2" />
     <PackageVersion Include="CodeOfChaos.Extensions.AspNetCore.Components" Version="0.87.2" />
     <PackageVersion Include="CodeOfChaos.Extensions.DependencyInjection" Version="0.87.2" />
