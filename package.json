@@ -11,11 +11,11 @@
   "description": "",
   "devDependencies": {
     "@toolwind/anchors": "^1.0.10",
-    "tailwindcss": "^4.2.1",
+    "tailwindcss": "^4.2.2",
     "ts-loader": "^9.5.4",
     "typescript": "^5.9.3",
     "webpack": "^5.105.4",
-    "webpack-cli": "^7.0.0",
+    "webpack-cli": "^7.0.2",
     "highlight.js": "^11.11.1"
   },
   "dependencies": {
