@@ -127,7 +127,7 @@ jobs:
 
             -   name: Create GitHub Release
                 if: inputs.publish_to_nuget
-                uses: softprops/action-gh-release@v2
+                uses: softprops/action-gh-release@v3
                 with:
                     tag_name: ${{ needs.bump-version.outputs.tag_name }}
                     name: Release ${{ needs.bump-version.outputs.new_version }}
